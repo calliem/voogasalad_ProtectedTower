@@ -12,6 +12,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.web.WebEngine;
@@ -26,7 +27,7 @@ public class MainEnvironment {
     private TabPane myTabPane;
     private GridPane myGridPane;
     
-    private static final String DEFAULT_RESOURCE_PACKAGE = "resources.display/";
+    private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "english");
 	
     //private SceneSetter mySceneSetter = new SceneSetter();
@@ -36,6 +37,7 @@ public class MainEnvironment {
 		initStage(s);
 		
 		myGridPane = new GridPane();
+		myGridPane.setGridLinesVisible(true);
 	    createEnvironment(myGridPane);
 	          
      //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
@@ -49,7 +51,13 @@ public class MainEnvironment {
 	}
 	
 	private void createEnvironment(GridPane grid) {
-		//hardcoded numbers should be removed
+		//TODO: hardcoded numbers should be removed
+		//TODO: set col to take up entire grid
+		//TODO: remove 'x's' from tabs
+		ColumnConstraints col0 = new ColumnConstraints();
+		col0.setPrefWidth(myDimensions.getWidth());
+		
+		
 		RowConstraints row0 = new RowConstraints();
 	    row0.setPercentHeight(4);
 	    RowConstraints row1 = new RowConstraints();
@@ -65,7 +73,7 @@ public class MainEnvironment {
     private void addTab(Editor newEditor, String tabName) {
         Tab tab = new Tab();
         tab.setText(tabName);
-        tab.setContent(newEditor.configureUI());
+     //   tab.setContent(newEditor.configureUI());
         myTabPane.getTabs().add(tab);
     }
 

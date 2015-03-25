@@ -1,5 +1,5 @@
 
-import authoring.environment.MainView;
+import authoring.environment.MainEnvironment;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -13,11 +13,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	private MainEnvironment myView;
-
 	@Override
 	public void start(Stage stage) throws Exception {
-		myView = new MainEnvironment(stage);
+		MainEnvironment myView = new MainEnvironment(stage);
 	}
 
 	public static void main(String[] args) {
