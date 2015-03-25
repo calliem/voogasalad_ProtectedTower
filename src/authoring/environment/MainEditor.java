@@ -1,5 +1,6 @@
 package authoring.environment;
 
-public abstract class MainEditor extends Editor{
+public abstract class MainEditor extends Editor{ 
+	//interface?
 
 }

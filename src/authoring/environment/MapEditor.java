@@ -2,10 +2,17 @@ package authoring.environment;
 
 import java.util.ArrayList;
 
-public class MapEditor extends Editor {
+import authoring.environment.objects.Line;
+import authoring.environment.objects.GameMap;
+import authoring.environment.objects.Tile;
 
-	public Cell[][] getTiles(){} 
+
+public abstract class MapEditor extends MainEditor {
+
+	public Tile[][] getTiles(){} 
 	
-	public ArrayList getPaths(){} 
+	public ArrayList<Line> getPaths(){} //to be accessed by Levels
+	
+	public ArrayList<GameMap> getMaps(){}
 	
 }

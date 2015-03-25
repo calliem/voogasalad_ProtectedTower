@@ -1,5 +1,5 @@
 package authoring.environment;
 
-public class LevelEditor {
+public class LevelEditor extends MainEditor{
 
 }
