@@ -1,5 +1,5 @@
 package authoring.environment.objects;
 
-public abstract class Line {
+public class Path {
 
 }

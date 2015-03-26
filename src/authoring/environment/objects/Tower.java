@@ -1,5 +1,10 @@
 package authoring.environment.objects;
 
-public abstract class Tower {
 
+
+public class Tower extends Sprite{
+
+	
+	
+	
 }

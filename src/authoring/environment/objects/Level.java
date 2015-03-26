@@ -1,5 +1,10 @@
 package authoring.environment.objects;
 
-public abstract class Level {
+public class Level {
 
 }
+/*
+waves
+map
+win condition
+lose condition*/
