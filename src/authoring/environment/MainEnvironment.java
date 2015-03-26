@@ -52,11 +52,11 @@ public class MainEnvironment {
 	
 	private void createEnvironment(GridPane grid) {
 		//TODO: hardcoded numbers should be removed
-		//TODO: set col to take up entire grid
 		//TODO: remove 'x's' from tabs
-		ColumnConstraints col0 = new ColumnConstraints();
-		col0.setPrefWidth(myDimensions.getWidth());
+		//gridPane.setStyle("-fx-background-color: #C0C0C0;");
 		
+		ColumnConstraints col0 = new ColumnConstraints();
+		col0.setPercentWidth(100);
 		
 		RowConstraints row0 = new RowConstraints();
 	    row0.setPercentHeight(4);
@@ -64,6 +64,8 @@ public class MainEnvironment {
 	    row1.setPercentHeight(96);
 	    grid.getRowConstraints().add(row0);
 	    grid.getRowConstraints().add(row1);
+	    grid.getColumnConstraints().add(col0);
+
 	    grid.add(configureTopMenu(),0,0);
         myTabPane = new TabPane();
         grid.add(myTabPane,0,1);
