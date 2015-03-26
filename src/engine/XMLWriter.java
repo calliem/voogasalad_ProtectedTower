@@ -1,22 +1,8 @@
 package engine;
 
-import java.util.Iterator;
-
 
 public class XMLWriter {
 
-	public void makeEnemy(){
-		
-	}
-	public void makeTower(){
-	}
-	public void makeProjectile(){
-		
-	}
-	public void makeModifier(){
-		
-	}
-	public void makeGrid(Iterator<GridCell> inputMap){
-		
-	}
+	public void saveInstance(Instance instance){}
+	
 }
