@@ -1,4 +1,4 @@
-package gameengine;
+package engine;
 
 public class InsufficientParametersException extends Exception {
 

@@ -1,4 +1,4 @@
-package gameengine;
+package engine;
 
 public abstract class Modifier extends Sprite {
 	public Modifier() throws InsufficientParametersException {

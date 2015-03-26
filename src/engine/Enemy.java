@@ -1,8 +1,6 @@
-package gameengine;
+package engine;
 
 import java.util.List;
-
-import otherstuff.Moveable;
 
 public class Enemy extends Sprite implements Moveable{
 
