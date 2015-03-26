@@ -1,17 +1,6 @@
-package sprite;
+package engine;
 
-import java.util.List;
-
-import voogasaladTEST.Moveable;
-
-public class Enemy extends Sprite implements Moveable{
-
-	@Override
-	public void target(Sprite s) {
-	}
-	@Override
-	public void move() {
-	}
+public class Tower extends Sprite{
 
 	@Override
 	public boolean isTargetable(String type) {
@@ -24,9 +13,11 @@ public class Enemy extends Sprite implements Moveable{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
-	public List<String> getParameters() {
+	public void target(Sprite s) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
+
 }

@@ -1,6 +1,15 @@
-package sprite;
+package engine;
 
-public class Tower extends Sprite{
+import java.util.List;
+
+public class Enemy extends Sprite implements Moveable{
+
+	@Override
+	public void target(Sprite s) {
+	}
+	@Override
+	public void move() {
+	}
 
 	@Override
 	public boolean isTargetable(String type) {
@@ -13,11 +22,9 @@ public class Tower extends Sprite{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 	@Override
-	public void target(Sprite s) {
+	public List<String> getParameters() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-
 }

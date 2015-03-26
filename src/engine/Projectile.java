@@ -1,8 +1,6 @@
-package sprite;
+package engine;
 
 import java.util.List;
-
-import voogasaladTEST.Moveable;
 
 
 public class Projectile extends Sprite implements Moveable{
