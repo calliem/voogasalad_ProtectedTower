@@ -3,7 +3,7 @@ package engine;
 import java.util.List;
 
 
-public class Projectile extends Sprite implements Moveable{
+public class Projectile extends MoveableSprite{
 
 	public Projectile() throws InsufficientParametersException {
 		super();

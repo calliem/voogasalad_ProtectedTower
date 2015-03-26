@@ -2,7 +2,7 @@ package engine;
 
 import java.util.List;
 
-public class Enemy extends Sprite implements Moveable{
+public class Enemy extends MoveableSprite{
 
 	public Enemy() throws InsufficientParametersException {
 		super();
@@ -10,9 +10,6 @@ public class Enemy extends Sprite implements Moveable{
 	}
 	@Override
 	public void target(Sprite s) {
-	}
-	@Override
-	public void move() {
 	}
 
 	@Override
@@ -30,5 +27,10 @@ public class Enemy extends Sprite implements Moveable{
 	public List<String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
 	}
 }

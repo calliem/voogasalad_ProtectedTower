@@ -6,6 +6,6 @@ public abstract class Modifier extends Sprite {
 		// TODO Auto-generated constructor stub
 	}
 
-	public abstract void modify(Sprite s);
+	public abstract void modify(GameSprite s);
 
 }
