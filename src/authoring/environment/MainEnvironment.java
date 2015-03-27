@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 public class MainEnvironment {
 
-    private Dimension2D myDimensions;
+    protected static Dimension2D myDimensions;
     private Stage myStage; //is this necessary
     private TabPane myTabPane;
     private GridPane myGridPane;
@@ -75,7 +75,8 @@ public class MainEnvironment {
     private void addTab(Editor newEditor, String tabName) {
         Tab tab = new Tab();
         tab.setText(tabName);
-        //   tab.setContent(newEditor.configureUI());
+        tab.setContent(newEditor.configureUI());
+        tab.setClosable(false);
         myTabPane.getTabs().add(tab);
     }
 
