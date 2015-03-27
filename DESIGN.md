@@ -176,6 +176,9 @@ We might want to allow the user to write his own setOnCollide methods for two pa
 
 Team Responsibilities
 ---
+
+This section describes the program modules each team member plans to take primary and secondary responsibility for and a high-level plan of how the team will complete the program.
+
 Callie, Johnny, Kevin, and Megan will be responsible for designing the authoring environment.
 
 
@@ -190,7 +193,9 @@ Callie, Johnny, Kevin, and Megan will be responsible for designing the authoring
 Add a tower:
 
 public class TowerEditor {    
-addTower()
+
+//adds a Map<String, Object> to the List<Map<String, Ob
+InstanceManager.addPart(String partName)
     String[] parameters = instanceManager.getParameters(“tower”);
 Sprite newTower = instanceManager.createSprite(parameters);
 /* The string “tower” will be processed through Java Reflection to get the tower’s parameters from a properties/resource file. We chose to use a properties file instead of utilizing constructors since it is possible for a constructor to have over 100 parameters, which would make the class unwieldy.*/
