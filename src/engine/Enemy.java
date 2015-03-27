@@ -2,6 +2,9 @@ package engine;
 
 import java.util.List;
 
+/*
+ * This class represents a sprite that moves across the screen and shoots/is shot at by towers.
+ */
 public class Enemy extends MoveableSprite{
 
 	public Enemy() throws InsufficientParametersException {
