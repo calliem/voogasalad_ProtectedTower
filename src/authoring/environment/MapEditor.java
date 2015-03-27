@@ -2,16 +2,15 @@ package authoring.environment;
 
 import java.util.ArrayList;
 import javafx.scene.Group;
-import authoring.environment.objects.GameMap;
 import authoring.environment.objects.Path;
-import authoring.environment.objects.Tile;
+import authoring.environment.objects.Sprite;
 
 
 public class MapEditor extends MainEditor {
 
-    public Tile[][] getTiles(){
+    public Sprite[][] getTiles(){
         // TODO return actual map tiles
-        return new Tile[0][0];
+        return new Sprite[0][0];
     }
 
     public ArrayList<Path> getPaths(){ //to be accessed by Levels
@@ -19,7 +18,7 @@ public class MapEditor extends MainEditor {
         return new ArrayList<>();
     }
 
-    public ArrayList<GameMap> getMaps(){
+    public ArrayList<Sprite> getMaps(){
         // TODO return actual GameMaps
         return new ArrayList<>();
     };
