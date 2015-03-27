@@ -21,74 +21,74 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class MainEnvironment {
-    
+
     private Dimension2D myDimensions;
     private Stage myStage; //is this necessary
     private TabPane myTabPane;
     private GridPane myGridPane;
-    
+
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "english");
-	
+
     //private SceneSetter mySceneSetter = new SceneSetter();
 
-	public MainEnvironment(Stage s) {
+    public MainEnvironment(Stage s) {
         initScreen();
-		initStage(s);
-		
-		myGridPane = new GridPane();
-		myGridPane.setGridLinesVisible(true);
-	    createEnvironment(myGridPane);
-	          
-     //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
+        initStage(s);
+
+        myGridPane = new GridPane();
+        myGridPane.setGridLinesVisible(true);
+        createEnvironment(myGridPane);
+
+        //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
         addTab(new MapEditor(), myResources.getString("MapTab"));
         addTab(new WaveEditor(), myResources.getString("WavesTab"));
         addTab(new LevelEditor(), myResources.getString("LevelsTab"));
-     //   addTab(new ProjectileEditor(), myResources.getString("ProjectilesTab"));
+        //   addTab(new ProjectileEditor(), myResources.getString("ProjectilesTab"));
         addTab(new TowerEditor(), myResources.getString("TowersTab"));
-        
-        setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
-	}
-	
-	private void createEnvironment(GridPane grid) {
-		//TODO: hardcoded numbers should be removed
-		//TODO: remove 'x's' from tabs
-		//gridPane.setStyle("-fx-background-color: #C0C0C0;");
-		
-		ColumnConstraints col0 = new ColumnConstraints();
-		col0.setPercentWidth(100);
-		
-		RowConstraints row0 = new RowConstraints();
-	    row0.setPercentHeight(4);
-	    RowConstraints row1 = new RowConstraints();
-	    row1.setPercentHeight(96);
-	    grid.getRowConstraints().add(row0);
-	    grid.getRowConstraints().add(row1);
-	    grid.getColumnConstraints().add(col0);
 
-	    grid.add(configureTopMenu(),0,0);
+        setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
+    }
+
+    private void createEnvironment(GridPane grid) {
+        //TODO: hardcoded numbers should be removed
+        //TODO: remove 'x's' from tabs
+        //gridPane.setStyle("-fx-background-color: #C0C0C0;");
+
+        ColumnConstraints col0 = new ColumnConstraints();
+        col0.setPercentWidth(100);
+
+        RowConstraints row0 = new RowConstraints();
+        row0.setPercentHeight(4);
+        RowConstraints row1 = new RowConstraints();
+        row1.setPercentHeight(96);
+        grid.getRowConstraints().add(row0);
+        grid.getRowConstraints().add(row1);
+        grid.getColumnConstraints().add(col0);
+
+        grid.add(configureTopMenu(),0,0);
         myTabPane = new TabPane();
         grid.add(myTabPane,0,1);
-	}
+    }
 
-	
+
     private void addTab(Editor newEditor, String tabName) {
         Tab tab = new Tab();
         tab.setText(tabName);
-     //   tab.setContent(newEditor.configureUI());
+        //   tab.setContent(newEditor.configureUI());
         myTabPane.getTabs().add(tab);
     }
 
-	private void initScreen() {
-		Screen screen = Screen.getPrimary();
+    private void initScreen() {
+        Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         myDimensions = new Dimension2D(bounds.getWidth(), bounds.getHeight());
-	}
+    }
 
-	private void initStage(Stage s) {
-		myStage = s;      
-		myStage.setResizable(false);
-	}
+    private void initStage(Stage s) {
+        myStage = s;      
+        myStage.setResizable(false);
+    }
 
     private MenuBar configureTopMenu() {
         Menu file = configureFileMenu();
@@ -98,21 +98,21 @@ public class MainEnvironment {
         return menuBar;
     }
 
-	private Menu configureInfoMenu() {
-		Menu info = new Menu(myResources.getString("Info"));
-		MenuItem help = new MenuItem(myResources.getString("Help"));
+    private Menu configureInfoMenu() {
+        Menu info = new Menu(myResources.getString("Info"));
+        MenuItem help = new MenuItem(myResources.getString("Help"));
         info.getItems().addAll(help);
         help.setOnAction(e -> displayPage("/src/resources/help.html"));
         return info;
-	}
-	
-	private Menu configureFileMenu() {
-		Menu file = new Menu(myResources.getString("File"));
-		MenuItem exit = new MenuItem(myResources.getString("Exit"));
-		exit.setOnAction(e -> Platform.exit());
-		file.getItems().addAll(exit);
-		return file;
-	}
+    }
+
+    private Menu configureFileMenu() {
+        Menu file = new Menu(myResources.getString("File"));
+        MenuItem exit = new MenuItem(myResources.getString("Exit"));
+        exit.setOnAction(e -> Platform.exit());
+        file.getItems().addAll(exit);
+        return file;
+    }
 
     private void displayPage(String loc) {
         WebView browser = new WebView();
@@ -121,10 +121,10 @@ public class MainEnvironment {
         Stage stage = new Stage();
         setupScene(stage, browser, 1000, 750);
     }
-    
+
     public void setupScene(Stage stage, Parent root, double width, double height) {
         Scene scene = new Scene(root, width, height);
-       // myStage.setTitle(myResources.getString("Title"));
+        // myStage.setTitle(myResources.getString("Title"));
         myStage.setScene(scene);
         myStage.show();
     }

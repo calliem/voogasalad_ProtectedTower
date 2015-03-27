@@ -10,22 +10,25 @@ import authoring.environment.objects.Tile;
 
 public class MapEditor extends MainEditor {
 
-	public Tile[][] getTiles(){
-		
-	}
-	
-	public ArrayList<Path> getPaths(){ //to be accessed by Levels
-	
-	}
-	
-	public ArrayList<GameMap> getMaps(){
-		
-	};
+    public Tile[][] getTiles(){
+        // TODO return actual map tiles
+        return new Tile[0][0];
+    }
 
-	@Override
-	protected GridPane configureUI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+    public ArrayList<Path> getPaths(){ //to be accessed by Levels
+        // TODO return actual paths
+        return new ArrayList<>();
+    }
+
+    public ArrayList<GameMap> getMaps(){
+        // TODO return actual GameMaps
+        return new ArrayList<>();
+    };
+
+    @Override
+    protected GridPane configureUI() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

@@ -6,12 +6,12 @@ import authoring.environment.objects.Unit;
 import javafx.scene.layout.GridPane;
 
 public class WaveEditor extends MainEditor{
+    public ArrayList<Unit> getWaves(){
+        return new ArrayList<>();
+    }
 
-	public ArrayList<Unit> getWaves(){}
-
-	@Override
-	protected GridPane configureUI() {
-		return null;
-	}
-
+    @Override
+    protected GridPane configureUI() {
+        return null;
+    }
 }
