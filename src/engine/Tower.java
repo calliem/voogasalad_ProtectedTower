@@ -20,7 +20,9 @@ public class Tower extends GameSprite{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	public String getName(){
+		return null;	
+	}
 	@Override
 	public void target(Sprite s) {
 		// TODO Auto-generated method stub
@@ -37,6 +39,16 @@ public class Tower extends GameSprite{
 	public List<String> getParameters() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public List<Tower> getUpgrades() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void addUpgrade(Tower t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
