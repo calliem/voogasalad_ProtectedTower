@@ -2,8 +2,16 @@ package authoring.environment;
 
 import java.util.ArrayList;
 
-public class WaveEditor {
+import authoring.environment.objects.Unit;
+import javafx.scene.layout.GridPane;
 
-	public ArrayList<Unit> getWaves(){}
+public class WaveEditor extends MainEditor{
+    public ArrayList<Unit> getWaves(){
+        return new ArrayList<>();
+    }
 
+    @Override
+    protected GridPane configureUI() {
+        return null;
+    }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import authoring.environment.objects.Unit;
 
 public class UnitEditor {
-
-	public ArrayList<Unit> getUnits(){}
+    public ArrayList<Unit> getUnits(){
+        return new ArrayList<>();
+    }
 }
