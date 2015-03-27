@@ -149,11 +149,6 @@ Within the Level class, Win and Lose conditions are both Condition objects descr
 
 IWave is the interface implemented by the Wavegroup and Wave classes. Parameters that they have in common are spawn rate and spawn list. Wavegroup spawns waves from the waves stored in its spawn list while Waves spawn enemies that are specified in its spawn list. In addition to those parameters, wavegroup contains win/lose conditions. The wave class contains spawn point(s) and end (target) points for enemies.
 
-
-###Integration
-
-
-
 Example games
 ---
 [Desktop Tower Defense] (http://www.kongregate.com/games/preecep/desktop-tower-defense) represents a very general tower defense game where the user has the freedom to create towers anywhere, and then have those towers define the path upon which enemies travel. The board space is open until the user places towers, which then block off parts of the board. Enemies move is the shortest path from start to finish. This game introduces strategy in deciding where to place towers, as mazes can be created to prolong the path of enemies. Tower types include single attacks as well as area attacks. Flying enemies are also present, which can only be targeted by certain towers. 
@@ -185,6 +180,8 @@ Greg, Bojia, Qian, Michael, Janan and Sean will be responsible for designing and
 
 Both groups will contribute team members to work on the player, to be determined by the members of the team who implement the xml data handlers.
 
+Use Cases
+---
 
 Add a tower to the authoring environment:
 
