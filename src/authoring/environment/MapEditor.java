@@ -1,10 +1,9 @@
 package authoring.environment;
 
 import java.util.ArrayList;
-
-import javafx.scene.layout.GridPane;
-import authoring.environment.objects.Path;
+import javafx.scene.Group;
 import authoring.environment.objects.GameMap;
+import authoring.environment.objects.Path;
 import authoring.environment.objects.Tile;
 
 
@@ -26,7 +25,7 @@ public class MapEditor extends MainEditor {
     };
 
     @Override
-    protected GridPane configureUI() {
+    protected Group configureUI() {
         // TODO Auto-generated method stub
         return null;
     }
