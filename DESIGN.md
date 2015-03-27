@@ -190,11 +190,13 @@ Callie, Johnny, Kevin, and Megan will be responsible for designing the authoring
 
 
 
-Add a tower:
+Add a tower to the authoring environment:
 
 public class TowerEditor {    
 
-//adds a Map<String, Object> to the List<Map<String, Ob
+String
+/*adds a Map<String, Object> to the List<Map<String, Object>> contained in InstanceManager which represents all the parts the user has created that are part of his game. The keys of the map are obtained from the properties file mapping game part to list of parameters, and the data in the map is the default data for each parameter. */
+
 InstanceManager.addPart(String partName)
     String[] parameters = instanceManager.getParameters(“tower”);
 Sprite newTower = instanceManager.createSprite(parameters);
@@ -242,9 +244,10 @@ public class TargetEnemy{
     targetEnemy.move()
 
     //targetEnemy.move() places enemy within range of detectingTower
-    if(targetEnemy.isTargetable(detectingTower.getType())){
     detectingTower.target(targetEnemy);
-}
+
+    //detectingTower.target runs
+
 }
 
 User draws a path that his enemies can follow
@@ -253,7 +256,11 @@ User draws a path that his enemies can follow
 
 A tower is placed that gives stat bonuses to nearby towers
 
-Modifier tower = new Modifier();
-List<Tower> affectedTowers = new ArrayList<>();
-for (Tower t: affectedTowers)
-    tower.modify(t);
+//A holder for every current thing on the map
+List<Sprite> allSpritesOnMap;
+
+Modifier modTower = new Modifier();
+for (Sprite t: allSpritesOnMap)
+    //if the sprite can be affected by the modifying tower then apply the modifier to the sprite
+if (t.isTargetable(modTower.getType()))
+modTower.modify(t);
