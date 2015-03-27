@@ -1,6 +1,7 @@
 package authoring.environment;
 
 import java.util.ArrayList;
+
 import javafx.scene.layout.GridPane;
 import authoring.environment.objects.Tower;
 
