@@ -49,6 +49,5 @@ Editor Cases
 44. User defines player’s starting resources
 45. User defines super-attacks for a tower
 46. User sets enemy spawn points
-47. User feels chills of agonizing pleasure strike like lightning down his spine upon beholding the beauty that is the protected Tower() splash screen.  Heart racing, in his blissful agony a small cry escapes his lips, a short exclamation of unprecedented ecstasy.
 49. User assigns enemies their spawn points
 50. User assigns enemies the path they will follow
