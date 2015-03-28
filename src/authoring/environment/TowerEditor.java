@@ -1,5 +1,6 @@
 package authoring.environment;
 
+import authoring.environment.setting.*;
 import java.util.ArrayList;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
@@ -64,10 +65,12 @@ public class TowerEditor extends PropertyEditor{
         title.setFont(new Font(30));
         title.setFill(Color.WHITE);
         
+        Setting test = new IntegerSetting("health");
+        
         Button close = new Button("Close");
         close.setOnAction((e) -> hideEditScreen(overlay));
         
-        editorContent.getChildren().addAll(title, close);
+        editorContent.getChildren().addAll(title, test, close);
         
         overlay.getChildren().addAll(overlayBackground, editorContent);
         myContent.getChildren().add(overlay);
