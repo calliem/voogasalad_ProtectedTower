@@ -6,21 +6,31 @@ package engine;
  * and includes methods to check if a withdrawal will cause a player's balance to go negative.
  */
 public class Bank {
+	private int balance;
+	
+	public Bank() {
+		balance = 0;
+	}
 
-	public boolean checkSufficientFunds(){
-		return false;
+	public boolean checkSufficientFunds(int amount){
+		return (balance - amount) >= 0;
 	}
 	public int getBalance(){
-		return 0;
+		return balance;
 	}
 	public void deposit(int amount){
-		
+		balance += amount;
 	}
 	public boolean withdraw(int amount){
-		return checkSufficientFunds();
+		if (checkSufficientFunds(amount)) {
+			balance -= amount;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public void forceWithdraw(int amount){
-		
+		balance -= amount;
 	}
 	
 }
