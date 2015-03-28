@@ -10,18 +10,24 @@ import java.util.ResourceBundle;
 public class InstanceManager {
 
 	private int partsCreated = 0;
-	private static final String paramListFile = "resources.part_parameters.properties";
-	private static final String paramSpecsFile = "resources.parameter_datatype.properties";
+	private static final String paramListFile = "resources/part_parameters";
+	private static final String paramSpecsFile = "resources/parameter_datatype";
 	//a map of all the parts the user has created
 	//each part is represented by a map mapping the part's parameters to their data
 	//the fields look like: Map<partName, Map<parameterName, parameterData>>
 	private Map<String, Map<String, Object>> userParts;
 
+	
+	public InstanceManager(){
+		userParts = new HashMap<String, Map<String, Object>>();
+	}
+	
 	//adds a default part to userParts with the name "Part_x" where x the number of parts the user has created
-	public void addPart(String partType){
+	public Map<String, Object> addPart(String partType){
 		Map<String, Object> newPart = createDefaultPart(partType);
 		String partName = "Part_" + new Integer(partsCreated++).toString();
 		userParts.put(partName, newPart);
+		return newPart;
 	}
 
 	public static String getPartType(Class c){
@@ -34,9 +40,10 @@ public class InstanceManager {
 		Map<String, Object> part = new HashMap<String, Object>();
 		ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-
+System.out.println(paramSpecs);
 		String[] params = paramLists.getString(partType).split("\\s+");
-
+for(String s : params)
+	System.out.println(s);
 		for(String paramName : params){
 			String[] typeAndDefault = paramSpecs.getString(paramName).split("\\s+");
 			String dataType = typeAndDefault[0];
@@ -71,6 +78,14 @@ public class InstanceManager {
 		}
 
 		return data;
+	}
+	
+	public static void main (String[] args){
+		InstanceManager gameManager = new InstanceManager();
+		Map<String, Object> partAdded = gameManager.addPart("Tower");
+		System.out.println("part added: " + partAdded);
+		//Integer hp = partAdded.get("HP");
+		
 	}
 
 
