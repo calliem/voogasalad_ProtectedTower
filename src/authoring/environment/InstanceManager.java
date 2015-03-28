@@ -3,15 +3,9 @@ package authoring.environment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -21,9 +15,8 @@ public class InstanceManager {
 
 	private String gameName;
 	private int partsCreated = 0;
-	private static final String paramListFile = "resources/part_parameters";
-	private static final String paramSpecsFile = "resources/parameter_datatype";
-	public static final ResourceBundle paramLists = ResourceBundle.getBundle("resources/part_parameters");
+	
+	//public static final ResourceBundle paramLists = ResourceBundle.getBundle("resources/part_parameters");
 	private static final String userDataPackage = System.getProperty("user.dir").concat("\\src\\userData");
 	
 	
@@ -46,7 +39,7 @@ public class InstanceManager {
 
 	//adds a default part to userParts with the name "Part_x" where x the number of parts the user has created
 	public Map<String, Object> addPart(String partType){
-		Map<String, Object> newPart = createDefaultPart(partType);
+		Map<String, Object> newPart = GameCreator.createDefaultPart(partType);
 		String partName =  partType + "_" + "Part_" + new Integer(partsCreated++).toString();
 		userParts.put(partName, newPart);
 		return newPart;
@@ -56,15 +49,12 @@ public class InstanceManager {
 		return c.toString().substring(0, c.toString().indexOf("Editor"));
 	}
 	
+	//updates data
 	public void updatePart(String partName, String param, String newData){
 		Map<String, Object> partToBeUpdated = userParts.get(partName);
 		Object data = "data incorrectly added";
 		try {
-			data = partToBeUpdated
-					.get(param)
-					.getClass()
-					.getConstructor(String.class)
-					.newInstance(newData);
+			data = partToBeUpdated.get(param).getClass().getConstructor(String.class).newInstance(newData);
 		} catch (InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
@@ -73,54 +63,6 @@ public class InstanceManager {
 		}
 		partToBeUpdated.put(param,  data);
 	}
-	
-	
-
-	//creates a default part of partType's type
-	public Map<String, Object> createDefaultPart(String partType){
-
-		Map<String, Object> part = new HashMap<String, Object>();
-		//ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
-		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-		
-		String[] params = paramLists.getString(partType).split("\\s+");
-		
-		for(String paramName : params){
-			String[] typeAndDefault = paramSpecs.getString(paramName).split("\\s+");
-			String dataType = typeAndDefault[0];
-			String defaultVal = typeAndDefault[1];
-
-			part.put(paramName, makeDefaultData(dataType, defaultVal));
-		}
-		return part;
-	}
-
-	//creates an Object of class "dataType" and value "defualtVal"
-	private Object makeDefaultData(String dataType, String defaultVal){
-
-		Class<?> c = String.class;
-		Object data = "N/A";
-
-		try{
-			c = Class.forName(dataType);
-		}catch (ClassNotFoundException e){
-			System.out.println(dataType + "class not found");
-			//do something, but this shouldn't happen if the properties file is correct
-		}
-
-		try{
-			data = c.getConstructor(String.class).newInstance(defaultVal);
-		}
-		catch (InstantiationException | IllegalAccessException
-				| IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e){
-			//hopefully this won't happen
-			System.out.println("Constructor couldn't be called with a String");
-		}
-
-		return data;
-	}
-
 	
 	//5:09am
 	public void writePartToXML(String partName){
@@ -140,17 +82,12 @@ public class InstanceManager {
 		}
 	}
 	
+	//writes all the parts to their repsective files
 	public void writeAllToXML(){
 		for(String partName : userParts.keySet())
 			writePartToXML(partName);
 	}
-	/*
-	public String writePartToXML(String partName){
-		String type = partName.substring(0, partName.indexOf("_"));
-		String fileName = partName.concat(".xml");
-		
-		
-	}*/
+	
 	@Override
 	public String toString(){
 		StringBuilder toPrint = new StringBuilder();
