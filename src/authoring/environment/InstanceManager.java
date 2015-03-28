@@ -25,7 +25,7 @@ public class InstanceManager {
 	//adds a default part to userParts with the name "Part_x" where x the number of parts the user has created
 	public Map<String, Object> addPart(String partType){
 		Map<String, Object> newPart = createDefaultPart(partType);
-		String partName = "Part_" + new Integer(partsCreated++).toString();
+		String partName = "Part_" + new Integer(partsCreated++).toString() + "." + partType;
 		userParts.put(partName, newPart);
 		return newPart;
 	}
@@ -96,6 +96,12 @@ public class InstanceManager {
 		gameManager.addPart("Tower");
 		gameManager.addPart("Unit");
 		gameManager.addPart("Projectile");
+		gameManager.addPart("Projectile");
+		gameManager.addPart("Unit");
+		gameManager.addPart("Unit");
+		gameManager.addPart("Unit");
+		gameManager.addPart("Tower");
+		gameManager.addPart("Tower");
 		System.out.println(gameManager);
 
 	}
