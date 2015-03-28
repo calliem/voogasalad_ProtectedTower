@@ -22,7 +22,6 @@ public class TowerEditor extends PropertyEditor{
     private static final double CONTENT_WIDTH = MainEnvironment.myDimensions.getWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.myDimensions.getHeight();
     
-    
     public ArrayList<Tower> getTowers(){
         return new ArrayList<>();
     }

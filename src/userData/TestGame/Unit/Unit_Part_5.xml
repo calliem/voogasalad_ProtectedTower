@@ -1,0 +1,14 @@
+<map>
+  <entry>
+    <string>Speed</string>
+    <double>1.0</double>
+  </entry>
+  <entry>
+    <string>HP</string>
+    <int>100</int>
+  </entry>
+  <entry>
+    <string>Range</string>
+    <int>1</int>
+  </entry>
+</map>

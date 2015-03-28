@@ -6,8 +6,6 @@ Introduction
 ---
 For this project we are making a game engine, which facilitates the creation of games using visual editors. Our game engine will be for the tower defense genre. There are many aspects of gameplay that differ to distinguish one tower defense game from another and our engine should be flexible enough for users to modify any of those aspects when creating their game. Things that should be modifiable include: type/existence of paths, enemy abilities (e.g. flying, path-following), tower types/features, ammo strength (i.e. what objects can each ammo type harm), and tower placement rules.
 
-[TODO: Open/Closed -- does anyone actually understand openness and closed...ness? I could probably write a paragraph ranting about how much I don’t understand it] Sean can do once we have a class diagram
-
 In tower defense games, the player’s life is determined by the health of their base. A destroyed base triggers the lose condition and win conditions are triggered by clearing each round of enemies. The health can be determined by damage caused by direct attacks from enemies, the number of enemies that are able to infiltrate the tower, removal of goods from the tower, and any action that modifies the state of your base. Enemies do not target your players directly (if players are even present) but rather they attack them for the purpose of getting to your base.
 
 To protect the base, tower defense games can provide weapons to attach to your base, towers that attack enemies en route, characters that engage in battle with the enemies, or any combination of those. The availability of those weapons are usually limited by funds and experience points. Difficulty can be adjusted by changing the number of enemies in a wave or your purchasing power of weapons and upgrades. 
@@ -62,8 +60,8 @@ The components of the property tabs (projectiles, towers, and units) will intera
 java files:
 Game Authoring Environment
 public interface MapEditor(){
-    public Cell[][] getTiles(){}
-    public ArrayList<Path> getPaths(){}  //overlayed smaller-celled grid
+	public Cell[][] getTiles(){}
+	public ArrayList<Path> getPaths(){}  //overlayed smaller-celled grid
 }
 
 public interface ProjectileEditor(){
@@ -71,15 +69,15 @@ public ArrayList<Projectile> getProjectiles(){}
 }
 
 public interface TowerEditor(){
-    public ArrayList<Tower> getTowers(){}
+	public ArrayList<Tower> getTowers(){}
 }
 
 public interface UnitEditor(){
-    public ArrayList<Unit> getUnits(){}
+	public ArrayList<Unit> getUnits(){}
 }
 
 public interface LevelEditor(){
-    public ArrayList<Level> getLevels(){}
+	public ArrayList<Level> getLevels(){}
 }
 
 Game Player
@@ -141,16 +139,15 @@ A `Projectile` object will be created as a subclass of `MovableSprite` as it nee
 
 The final abstract class, `GameSprite`, is used to represent the most significant parts of the game, the towers and enemies. The game sprite contains many variables that are shared between the tower and enemies objects, such as health, attack speed, attack power, attack range, cost, target priority, ability to hurt player, defense, etc. The `Tower` and `Enemy` objects will extend this game sprite and add on specific variables that may be needed for those classes in particular. For example, towers may include a build speed to represent the time it takes to build a tower where it cannot attack. 
 
+Both enemies and towers may need to upgrade to degrade into other enemies and towers. This is taken care of by manager classes for each. The `TowerManager` class contains a tree of the full tower hierarchy, as well as a map that maps a certain tower type to a reference of the object in the map that it represents. Methods include finding the next tower choices when given a specific tower type. The `EnemyManager` contains a list of the order of how enemies degrade. When an enemy dies, it may spawn enemies of a different type and a different number of them. The nodes in the list will contain this information, so that when a method is called, it will return what enemies to spawn when a certain enemy type dies.
+
+Towers will be able to specify a projectile type that it shoots. It can do this by saving a string of the name of the projectile that it shoots. These projectiles will be loaded into a table and then an instance given back when called. This is how a tower can be used to spawn projectiles. 
+
 Game control, as described in the overview section, generally does not follow a class hierarchy. The Game class is the first thing instantiated in the game engine. The persistent stat manager class contains fields for player score, money, as well as methods for changing and retrieving them. The tower manager class contains a tree for every tower and its upgraded towers and a map that maps each tower to its corresponding node on its upgrade tree. Methods exist for getting the next tower in the upgrade sequence given a particular tower. Finally, the Game class contains a list of levels it contains and methods for getting those level objects.
 
 Within the Level class, Win and Lose conditions are both Condition objects describing the state the game has to be in for it to be declared won or lost. Methods exist for finding out thresholds for specific parameters that need to be met for a condition to be met.  The condition class contains method that determine if these certain thresholds are met, by taking in relevant game parameters, such as an object representing the game state that contains just as much information as needed. Layout is essentially just a 2D array of gridcells and transient stat manager behaves similarly to the persistent stat manager, only with different parameters. Level contains a list of Wavegroups and methods for getting those.
 
 IWave is the interface implemented by the Wavegroup and Wave classes. Parameters that they have in common are spawn rate and spawn list. Wavegroup spawns waves from the waves stored in its spawn list while Waves spawn enemies that are specified in its spawn list. In addition to those parameters, wavegroup contains win/lose conditions. The wave class contains spawn point(s) and end (target) points for enemies.
-
-
-###Integration
-
-
 
 Example games
 ---
@@ -160,11 +157,11 @@ Different tower types and different enemy types may be able to be targeted diffe
 
 [Bloons Tower Defense](http://ninjakiwi.com/Games/Tower-Defense/Play/Bloons-Tower-Defense-5.html) is a tower defense game with predefined paths for the enemies, as well as enemies which spawn multiple other enemies. Each level has one or multiples paths that the enemies follow. Towers can be created on non-path spaces on the game screen. Enemies in the game, which are balloons, may spawn multiple other balloons when defeated, until the lowest level balloon is defeated and does not spawn any more. The game also adds extras such as abilities for the towers, which are larger attacks that run on a longer timer, as well as bombs/tacks, which are attacks which the player can use at any time during the round. These are one-time use attacks. There are also different terrains on the map, so certain towers can only be placed on certain areas, such as pirate ships only being able to be placed in water. Tower upgrades are not necessarily defined as a set path in Bloons TD, but the user has the option of choosing between upgrade paths.
 
-Paths can be defined in objects created by the authoring environment and attached to each level. This means that different levels can have different paths. 
+Paths can be defined in objects created by the authoring environment and attached to each level. This means that different levels can have different paths. The grid cells contain instance variables representing what towers can be created on them, to simulate the need for water and land squares. Just as towers can be upgraded, enemies can have children that spawn when they are removed from the game after being defeated. This is taken care of by the enemy manager, where the sequence of balloons can be defined. The game is represented by multiple levels, each with multiple waves. The one-time use attacks and abilities can be made as special projectiles that the user may place throughout the running of the game. 
 
 [Plants v. Zombies](http://www.popcap.com/games/plants-vs-zombies/online) is an example of a non-top-down tower defense game. Instead, enemies and towers are placed on paths in a line, so that the game works as almost a 1D tower defense game, albeit with multiple lanes. The acquisition of cash used to buy new towers is also different here, as it does not come from defeated enemies, but rather appears randomly throughout the game, and towers can be created which produce this cash. The win condition of this game is that all enemies are defeated in a round, but the lose condition differs from other games. Instead of a set number of lives, the player loses when enemies reach the end of a lane twice. Progress in this game can be saved after each level, and each level can be tried multiple times. Enemies can also destroy placed towers, as they are placed on the same path that the enemies take to reach the end of a lane.
 
-[TODO: how does our code support the differences between these games
+The setup of this game is very different from the top-down shooter that is being created in the initial sprints. For this, a new framework for the view will need to be created which shows horizontal paths for the enemies. In this game, enemies are able to attack towers, and there are multiples paths per round. The game is represented by multiple levels, each of which contains multiple waves. Each wave have the same paths, which are the paths for each lane.
 
 Design Considerations
 ---
@@ -176,79 +173,9 @@ We might want to allow the user to write his own setOnCollide methods for two pa
 
 Team Responsibilities
 ---
+
 Callie, Johnny, Kevin, and Megan will be responsible for designing the authoring environment.
 
+Greg, Bojia, Qian, Michael, Janan and Sean will be responsible for designing and implementing the game engine.
 
-
-
-
-
-
-
-
-
-Add a tower:
-
-public class TowerEditor {    
-addTower()
-    String[] parameters = instanceManager.getParameters(“tower”);
-Sprite newTower = instanceManager.createSprite(parameters);
-/* The string “tower” will be processed through Java Reflection to get the tower’s parameters from a properties/resource file. We chose to use a properties file instead of utilizing constructors since it is possible for a constructor to have over 100 parameters, which would make the class unwieldy.*/
-
-/*The front end would then display this tower through private methods. Editing the tower will call the following:*/
-instanceManager.editSprite(newTower)
-
-XStream.toXML(newTower);
-
-
-
-
-instanceManager.getParameters(“tower”);
-    // private promptParameters();
-
-
-
-
-}
-
-A user adds an upgraded tower to the tower hierarchy
-
-public class UpgradeTower {
-
-    /*
-* This method finds a specific tower and, for all of its string upgrade references, adds the actual tower      * object to its upgrade list instead of just the string reference
-     */
-    public void addUpgradeTowers(List<Tower> allTowers, Tower towerToAdd){
-            for(Tower t:allTowers){
-                if(towerToAdd.getUpgrades().contains(t.getName())){
-                    towerToAdd.addUpgrade(t);
-                }
-            }
-    }
-}
-
-
-
-An enemy comes in range of a specific tower
-
-public class TargetEnemy{
-    public Tower detectingTower = new Tower();
-    public Enemy targetEnemy = new Enemy();
-    targetEnemy.move()
-
-    //targetEnemy.move() places enemy within range of detectingTower
-    if(targetEnemy.isTargetable(detectingTower.getType())){
-    detectingTower.target(targetEnemy);
-}
-}
-
-User draws a path that his enemies can follow
-
-
-
-A tower is placed that gives stat bonuses to nearby towers
-
-Modifier tower = new Modifier();
-List<Tower> affectedTowers = new ArrayList<>();
-for (Tower t: affectedTowers)
-    tower.modify(t);
+Both groups will contribute team members to work on the player, to be determined by the members of the team who implement the xml data handlers.

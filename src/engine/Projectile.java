@@ -9,6 +9,10 @@ public class Projectile extends MoveableSprite{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Projectile(String s) throws InsufficientParametersException{
+		super();
+	}
 
 	@Override
 	public boolean isTargetable(String type) {
@@ -39,5 +43,6 @@ public class Projectile extends MoveableSprite{
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 }
