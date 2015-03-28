@@ -6,6 +6,7 @@ public class AddTower {
 
 	public void addTower(){
 		String partName = InstanceManager.getPartType(new TowerEditor().getClass());
-		InstanceManager.addPart(partName);
+		InstanceManager im = new InstanceManager();
+		im.addPart(partName);
 	}
 }
