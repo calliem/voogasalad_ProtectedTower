@@ -17,11 +17,11 @@ public class InstanceManager {
 	//the fields look like: Map<partName, Map<parameterName, parameterData>>
 	private Map<String, Map<String, Object>> userParts;
 
-	
+
 	public InstanceManager(){
 		userParts = new HashMap<String, Map<String, Object>>();
 	}
-	
+
 	//adds a default part to userParts with the name "Part_x" where x the number of parts the user has created
 	public Map<String, Object> addPart(String partType){
 		Map<String, Object> newPart = createDefaultPart(partType);
@@ -40,10 +40,9 @@ public class InstanceManager {
 		Map<String, Object> part = new HashMap<String, Object>();
 		ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-System.out.println(paramSpecs);
+		
 		String[] params = paramLists.getString(partType).split("\\s+");
-for(String s : params)
-	System.out.println(s);
+		
 		for(String paramName : params){
 			String[] typeAndDefault = paramSpecs.getString(paramName).split("\\s+");
 			String dataType = typeAndDefault[0];
@@ -56,7 +55,7 @@ for(String s : params)
 
 	//creates an Object of class "dataType" and value "defualtVal"
 	private Object makeDefaultData(String dataType, String defaultVal){
-		
+
 		Class<?> c = Integer.class;
 		Object data = new Integer("0");
 
@@ -79,13 +78,26 @@ for(String s : params)
 
 		return data;
 	}
-	
+
+	public String toString(){
+		StringBuilder toPrint = new StringBuilder();
+		for(String partName : userParts.keySet())
+			toPrint.append("Name: ")
+			.append(partName)
+			.append(", Params: ")
+			.append(userParts.get(partName).toString())
+			.append("\n");
+		toPrint.substring(0, toPrint.length() - 2);
+		return toPrint.toString();
+	}
+
 	public static void main (String[] args){
 		InstanceManager gameManager = new InstanceManager();
-		Map<String, Object> partAdded = gameManager.addPart("Tower");
-		System.out.println("part added: " + partAdded);
-		//Integer hp = partAdded.get("HP");
-		
+		gameManager.addPart("Tower");
+		gameManager.addPart("Unit");
+		gameManager.addPart("Projectile");
+		System.out.println(gameManager);
+
 	}
 
 
