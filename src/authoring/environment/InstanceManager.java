@@ -12,6 +12,7 @@ public class InstanceManager {
 	private int partsCreated = 0;
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
+	
 	//a map of all the parts the user has created
 	//each part is represented by a map mapping the part's parameters to their data
 	//the fields look like: Map<partName, Map<parameterName, parameterData>>
@@ -79,6 +80,7 @@ public class InstanceManager {
 		return data;
 	}
 
+	@Override
 	public String toString(){
 		StringBuilder toPrint = new StringBuilder();
 		for(String partName : userParts.keySet())
