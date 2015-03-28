@@ -34,6 +34,20 @@ public class InstanceManager {
 	public static String getPartType(Class c){
 		return c.toString().substring(0, c.toString().indexOf("Editor"));
 	}
+	
+	public void updatePart(String partName, String param, String newData){
+		Map<String, Object> partToBeUpdated = userParts.get(partName);
+		Object data = "data incorrectly added";
+		try {
+			data = partToBeUpdated.get(param).getClass().getConstructor(String.class).newInstance(newData);
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		partToBeUpdated.put(param,  data);
+	}
 
 	//creates a default part of partType's type
 	public Map<String, Object> createDefaultPart(String partType){
@@ -89,7 +103,6 @@ public class InstanceManager {
 			.append(", Params: ")
 			.append(userParts.get(partName).toString())
 			.append("\n");
-		toPrint.substring(0, toPrint.length() - 2);
 		return toPrint.toString();
 	}
 
@@ -101,9 +114,11 @@ public class InstanceManager {
 		gameManager.addPart("Projectile");
 		gameManager.addPart("Unit");
 		gameManager.addPart("Unit");
-		gameManager.addPart("Unit");
 		gameManager.addPart("Tower");
-		gameManager.addPart("Tower");
+		System.out.println(gameManager);
+		gameManager.updatePart("Part_0.Tower", "HP",  "5000");
+		gameManager.updatePart("Part_0.Tower", "FireRate",  "8");
+		gameManager.updatePart("Part_4.Unit", "Speed", "3");
 		System.out.println(gameManager);
 
 	}
