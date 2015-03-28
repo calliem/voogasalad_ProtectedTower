@@ -19,12 +19,13 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class InstanceManager {
 
+	private String gameName;
 	private int partsCreated = 0;
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
+	public static final ResourceBundle paramLists = ResourceBundle.getBundle("resources/part_parameters");
 	private static final String userDataPackage = System.getProperty("user.dir").concat("\\src\\userData");
-	private static ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
-	private static Set<String> dirsToBeCreated;
+	
 	
 	//a map of all the parts the user has created
 	//each part is represented by a map mapping the part's parameters to their data
@@ -32,9 +33,15 @@ public class InstanceManager {
 	private Map<String, Map<String, Object>> userParts;
 
 
+	public InstanceManager(String name){
+		this();
+		gameName = name;
+	}
+	
 	public InstanceManager(){
 		userParts = new HashMap<String, Map<String, Object>>();
-		dirsToBeCreated = dirsToMake();
+		gameName = "Unnamed_Game";
+		
 	}
 
 	//adds a default part to userParts with the name "Part_x" where x the number of parts the user has created
@@ -67,18 +74,13 @@ public class InstanceManager {
 		partToBeUpdated.put(param,  data);
 	}
 	
-	private Set<String> dirsToMake(){
-		Set<String> dirsToMake = paramLists.keySet();
-		for(String partType : dirsToMake)
-			partType.concat("s");
-		return dirsToMake;
-	}
+	
 
 	//creates a default part of partType's type
 	public Map<String, Object> createDefaultPart(String partType){
 
 		Map<String, Object> part = new HashMap<String, Object>();
-		
+		//ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
 		
 		String[] params = paramLists.getString(partType).split("\\s+");
@@ -120,24 +122,27 @@ public class InstanceManager {
 	}
 
 	
-	public String writeAllToXML(){
+	//5:09am
+	public void writePartToXML(String partName){
+		XStream stream = new XStream(new DomDriver());
+		String partType = partName.substring(0, partName.indexOf("_"));
+		String partFileName = partName + ".xml";
+		String dirLocation = userDataPackage + "\\" + gameName + "\\" + partType;
+		File partFile = new File(dirLocation, partFileName);
 		
-		XStream xstream = new XStream(new DomDriver());
-		String xmlText = xstream.toXML(userParts);
-		PrintStream out;
 		try {
-			File f = new File(userDataPackage, "testfile.xml");
-			out = new PrintStream(f);
-			System.out.println("SDfS");
-			out.println(xmlText);
+			PrintStream out = new PrintStream(partFile);
+			out.println(stream.toXML(userParts.get(partName)));
 			out.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		return xmlText;	
+	}
+	
+	public void writeAllToXML(){
+		for(String partName : userParts.keySet())
+			writePartToXML(partName);
 	}
 	/*
 	public String writePartToXML(String partName){
@@ -158,15 +163,14 @@ public class InstanceManager {
 		return toPrint.toString();
 	}
 	
-	public void createNewGameFolder(String gameName){
-		String gameDir = userDataPackage.concat("\\").concat(gameName);
-		new File(gameDir).mkdirs();
-		for(String dir : dirsToBeCreated)
-			new File(gameDir.concat("\\").concat(dir)).mkdirs();
+	public String getName(){
+		return gameName;
 	}
+	
 
 	public static void main (String[] args){
-		InstanceManager gameManager = new InstanceManager();
+		InstanceManager gameManager = new InstanceManager("TestGame");
+		GameCreator.createNewGameFolder(gameManager.getName());
 		gameManager.addPart("Tower");
 		gameManager.addPart("Unit");
 		gameManager.addPart("Projectile");
@@ -179,9 +183,8 @@ public class InstanceManager {
 		gameManager.updatePart("Tower_Part_0", "FireRate",  "8");
 		gameManager.updatePart("Unit_Part_4", "Speed", "3");
 		System.out.println(gameManager);
+		//gameManager.writeAllToXML();
 		gameManager.writeAllToXML();
-		gameManager.createNewGameFolder("testGame");
-
 	}
 
 
