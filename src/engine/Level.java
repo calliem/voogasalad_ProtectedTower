@@ -22,8 +22,8 @@ import java.util.List;
 public class Level {
 
     private List<Round> myRounds;
-    private double health;
-    private int lives;
+    private double myHealth;
+    private int myLives;
 
     public Level () {
         myRounds = new ArrayList<>();
