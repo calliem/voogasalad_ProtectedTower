@@ -12,12 +12,9 @@ import javafx.util.Duration;
 import authoring.environment.objects.Tower;
 
 public class TowerEditor extends PropertyEditor{
-<<<<<<< HEAD
-    private Group myRoot;
-    
-=======
+
+	private Group myRoot;
 	
->>>>>>> c93cd276b2d4411575c4f414fe2a3860d45b26ea
     public ArrayList<Tower> getTowers(){
         return new ArrayList<>();
     }
@@ -61,12 +58,6 @@ public class TowerEditor extends PropertyEditor{
         scale.setCycleCount(1);
         scale.play();
     }
-<<<<<<< HEAD
-=======
-    
-    
-
->>>>>>> c93cd276b2d4411575c4f414fe2a3860d45b26ea
 }
 
 

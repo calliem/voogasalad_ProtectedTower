@@ -23,10 +23,10 @@ public class MapEditor extends MainEditor {
         return new ArrayList<>();
     };
 
-    @Override
+   /* @Override
     protected Group configureUI() {
         // TODO Auto-generated method stub
         return null;
     }
-
+*/
 }

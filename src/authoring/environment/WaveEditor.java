@@ -9,8 +9,10 @@ public class WaveEditor extends MainEditor{
         return new ArrayList<>();
     }
 
-    @Override
+/*    @Override
     protected Group configureUI() {
+    	super.configureUI();
+    	getGridPane();
         return null;
-    }
+    }*/
 }
