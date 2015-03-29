@@ -1,10 +1,14 @@
 package engine;
 
-
-/*
+/**
+ * 
+ * @author Bojia Chen
+ * 
  * This object holds the current balance of a player's credits.  The value can be increased or decreased on demand,
  * and includes methods to check if a withdrawal will cause a player's balance to go negative.
+ *
  */
+
 public class Bank {
 	private int balance;
 	
