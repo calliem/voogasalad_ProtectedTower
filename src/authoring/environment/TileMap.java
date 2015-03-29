@@ -1,26 +1,33 @@
 //current not sure if this class is necessary. ideally yes, since it will help to extend in the future.
 
 package authoring.environment;
-
 import javafx.scene.Group;
 
-public abstract class TileMap {
+//potentially make abstract?
+public class TileMap {
 	
 	private Group myMap;
 	private Tile[][] myTiles;
 	private double myTileSize;
-	private double myMapSize;
 	
-	//width and height should be the same for square tile sizes
-	public TileMap(double mapSize, double tileSize) {
+	//allowing both width and height gives greater flexibility in map creation
+	private double myMapWidth;
+	private double myMapHeight;
+	
+	//user specifies rectangle or square dimensions...allow this flexibility
+	public TileMap(double mapWidth, double mapHeight, double tileSize) {
 		myMap = new Group();
-		myMapSize = mapSize;
+		myMapWidth = mapWidth;
+		myMapHeight = mapHeight;
 		myTileSize = tileSize;
 		myTiles = createMap();
+	//	displayMap(myTiles);
+		//myMap.getChildren().add(myTIles);
 	//	displayGrid(myTile);
+		
 	}
 	
-	public Group getGrid() {
+	public Group getMap() {
 		return myMap;
 	}
 	
@@ -28,27 +35,38 @@ public abstract class TileMap {
 		//add if it is possible to drag and select multiple squares
 	}*/
 	
+	//is this necessary if it is already written into the tile itself?
 	private void setActiveTile(int x, int y) {
-			myTiles[x][y].setActivePath();
+		myTiles[x][y].setActiveTile();
 	}
 	
-/*	private void displayGrid(Tile[][] shapes) {
-		myMap.getChildren().clear();
-		for (int i = 0; i < shapes.length; i++) {
-			for (int j = 0; j < shapes[0].length; j++) {
-				myMap.getChildren().add(shapes[i][j]);
-			}
-		}
-	}*/
+	public Tile getTile(int x, int y){
+		return myTiles[x][y];
+	}
 	
 	//protected abstract Tile[][] populateGrid(double gridSize, Tile[][] cells);
 	//where to calculate tile size? 
-	public Tile[][] createMap(){
-		Tile[][] tiles = new Tile[myTileSize][myTileSize];
+	private Tile[][] createMap(){
+		int numTileRows = (int) (myMapHeight / myTileSize);
+		System.out.println(numTileRows);
+		int numTileCols = (int) (myMapWidth / myTileSize);
+		System.out.println(numTileCols);
+		Tile[][] tiles = new Tile[numTileRows][numTileCols];
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[0].length; j++) {
-				Tile tile = new Tile(myTileSize);
+				tiles[i][j] = new Tile(myTileSize);
+				myMap.getChildren().add(tiles[i][j]); //to speed up efficiency. will these be updated dynamically or do we need to call displaymap each time?
+			}
 		}
 		return tiles;
 	}
+	
+	/*private void displayMap(Tile[][] tiles){
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles[0].length; j++) {
+				myMap.getChildren().add(tiles[i][j]);
+			}
+		}
+	}*/
+
 }
