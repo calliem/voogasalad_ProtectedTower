@@ -1,9 +1,8 @@
 package engine;
 
 import java.util.ArrayList;
-
 import com.thoughtworks.xstream.XStream;
-
+import engine.sprites.GridCell;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
