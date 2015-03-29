@@ -1,23 +1,20 @@
 package engine.sprites;
 
-import java.util.List;
 import engine.InsufficientParametersException;
 
 
+/**
+ * This class represents an object which may carry a modification to set upon another object, such
+ * as a status effect.
+ * 
+ * @author Qian Wang
+ *
+ */
 public class Modifier extends Sprite {
 
     public Modifier () throws InsufficientParametersException {
         super();
         // TODO Auto-generated constructor stub
-    }
-
-    public void modify (GameSprite s) {
-    }
-
-    @Override
-    public List<String> getParameters () {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
@@ -30,12 +27,6 @@ public class Modifier extends Sprite {
     public boolean isCollidableWith (String type) {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    @Override
-    public void target (Sprite s) {
-        // TODO Auto-generated method stub
-
     }
 
 }

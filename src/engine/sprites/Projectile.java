@@ -1,9 +1,14 @@
 package engine.sprites;
 
-import java.util.List;
 import engine.InsufficientParametersException;
 
 
+/**
+ * This class represents the projectiles shot out by certain Sprites, like towers.
+ * 
+ * @author Qian Wang
+ *
+ */
 public class Projectile extends MoveableSprite {
 
     public Projectile () throws InsufficientParametersException {
@@ -11,8 +16,22 @@ public class Projectile extends MoveableSprite {
         // TODO Auto-generated constructor stub
     }
 
-    public Projectile (String s) throws InsufficientParametersException {
-        super();
+    @Override
+    public void target (Sprite sprite) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void collide (Sprite sprite) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void move () {
+        // TODO Auto-generated method stub
+
     }
 
     @Override
@@ -25,24 +44,6 @@ public class Projectile extends MoveableSprite {
     public boolean isCollidableWith (String type) {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    @Override
-    public void target (Sprite s) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public List<String> getParameters () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void move () {
-        // TODO Auto-generated method stub
-
     }
 
 }

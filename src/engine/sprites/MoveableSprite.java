@@ -4,6 +4,13 @@ import javafx.geometry.Point2D;
 import engine.InsufficientParametersException;
 
 
+/**
+ * This class represents game elements that move around the game space. Required abstract methods
+ * include those to control movement. A variable representing velocity can be used to move.
+ * 
+ * @author Qian Wang
+ *
+ */
 public abstract class MoveableSprite extends Sprite {
     private Point2D myVelocity;
     private double myRange;
@@ -45,10 +52,28 @@ public abstract class MoveableSprite extends Sprite {
     }
 
     // Abstract methods
-    public abstract void target (Sprite s);
 
-    public abstract boolean collide (Sprite s);
+    /**
+     * This method is called when this object targets another object to perform an action, such as
+     * applying a status effect, or damaging the the object.
+     * 
+     * @param sprite Sprite object that is targeted
+     */
+    public abstract void target (Sprite sprite);
 
+    /**
+     * This method is called when this object collides with another and should include the behavior
+     * of this object, such as stopping movement, or damaging the other object.
+     * 
+     * @param sprite Sprite object that this object collides with
+     * @return
+     */
+    public abstract void collide (Sprite sprite);
+
+    /**
+     * This method is called by the game loop to update the view of the MovableSprite object. This
+     * method should be used to define how this object moves and changes coordinates on the screen.
+     */
     public abstract void move ();
 
 }

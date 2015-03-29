@@ -1,11 +1,15 @@
 package engine.sprites;
 
-import java.util.List;
 import engine.InsufficientParametersException;
 
 
-/*
- * This class represents a sprite that moves across the screen and shoots/is shot at by towers.
+/**
+ * This class represents a sprite that moves across the screen and shoots/is shot at by towers. The
+ * Enemy object is the primary one which can damage a player's health as it move through the map.
+ * Some may also be able to attack towers.
+ * 
+ * @author Qian Wang
+ *
  */
 public class Enemy extends MoveableSprite {
 
@@ -15,7 +19,21 @@ public class Enemy extends MoveableSprite {
     }
 
     @Override
-    public void target (Sprite s) {
+    public void target (Sprite sprite) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void collide (Sprite sprite) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void move () {
+        // TODO Auto-generated method stub
+
     }
 
     @Override
@@ -30,15 +48,4 @@ public class Enemy extends MoveableSprite {
         return false;
     }
 
-    @Override
-    public List<String> getParameters () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void move () {
-        // TODO Auto-generated method stub
-
-    }
 }
