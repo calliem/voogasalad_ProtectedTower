@@ -1,14 +1,42 @@
 package engine.sprites;
 
-import java.util.List;
 import engine.InsufficientParametersException;
 
 
+/**
+ * This class represents the tower object in the game, which usually does not move and is used to
+ * defend a map from Enemy objects. The tower shoots projectiles which target enemies.
+ * 
+ * @author Qian Wang
+ *
+ */
 public class Tower extends GameSprite {
+    // TODO Specify instance variables specific to Tower, such as a build time. Add to the main
+    // parameter map
 
     public Tower () throws InsufficientParametersException {
         super();
         // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public void target (Sprite sprite) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void collide (Sprite sprite) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * The tower does not move.
+     */
+    @Override
+    public void move () {
+        return;
     }
 
     @Override
@@ -21,38 +49,6 @@ public class Tower extends GameSprite {
     public boolean isCollidableWith (String type) {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    public String getName () {
-        return null;
-    }
-
-    @Override
-    public void target (Sprite s) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void move () {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public List<String> getParameters () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public List<Tower> getUpgrades () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public void addUpgrade (Tower t) {
-        // TODO Auto-generated method stub
-
     }
 
 }
