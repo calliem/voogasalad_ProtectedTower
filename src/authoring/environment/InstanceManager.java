@@ -1,3 +1,5 @@
+
+
 package authoring.environment;
 
 import java.io.File;
@@ -18,6 +20,10 @@ public class InstanceManager {
 	
 	//public static final ResourceBundle paramLists = ResourceBundle.getBundle("resources/part_parameters");
 	private static final String userDataPackage = System.getProperty("user.dir").concat("\\src\\userData");
+	
+	private static final String TOWER = "Tower";
+	private static final String UNIT = "Unit";
+	private static final String PROJECTILE = "Projectile";
 	
 	
 	//a map of all the parts the user has created
@@ -51,7 +57,8 @@ public class InstanceManager {
 	
 	//updates data
 	public void updatePart(String partName, String param, String newData){
-		Map<String, Object> partToBeUpdated = userParts.get(partName);
+		Map<String, Object> partToBeUpdated = userParts.
+				get(partName);
 		Object data = "data incorrectly added";
 		try {
 			data = partToBeUpdated.get(param).getClass().getConstructor(String.class).newInstance(newData);
@@ -108,14 +115,17 @@ public class InstanceManager {
 	public static void main (String[] args){
 		InstanceManager gameManager = new InstanceManager("TestGame");
 		GameCreator.createNewGameFolder(gameManager.getName());
-		gameManager.addPart("Tower");
-		gameManager.addPart("Unit");
-		gameManager.addPart("Projectile");
-		gameManager.addPart("Projectile");
-		gameManager.addPart("Unit");
-		gameManager.addPart("Unit");
-		gameManager.addPart("Tower");
+		gameManager.addPart(TOWER);
+		gameManager.addPart(UNIT);
+		gameManager.addPart(PROJECTILE);
+		gameManager.addPart(PROJECTILE);
+		gameManager.addPart(UNIT);
+		gameManager.addPart(UNIT);
+		gameManager.addPart(TOWER);
 		System.out.println(gameManager);
+		
+		//TODO: Remove hardcoded "magic values"
+		//Or if this is a test, then ignore this.
 		gameManager.updatePart("Tower_Part_0", "HP",  "5000");
 		gameManager.updatePart("Tower_Part_0", "FireRate",  "8");
 		gameManager.updatePart("Unit_Part_4", "Speed", "3");

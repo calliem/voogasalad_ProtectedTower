@@ -50,11 +50,11 @@ public class MainEnvironment {
 
         //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
         
-        addTab(new MapEditor(), myResources.getString("MapTab"), MAIN_TAB);
-        addTab(new WaveEditor(), myResources.getString("WavesTab"), MAIN_TAB);
-        addTab(new LevelEditor(), myResources.getString("LevelsTab"), MAIN_TAB);
+        addTab(new MapEditor(myDimensions), myResources.getString("MapTab"), MAIN_TAB);     //is it redundant passing in the dimensions so many times?
+        addTab(new WaveEditor(myDimensions), myResources.getString("WavesTab"), MAIN_TAB);
+        addTab(new LevelEditor(myDimensions), myResources.getString("LevelsTab"), MAIN_TAB);
         //   addTab(new ProjectileEditor(), myResources.getString("ProjectilesTab"));
-        addTab(new TowerEditor(), myResources.getString("TowersTab"), SPRITE_TAB);
+        addTab(new TowerEditor(myDimensions), myResources.getString("TowersTab"), SPRITE_TAB);
 
         setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
     }
