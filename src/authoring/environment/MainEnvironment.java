@@ -1,3 +1,8 @@
+/**
+ * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
+ * @author Callie Mao
+ */
+
 package authoring.environment;
 
 import java.util.ResourceBundle;
@@ -15,6 +20,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
@@ -26,7 +33,8 @@ public class MainEnvironment {
     private Stage myStage; //is this necessary
     private TabPane myTabPane;
     private GridPane myGridPane;
-
+    private static final boolean MAIN_TAB = true;
+    private static final boolean SPRITE_TAB = false;
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "english");
 
@@ -41,11 +49,12 @@ public class MainEnvironment {
         createEnvironment(myGridPane);
 
         //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
-        addTab(new MapEditor(), myResources.getString("MapTab"));
-        addTab(new WaveEditor(), myResources.getString("WavesTab"));
-        addTab(new LevelEditor(), myResources.getString("LevelsTab"));
+        
+        addTab(new MapEditor(), myResources.getString("MapTab"), MAIN_TAB);
+        addTab(new WaveEditor(), myResources.getString("WavesTab"), MAIN_TAB);
+        addTab(new LevelEditor(), myResources.getString("LevelsTab"), MAIN_TAB);
         //   addTab(new ProjectileEditor(), myResources.getString("ProjectilesTab"));
-        addTab(new TowerEditor(), myResources.getString("TowersTab"));
+        addTab(new TowerEditor(), myResources.getString("TowersTab"), SPRITE_TAB);
 
         setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
     }
@@ -72,10 +81,13 @@ public class MainEnvironment {
     }
 
 
-    private void addTab(Editor newEditor, String tabName) {
+    private void addTab(Editor newEditor, String tabName, boolean main) {
         Tab tab = new Tab();
         tab.setText(tabName);
         tab.setContent(newEditor.configureUI());
+        if (main == true){
+        	tab.setStyle("-fx-base: #3c3c3c;");
+        }
         tab.setClosable(false);
         myTabPane.getTabs().add(tab);
     }

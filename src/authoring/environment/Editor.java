@@ -1,3 +1,8 @@
+/**
+ * General editor structure 
+ * @author Callie Mao
+ */
+
 package authoring.environment;
 
 import javafx.scene.Group;
