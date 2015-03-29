@@ -4,14 +4,19 @@ package authoring.environment;
 
 import javafx.scene.Group;
 
-public abstract class Map {
+public abstract class TileMap {
 	
 	private Group myMap;
 	private Tile[][] myTiles;
+	private double myTileSize;
+	private double myMapSize;
 	
-	public Map(double width, double height, double gridSize) {
+	//width and height should be the same for square tile sizes
+	public TileMap(double mapSize, double tileSize) {
 		myMap = new Group();
-		//myTiles = populateGrid(gridSize);
+		myMapSize = mapSize;
+		myTileSize = tileSize;
+		myTiles = createMap();
 	//	displayGrid(myTile);
 	}
 	
@@ -36,6 +41,14 @@ public abstract class Map {
 		}
 	}*/
 	
-	protected abstract Tile[][] populateGrid(double gridSize, Tile[][] cells);
-
+	//protected abstract Tile[][] populateGrid(double gridSize, Tile[][] cells);
+	//where to calculate tile size? 
+	public Tile[][] createMap(){
+		Tile[][] tiles = new Tile[myTileSize][myTileSize];
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles[0].length; j++) {
+				Tile tile = new Tile(myTileSize);
+		}
+		return tiles;
+	}
 }

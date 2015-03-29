@@ -1,6 +1,6 @@
 /**
  * Displays the general layout for MainEditor classes/subclasses (ie. GameMap, WaveEditor) consisting of a sidebar and a generic map.
- * @author Callie Mao
+ * @author Callie Map
  */
 
 package authoring.environment;
@@ -19,7 +19,7 @@ public abstract class MainEditor extends Editor {
 	}
 
 	private GridPane myPane;
-	private Map myActiveMap;
+	private TileMap myActiveMap;
 	// interface?
 
 	// or we could just have configureUI() return a parent?
@@ -31,24 +31,9 @@ public abstract class MainEditor extends Editor {
 		myPane = new GridPane();
 		setGridPaneConstraints(myPane);
 		myPane.setGridLinesVisible(true);
-
-
-		/*
-		 * mySidebar = new SideBar(); myWorkspace = new Workspace(myDimensions,
-		 * mySidebar); drawer = new Drawer(myWorkspace); CustomizationBar
-		 * customizationBar = new CustomizationBar( myTurtles, drawer,
-		 * myWorkspace, myStage, myDimensions); root.add(customizationBar, 0,
-		 * 0); root.add(configureAddTurtlesButton(), 1, 0);
-		 * root.add(myWorkspace, 0, 1); root.add(mySidebar, 1, 1, 1, 2);
-		 * 
-		 * myParser = createNewParser(this); mySidebar.setParser(myParser);
-		 * customizationBar.setParser(myParser);
-		 * 
-		 * myEditor = new Editor(myParser, mySidebar, myDimensions);
-		 * root.add(myEditor, 0, 2); return root;
-		 */
 		
-		myActiveMap = new TileMap(100, 100, 5); //TODO: remove test values
+		myActiveMap = new TileMap(100.0, 100.0, 5.0); 
+		//TODO: remove test values
 		
 		Text text = new Text("hello");
 		myPane.add(myActiveMap, 1, 0);
@@ -57,7 +42,7 @@ public abstract class MainEditor extends Editor {
 		return root;
 	}
 	
-	public void setActiveMap(Map map){
+	public void setActiveMap(TileMap map){
 		myActiveMap = map;
 		//TODO: display the new active map
 	}
