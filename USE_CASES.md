@@ -1,4 +1,4 @@
-Use Cases
+  Use Cases
 ===
 
 Engine Cases
@@ -26,10 +26,6 @@ Engine Cases
 21. The player upgrades their abilities in the shop after a round ends.
 22. The player changes the speed of gameplay
 23. The player changes targeting priority of a tower
-24. Game uses confusion
-25. The player develops schizophrenia and believes he/she is actually inside the game.
-26. It is super effective
-http://cdn.gagbay.com/2013/06/its_super_effective-300492.jpg
 
 Editor Cases
 ---
@@ -44,16 +40,14 @@ Editor Cases
 35. User draws a path that his enemies can follow
 36. User picks editing or playing in splash screen.
 37. User creates new ability item.
+38. User creates a tower
+39. User adds an upgraded tower to the tower hierarchy
 38. User loads a data file to edit.
 39. User saves the game (a data file) after completion of a game.
 40. User defines multiple levels with the kinds of enemies they want on each level
 41. User creates enemies with specific properties
-42. User creates YOU LOSE screen
-43. User creates YOU WIN screen
 44. User defines player’s starting resources
 45. User defines super-attacks for a tower
 46. User sets enemy spawn points
-47. User feels chills of agonizing pleasure strike like lightning down his spine upon beholding the beauty that is the protected Tower() splash screen.  Heart racing, in his blissful agony a small cry escapes his lips, a short exclamation of unprecedented ecstasy.
-48. User changes pants
 49. User assigns enemies their spawn points
 50. User assigns enemies the path they will follow
