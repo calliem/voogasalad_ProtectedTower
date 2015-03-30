@@ -1,7 +1,10 @@
 package authoring.environment;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -45,8 +48,9 @@ public class InstanceManager {
 		return newPart;
 	}
 
-	public static String getPartType(Class c){
-		return c.toString().substring(0, c.toString().indexOf("Editor"));
+	public static String getPartType(Object o){
+		String className = o.getClass().toString();
+		return className.substring(0, className.indexOf("Editor"));
 	}
 	
 	//updates data
@@ -67,7 +71,7 @@ public class InstanceManager {
 	//5:09am
 	public void writePartToXML(String partName){
 		XStream stream = new XStream(new DomDriver());
-		String partType = partName.substring(0, partName.indexOf("_"));
+		String partType = partTypeFromName(partName);
 		String partFileName = partName + ".xml";
 		String dirLocation = userDataPackage + "\\" + gameName + "\\" + partType;
 		File partFile = new File(dirLocation, partFileName);
@@ -80,6 +84,32 @@ public class InstanceManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static Map<String, Object> getPartFromXML(String gameName, String partName) throws IOException{
+		XStream stream = new XStream(new DomDriver());
+		String fileLocation = userDataPackage + "\\" + 
+		gameName + "\\" +
+		partTypeFromName(partName) + "\\" + 
+		partName + ".xml";
+		File partFile = new File(fileLocation);
+		return (Map<String, Object>) stream.fromXML(partFile);
+	}
+	
+	private static String partTypeFromName(String partName){
+		return partName.substring(0, partName.indexOf("_"));
+	}
+	//from stack overflow
+	private static String readFile(String fileName) throws IOException {
+	    BufferedReader reader = new BufferedReader(new FileReader (fileName));
+	    String         line = null;
+	    StringBuilder  xmlText = new StringBuilder();
+	    String         ls = System.getProperty("line.separator");
+
+	    while((line = reader.readLine()) != null) {
+	        xmlText.append(line).append(ls);
+	    }
+	    return xmlText.toString();
 	}
 	
 	//writes all the parts to their repsective files
@@ -122,11 +152,14 @@ public class InstanceManager {
 		System.out.println(gameManager);
 		//gameManager.writeAllToXML();
 		gameManager.writeAllToXML();
+		try {
+			System.out.println("from xml: " + InstanceManager.getPartFromXML("TestGame", "Tower_Part_0"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-
-
-
 }
+
 
 
