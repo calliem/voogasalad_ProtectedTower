@@ -9,21 +9,25 @@ import javafx.scene.Group;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public abstract class MainEditor extends Editor {
 	
-	public static final double SIDEBAR_WIDTH_MULTIPLIER = .2;
-	public static final double MAP_WIDTH_MULTIPLIER = .8;
+	public static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
+	public static final double MAP_WIDTH_MULTIPLIER = .75;
 	public static final double MAP_HEIGHT_PERCENT = 100;
 	
 	public MainEditor(Dimension2D dim) {
 		super(dim);
 		// TODO Auto-generated constructor stub
 	}
+	
+
 
 	private GridPane myPane;
-	private TileMap myActiveMap;
+	
 	// interface?
 
 	// or we could just have configureUI() return a parent?
@@ -35,6 +39,7 @@ public abstract class MainEditor extends Editor {
 	//doing this wrong
 	//create in mapeditor only and then call it in the other editor
 	protected Group configureUI() {
+		
 		Group root = new Group();
 		//root.
 		//TODO: set background color to the same color as the tabs
@@ -42,22 +47,25 @@ public abstract class MainEditor extends Editor {
 		setGridPaneConstraints(myPane);
 		myPane.setGridLinesVisible(true);
 		
-		myActiveMap = new TileMap(100, 100, 5);
-		//TODO: remove test values
+		createMap();
+		//does it dynamically update or will i have to say myPane = createmap();
+		// TODO remove magic number
+        /*Rectangle background = new Rectangle(MainEnvironment.myDimensions.getWidth(), 0.9 * MainEnvironment.myDimensions.getHeight());
+        background.setStyle("-fx-border-color: red;"
+                + "-fx-border-width: 1;"
+                + "-fx-border-style: solid;"
+                + "-fx-padding: 10;" 
+                + "-fx-background-color: firebrick;");*/
+        		
+        		//"-fx-base: #3c3c3c;");
+        
 		
-		Text text = new Text("hello");
-		Tile tile = new Tile(100);
-		myPane.add(myActiveMap.getMap(), 1, 0);
-		myPane.add(text, 2, 0);
-		myPane.add(tile, 2, 0);
-		root.getChildren().addAll(myPane);
+		root.getChildren().addAll(myPane); 
+
 		return root;
 	}
 	
-	public void setActiveMap(TileMap map){
-		myActiveMap = map;
-		//TODO: display the new active map
-	}
+
 
 	private void setGridPaneConstraints(GridPane pane) {
 		RowConstraints row0 = new RowConstraints();
@@ -75,5 +83,7 @@ public abstract class MainEditor extends Editor {
 	protected GridPane getPane() {
 		return myPane;
 	}
+	
+	protected abstract void createMap();
 
 }

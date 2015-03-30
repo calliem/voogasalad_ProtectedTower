@@ -21,6 +21,12 @@ public class WaveEditor extends MainEditor{
         return new ArrayList<>();
     }
 
+	@Override
+	protected void createMap() {
+		// TODO Auto-generated method stub
+		
+	}
+
 /*    @Override
     protected Group configureUI() {
     	super.configureUI();

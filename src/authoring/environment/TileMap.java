@@ -20,7 +20,7 @@ public class TileMap {
 		myMapWidth = mapWidth;
 		myMapHeight = mapHeight;
 		myTileSize = tileSize;
-		myTiles = createMap();
+		createMap();
 	//	displayMap(myTiles);
 		//myMap.getChildren().add(myTIles);
 	//	displayGrid(myTile);
@@ -46,19 +46,20 @@ public class TileMap {
 	
 	//protected abstract Tile[][] populateGrid(double gridSize, Tile[][] cells);
 	//where to calculate tile size? 
-	private Tile[][] createMap(){
+	private void createMap(){
 		int numTileRows = (int) (myMapHeight / myTileSize);
-		System.out.println(numTileRows);
 		int numTileCols = (int) (myMapWidth / myTileSize);
+		
+		System.out.println(numTileRows);
 		System.out.println(numTileCols);
-		Tile[][] tiles = new Tile[numTileRows][numTileCols];
-		for (int i = 0; i < tiles.length; i++) {
-			for (int j = 0; j < tiles[0].length; j++) {
-				tiles[i][j] = new Tile(myTileSize);
-				myMap.getChildren().add(tiles[i][j]); //to speed up efficiency. will these be updated dynamically or do we need to call displaymap each time?
+		
+		myTiles = new Tile[numTileRows][numTileCols];
+		for (int i = 0; i < myTiles.length; i++) {
+			for (int j = 0; j < myTiles[0].length; j++) {
+				myTiles[i][j] = new Tile(myTileSize, i, j);
+				myMap.getChildren().add(myTiles[i][j]); //to speed up efficiency. will these be updated dynamically or do we need to call displaymap each time?
 			}
 		}
-		return tiles;
 	}
 	
 	/*private void displayMap(Tile[][] tiles){
