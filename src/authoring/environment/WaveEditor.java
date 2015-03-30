@@ -1,9 +1,8 @@
 package authoring.environment;
 
 import java.util.ArrayList;
-
+import javafx.scene.Group;
 import authoring.environment.objects.Unit;
-import javafx.scene.layout.GridPane;
 
 public class WaveEditor extends MainEditor{
     public ArrayList<Unit> getWaves(){
@@ -11,7 +10,7 @@ public class WaveEditor extends MainEditor{
     }
 
     @Override
-    protected GridPane configureUI() {
+    protected Group configureUI() {
         return null;
     }
 }
