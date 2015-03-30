@@ -1,7 +1,7 @@
 package usecases;
 
-import engine.Enemy;
-import engine.Tower;
+import engine.sprites.Enemy;
+import engine.sprites.Tower;
 
 public class TargetEnemy{
     public Tower detectingTower = new Tower();
