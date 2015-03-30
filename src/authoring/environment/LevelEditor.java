@@ -1,10 +1,10 @@
 package authoring.environment;
 
-import javafx.scene.layout.GridPane;
+import javafx.scene.Group;
 
 public class LevelEditor extends MainEditor{
     @Override
-    protected GridPane configureUI() {
+    protected Group configureUI() {
         // TODO Auto-generated method stub
         return null;
     }
