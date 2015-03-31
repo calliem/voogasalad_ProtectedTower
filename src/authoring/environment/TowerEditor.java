@@ -15,15 +15,15 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import authoring.environment.objects.Tower;
+import authoring.environment.objects.TowerView;
 
 public class TowerEditor extends PropertyEditor{
     private Group myRoot;
     private StackPane myContent;
-    private static final double CONTENT_WIDTH = MainEnvironment.myDimensions.getWidth();
-    private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.myDimensions.getHeight();
+    private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
+    private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
     
-    public ArrayList<Tower> getTowers(){
+    public ArrayList<TowerView> getTowers(){
         return new ArrayList<>();
     }
 
@@ -36,56 +36,43 @@ public class TowerEditor extends PropertyEditor{
         // TODO remove magic number
         Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, Color.GRAY);
         
-        // TODO remove magic numbers 
+        // TODO remove magic numbers
         HBox row = new HBox(10);
-        row.setAlignment(Pos.TOP_CENTER);
-        row.setTranslateY(10);
-        Rectangle tower = new Rectangle(40,40,Color.WHITE); //hard-coded placeholders
-        tower.setOnMousePressed((e) -> handleTowerEdit());
-        Tooltip t = new Tooltip("Test");
-        Tooltip.install(tower, t);
-        Rectangle tower2 = new Rectangle(40,40,Color.WHITE);
+        
+        TowerView tower = new TowerView(40,40);
+        tower.setOnMousePressed((e) -> handleTowerEdit(tower.getEditorOverlay()));
+        
+        TowerView tower2 = new TowerView(40,40);
         Rectangle tower3 = new Rectangle(40,40,Color.WHITE);
+        
         row.getChildren().addAll(tower, tower2, tower3);
+        row.setAlignment(Pos.TOP_CENTER);
+        row.setMaxHeight(40);
+        row.setTranslateY(10);
         
         myContent.getChildren().addAll(background, row);
-        myRoot.getChildren().addAll(myContent);
+        StackPane.setAlignment(row, Pos.TOP_CENTER);
+        myRoot.getChildren().add(myContent);
+        
         return myRoot;
     }
     
-    private void handleTowerEdit(){
-        StackPane overlay = new StackPane();
-        Rectangle overlayBackground = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT);
-        overlayBackground.setOpacity(0.6);
-        
-        VBox editorContent = new VBox(10);
-        editorContent.setAlignment(Pos.TOP_CENTER);
-        editorContent.setTranslateY(10);
-        Text title = new Text("Tower");
-        title.setFont(new Font(30));
-        title.setFill(Color.WHITE);
-        
-        Setting test = new IntegerSetting("health");
-        
-        Button close = new Button("Close");
-        close.setOnAction((e) -> hideEditScreen(overlay));
-        
-        editorContent.getChildren().addAll(title, test, close);
-        
-        overlay.getChildren().addAll(overlayBackground, editorContent);
-        myContent.getChildren().add(overlay);
+    private void handleTowerEdit(StackPane overlay){
+        System.out.println("clicked");
         showEditScreen(overlay);
     }
     
     private void showEditScreen(StackPane overlay){
+        myRoot.getChildren().add(overlay);
         scaleEditScreen(0.0, 1.0, overlay);
     }
     
     private void hideEditScreen(StackPane overlay){
-        scaleEditScreen(1.0, 0.0, overlay);
+        ScaleTransition scale = scaleEditScreen(1.0, 0.0, overlay);
+        scale.setOnFinished((e) -> myRoot.getChildren().remove(overlay));
     }
     
-    private void scaleEditScreen(double from, double to, StackPane overlay){
+    private ScaleTransition scaleEditScreen(double from, double to, StackPane overlay){
         ScaleTransition scale = new ScaleTransition(Duration.millis(400), overlay);
         scale.setFromX(from);
         scale.setFromY(from);
@@ -93,6 +80,8 @@ public class TowerEditor extends PropertyEditor{
         scale.setToY(to);
         scale.setCycleCount(1);
         scale.play();
+        
+        return scale;
     }
 }
 

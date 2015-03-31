@@ -1,5 +1,5 @@
 package authoring.environment.objects;
 
-public class Path {
+public class UnitView extends SpriteView{
 
 }

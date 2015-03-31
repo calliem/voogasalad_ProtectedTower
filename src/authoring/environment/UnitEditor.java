@@ -1,10 +1,10 @@
 package authoring.environment;
 import java.util.ArrayList;
 
-import authoring.environment.objects.Unit;
+import authoring.environment.objects.UnitView;
 
 public class UnitEditor {
-    public ArrayList<Unit> getUnits(){
+    public ArrayList<UnitView> getUnits(){
         return new ArrayList<>();
     }
 }

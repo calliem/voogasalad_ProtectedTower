@@ -1,6 +1,6 @@
 package authoring.environment.objects;
 
-public class Level {
+public class LevelView {
 
 }
 /*
