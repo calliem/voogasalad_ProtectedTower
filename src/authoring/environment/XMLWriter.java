@@ -20,8 +20,9 @@ public class XMLWriter {
 	 * @param o Object to be written to a file in XML format
 	 * @param fileName Name of the resulting file
 	 * @param dir Directory leading to the resulting file
+	 * @return Directory where the file was saved
 	 */
-	public static void toXML(Object o, String fileName, String dir){
+	public static String toXML(Object o, String fileName, String dir){
 		if(!fileName.substring(fileName.length() - 4, fileName.length()).equals(".xml"))
 			fileName = fileName + ".xml";
 		File partFile = new File(dir, fileName);
@@ -33,6 +34,8 @@ public class XMLWriter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//System.out.println("File: " + fileName + " saved at: " + dir);
+		return dir;
 	}
 	
 	/**
@@ -41,11 +44,12 @@ public class XMLWriter {
 	 * @param fileName The name of the resulting file
 	 * NOTE: a sub-directory \XML_Files will be created from the current
 	 * directory, and the file will be saved their. 
+	 * @return Directory where the file was saved
 	 */
-	public static void toXML(Object o, String fileName){
+	public static String toXML(Object o, String fileName){
 		String saveDir = System.getProperty("user.dir") + "\\XML_Files";
 		new File(saveDir).mkdirs();
-		toXML(o, fileName, saveDir);
+		return toXML(o, fileName, saveDir);
 	}
 	
 	/**
@@ -53,20 +57,13 @@ public class XMLWriter {
 	 * @param o The object to be saved in XML format
 	 * NOTE: \XML_Files directory will be created and used
 	 * File name will be: ClassName_HashCode
+	 * @return Directory where the file was saved
 	 */
-	public static void toXML(Object o){
+	public static String toXML(Object o){
 		String fileName = o.getClass().toString() + "_" + o.hashCode();
-		toXML(o, fileName);
+		return toXML(o, fileName);
 	}
 	
-	/**
-	 * 
-	 * @param f The XML file you want to read an object from
-	 * @return Object stored in that file
-	 */
-	public static Object fromXML(File f){
-		return stream.fromXML(f);
-	}
 	
 	
 	/**

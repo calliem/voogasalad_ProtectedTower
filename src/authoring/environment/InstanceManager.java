@@ -51,13 +51,14 @@ public class InstanceManager {
 		userParts.put(partName, newPart);
 		return newPart;
 	}
-
+	
+	/*
 	//if you're using a class like TowerEditor, get the word "Tower" from it
 	//not sure if this method's useful yet, or in its best form
 	public static String getPartType(Object o){
 		String className = o.getClass().toString();
 		return className.substring(0, className.indexOf("Editor"));
-	}
+	}*/
 	
 	/**
 	 * 
@@ -125,6 +126,7 @@ public class InstanceManager {
 	@Override
 	public String toString(){
 		StringBuilder toPrint = new StringBuilder();
+		toPrint.append("All Parts In Game: \n");
 		for(String partName : userParts.keySet())
 			toPrint.append("Name: ")
 			.append(partName)
@@ -154,7 +156,7 @@ public class InstanceManager {
 		gameManager.updatePart("Tower_Part_0", "FireRate",  "8");
 		gameManager.updatePart("Unit_Part_4", "Speed", "3");
 		System.out.println(gameManager);
-		//gameManager.writeAllToXML();
+		
 		gameManager.writeAllToXML();
 		//example of overwriting a file
 		//XMLWriter.toXML(new String("testing"), "Projectile_Part_2", 
