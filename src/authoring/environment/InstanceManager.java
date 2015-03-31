@@ -19,15 +19,12 @@ public class InstanceManager {
 	private String gameName;
 	private int partsCreated = 0;
 	
-	//public static final ResourceBundle paramLists = ResourceBundle.getBundle("resources/part_parameters");
 	private static final String userDataPackage = System.getProperty("user.dir").concat("\\src\\userData");
-	
 	
 	//a map of all the parts the user has created
 	//each part is represented by a map mapping the part's parameters to their data
 	//the fields look like: Map<partName, Map<parameterName, parameterData>>
 	private Map<String, Map<String, Object>> userParts;
-
 
 	public InstanceManager(String name){
 		this();
@@ -161,8 +158,10 @@ public class InstanceManager {
 		//example of overwriting a file
 		//XMLWriter.toXML(new String("testing"), "Projectile_Part_2", 
 				//userDataPackage + "\\TestGame\\Projectile");
-		XMLWriter.toXML(new String("String theory"), "stringy");
+		String stringyDir = XMLWriter.toXML(new String("String theory"), "stringy");
 		XMLWriter.toXML(new String("hascode class test"));
+		String stringyLoaded = (String) XMLWriter.fromXML(stringyDir);
+		System.out.println("Stringy test: " + stringyLoaded);
 		try {
 			System.out.println("from xml: " + InstanceManager.getPartFromXML("TestGame", "Tower_Part_0"));
 		} catch (IOException e) {

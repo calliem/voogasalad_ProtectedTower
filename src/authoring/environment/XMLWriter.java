@@ -20,7 +20,7 @@ public class XMLWriter {
 	 * @param o Object to be written to a file in XML format
 	 * @param fileName Name of the resulting file
 	 * @param dir Directory leading to the resulting file
-	 * @return Directory where the file was saved
+	 * @return Exact location where the file was saved
 	 */
 	public static String toXML(Object o, String fileName, String dir){
 		if(!fileName.substring(fileName.length() - 4, fileName.length()).equals(".xml"))
@@ -34,8 +34,8 @@ public class XMLWriter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//System.out.println("File: " + fileName + " saved at: " + dir);
-		return dir;
+		//System.out.println(fileName + " saved at: " + dir);
+		return dir + "\\" + fileName;
 	}
 	
 	/**
@@ -63,7 +63,6 @@ public class XMLWriter {
 		String fileName = o.getClass().toString() + "_" + o.hashCode();
 		return toXML(o, fileName);
 	}
-	
 	
 	
 	/**
