@@ -14,7 +14,7 @@ public class Setting extends HBox{
         this.setAlignment(Pos.CENTER);
         
         this.label = label;
-        Text parameter = new Text(label);
+        Text parameter = new Text(String.format("%s:", label));
         parameter.setFill(Color.WHITE);
         
         this.getChildren().add(parameter);
@@ -25,7 +25,11 @@ public class Setting extends HBox{
 
     }
     
-    protected String getParameterName(){
+    public String getParameterName(){
         return label;
+    }
+    
+    public String getParameterValue(){
+        return ""; 
     }
 }
