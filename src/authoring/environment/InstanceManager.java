@@ -40,7 +40,11 @@ public class InstanceManager {
 		
 	}
 
-	//adds a default part to userParts with the name "Part_x" where x the number of parts the user has created
+	/**
+	 * 
+	 * @param partType the kind of part to be added
+	 * @return the part that was added
+	 */
 	public Map<String, Object> addPart(String partType){
 		Map<String, Object> newPart = GameCreator.createDefaultPart(partType);
 		String partName =  partType + "_" + "Part_" + new Integer(partsCreated++).toString();
@@ -48,12 +52,19 @@ public class InstanceManager {
 		return newPart;
 	}
 
+	//if you're using a class like TowerEditor, get the word "Tower" from it
+	//not sure if this method's useful yet, or in its best form
 	public static String getPartType(Object o){
 		String className = o.getClass().toString();
 		return className.substring(0, className.indexOf("Editor"));
 	}
 	
-	//updates data
+	/**
+	 * 
+	 * @param partName The name of the part you want to update
+	 * @param param Which parameter of that part you want to update
+	 * @param newData The new value of that parameter's data, as a String
+	 */
 	public void updatePart(String partName, String param, String newData){
 		Map<String, Object> partToBeUpdated = userParts.get(partName);
 		Object data = "data incorrectly added";
@@ -69,50 +80,41 @@ public class InstanceManager {
 	}
 	
 	//5:09am
+	/**
+	 * 
+	 * @param partName The part to write to XML
+	 */
 	public void writePartToXML(String partName){
-		XStream stream = new XStream(new DomDriver());
 		String partType = partTypeFromName(partName);
 		String partFileName = partName + ".xml";
-		String dirLocation = userDataPackage + "\\" + gameName + "\\" + partType;
-		File partFile = new File(dirLocation, partFileName);
-		
-		try {
-			PrintStream out = new PrintStream(partFile);
-			out.println(stream.toXML(userParts.get(partName)));
-			out.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String dir= userDataPackage + "\\" + gameName + "\\" + partType;
+		XMLWriter.toXML(userParts.get(partName), partFileName, dir);
 	}
 	
+	/**
+	 * 
+	 * @param gameName The name of the game from which you want to load a part
+	 * @param partName The name of the part from that game you want to load
+	 * @return The part in Map<String, Object> form
+	 * @throws IOException
+	 */
 	public static Map<String, Object> getPartFromXML(String gameName, String partName) throws IOException{
-		XStream stream = new XStream(new DomDriver());
-		String fileLocation = userDataPackage + "\\" + 
-		gameName + "\\" +
-		partTypeFromName(partName) + "\\" + 
-		partName + ".xml";
-		File partFile = new File(fileLocation);
-		return (Map<String, Object>) stream.fromXML(partFile);
+		String fileLocation = userDataPackage + "\\" + gameName + "\\" +
+		partTypeFromName(partName) + "\\" + partName + ".xml";
+		return (Map<String, Object>) XMLWriter.fromXML(fileLocation);
 	}
 	
+	/**
+	 * 
+	 * @param partName The name of the part
+	 * @return The type of part, i.e. Tower, Projectile, Unit, etc.
+	 */
 	private static String partTypeFromName(String partName){
 		return partName.substring(0, partName.indexOf("_"));
 	}
-	//from stack overflow
-	private static String readFile(String fileName) throws IOException {
-	    BufferedReader reader = new BufferedReader(new FileReader (fileName));
-	    String         line = null;
-	    StringBuilder  xmlText = new StringBuilder();
-	    String         ls = System.getProperty("line.separator");
-
-	    while((line = reader.readLine()) != null) {
-	        xmlText.append(line).append(ls);
-	    }
-	    return xmlText.toString();
-	}
 	
-	//writes all the parts to their repsective files
+	
+	//writes all the parts to their respective files
 	public void writeAllToXML(){
 		for(String partName : userParts.keySet())
 			writePartToXML(partName);
@@ -152,6 +154,9 @@ public class InstanceManager {
 		System.out.println(gameManager);
 		//gameManager.writeAllToXML();
 		gameManager.writeAllToXML();
+		//example of overwriting a file
+		//XMLWriter.toXML(new String("testing"), "Projectile_Part_2", 
+				//userDataPackage + "\\TestGame\\Projectile");
 		try {
 			System.out.println("from xml: " + InstanceManager.getPartFromXML("TestGame", "Tower_Part_0"));
 		} catch (IOException e) {
