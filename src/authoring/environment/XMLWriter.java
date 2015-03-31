@@ -35,39 +35,48 @@ public class XMLWriter {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param The object to be saved in XML format
+	 * @param fileName The name of the resulting file
+	 * NOTE: a sub-directory \XML_Files will be created from the current
+	 * directory, and the file will be saved their. 
+	 */
 	public static void toXML(Object o, String fileName){
 		String saveDir = System.getProperty("user.dir") + "\\XML_Files";
 		new File(saveDir).mkdirs();
 		toXML(o, fileName, saveDir);
 	}
 	
+	/**
+	 * 
+	 * @param o The object to be saved in XML format
+	 * NOTE: \XML_Files directory will be created and used
+	 * File name will be: ClassName_HashCode
+	 */
 	public static void toXML(Object o){
 		String fileName = o.getClass().toString() + "_" + o.hashCode();
 		toXML(o, fileName);
 	}
 	
+	/**
+	 * 
+	 * @param f The XML file you want to read an object from
+	 * @return Object stored in that file
+	 */
 	public static Object fromXML(File f){
 		return stream.fromXML(f);
 	}
 	
+	
+	/**
+	 * 
+	 * @param dir The directory from which you want to read an object
+	 * @return Object stored in the file at that directory
+	 */
 	public static Object fromXML(String dir){
 		return stream.fromXML(new File(dir));
 	}
 	
-	/*
-	//from stack overflow
-		private static String readFile(String fileName) throws IOException {
-		    BufferedReader reader = new BufferedReader(new FileReader (fileName));
-		    String         line = null;
-		    StringBuilder  xmlText = new StringBuilder();
-		    String         ls = System.getProperty("line.separator");
-
-		    while((line = reader.readLine()) != null) {
-		        xmlText.append(line).append(ls);
-		    }
-		    reader.close();
-		    return xmlText.toString();
-		}
-		*/
 
 }

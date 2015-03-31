@@ -114,7 +114,9 @@ public class InstanceManager {
 	}
 	
 	
-	//writes all the parts to their respective files
+	/**
+	 * writes all parts of the current game into their respective files
+	 */
 	public void writeAllToXML(){
 		for(String partName : userParts.keySet())
 			writePartToXML(partName);
@@ -157,6 +159,8 @@ public class InstanceManager {
 		//example of overwriting a file
 		//XMLWriter.toXML(new String("testing"), "Projectile_Part_2", 
 				//userDataPackage + "\\TestGame\\Projectile");
+		XMLWriter.toXML(new String("String theory"), "stringy");
+		XMLWriter.toXML(new String("hascode class test"));
 		try {
 			System.out.println("from xml: " + InstanceManager.getPartFromXML("TestGame", "Tower_Part_0"));
 		} catch (IOException e) {
