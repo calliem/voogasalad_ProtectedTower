@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.thoughtworks.xstream.XStream;
@@ -18,23 +20,24 @@ public class InstanceManager {
 
 	private String gameName;
 	private int partsCreated = 0;
-	
+
 	private static final String userDataPackage = System.getProperty("user.dir").concat("\\src\\userData");
-	
+
 	//a map of all the parts the user has created
 	//each part is represented by a map mapping the part's parameters to their data
 	//the fields look like: Map<partName, Map<parameterName, parameterData>>
 	private Map<String, Map<String, Object>> userParts;
+	private Map<String, String> partSaveLocs;
 
 	public InstanceManager(String name){
 		this();
 		gameName = name;
 	}
-	
+
 	public InstanceManager(){
 		userParts = new HashMap<String, Map<String, Object>>();
 		gameName = "Unnamed_Game";
-		
+
 	}
 
 	/**
@@ -48,7 +51,15 @@ public class InstanceManager {
 		userParts.put(partName, newPart);
 		return newPart;
 	}
-	
+
+	public Map<String, Object> addPart(String partName, List<String> params, List<Object> data){
+		Map<String, Object> part = new HashMap<String, Object>();
+		for(int i = 0; i < params.size(); i++)
+			part.put(params.get(i),  data.get(i));
+		userParts.put(partName, part);
+		return part;
+	}
+
 	/*
 	//if you're using a class like TowerEditor, get the word "Tower" from it
 	//not sure if this method's useful yet, or in its best form
@@ -56,7 +67,9 @@ public class InstanceManager {
 		String className = o.getClass().toString();
 		return className.substring(0, className.indexOf("Editor"));
 	}*/
-	
+
+	//create map based on passed List<Setting>
+	// use getParamName() getParamValue()
 	/**
 	 * 
 	 * @param partName The name of the part you want to update
@@ -76,7 +89,11 @@ public class InstanceManager {
 		}
 		partToBeUpdated.put(param,  data);
 	}
-	
+
+	public void updatePart(String partName, String param, Object newData){
+		userParts.get(partName).put(param,  newData);
+	}
+
 	//5:09am
 	/**
 	 * 
@@ -86,9 +103,9 @@ public class InstanceManager {
 		String partType = partTypeFromName(partName);
 		String partFileName = partName + ".xml";
 		String dir= userDataPackage + "\\" + gameName + "\\" + partType;
-		XMLWriter.toXML(userParts.get(partName), partFileName, dir);
+		partSaveLocs.put(partName, XMLWriter.toXML(userParts.get(partName), partFileName, dir));
 	}
-	
+
 	/**
 	 * 
 	 * @param gameName The name of the game from which you want to load a part
@@ -98,9 +115,10 @@ public class InstanceManager {
 	 */
 	public static Map<String, Object> getPartFromXML(String gameName, String partName) throws IOException{
 		String fileLocation = userDataPackage + "\\" + gameName + "\\" +
-		partTypeFromName(partName) + "\\" + partName + ".xml";
+				partTypeFromName(partName) + "\\" + partName + ".xml";
 		return (Map<String, Object>) XMLWriter.fromXML(fileLocation);
 	}
+
 	
 	/**
 	 * 
@@ -111,7 +129,16 @@ public class InstanceManager {
 		return partName.substring(0, partName.indexOf("_"));
 	}
 	
-	
+	/**
+	 * 
+	 * @param partName Name of the part you want to retrieve, i.e. "Tower_Part_0"
+	 * @return The part in Map<String, Object> form
+	 */
+	public Map<String, Object> getPartFromFile(String partName){
+		return (Map<String, Object>) XMLWriter.fromXML(partSaveLocs.get(partName));
+	}
+
+
 	/**
 	 * writes all parts of the current game into their respective files
 	 */
@@ -119,7 +146,7 @@ public class InstanceManager {
 		for(String partName : userParts.keySet())
 			writePartToXML(partName);
 	}
-	
+
 	@Override
 	public String toString(){
 		StringBuilder toPrint = new StringBuilder();
@@ -132,16 +159,16 @@ public class InstanceManager {
 			.append("\n");
 		return toPrint.toString();
 	}
-	
+
 	public String getName(){
 		return gameName;
 	}
-	
+
 
 	public static void main (String[] args){
 		InstanceManager gameManager = new InstanceManager("TestGame");
 		GameCreator.createNewGameFolder(gameManager.getName());
-		gameManager.addPart("Tower");
+		gameManager.addPart("Tower").keySet();
 		gameManager.addPart("Unit");
 		gameManager.addPart("Projectile");
 		gameManager.addPart("Projectile");
@@ -153,11 +180,11 @@ public class InstanceManager {
 		gameManager.updatePart("Tower_Part_0", "FireRate",  "8");
 		gameManager.updatePart("Unit_Part_4", "Speed", "3");
 		System.out.println(gameManager);
-		
+
 		gameManager.writeAllToXML();
 		//example of overwriting a file
 		//XMLWriter.toXML(new String("testing"), "Projectile_Part_2", 
-				//userDataPackage + "\\TestGame\\Projectile");
+		//userDataPackage + "\\TestGame\\Projectile");
 		String stringyDir = XMLWriter.toXML(new String("String theory"), "stringy");
 		XMLWriter.toXML(new String("hascode class test"));
 		String stringyLoaded = (String) XMLWriter.fromXML(stringyDir);
