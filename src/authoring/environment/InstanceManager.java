@@ -103,7 +103,7 @@ public class InstanceManager {
 		String partType = partTypeFromName(partName);
 		String partFileName = partName + ".xml";
 		String dir= userDataPackage + "\\" + gameName + "\\" + partType;
-		partSaveLocs.put(partName, XMLWriter.toXML(userParts.get(partName), partFileName, dir));
+		//partSaveLocs.put(partName, XMLWriter.toXML(userParts.get(partName), partFileName, dir));
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class InstanceManager {
 	 * @return The part in Map<String, Object> form
 	 * @throws IOException
 	 */
-	public static Map<String, Object> getPartFromXML(String gameName, String partName) throws IOException{
+	public  Map<String, Object> getPartFromXML(String partName) throws IOException{
 		String fileLocation = userDataPackage + "\\" + gameName + "\\" +
 				partTypeFromName(partName) + "\\" + partName + ".xml";
 		return (Map<String, Object>) XMLWriter.fromXML(fileLocation);
@@ -129,15 +129,6 @@ public class InstanceManager {
 		return partName.substring(0, partName.indexOf("_"));
 	}
 	
-	/**
-	 * 
-	 * @param partName Name of the part you want to retrieve, i.e. "Tower_Part_0"
-	 * @return The part in Map<String, Object> form
-	 */
-	public Map<String, Object> getPartFromFile(String partName){
-		return (Map<String, Object>) XMLWriter.fromXML(partSaveLocs.get(partName));
-	}
-
 
 	/**
 	 * writes all parts of the current game into their respective files
@@ -190,7 +181,7 @@ public class InstanceManager {
 		String stringyLoaded = (String) XMLWriter.fromXML(stringyDir);
 		System.out.println("Stringy test: " + stringyLoaded);
 		try {
-			System.out.println("from xml: " + InstanceManager.getPartFromXML("TestGame", "Tower_Part_0"));
+			System.out.println("from xml: " + gameManager.getPartFromXML("Tower_Part_0"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

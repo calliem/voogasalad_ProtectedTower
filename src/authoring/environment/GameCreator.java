@@ -29,6 +29,7 @@ public class GameCreator {
 		new File(gameDir).mkdirs();
 		for(String dir : dirsToBeCreated)
 			new File(gameDir.concat("\\").concat(dir)).mkdirs();
+		new File(gameDir + "\\gameFile").mkdirs();
 	}
 	
 	public static void saveGame(InstanceManager gameManager){
@@ -49,6 +50,7 @@ public class GameCreator {
 	 * @param dataType The type of the data, i.e. "Integer"
 	 * @return The Setting object corresponding to these parameters
 	 */
+	
 	public static Setting generateSetting(String partType, String param, String defaultVal, String dataType){
 		Class<?> c = String.class;
 		try{
@@ -68,6 +70,7 @@ public class GameCreator {
 
 		return s;
 	}
+	
 
 	/**
 	 * 
@@ -82,7 +85,7 @@ public class GameCreator {
 		String[] params = paramLists.getString(partType).split("\\s+");
 
 		for(String param : params){
-			String[] typeAndDefault = paramSpecs.getString(paramName).split("\\s+");
+			String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
 			String dataType = typeAndDefault[0];
 			String defaultVal = typeAndDefault[1];
 
