@@ -27,7 +27,6 @@ public class InstanceManager {
 	//each part is represented by a map mapping the part's parameters to their data
 	//the fields look like: Map<partName, Map<parameterName, parameterData>>
 	private Map<String, Map<String, Object>> userParts;
-	private Map<String, String> partSaveLocs;
 
 	public InstanceManager(String name){
 		this();
@@ -41,23 +40,62 @@ public class InstanceManager {
 	}
 
 	/**
-	 * 
-	 * @param partType the kind of part to be added
-	 * @return the part that was added
+	 * This is how parts will be added from the Editor windows like TowerEditor
+	 * @param partType The type of part, i.e. "Tower"
+	 * @param partName The name of the part, i.e. "IceShooter"
+	 * @param params List of the parameters that this part needs, i.e. "HP", "Range", "Projectile"
+	 * @param data List of corresponding data values for those params, i.e. 1, 1.0, "Projectile1.xml"
+	 * @return The part that was created and added top user's parts
 	 */
-	public Map<String, Object> addPart(String partType){
-		Map<String, Object> newPart = GameCreator.createDefaultPart(partType);
-		String partName =  partType + "_" + "Part_" + new Integer(partsCreated++).toString();
-		userParts.put(partName, newPart);
-		return newPart;
-	}
-
-	public Map<String, Object> addPart(String partName, List<String> params, List<Object> data){
+	public Map<String, Object> addPart(String partType, String partName, List<String> params, List<Object> data){
+		//appends the part type onto the start of the name
+		//Ex: "IceTower" becomes "Tower_IceTower"
+		partName = partType + "_" + partName;
+		//populates the map of param name to data
 		Map<String, Object> part = new HashMap<String, Object>();
 		for(int i = 0; i < params.size(); i++)
 			part.put(params.get(i),  data.get(i));
+		//adds this part to user parts with it's updated part name
 		userParts.put(partName, part);
+		//writes this part to xml with the filename partName.xml (i.e. "Tower_IceTower.xml")
+		writePartToXML(partName);
 		return part;
+	}
+
+	/**
+	 * Writes the part of partName into an XML file
+	 * @param partName The part to write to XML
+	 */
+	private void writePartToXML(String partName){
+		String partType = partTypeFromName(partName);
+		String partFileName = partName + ".xml";
+		String dir= userDataPackage + "\\" + gameName + "\\" + partType;
+		XMLWriter.toXML(userParts.get(partName), partFileName, dir);
+	}
+
+	/**
+	 * Gets the part type by looking at what comes before the first "_" in the name
+	 * @param partName The name of the part
+	 * @return The type of part, i.e. "Tower", "Projectile", "Unit", etc.
+	 */
+	private static String partTypeFromName(String partName){
+		return partName.substring(0, partName.indexOf("_"));
+	}
+
+	/**
+	 * Writes all parts of the current game into their respective files
+	 */
+	public void writeAllPartsToXML(){
+		for(String partName : userParts.keySet())
+			writePartToXML(partName);
+	}
+	
+	/**
+	 * Writes the Map<partName, [part data]> into an XML file called [gameName]Parts.xml
+	 */
+	public void writeGameToXML(){
+		String dir = userDataPackage + "\\" + gameName + "\\GameFile";
+		XMLWriter.toXML(userParts, gameName + "Parts.xml", dir);
 	}
 
 	/*
@@ -68,8 +106,6 @@ public class InstanceManager {
 		return className.substring(0, className.indexOf("Editor"));
 	}*/
 
-	//create map based on passed List<Setting>
-	// use getParamName() getParamValue()
 	/**
 	 * 
 	 * @param partName The name of the part you want to update
@@ -94,17 +130,7 @@ public class InstanceManager {
 		userParts.get(partName).put(param,  newData);
 	}
 
-	//5:09am
-	/**
-	 * 
-	 * @param partName The part to write to XML
-	 */
-	public void writePartToXML(String partName){
-		String partType = partTypeFromName(partName);
-		String partFileName = partName + ".xml";
-		String dir= userDataPackage + "\\" + gameName + "\\" + partType;
-		//partSaveLocs.put(partName, XMLWriter.toXML(userParts.get(partName), partFileName, dir));
-	}
+
 
 	/**
 	 * 
@@ -119,24 +145,6 @@ public class InstanceManager {
 		return (Map<String, Object>) XMLWriter.fromXML(fileLocation);
 	}
 
-	
-	/**
-	 * 
-	 * @param partName The name of the part
-	 * @return The type of part, i.e. Tower, Projectile, Unit, etc.
-	 */
-	private static String partTypeFromName(String partName){
-		return partName.substring(0, partName.indexOf("_"));
-	}
-	
-
-	/**
-	 * writes all parts of the current game into their respective files
-	 */
-	public void writeAllToXML(){
-		for(String partName : userParts.keySet())
-			writePartToXML(partName);
-	}
 
 	@Override
 	public String toString(){
@@ -156,6 +164,19 @@ public class InstanceManager {
 	}
 
 
+	/**
+	 * At the moment, this adds a default part, but this probably won't end up being used
+	 * @param partType the kind of part to be added
+	 * @return the part that was added
+	 */
+	public Map<String, Object> addPart(String partType){
+		Map<String, Object> newPart = GameCreator.createDefaultPart(partType);
+		String partName =  partType + "_" + "Part_" + new Integer(partsCreated++).toString();
+		userParts.put(partName, newPart);
+		return newPart;
+	}
+
+
 	public static void main (String[] args){
 		InstanceManager gameManager = new InstanceManager("TestGame");
 		GameCreator.createNewGameFolder(gameManager.getName());
@@ -172,7 +193,7 @@ public class InstanceManager {
 		gameManager.updatePart("Unit_Part_4", "Speed", "3");
 		System.out.println(gameManager);
 
-		gameManager.writeAllToXML();
+		gameManager.writeAllPartsToXML();
 		//example of overwriting a file
 		//XMLWriter.toXML(new String("testing"), "Projectile_Part_2", 
 		//userDataPackage + "\\TestGame\\Projectile");

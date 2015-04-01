@@ -14,32 +14,43 @@ public class GameCreator {
 	private static final String userDataPackage = System.getProperty("user.dir").concat("\\src\\userData");
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
+	private static final String gameFileDir = "\\GameFile";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 	private static Set<String> dirsToBeCreated = paramLists.keySet();
 
 
 	/**
-	 * 
-	 * @param gameName The name of the new game we're going to create subdirectories for
 	 * Creates subdirectories for each kind of part, i.e. "Tower", "Unit", etc. in a 
 	 * subdirectory of ... userData\gameName
+	 * @param gameName The name of the new game we're going to create subdirectories for
 	 */
 	public static void createNewGameFolder(String gameName){
 		String gameDir = userDataPackage.concat("\\").concat(gameName);
 		new File(gameDir).mkdirs();
 		for(String dir : dirsToBeCreated)
 			new File(gameDir.concat("\\").concat(dir)).mkdirs();
-		new File(gameDir + "\\gameFile").mkdirs();
+		//adds a directory for storing the Map<partName, [it's params and data]>
+		new File(gameDir + gameFileDir).mkdirs();
 	}
-	
+
+	/**
+	 * Saves all the parts and the Map<partName, [part data]> into an XML file called gameName + "Parts.xml"
+	 * Ex: "TestGameParts.xml"
+	 * @param gameManager the InstanceManager of the game that's being saved
+	 */
 	public static void saveGame(InstanceManager gameManager){
-		//saves the entire game
+		gameManager.writeAllPartsToXML();
+		gameManager.writeGameToXML();
 	}
-	
-	//not sure what the best parameter for this is yet
-	//  String gameName?
-	public static InstanceManager loadGame(String gameName){
-		//loads entire game
+
+	/**
+	 * Loads in the Map<partName, [part data]> representing all the parts of the game
+	 * @param gameName The name of the game for which to load in the parts
+	 * @return
+	 */
+	public static Map<String, Map<String, Object>> loadGame(String gameName){
+		String dir = userDataPackage + "\\" + gameName + gameFileDir;
+		return (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir);
 	}
 
 	/**
@@ -50,7 +61,7 @@ public class GameCreator {
 	 * @param dataType The type of the data, i.e. "Integer"
 	 * @return The Setting object corresponding to these parameters
 	 */
-	
+
 	public static Setting generateSetting(String partType, String param, String defaultVal, String dataType){
 		Class<?> c = String.class;
 		try{
@@ -70,7 +81,6 @@ public class GameCreator {
 
 		return s;
 	}
-	
 
 	/**
 	 * 
@@ -91,11 +101,9 @@ public class GameCreator {
 
 			settingsList.add(generateSetting(partType, param, defaultVal, dataType));
 		}
-		
+
 		return settingsList;
 	}
-
-
 
 	/**
 	 * 
