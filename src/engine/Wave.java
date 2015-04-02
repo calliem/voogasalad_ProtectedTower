@@ -11,11 +11,23 @@ import engine.sprites.Enemy;
  * @author Qian Wang
  *
  */
-public class Wave {
+public class Wave implements Updateable, Endable {
     private ArrayList<Enemy> myEnemies;
     private double mySendRate;
+    private int myNumSent = 0;
 
-    public void update () {
-
+    @Override
+    public boolean hasEnded () {
+        if (myNumSent >= myEnemies.size()) { return true; }
+        return false;
     }
+
+    @Override
+    public void update (int counter) {
+        if (counter % mySendRate == 0) {
+            // TODO send enemy
+            myNumSent++;
+        }
+    }
+
 }

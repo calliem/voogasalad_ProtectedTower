@@ -11,10 +11,18 @@ import java.util.ArrayList;
  * 
  * @author Qian Wang
  */
-public class Level {
+public class Level implements Updateable, Endable {
     private ArrayList<Round> myRounds;
 
-    public void update () {
+    @Override
+    public boolean hasEnded () {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void update (int counter) {
+        // TODO Auto-generated method stub
 
     }
 

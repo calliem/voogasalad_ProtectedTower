@@ -10,10 +10,30 @@ import java.util.ArrayList;
  * @author Qian Wang
  *
  */
-public class Round {
+public class Round implements Updateable, Endable {
     private ArrayList<Wave> myWaves;
+    private int myDelay; // defines how many frames to wait between sending waves
+    private int myCurrentDelay = 0;
+    private int myActiveWaveIndex = 0;
 
-    public void update () {
-
+    @Override
+    public boolean hasEnded () {
+        if (myActiveWaveIndex >= myWaves.size()) { return true; }
+        return false;
     }
+
+    @Override
+    public void update (int counter) {
+        if (myCurrentDelay == 0) {
+            myWaves.get(myActiveWaveIndex).update(counter);
+        }
+        if (myWaves.get(myActiveWaveIndex).hasEnded()) {
+            myCurrentDelay++;
+            if (myCurrentDelay > myDelay) {
+                myCurrentDelay = 0;
+                myActiveWaveIndex++;
+            }
+        }
+    }
+
 }
