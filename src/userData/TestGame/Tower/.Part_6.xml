@@ -1,0 +1,18 @@
+<map>
+  <entry>
+    <string>HP</string>
+    <int>100</int>
+  </entry>
+  <entry>
+    <string>FireRate</string>
+    <double>1.0</double>
+  </entry>
+  <entry>
+    <string>Range</string>
+    <int>1</int>
+  </entry>
+  <entry>
+    <string>Projectile</string>
+    <engine.Projectile/>
+  </entry>
+</map>
