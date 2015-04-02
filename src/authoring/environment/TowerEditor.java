@@ -1,6 +1,14 @@
+/**
+ * Sets up the tower editor that allows the user to create towers, update their parameters/properties, and specify a hierarchy of upgrades 
+ * @author Callie Mao, Kevin He
+ */
+
 package authoring.environment;
 
 import java.util.ArrayList;
+
+import javafx.animation.ScaleTransition;
+import javafx.geometry.Dimension2D;
 import java.util.List;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
@@ -22,6 +30,13 @@ import javafx.util.Duration;
 import authoring.environment.objects.TowerView;
 
 public class TowerEditor extends PropertyEditor{
+
+	public TowerEditor(Dimension2D dim) {
+		super(dim);
+		// TODO Auto-generated constructor stub
+	}
+
+    //public ArrayList<TowerView> getTowers(){
     private Group myRoot;
     private StackPane myContent;
     private HBox currentRow;
@@ -125,6 +140,7 @@ public class TowerEditor extends PropertyEditor{
         promptDisplay.getChildren().addAll(promptBackground, promptContent);
         showEditScreen(promptDisplay);
     }
+
 
     /**
      * @param editControls
