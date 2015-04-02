@@ -40,6 +40,9 @@ public class TowerView extends SpriteView{
         
         Rectangle towerBackground = new Rectangle(100, 100, Color.WHITE);
         Text towerName = new Text(name);
+        towerName.setFont(new Font(10));
+        towerName.setTextAlignment(TextAlignment.CENTER);
+        towerName.setWrappingWidth(90);
         getChildren().addAll(towerBackground, towerName);
         
         setupEditableContent();

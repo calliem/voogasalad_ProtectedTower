@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import authoring.environment.setting.Setting;
 
 public class GameCreator {
 
@@ -40,6 +41,7 @@ public class GameCreator {
 	//  String gameName?
 	public static InstanceManager loadGame(String gameName){
 		//loads entire game
+	    return new InstanceManager();
 	}
 
 	/**

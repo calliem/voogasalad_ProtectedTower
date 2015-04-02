@@ -76,15 +76,9 @@ public class TowerEditor extends PropertyEditor{
         HBox editControls = new HBox(10);
         editControls.setAlignment(Pos.CENTER_RIGHT);
         Button edit = new Button("Edit");
-//        edit.setMaxHeight(60);
-        edit.setMinHeight(60);
-        edit.setMinWidth(100);
         edit.setTranslateX(-10);
 
-        ImageView add = new ImageView(new Image("images/addtower.png"));
-        add.setFitHeight(60);
-        add.setPreserveRatio(true);
-        add.setSmooth(true);
+        Button add = new Button("Add Tower");
         add.setTranslateX(-10);
         add.setOnMousePressed((e) -> {
             promptNewTowerName();
@@ -108,19 +102,29 @@ public class TowerEditor extends PropertyEditor{
         Rectangle promptBackground = new Rectangle(300, 200);
         promptBackground.setOpacity(0.8);
         
-        VBox promptContent = new VBox(10);
+        VBox promptContent = new VBox(20);
         promptContent.setAlignment(Pos.CENTER);
         Text prompt = new Text("Creating a new tower...");
         prompt.setFill(Color.WHITE);
         TextField promptField = new TextField();
         promptField.setMaxWidth(200);
         promptField.setPromptText("Enter a name...");
+        
+        HBox buttons = new HBox(10);
         Button create = new Button("Create");
         create.setOnAction((e) -> {
             addTower(promptField.getText());
             hideEditScreen(promptDisplay);
         });
-        promptContent.getChildren().addAll(prompt, promptField, create);
+        
+        Button cancel = new Button("Cancel");
+        cancel.setOnAction((e) -> {
+            hideEditScreen(promptDisplay);
+        });
+        
+        buttons.setAlignment(Pos.CENTER);
+        buttons.getChildren().addAll(create, cancel);
+        promptContent.getChildren().addAll(prompt, promptField, buttons);
         
         promptDisplay.getChildren().addAll(promptBackground, promptContent);
         showEditScreen(promptDisplay);
@@ -143,7 +147,7 @@ public class TowerEditor extends PropertyEditor{
      * @param edit
      * @param add
      */
-    private void startEditing (HBox editControls, Button edit, ImageView add) {
+    private void startEditing (HBox editControls, Button edit, Button add) {
         editControls.getChildren().add(0, add);
         edit.setText("Done");
         for(TowerView tower: towersCreated){
