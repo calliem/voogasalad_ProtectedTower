@@ -1,4 +1,4 @@
-package authoring.environment.objects;
+package authoringEnvironment.objects;
 
 import javafx.scene.layout.StackPane;
 
