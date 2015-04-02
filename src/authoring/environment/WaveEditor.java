@@ -2,10 +2,10 @@ package authoring.environment;
 
 import java.util.ArrayList;
 import javafx.scene.Group;
-import authoring.environment.objects.Unit;
+import authoring.environment.objects.UnitView;
 
 public class WaveEditor extends MainEditor{
-    public ArrayList<Unit> getWaves(){
+    public ArrayList<UnitView> getWaves(){
         return new ArrayList<>();
     }
 

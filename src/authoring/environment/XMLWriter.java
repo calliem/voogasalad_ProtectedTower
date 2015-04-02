@@ -37,7 +37,7 @@ public class XMLWriter {
 		//System.out.println(fileName + " saved at: " + dir);
 		return dir + "\\" + fileName;
 	}
-	
+
 	/**
 	 * 
 	 * @param The object to be saved in XML format
@@ -73,6 +73,4 @@ public class XMLWriter {
 	public static Object fromXML(String dir){
 		return stream.fromXML(new File(dir));
 	}
-
-
 }
