@@ -10,21 +10,20 @@ import java.util.ResourceBundle;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 
-public class LevelEditor extends MainEditor{
-    public LevelEditor(Dimension2D dim, ResourceBundle resources) {
+public class LevelEditor extends MainEditor {
+	public LevelEditor(Dimension2D dim, ResourceBundle resources) {
 		super(dim, resources);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-    public Group configureUI() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public Group configureUI() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	
 	@Override
-	protected void createMap(){
-		//TODO impement this
+	protected void createMap() {
+		// TODO impement this
 	}
 }

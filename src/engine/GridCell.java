@@ -2,7 +2,7 @@ package engine;
 
 import java.util.List;
 
-public class GridCell extends Sprite{
+public class GridCell extends Sprite {
 
 	public GridCell() throws InsufficientParametersException {
 		super();
@@ -30,8 +30,7 @@ public class GridCell extends Sprite{
 	@Override
 	public void target(Sprite s) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
 }

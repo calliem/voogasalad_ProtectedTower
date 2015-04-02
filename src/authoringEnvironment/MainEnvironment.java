@@ -1,12 +1,8 @@
-/**
- * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
- * @author Callie Mao
- */
+
 
 package authoringEnvironment;
 
 import java.util.ResourceBundle;
-
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.editors.LevelEditor;
 import authoringEnvironment.editors.MapEditor;
@@ -25,133 +21,140 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
+ * @author Callie Mao
+ */
+
 public class MainEnvironment {
 
-    private static Dimension2D myDimensions;
-    private Stage myStage; //is this necessary
-    private TabPane myTabPane;
-    private GridPane myGridPane;
-    private static final boolean MAIN_TAB = true;
-    private static final boolean SPRITE_TAB = false;
-    private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-    private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "english");
+	private static Dimension2D myDimensions;
+	private Stage myStage; // is this necessary
+	private TabPane myTabPane;
+	private GridPane myGridPane;
+	private static final boolean MAIN_TAB = true;
+	private static final boolean SPRITE_TAB = false;
+	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+	private ResourceBundle myResources = ResourceBundle
+			.getBundle(DEFAULT_RESOURCE_PACKAGE + "english");
 
-    //private SceneSetter mySceneSetter = new SceneSetter();
+	public MainEnvironment(Stage s) {
+		initScreen();
+		initStage(s);
 
-    public MainEnvironment(Stage s) {
-        initScreen();
-        initStage(s);
+		myGridPane = new GridPane();
+		myGridPane.setGridLinesVisible(true);
+		createEnvironment(myGridPane);
 
-        myGridPane = new GridPane();
-        myGridPane.setGridLinesVisible(true);
-        createEnvironment(myGridPane);
+		// addTab(new MainEditor(), myResources.getString("MainTabTab"));
 
-        //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
-        
-        addTab(new MapEditor(myDimensions, myResources), myResources.getString("MapTab"), MAIN_TAB);     //is it redundant passing in the dimensions so many times?
-        addTab(new WaveEditor(myDimensions, myResources), myResources.getString("WavesTab"), MAIN_TAB);
-        addTab(new LevelEditor(myDimensions, myResources), myResources.getString("LevelsTab"), MAIN_TAB);
-        //   addTab(new ProjectileEditor(), myResources.getString("ProjectilesTab"));
-        addTab(new TowerEditor(myDimensions, myResources), myResources.getString("TowersTab"), SPRITE_TAB);
+		addTab(new MapEditor(myDimensions, myResources), myResources.getString("MapTab"),
+				MAIN_TAB); // is it redundant passing in the dimensions so many
+							// times?
+		addTab(new WaveEditor(myDimensions, myResources),
+				myResources.getString("WavesTab"), MAIN_TAB);
+		addTab(new LevelEditor(myDimensions, myResources),
+				myResources.getString("LevelsTab"), MAIN_TAB);
+		// addTab(new ProjectileEditor(),
+		// myResources.getString("ProjectilesTab"));
+		addTab(new TowerEditor(myDimensions, myResources),
+				myResources.getString("TowersTab"), SPRITE_TAB);
 
-        setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
-    }
-    
-    public static double getEnvironmentWidth(){
-        return myDimensions.getWidth();
-    }
-    
-    public static double getEnvironmentHeight(){
-        return myDimensions.getHeight();
-    }
+		setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
+	}
 
-    private void createEnvironment(GridPane grid) {
-        //TODO: hardcoded numbers should be removed
-        //TODO: remove 'x's' from tabs
-        //gridPane.setStyle("-fx-background-color: #C0C0C0;");
+	public static double getEnvironmentWidth() {
+		return myDimensions.getWidth();
+	}
 
-        ColumnConstraints col0 = new ColumnConstraints();
-        col0.setPercentWidth(100);
+	public static double getEnvironmentHeight() {
+		return myDimensions.getHeight();
+	}
 
-        RowConstraints row0 = new RowConstraints();
-        row0.setPercentHeight(4);
-        RowConstraints row1 = new RowConstraints();
-        row1.setPercentHeight(96);
-        grid.getRowConstraints().add(row0);
-        grid.getRowConstraints().add(row1);
-        grid.getColumnConstraints().add(col0);
+	private void createEnvironment(GridPane grid) {
+		// TODO: hardcoded numbers should be removed
+		// TODO: remove 'x's' from tabs
+		// gridPane.setStyle("-fx-background-color: #C0C0C0;");
 
-        grid.add(configureTopMenu(),0,0);
-        myTabPane = new TabPane();
-        grid.add(myTabPane,0,1);
-    }
+		ColumnConstraints col0 = new ColumnConstraints();
+		col0.setPercentWidth(100);
 
+		RowConstraints row0 = new RowConstraints();
+		row0.setPercentHeight(4);
+		RowConstraints row1 = new RowConstraints();
+		row1.setPercentHeight(96);
+		grid.getRowConstraints().add(row0);
+		grid.getRowConstraints().add(row1);
+		grid.getColumnConstraints().add(col0);
 
-    private void addTab(Editor newEditor, String tabName, boolean main) {
-        Tab tab = new Tab();
-        tab.setText(tabName);
-        tab.setContent(newEditor.configureUI());
-        if (main == true){
-        	tab.setStyle("-fx-base: #3c3c3c;");
-        }
-        tab.setClosable(false);
-        myTabPane.getTabs().add(tab);
-    }
+		grid.add(configureTopMenu(), 0, 0);
+		myTabPane = new TabPane();
+		grid.add(myTabPane, 0, 1);
+	}
 
-    private void initScreen() {
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-        myDimensions = new Dimension2D(bounds.getWidth(), bounds.getHeight());
-    }
+	private void addTab(Editor newEditor, String tabName, boolean main) {
+		Tab tab = new Tab();
+		tab.setText(tabName);
+		tab.setContent(newEditor.configureUI());
+		if (main == true) {
+			tab.setStyle("-fx-base: #3c3c3c;");
+		}
+		tab.setClosable(false);
+		myTabPane.getTabs().add(tab);
+	}
 
-    private void initStage(Stage s) {
-        myStage = s;      
-        myStage.setResizable(false);
-    }
+	private void initScreen() {
+		Screen screen = Screen.getPrimary();
+		Rectangle2D bounds = screen.getVisualBounds();
+		myDimensions = new Dimension2D(bounds.getWidth(), bounds.getHeight());
+	}
 
-    private MenuBar configureTopMenu() {
-        Menu file = configureFileMenu();
-        Menu info = configureInfoMenu();
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(file, info);
-        return menuBar;
-    }
+	private void initStage(Stage s) {
+		myStage = s;
+		myStage.setResizable(false);
+	}
 
-    private Menu configureInfoMenu() {
-        Menu info = new Menu(myResources.getString("Info"));
-        MenuItem help = new MenuItem(myResources.getString("Help"));
-        info.getItems().addAll(help);
-        help.setOnAction(e -> displayPage("/src/resources/help.html"));
-        return info;
-    }
+	private MenuBar configureTopMenu() {
+		Menu file = configureFileMenu();
+		Menu info = configureInfoMenu();
+		MenuBar menuBar = new MenuBar();
+		menuBar.getMenus().addAll(file, info);
+		return menuBar;
+	}
 
-    private Menu configureFileMenu() {
-        Menu file = new Menu(myResources.getString("File"));
-        MenuItem exit = new MenuItem(myResources.getString("Exit"));
-        exit.setOnAction(e -> Platform.exit());
-        file.getItems().addAll(exit);
-        return file;
-    }
+	private Menu configureInfoMenu() {
+		Menu info = new Menu(myResources.getString("Info"));
+		MenuItem help = new MenuItem(myResources.getString("Help"));
+		info.getItems().addAll(help);
+		help.setOnAction(e -> displayPage("/src/resources/help.html"));
+		return info;
+	}
 
-    private void displayPage(String loc) {
-        WebView browser = new WebView();
-        WebEngine webEngine = browser.getEngine();
-        webEngine.load("file://" + System.getProperty("user.dir") + loc);
-        Stage stage = new Stage();
-        setupScene(stage, browser, 1000, 750);
-    }
+	private Menu configureFileMenu() {
+		Menu file = new Menu(myResources.getString("File"));
+		MenuItem exit = new MenuItem(myResources.getString("Exit"));
+		exit.setOnAction(e -> Platform.exit());
+		file.getItems().addAll(exit);
+		return file;
+	}
 
-    public void setupScene(Stage stage, Parent root, double width, double height) {
-        Scene scene = new Scene(root, width, height);
-        // myStage.setTitle(myResources.getString("Title"));
-        myStage.setScene(scene);
-        myStage.show();
-    }
+	private void displayPage(String loc) {
+		WebView browser = new WebView();
+		WebEngine webEngine = browser.getEngine();
+		webEngine.load("file://" + System.getProperty("user.dir") + loc);
+		Stage stage = new Stage();
+		setupScene(stage, browser, 1000, 750);
+	}
+
+	public void setupScene(Stage stage, Parent root, double width, double height) {
+		Scene scene = new Scene(root, width, height);
+		// myStage.setTitle(myResources.getString("Title"));
+		myStage.setScene(scene);
+		myStage.show();
+	}
 }
