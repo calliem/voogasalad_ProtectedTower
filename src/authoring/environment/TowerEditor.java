@@ -211,6 +211,3 @@ public class TowerEditor extends PropertyEditor{
         return scale;
     }
 }
-
-
-
