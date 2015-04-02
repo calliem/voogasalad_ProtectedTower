@@ -173,8 +173,6 @@ public class TowerEditor extends PropertyEditor{
     private void showEditScreen(StackPane overlay){
         if(!overlayActive){
             myContent.getChildren().add(overlay);
-            StackPane.setAlignment(overlay, Pos.CENTER);
-            System.out.println(overlay.getAlignment());
             scaleEditScreen(0.0, 1.0, overlay);
             overlayActive = true;
         }
@@ -202,7 +200,7 @@ public class TowerEditor extends PropertyEditor{
     }
 
     private ScaleTransition scaleEditScreen(double from, double to, StackPane overlay){
-        ScaleTransition scale = new ScaleTransition(Duration.millis(400), overlay);
+        ScaleTransition scale = new ScaleTransition(Duration.millis(200), overlay);
         scale.setFromX(from);
         scale.setFromY(from);
         scale.setToX(to);

@@ -15,7 +15,7 @@ public class IntegerSetting extends Setting {
     protected void setupInteractionLayout(){
         value = new TextField("0");
         value.setOnAction((e) -> {
-           System.out.println(value.getText()); 
+           System.out.println(value.getText());
         });
         this.getChildren().add(value);
     }

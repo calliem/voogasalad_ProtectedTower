@@ -60,7 +60,7 @@ public class TowerView extends SpriteView{
     }
     
     public void setupTooltipText(List<String[]> info){
-        String tooltipText = String.format("%s: %s\n", "Tower Name", name);
+        String tooltipText = String.format("%s: %s\n", "Name", name);
         for(String[] parameter : info){
             tooltipText += String.format("%s: %s\n", parameter[0], parameter[1]);
         }
@@ -99,6 +99,7 @@ public class TowerView extends SpriteView{
         
         Setting test = new IntegerSetting("Health");
         parameterFields.add(test);
+        
         overlayCloseButton = new Button("Close");
         
         editableContent.getChildren().addAll(title, test, overlayCloseButton);
