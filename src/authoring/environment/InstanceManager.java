@@ -2,11 +2,16 @@
 
 package authoring.environment;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.thoughtworks.xstream.XStream;
@@ -14,8 +19,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
 public class InstanceManager {
-
-	private String gameName;
+	String gameName;
 	private int partsCreated = 0;
 	
 	//public static final ResourceBundle paramLists = ResourceBundle.getBundle("resources/part_parameters");
@@ -30,7 +34,6 @@ public class InstanceManager {
 	//each part is represented by a map mapping the part's parameters to their data
 	//the fields look like: Map<partName, Map<parameterName, parameterData>>
 	private Map<String, Map<String, Object>> userParts;
-
 
 	public InstanceManager(String name){
 		this();
@@ -133,10 +136,7 @@ public class InstanceManager {
 		//gameManager.writeAllToXML();
 		gameManager.writeAllToXML();
 	}
-
-
-
-
 }
+
 
 

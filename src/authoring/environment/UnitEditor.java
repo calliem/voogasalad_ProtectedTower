@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
-import authoring.environment.objects.Unit;
+import authoring.environment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
    
@@ -17,9 +17,9 @@ public class UnitEditor extends PropertyEditor {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<Unit> getUnits(){
-        return new ArrayList<>();
-    }
+	public ArrayList<UnitView> getUnits(){
+		return null;
+	}
 
 	@Override
 	protected Group configureUI() {

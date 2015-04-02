@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 
 public class MainEnvironment {
 
-    protected static Dimension2D myDimensions;
+    private static Dimension2D myDimensions;
     private Stage myStage; //is this necessary
     private TabPane myTabPane;
     private GridPane myGridPane;
@@ -57,6 +57,14 @@ public class MainEnvironment {
         addTab(new TowerEditor(myDimensions), myResources.getString("TowersTab"), SPRITE_TAB);
 
         setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
+    }
+    
+    public static double getEnvironmentWidth(){
+        return myDimensions.getWidth();
+    }
+    
+    public static double getEnvironmentHeight(){
+        return myDimensions.getHeight();
     }
 
     private void createEnvironment(GridPane grid) {

@@ -8,8 +8,7 @@ package authoring.environment;
 import java.util.ArrayList;
 
 import javafx.geometry.Dimension2D;
-import javafx.scene.Group;
-import authoring.environment.objects.Unit;
+import authoring.environment.objects.UnitView;
 
 public class WaveEditor extends MainEditor{
     public WaveEditor(Dimension2D dim) {
@@ -17,7 +16,8 @@ public class WaveEditor extends MainEditor{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<Unit> getWaves(){
+
+    public ArrayList<UnitView> getWaves(){
         return new ArrayList<>();
     }
 

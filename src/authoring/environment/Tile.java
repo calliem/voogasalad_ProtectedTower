@@ -13,22 +13,16 @@ public class Tile extends ImageView{
 	private double mySize;
 	private Image myImage;
 //	private static Image myPathImage = new Image("/resources/red_square.png"); //is this done properly if all tiles will have the same image for a path?
-	
+	//TODO: create a text box to set grid size and a slider to set tile size that would only allow numbers in correct increments that would fit 
 	
 	public Tile(double tileSize, int rowNum, int colNum) {
+		System.out.println("tileSize" + tileSize);
 		mySize = tileSize;
-		//myImage = new ImageView(new Image("/resources/white_square.png"));
 		setImage(new Image("/resources/white_square.png"));
 		setFitWidth(tileSize);
 		setFitHeight(tileSize);
 		setTranslateX(colNum*tileSize);
-		setTranslateX(rowNum*tileSize);
-		//TODO: add borders around map
-		setStyle("-fx-border-color: black;"
-        + "-fx-border-width: 1;"
-        + "-fx-border-style: solid;"
-        + "-fx-padding: 10;" 
-        + "-fx-background-color: firebrick;");
+		setTranslateY(rowNum*tileSize);
 		isPath = false;
 	}
 	

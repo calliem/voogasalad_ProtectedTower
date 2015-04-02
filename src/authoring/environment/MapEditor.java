@@ -8,18 +8,16 @@ package authoring.environment;
 import java.util.ArrayList;
 
 import javafx.geometry.Dimension2D;
-import javafx.scene.Group;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
-import authoring.environment.objects.Path;
-import authoring.environment.objects.Sprite;
+import authoring.environment.objects.PathView;
+import authoring.environment.objects.SpriteView;
 
 public class MapEditor extends MainEditor {
 	
 	private TileMap myActiveMap;
 	
-	private static final double DEFAULT_MAP_WIDTH = 600;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
-	private static final double DEFAULT_MAP_HEIGHT = 1000; //getHeight();
+	private static final double DEFAULT_MAP_WIDTH = 1000;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
+	private static final double DEFAULT_MAP_HEIGHT = 700; //getHeight();
+	private static final double DEFAULT_TILE_SIZE = 50;
 	
 
 	public MapEditor(Dimension2D dim) {
@@ -27,26 +25,25 @@ public class MapEditor extends MainEditor {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Sprite[][] getTiles() {
-		// TODO return actual map tiles
-		return new Sprite[0][0];
-	}
+    public SpriteView[][] getTiles(){
+        // TODO return actual map tiles
+        return new SpriteView[0][0];
+    }
 
-	public ArrayList<Path> getPaths() { // to be accessed by Levels
-		// TODO return actual paths
-		return new ArrayList<>();
-	}
+    public ArrayList<PathView> getPaths(){ //to be accessed by Levels
+        // TODO return actual paths
+        return new ArrayList<>();
+    }
 
-	public ArrayList<Sprite> getMaps() {
-		// TODO return actual GameMaps
-		return new ArrayList<>();
-	};
-
-	@Override
+    public ArrayList<SpriteView> getMaps(){
+        // TODO return actual GameMaps
+        return new ArrayList<>();
+    };
+    
 	protected void createMap() {
 		// TODO Auto-generated method stub
 		
-		myActiveMap = new TileMap(DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT, 200);
+		myActiveMap = new TileMap(DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT, DEFAULT_TILE_SIZE);
 		//TODO: remove test values
 		
 //		Tile tile = new Tile(100);
