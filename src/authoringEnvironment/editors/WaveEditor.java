@@ -3,16 +3,17 @@
  * @author Callie Mao
  */
 
-package authoring.environment;
+package authoringEnvironment.editors;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
-import authoring.environment.objects.UnitView;
+import authoringEnvironment.objects.UnitView;
 
 public class WaveEditor extends MainEditor{
-    public WaveEditor(Dimension2D dim) {
-		super(dim);
+    public WaveEditor(Dimension2D dim, ResourceBundle resources) {
+		super(dim, resources);
 		// TODO Auto-generated constructor stub
 	}
 

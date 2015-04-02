@@ -1,6 +1,6 @@
 //current not sure if this class is necessary. ideally yes, since it will help to extend in the future.
 
-package authoring.environment;
+package authoringEnvironment.objects;
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
 

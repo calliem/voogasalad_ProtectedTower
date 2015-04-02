@@ -1,4 +1,4 @@
-package authoring.environment;
+package authoringEnvironment.objects;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

@@ -3,13 +3,16 @@
  * @author Callie Mao, Kevin He
  */
 
-package authoring.environment;
+package authoringEnvironment.editors;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Dimension2D;
+
 import java.util.List;
+
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -27,12 +30,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import authoring.environment.objects.TowerView;
+import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.objects.TowerView;
 
 public class TowerEditor extends PropertyEditor{
 
-	public TowerEditor(Dimension2D dim) {
-		super(dim);
+	public TowerEditor(Dimension2D dim, ResourceBundle resources) {
+		super(dim, resources);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -53,7 +57,7 @@ public class TowerEditor extends PropertyEditor{
     }
 
     @Override
-    protected Group configureUI () {
+    public Group configureUI () {
         // TODO Auto-generated method stub
         myRoot = new Group();
         myContent = new StackPane();

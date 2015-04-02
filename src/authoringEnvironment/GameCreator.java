@@ -1,4 +1,4 @@
-package authoring.environment;
+package authoringEnvironment;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;

@@ -3,7 +3,9 @@
  * @author Callie Map
  */
 
-package authoring.environment;
+package authoringEnvironment.editors;
+import java.util.ResourceBundle;
+
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.layout.ColumnConstraints;
@@ -19,12 +21,10 @@ public abstract class MainEditor extends Editor {
 	public static final double MAP_WIDTH_MULTIPLIER = .75;
 	public static final double MAP_HEIGHT_PERCENT = 100;
 	
-	public MainEditor(Dimension2D dim) {
-		super(dim);
+	public MainEditor(Dimension2D dim, ResourceBundle resources) {
+		super(dim, resources);
 		// TODO Auto-generated constructor stub
 	}
-	
-
 
 	private GridPane myPane;
 	
@@ -38,31 +38,27 @@ public abstract class MainEditor extends Editor {
 	
 	//doing this wrong
 	//create in mapeditor only and then call it in the other editor
-	protected Group configureUI() {
+	public Group configureUI() {
 		
 		Group root = new Group();
 		//root.
 		//TODO: set background color to the same color as the tabs
-		myPane = new GridPane();
-		setGridPaneConstraints(myPane);
-		myPane.setGridLinesVisible(true);
 		
+		createGridPane();
 		createMap();
 		//does it dynamically update or will i have to say myPane = createmap();
 		// TODO remove magic number
-        /*Rectangle background = new Rectangle(MainEnvironment.myDimensions.getWidth(), 0.9 * MainEnvironment.myDimensions.getHeight());
-        background.setStyle("-fx-border-color: red;"
-                + "-fx-border-width: 1;"
-                + "-fx-border-style: solid;"
-                + "-fx-padding: 10;" 
-                + "-fx-background-color: firebrick;");*/
-        		
-        		//"-fx-base: #3c3c3c;");
-        
-		
+        //Rectangle background = new Rectangle(MainEnvironment.myDimensions.getWidth(), 0.9 * MainEnvironment.myDimensions.getHeight());
+   
 		root.getChildren().addAll(myPane); 
 
 		return root;
+	}
+	
+	private void createGridPane(){
+		myPane = new GridPane();
+		setGridPaneConstraints(myPane);
+		myPane.setGridLinesVisible(true);
 	}
 	
 

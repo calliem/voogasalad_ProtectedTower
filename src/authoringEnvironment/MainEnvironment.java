@@ -3,10 +3,15 @@
  * @author Callie Mao
  */
 
-package authoring.environment;
+package authoringEnvironment;
 
 import java.util.ResourceBundle;
 
+import authoringEnvironment.editors.Editor;
+import authoringEnvironment.editors.LevelEditor;
+import authoringEnvironment.editors.MapEditor;
+import authoringEnvironment.editors.TowerEditor;
+import authoringEnvironment.editors.WaveEditor;
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
@@ -50,11 +55,11 @@ public class MainEnvironment {
 
         //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
         
-        addTab(new MapEditor(myDimensions), myResources.getString("MapTab"), MAIN_TAB);     //is it redundant passing in the dimensions so many times?
-        addTab(new WaveEditor(myDimensions), myResources.getString("WavesTab"), MAIN_TAB);
-        addTab(new LevelEditor(myDimensions), myResources.getString("LevelsTab"), MAIN_TAB);
+        addTab(new MapEditor(myDimensions, myResources), myResources.getString("MapTab"), MAIN_TAB);     //is it redundant passing in the dimensions so many times?
+        addTab(new WaveEditor(myDimensions, myResources), myResources.getString("WavesTab"), MAIN_TAB);
+        addTab(new LevelEditor(myDimensions, myResources), myResources.getString("LevelsTab"), MAIN_TAB);
         //   addTab(new ProjectileEditor(), myResources.getString("ProjectilesTab"));
-        addTab(new TowerEditor(myDimensions), myResources.getString("TowersTab"), SPRITE_TAB);
+        addTab(new TowerEditor(myDimensions, myResources), myResources.getString("TowersTab"), SPRITE_TAB);
 
         setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
     }
