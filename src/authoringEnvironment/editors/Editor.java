@@ -3,7 +3,9 @@
  * @author Callie Mao
  */
 
-package authoring.environment;
+package authoringEnvironment.editors;
+
+import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
@@ -13,12 +15,13 @@ public abstract class Editor {
     //or use a ArrayList<?> getObjects() method in this superclass?
 	
 	private Dimension2D myDimensions;
+	private ResourceBundle myResources;
 	
-	public Editor(Dimension2D dim){
+	public Editor(Dimension2D dim, ResourceBundle resources){
 		myDimensions = dim;
 	}
 
-    protected abstract Group configureUI(); //or make it a Node instead of a gridPane?
+    public abstract Group configureUI(); //or make it a Node instead of a gridPane?
     
     protected double getWidth(){
     	return myDimensions.getWidth();
@@ -26,5 +29,9 @@ public abstract class Editor {
     
     protected double getHeight(){
     	return myDimensions.getHeight();
+    }
+    
+    protected ResourceBundle getResources(){
+    	return myResources;
     }
 }

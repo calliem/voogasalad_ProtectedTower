@@ -1,7 +1,8 @@
-package authoring.environment.objects;
+package authoringEnvironment.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
@@ -16,9 +17,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import authoring.environment.MainEnvironment;
 import authoring.environment.setting.IntegerSetting;
 import authoring.environment.setting.Setting;
+import authoringEnvironment.MainEnvironment;
 
 public class TowerView extends SpriteView{
     

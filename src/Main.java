@@ -1,5 +1,5 @@
 
-import authoring.environment.MainEnvironment;
+import authoringEnvironment.MainEnvironment;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

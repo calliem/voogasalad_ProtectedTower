@@ -3,26 +3,37 @@
  * @author Callie Mao
  */
 
-package authoring.environment;
+package authoringEnvironment.editors;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
-import authoring.environment.objects.PathView;
-import authoring.environment.objects.SpriteView;
+import javafx.scene.Group;
+import authoringEnvironment.Sidebar;
+import authoringEnvironment.objects.PathView;
+import authoringEnvironment.objects.SpriteView;
+import authoringEnvironment.objects.TileMap;
 
 public class MapEditor extends MainEditor {
 
     private TileMap myActiveMap;
-
-    private static final double DEFAULT_MAP_WIDTH = 1000;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
+    private static final double DEFAULT_MAP_WIDTH = 950;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
     private static final double DEFAULT_MAP_HEIGHT = 700; //getHeight();
     private static final double DEFAULT_TILE_SIZE = 1000;
 
 
-    public MapEditor(Dimension2D dim) {
-        super(dim);
-        // TODO Auto-generated constructor stub
+    public MapEditor(Dimension2D dim, ResourceBundle resources) {
+        super(dim, resources);
+
+    }
+
+    @Override
+    public Group configureUI(){
+        Group root = super.configureUI();
+        getPane().add(new Sidebar(getResources()),1,0);
+        return root;
+
     }
 
     public SpriteView[][] getTiles(){
@@ -42,14 +53,8 @@ public class MapEditor extends MainEditor {
 
     protected void createMap() {
         // TODO Auto-generated method stub
-
-        myActiveMap = new TileMap(DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT, DEFAULT_TILE_SIZE);
-        //TODO: remove test values
-
-        //		Tile tile = new Tile(100);
-
+        myActiveMap = new TileMap(DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT, DEFAULT_TILE_SIZE);		
         getPane().add(myActiveMap.getMap(), 0, 0);
-        //	getPane().add(tile, 2, 0);
     }
 
     public void setActiveMap(TileMap map){

@@ -3,13 +3,17 @@
  * @author Callie Mao, Kevin He
  */
 
-package authoring.environment;
+package authoringEnvironment.editors;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Dimension2D;
+
 import java.util.List;
+
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -30,7 +34,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import authoring.environment.objects.TowerView;
+import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.objects.TowerView;
 
 public class TowerEditor extends PropertyEditor{
     private Stage myStage;
@@ -45,8 +50,8 @@ public class TowerEditor extends PropertyEditor{
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
 
-    public TowerEditor(Dimension2D dim, Stage s) {
-        super(dim);
+    public TowerEditor(Dimension2D dim, ResourceBundle rb, Stage s) {
+        super(dim, rb);
         myStage = s;
         // TODO Auto-generated constructor stub
     }
@@ -55,7 +60,7 @@ public class TowerEditor extends PropertyEditor{
     }
 
     @Override
-    protected Group configureUI () {
+    public Group configureUI () {
         // TODO Auto-generated method stub
         myRoot = new Group();
         myContent = new StackPane();
