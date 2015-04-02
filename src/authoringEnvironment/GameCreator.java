@@ -1,9 +1,13 @@
-package authoring.environment;
+/**
+ * @author Johnny Kumpf
+ */
+package authoringEnvironment;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -19,6 +23,9 @@ public class GameCreator {
 	private static final String gameFileDir = "\\GameFile";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 	private static Set<String> dirsToBeCreated = paramLists.keySet();
+	private static final String editorPackage = System.getProperty("user.dir").concat("\\src\\authoringEnvironment\\editors");
+	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
+	private static final List<String> spriteEditors = listFromArray(new String[] {"TowerEditor", "ProjectileEditor", "UnitEditor"});
 
 
 	/**
@@ -54,7 +61,7 @@ public class GameCreator {
 		String dir = userDataPackage + "\\" + gameName + gameFileDir;
 		return (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir);
 	}
-	
+
 	/**
 	 * 
 	 * @param partType The type of part we need a Settings list for, i.e. "Tower"
@@ -158,6 +165,38 @@ public class GameCreator {
 		}
 
 		return data;
+	}
+
+	public static String[] editorsToCreate(){
+		File editors = new File(editorPackage);
+		System.out.println(editorPackage);
+		File[] allEditors = editors.listFiles();
+		String[] editorNames = new String[allEditors.length];
+		for(int i = 0; i < allEditors.length; i++){
+			String untrimmedName = allEditors[i].getName();
+			//trim off ".java"
+			editorNames[i] = untrimmedName.substring(0, untrimmedName.indexOf("."));
+			System.out.println(editorNames[i]);
+		}
+		return editorNames;
+	}
+
+	public static Map<String, Boolean> tabsToCreate(){
+		Map<String, Boolean> tabsToMake = new HashMap<String, Boolean>();
+		for(String s : editorsToCreate())
+			if(!abstractEditors.contains(s))
+				tabsToMake.put(s, !spriteEditors.contains(s));
+		return tabsToMake;
+	}
+
+	public static List<String> listFromArray(String[] s){
+		List<String> l = new ArrayList<String>();
+		for(String word : s)
+			l.add(word);
+		return l;
+	}
+	public static void main(String[] args){
+		GameCreator.editorsToCreate();
 	}
 
 

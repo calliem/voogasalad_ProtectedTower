@@ -1,4 +1,4 @@
-package authoring.environment.objects;
+package authoringEnvironment.objects;
 
 public abstract class ProjectileView extends SpriteView{
 

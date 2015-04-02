@@ -1,4 +1,7 @@
-package authoring.environment;
+/**
+ * @author Johnny Kumpf
+ */
+package authoringEnvironment;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -3,17 +3,18 @@
  * @author Callie Mao
  */
 
-package authoring.environment;
+package authoringEnvironment.editors;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
-import authoring.environment.objects.UnitView;
+import authoringEnvironment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
    
-	public UnitEditor(Dimension2D dim) {
-		super(dim);
+	public UnitEditor(Dimension2D dim, ResourceBundle resources) {
+		super(dim, resources);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -22,7 +23,7 @@ public class UnitEditor extends PropertyEditor {
 	}
 
 	@Override
-	protected Group configureUI() {
+	public Group configureUI() {
 		// TODO Auto-generated method stub
 		return null;
 	}
