@@ -5,8 +5,8 @@
 
 package authoring.environment;
 
+import java.io.File;
 import java.util.ArrayList;
-
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Dimension2D;
 import java.util.List;
@@ -26,17 +26,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import authoring.environment.objects.TowerView;
 
 public class TowerEditor extends PropertyEditor{
-
-	public TowerEditor(Dimension2D dim) {
-		super(dim);
-		// TODO Auto-generated constructor stub
-	}
-
-    //public ArrayList<TowerView> getTowers(){
+    private Stage myStage;
     private Group myRoot;
     private StackPane myContent;
     private HBox currentRow;
@@ -48,6 +45,11 @@ public class TowerEditor extends PropertyEditor{
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
 
+    public TowerEditor(Dimension2D dim, Stage s) {
+        super(dim);
+        myStage = s;
+        // TODO Auto-generated constructor stub
+    }
     public ArrayList<TowerView> getTowers(){
         return new ArrayList<>();
     }
@@ -111,12 +113,12 @@ public class TowerEditor extends PropertyEditor{
         editControls.getChildren().add(edit);
         return editControls;
     }
-    
+
     private void promptNewTowerName(){
         StackPane promptDisplay = new StackPane();
         Rectangle promptBackground = new Rectangle(300, 200);
         promptBackground.setOpacity(0.8);
-        
+
         VBox promptContent = new VBox(20);
         promptContent.setAlignment(Pos.CENTER);
         Text prompt = new Text("Creating a new tower...");
@@ -125,22 +127,25 @@ public class TowerEditor extends PropertyEditor{
         promptField.setMaxWidth(200);
         promptField.setPromptText("Enter a name...");
         
+        Text fileDisplay = new Text("Choose an image...");
+        HBox fileSelector = createFileSelector(fileDisplay);
+
         HBox buttons = new HBox(10);
         Button create = new Button("Create");
         create.setOnAction((e) -> {
             addTower(promptField.getText());
             hideEditScreen(promptDisplay);
         });
-        
+
         Button cancel = new Button("Cancel");
         cancel.setOnAction((e) -> {
             hideEditScreen(promptDisplay);
         });
-        
+
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(create, cancel);
-        promptContent.getChildren().addAll(prompt, promptField, buttons);
-        
+        promptContent.getChildren().addAll(prompt, promptField, fileSelector, buttons);
+
         promptDisplay.getChildren().addAll(promptBackground, promptContent);
         showEditScreen(promptDisplay);
     }
@@ -229,5 +234,42 @@ public class TowerEditor extends PropertyEditor{
         scale.play();
 
         return scale;
+    }
+
+    /**
+     * Creates the file selector with browse button.
+     * @param s the stage on which to display the open-file dialog
+     * @param fileDisplay       the display on which the user sees the file selected
+     * @return
+     */
+    private HBox createFileSelector(Text fileDisplay){
+        HBox fileSelection = new HBox(5);
+
+        StackPane textDisplay = new StackPane();
+
+        Rectangle textBox = new Rectangle(150, 24);
+        textBox.setFill(Color.WHITE);
+
+        Button loader = new Button("Browse");
+        loader.setOnAction((event) -> {
+            FileChooser fileChooser = new FileChooser();
+            // Set extension filter
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG Images (*.png)", "*.png");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            File file = fileChooser.showOpenDialog(myStage.getScene().getWindow());
+
+            if(file!=null){
+                String fileName = file.getName();
+                fileDisplay.setText(fileName);
+            }
+        });
+        fileDisplay.setTextAlignment(TextAlignment.LEFT);
+        textDisplay.getChildren().addAll(textBox, fileDisplay);
+
+        fileSelection.getChildren().addAll(textDisplay, loader);
+        fileSelection.setAlignment(Pos.CENTER);
+
+        return fileSelection;
     }
 }

@@ -10,13 +10,19 @@ import javafx.scene.Group;
 
 public class LevelEditor extends MainEditor{
     public LevelEditor(Dimension2D dim) {
-		super(dim);
-		// TODO Auto-generated constructor stub
-	}
+        super(dim);
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
+    @Override
     protected Group configureUI() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    protected void createMap () {
+        // TODO Auto-generated method stub
+
     }
 }

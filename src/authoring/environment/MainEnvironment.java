@@ -54,7 +54,7 @@ public class MainEnvironment {
         addTab(new WaveEditor(myDimensions), myResources.getString("WavesTab"), MAIN_TAB);
         addTab(new LevelEditor(myDimensions), myResources.getString("LevelsTab"), MAIN_TAB);
         //   addTab(new ProjectileEditor(), myResources.getString("ProjectilesTab"));
-        addTab(new TowerEditor(myDimensions), myResources.getString("TowersTab"), SPRITE_TAB);
+        addTab(new TowerEditor(myDimensions, s), myResources.getString("TowersTab"), SPRITE_TAB);
 
         setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
     }
