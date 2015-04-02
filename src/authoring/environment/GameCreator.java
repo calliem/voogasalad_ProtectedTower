@@ -54,6 +54,29 @@ public class GameCreator {
 		String dir = userDataPackage + "\\" + gameName + gameFileDir;
 		return (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir);
 	}
+	
+	/**
+	 * 
+	 * @param partType The type of part we need a Settings list for, i.e. "Tower"
+	 * @return The corresponding Settings list
+	 */
+	public static List<Setting> generateSettingsList(String partType){
+
+		List<Setting> settingsList = new ArrayList<Setting>();
+		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
+
+		String[] params = paramLists.getString(partType).split("\\s+");
+
+		for(String param : params){
+			String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
+			String dataType = typeAndDefault[0];
+			String defaultVal = typeAndDefault[1];
+
+			settingsList.add(generateSetting(partType, param, defaultVal, dataType));
+		}
+
+		return settingsList;
+	}
 
 	/**
 	 * 
@@ -83,29 +106,6 @@ public class GameCreator {
 		}
 
 		return s;
-	}
-
-	/**
-	 * 
-	 * @param partType The type of part we need a Settings list for, i.e. "Tower"
-	 * @return The corresponding Settings list
-	 */
-	public static List<Setting> generateSettingsList(String partType){
-
-		List<Setting> settingsList = new ArrayList<Setting>();
-		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-
-		String[] params = paramLists.getString(partType).split("\\s+");
-
-		for(String param : params){
-			String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
-			String dataType = typeAndDefault[0];
-			String defaultVal = typeAndDefault[1];
-
-			settingsList.add(generateSetting(partType, param, defaultVal, dataType));
-		}
-
-		return settingsList;
 	}
 
 	/**

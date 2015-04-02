@@ -49,7 +49,6 @@ public class MainEnvironment {
         createEnvironment(myGridPane);
 
         //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
-        
         addTab(new MapEditor(myDimensions), myResources.getString("MapTab"), MAIN_TAB);     //is it redundant passing in the dimensions so many times?
         addTab(new WaveEditor(myDimensions), myResources.getString("WavesTab"), MAIN_TAB);
         addTab(new LevelEditor(myDimensions), myResources.getString("LevelsTab"), MAIN_TAB);
@@ -93,7 +92,7 @@ public class MainEnvironment {
         Tab tab = new Tab();
         tab.setText(tabName);
         tab.setContent(newEditor.configureUI());
-        if (main == true){
+        if (main){
         	tab.setStyle("-fx-base: #3c3c3c;");
         }
         tab.setClosable(false);
