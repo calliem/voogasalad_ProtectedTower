@@ -1,10 +1,13 @@
+
+
+package authoringEnvironment.editors;
+
+import java.util.ArrayList;
+
 /**
  * Sets up the unit editor that allows the user to create units as well as update their parameters/properties 
  * @author Callie Mao
  */
-
-package authoringEnvironment.editors;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;

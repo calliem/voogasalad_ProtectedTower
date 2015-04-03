@@ -18,10 +18,10 @@ public class LevelEditor extends MainEditor{
 	}
 
 	@Override
-    public Group configureUI() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public Group configureUI() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
     @Override
     protected void createMap () {

@@ -22,6 +22,7 @@ import engine.sprites.GridCell;
 public class GameController {
 
     public GameController () throws InsufficientParametersException {
+
         throw new InsufficientParametersException();
     }
 
@@ -46,4 +47,5 @@ public class GameController {
     public void handleKeyInput (KeyEvent k) {
 
     }
+
 }
