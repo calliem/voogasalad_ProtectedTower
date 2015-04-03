@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import authoring.environment.setting.Setting;
 
 import authoring.environment.setting.Setting;
 
@@ -15,9 +16,11 @@ public class GameCreator {
 
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
-	private static final String gameFileDir = "\\AllPartsData";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
+<<<<<<< HEAD
 	private static Set<String> dirsToBeCreated = paramLists.keySet();
+=======
+>>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> spriteEditors = listFromArray(new String[] {"TowerEditor", "ProjectileEditor", "UnitEditor"});
@@ -98,6 +101,7 @@ public class GameCreator {
 		File editors = new File(editorPackage);
 		System.out.println(editorPackage);
 		File[] allEditors = editors.listFiles();
+		System.out.println("All editors " + allEditors);
 		String[] editorNames = new String[allEditors.length];
 		for(int i = 0; i < allEditors.length; i++){
 			String untrimmedName = allEditors[i].getName();
