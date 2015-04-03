@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
+import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
 public class WaveEditor extends MainEditor{
-    public WaveEditor(Dimension2D dim, ResourceBundle resources) {
-		super(dim, resources);
+    public WaveEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
+		super(dim, resources, s);
 		// TODO Auto-generated constructor stub
 	}
 

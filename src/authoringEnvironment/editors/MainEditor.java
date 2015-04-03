@@ -14,6 +14,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public abstract class MainEditor extends Editor {
 	
@@ -21,8 +22,8 @@ public abstract class MainEditor extends Editor {
 	public static final double MAP_WIDTH_MULTIPLIER = .75;
 	public static final double MAP_HEIGHT_PERCENT = 100;
 	
-	public MainEditor(Dimension2D dim, ResourceBundle resources) {
-		super(dim, resources);
+	public MainEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
+		super(dim, resources, s);
 		// TODO Auto-generated constructor stub
 	}
 

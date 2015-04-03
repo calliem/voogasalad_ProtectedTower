@@ -9,11 +9,12 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
-    public UnitEditor(Dimension2D dim, ResourceBundle resources) {
-        super(dim, resources);
+    public UnitEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
+        super(dim, resources, s);
         // TODO Auto-generated constructor stub
     }
 

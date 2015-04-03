@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.stage.Stage;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.SpriteView;
@@ -23,8 +24,8 @@ public class MapEditor extends MainEditor {
     private static final double DEFAULT_TILE_SIZE = 1000;
 
 
-    public MapEditor(Dimension2D dim, ResourceBundle resources) {
-        super(dim, resources);
+    public MapEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
+        super(dim, resources, s);
 
     }
 
