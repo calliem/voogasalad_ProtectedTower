@@ -16,12 +16,12 @@ import javafx.scene.input.KeyEvent;
  * this class then runs the game.
  */
 
-public class GameLoop {
-    public GameLoop () throws InsufficientParametersException {
+public class GameController {
+    public GameController () throws InsufficientParametersException {
         throw new InsufficientParametersException();
     }
 
-    public GameLoop (ObservableList<Node> sceneContents, XStream inputStream)
+    public GameController (ObservableList<Node> sceneContents, XStream inputStream)
         throws InsufficientParametersException {
 
     }
