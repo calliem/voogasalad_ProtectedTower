@@ -1,5 +1,6 @@
 package engine;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import engine.sprites.Tower;
@@ -25,6 +26,8 @@ public class TowerNode {
 		myName = name;
 		myGroup = group;
 		myTower = tower.clone();
+		myNextNodes = new HashSet<>();
+		myPrevNodes = new HashSet<>();
 	}
 
 	protected String getName() {
