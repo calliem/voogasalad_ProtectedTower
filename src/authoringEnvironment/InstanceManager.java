@@ -45,7 +45,11 @@ public class InstanceManager {
 	public InstanceManager(){
 		userParts = new HashMap<String, Map<String, Object>>();
 		gameName = "Unnamed_Game";
-		
+	}
+	
+	public InstanceManager(String name, Map<String, Map<String, Object>> partData){
+		this(name);
+		userParts = partData;
 	}
 
 	/**
@@ -180,7 +184,7 @@ public class InstanceManager {
 	 * @return the part that was added
 	 */
 	public Map<String, Object> addPart(String partType){
-		Map<String, Object> newPart = GameCreator.createDefaultPart(partType);
+		Map<String, Object> newPart = Game.createDefaultPart(partType);
 		String partName =  partType + "_" + "Part_" + new Integer(partsCreated++).toString();
 		userParts.put(partName, newPart);
 		return newPart;
@@ -189,7 +193,7 @@ public class InstanceManager {
 
 	public static void main (String[] args){
 		InstanceManager gameManager = new InstanceManager("TestGame");
-		GameCreator.createNewGameFolder(gameManager.getName());
+		Game.createGameFolders(gameManager.getName());
 		gameManager.addPart(TOWER);
 		gameManager.addPart(UNIT);
 		gameManager.addPart(PROJECTILE);
