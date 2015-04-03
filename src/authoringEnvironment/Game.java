@@ -23,12 +23,12 @@ public class Game {
 	private static final String gameFileDir = "\\AllPartsData";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 	private static Set<String> dirsToBeCreated = paramLists.keySet();
-	private static final String editorPackage = System.getProperty("user.dir").concat("\\src\\authoringEnvironment\\editors");
-	
+
 	private static InstanceManager currentGame = new InstanceManager();
 
 
 	/**
+	 * 
 	 * Creates a new game and all the appropriate sub directories
 	 * @param gameName The name of the new game to create
 	 * @param rootDir The place where the game and subsequent folders will be created

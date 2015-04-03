@@ -16,6 +16,7 @@ public abstract class Editor {
 	
 	private Dimension2D myDimensions;
 	private ResourceBundle myResources;
+	//private double tabIndex;
 	
 	public Editor(Dimension2D dim, ResourceBundle resources){
 		myDimensions = dim;
@@ -34,4 +35,5 @@ public abstract class Editor {
     protected ResourceBundle getResources(){
     	return myResources;
     }
+    
 }
