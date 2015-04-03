@@ -69,7 +69,7 @@ public class MainEnvironment {
         setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
     }
     
-    public void populateTabBar(){
+    private void populateTabBar(){
     	Map<String, Boolean> tabsToCreate = GameCreator.tabsToCreate();
     	for(String s : tabsToCreate.keySet()){
     		Editor e = null;
