@@ -9,10 +9,11 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.stage.Stage;
 
 public class ProjectileEditor extends PropertyEditor {
-    public ProjectileEditor(Dimension2D dim, ResourceBundle resources) {
-        super(dim, resources);
+    public ProjectileEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
+        super(dim, resources, s);
         // TODO Auto-generated constructor stub
     }
 
