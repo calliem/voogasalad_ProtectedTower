@@ -22,7 +22,6 @@ public class GameManager {
 	private static final String paramSpecsFile = "resources/parameter_datatype";
 	private static final String gameFileDir = "/AllPartsData";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
-	private static Set<String> dirsToBeCreated = paramLists.keySet();
 
 	private static InstanceManager currentGame = new InstanceManager();
 
@@ -51,19 +50,14 @@ public class GameManager {
 	 * @param gameName The name of the new game we're going to create subdirectories for
 	 */
 	public static void createGameFolders(String gameName){
-		String gameDir = userDataPackage;
-		new File(gameDir).mkdirs();
-		for(String dir : dirsToBeCreated)
-			new File(gameDir.concat("/").concat(dir)).mkdirs();
-		//adds a directory for storing the Map<partName, [it's params and data]
-		new File(gameDir + gameFileDir).mkdirs();
+		XMLWriter.createDirectories(userDataPackage, dirsToBeCreated());
 	}
 	
 	public static void setUserDataPackage(String rootDir){
 		userDataPackage = rootDir;
 	}
 	
-	public static void addPart(String partType, String partName, List<String> params, List<Object> data){
+	public static void addPartToGame(String partType, String partName, List<String> params, List<Object> data){
 		currentGame.addPart(partType, partName, params, data);
 	}
 
@@ -88,6 +82,12 @@ public class GameManager {
 		String dir = userDataPackage + gameFileDir;
 		currentGame = new InstanceManager(nameAndDirectory[0], (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir));
 		return (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir);
+	}
+	
+	private static Set<String> dirsToBeCreated(){
+		Set<String> toAdd = paramLists.keySet();
+		toAdd.add(gameFileDir);
+		return toAdd;
 	}
 
 	/**
