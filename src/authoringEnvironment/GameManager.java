@@ -15,7 +15,7 @@ import java.util.Set;
 
 import authoring.environment.setting.Setting;
 
-public class Game {
+public class GameManager {
 
 	private static String userDataPackage = System.getProperty("user.dir").concat("/src/userData");
 	private static final String paramListFile = "resources/part_parameters";
@@ -120,16 +120,19 @@ public class Game {
 
 		Class<?> c = String.class;
 		Object data = "N/A";
+		String settingClass = "authoringEnvironment.editors." + dataType + "Setting";
 
 		try{
-			c = Class.forName(dataType);
+			c = Class.forName(settingClass);
 		}catch (ClassNotFoundException e){
 			System.out.println(dataType + "class not found");
 			//do something, but this shouldn't happen if the properties file is correct
 		}
 
 		try{
-			data = c.getConstructor(String.class).newInstance(defaultVal);
+			data = ((Setting) (c.getConstructor(String.class, String.class, String.class)
+					.newInstance("Doesn't", "Matter", defaultVal)))
+					.getParameterValue();
 		}
 		catch (InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException
