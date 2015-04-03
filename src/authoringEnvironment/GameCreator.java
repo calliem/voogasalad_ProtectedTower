@@ -1,13 +1,9 @@
-/**
- * @author Johnny Kumpf
- */
 package authoringEnvironment;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -17,72 +13,22 @@ import authoring.environment.setting.Setting;
 
 public class GameCreator {
 
-	private static final String userDataPackage = System.getProperty("user.dir").concat(
-			"\\src\\userData");
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
-	private static final String gameFileDir = "\\GameFile";
-	public static final ResourceBundle paramLists = ResourceBundle
-			.getBundle(paramListFile);
+	private static final String gameFileDir = "\\AllPartsData";
+	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 	private static Set<String> dirsToBeCreated = paramLists.keySet();
 	private static final String editorPackage = System.getProperty("user.dir").concat("\\src\\authoringEnvironment\\editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> spriteEditors = listFromArray(new String[] {"TowerEditor", "ProjectileEditor", "UnitEditor"});
 
-	/**
-	 * Creates subdirectories for each kind of part, i.e. "Tower", "Unit", etc.
-	 * in a subdirectory of ... userData\gameName
-	 * 
-	 * @param gameName
-	 *            The name of the new game we're going to create subdirectories
-	 *            for
-	 */
-	public static void createNewGameFolder(String gameName) {
-		String gameDir = userDataPackage.concat("\\").concat(gameName);
-		new File(gameDir).mkdirs();
-		for (String dir : dirsToBeCreated)
-			new File(gameDir.concat("\\").concat(dir)).mkdirs();
-		// adds a directory for storing the Map<partName, [it's params and
-		// data]>
-		new File(gameDir + gameFileDir).mkdirs();
-	}
 
 	/**
-	 * Saves all the parts and the Map<partName, [part data]> into an XML file
-	 * called gameName + "Parts.xml" Ex: "TestGameParts.xml"
-	 * 
-	 * @param gameManager
-	 *            the InstanceManager of the game that's being saved
+	 * Generates the Settings objects the Overlay UI needs to allow the user to edit
+	 * all of this part's parameters.
+	 * @param partType The type of part we need a Settings list for, i.e. "Tower"
+	 * @return The corresponding Settings list
 	 */
-	public static void saveGame(InstanceManager gameManager) {
-		gameManager.writeAllPartsToXML();
-		gameManager.writeGameToXML();
-	}
-
-	/**
-	 * Loads in the Map<partName, [part data]> representing all the parts of the
-	 * game
-	 * 
-	 * @param gameName
-	 *            The name of the game for which to load in the parts
-	 * @return
-	 */
-	public static Map<String, Map<String, Object>> loadGame(String gameName) {
-		String dir = userDataPackage + "\\" + gameName + gameFileDir;
-		return (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir);
-	}
-
-	/**
-	 * 
-	 * @param partType
-	 *            The type of part, i.e. "Tower"
-	 * @param param
-	 *            The name of the parameter the Setting is being generated for,
-	 *            i.e. "HP"
-	 * @param defaultVal
-	 *            The default value of the Setting, i.e. "0"
-	 * @param dataType
-	 *            The type of the data, i.e. "Integer"
 	public static List<Setting> generateSettingsList(String partType){
 
 		List<Setting> settingsList = new ArrayList<Setting>();
@@ -102,7 +48,7 @@ public class GameCreator {
 	}
 
 	/**
-	 * 
+	 * Generates one setting object from the 4 parameters given
 	 * @param partType The type of part, i.e. "Tower"
 	 * @param param The name of the parameter the Setting is being generated for, i.e. "HP"
 	 * @param defaultVal The default value of the Setting, i.e. "0"
@@ -133,57 +79,21 @@ public class GameCreator {
 	}
 
 	/**
-	 * 
-	 * @param partType Part type name, i.e. "Tower"
-	 * @return the Map<String, Object> representing the part's default data
-	 *         Currently generates this from properties file, this is going to
-	 *         change in how it's done, but I'm leaving it for now
+	 * Gives the user Editor strings and booleans (main tab or sprite tab) of tabs to create
+	 * @return The map of editors and booleans that go with them to create tabs for (main = true, sprite = false)
 	 */
-	public static Map<String, Object> createDefaultPart(String partType) {
-
-		Map<String, Object> part = new HashMap<String, Object>();
-		// ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
-		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-
-		String[] params = paramLists.getString(partType).split("\\s+");
-
-		for (String paramName : params) {
-			String[] typeAndDefault = paramSpecs.getString(paramName).split("\\s+");
-			String dataType = typeAndDefault[0];
-			String defaultVal = typeAndDefault[1];
-
-			part.put(paramName, makeDefaultData(dataType, defaultVal));
-		}
-		return part;
+	public static Map<String, Boolean> tabsToCreate(){
+		Map<String, Boolean> tabsToMake = new HashMap<String, Boolean>();
+		for(String s : editorsToCreate())
+			if(!abstractEditors.contains(s))
+				tabsToMake.put(s, !spriteEditors.contains(s));
+		return tabsToMake;
 	}
 
-	// creates an Object of class "dataType" and value "defualtVal"
-	// also going to change, probably will be an unnecessary method by the end
-	private static Object makeDefaultData(String dataType, String defaultVal) {
-
-		Class<?> c = String.class;
-		Object data = "N/A";
-
-		try {
-			c = Class.forName(dataType);
-		} catch (ClassNotFoundException e) {
-			System.out.println(dataType + "class not found");
-			// do something, but this shouldn't happen if the properties file is
-			// correct
-		}
-
-		try {
-			data = c.getConstructor(String.class).newInstance(defaultVal);
-		} catch (InstantiationException | IllegalAccessException
-				| IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
-			// hopefully this won't happen
-			System.out.println("Constructor couldn't be called with a String");
-		}
-
-		return data;
-	}
-
+	/**
+	 * Returns the array of strings like "LevelEditor" that tabs need to be created for
+	 * @return The array of editors to create
+	 */
 	public static String[] editorsToCreate(){
 		File editors = new File(editorPackage);
 		System.out.println(editorPackage);
@@ -198,21 +108,15 @@ public class GameCreator {
 		return editorNames;
 	}
 
-	public static Map<String, Boolean> tabsToCreate(){
-		Map<String, Boolean> tabsToMake = new HashMap<String, Boolean>();
-		for(String s : editorsToCreate())
-			if(!abstractEditors.contains(s))
-				tabsToMake.put(s, !spriteEditors.contains(s));
-		return tabsToMake;
-	}
-
+	/**
+	 * because String[]'s don't have .contains
+	 * @param s array to be converted to List<String>
+	 * @return s in List form
+	 */
 	public static List<String> listFromArray(String[] s){
 		List<String> l = new ArrayList<String>();
 		for(String word : s)
 			l.add(word);
 		return l;
-	}
-	public static void main(String[] args){
-		GameCreator.editorsToCreate();
 	}
 }

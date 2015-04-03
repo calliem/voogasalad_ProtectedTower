@@ -78,4 +78,9 @@ public class XMLWriter {
 	public static Object fromXML(String dir) {
 		return stream.fromXML(new File(dir));
 	}
+	
+	//maybe unnecessary
+	public static Object fromXML(File f){
+		return stream.fromXML(f);
+	}
 }
