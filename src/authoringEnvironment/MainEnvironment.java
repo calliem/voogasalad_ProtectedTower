@@ -5,6 +5,8 @@
 
 package authoringEnvironment;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import authoringEnvironment.editors.Editor;
@@ -12,6 +14,7 @@ import authoringEnvironment.editors.LevelEditor;
 import authoringEnvironment.editors.MapEditor;
 import authoringEnvironment.editors.TowerEditor;
 import authoringEnvironment.editors.WaveEditor;
+import authoringEnvironment.editors.MainEditor;
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
@@ -53,21 +56,38 @@ public class MainEnvironment {
         myGridPane.setGridLinesVisible(true);
         createEnvironment(myGridPane);
 
-        //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
-        
-        addTab(new MapEditor(myDimensions, myResources), myResources.getString("MapTab"), MAIN_TAB);     //is it redundant passing in the dimensions so many times?
-        addTab(new WaveEditor(myDimensions, myResources), myResources.getString("WavesTab"), MAIN_TAB);
-        addTab(new LevelEditor(myDimensions, myResources), myResources.getString("LevelsTab"), MAIN_TAB);
-        //   addTab(new ProjectileEditor(), myResources.getString("ProjectilesTab"));
-        addTab(new TowerEditor(myDimensions, myResources, s), myResources.getString("TowersTab"), SPRITE_TAB);
+        populateTabBar();
 
         setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
     }
-    
+
+    /**
+     * Populates the tab bar with 1 tab for every non-abstract class in editors package
+     */
+    private void populateTabBar(){
+        Map<String, Boolean> tabsToCreate = GameCreator.tabsToCreate();
+        for(String s : tabsToCreate.keySet()){
+            Editor e = null;
+            try {
+                e = (Editor) Class.forName("authoringEnvironment.editors." + s)
+                        .getConstructor(Dimension2D.class, ResourceBundle.class)
+                        .newInstance(myDimensions, myResources);
+            } catch (InstantiationException | IllegalAccessException
+                    | IllegalArgumentException | InvocationTargetException
+                    | NoSuchMethodException | SecurityException
+                    | ClassNotFoundException e1) {
+                // something that doesn't let this null go through
+                e1.printStackTrace();
+            }
+            addTab(e, myResources.getString(s), tabsToCreate.get(s));
+        }
+
+    }
+
     public static double getEnvironmentWidth(){
         return myDimensions.getWidth();
     }
-    
+
     public static double getEnvironmentHeight(){
         return myDimensions.getHeight();
     }
@@ -98,8 +118,9 @@ public class MainEnvironment {
         Tab tab = new Tab();
         tab.setText(tabName);
         tab.setContent(newEditor.configureUI());
-        if (main == true){
-        	tab.setStyle("-fx-base: #3c3c3c;");
+        if (main){
+            tab.setStyle("-fx-base: #3c3c3c;");
+            System.out.println(tabName + "main = true, property set");
         }
         tab.setClosable(false);
         myTabPane.getTabs().add(tab);
