@@ -1,6 +1,7 @@
 package engine;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -9,10 +10,19 @@ import java.util.ArrayList;
  * pointer to another level which will be called if the win conditions are met - if the loss
  * conditions are met, a generic "Game Over" is loaded before the same level is reloaded.
  * 
+ * @author Bojia Chen
  * @author Qian Wang
  */
 public class Level implements Updateable, Endable {
-    private ArrayList<Round> myRounds;
+    private List<Round> myRounds;
+    private double myHealth;
+    private int myLives;
+
+    // TODO: Win/Lose Conditions
+
+    public Level () {
+        myRounds = new ArrayList<>();
+    }
 
     @Override
     public boolean hasEnded () {
