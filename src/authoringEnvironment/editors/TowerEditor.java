@@ -5,24 +5,21 @@
 
 package authoringEnvironment.editors;
 
-import java.io.File;
+import imageSelector.ImageSelector;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-
-import javafx.animation.ScaleTransition;
-import javafx.geometry.Dimension2D;
-
 import java.util.List;
-
+import java.util.ResourceBundle;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -30,8 +27,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import authoringEnvironment.MainEnvironment;
@@ -46,6 +41,7 @@ public class TowerEditor extends PropertyEditor{
     private boolean editing = false;
     private Text empty;
     private List<TowerView> towersCreated;
+    private IntegerProperty numTowers;
 
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
@@ -53,8 +49,8 @@ public class TowerEditor extends PropertyEditor{
     public TowerEditor(Dimension2D dim, ResourceBundle rb, Stage s) {
         super(dim, rb);
         myStage = s;
-        // TODO Auto-generated constructor stub
     }
+    
     public ArrayList<TowerView> getTowers(){
         return new ArrayList<>();
     }
@@ -74,20 +70,32 @@ public class TowerEditor extends PropertyEditor{
 
         HBox editControls = setupEditControls();
         towersDisplay.getChildren().add(editControls);
-
+        
         // TODO remove magic numbers
         currentRow = new HBox(20);
         towersDisplay.getChildren().add(currentRow);
 
+        numTowers = new SimpleIntegerProperty(0);
+        numTowers.addListener((obs, oldValue, newValue) -> {
+            if((int) newValue == 0){
+                myContent.getChildren().add(empty);
+            }
+            else if((int) newValue > 0 && myContent.getChildren().contains(empty)){
+                myContent.getChildren().remove(empty);
+            }
+            
+            //TODO: dynamically put new towers onto new line
+            //so that each row has 7 towers.
+        });
+        
         empty = new Text("No towers have been made...yet.");
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
-        currentRow.getChildren().add(empty);
 
         currentRow.setAlignment(Pos.TOP_CENTER);
-        currentRow.setMaxHeight(40);
+        currentRow.setMaxHeight(100);
 
-        myContent.getChildren().addAll(background, towersDisplay);
+        myContent.getChildren().addAll(background, towersDisplay, empty);
         StackPane.setAlignment(towersDisplay, Pos.TOP_CENTER);
         myRoot.getChildren().add(myContent);
 
@@ -121,7 +129,7 @@ public class TowerEditor extends PropertyEditor{
 
     private void promptNewTowerName(){
         StackPane promptDisplay = new StackPane();
-        Rectangle promptBackground = new Rectangle(300, 200);
+        Rectangle promptBackground = new Rectangle(300, 400);
         promptBackground.setOpacity(0.8);
 
         VBox promptContent = new VBox(20);
@@ -129,16 +137,15 @@ public class TowerEditor extends PropertyEditor{
         Text prompt = new Text("Creating a new tower...");
         prompt.setFill(Color.WHITE);
         TextField promptField = new TextField();
-        promptField.setMaxWidth(200);
+        promptField.setMaxWidth(225);
         promptField.setPromptText("Enter a name...");
         
-        Text fileDisplay = new Text("Choose an image...");
-        HBox fileSelector = createFileSelector(fileDisplay);
+        ImageSelector imgSelector = new ImageSelector(myStage);
 
         HBox buttons = new HBox(10);
         Button create = new Button("Create");
         create.setOnAction((e) -> {
-            addTower(promptField.getText());
+            addTower(promptField.getText(), imgSelector.getSelectedImageFile());
             hideEditScreen(promptDisplay);
         });
 
@@ -149,7 +156,7 @@ public class TowerEditor extends PropertyEditor{
 
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(create, cancel);
-        promptContent.getChildren().addAll(prompt, promptField, fileSelector, buttons);
+        promptContent.getChildren().addAll(prompt, promptField, imgSelector, buttons);
 
         promptDisplay.getChildren().addAll(promptBackground, promptContent);
         showEditScreen(promptDisplay);
@@ -181,23 +188,24 @@ public class TowerEditor extends PropertyEditor{
         }
     }
 
-    private void addTower(String name){
-        TowerView tower = new TowerView(name);
+    private void addTower(String name, String imageFile){
+        TowerView tower = new TowerView(name, imageFile);
         tower.initiateEditableState();
         setupTowerAction(tower);
         BooleanProperty towerExists = new SimpleBooleanProperty(true);
         towerExists.bind(tower.isExisting());
         towerExists.addListener((obs, oldValue, newValue) -> {
             if(!newValue){
-                currentRow.getChildren().remove(tower);
+                PauseTransition wait = new PauseTransition(Duration.millis(200));
+                wait.setOnFinished((e) -> currentRow.getChildren().remove(tower));
+                towersCreated.remove(tower);
+                numTowers.setValue(towersCreated.size());
             }
         });
 
-        if(currentRow.getChildren().size() == 1 && currentRow.getChildren().contains(empty)){
-            currentRow.getChildren().remove(0);
-        }
         currentRow.getChildren().add(tower);
         towersCreated.add(tower);
+        numTowers.setValue(towersCreated.size());
     }
 
     private void showEditScreen(StackPane overlay){
@@ -225,6 +233,7 @@ public class TowerEditor extends PropertyEditor{
         });
         tower.getCloseButton().setOnAction((e) -> {
             hideEditScreen(tower.getEditorOverlay());
+            tower.discardUnsavedChanges();
             tower.setupTooltipText(tower.getTowerInfo());
         });
     }
@@ -239,42 +248,5 @@ public class TowerEditor extends PropertyEditor{
         scale.play();
 
         return scale;
-    }
-
-    /**
-     * Creates the file selector with browse button.
-     * @param s the stage on which to display the open-file dialog
-     * @param fileDisplay       the display on which the user sees the file selected
-     * @return
-     */
-    private HBox createFileSelector(Text fileDisplay){
-        HBox fileSelection = new HBox(5);
-
-        StackPane textDisplay = new StackPane();
-
-        Rectangle textBox = new Rectangle(150, 24);
-        textBox.setFill(Color.WHITE);
-
-        Button loader = new Button("Browse");
-        loader.setOnAction((event) -> {
-            FileChooser fileChooser = new FileChooser();
-            // Set extension filter
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG Images (*.png)", "*.png");
-            fileChooser.getExtensionFilters().add(extFilter);
-
-            File file = fileChooser.showOpenDialog(myStage.getScene().getWindow());
-
-            if(file!=null){
-                String fileName = file.getName();
-                fileDisplay.setText(fileName);
-            }
-        });
-        fileDisplay.setTextAlignment(TextAlignment.LEFT);
-        textDisplay.getChildren().addAll(textBox, fileDisplay);
-
-        fileSelection.getChildren().addAll(textDisplay, loader);
-        fileSelection.setAlignment(Pos.CENTER);
-
-        return fileSelection;
     }
 }
