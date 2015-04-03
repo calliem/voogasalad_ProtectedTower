@@ -51,12 +51,8 @@ public class Game {
 	 * @param gameName The name of the new game we're going to create subdirectories for
 	 */
 	public static void createGameFolders(String gameName){
-		String gameDir = userDataPackage;
-		new File(gameDir).mkdirs();
-		for(String dir : dirsToBeCreated)
-			new File(gameDir.concat("/").concat(dir)).mkdirs();
-		//adds a directory for storing the Map<partName, [it's params and data]>
-		new File(gameDir + gameFileDir).mkdirs();
+		XMLWriter.createDirectories(userDataPackage, dirsToBeCreated);
+		new File(userDataPackage + gameFileDir).mkdirs();
 	}
 	
 	public static void setUserDataPackage(String rootDir){
