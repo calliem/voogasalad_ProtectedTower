@@ -22,9 +22,9 @@ public class LevelEditor extends MainEditor{
         return null;
     }
 
-	
-	@Override
-	protected void createMap(){
-		//TODO impement this
-	}
+    @Override
+    protected void createMap () {
+        // TODO Auto-generated method stub
+
+    }
 }

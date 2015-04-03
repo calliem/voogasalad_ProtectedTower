@@ -1,8 +1,9 @@
 package authoringEnvironment.objects;
 
+import imageSelector.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
-
+import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
@@ -10,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -17,31 +19,54 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 import authoring.environment.setting.IntegerSetting;
 import authoring.environment.setting.Setting;
 import authoringEnvironment.MainEnvironment;
 
+/**
+ * Creates the visual tower object containing
+ * the tower's image, name, and the overlay that
+ * pops up when the object is clicked.
+ * 
+ * @author Kevin He
+ *
+ */
 public class TowerView extends SpriteView{
     
     private VBox editableContent;
     private StackPane overlayContent;
     private Button overlayCloseButton;
+    private Text overlayErrorMessage;
     private BooleanProperty exists;
     
     private String name;
+    private String imageFile;
     private List<Setting> parameterFields;
     
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
     
-    public TowerView(String name){
+    public TowerView(String name, String imageFile){
         this.name = name;
+        this.imageFile = imageFile;
+        ImageView image = new ImageView(new Image(imageFile));
+        ScaleImage.scale(image, 90, 70);
+        
         parameterFields = new ArrayList<>();
         exists = new SimpleBooleanProperty(true);
         
+        VBox display = new VBox(5);
+        display.setAlignment(Pos.CENTER);
+        
         Rectangle towerBackground = new Rectangle(100, 100, Color.WHITE);
         Text towerName = new Text(name);
-        getChildren().addAll(towerBackground, towerName);
+        towerName.setFont(new Font(10));
+        towerName.setTextAlignment(TextAlignment.CENTER);
+        towerName.setWrappingWidth(90);
+        
+        display.getChildren().addAll(image, towerName);
+        getChildren().addAll(towerBackground, display);
         
         setupEditableContent();
         setupOverlayContent();
@@ -78,15 +103,35 @@ public class TowerView extends SpriteView{
         close.setFitWidth(20);
         close.setPreserveRatio(true);
         close.setOnMousePressed((e) -> {
+            playDeletionAnimation();
             exists.setValue(false);
         });
         this.getChildren().add(close);
         StackPane.setAlignment(close, Pos.TOP_RIGHT);
     }
     
+    private ScaleTransition playDeletionAnimation(){
+        ScaleTransition delete = new ScaleTransition(Duration.millis(200), this);
+        delete.setFromX(1.0);
+        delete.setFromY(1.0);
+        delete.setToX(0.0);
+        delete.setToY(0.0);
+        delete.setCycleCount(1);
+        delete.play();
+        
+        return delete;
+    }
+    
     public void exitEditableState(){
         //removes the 'x' button.
         this.getChildren().remove(this.getChildren().size()-1);
+    }
+    
+    public void discardUnsavedChanges(){
+        for(Setting s : parameterFields){
+            s.displaySavedValue();
+        }
+        saveParameterFields();
     }
     
     private void setupEditableContent(){
@@ -98,12 +143,38 @@ public class TowerView extends SpriteView{
         title.setFont(new Font(30));
         title.setFill(Color.WHITE);
         
+        ImageView towerImage = new ImageView(new Image(imageFile));
+        ScaleImage.scaleByHeight(towerImage, 150);
+        
+        overlayErrorMessage = new Text("Please check your parameters for errors.");
+        overlayErrorMessage.setFill(Color.RED);
+        overlayErrorMessage.setVisible(false);
+        
         Setting test = new IntegerSetting("Health");
         parameterFields.add(test);
         
+        HBox buttons = new HBox(10);
+        
+        Button save = new Button("Save");
+        save.setOnAction((e)-> saveParameterFields());
+        
         overlayCloseButton = new Button("Close");
         
-        editableContent.getChildren().addAll(title, test, overlayCloseButton);
+        buttons.setAlignment(Pos.CENTER);
+        buttons.getChildren().addAll(save, overlayCloseButton);
+        
+        editableContent.getChildren().addAll(title, towerImage, overlayErrorMessage, test, buttons);
+    }
+    
+    private void saveParameterFields(){
+        boolean correctFormat = true;
+        for(Setting s : parameterFields){
+            boolean correct = s.parseField();
+            if(correctFormat && !correct){
+                correctFormat = false;
+            }
+        }
+        overlayErrorMessage.setVisible(!correctFormat);
     }
     
     private void setupOverlayContent(){

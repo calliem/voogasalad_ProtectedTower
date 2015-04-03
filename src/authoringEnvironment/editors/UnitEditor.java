@@ -12,19 +12,18 @@ import javafx.scene.Group;
 import authoringEnvironment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
-   
-	public UnitEditor(Dimension2D dim, ResourceBundle resources) {
-		super(dim, resources);
-		// TODO Auto-generated constructor stub
-	}
+    public UnitEditor(Dimension2D dim, ResourceBundle resources) {
+        super(dim, resources);
+        // TODO Auto-generated constructor stub
+    }
 
-	public ArrayList<UnitView> getUnits(){
-		return null;
-	}
+    public ArrayList<UnitView> getUnits(){
+        return null;
+    }
 
-	@Override
-	public Group configureUI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Group configureUI() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -12,11 +12,11 @@ import javafx.scene.Group;
 
 public class ProjectileEditor extends PropertyEditor {
     public ProjectileEditor(Dimension2D dim, ResourceBundle resources) {
-		super(dim, resources);
-		// TODO Auto-generated constructor stub
-	}
+        super(dim, resources);
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
+    @Override
     public Group configureUI() {
         // TODO Auto-generated method stub
         return null;
