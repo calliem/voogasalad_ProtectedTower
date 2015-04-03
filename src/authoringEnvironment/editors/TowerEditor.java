@@ -40,7 +40,6 @@ import authoringEnvironment.objects.TowerView;
  *
  */
 public class TowerEditor extends PropertyEditor{
-    private Stage myStage;
     private Group myRoot;
     private StackPane myContent;
     private HBox currentRow;
@@ -60,8 +59,7 @@ public class TowerEditor extends PropertyEditor{
      * @param s the stage on which the authoring environment is displayed
      */
     public TowerEditor(Dimension2D dim, ResourceBundle rb, Stage s) {
-        super(dim, rb);
-        myStage = s;
+        super(dim, rb, s);
     }
     
     /**

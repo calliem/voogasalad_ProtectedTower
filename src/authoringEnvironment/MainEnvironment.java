@@ -70,8 +70,8 @@ public class MainEnvironment {
             Editor e = null;
             try {
                 e = (Editor) Class.forName("authoringEnvironment.editors." + s)
-                        .getConstructor(Dimension2D.class, ResourceBundle.class)
-                        .newInstance(myDimensions, myResources);
+                        .getConstructor(Dimension2D.class, ResourceBundle.class, Stage.class)
+                        .newInstance(myDimensions, myResources, myStage);
             } catch (InstantiationException | IllegalAccessException
                     | IllegalArgumentException | InvocationTargetException
                     | NoSuchMethodException | SecurityException

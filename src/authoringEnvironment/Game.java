@@ -17,10 +17,10 @@ import authoring.environment.setting.Setting;
 
 public class Game {
 
-	private static String userDataPackage = System.getProperty("user.dir").concat("\\src\\userData");
+	private static String userDataPackage = System.getProperty("user.dir").concat("/src/userData");
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
-	private static final String gameFileDir = "\\AllPartsData";
+	private static final String gameFileDir = "/AllPartsData";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 	private static Set<String> dirsToBeCreated = paramLists.keySet();
 
@@ -34,7 +34,7 @@ public class Game {
 	 * @param rootDir The place where the game and subsequent folders will be created
 	 */
 	public static void createNewGame(String gameName, String rootDir){
-		String gameDirectory = rootDir + "\\" + gameName;
+		String gameDirectory = rootDir + "/" + gameName;
 		String[] nameAndDirectory = new String[2];
 		nameAndDirectory[0] = gameName;
 		nameAndDirectory[1] = gameDirectory;
@@ -54,7 +54,7 @@ public class Game {
 		String gameDir = userDataPackage;
 		new File(gameDir).mkdirs();
 		for(String dir : dirsToBeCreated)
-			new File(gameDir.concat("\\").concat(dir)).mkdirs();
+			new File(gameDir.concat("/").concat(dir)).mkdirs();
 		//adds a directory for storing the Map<partName, [it's params and data]>
 		new File(gameDir + gameFileDir).mkdirs();
 	}
