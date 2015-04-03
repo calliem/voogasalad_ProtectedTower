@@ -66,7 +66,7 @@ public class MainEnvironment {
      */
     private void populateTabBar(){
         Map<String, Boolean> tabsToCreate = GameCreator.tabsToCreate();
-        for(String s : tabsToCreate.keySet()){
+        for(String s : GameCreator.getOrderedTabList()){
             Editor e = null;
             try {
                 e = (Editor) Class.forName("authoringEnvironment.editors." + s)

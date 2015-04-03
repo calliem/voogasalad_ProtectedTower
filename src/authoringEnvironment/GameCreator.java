@@ -1,15 +1,17 @@
 package authoringEnvironment;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.Set;
-import authoring.environment.setting.Setting;
 
+import authoring.environment.setting.Setting;
 import authoring.environment.setting.Setting;
 
 public class GameCreator {
@@ -20,6 +22,7 @@ public class GameCreator {
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> spriteEditors = listFromArray(new String[] {"TowerEditor", "ProjectileEditor", "UnitEditor"});
+	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/tab_order.txt";
 
 	/**
 	 * Generates the Settings objects the Overlay UI needs to allow the user to edit
@@ -104,6 +107,25 @@ public class GameCreator {
 			System.out.println(editorNames[i]);
 		}
 		return editorNames;
+	}
+
+	/**
+	 * Gets the list of tabs to generate in the tab bar in the order specified in tab_order.txt
+	 * @return The List<String> of tab names in order
+	 */
+	public static List<String> getOrderedTabList(){
+		ArrayList<String> tabList = new ArrayList<String>();
+		try {
+			Scanner s = new Scanner(new File(tabOrder));
+			while (s.hasNext()){
+				tabList.add(s.next());
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return tabList;
 	}
 
 	/**
