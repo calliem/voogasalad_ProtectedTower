@@ -86,7 +86,7 @@ public class Game {
 	
 	private static Set<String> dirsToBeCreated(){
 		Set<String> toAdd = paramLists.keySet();
-		toAdd.add(userDataPackage + gameFileDir);
+		toAdd.add(gameFileDir);
 		return toAdd;
 	}
 
