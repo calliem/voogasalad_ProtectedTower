@@ -21,7 +21,6 @@ public class Main extends Application {
 	}
 =======
     public static void main(String[] args) {
-    	
         launch(args);
     }	
 >>>>>>> df2f93acfe7e9c4087013fb6a34dbf5006539293
