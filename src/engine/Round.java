@@ -1,6 +1,7 @@
 package engine;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -11,10 +12,14 @@ import java.util.ArrayList;
  *
  */
 public class Round implements Updateable, Endable {
-    private ArrayList<Wave> myWaves;
+    private List<Wave> myWaves;
     private int myDelay; // defines how many frames to wait between sending waves
     private int myCurrentDelay = 0;
     private int myActiveWaveIndex = 0;
+
+    public Round () {
+        myWaves = new ArrayList<>();
+    }
 
     @Override
     public boolean hasEnded () {

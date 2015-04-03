@@ -14,6 +14,8 @@ import javafx.scene.input.KeyEvent;
  * map created by the authoring environment. A new version of this class must be created by the
  * player whenever a new game is loaded. The player calls this class when it loads a new game, and
  * this class then runs the game.
+ * 
+ * @author Qian Wang
  */
 
 public class GameController {
