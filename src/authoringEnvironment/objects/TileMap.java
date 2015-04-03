@@ -82,10 +82,17 @@ public class TileMap {
 	private void createMap() {
 		int numTileRows = (int) (myMapHeight / myTileSize);
 		int numTileCols = (int) (myMapWidth / myTileSize);
+<<<<<<< HEAD
 
 		System.out.println(numTileRows);
 		System.out.println(numTileCols);
 
+=======
+		
+		System.out.println("numtilerows" + numTileRows);
+		System.out.println("num tile cols" + numTileCols);
+		
+>>>>>>> 292f10bd9733feb8d0fc465e7e650946d81c1953
 		myTiles = new Tile[numTileRows][numTileCols];
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
