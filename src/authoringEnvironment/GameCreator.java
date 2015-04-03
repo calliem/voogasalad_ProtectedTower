@@ -21,8 +21,8 @@ public class GameCreator {
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
-	private static final List<String> spriteEditors = listFromArray(new String[] {"TowerEditor", "ProjectileEditor", "UnitEditor"});
-	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/tab_order.txt";
+	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
+	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/english.properties";
 
 	/**
 	 * Generates the Settings objects the Overlay UI needs to allow the user to edit
@@ -86,7 +86,7 @@ public class GameCreator {
 		Map<String, Boolean> tabsToMake = new HashMap<String, Boolean>();
 		for(String s : editorsToCreate())
 			if(!abstractEditors.contains(s))
-				tabsToMake.put(s, !spriteEditors.contains(s));
+				tabsToMake.put(s, mainEditors.contains(s));
 		return tabsToMake;
 	}
 
@@ -118,7 +118,8 @@ public class GameCreator {
 		try {
 			Scanner s = new Scanner(new File(tabOrder));
 			while (s.hasNext()){
-				tabList.add(s.next());
+				String nextEditor = s.next();
+				tabList.add(nextEditor.substring(0,  nextEditor.indexOf("=")));
 			}
 			s.close();
 		} catch (FileNotFoundException e) {
