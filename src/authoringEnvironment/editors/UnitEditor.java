@@ -1,10 +1,13 @@
+
+
+package authoringEnvironment.editors;
+
+import java.util.ArrayList;
+
 /**
  * Sets up the unit editor that allows the user to create units as well as update their parameters/properties 
  * @author Callie Mao
  */
-
-package authoringEnvironment.editors;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
@@ -13,6 +16,17 @@ import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
+<<<<<<< HEAD
+
+	public UnitEditor(Dimension2D dim, ResourceBundle resources) {
+		super(dim, resources);
+		// TODO Auto-generated constructor stub
+	}
+
+	public ArrayList<UnitView> getUnits() {
+		return null;
+	}
+=======
     public UnitEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
         super(dim, resources, s);
         // TODO Auto-generated constructor stub
@@ -21,6 +35,7 @@ public class UnitEditor extends PropertyEditor {
     public ArrayList<UnitView> getUnits(){
         return null;
     }
+>>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 
     @Override
     public Group configureUI() {

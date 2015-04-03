@@ -3,14 +3,14 @@
  */
 package authoringEnvironment;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintStream;
+<<<<<<< HEAD
+=======
 import java.util.Collection;
 import java.util.Map;
+>>>>>>> df2f93acfe7e9c4087013fb6a34dbf5006539293
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -18,7 +18,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 public class XMLWriter {
 
 	private static XStream stream = new XStream(new DomDriver());
-	
+
 	/**
 	 * Specify a root directory, and create all directories necessary for that to exist.
 	 * Then, specify subfolders you want to create in that directory, and they will be created.
@@ -38,13 +38,16 @@ public class XMLWriter {
 	}
 	/**
 	 * 
-	 * @param o Object to be written to a file in XML format
-	 * @param fileName Name of the resulting file
-	 * @param dir Directory leading to the resulting file
+	 * @param o
+	 *            Object to be written to a file in XML format
+	 * @param fileName
+	 *            Name of the resulting file
+	 * @param dir
+	 *            Directory leading to the resulting file
 	 * @return Exact location where the file was saved
 	 */
-	public static String toXML(Object o, String fileName, String dir){
-		if(!fileName.substring(fileName.length() - 4, fileName.length()).equals(".xml"))
+	public static String toXML(Object o, String fileName, String dir) {
+		if (!fileName.substring(fileName.length() - 4, fileName.length()).equals(".xml"))
 			fileName = fileName + ".xml";
 		File partFile = new File(dir, fileName);
 		try {
@@ -55,43 +58,46 @@ public class XMLWriter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//System.out.println(fileName + " saved at: " + dir);
+		// System.out.println(fileName + " saved at: " + dir);
 		return dir + "\\" + fileName;
 	}
 
 	/**
 	 * 
-	 * @param The object to be saved in XML format
-	 * @param fileName The name of the resulting file
-	 * NOTE: a sub-directory \XML_Files will be created from the current
-	 * directory, and the file will be saved their. 
+	 * @param The
+	 *            object to be saved in XML format
+	 * @param fileName
+	 *            The name of the resulting file NOTE: a sub-directory
+	 *            \XML_Files will be created from the current directory, and the
+	 *            file will be saved their.
 	 * @return Directory where the file was saved
 	 */
-	public static String toXML(Object o, String fileName){
+	public static String toXML(Object o, String fileName) {
 		String saveDir = System.getProperty("user.dir") + "\\XML_Files";
 		new File(saveDir).mkdirs();
 		return toXML(o, fileName, saveDir);
 	}
-	
+
 	/**
 	 * 
-	 * @param o The object to be saved in XML format
-	 * NOTE: \XML_Files directory will be created and used
-	 * File name will be: ClassName_HashCode
+	 * @param o
+	 *            The object to be saved in XML format NOTE: \XML_Files
+	 *            directory will be created and used File name will be:
+	 *            ClassName_HashCode
 	 * @return Directory where the file was saved
 	 */
-	public static String toXML(Object o){
+	public static String toXML(Object o) {
 		String fileName = o.getClass().toString() + "_" + o.hashCode();
 		return toXML(o, fileName);
 	}
-	
-	
+
 	/**
 	 * 
-	 * @param dir The directory from which you want to read an object
+	 * @param dir
+	 *            The directory from which you want to read an object
 	 * @return Object stored in the file at that directory
 	 */
-	public static Object fromXML(String dir){
+	public static Object fromXML(String dir) {
 		return stream.fromXML(new File(dir));
 	}
 	

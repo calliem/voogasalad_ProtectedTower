@@ -19,10 +19,15 @@ public class ProjectReader {
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
+<<<<<<< HEAD
+	private static Set<String> dirsToBeCreated = paramLists.keySet();
+=======
+>>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
 	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/english.properties";
+
 
 	/**
 	 * Generates the Settings objects the Overlay UI needs to allow the user to edit
@@ -57,22 +62,28 @@ public class ProjectReader {
 	 * @return The Setting object corresponding to these parameters
 	 */
 
-	public static Setting generateSetting(String partType, String param, String defaultVal, String dataType){
+	public static Setting generateSetting(String partType, String param,
+			String defaultVal, String dataType) {
 		Class<?> c = String.class;
 		Setting s = null;
+<<<<<<< HEAD:src/authoringEnvironment/GameCreator.java
+		try {
+			c = Class.forName(dataType + "Setting");
+		} catch (ClassNotFoundException e) {
+			// display error message
+=======
 		try{
 			c = Class.forName("authoringEnvironment.setting" + dataType + "Setting");
+>>>>>>> df2f93acfe7e9c4087013fb6a34dbf5006539293:src/authoringEnvironment/ProjectReader.java
 		}
-		catch(ClassNotFoundException e){
-			//display error message
-		};
-		try{
-			s = (Setting) c.getConstructor(String.class, String.class, String.class).newInstance(partType, param, defaultVal);
-		}
-		catch  (InstantiationException | IllegalAccessException
+		;
+		try {
+			s = (Setting) c.getConstructor(String.class, String.class, String.class)
+					.newInstance(partType, param, defaultVal);
+		} catch (InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e){
-			//display error message, don't let the null value be used
+				| NoSuchMethodException | SecurityException e) {
+			// display error message, don't let the null value be used
 		}
 
 		return s;
@@ -140,5 +151,4 @@ public class ProjectReader {
 			l.add(word);
 		return l;
 	}
-
 }

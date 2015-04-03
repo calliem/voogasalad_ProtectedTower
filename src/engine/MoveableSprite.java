@@ -1,6 +1,6 @@
 package engine;
 
-public abstract class MoveableSprite extends Sprite{
+public abstract class MoveableSprite extends Sprite {
 
 	public MoveableSprite() throws InsufficientParametersException {
 		super();
@@ -8,5 +8,5 @@ public abstract class MoveableSprite extends Sprite{
 	}
 
 	public abstract void move();
-	
+
 }

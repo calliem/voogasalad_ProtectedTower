@@ -1,14 +1,10 @@
-/**
- * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
- * @author Callie Mao
- */
+
 
 package authoringEnvironment;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.ResourceBundle;
-
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.editors.LevelEditor;
 import authoringEnvironment.editors.MapEditor;
@@ -28,12 +24,15 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+/**
+ * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
+ * @author Callie Mao
+ */
 
 public class MainEnvironment {
 
