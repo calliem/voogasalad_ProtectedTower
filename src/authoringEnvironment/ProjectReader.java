@@ -19,10 +19,6 @@ public class ProjectReader {
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
-<<<<<<< HEAD
-	private static Set<String> dirsToBeCreated = paramLists.keySet();
-=======
->>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
@@ -66,17 +62,14 @@ public class ProjectReader {
 			String defaultVal, String dataType) {
 		Class<?> c = String.class;
 		Setting s = null;
-<<<<<<< HEAD:src/authoringEnvironment/GameCreator.java
-		try {
-			c = Class.forName(dataType + "Setting");
-		} catch (ClassNotFoundException e) {
-			// display error message
-=======
+		// display error message
 		try{
 			c = Class.forName("authoringEnvironment.setting" + dataType + "Setting");
->>>>>>> df2f93acfe7e9c4087013fb6a34dbf5006539293:src/authoringEnvironment/ProjectReader.java
 		}
-		;
+		catch(ClassNotFoundException e){
+			//something
+		}
+
 		try {
 			s = (Setting) c.getConstructor(String.class, String.class, String.class)
 					.newInstance(partType, param, defaultVal);
@@ -121,15 +114,18 @@ public class ProjectReader {
 	}
 
 	/**
-	 * Gets the list of tabs to generate in the tab bar in the order specified in tab_order.txt
+	 * Gets the list of tabs to generate in the tab bar in the order specified in english.properties
 	 * @return The List<String> of tab names in order
 	 */
 	public static List<String> getOrderedTabList(){
-		ArrayList<String> tabList = new ArrayList<String>();
+		ArrayList<String> tabList = new	ArrayList<String>();
 		try {
 			Scanner s = new Scanner(new File(tabOrder));
-			while (s.hasNext()){
-				String nextEditor = s.next();
+			String nextEditor = "nothign";
+			while (s.hasNextLine()) {
+				nextEditor = s.nextLine();
+				nextEditor.replaceAll("\\s+", "");
+				System.out.println("nextEditor: " + nextEditor + nextEditor.indexOf("="));
 				tabList.add(nextEditor.substring(0,  nextEditor.indexOf("=")));
 			}
 			s.close();

@@ -69,6 +69,8 @@ public class MainEnvironment {
 			if(tabsToCreate.keySet().contains(s)){
 				Editor e = null;
 				try {
+					System.out.println("dim: " + myDimensions);
+					System.out.println("s: " + s);
 					e = (Editor) Class.forName("authoringEnvironment.editors." + s)
 							.getConstructor(Dimension2D.class, ResourceBundle.class, Stage.class)
 							.newInstance(myDimensions, myResources, myStage);

@@ -16,17 +16,6 @@ import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
-<<<<<<< HEAD
-
-	public UnitEditor(Dimension2D dim, ResourceBundle resources) {
-		super(dim, resources);
-		// TODO Auto-generated constructor stub
-	}
-
-	public ArrayList<UnitView> getUnits() {
-		return null;
-	}
-=======
     public UnitEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
         super(dim, resources, s);
         // TODO Auto-generated constructor stub
@@ -35,7 +24,6 @@ public class UnitEditor extends PropertyEditor {
     public ArrayList<UnitView> getUnits(){
         return null;
     }
->>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 
     @Override
     public Group configureUI() {
