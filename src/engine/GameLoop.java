@@ -17,6 +17,7 @@ import javafx.scene.input.KeyEvent;
  */
 
 public class GameLoop {
+
     public GameLoop () throws InsufficientParametersException {
         throw new InsufficientParametersException();
     }
@@ -38,4 +39,5 @@ public class GameLoop {
     public void handleKeyInput (KeyEvent k) {
 
     }
+
 }

@@ -1,8 +1,3 @@
-/**
- * Sets up the tower editor that allows the user to create towers, update their parameters/properties, and specify a hierarchy of upgrades 
- * @author Callie Mao, Kevin He
- */
-
 package authoringEnvironment.editors;
 
 import imageSelector.ImageSelector;
