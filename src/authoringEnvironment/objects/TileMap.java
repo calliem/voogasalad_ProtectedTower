@@ -54,8 +54,8 @@ public class TileMap {
 		int numTileRows = (int) (myMapHeight / myTileSize);
 		int numTileCols = (int) (myMapWidth / myTileSize);
 		
-		System.out.println(numTileRows);
-		System.out.println(numTileCols);
+		System.out.println("numtilerows" + numTileRows);
+		System.out.println("num tile cols" + numTileCols);
 		
 		myTiles = new Tile[numTileRows][numTileCols];
 		for (int i = 0; i < myTiles.length; i++) {
