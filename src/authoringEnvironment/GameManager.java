@@ -15,7 +15,7 @@ import java.util.Set;
 
 import authoring.environment.setting.Setting;
 
-public class Game {
+public class GameManager {
 
 	private static String userDataPackage = System.getProperty("user.dir").concat("/src/userData");
 	private static final String paramListFile = "resources/part_parameters";
@@ -55,7 +55,7 @@ public class Game {
 		new File(gameDir).mkdirs();
 		for(String dir : dirsToBeCreated)
 			new File(gameDir.concat("/").concat(dir)).mkdirs();
-		//adds a directory for storing the Map<partName, [it's params and data]>g
+		//adds a directory for storing the Map<partName, [it's params and data]
 		new File(gameDir + gameFileDir).mkdirs();
 	}
 	

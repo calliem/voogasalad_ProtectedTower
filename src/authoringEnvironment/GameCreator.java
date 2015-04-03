@@ -58,7 +58,7 @@ public class GameCreator {
 		Class<?> c = String.class;
 		Setting s = null;
 		try{
-			c = Class.forName(dataType + "Setting");
+			c = Class.forName("authoringEnvironment.setting" + dataType + "Setting");
 		}
 		catch(ClassNotFoundException e){
 			//display error message
