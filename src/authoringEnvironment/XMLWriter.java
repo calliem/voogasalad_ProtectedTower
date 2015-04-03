@@ -6,11 +6,8 @@ package authoringEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-<<<<<<< HEAD
-=======
 import java.util.Collection;
 import java.util.Map;
->>>>>>> df2f93acfe7e9c4087013fb6a34dbf5006539293
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;

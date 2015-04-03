@@ -14,31 +14,20 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-<<<<<<< HEAD
-=======
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
->>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 
 public abstract class MainEditor extends Editor {
 
-	public Dimension2D myDimensions;
 	private GridPane myPane;
 	
 	public static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
 	public static final double MAP_WIDTH_MULTIPLIER = .75;
 	public static final double MAP_HEIGHT_PERCENT = 100;
-<<<<<<< HEAD
-
-	public MainEditor(Dimension2D dim, ResourceBundle resources) {
-		super(dim, resources);
-		myDimensions = dim;
-=======
 	
 	public MainEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
 		super(dim, resources, s);
 		// TODO Auto-generated constructor stub
->>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 	}
 
 	/**
@@ -54,6 +43,8 @@ public abstract class MainEditor extends Editor {
 		// does it dynamically update or will i have to say
 		// TODO remove magic number
 		//is using MainEnvironment.myDimensions.getWidth() bad?
+		System.out.println("dim: " + myDimensions);
+		System.out.println("width: " + myDimensions.getWidth() + " height: " + myDimensions.getHeight());
 		Rectangle background = new Rectangle(myDimensions.getWidth()*MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(), Color.web("2A2A29"));
 		root.getChildren().addAll(background, myPane);
 		return root;

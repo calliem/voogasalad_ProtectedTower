@@ -9,35 +9,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-<<<<<<< HEAD
-public class Setting extends HBox {
-	private String label;
-
-	protected Setting(String label) {
-		// TODO: remove magic number
-		super(10);
-		this.setAlignment(Pos.CENTER);
-
-		this.label = label;
-		Text parameter = new Text(String.format("%s:", label));
-		parameter.setFill(Color.WHITE);
-
-		this.getChildren().add(parameter);
-		setupInteractionLayout();
-	}
-
-	protected void setupInteractionLayout() {
-
-	}
-
-	public String getParameterName() {
-		return label;
-	}
-
-	public String getParameterValue() {
-		return "";
-	}
-=======
 /**
  * Creates a Setting object that allows the user
  * to edit a certain parameter of a sprite.
@@ -113,5 +84,4 @@ public abstract class Setting extends HBox{
     public abstract boolean parseField();
     
     public abstract void displaySavedValue();
->>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 }

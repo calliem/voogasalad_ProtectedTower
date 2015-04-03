@@ -15,19 +15,9 @@ import java.util.Map;
 public class InstanceManager {
 	String gameName;
 	private int partsCreated = 0;
-<<<<<<< HEAD
-
-	// public static final ResourceBundle paramLists =
-	// ResourceBundle.getBundle("resources/part_parameters");
-	private static final String userDataPackage = System.getProperty("user.dir").concat(
-			"\\src\\userData");
-
-=======
-	
 	//public static final ResourceBundle paramLists = ResourceBundle.getBundle("resources/part_parameters");
 	private static final String userDataPackage = System.getProperty("user.dir").concat("/src/userData");
 	
->>>>>>> df2f93acfe7e9c4087013fb6a34dbf5006539293
 	private static final String TOWER = "Tower";
 	private static final String UNIT = "Unit";
 	private static final String PROJECTILE = "Projectile";
@@ -94,11 +84,7 @@ public class InstanceManager {
 	private void writePartToXML(String partName) {
 		String partType = partTypeFromName(partName);
 		String partFileName = partName + ".xml";
-<<<<<<< HEAD
-		String dir = userDataPackage + "\\" + gameName + "\\" + partType;
-=======
 		String dir= userDataPackage + "/" + gameName + "/" + partType;
->>>>>>> df2f93acfe7e9c4087013fb6a34dbf5006539293
 		XMLWriter.toXML(userParts.get(partName), partFileName, dir);
 	}
 
@@ -126,13 +112,8 @@ public class InstanceManager {
 	 * Writes the Map<partName, [part data]> into an XML file called
 	 * [gameName]Parts.xml
 	 */
-<<<<<<< HEAD
-	public void writeGameToXML() {
-		String dir = userDataPackage + "\\" + gameName + "\\GameFile";
-=======
 	public void writeGameToXML(){
 		String dir = userDataPackage + "/" + gameName + "/GameFile";
->>>>>>> df2f93acfe7e9c4087013fb6a34dbf5006539293
 		XMLWriter.toXML(userParts, gameName + "Parts.xml", dir);
 	}
 

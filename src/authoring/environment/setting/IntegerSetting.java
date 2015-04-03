@@ -13,27 +13,6 @@ import javafx.scene.text.TextAlignment;
  *
  */
 public class IntegerSetting extends Setting {
-<<<<<<< HEAD
-	private TextField value;
-
-	public IntegerSetting(String label) {
-		super(label);
-	}
-
-	@Override
-	protected void setupInteractionLayout() {
-		value = new TextField("0");
-		value.setOnAction((e) -> {
-			System.out.println(value.getText());
-		});
-		this.getChildren().add(value);
-	}
-
-	@Override
-	public String getParameterValue() {
-		return value.getText();
-	}
-=======
     private int value;
     private TextField editableField;
     
@@ -69,5 +48,4 @@ public class IntegerSetting extends Setting {
     public void displaySavedValue () {
         editableField.setText(""+value);
     }
->>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 }
