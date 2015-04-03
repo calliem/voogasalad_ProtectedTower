@@ -57,7 +57,7 @@ public class GameManager {
 		userDataPackage = rootDir;
 	}
 	
-	public static void addPart(String partType, String partName, List<String> params, List<Object> data){
+	public static void addPartToGame(String partType, String partName, List<String> params, List<Object> data){
 		currentGame.addPart(partType, partName, params, data);
 	}
 

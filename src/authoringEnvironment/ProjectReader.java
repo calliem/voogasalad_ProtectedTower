@@ -14,7 +14,7 @@ import java.util.Set;
 import authoring.environment.setting.Setting;
 import authoring.environment.setting.Setting;
 
-public class GameCreator {
+public class ProjectReader {
 
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";

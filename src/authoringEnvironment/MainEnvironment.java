@@ -65,8 +65,8 @@ public class MainEnvironment {
 	 * Populates the tab bar with 1 tab for every non-abstract class in editors package
 	 */
 	private void populateTabBar(){
-		Map<String, Boolean> tabsToCreate = GameCreator.tabsToCreate();
-		for(String s : GameCreator.getOrderedTabList()){
+		Map<String, Boolean> tabsToCreate = ProjectReader.tabsToCreate();
+		for(String s : ProjectReader.getOrderedTabList()){
 			if(tabsToCreate.keySet().contains(s)){
 				Editor e = null;
 				try {
