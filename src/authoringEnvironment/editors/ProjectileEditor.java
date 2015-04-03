@@ -17,8 +17,8 @@ public class ProjectileEditor extends PropertyEditor {
 	}
 
 	@Override
-	protected Group configureUI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Group configureUI() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

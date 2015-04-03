@@ -38,13 +38,13 @@ public class TileMap {
 	}
 
     private void attachTileListeners(){
+    	myMap.setOnDragDetected(e -> myMap.startFullDrag());
     	for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				int x = i;
 				int y = j;
-				myTiles[i][j].setOnMouseClicked(e -> myTiles[x][y].select());
-				//MouseEvent
-				//EventHandler<MouseEvent> 
+				myTiles[i][j].setOnMousePressed(e -> myTiles[x][y].select());
+				myTiles[i][j].setOnMouseDragEntered(e -> myTiles[x][y].select());
 			}
     	}
     }
@@ -52,40 +52,6 @@ public class TileMap {
 
     	
     	
-    /*    for(int i = 0; i < shapeGrid.size(); i++){
-            for(int j = 0; j < shapeGrid.get(i).size(); j++){
-                Cell cell = cellGrid.get(i).get(j);
-                Shape shape = shapeGrid.get(i).get(j);
-                shape.setFill(stateMap.get(mySim.getColorCode(cell)).getColor());
-
-                //set actions for each cell
-                BooleanProperty stateTracker = cell.getTracker();
-                stateTracker.addListener(new ChangeListener<Boolean>(){
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> obs,
-                                        Boolean oldValue, Boolean newValue) {
-                        shape.setFill(stateMap.get(mySim.getColorCode(cell)).getColor());
-
-                        int oldCell = cellsToTrack.indexOf(cell.getOldProp()[0]);
-                        int newCell = cellsToTrack.indexOf(cell.getAllProp()[0]);
-                        int NOT_FOUND = -1;
-                        if(oldCell != newCell){
-                            if(newCell != NOT_FOUND){
-                                populationCounts[newCell]++;
-                            }
-                            if(oldCell != NOT_FOUND){
-                                populationCounts[oldCell]--;
-                            }
-
-                            updateBarGraph();
-                        }
-                    }
-                });
-                shape.setOnMousePressed(e -> handleMousePressed(e, cell, shape));
-                shape.setOnMouseDragEntered(e -> handleDragEntered(e, cell, shape));
-            
-        }
-    }*/
 
 	/*
 	 * public void setActiveTiles{int startX, int startY, int endX, int endY

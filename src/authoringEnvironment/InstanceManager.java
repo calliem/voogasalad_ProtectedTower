@@ -1,3 +1,9 @@
+
+/**
+ * @author Johnny Kumpf
+ */
+
+
 package authoringEnvironment;
 
 import java.io.IOException;

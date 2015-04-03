@@ -1,9 +1,13 @@
+/**
+ * @author Johnny Kumpf
+ */
 package authoringEnvironment;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -21,6 +25,9 @@ public class GameCreator {
 	public static final ResourceBundle paramLists = ResourceBundle
 			.getBundle(paramListFile);
 	private static Set<String> dirsToBeCreated = paramLists.keySet();
+	private static final String editorPackage = System.getProperty("user.dir").concat("\\src\\authoringEnvironment\\editors");
+	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
+	private static final List<String> spriteEditors = listFromArray(new String[] {"TowerEditor", "ProjectileEditor", "UnitEditor"});
 
 	/**
 	 * Creates subdirectories for each kind of part, i.e. "Tower", "Unit", etc.
@@ -76,6 +83,30 @@ public class GameCreator {
 	 *            The default value of the Setting, i.e. "0"
 	 * @param dataType
 	 *            The type of the data, i.e. "Integer"
+	public static List<Setting> generateSettingsList(String partType){
+
+		List<Setting> settingsList = new ArrayList<Setting>();
+		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
+
+		String[] params = paramLists.getString(partType).split("\\s+");
+
+		for(String param : params){
+			String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
+			String dataType = typeAndDefault[0];
+			String defaultVal = typeAndDefault[1];
+
+			settingsList.add(generateSetting(partType, param, defaultVal, dataType));
+		}
+
+		return settingsList;
+	}
+
+	/**
+	 * 
+	 * @param partType The type of part, i.e. "Tower"
+	 * @param param The name of the parameter the Setting is being generated for, i.e. "HP"
+	 * @param defaultVal The default value of the Setting, i.e. "0"
+	 * @param dataType The type of the data, i.e. "Integer"
 	 * @return The Setting object corresponding to these parameters
 	 */
 
@@ -103,32 +134,7 @@ public class GameCreator {
 
 	/**
 	 * 
-	 * @param partType
-	 *            The type of part we need a Settings list for, i.e. "Tower"
-	 * @return The corresponding Settings list
-	 */
-	public static List<Setting> generateSettingsList(String partType) {
-
-		List<Setting> settingsList = new ArrayList<Setting>();
-		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-
-		String[] params = paramLists.getString(partType).split("\\s+");
-
-		for (String param : params) {
-			String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
-			String dataType = typeAndDefault[0];
-			String defaultVal = typeAndDefault[1];
-
-			settingsList.add(generateSetting(partType, param, defaultVal, dataType));
-		}
-
-		return settingsList;
-	}
-
-	/**
-	 * 
-	 * @param partType
-	 *            Part type name, i.e. "Tower"
+	 * @param partType Part type name, i.e. "Tower"
 	 * @return the Map<String, Object> representing the part's default data
 	 *         Currently generates this from properties file, this is going to
 	 *         change in how it's done, but I'm leaving it for now
@@ -178,4 +184,35 @@ public class GameCreator {
 		return data;
 	}
 
+	public static String[] editorsToCreate(){
+		File editors = new File(editorPackage);
+		System.out.println(editorPackage);
+		File[] allEditors = editors.listFiles();
+		String[] editorNames = new String[allEditors.length];
+		for(int i = 0; i < allEditors.length; i++){
+			String untrimmedName = allEditors[i].getName();
+			//trim off ".java"
+			editorNames[i] = untrimmedName.substring(0, untrimmedName.indexOf("."));
+			System.out.println(editorNames[i]);
+		}
+		return editorNames;
+	}
+
+	public static Map<String, Boolean> tabsToCreate(){
+		Map<String, Boolean> tabsToMake = new HashMap<String, Boolean>();
+		for(String s : editorsToCreate())
+			if(!abstractEditors.contains(s))
+				tabsToMake.put(s, !spriteEditors.contains(s));
+		return tabsToMake;
+	}
+
+	public static List<String> listFromArray(String[] s){
+		List<String> l = new ArrayList<String>();
+		for(String word : s)
+			l.add(word);
+		return l;
+	}
+	public static void main(String[] args){
+		GameCreator.editorsToCreate();
+	}
 }
