@@ -1,40 +1,65 @@
 package authoringEnvironment;
 
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
+
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.StringConverter;
 
 /**
- * Right sidebar containing display properties that allows a user to interactively set grid size, 
- * tile size, specific tiles / tile colors, paths, and other visual elements of the map. 
+ * Right sidebar containing display properties that allows a user to
+ * interactively set grid size, tile size, specific tiles / tile colors, paths,
+ * and other visual elements of the map.
  * 
- * @author Callie
+ * @author Callie Mao
  *
  */
 
+
+//TODO: abstract further
 public class Sidebar extends VBox {
 
 	private ResourceBundle myResources;
-	
+
 	public Sidebar(ResourceBundle resources) {
 		myResources = resources;
 		setDimensionRestrictions();
-		createTitleText("sidebar test");
+		createMapSettings();
+	}
+	
+	private void createMapSettings(){
+		createTitleText(myResources.getString("MapSettings"));
+		setGridDimensions();
+		
+		//createHSelection(myResources.getString("GridDimensions"), gridDimensionsText);
+		//TODO: event handlers
+		
+		TextField tileSizeText = new TextField();
+		createHSelection(myResources.getString("TileSize"), tileSizeText);
+	}
+	
+	//TODO: remove duplicated code
+	private void setGridDimensions(){
+		HBox selection = new HBox();
+		TextField x = new TextField();
+		Text xSeparator = new Text(" x ");
+		TextField y = new TextField();
+		Button setGridDimButton = new Button("Set Grid Dimensions");
+		selection.getChildren().addAll(x, xSeparator, y,setGridDimButton);
+		getChildren().add(selection);
+	}
+	
+	private void createHSelection(String s, Node node){
+		HBox selection = new HBox();
+		selection.getChildren().addAll(new Text(s), node);
+		getChildren().add(selection);
 	}
 
 	private void setDimensionRestrictions() {
@@ -50,12 +75,6 @@ public class Sidebar extends VBox {
 		getChildren().add(title);
 	}
 
-	
-	private void createUserCommandsPane() {
-		createTitleText("hi");//myResources.getString("UserDefinedCommandsHeader"));
-		//getChildren().add(createListView(myCommandItems, 130));
-	}
-
 	private ListView<String> createListView(ObservableList<String> items, int height) {
 		ListView<String> list = new ListView<String>();
 		list.setItems(items);
@@ -65,9 +84,7 @@ public class Sidebar extends VBox {
 	}
 }
 
-
-
-//set grid size
-//slider to set tile size 
+// set grid size
+// slider to set tile size
 
 // 

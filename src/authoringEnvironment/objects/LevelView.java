@@ -4,7 +4,5 @@ public class LevelView {
 
 }
 /*
-waves
-map
-win condition
-lose condition*/
+ * waves map win condition lose condition
+ */

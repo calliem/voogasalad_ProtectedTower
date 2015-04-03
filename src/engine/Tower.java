@@ -2,7 +2,7 @@ package engine;
 
 import java.util.List;
 
-public class Tower extends GameSprite{
+public class Tower extends GameSprite {
 
 	public Tower() throws InsufficientParametersException {
 		super();
@@ -20,19 +20,21 @@ public class Tower extends GameSprite{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	public String getName(){
-		return null;	
+
+	public String getName() {
+		return null;
 	}
+
 	@Override
 	public void target(Sprite s) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -48,7 +50,7 @@ public class Tower extends GameSprite{
 
 	public void addUpgrade(Tower t) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -11,21 +11,34 @@ import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.stage.Stage;
 
+<<<<<<< HEAD
+public class LevelEditor extends MainEditor {
+	public LevelEditor(Dimension2D dim, ResourceBundle resources) {
+		super(dim, resources);
+=======
 public class LevelEditor extends MainEditor{
     public LevelEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
 		super(dim, resources, s);
+>>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-    public Group configureUI() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	public Group configureUI() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+<<<<<<< HEAD
+	@Override
+	protected void createMap() {
+		// TODO impement this
+	}
+=======
     @Override
     protected void createMap () {
         // TODO Auto-generated method stub
 
     }
+>>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 }

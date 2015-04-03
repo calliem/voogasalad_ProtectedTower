@@ -7,8 +7,8 @@ package engine;
  */
 public class Level {
 
-	public void update(){
-		
+	public void update() {
+
 	}
-	
+
 }

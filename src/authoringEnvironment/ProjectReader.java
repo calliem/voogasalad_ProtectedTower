@@ -1,25 +1,33 @@
 package authoringEnvironment;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.Set;
-import authoring.environment.setting.Setting;
 
 import authoring.environment.setting.Setting;
+import authoring.environment.setting.Setting;
 
-public class GameCreator {
+public class ProjectReader {
 
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
+<<<<<<< HEAD
+	private static Set<String> dirsToBeCreated = paramLists.keySet();
+=======
+>>>>>>> 8895d74c0cf256fc1f2bc1a4062df4283a1b093a
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
-	private static final List<String> spriteEditors = listFromArray(new String[] {"TowerEditor", "ProjectileEditor", "UnitEditor"});
+	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
+	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/english.properties";
+
 
 	/**
 	 * Generates the Settings objects the Overlay UI needs to allow the user to edit
@@ -54,22 +62,28 @@ public class GameCreator {
 	 * @return The Setting object corresponding to these parameters
 	 */
 
-	public static Setting generateSetting(String partType, String param, String defaultVal, String dataType){
+	public static Setting generateSetting(String partType, String param,
+			String defaultVal, String dataType) {
 		Class<?> c = String.class;
 		Setting s = null;
-		try{
+<<<<<<< HEAD:src/authoringEnvironment/GameCreator.java
+		try {
 			c = Class.forName(dataType + "Setting");
-		}
-		catch(ClassNotFoundException e){
-			//display error message
-		};
+		} catch (ClassNotFoundException e) {
+			// display error message
+=======
 		try{
-			s = (Setting) c.getConstructor(String.class, String.class, String.class).newInstance(partType, param, defaultVal);
+			c = Class.forName("authoringEnvironment.setting" + dataType + "Setting");
+>>>>>>> df2f93acfe7e9c4087013fb6a34dbf5006539293:src/authoringEnvironment/ProjectReader.java
 		}
-		catch  (InstantiationException | IllegalAccessException
+		;
+		try {
+			s = (Setting) c.getConstructor(String.class, String.class, String.class)
+					.newInstance(partType, param, defaultVal);
+		} catch (InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e){
-			//display error message, don't let the null value be used
+				| NoSuchMethodException | SecurityException e) {
+			// display error message, don't let the null value be used
 		}
 
 		return s;
@@ -83,7 +97,7 @@ public class GameCreator {
 		Map<String, Boolean> tabsToMake = new HashMap<String, Boolean>();
 		for(String s : editorsToCreate())
 			if(!abstractEditors.contains(s))
-				tabsToMake.put(s, !spriteEditors.contains(s));
+				tabsToMake.put(s, mainEditors.contains(s));
 		return tabsToMake;
 	}
 
@@ -107,6 +121,26 @@ public class GameCreator {
 	}
 
 	/**
+	 * Gets the list of tabs to generate in the tab bar in the order specified in tab_order.txt
+	 * @return The List<String> of tab names in order
+	 */
+	public static List<String> getOrderedTabList(){
+		ArrayList<String> tabList = new ArrayList<String>();
+		try {
+			Scanner s = new Scanner(new File(tabOrder));
+			while (s.hasNext()){
+				String nextEditor = s.next();
+				tabList.add(nextEditor.substring(0,  nextEditor.indexOf("=")));
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return tabList;
+	}
+
+	/**
 	 * because String[]'s don't have .contains
 	 * @param s array to be converted to List<String>
 	 * @return s in List form
@@ -117,5 +151,4 @@ public class GameCreator {
 			l.add(word);
 		return l;
 	}
-
 }
