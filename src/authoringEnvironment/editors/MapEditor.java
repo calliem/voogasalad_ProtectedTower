@@ -18,6 +18,7 @@ import authoringEnvironment.objects.TileMap;
 
 public class MapEditor extends MainEditor {
 
+
     private TileMap myActiveMap;
     private static final double DEFAULT_MAP_WIDTH = 950;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
     private static final double DEFAULT_MAP_HEIGHT = 700; //getHeight();
@@ -42,15 +43,11 @@ public class MapEditor extends MainEditor {
         return new SpriteView[0][0];
     }
 
-    public ArrayList<PathView> getPaths(){ //to be accessed by Levels
-        // TODO return actual paths
-        return new ArrayList<>();
-    }
+	public ArrayList<SpriteView> getMaps() {
+		// TODO return actual GameMaps
+		return new ArrayList<>();
+	};
 
-    public ArrayList<SpriteView> getMaps(){
-        // TODO return actual GameMaps
-        return new ArrayList<>();
-    };
 
     protected void createMap() {
         // TODO Auto-generated method stub

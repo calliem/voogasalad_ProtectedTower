@@ -1,11 +1,11 @@
+package authoringEnvironment.editors;
+
+import java.util.ResourceBundle;
+
 /**
  * Sets up the projectile editor that allows the user to create projectiles as well as specify their parameters and properties 
  * @author Callie Mao
  */
-
-package authoringEnvironment.editors;
-
-import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
