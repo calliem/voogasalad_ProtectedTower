@@ -1,11 +1,12 @@
 package engine;
 
 import java.util.ArrayList;
-import com.thoughtworks.xstream.XStream;
-import engine.sprites.GridCell;
+import java.util.Map;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
+import com.thoughtworks.xstream.XStream;
+import engine.sprites.GridCell;
 
 
 /**
@@ -19,6 +20,7 @@ import javafx.scene.input.KeyEvent;
  */
 
 public class GameController {
+
     public GameController () throws InsufficientParametersException {
         throw new InsufficientParametersException();
     }
@@ -26,6 +28,10 @@ public class GameController {
     public GameController (ObservableList<Node> sceneContents, XStream inputStream)
         throws InsufficientParametersException {
 
+    }
+
+    public void loadGame (String filepath) {
+        Map<String, Map<String, Object>> temp;
     }
 
     public void parse (XStream inputStream) {
