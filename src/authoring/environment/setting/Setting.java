@@ -9,6 +9,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+/**
+ * Creates a Setting object that allows the user
+ * to edit a certain parameter of a sprite.
+ * 
+ * @author Kevin He
+ *
+ */
 public abstract class Setting extends HBox{
     private String label;
     protected ImageView error;

@@ -32,6 +32,13 @@ import javafx.util.Duration;
 import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.objects.TowerView;
 
+/**
+ * Creates the Tower Editor that allows the user to create
+ * and edit towers.
+ *  
+ * @author Kevin He
+ *
+ */
 public class TowerEditor extends PropertyEditor{
     private Stage myStage;
     private Group myRoot;
@@ -46,15 +53,28 @@ public class TowerEditor extends PropertyEditor{
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
 
+    /**
+     * Creates a tower object.
+     * @param dim       dimensions of the environment
+     * @param rb        the resource bundle containing displayed strings
+     * @param s the stage on which the authoring environment is displayed
+     */
     public TowerEditor(Dimension2D dim, ResourceBundle rb, Stage s) {
         super(dim, rb);
         myStage = s;
     }
     
-    public ArrayList<TowerView> getTowers(){
-        return new ArrayList<>();
+    /**
+     * Gets the list of towers that the user has created.
+     * @return towersCreated    the list of towers that the user has created.
+     */
+    public List<TowerView> getTowers(){
+        return towersCreated;
     }
 
+    /**
+     * Sets up the editor UI.
+     */
     @Override
     public Group configureUI () {
         // TODO Auto-generated method stub
@@ -162,11 +182,6 @@ public class TowerEditor extends PropertyEditor{
         showEditScreen(promptDisplay);
     }
 
-
-    /**
-     * @param editControls
-     * @param edit
-     */
     private void finishEditing (HBox editControls, Button edit) {
         editControls.getChildren().remove(0);
         edit.setText("Edit");
@@ -175,11 +190,6 @@ public class TowerEditor extends PropertyEditor{
         }
     }
 
-    /**
-     * @param editControls
-     * @param edit
-     * @param add
-     */
     private void startEditing (HBox editControls, Button edit, Button add) {
         editControls.getChildren().add(0, add);
         edit.setText("Done");

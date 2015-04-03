@@ -24,6 +24,14 @@ import authoring.environment.setting.IntegerSetting;
 import authoring.environment.setting.Setting;
 import authoringEnvironment.MainEnvironment;
 
+/**
+ * Creates the visual tower object containing
+ * the tower's image, name, and the overlay that
+ * pops up when the object is clicked.
+ * 
+ * @author Kevin He
+ *
+ */
 public class TowerView extends SpriteView{
     
     private VBox editableContent;

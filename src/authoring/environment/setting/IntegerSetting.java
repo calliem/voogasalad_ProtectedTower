@@ -6,6 +6,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * A Setting object for integer parameters.
+ * 
+ * @author Kevin He
+ *
+ */
 public class IntegerSetting extends Setting {
     private int value;
     private TextField editableField;
