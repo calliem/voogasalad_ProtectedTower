@@ -22,16 +22,15 @@ import javafx.scene.text.Text;
  *
  */
 
-
 //TODO: abstract further
 public class Sidebar extends VBox {
 
-	private ResourceBundle myResources;
 	private static final int HBOX_SPACING = 10; //maybe set the spacing dynamically instead
+	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
+	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "sidebar_english");
 
-	public Sidebar(ResourceBundle resources) {
+	public Sidebar() {
 		setSpacing(HBOX_SPACING);
-		myResources = resources;
 		setDimensionRestrictions();
 		createMapSettings();
 	}

@@ -19,14 +19,10 @@ public class ProjectReader {
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
-<<<<<<< HEAD:src/authoringEnvironment/GameCreator.java
-	private static Set<String> dirsToBeCreated = paramLists.keySet();
-=======
->>>>>>> 50046e566265c2e24d17d366b95baeca1387c43c:src/authoringEnvironment/ProjectReader.java
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
-	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/english.properties";
+	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/display/main_environment_english.properties";
 
 
 	/**
@@ -110,11 +106,7 @@ public class ProjectReader {
 		System.out.println(editors.toString());
 		System.out.println(editorPackage);
 		File[] allEditors = editors.listFiles();
-<<<<<<< HEAD:src/authoringEnvironment/GameCreator.java
-		System.out.println(allEditors);
-=======
 		System.out.println("All editors " + allEditors);
->>>>>>> 50046e566265c2e24d17d366b95baeca1387c43c:src/authoringEnvironment/ProjectReader.java
 		String[] editorNames = new String[allEditors.length];
 		for(int i = 0; i < allEditors.length; i++){
 			String untrimmedName = allEditors[i].getName();

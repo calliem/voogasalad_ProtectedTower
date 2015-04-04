@@ -42,12 +42,13 @@ public class MainEnvironment {
 	private GridPane myGridPane;
 	private static final boolean MAIN_TAB = true;
 	private static final boolean SPRITE_TAB = false;
-	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "english");
+	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
+	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
 
 	//private SceneSetter mySceneSetter = new SceneSetter();
 
 	public MainEnvironment(Stage s) {
+		System.out.println(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
 		initScreen();
 		initStage(s);
 

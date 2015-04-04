@@ -23,26 +23,6 @@ public abstract class Editor {
 	
 	public Editor(Dimension2D dim, ResourceBundle resources, Stage s){
 		myDimensions = dim;
-<<<<<<< HEAD
-		myResources = resources;
-	}
-
-	public abstract Group configureUI(); // or make it a Node instead of a
-											// gridPane?
-
-	protected double getWidth() {
-		return myDimensions.getWidth();
-	}
-
-	protected double getHeight() {
-		return myDimensions.getHeight();
-	}
-
-	protected ResourceBundle getResources() {
-		System.out.println("res" + myResources);
-		return myResources;
-	}
-=======
 		myStage = s;
 		myResources = resources;
 	}
@@ -63,5 +43,4 @@ public abstract class Editor {
     
    
     
->>>>>>> 50046e566265c2e24d17d366b95baeca1387c43c
 }
