@@ -1,11 +1,13 @@
 package engine;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
-import javafx.collections.ObservableList;
+import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
-import com.thoughtworks.xstream.XStream;
+import util.reflection.Reflection;
+import authoringEnvironment.GameManager;
 import engine.sprites.GridCell;
 
 
@@ -20,23 +22,34 @@ import engine.sprites.GridCell;
  */
 
 public class GameController {
+    /**
+     * Holds a set of all objects instantiated from data files
+     */
+    Set<Object> allObjects;
 
     public GameController () throws InsufficientParametersException {
-
-        throw new InsufficientParametersException();
+        allObjects = new HashSet<>();
     }
 
-    public GameController (ObservableList<Node> sceneContents, XStream inputStream)
-        throws InsufficientParametersException {
+    // still need this?
+    // public GameController (ObservableList<Node> sceneContents, XStream inputStream)
+    // throws InsufficientParametersException {
+    //
+    // }
 
-    }
-
+    /**
+     * Given a location of a game file, the {@link GameManager#loadGame(String)} method if called,
+     * which generates a map of objects names to the parameters which those objects should contain.
+     * Those objects are then instantiated and their parameter lists are set.
+     * 
+     * @param filepath
+     */
     public void loadGame (String filepath) {
-        Map<String, Map<String, Object>> temp;
-    }
+        Map<String, Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
 
-    public void parse (XStream inputStream) {
-
+        for (String s : allDataObjects.keySet()) {
+            allObjects.add(Reflection.createInstance(s));
+        }
     }
 
     public ArrayList<Node> displayMap (Iterable<GridCell> map) {
