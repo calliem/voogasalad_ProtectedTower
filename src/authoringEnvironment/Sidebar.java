@@ -27,9 +27,10 @@ public class Sidebar extends VBox {
 
 	private static final int HBOX_SPACING = 10; //maybe set the spacing dynamically instead
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
-	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "sidebar_english");
+	private ResourceBundle myResources;
 
-	public Sidebar() {
+	public Sidebar(ResourceBundle resources) {
+		myResources = resources;
 		setSpacing(HBOX_SPACING);
 		setDimensionRestrictions();
 		createMapSettings();

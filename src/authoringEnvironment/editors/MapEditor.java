@@ -23,17 +23,18 @@ public class MapEditor extends MainEditor {
     private static final double DEFAULT_MAP_WIDTH = 950;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
     private static final double DEFAULT_MAP_HEIGHT = 700; //getHeight();
     private static final double DEFAULT_TILE_SIZE = 1000;
+    private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
+	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
 
-
-    public MapEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
-        super(dim, resources, s);
+    public MapEditor(Dimension2D dim, Stage s) {
+        super(dim, s);
 
     }
 
     @Override
     public Group configureUI(){
         Group root = super.configureUI();
-        getPane().add(new Sidebar(getResources()),1,0);
+        getPane().add(new Sidebar(myResources),1,0);
         return root;
 
     }
