@@ -68,7 +68,7 @@ public class ProjectReader {
 		Setting s = null;
 		// display error message
 		try{
-			c = Class.forName("authoringEnvironment.setting" + dataType + "Setting");
+			c = Class.forName("authoringEnvironment.setting." + dataType + "Setting");
 		}
 		catch(ClassNotFoundException e){
 			//something
