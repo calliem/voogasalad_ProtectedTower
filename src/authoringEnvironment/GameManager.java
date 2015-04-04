@@ -15,26 +15,25 @@ import java.util.Set;
 
 import authoring.environment.setting.Setting;
 
-public class Game {
+public class GameManager {
 
-	private static String userDataPackage = System.getProperty("user.dir").concat("\\src\\userData");
+	private static String userDataPackage = System.getProperty("user.dir").concat("/src/userData");
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
-	private static final String gameFileDir = "\\AllPartsData";
+	private static final String gameFileDir = "/AllPartsData";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
-	private static Set<String> dirsToBeCreated = paramLists.keySet();
-	private static final String editorPackage = System.getProperty("user.dir").concat("\\src\\authoringEnvironment\\editors");
-	
+
 	private static InstanceManager currentGame = new InstanceManager();
 
 
 	/**
+	 * 
 	 * Creates a new game and all the appropriate sub directories
 	 * @param gameName The name of the new game to create
 	 * @param rootDir The place where the game and subsequent folders will be created
 	 */
 	public static void createNewGame(String gameName, String rootDir){
-		String gameDirectory = rootDir + "\\" + gameName;
+		String gameDirectory = rootDir + "/" + gameName;
 		String[] nameAndDirectory = new String[2];
 		nameAndDirectory[0] = gameName;
 		nameAndDirectory[1] = gameDirectory;
@@ -51,19 +50,14 @@ public class Game {
 	 * @param gameName The name of the new game we're going to create subdirectories for
 	 */
 	public static void createGameFolders(String gameName){
-		String gameDir = userDataPackage;
-		new File(gameDir).mkdirs();
-		for(String dir : dirsToBeCreated)
-			new File(gameDir.concat("\\").concat(dir)).mkdirs();
-		//adds a directory for storing the Map<partName, [it's params and data]>
-		new File(gameDir + gameFileDir).mkdirs();
+		XMLWriter.createDirectories(userDataPackage, dirsToBeCreated());
 	}
 	
 	public static void setUserDataPackage(String rootDir){
 		userDataPackage = rootDir;
 	}
 	
-	public static void addPart(String partType, String partName, List<String> params, List<Object> data){
+	public static void addPartToGame(String partType, String partName, List<String> params, List<Object> data){
 		currentGame.addPart(partType, partName, params, data);
 	}
 
@@ -88,6 +82,12 @@ public class Game {
 		String dir = userDataPackage + gameFileDir;
 		currentGame = new InstanceManager(nameAndDirectory[0], (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir));
 		return (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir);
+	}
+	
+	private static Set<String> dirsToBeCreated(){
+		Set<String> toAdd = paramLists.keySet();
+		toAdd.add(gameFileDir);
+		return toAdd;
 	}
 
 	/**
@@ -120,16 +120,19 @@ public class Game {
 
 		Class<?> c = String.class;
 		Object data = "N/A";
+		String settingClass = "authoringEnvironment.editors." + dataType + "Setting";
 
 		try{
-			c = Class.forName(dataType);
+			c = Class.forName(settingClass);
 		}catch (ClassNotFoundException e){
 			System.out.println(dataType + "class not found");
 			//do something, but this shouldn't happen if the properties file is correct
 		}
 
 		try{
-			data = c.getConstructor(String.class).newInstance(defaultVal);
+			data = ((Setting) (c.getConstructor(String.class, String.class, String.class)
+					.newInstance("Doesn't", "Matter", defaultVal)))
+					.getParameterValue();
 		}
 		catch (InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException

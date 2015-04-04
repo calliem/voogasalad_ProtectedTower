@@ -8,11 +8,12 @@ package authoringEnvironment.editors;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
+import javafx.stage.Stage;
 
 public abstract class PropertyEditor extends Editor {
 
-	public PropertyEditor(Dimension2D dim, ResourceBundle resources) {
-		super(dim, resources);
+	public PropertyEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
+		super(dim, resources, s);
 		// TODO Auto-generated constructor stub
 	} // abstract class?
 

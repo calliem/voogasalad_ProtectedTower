@@ -6,6 +6,8 @@ package authoringEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.Collection;
+import java.util.Map;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -14,6 +16,23 @@ public class XMLWriter {
 
 	private static XStream stream = new XStream(new DomDriver());
 
+	/**
+	 * Specify a root directory, and create all directories necessary for that to exist.
+	 * Then, specify subfolders you want to create in that directory, and they will be created.
+	 * @param root The initial directory to create, and where you want the subdirectories created
+	 * @param newDirectories The list of subdirectories you want to create
+	 * @return The root directory where the subdirectories were created
+	 * Example: createDirectories("C:/Users/Johnny/JohnnysTowerGame", "new String[] {"Towers", "Units", "Maps"})
+	 * will create the folder JohnnysTowerGame, and inside that folder, create three folders: Towers, Units, and Maps
+	 */
+	public static String createDirectories(String root, Collection<String> newDirectories){
+		File f = new File(root);
+		f.mkdirs();
+		for(String s: newDirectories){
+			new File(root + "/" + s).mkdirs();
+		}
+		return root;
+	}
 	/**
 	 * 
 	 * @param o

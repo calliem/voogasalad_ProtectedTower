@@ -54,15 +54,7 @@ public class MainEnvironment {
 		myGridPane = new GridPane();
 		myGridPane.setGridLinesVisible(true);
 		createEnvironment(myGridPane);
-		/*
-        //   addTab(new MainEditor(), myResources.getString("MainTabTab"));
-        addTab(new MapEditor(myDimensions, myResources), myResources.getString("MapTab"), MAIN_TAB);     //is it redundant passing in the dimensions so many times?
-        addTab(new WaveEditor(myDimensions, myResources), myResources.getString("WavesTab"), MAIN_TAB);
-        addTab(new LevelEditor(myDimensions, myResources), myResources.getString("LevelsTab"), MAIN_TAB);
 
-        //   addTab(new ProjectileEditor(), myResources.getString("ProjectilesTab"));
-        addTab(new TowerEditor(myDimensions, myResources), myResources.getString("TowersTab"), SPRITE_TAB);
-		 */
 		populateTabBar();
 
 		setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
@@ -72,21 +64,25 @@ public class MainEnvironment {
 	 * Populates the tab bar with 1 tab for every non-abstract class in editors package
 	 */
 	private void populateTabBar(){
-		Map<String, Boolean> tabsToCreate = GameCreator.tabsToCreate();
-		for(String s : tabsToCreate.keySet()){
-			Editor e = null;
-			try {
-				e = (Editor) Class.forName("authoringEnvironment.editors." + s)
-						.getConstructor(Dimension2D.class, ResourceBundle.class)
-						.newInstance(myDimensions, myResources);
-			} catch (InstantiationException | IllegalAccessException
-					| IllegalArgumentException | InvocationTargetException
-					| NoSuchMethodException | SecurityException
-					| ClassNotFoundException e1) {
-				// something that doesn't let this null go through
-				e1.printStackTrace();
+		Map<String, Boolean> tabsToCreate = ProjectReader.tabsToCreate();
+		for(String s : ProjectReader.getOrderedTabList()){
+			if(tabsToCreate.keySet().contains(s)){
+				Editor e = null;
+				try {
+					System.out.println("dim: " + myDimensions);
+					System.out.println("s: " + s);
+					e = (Editor) Class.forName("authoringEnvironment.editors." + s)
+							.getConstructor(Dimension2D.class, ResourceBundle.class, Stage.class)
+							.newInstance(myDimensions, myResources, myStage);
+				} catch (InstantiationException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException
+						| NoSuchMethodException | SecurityException
+						| ClassNotFoundException e1) {
+					// something that doesn't let this null go through
+					e1.printStackTrace();
+				}
+				addTab(e, myResources.getString(s), tabsToCreate.get(s));
 			}
-			addTab(e, myResources.getString(s), tabsToCreate.get(s));
 		}
 
 	}

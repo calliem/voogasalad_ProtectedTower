@@ -1,26 +1,32 @@
 package authoringEnvironment;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.Set;
 
 import authoring.environment.setting.Setting;
+import authoring.environment.setting.Setting;
 
-public class GameCreator {
+public class ProjectReader {
 
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
-	private static final String gameFileDir = "\\AllPartsData";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
+<<<<<<< HEAD:src/authoringEnvironment/GameCreator.java
 	private static Set<String> dirsToBeCreated = paramLists.keySet();
+=======
+>>>>>>> 50046e566265c2e24d17d366b95baeca1387c43c:src/authoringEnvironment/ProjectReader.java
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
-	private static final List<String> spriteEditors = listFromArray(new String[] {"TowerEditor", "ProjectileEditor", "UnitEditor"});
+	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
+	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/english.properties";
 
 
 	/**
@@ -60,12 +66,14 @@ public class GameCreator {
 			String defaultVal, String dataType) {
 		Class<?> c = String.class;
 		Setting s = null;
-		try {
-			c = Class.forName(dataType + "Setting");
-		} catch (ClassNotFoundException e) {
-			// display error message
+		// display error message
+		try{
+			c = Class.forName("authoringEnvironment.setting" + dataType + "Setting");
 		}
-		;
+		catch(ClassNotFoundException e){
+			//something
+		}
+
 		try {
 			s = (Setting) c.getConstructor(String.class, String.class, String.class)
 					.newInstance(partType, param, defaultVal);
@@ -86,7 +94,7 @@ public class GameCreator {
 		Map<String, Boolean> tabsToMake = new HashMap<String, Boolean>();
 		for(String s : editorsToCreate())
 			if(!abstractEditors.contains(s))
-				tabsToMake.put(s, !spriteEditors.contains(s));
+				tabsToMake.put(s, mainEditors.contains(s));
 		return tabsToMake;
 	}
 
@@ -102,7 +110,11 @@ public class GameCreator {
 		System.out.println(editors.toString());
 		System.out.println(editorPackage);
 		File[] allEditors = editors.listFiles();
+<<<<<<< HEAD:src/authoringEnvironment/GameCreator.java
 		System.out.println(allEditors);
+=======
+		System.out.println("All editors " + allEditors);
+>>>>>>> 50046e566265c2e24d17d366b95baeca1387c43c:src/authoringEnvironment/ProjectReader.java
 		String[] editorNames = new String[allEditors.length];
 		for(int i = 0; i < allEditors.length; i++){
 			String untrimmedName = allEditors[i].getName();
@@ -111,6 +123,29 @@ public class GameCreator {
 			System.out.println(editorNames[i]);
 		}
 		return editorNames;
+	}
+
+	/**
+	 * Gets the list of tabs to generate in the tab bar in the order specified in english.properties
+	 * @return The List<String> of tab names in order
+	 */
+	public static List<String> getOrderedTabList(){
+		ArrayList<String> tabList = new	ArrayList<String>();
+		try {
+			Scanner s = new Scanner(new File(tabOrder));
+			String nextEditor = "nothign";
+			while (s.hasNextLine()) {
+				nextEditor = s.nextLine();
+				nextEditor.replaceAll("\\s+", "");
+				System.out.println("nextEditor: " + nextEditor + nextEditor.indexOf("="));
+				tabList.add(nextEditor.substring(0,  nextEditor.indexOf("=")));
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return tabList;
 	}
 
 	/**
