@@ -80,7 +80,7 @@ public class TowerView extends SpriteView{
     public List<String[]> getTowerInfo(){
         List<String[]> info = new ArrayList<>();
         for(Setting setting : parameterFields){
-            info.add(new String[]{setting.getParameterName(), setting.getParameterValue()});
+            info.add(new String[]{setting.getParameterName(), (String) setting.getParameterValue()});
         }
         return info;
     }
@@ -150,7 +150,7 @@ public class TowerView extends SpriteView{
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
         
-        Setting test = new IntegerSetting("Health");
+        Setting test = new IntegerSetting("Health", "0");
         parameterFields.add(test);
         
         HBox buttons = new HBox(10);
