@@ -46,6 +46,8 @@ public class TowerEditor extends PropertyEditor{
 
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
+    
+    private static final int ROW_SIZE = 2;
 
     /**
      * Creates a tower object.
@@ -85,8 +87,9 @@ public class TowerEditor extends PropertyEditor{
         towersDisplay.getChildren().add(editControls);
         
         // TODO remove magic numbers
-        currentRow = new HBox(20);
-        towersDisplay.getChildren().add(currentRow);
+        HBox row = new HBox(20);
+        currentRow = row;
+        towersDisplay.getChildren().add(row);
 
         numTowers = new SimpleIntegerProperty(0);
         numTowers.addListener((obs, oldValue, newValue) -> {
@@ -97,8 +100,17 @@ public class TowerEditor extends PropertyEditor{
                 myContent.getChildren().remove(empty);
             }
             
-            //TODO: dynamically put new towers onto new line
-            //so that each row has 7 towers.
+//            // if there's 7 on a row already
+//            else if((int) newValue % (ROW_SIZE+1) == 0 && (int) oldValue % ROW_SIZE == 0){
+//                HBox newRow = new HBox(20);
+//                currentRow = newRow;
+//                towersDisplay.getChildren().add(newRow);
+//            }
+//            
+//            else if((int) newValue % ROW_SIZE == 0 && (int) oldValue % (ROW_SIZE+1) == 0){
+//                currentRow = (HBox) towersDisplay.getChildren().get(towersDisplay.getChildren().size()-2);
+//                towersDisplay.getChildren().remove(towersDisplay.getChildren().size()-1);
+//            }
         });
         
         empty = new Text("No towers have been made...yet.");
@@ -201,6 +213,7 @@ public class TowerEditor extends PropertyEditor{
             if(!newValue){
                 PauseTransition wait = new PauseTransition(Duration.millis(200));
                 wait.setOnFinished((e) -> currentRow.getChildren().remove(tower));
+                wait.play();
                 towersCreated.remove(tower);
                 numTowers.setValue(towersCreated.size());
             }
