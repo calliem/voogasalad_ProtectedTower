@@ -13,7 +13,11 @@ import java.util.Set;
 
 import authoring.environment.setting.Setting;
 import authoring.environment.setting.Setting;
-
+/**
+ * 
+ * @author Johnny Kumpf
+ *
+ */
 public class ProjectReader {
 
 	private static final String paramListFile = "resources/part_parameters";
