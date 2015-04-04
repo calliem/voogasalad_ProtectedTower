@@ -1,6 +1,7 @@
 package engine;
 
 import java.util.ArrayList;
+import java.util.List;
 import engine.sprites.Enemy;
 
 
@@ -12,9 +13,13 @@ import engine.sprites.Enemy;
  *
  */
 public class Wave implements Updateable, Endable {
-    private ArrayList<Enemy> myEnemies;
+    private List<Enemy> myEnemies;
     private double mySendRate;
     private int myNumSent = 0;
+
+    public Wave () {
+        myEnemies = new ArrayList<>();
+    }
 
     @Override
     public boolean hasEnded () {
