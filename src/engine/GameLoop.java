@@ -15,20 +15,25 @@ import javafx.scene.input.KeyEvent;
  *
  */
 public class GameLoop {
-	public GameLoop() throws InsufficientParametersException{
+	public GameLoop() throws InsufficientParametersException {
 		throw new InsufficientParametersException();
 	}
-	public GameLoop(ObservableList<Node> sceneContents, XStream inputStream) throws InsufficientParametersException{
-		
+
+	public GameLoop(ObservableList<Node> sceneContents, XStream inputStream)
+			throws InsufficientParametersException {
+
 	}
-	public void parse(XStream inputStream){
-		
+
+	public void parse(XStream inputStream) {
+
 	}
-	public ArrayList<Node> displayMap(Iterable<GridCell> map){
+
+	public ArrayList<Node> displayMap(Iterable<GridCell> map) {
 		return null;
 	}
+
 	// Will handle hotkeys
-	public void handleKeyInput(KeyEvent k){
-		
+	public void handleKeyInput(KeyEvent k) {
+
 	}
 }

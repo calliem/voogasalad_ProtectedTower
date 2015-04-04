@@ -9,7 +9,8 @@ public class Modifier extends Sprite {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void modify(GameSprite s){}
+	public void modify(GameSprite s) {
+	}
 
 	@Override
 	public List<String> getParameters() {
@@ -32,7 +33,7 @@ public class Modifier extends Sprite {
 	@Override
 	public void target(Sprite s) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

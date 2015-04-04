@@ -1,7 +1,8 @@
 package engine;
 
 public class Game {
-	
-	public void endGame(){}
-	
+
+	public void endGame() {
+	}
+
 }

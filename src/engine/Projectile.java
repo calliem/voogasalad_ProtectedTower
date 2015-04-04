@@ -2,15 +2,14 @@ package engine;
 
 import java.util.List;
 
-
-public class Projectile extends MoveableSprite{
+public class Projectile extends MoveableSprite {
 
 	public Projectile() throws InsufficientParametersException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Projectile(String s) throws InsufficientParametersException{
+
+	public Projectile(String s) throws InsufficientParametersException {
 		super();
 	}
 
@@ -29,7 +28,7 @@ public class Projectile extends MoveableSprite{
 	@Override
 	public void target(Sprite s) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -41,8 +40,7 @@ public class Projectile extends MoveableSprite{
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
 
 }
