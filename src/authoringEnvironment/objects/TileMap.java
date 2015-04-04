@@ -30,7 +30,6 @@ public class TileMap {
 		// displayGrid(myTile);
 		createGridLines();
 		attachTileListeners();
-
 	}
 
 	public Group getMap() {
@@ -44,15 +43,11 @@ public class TileMap {
 				int x = i;
 				int y = j;
 				myTiles[i][j].setOnMousePressed(e -> myTiles[x][y].select());
-				myTiles[i][j].setOnMouseDragEntered(e -> myTiles[x][y].select());
+				myTiles[i][j].setOnMouseDragEntered(e -> myTiles[x][y].dragSelect());
 			}
     	}
     }
 			
-
-    	
-    	
-
 	/*
 	 * public void setActiveTiles{int startX, int startY, int endX, int endY
 	 * //add if it is possible to drag and select multiple squares }

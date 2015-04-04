@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 /**
  * Creates the view and runs the game engine
  * 
- * @author Callie
+ * @author Callie Mao
  *
  */
 
@@ -15,7 +15,7 @@ public class Main extends Application {
 		MainEnvironment myView = new MainEnvironment(stage);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		launch(args);
 	}
 }

@@ -27,40 +27,69 @@ import javafx.scene.text.Text;
 public class Sidebar extends VBox {
 
 	private ResourceBundle myResources;
+	private static final int HBOX_SPACING = 10; //maybe set the spacing dynamically instead
 
 	public Sidebar(ResourceBundle resources) {
+		setSpacing(HBOX_SPACING);
 		myResources = resources;
 		setDimensionRestrictions();
 		createMapSettings();
 	}
 	
 	private void createMapSettings(){
+		System.out.println(myResources);
+		//TODO: make a main tab to display the stuff here
+		createTitleText(myResources.getString("GameSettings"));
+		//setLives();
+		updateTextField(myResources.getString("Lives"), 50); //TODO: remove hardcoded values
+		
 		createTitleText(myResources.getString("MapSettings"));
 		setGridDimensions();
+		updateTextField(myResources.getString("TileSize"), 50);
+		
+		createTitleText(myResources.getString("SetTiles"));
 		
 		//createHSelection(myResources.getString("GridDimensions"), gridDimensionsText);
 		//TODO: event handlers
-		
-		TextField tileSizeText = new TextField();
-		createHSelection(myResources.getString("TileSize"), tileSizeText);
 	}
 	
 	//TODO: remove duplicated code
 	private void setGridDimensions(){
 		HBox selection = new HBox();
+		selection.setSpacing(HBOX_SPACING); 
+		Text text = new Text(myResources.getString("GridDimensions"));
+		
+		HBox textFields = new HBox();
 		TextField x = new TextField();
+		x.setPrefWidth(50); //TODO: remove hardcoded stuff
 		Text xSeparator = new Text(" x ");
 		TextField y = new TextField();
-		Button setGridDimButton = new Button("Set Grid Dimensions");
-		selection.getChildren().addAll(x, xSeparator, y,setGridDimButton);
+		textFields.getChildren().addAll(x, xSeparator, y);
+		
+		y.setPrefWidth(50);
+		Button setGridDimButton = new Button(myResources.getString("Update"));
+		setGridDimButton.setOnMouseClicked(e -> updateGridDim());
+		selection.getChildren().addAll(text, textFields,setGridDimButton);
 		getChildren().add(selection);
 	}
 	
-	private void createHSelection(String s, Node node){
+	private void updateTextField(String s, int boxWidth){
 		HBox selection = new HBox();
-		selection.getChildren().addAll(new Text(s), node);
+		selection.setSpacing(10);
+		Text lives = new Text(myResources.getString(s));
+		TextField textField = new TextField();
+		textField.setPrefWidth(boxWidth);
+		Button livesButton = new Button(myResources.getString("Update"));
+		selection.getChildren().addAll(lives, textField, livesButton);
 		getChildren().add(selection);
 	}
+	
+	
+	//tile view
+	
+	//path view
+	
+	
 
 	private void setDimensionRestrictions() {
 		setPadding(new Insets(10, 10, 10, 10));
@@ -70,7 +99,7 @@ public class Sidebar extends VBox {
 
 	private void createTitleText(String s) {
 		Text title = new Text(s);
-		title.setFont(new Font(13));
+		title.setFont(new Font(15));
 		title.setUnderline(true);
 		getChildren().add(title);
 	}
@@ -81,6 +110,10 @@ public class Sidebar extends VBox {
 		list.setMaxWidth(Double.MAX_VALUE);
 		list.setPrefHeight(130);
 		return list;
+	}
+	
+	private void updateGridDim(){
+		System.out.println("updateGridDim");
 	}
 }
 

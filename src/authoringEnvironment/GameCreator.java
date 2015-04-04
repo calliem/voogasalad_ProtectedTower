@@ -18,7 +18,7 @@ public class GameCreator {
 	private static final String gameFileDir = "\\AllPartsData";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 	private static Set<String> dirsToBeCreated = paramLists.keySet();
-	private static final String editorPackage = System.getProperty("user.dir").concat("\\src\\authoringEnvironment\\editors");
+	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> spriteEditors = listFromArray(new String[] {"TowerEditor", "ProjectileEditor", "UnitEditor"});
 
@@ -95,9 +95,14 @@ public class GameCreator {
 	 * @return The array of editors to create
 	 */
 	public static String[] editorsToCreate(){
+		
+		//TODO: fix order that the tabs are displayed 
+		
 		File editors = new File(editorPackage);
+		System.out.println(editors.toString());
 		System.out.println(editorPackage);
 		File[] allEditors = editors.listFiles();
+		System.out.println(allEditors);
 		String[] editorNames = new String[allEditors.length];
 		for(int i = 0; i < allEditors.length; i++){
 			String untrimmedName = allEditors[i].getName();

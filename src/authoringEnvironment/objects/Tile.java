@@ -39,9 +39,6 @@ public class Tile extends Rectangle {
 
 	// this may not be necessary if the 2D array will update itself
 	public void setTileSize(double size) {
-
-		// setFitWidth(size);
-		// setFitHeight(size);
 		setWidth(size);
 		setHeight(size);
 		myTileSize = size;
@@ -59,6 +56,12 @@ public class Tile extends Rectangle {
 		
 //		setStyle("-fx-base: #3c3c3c;");
 		//isPath = true;
+	}
+	
+	//not sure if this below method belongs here
+	public void dragSelect(){
+		
+		//select()
 	}
 
 	/*public void setInactiveTile() {

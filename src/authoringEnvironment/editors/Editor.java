@@ -19,6 +19,7 @@ public abstract class Editor {
 
 	public Editor(Dimension2D dim, ResourceBundle resources) {
 		myDimensions = dim;
+		myResources = resources;
 	}
 
 	public abstract Group configureUI(); // or make it a Node instead of a
@@ -33,6 +34,7 @@ public abstract class Editor {
 	}
 
 	protected ResourceBundle getResources() {
+		System.out.println("res" + myResources);
 		return myResources;
 	}
 }
