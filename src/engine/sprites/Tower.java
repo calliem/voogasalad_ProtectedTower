@@ -8,6 +8,7 @@ import engine.InsufficientParametersException;
  * defend a map from Enemy objects. The tower shoots projectiles which target enemies.
  * 
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
 public class Tower extends GameSprite {
@@ -29,6 +30,11 @@ public class Tower extends GameSprite {
     public void collide (Sprite sprite) {
         // TODO Auto-generated method stub
 
+    }
+    
+    @Override
+    public Tower clone() {
+    	return null;
     }
 
     /**

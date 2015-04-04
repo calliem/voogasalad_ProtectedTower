@@ -1,6 +1,7 @@
 package engine;
 
 import java.util.ArrayList;
+import java.util.List;
 import engine.conditions.Condition;
 
 
@@ -9,16 +10,21 @@ import engine.conditions.Condition;
  * enemies, and their properties.
  * 
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
 public class Game {
 
     private Bank myBank;
-    ArrayList<Condition> myConditions;
+    private List<Condition> myConditions;
+    private int myExperiencePoints;
+    private List<Level> myLevels;
 
     public Game () {
         myBank = new Bank();
         myConditions = new ArrayList<Condition>();
+        myExperiencePoints = 0;
+        myLevels = new ArrayList<>();
     }
 
     public void endGame () {
