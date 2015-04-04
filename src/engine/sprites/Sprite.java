@@ -38,7 +38,7 @@ public abstract class Sprite {
      * 
      * @param map of string to object
      */
-    protected void setParameterMap (Map<String, Object> map) {
+    public void setParameterMap (Map<String, Object> map) {
         myParameters = map;
     }
 

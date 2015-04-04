@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
 import engine.sprites.GridCell;
+import engine.sprites.Sprite;
 
 
 /**
@@ -25,7 +26,7 @@ public class GameController {
     /**
      * Holds a set of all objects instantiated from data files
      */
-    Set<Object> allObjects;
+    Set<Sprite> allObjects;
 
     public GameController () throws InsufficientParametersException {
         allObjects = new HashSet<>();
@@ -42,13 +43,16 @@ public class GameController {
      * which generates a map of objects names to the parameters which those objects should contain.
      * Those objects are then instantiated and their parameter lists are set.
      * 
-     * @param filepath
+     * @param filepath String of location of the game file
      */
     public void loadGame (String filepath) {
         Map<String, Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
 
         for (String s : allDataObjects.keySet()) {
-            allObjects.add(Reflection.createInstance(s));
+            Sprite currentObject = (Sprite) Reflection.createInstance(s);
+            currentObject.setParameterMap(allDataObjects.get(s));
+            allObjects.add(currentObject);
+            // TODO need way to load objects into correct classes, like Layout and Wave
         }
     }
 
