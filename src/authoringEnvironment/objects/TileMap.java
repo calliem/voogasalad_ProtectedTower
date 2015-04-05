@@ -99,87 +99,14 @@ public class TileMap {
 		}
 		attachTileListeners();
 	}
-	
-	/*public void setMapDimensions(int numRows, int numCols){
-		//TODO: do we even need global variables?
-		updateMap(numRows, numCols);
-		myMapRows = numRows;
-		myMapCols = numCols;
-		//TODO: remake the map each time
-	}*/
-	
-	//will remove all extra tiles on the right and bottom. TODO: make it delete for everything but the center tiles
-	
+
 	//@param myMapRows and myMapCols represent the previous/old rows and cols
 	public void setMapDimensions(int newMapRows, int newMapCols){
 		clearTiles();
-		//myMap.getChildren().clear();
-		
-		//set proper x and y coordinates
-	/*	for (int i = 0; i < newMapRows; i++) {
-			for (int j = 0; j < newMapCols; j++) {
-				if (myTiles[i][j] == null)
-					myTiles[i][j] = new Tile(myTileSize, i, j);
-				myTiles[i][j].setTranslateX(i*myTileSize);
-				myTiles[i][j].setTranslateY(j*myTileSize);
-				
-			}
-		}*/
-		
-		//this is not called for changes in tile size so don't need to worry about above
-		
-		//int rowDiff = myMapRows - newMapRows; // 1 - 2
-		//int colDiff = myMapCols - newMapCols;
-		
-		//TODO: super inefficient and probably duplicated
-		
-	/*	if (newMapRows < myMapRows){   // 1 < 2
-			for (int i = newMapRows; i < myMapRows; i++) {
-				for (int j = 0; j < myMapCols; j ++){
-					myMap.getChildren().remove(myTiles[i][j]);
-				}
-			}
-		}
-		
-		if (newMapCols < myMapCols){
-			for (int i = newMapCols; i < myMapCols; i++) {
-				for (int j = 0; j < myMapRows; j ++){
-					//remove elements from the array
-					myMap.getChildren().remove(myTiles[j][i]);
-				}
-			}
-		}
-		
-		System.out.println("-----------------------------------");
-		System.out.println("new col " + newMapCols);
-		System.out.println("old col " + myMapCols);
-		
-		System.out.println("new row " + newMapRows);
-		System.out.println("old row " + myMapRows);
-		
-		if (newMapCols > myMapCols || newMapRows > myMapRows){
-			System.out.println("in this loop");
-			for (int i = 0; i < newMapRows; i++) {
-				for (int j = 0; j < newMapCols; j++) {
-					System.out.println(i + " " +  j +  " tile " + myTiles[i][j].getTranslateX());
-					if (myTiles[i][j] == null){
-						System.out.println("null tile====================================");
-						myTiles[i][j] = new Tile(myTileSize, i, j);
-						myMap.getChildren().add(myTiles[i][j]);
-					}
-				}
-			}
-		}			*/
-		
-		
-		System.out.println("-----------------------------------");
-		System.out.println("new col " + newMapCols);
-		System.out.println("old col " + myMapCols);
-		
-		System.out.println("new row " + newMapRows);
-		System.out.println("old row " + myMapRows);
-		
 		Tile[][] newTiles = new Tile[newMapRows][newMapCols];
+		
+		//TODO make newmethod to avoid duplication since this is similar to createMap
+
 		for (int i = 0; i < newMapRows; i++) {
 			for (int j = 0; j < newMapCols; j++) {
 				if (i >= myMapRows || j >= myMapCols)
@@ -193,18 +120,9 @@ public class TileMap {
 				myMap.getChildren().add(newTiles[i][j]);
 			}
 		}
-		
-		
-		
-		
-		
-		//TODO make newmethod to avoid duplication since this is similar to createMap
 
-		
-		
 		myMapCols = newMapCols;
 		myMapRows = newMapRows;
-		
 		
 		myTiles = newTiles;
 	}

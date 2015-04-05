@@ -53,16 +53,45 @@ public class Sidebar extends VBox {
 		//TODO: make a main tab to display the stuff here
 		createTitleText(myResources.getString("GameSettings"));
 		//setLives();
-		updateTextField(myResources.getString("Lives"), 50); //TODO: remove hardcoded values
+		setLives();
+
+		//updateTextField(myResources.getString("Lives"), 50); //TODO: remove hardcoded values
 		
 		createTitleText(myResources.getString("MapSettings"));
 		setGridDimensions();
-		updateTextField(myResources.getString("TileSize"), 50);
+		setTileSize();
+		//updateTextField(myResources.getString("TileSize"), 50);
 		createTitleText(myResources.getString("SetTiles"));
 		selectTile();
 		
 		//createHSelection(myResources.getString("GridDimensions"), gridDimensionsText);
 		//TODO: event handlers
+	}
+	
+	
+	//Lots of duplication below
+	private void setLives(){
+		HBox selection = new HBox();
+		selection.setSpacing(10);
+		Text lives = new Text(myResources.getString("Lives"));
+		TextField textField = new TextField();
+		Button button = new Button(myResources.getString("Update"));
+		button.setOnMouseClicked(e -> myMap.changeTileSize(System.out.println(textField.getText()))); //TODO: add to properties file to be saved
+		textField.setPrefWidth(50);
+		selection.getChildren().addAll(lives, textField, button);
+		getChildren().add(selection);
+	}
+	
+	private void setTileSize(){
+		HBox selection = new HBox();
+		selection.setSpacing(10);
+		Text lives = new Text(myResources.getString("SetTiles"));
+		TextField textField = new TextField();
+		Button button = new Button(myResources.getString("Update"));
+		button.setOnMouseClicked(e -> myMap.changeTileSize(Integer.parseInt(textField.getText())));
+		textField.setPrefWidth(50);
+		selection.getChildren().addAll(lives, textField, button);
+		getChildren().add(selection);
 	}
 	
 	private void selectTile(){
@@ -121,10 +150,11 @@ public class Sidebar extends VBox {
 		selection.getChildren().addAll(text, textFields,setGridDimButton);
 		getChildren().add(selection);
 	}
+
 	
 	
 	//TODO: find a way to make this work
-	private Button updateTextField(String s, int boxWidth){
+/*	private Button updateTextField(String s, int boxWidth){
 		HBox selection = new HBox();
 		selection.setSpacing(10);
 		Text lives = new Text(myResources.getString(s));
@@ -133,8 +163,8 @@ public class Sidebar extends VBox {
 		textField.setPrefWidth(boxWidth);
 		selection.getChildren().addAll(lives, textField, button);
 		getChildren().add(selection);
-		return button;
-	}
+		
+	}*/
 	
 	
 	
@@ -168,8 +198,3 @@ public class Sidebar extends VBox {
 		myMap.setMapDimensions(Integer.parseInt(numRows), Integer.parseInt(numCols));
 	}
 }
-
-// set grid size
-// slider to set tile size
-
-// 
