@@ -38,7 +38,6 @@ public class TileMap {
 		//TODO: sethover x, y coordinate, tile size, etc.
 		createMap();
 		//createGridLines();
-		attachTileListeners();
 	}
 
 	public Group getMap() {
@@ -57,7 +56,7 @@ public class TileMap {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				int x = i;
 				int y = j;
-				myTiles[i][j].setOnMousePressed(e -> System.out.println(myActiveColor));//myTiles[x][y].setFill(myActiveColor));
+				myTiles[i][j].setOnMousePressed(e -> myTiles[x][y].setFill(myActiveColor));//myTiles[x][y].setFill(myActiveColor));
 				myTiles[i][j].setOnMouseDragEntered(e -> myTiles[x][y].setFill(myActiveColor)); //TODO: fix dragging errors
 
 				
@@ -97,6 +96,35 @@ public class TileMap {
 				myMap.getChildren().add(myTiles[i][j]); // to speed up												// time?
 			}
 		}
+		attachTileListeners();
+	}
+	
+	public void setMapRows(int numRows){
+		myMapRows = numRows;
+		updateMap();
+		//TODO: remake the map each time
+	}
+	
+	public void setMapCols(int numCols){
+		myMapCols = numCols;
+		updateMap();
+		//TODO: remake the map each time
+	}
+	
+	
+	//will remove all extra tiles on the right and bottom. TODO: make it delete for everything but the center tiles
+	private void updateMap(){
+		//myMap.getChildren().clear();
+		
+		//set proper x and y coordinates
+		for (int i = 0; i < myTiles.length; i++) {
+			for (int j = 0; j < myTiles[0].length; j++) {
+				myTiles[i][j].setTranslateX(i*myTileSize);
+				myTiles[i][j].setTranslateY(j*myTileSize);
+			}
+		}
+		
+		//delete all extra tiles
 	}
 
 	// might be more efficient if in the above for loop

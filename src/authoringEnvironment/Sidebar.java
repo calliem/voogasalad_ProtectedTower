@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import authoringEnvironment.objects.TileMap;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -29,8 +30,12 @@ import javafx.scene.text.Text;
 //TODO: abstract further
 public class Sidebar extends VBox {
 
+	//TODO: display sidebar with a gridpane not an HBox to keep everything aligned and beautiful
+	
 	private static final int HBOX_SPACING = 10; //maybe set the spacing dynamically instead
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
+	private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.WHITE;
+	private static final int DEFAULT_TILE_DISPLAY_SIZE = 40;
 	private ResourceBundle myResources;
 	private TileMap myMap;
 
@@ -53,7 +58,6 @@ public class Sidebar extends VBox {
 		createTitleText(myResources.getString("MapSettings"));
 		setGridDimensions();
 		updateTextField(myResources.getString("TileSize"), 50);
-		
 		createTitleText(myResources.getString("SetTiles"));
 		selectTile();
 		
@@ -66,11 +70,11 @@ public class Sidebar extends VBox {
 		selectTile.setSpacing(30);
 		
 		VBox selection = new VBox();
-		Text selectTileColor = new Text("Select Tile Color:"); //TODO: fix
+		Text selectTileColor = new Text(myResources.getString("SelectTileColor")); //TODO: fix
 		ColorPicker picker = new ColorPicker();
 		selection.getChildren().addAll(selectTileColor, picker);
 		
-		Rectangle rectangleDisplay = new Rectangle(40,40, Color.WHITE); //remove hardcoded;
+		Rectangle rectangleDisplay = new Rectangle(DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_COLOR); //remove hardcoded including the color;
 		
 		//Button placeTile = new Button("Place Tile"); //TODO:
 		//placeTile.setPrefHeight(40);
@@ -113,26 +117,28 @@ public class Sidebar extends VBox {
 		
 		y.setPrefWidth(50);
 		Button setGridDimButton = new Button(myResources.getString("Update"));
-		setGridDimButton.setOnMouseClicked(e -> updateGridDim());
+		setGridDimButton.setOnMouseClicked(e -> updateMapDim(x.getText(), y.getText()));
 		selection.getChildren().addAll(text, textFields,setGridDimButton);
 		getChildren().add(selection);
 	}
 	
-	private void updateTextField(String s, int boxWidth){
+	
+	//TODO: find a way to make this work
+	private Button updateTextField(String s, int boxWidth){
 		HBox selection = new HBox();
 		selection.setSpacing(10);
 		Text lives = new Text(myResources.getString(s));
 		TextField textField = new TextField();
+		Button button = new Button(myResources.getString("Update"));
 		textField.setPrefWidth(boxWidth);
-		Button livesButton = new Button(myResources.getString("Update"));
-		selection.getChildren().addAll(lives, textField, livesButton);
+		selection.getChildren().addAll(lives, textField, button);
 		getChildren().add(selection);
+		return button;
 	}
 	
 	
-	//tile view
 	
-	//path view
+	//TODO: path view
 	
 	
 
@@ -157,8 +163,10 @@ public class Sidebar extends VBox {
 		return list;
 	}
 	
-	private void updateGridDim(){
-		System.out.println("updateGridDim");
+	private void updateMapDim(String numRows, String numCols){
+		System.out.println("Update map dimensions");
+		myMap.setMapRows(Integer.parseInt(numRows));
+		myMap.setMapCols(Integer.parseInt(numCols));
 	}
 }
 
