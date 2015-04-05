@@ -47,6 +47,7 @@ public abstract class Setting extends HBox{
      * and the features that the user can edit (i.e. a
      * textfield)
      */
+    
     //this is the same for every setting object
     //if not, we can have two setting subclasses, one for normal stuff, one for file selectors
     protected void setupInteractionLayout(){
