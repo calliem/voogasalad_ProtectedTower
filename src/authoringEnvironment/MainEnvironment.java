@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 /**
  * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
  * @author Callie Mao
+ * @author Johnny Kumpf, populateTabBar() methods
  */
 
 public class MainEnvironment {

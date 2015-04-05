@@ -1,5 +1,6 @@
 /**
  * @author Johnny Kumpf
+ * @author Megan Gutter
  */
 package authoringEnvironment;
 

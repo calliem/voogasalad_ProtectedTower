@@ -3,6 +3,7 @@ package authoringEnvironment.objects;
 import imageselector.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -20,9 +21,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import authoring.environment.setting.IntegerSetting;
-import authoring.environment.setting.Setting;
 import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.setting.IntegerSetting;
+import authoringEnvironment.setting.Setting;
 
 /**
  * Creates the visual tower object containing
@@ -80,7 +81,7 @@ public class TowerView extends SpriteView{
     public List<String[]> getTowerInfo(){
         List<String[]> info = new ArrayList<>();
         for(Setting setting : parameterFields){
-            info.add(new String[]{setting.getParameterName(), setting.getParameterValue()});
+            info.add(new String[]{setting.getParameterName(), (String) setting.getParameterValue()});
         }
         return info;
     }
@@ -150,7 +151,7 @@ public class TowerView extends SpriteView{
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
         
-        Setting test = new IntegerSetting("Health");
+        Setting test = new IntegerSetting("Health", "0");
         parameterFields.add(test);
         
         HBox buttons = new HBox(10);
