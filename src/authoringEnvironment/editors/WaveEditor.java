@@ -1,18 +1,28 @@
-
-
 package authoringEnvironment.editors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
+import javafx.scene.Group;
 import javafx.stage.Stage;
+import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.UnitView;
 
-public class WaveEditor extends MainEditor{
-    public WaveEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
+public class WaveEditor extends MainEditor {
+	private Group myRoot;
+
+	public WaveEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
 		super(dim, resources, s);
-		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public Group configureUI () {
+		myRoot = new Group();
+		myRoot.getChildren().add(new FlowView(100, 100));
+		return myRoot;
 	}
 
 	public ArrayList<UnitView> getWaves() {
@@ -21,12 +31,6 @@ public class WaveEditor extends MainEditor{
 
 	@Override
 	protected void createMap() {
-		// TODO Auto-generated method stub
-
 	}
 
-	/*
-	 * @Override protected Group configureUI() { super.configureUI();
-	 * getGridPane(); return null; }
-	 */
 }

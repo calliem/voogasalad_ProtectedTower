@@ -20,11 +20,11 @@ import javafx.stage.Stage;
 public abstract class MainEditor extends Editor {
 
 	private GridPane myPane;
-	
+
 	public static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
 	public static final double MAP_WIDTH_MULTIPLIER = .75;
 	public static final double MAP_HEIGHT_PERCENT = 100;
-	
+
 	public MainEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
 		super(dim, resources, s);
 		// TODO Auto-generated constructor stub
@@ -39,13 +39,16 @@ public abstract class MainEditor extends Editor {
 		Group root = new Group();
 		createGridPane();
 		createMap();
-		
+
 		// does it dynamically update or will i have to say
 		// TODO remove magic number
-		//is using MainEnvironment.myDimensions.getWidth() bad?
+		// is using MainEnvironment.myDimensions.getWidth() bad?
 		System.out.println("dim: " + myDimensions);
-		System.out.println("width: " + myDimensions.getWidth() + " height: " + myDimensions.getHeight());
-		Rectangle background = new Rectangle(myDimensions.getWidth()*MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(), Color.web("2A2A29"));
+		System.out.println("width: " + myDimensions.getWidth() + " height: "
+				+ myDimensions.getHeight());
+		Rectangle background = new Rectangle(myDimensions.getWidth()
+				* MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(),
+				Color.web("2A2A29"));
 		root.getChildren().addAll(background, myPane);
 		return root;
 	}
@@ -58,7 +61,7 @@ public abstract class MainEditor extends Editor {
 
 	private void setGridPaneConstraints(GridPane pane) {
 		RowConstraints row0 = new RowConstraints();
-		row0.setPercentHeight(MAP_HEIGHT_PERCENT); 
+		row0.setPercentHeight(MAP_HEIGHT_PERCENT);
 		pane.getRowConstraints().add(row0);
 		ColumnConstraints col0 = new ColumnConstraints();
 		col0.setPrefWidth(getWidth() * MAP_WIDTH_MULTIPLIER);
