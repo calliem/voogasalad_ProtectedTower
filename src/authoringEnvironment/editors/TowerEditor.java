@@ -1,6 +1,6 @@
 package authoringEnvironment.editors;
 
-import imageSelector.ImageSelector;
+import imageselector.ImageSelector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -172,6 +172,7 @@ public class TowerEditor extends PropertyEditor{
         ImageSelector imgSelector = new ImageSelector(myStage);
         imgSelector.addExtensionFilter("png");
         imgSelector.addExtensionFilter("jpg");
+        imgSelector.setPreviewImageSize(225, 150);
 
         HBox buttons = new HBox(10);
         Button create = new Button("Create");

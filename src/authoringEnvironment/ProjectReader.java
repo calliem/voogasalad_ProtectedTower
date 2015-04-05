@@ -18,7 +18,7 @@ public class ProjectReader {
 
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
-	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
+	private static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});

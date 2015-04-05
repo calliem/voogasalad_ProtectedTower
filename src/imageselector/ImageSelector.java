@@ -1,7 +1,8 @@
-package imageSelector;
+package imageselector;
 
-import imageSelector.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import java.io.File;
+import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -20,6 +21,8 @@ import javafx.stage.Stage;
  * Creates a visual interface for selecting and uploading an image.
  * Includes a preview of the selected image, and a UI for a fileChooser.
  * 
+ * Create an images folder in your src folder and add selectable images there.
+ * 
  * @author Kevin He
  *
  */
@@ -28,6 +31,15 @@ public class ImageSelector extends VBox {
     private String filePath;
     private FileChooser fileChooser;
     
+    private double previewImageHeight = 100;
+    private double previewImageWidth = 100;
+    private static final int LOAD_BUTTON_WIDTH = 65;
+    private static final int FILE_DISPLAY_WIDTH = 150;
+    private static final int FILE_DISPLAY_HEIGHT = 24;
+    private static final int PADDING = 10;
+    private static final String NOT_AVAILABLE = "imageSelector/img_not_available.png";
+    private static final String SELECTOR_RESOURCES = "imageSelector/SelectorText.properties";
+    
     /**
      * Creates an ImageSelector object.
      * 
@@ -35,27 +47,28 @@ public class ImageSelector extends VBox {
      * This is required to display an open-file dialog window.
      */
     public ImageSelector (Stage stage) {
-        super(20);
+        super(2*PADDING);
         setAlignment(Pos.CENTER);
 
-        HBox fileSelection = new HBox(10);
-
+        ResourceBundle myResources = ResourceBundle.getBundle(SELECTOR_RESOURCES);
+        
+        HBox fileSelection = new HBox(PADDING);
         StackPane textDisplay = new StackPane();
 
-        Text fileDisplay = new Text("Choose an image...");
-        Rectangle textBox = new Rectangle(150, 24);
+        Text fileDisplay = new Text(myResources.getString("filePrompt"));
+        Rectangle textBox = new Rectangle(FILE_DISPLAY_WIDTH, FILE_DISPLAY_HEIGHT);
         textBox.setFill(Color.WHITE);
 
-        filePath = "imageSelector/img_not_available.png";
+        filePath = NOT_AVAILABLE;
         preview = new ImageView(new Image(filePath));
-        ScaleImage.scaleByHeight(preview, 100);
 
         fileChooser = new FileChooser();
         
-        Button loader = new Button("Browse");
-        loader.setMaxWidth(65);
+        Button loader = new Button(myResources.getString("browse"));
+        loader.setMaxWidth(LOAD_BUTTON_WIDTH);
         loader.setOnAction( (event) -> {
             openFileChooser(stage, fileDisplay);
+            setPreviewImageSize(previewImageWidth, previewImageHeight);
         });
         fileDisplay.setTextAlignment(TextAlignment.LEFT);
         textDisplay.getChildren().addAll(textBox, fileDisplay);
@@ -79,7 +92,6 @@ public class ImageSelector extends VBox {
             fileDisplay.setText(fileName);
             filePath = String.format("images/%s", fileName);
             preview = new ImageView(new Image(filePath));
-            ScaleImage.scaleByHeight(preview, 100);
             this.getChildren().remove(0);
             this.getChildren().add(0, preview);
         }
@@ -105,7 +117,19 @@ public class ImageSelector extends VBox {
      * @param height    the height of the image
      */
     public void setPreviewImageSize(double width, double height){
+        previewImageWidth = width;
+        previewImageHeight = height;
         ScaleImage.scale(preview, width, height);
+    }
+    
+    public void setPreviewImageHeight(double height){
+        previewImageHeight = height;
+        ScaleImage.scaleByHeight(preview, height);
+    }
+    
+    public void setPreviewImageWidth(double width){
+        previewImageWidth = width;
+        ScaleImage.scaleByWidth(preview, width);
     }
 
     /**

@@ -1,6 +1,6 @@
 package authoring.environment.setting;
 
-import imageSelector.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import javafx.geometry.Pos;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
