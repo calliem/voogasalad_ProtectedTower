@@ -68,7 +68,7 @@ public class TileMap {
 	public void changeTileSize(double tileSize) {
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
-				myTiles[i][j].setTileSize(tileSize);
+				myTiles[i][j].setTileSizeDynamically(tileSize);
 			}
 		}
 	}

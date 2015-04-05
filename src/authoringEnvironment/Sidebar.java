@@ -2,14 +2,18 @@ package authoringEnvironment;
 
 import java.util.ResourceBundle;
 
+import authoringEnvironment.objects.TileMap;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -28,12 +32,17 @@ public class Sidebar extends VBox {
 	private static final int HBOX_SPACING = 10; //maybe set the spacing dynamically instead
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources;
+	private TileMap myMap;
 
-	public Sidebar(ResourceBundle resources) {
+	public Sidebar(ResourceBundle resources, TileMap map) {
 		myResources = resources;
+		myMap = map;
+		if (myMap == null)
+		System.out.println("myMap is null!!!!!!!!!!!!!!!!!!!!!!!!!");
 		setSpacing(HBOX_SPACING);
 		setDimensionRestrictions();
 		createMapSettings();
+		
 	}
 	
 	private void createMapSettings(){
@@ -48,9 +57,44 @@ public class Sidebar extends VBox {
 		updateTextField(myResources.getString("TileSize"), 50);
 		
 		createTitleText(myResources.getString("SetTiles"));
+		selectTile();
 		
 		//createHSelection(myResources.getString("GridDimensions"), gridDimensionsText);
 		//TODO: event handlers
+	}
+	
+	private void selectTile(){
+		HBox selectTile = new HBox();
+		selectTile.setSpacing(30);
+		
+		VBox selection = new VBox();
+		Text selectTileColor = new Text("Select Tile Color:"); //TODO: fix
+		ColorPicker picker = new ColorPicker();
+		selection.getChildren().addAll(selectTileColor, picker);
+		
+		Rectangle rectangleDisplay = new Rectangle(40,40, Color.WHITE); //remove hardcoded;
+		
+		Button placeTile = new Button("Place Tile"); //TODO:
+		placeTile.setPrefHeight(40);
+		
+		
+		selectTile.getChildren().addAll(selection, rectangleDisplay, placeTile);
+	
+		
+		getChildren().add(selectTile);
+		
+		
+		picker.setOnAction(e -> {rectangleDisplay.setFill(picker.getValue());
+		});
+		
+		placeTile.setOnMouseClicked(e -> changeActiveTileColor(picker.getValue()));
+	}
+	
+	private void changeActiveTileColor(Color color){
+		//TODO: make this do the right thing
+		System.out.println("CLICKED!==============================");
+		myMap.changeTileSize(10); 
+		//TODO: make it update the color in the actual grid 
 	}
 	
 	//TODO: remove duplicated code

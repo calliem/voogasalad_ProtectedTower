@@ -15,6 +15,8 @@ public class Tile extends Rectangle {
 	private boolean isPath;
 	private boolean isSelected;
 	private double myTileSize;
+	private int myColNum;
+	private int myRowNum;
 
 	// will have the same image for a path?
 	// TODO: create a text box to set grid size and a slider to set tile size
@@ -23,6 +25,8 @@ public class Tile extends Rectangle {
 	public Tile(double tileSize, int rowNum, int colNum) {
 		System.out.println("tileSize" + tileSize);
 		myTileSize = tileSize;
+		myColNum = colNum;
+		myRowNum = rowNum;
 		// setImage(new Image("/resources/white_square.png"));
 		// setFitWidth(tileSize);
 		// setFitHeight(tileSize);
@@ -40,8 +44,14 @@ public class Tile extends Rectangle {
 	 * public void setImage(ImageView image) { myImage = image; }
 	 */
 
+	
+	public void setTileSizeDynamically(double size) {
+		setTileSize(size);
+		setTranslateX(myColNum*size);
+		setTranslateY(myRowNum*size);
+	}
 	// this may not be necessary if the 2D array will update itself
-	public void setTileSize(double size) {
+	private void setTileSize(double size) {
 		setWidth(size);
 		setHeight(size);
 		myTileSize = size;

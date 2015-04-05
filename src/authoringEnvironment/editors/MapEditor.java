@@ -33,7 +33,7 @@ public class MapEditor extends MainEditor {
     @Override
     public Group configureUI(){
         Group root = super.configureUI();
-        getPane().add(new Sidebar(myResources),1,0);
+        getPane().add(new Sidebar(myResources, myActiveMap),1,0); //TODO: check map dependency
         return root;
     }
 
