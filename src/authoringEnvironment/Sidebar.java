@@ -165,8 +165,7 @@ public class Sidebar extends VBox {
 	
 	private void updateMapDim(String numRows, String numCols){
 		System.out.println("Update map dimensions");
-		myMap.setMapRows(Integer.parseInt(numRows));
-		myMap.setMapCols(Integer.parseInt(numCols));
+		myMap.setMapDimensions(Integer.parseInt(numRows), Integer.parseInt(numCols));
 	}
 }
 

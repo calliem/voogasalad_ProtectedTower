@@ -23,6 +23,7 @@ public class TileMap {
 	// allowing both width and height gives greater flexibility in map creation
 	private int myMapRows;
 	private int myMapCols;
+	
 	private Group myGridLines;
 	
 	private static final Color DEFAULT_TILE_COLOR = Color.WHITE;
@@ -99,33 +100,67 @@ public class TileMap {
 		attachTileListeners();
 	}
 	
-	public void setMapRows(int numRows){
+	/*public void setMapDimensions(int numRows, int numCols){
+		//TODO: do we even need global variables?
+		updateMap(numRows, numCols);
 		myMapRows = numRows;
-		updateMap();
-		//TODO: remake the map each time
-	}
-	
-	public void setMapCols(int numCols){
 		myMapCols = numCols;
-		updateMap();
 		//TODO: remake the map each time
-	}
-	
+	}*/
 	
 	//will remove all extra tiles on the right and bottom. TODO: make it delete for everything but the center tiles
-	private void updateMap(){
+	
+	//@param myMapRows and myMapCols represent the previous/old rows and cols
+	public void setMapDimensions(int newMapRows, int newMapCols){
 		//myMap.getChildren().clear();
 		
 		//set proper x and y coordinates
-		for (int i = 0; i < myTiles.length; i++) {
-			for (int j = 0; j < myTiles[0].length; j++) {
+	/*	for (int i = 0; i < newMapRows; i++) {
+			for (int j = 0; j < newMapCols; j++) {
+				if (myTiles[i][j] == null)
+					myTiles[i][j] = new Tile(myTileSize, i, j);
 				myTiles[i][j].setTranslateX(i*myTileSize);
 				myTiles[i][j].setTranslateY(j*myTileSize);
+				
+			}
+		}*/
+		
+		//this is not called for changes in tile size so don't need to worry about above
+		
+		//int rowDiff = myMapRows - newMapRows; // 1 - 2
+		//int colDiff = myMapCols - newMapCols;
+		
+		//TODO: super inefficient and probably duplicated
+		
+		if (newMapRows < myMapRows){   // 1 < 2
+			for (int i = newMapRows; i < myMapRows; i++) {
+				for (int j = 0; j < myMapCols; j ++){
+					myMap.getChildren().remove(myTiles[i][j]);
+				}
 			}
 		}
 		
-		//delete all extra tiles
+		if (newMapCols < myMapCols){
+			for (int i = newMapCols; i < myMapCols; i++) {
+				for (int j = 0; j < myMapRows; j ++){
+					myMap.getChildren().remove(myTiles[j][i]);
+				}
+			}
+		}
+		
+		if (newMapCols > myMapCols || newMapRows > myMapRows){
+			for (int i = 0; i < newMapRows; i++) {
+				for (int j = 0; j < newMapCols; j++) {
+					if (myTiles[i][j] == null){
+						myTiles[i][j] = new Tile(myTileSize, i, j);
+					}
+				}
+			}
+		}			
 	}
+		//for (int i = myTiles.length; )
+		
+		//delete all extra tiles
 
 	// might be more efficient if in the above for loop
 	/*private void createGridLines() {
