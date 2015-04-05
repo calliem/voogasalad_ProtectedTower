@@ -1,6 +1,6 @@
 package authoringEnvironment.editors;
 
-import imageSelector.ImageSelector;
+import imageselector.ImageSelector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -80,16 +80,19 @@ public class TowerEditor extends PropertyEditor{
         // TODO remove magic number
         Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, Color.GRAY);
 
-        VBox towersDisplay = new VBox(10);
+        VBox towersDisplay = new VBox(20);
         towersDisplay.setTranslateY(10);
 
         HBox editControls = setupEditControls();
         towersDisplay.getChildren().add(editControls);
         
+        ArrayList<HBox> rows = new ArrayList<>();
+        
         // TODO remove magic numbers
         HBox row = new HBox(20);
         currentRow = row;
         towersDisplay.getChildren().add(row);
+        rows.add(row);
 
         numTowers = new SimpleIntegerProperty(0);
         numTowers.addListener((obs, oldValue, newValue) -> {
@@ -100,17 +103,18 @@ public class TowerEditor extends PropertyEditor{
                 myContent.getChildren().remove(empty);
             }
             
-//            // if there's 7 on a row already
-//            else if((int) newValue % (ROW_SIZE+1) == 0 && (int) oldValue % ROW_SIZE == 0){
-//                HBox newRow = new HBox(20);
-//                currentRow = newRow;
-//                towersDisplay.getChildren().add(newRow);
-//            }
-//            
-//            else if((int) newValue % ROW_SIZE == 0 && (int) oldValue % (ROW_SIZE+1) == 0){
-//                currentRow = (HBox) towersDisplay.getChildren().get(towersDisplay.getChildren().size()-2);
-//                towersDisplay.getChildren().remove(towersDisplay.getChildren().size()-1);
-//            }
+            // if there's 2 on a row already
+            else if(currentRow.getChildren().size() == ROW_SIZE){
+                HBox newRow = new HBox(20);
+                newRow.setAlignment(Pos.TOP_CENTER);
+                currentRow = newRow;
+                rows.add(newRow);
+                towersDisplay.getChildren().add(newRow);
+            }
+            
+            else if((int)newValue < (int)oldValue){
+                System.out.println("rows: " + rows.size());
+            }
         });
         
         empty = new Text("No towers have been made...yet.");
@@ -166,11 +170,14 @@ public class TowerEditor extends PropertyEditor{
         promptField.setPromptText("Enter a name...");
         
         ImageSelector imgSelector = new ImageSelector(myStage);
+        imgSelector.addExtensionFilter("png");
+        imgSelector.addExtensionFilter("jpg");
+        imgSelector.setPreviewImageSize(225, 150);
 
         HBox buttons = new HBox(10);
         Button create = new Button("Create");
         create.setOnAction((e) -> {
-            addTower(promptField.getText(), imgSelector.getSelectedImageFile());
+            addTower(promptField.getText(), imgSelector.getSelectedImageFile(), currentRow);
             hideEditScreen(promptDisplay);
         });
 
@@ -203,7 +210,7 @@ public class TowerEditor extends PropertyEditor{
         }
     }
 
-    private void addTower(String name, String imageFile){
+    private void addTower(String name, String imageFile, HBox row){
         TowerView tower = new TowerView(name, imageFile);
         tower.initiateEditableState();
         setupTowerAction(tower);
@@ -212,14 +219,14 @@ public class TowerEditor extends PropertyEditor{
         towerExists.addListener((obs, oldValue, newValue) -> {
             if(!newValue){
                 PauseTransition wait = new PauseTransition(Duration.millis(200));
-                wait.setOnFinished((e) -> currentRow.getChildren().remove(tower));
+                wait.setOnFinished((e) -> row.getChildren().remove(tower));
                 wait.play();
                 towersCreated.remove(tower);
                 numTowers.setValue(towersCreated.size());
             }
         });
 
-        currentRow.getChildren().add(tower);
+        row.getChildren().add(tower);
         towersCreated.add(tower);
         numTowers.setValue(towersCreated.size());
     }

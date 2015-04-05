@@ -1,7 +1,14 @@
-package imageSelector.util;
+package imageselector.util;
 
 import javafx.scene.image.ImageView;
 
+/**
+ * Utility class for ImageSelector that can be used to scale images to
+ * specified dimensions.
+ * 
+ * @author Kevin He
+ *
+ */
 public class ScaleImage {
     public static void scaleByHeight(ImageView image, double fitHeight){
         image.setFitHeight(fitHeight);
@@ -18,9 +25,6 @@ public class ScaleImage {
         scaleByWidth(image, fitWidth);
     }
 
-    /**
-     * @param image
-     */
     private static void preserveImageRatio (ImageView image) {
         image.setPreserveRatio(true);
         image.setSmooth(true);
