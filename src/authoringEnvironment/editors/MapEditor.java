@@ -18,11 +18,12 @@ import authoringEnvironment.objects.TileMap;
 
 public class MapEditor extends MainEditor {
 
-
+	//TODO: create a stackpane and put the grid onto the stackpane and put the background 
+	
     private TileMap myActiveMap;
-    private static final double DEFAULT_MAP_WIDTH = 950;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
-    private static final double DEFAULT_MAP_HEIGHT = 700; //getHeight();
-    private static final double DEFAULT_TILE_SIZE = 50;
+    private static final int DEFAULT_MAP_ROWS = 25;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
+    private static final int DEFAULT_MAP_COLS = 25; //getHeight();
+    private static final int DEFAULT_TILE_SIZE = 25;
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
 
@@ -50,7 +51,7 @@ public class MapEditor extends MainEditor {
 
     protected void createMap() {
         // TODO Auto-generated method stub
-        myActiveMap = new TileMap(DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT, DEFAULT_TILE_SIZE);		
+        myActiveMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);		
         getPane().add(myActiveMap.getMap(), 0, 0);
     }
 

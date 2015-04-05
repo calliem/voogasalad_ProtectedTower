@@ -37,8 +37,6 @@ public class Sidebar extends VBox {
 	public Sidebar(ResourceBundle resources, TileMap map) {
 		myResources = resources;
 		myMap = map;
-		if (myMap == null)
-		System.out.println("myMap is null!!!!!!!!!!!!!!!!!!!!!!!!!");
 		setSpacing(HBOX_SPACING);
 		setDimensionRestrictions();
 		createMapSettings();
@@ -74,26 +72,29 @@ public class Sidebar extends VBox {
 		
 		Rectangle rectangleDisplay = new Rectangle(40,40, Color.WHITE); //remove hardcoded;
 		
-		Button placeTile = new Button("Place Tile"); //TODO:
-		placeTile.setPrefHeight(40);
+		//Button placeTile = new Button("Place Tile"); //TODO:
+		//placeTile.setPrefHeight(40);
 		
 		
-		selectTile.getChildren().addAll(selection, rectangleDisplay, placeTile);
+		selectTile.getChildren().addAll(selection, rectangleDisplay);
 	
 		
 		getChildren().add(selectTile);
+		picker.setOnAction(e -> changeActiveTileColor(picker.getValue(), rectangleDisplay));
 		
+	//	placeTile.setOnMouseClicked(e -> {myMap.setActiveColor(picker.getValue());}); 
 		
-		picker.setOnAction(e -> {rectangleDisplay.setFill(picker.getValue());
-		});
+		//changeActiveTileColor(picker.getValue()));
 		
-		placeTile.setOnMouseClicked(e -> changeActiveTileColor(picker.getValue()));
+		//Grid Dimensions will set the number of rows and cols (not the actual pixels) 
 	}
 	
-	private void changeActiveTileColor(Color color){
+	private void changeActiveTileColor(Color color, Rectangle display){
 		//TODO: make this do the right thing
-		System.out.println("CLICKED!==============================");
-		myMap.changeTileSize(10); 
+		display.setFill(color);
+		myMap.setActiveColor(color); 
+		
+		
 		//TODO: make it update the color in the actual grid 
 	}
 	
