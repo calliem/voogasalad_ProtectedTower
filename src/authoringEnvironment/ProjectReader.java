@@ -11,8 +11,7 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.Set;
 
-import authoring.environment.setting.Setting;
-import authoring.environment.setting.Setting;
+import authoringEnvironment.setting.Setting;
 /**
  * 
  * @author Johnny Kumpf
@@ -68,7 +67,7 @@ public class ProjectReader {
 		Setting s = null;
 		// display error message
 		try{
-			c = Class.forName("authoringEnvironment.setting" + dataType + "Setting");
+			c = Class.forName("authoringEnvironment.setting." + dataType + "Setting");
 		}
 		catch(ClassNotFoundException e){
 			//something
