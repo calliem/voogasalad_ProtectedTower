@@ -35,10 +35,6 @@ public abstract class Editor {
     	return myDimensions.getHeight();
     }
     
-    protected ResourceBundle getResources(){
-    	return myResources;
-    }
-    
    
     
 }

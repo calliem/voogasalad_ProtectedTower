@@ -1,7 +1,8 @@
-package authoring.environment.setting;
+package authoringEnvironment.setting;
 
-import imageSelector.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,15 +15,19 @@ import javafx.scene.text.Text;
  * to edit a certain parameter of a sprite.
  * 
  * @author Kevin He
+ * @author Johnny
  *
  */
 public abstract class Setting extends HBox{
     private String label;
     protected ImageView error;
+    private String dataAsString;
+    private TextField editableField;
     
-    public Setting(String label){
+    public Setting(String label, String value){
         //TODO: remove magic number
         super(10);
+        dataAsString = value;
         this.setAlignment(Pos.CENTER);
         
         error = new ImageView(new Image(String.format("images/%s.png", "error")));
@@ -34,6 +39,7 @@ public abstract class Setting extends HBox{
         
         this.getChildren().add(parameter);
         setupInteractionLayout();
+        parseField();
     }
     
     /**
@@ -41,8 +47,12 @@ public abstract class Setting extends HBox{
      * and the features that the user can edit (i.e. a
      * textfield)
      */
-    protected abstract void setupInteractionLayout();
-    
+    //this is the same for every setting object
+    //if not, we can have two setting subclasses, one for normal stuff, one for file selectors
+    protected void setupInteractionLayout(){
+        editableField = new TextField(dataAsString);
+        this.getChildren().add(editableField);
+    }
     /**
      * Returns the name of the parameter represented
      * by this object.
@@ -56,13 +66,20 @@ public abstract class Setting extends HBox{
      * Gets the value of the parameter.
      * @return the user-edited value of the parameter
      */
-    public abstract String getParameterValue();
+    public abstract Object getParameterValue();
     
+    public String getDataAsString(){
+    	return dataAsString;
+    }
     /**
      * Hides the error alert for this parameter.
      */
     protected void hideErrorAlert(){
         this.getChildren().remove(error);
+    }
+    
+    protected TextField textBox(){
+    	return editableField;
     }
     
     /**
@@ -83,5 +100,7 @@ public abstract class Setting extends HBox{
      */
     public abstract boolean parseField();
     
-    public abstract void displaySavedValue();
+    public void displaySavedValue () {
+        editableField.setText(""+dataAsString);
+    }
 }

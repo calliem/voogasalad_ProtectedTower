@@ -6,11 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.ResourceBundle;
 import authoringEnvironment.editors.Editor;
-import authoringEnvironment.editors.LevelEditor;
-import authoringEnvironment.editors.MapEditor;
-import authoringEnvironment.editors.TowerEditor;
-import authoringEnvironment.editors.WaveEditor;
-import authoringEnvironment.editors.MainEditor;
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
@@ -32,6 +27,7 @@ import javafx.stage.Stage;
 /**
  * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
  * @author Callie Mao
+ * @author Johnny Kumpf, populateTabBar() methods
  */
 
 public class MainEnvironment {
@@ -85,7 +81,6 @@ public class MainEnvironment {
 				addTab(e, myResources.getString(s), tabsToCreate.get(s));
 			}
 		}
-
 	}
 
 	public static double getEnvironmentWidth(){
@@ -121,6 +116,7 @@ public class MainEnvironment {
 	private void addTab(Editor newEditor, String tabName, boolean main) {
 		Tab tab = new Tab();
 		tab.setText(tabName);
+		System.out.println("tabname: " + tabName);
 		tab.setContent(newEditor.configureUI());
 		if (main){
 			tab.setStyle("-fx-base: #3c3c3c;");

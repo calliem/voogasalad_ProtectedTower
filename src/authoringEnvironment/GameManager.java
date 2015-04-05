@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import authoring.environment.setting.Setting;
+import authoringEnvironment.setting.Setting;
 
 public class GameManager {
 

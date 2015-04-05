@@ -1,9 +1,15 @@
-//current not sure if this class is necessary. ideally yes, since it will help to extend in the future.
-
 package authoringEnvironment.objects;
 
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
+
+/**
+ * Holds a 2D array of tiles, attaches listeners, and draws lines to display on the editor
+ * @author Callie Mao
+ *
+ */
+
 
 //potentially make abstract?
 public class TileMap {
@@ -24,10 +30,10 @@ public class TileMap {
 		myMapHeight = mapHeight;
 		myTileSize = tileSize;
 		myGridLines = new Group();
+		System.out.println("===============" + myMapWidth);
+		System.out.println("===============" + myMapHeight);
+		System.out.println("===============" + myTileSize);
 		createMap();
-		// displayMap(myTiles);
-		// myMap.getChildren().add(myTIles);
-		// displayGrid(myTile);
 		createGridLines();
 		attachTileListeners();
 	}
@@ -85,15 +91,14 @@ public class TileMap {
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				myTiles[i][j] = new Tile(myTileSize, i, j);
-				// myGridLines.getChildren().add(new PolyLine());
-
-				myMap.getChildren().addAll(myTiles[i][j]); // to speed up
+				myMap.getChildren().add(myTiles[i][j]); // to speed up
 															// efficiency. will
 															// these be updated
 															// dynamically or do
 															// we need to call
 															// displaymap each
 															// time?
+				System.out.println("add rectangle================================");
 			}
 		}
 	}

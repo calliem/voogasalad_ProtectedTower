@@ -3,9 +3,12 @@ package authoringEnvironment.objects;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-//this may not be necessary
 
-//extends Node to allow tiles to be placed into a group
+/**
+ * Creates a visual tile object and its actions when selected or deselected
+ * @author Callie Mao
+ *
+ */
 public class Tile extends Rectangle {
 
 	// private ImageView myImage;
@@ -60,8 +63,8 @@ public class Tile extends Rectangle {
 	
 	//not sure if this below method belongs here
 	public void dragSelect(){
-		
-		//select()
+		select();
+		//TODO: make this work
 	}
 
 	/*public void setInactiveTile() {
