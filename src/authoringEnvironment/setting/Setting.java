@@ -1,4 +1,4 @@
-package authoring.environment.setting;
+package authoringEnvironment.setting;
 
 import imageSelector.util.ScaleImage;
 import javafx.geometry.Pos;

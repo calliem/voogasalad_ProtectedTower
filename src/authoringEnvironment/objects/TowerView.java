@@ -1,8 +1,10 @@
 package authoringEnvironment.objects;
 
 import imageSelector.util.ScaleImage;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -20,9 +22,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import authoring.environment.setting.IntegerSetting;
-import authoring.environment.setting.Setting;
 import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.setting.IntegerSetting;
+import authoringEnvironment.setting.Setting;
 
 /**
  * Creates the visual tower object containing

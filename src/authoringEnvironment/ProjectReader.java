@@ -11,8 +11,7 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.Set;
 
-import authoring.environment.setting.Setting;
-import authoring.environment.setting.Setting;
+import authoringEnvironment.setting.Setting;
 /**
  * 
  * @author Johnny Kumpf

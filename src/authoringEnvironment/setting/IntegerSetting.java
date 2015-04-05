@@ -1,4 +1,4 @@
-package authoring.environment.setting;
+package authoringEnvironment.setting;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
