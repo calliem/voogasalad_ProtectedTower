@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 
 public abstract class PropertyEditor extends Editor {
 
-	public PropertyEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
-		super(dim, resources, s);
+	public PropertyEditor(Dimension2D dim, Stage s) {
+		super(dim, s);
 		// TODO Auto-generated constructor stub
 	} // abstract class?
 

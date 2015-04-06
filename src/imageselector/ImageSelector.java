@@ -1,6 +1,6 @@
-package imageselector;
+package imageSelector;
 
-import imageselector.util.ScaleImage;
+import imageSelector.util.ScaleImage;
 import java.io.File;
 import java.util.ResourceBundle;
 import javafx.geometry.Pos;
@@ -38,7 +38,7 @@ public class ImageSelector extends VBox {
     private static final int FILE_DISPLAY_HEIGHT = 24;
     private static final int PADDING = 10;
     private static final String NOT_AVAILABLE = "imageselector/img_not_available.png";
-    private static final String SELECTOR_RESOURCES = "imageselector/SelectorText";
+    private static final String SELECTOR_RESOURCES = "imageselector/SelectorText.properties";
     
     /**
      * Creates an ImageSelector object.

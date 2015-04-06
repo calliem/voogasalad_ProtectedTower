@@ -25,7 +25,7 @@ public class ProjectReader {
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
-	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/english.properties";
+	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/display/main_environment_english.properties";
 
 
 	/**
@@ -102,7 +102,11 @@ public class ProjectReader {
 	 * @return The array of editors to create
 	 */
 	public static String[] editorsToCreate(){
+		
+		//TODO: fix order that the tabs are displayed 
+		
 		File editors = new File(editorPackage);
+		System.out.println(editors.toString());
 		System.out.println(editorPackage);
 		File[] allEditors = editors.listFiles();
 		System.out.println("All editors " + allEditors);

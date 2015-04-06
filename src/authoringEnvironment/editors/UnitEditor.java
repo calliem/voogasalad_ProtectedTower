@@ -16,8 +16,8 @@ import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
-    public UnitEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
-        super(dim, resources, s);
+    public UnitEditor(Dimension2D dim, Stage s) {
+        super(dim, s);
         // TODO Auto-generated constructor stub
     }
 

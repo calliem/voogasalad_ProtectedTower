@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 
 public class ItemEditor extends PropertyEditor{
 
-	public ItemEditor (Dimension2D dim, ResourceBundle resources, Stage s){
-		super(dim, resources, s);
+	public ItemEditor (Dimension2D dim, Stage s){
+		super(dim, s);
 	}
 
 	@Override

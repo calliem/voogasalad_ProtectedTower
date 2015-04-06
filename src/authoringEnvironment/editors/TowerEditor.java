@@ -1,9 +1,11 @@
 package authoringEnvironment.editors;
 
-import imageselector.ImageSelector;
+import imageSelector.ImageSelector;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
@@ -55,8 +57,8 @@ public class TowerEditor extends PropertyEditor{
      * @param rb        the resource bundle containing displayed strings
      * @param s the stage on which the authoring environment is displayed
      */
-    public TowerEditor(Dimension2D dim, ResourceBundle rb, Stage s) {
-        super(dim, rb, s);
+    public TowerEditor(Dimension2D dim, Stage s) {
+        super(dim, s);
     }
     
     /**
