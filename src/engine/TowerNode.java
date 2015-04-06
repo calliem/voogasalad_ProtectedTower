@@ -18,14 +18,13 @@ public class TowerNode {
 
     private String myName;
     private String myGroup;
-    private Tower myTower;
+
     private Set<TowerNode> myNextNodes;
     private Set<TowerNode> myPrevNodes;
 
     public TowerNode (Tower tower) {
         myName = (String) tower.getParameter("Name");
         myGroup = (String) tower.getParameter("Group");
-        myTower = tower.clone();
         myNextNodes = new HashSet<>();
         myPrevNodes = new HashSet<>();
     }
@@ -39,7 +38,8 @@ public class TowerNode {
     }
 
     protected Tower getTower () {
-        return myTower.clone();
+        // TODO: get new tower from towerFactory
+        return null;
     }
 
     protected boolean addNextNode (TowerNode node) {
@@ -47,6 +47,7 @@ public class TowerNode {
     }
 
     protected Set<TowerNode> getNextNode () {
+
         return myNextNodes;
     }
 
