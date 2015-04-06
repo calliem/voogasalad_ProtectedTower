@@ -1,12 +1,9 @@
 package authoringEnvironment.editors;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -17,12 +14,13 @@ import authoringEnvironment.objects.UnitView;
 public class WaveEditor extends MainEditor {
 	private Group myRoot;
 
-	public WaveEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
+
+	public WaveEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
 	}
 	
 	@Override
-	public Group configureUI () {
+	public Node configureUI() {
 		myRoot = new Group();		
 		
 		HBox wave1 = makeNewWave();
@@ -52,5 +50,4 @@ public class WaveEditor extends MainEditor {
 	@Override
 	protected void createMap() {
 	}
-
 }

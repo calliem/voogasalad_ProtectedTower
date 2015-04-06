@@ -2,7 +2,9 @@ package authoringEnvironment;
 
 import java.util.ResourceBundle;
 
+import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -28,7 +31,7 @@ import javafx.scene.text.Text;
  */
 
 //TODO: abstract further
-public class Sidebar extends VBox {
+public class Sidebar extends VBox { //add a gridpane
 
 	//TODO: display sidebar with a gridpane not an HBox to keep everything aligned and beautiful
 	
@@ -42,9 +45,12 @@ public class Sidebar extends VBox {
 	public Sidebar(ResourceBundle resources, TileMap map) {
 		myResources = resources;
 		myMap = map;
-		setSpacing(HBOX_SPACING);
+		//setSpacing(HBOX_SPACING);
 		setDimensionRestrictions();
 		createMapSettings();
+		
+		ObservableList<PathView> pathList = FXCollections.observableArrayList();
+		getChildren().add(createListView(pathList, 300));
 		
 	}
 	
@@ -52,7 +58,6 @@ public class Sidebar extends VBox {
 		System.out.println(myResources);
 		//TODO: make a main tab to display the stuff here
 		createTitleText(myResources.getString("GameSettings"));
-		//setLives();
 		setLives();
 
 		//updateTextField(myResources.getString("Lives"), 50); //TODO: remove hardcoded values
@@ -85,7 +90,7 @@ public class Sidebar extends VBox {
 	private void setTileSize(){
 		HBox selection = new HBox();
 		selection.setSpacing(10);
-		Text lives = new Text(myResources.getString("SetTiles"));
+		Text lives = new Text(myResources.getString("TileSize"));
 		TextField textField = new TextField();
 		Button button = new Button(myResources.getString("Update"));
 		button.setOnMouseClicked(e -> myMap.changeTileSize(Integer.parseInt(textField.getText())));
@@ -174,7 +179,7 @@ public class Sidebar extends VBox {
 
 	private void setDimensionRestrictions() {
 		setPadding(new Insets(10, 10, 10, 10));
-		setSpacing(3);
+		//setSpacing(3);
 		setMaxWidth(Double.MAX_VALUE);
 	}
 
@@ -185,8 +190,8 @@ public class Sidebar extends VBox {
 		getChildren().add(title);
 	}
 
-	private ListView<String> createListView(ObservableList<String> items, int height) {
-		ListView<String> list = new ListView<String>();
+	private ListView<PathView> createListView(ObservableList<PathView> items, int height) {
+		ListView<PathView> list = new ListView<PathView>();
 		list.setItems(items);
 		list.setMaxWidth(Double.MAX_VALUE);
 		list.setPrefHeight(130);
