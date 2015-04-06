@@ -18,13 +18,11 @@ public abstract class Editor {
 	// or use a ArrayList<?> getObjects() method in this superclass?
 
 	protected Dimension2D myDimensions;
-	protected ResourceBundle myResources;
 	protected Stage myStage;
 	
-	public Editor(Dimension2D dim, ResourceBundle resources, Stage s){
+	public Editor(Dimension2D dim, Stage s){
 		myDimensions = dim;
 		myStage = s;
-		myResources = resources;
 	}
 
     public abstract Group configureUI(); //or make it a Node instead of a gridPane?
@@ -35,10 +33,6 @@ public abstract class Editor {
     
     protected double getHeight(){
     	return myDimensions.getHeight();
-    }
-    
-    protected ResourceBundle getResources(){
-    	return myResources;
     }
     
    

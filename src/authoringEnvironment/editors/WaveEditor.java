@@ -17,7 +17,7 @@ public class WaveEditor extends MainEditor {
 	private Group myRoot;
 
 	public WaveEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
-		super(dim, resources, s);
+		super(dim, s);
 	}
 	
 	@Override
