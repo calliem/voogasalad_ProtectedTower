@@ -46,7 +46,7 @@ public abstract class MainEditor extends Editor {
 		myMapWorkspace.getChildren().add(background);
 		myPane.add(myMapWorkspace, 0, 0);
 		createMap();
-		
+
 		// does it dynamically update or will i have to say
 		// TODO remove magic number
 		//is using MainEnvironment.myDimensions.getWidth() bad?
@@ -67,7 +67,7 @@ public abstract class MainEditor extends Editor {
 
 	private void setGridPaneConstraints(GridPane pane) {
 		RowConstraints row0 = new RowConstraints();
-		row0.setPercentHeight(MAP_HEIGHT_PERCENT); 
+		row0.setPercentHeight(MAP_HEIGHT_PERCENT);
 		pane.getRowConstraints().add(row0);
 		ColumnConstraints col0 = new ColumnConstraints();
 		col0.setPrefWidth(getWidth() * MAP_WIDTH_MULTIPLIER);
