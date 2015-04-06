@@ -38,4 +38,8 @@ public class FlowView extends HBox {
 		this.setPrefHeight(myHeight);
 	}
 	
+	public String getFileName() {
+		return partFileName;
+	}
+	
 }
