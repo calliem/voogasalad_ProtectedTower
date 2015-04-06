@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
@@ -25,8 +26,12 @@ public class WaveEditor extends MainEditor{
 
 	}
 
-	/*
-	 * @Override protected Group configureUI() { super.configureUI();
-	 * getGridPane(); return null; }
-	 */
+	
+	@Override 
+	public Node configureUI() { 
+		super.configureUI();
+	 	//getGridPane();
+		return null;
+	 }
+	 
 }
