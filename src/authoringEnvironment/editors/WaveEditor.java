@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -35,6 +36,8 @@ public class WaveEditor extends MainEditor {
 		addUnit.setOnAction(e -> {
 			addUnitToWave(newWave);
 		});
+		addUnit.setAlignment(Pos.TOP_RIGHT);
+		newWave.getChildren().add(addUnit);
 		return newWave;
 	}
 	

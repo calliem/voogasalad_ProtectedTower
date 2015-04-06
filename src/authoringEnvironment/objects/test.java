@@ -3,8 +3,8 @@ package authoringEnvironment.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import authoring.environment.setting.IntegerSetting;
-import authoring.environment.setting.Setting;
+import authoringEnvironment.setting.IntegerSetting;
+import authoringEnvironment.setting.Setting;
 import imageSelector.util.ScaleImage;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;

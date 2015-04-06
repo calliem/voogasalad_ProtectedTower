@@ -76,7 +76,7 @@ public class Sidebar extends VBox {
 		Text lives = new Text(myResources.getString("Lives"));
 		TextField textField = new TextField();
 		Button button = new Button(myResources.getString("Update"));
-		button.setOnMouseClicked(e -> myMap.changeTileSize(System.out.println(textField.getText()))); //TODO: add to properties file to be saved
+		button.setOnMouseClicked(e -> System.out.println(textField.getText())); //TODO: add to properties file to be saved
 		textField.setPrefWidth(50);
 		selection.getChildren().addAll(lives, textField, button);
 		getChildren().add(selection);
