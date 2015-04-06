@@ -20,20 +20,18 @@ public class Game implements Updateable {
      * Holds the parameters of the game, like lives remaining
      */
     private Map<String, Object> myParameters;
-    private Bank myBank;
     private List<Condition> myConditions;
-    private int myPoints;
     private List<Level> myLevels;
     private Layout myLayout;
     private int myActiveLevel;
+    public GameState myGameState;
 
     public Game () {
-        myBank = new Bank();
         myConditions = new ArrayList<Condition>();
-        myPoints = 0;
         myLevels = new ArrayList<>();
         myLayout = new Layout();
         myActiveLevel = 0;
+        myGameState = new GameState();
     }
 
     public void endGame () {
@@ -42,9 +40,8 @@ public class Game implements Updateable {
 
     @Override
     public void update (int counter) {
-        // TODO Auto-generated method stub
+        myConditions.forEach(c -> c.act(myGameState));
         myLevels.get(myActiveLevel).update(counter);
         myLayout.update(counter);
     }
-
 }

@@ -25,6 +25,7 @@ public class Layout implements Updateable {
 
     @Override
     public void update (int counter) {
+        // TODO Update all game elements
 
     }
 
