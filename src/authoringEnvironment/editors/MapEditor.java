@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import authoringEnvironment.Sidebar;
@@ -33,8 +34,8 @@ public class MapEditor extends MainEditor {
     }
 
     @Override
-    public Group configureUI(){
-        Group root = super.configureUI();
+    public Node configureUI(){
+        Node root = super.configureUI();
         getPane().add(new Sidebar(myResources, myActiveMap),1,0); //TODO: check map dependency
         return root;
     }

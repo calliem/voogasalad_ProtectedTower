@@ -7,8 +7,10 @@ import java.util.ResourceBundle;
  * @author Callie Mao
  */
 
+
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 
 public class ProjectileEditor extends PropertyEditor {
@@ -18,7 +20,7 @@ public class ProjectileEditor extends PropertyEditor {
     }
 
     @Override
-    public Group configureUI() {
+    public Node configureUI() {
         // TODO Auto-generated method stub
         return null;
     }

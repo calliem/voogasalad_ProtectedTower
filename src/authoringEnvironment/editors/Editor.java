@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 
 public abstract class Editor {
@@ -25,7 +26,7 @@ public abstract class Editor {
 		myStage = s;
 	}
 
-    public abstract Group configureUI(); //or make it a Node instead of a gridPane?
+    public abstract Node configureUI(); //or make it a Node instead of a gridPane?
     
     protected double getWidth(){
     	return myDimensions.getWidth();

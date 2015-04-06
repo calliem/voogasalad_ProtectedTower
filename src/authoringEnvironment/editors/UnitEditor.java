@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
@@ -26,7 +27,7 @@ public class UnitEditor extends PropertyEditor {
     }
 
     @Override
-    public Group configureUI() {
+    public Node configureUI() {
         // TODO Auto-generated method stub
         return null;
     }

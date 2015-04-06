@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -36,7 +37,7 @@ public abstract class MainEditor extends Editor {
 	 * Creates a sidebar and general map layout to be utilized by subclasses
 	 */
 	//TODO: return groupor return a parent so that I can directly return a gridpane here?
-	public Group configureUI() {
+	public Node configureUI() {
 
 		Group root = new Group();
 		createGridPane();
