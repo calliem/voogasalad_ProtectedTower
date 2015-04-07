@@ -1,7 +1,7 @@
 package engine.element.sprites;
 
-import java.util.Map;
 import javafx.geometry.Point2D;
+import engine.Collidable;
 import engine.InsufficientParametersException;
 import engine.element.GameElement;
 
@@ -13,11 +13,15 @@ import engine.element.GameElement;
  * @author Qian Wang
  *
  */
-public abstract class Sprite extends GameElement {
+public abstract class Sprite extends GameElement implements Collidable {
+
+    // TODO fill in with correct string
+    private static final String PARAMETER_BOUNDING_HEIGHT = "";
+    private static final String PARAMETER_BOUNDING_WIDTH = "";
 
     private Point2D myLocation;
     private String myType;
-    
+
     public Sprite () throws InsufficientParametersException {
 
     }
@@ -50,6 +54,23 @@ public abstract class Sprite extends GameElement {
     }
 
     /**
+     * @return Point2D representing coordinate location of object
+     */
+    public Point2D getLocation () {
+        return new Point2D(myLocation.getX(), myLocation.getY());
+    }
+
+    @Override
+    public double getLocationX () {
+        return myLocation.getX();
+    }
+
+    @Override
+    public double getLocationY () {
+        return myLocation.getY();
+    }
+
+    /**
      * Sets the type of object this is as an uppercase string
      * 
      * @param type String of the type of object
@@ -63,6 +84,16 @@ public abstract class Sprite extends GameElement {
      */
     protected String getType () {
         return myType;
+    }
+
+    @Override
+    public double getBoundingHeight () {
+        return (double) super.getParameter(PARAMETER_BOUNDING_HEIGHT);
+    }
+
+    @Override
+    public double getBoundingWidth () {
+        return (double) super.getParameter(PARAMETER_BOUNDING_WIDTH);
     }
 
     // Abstract methods
