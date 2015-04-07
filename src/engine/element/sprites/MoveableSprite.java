@@ -1,4 +1,4 @@
-package engine.sprites;
+package engine.element.sprites;
 
 import javafx.geometry.Point2D;
 import engine.InsufficientParametersException;

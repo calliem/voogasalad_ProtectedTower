@@ -1,21 +1,17 @@
-package engine.sprites;
+package engine.element.sprites;
 
 import engine.InsufficientParametersException;
 
 
 /**
- * This class represents the tower object in the game, which usually does not move and is used to
- * defend a map from Enemy objects. The tower shoots projectiles which target enemies.
+ * This class represents the projectiles shot out by certain Sprites, like towers.
  * 
  * @author Qian Wang
- * @author Bojia Chen
  *
  */
-public class Tower extends GameSprite {
-    // TODO Specify instance variables specific to Tower, such as a build time. Add to the main
-    // parameter map
+public class Projectile extends MoveableSprite {
 
-    public Tower () throws InsufficientParametersException {
+    public Projectile () throws InsufficientParametersException {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,18 +27,11 @@ public class Tower extends GameSprite {
         // TODO Auto-generated method stub
 
     }
-    
-    @Override
-    public Tower clone() {
-    	return null;
-    }
 
-    /**
-     * The tower does not move.
-     */
     @Override
     public void move () {
-        return;
+        // TODO Auto-generated method stub
+
     }
 
     @Override

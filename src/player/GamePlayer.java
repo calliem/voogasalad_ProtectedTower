@@ -10,7 +10,7 @@ public class GamePlayer {
 	public GamePlayer() {
 
 	}
-
+	// find and open .game file
 	public void loadGame(XStream inputStream) {
 
 	}
