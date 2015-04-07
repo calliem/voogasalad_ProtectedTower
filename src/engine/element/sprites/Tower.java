@@ -12,7 +12,7 @@ import engine.InsufficientParametersException;
  *
  */
 public class Tower extends GameSprite {
-    // TODO Specify instance variables specific to Tower, such as a build time. Add to the main
+    // TODO Specify instance variables specific to Tower, such as a build time. Add to the main    
     // parameter map
 
     public Tower () throws InsufficientParametersException {
@@ -31,10 +31,10 @@ public class Tower extends GameSprite {
         // TODO Auto-generated method stub
 
     }
-    
+
     @Override
-    public Tower clone() {
-    	return null;
+    public Tower clone () {
+        return null;
     }
 
     /**

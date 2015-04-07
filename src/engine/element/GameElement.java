@@ -33,7 +33,7 @@ public abstract class GameElement {
      * @param name String of the parameter
      * @return Object of a certain type representing value of name
      */
-    protected Object getParameter (String name) {
+    public Object getParameter (String name) {
         return myParameters.get(name);
     }
 }
