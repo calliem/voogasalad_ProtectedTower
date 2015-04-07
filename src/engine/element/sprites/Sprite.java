@@ -17,7 +17,7 @@ public abstract class Sprite extends GameElement {
 
     private Point2D myLocation;
     private String myType;
-
+    
     public Sprite () throws InsufficientParametersException {
 
     }
