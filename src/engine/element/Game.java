@@ -1,8 +1,10 @@
-package engine;
+package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import engine.GameElement;
+import engine.GameState;
+import engine.Updateable;
 import engine.conditions.Condition;
 
 
@@ -14,12 +16,8 @@ import engine.conditions.Condition;
  * @author Bojia Chen
  *
  */
-public class Game implements Updateable {
+public class Game extends GameElement implements Updateable {
 
-    /**
-     * Holds the parameters of the game, like lives remaining
-     */
-    private Map<String, Object> myParameters;
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
@@ -43,5 +41,13 @@ public class Game implements Updateable {
         myConditions.forEach(c -> c.act(myGameState));
         myLevels.get(myActiveLevel).update(counter);
         myLayout.update(counter);
+    }
+
+    protected void addTower () {
+
+    }
+
+    protected void addEnemy () {
+
     }
 }

@@ -1,7 +1,10 @@
-package engine;
+package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
+import engine.Endable;
+import engine.GameElement;
+import engine.Updateable;
 
 
 /**
@@ -11,7 +14,7 @@ import java.util.List;
  * @author Qian Wang
  *
  */
-public class Round implements Updateable, Endable {
+public class Round extends GameElement implements Updateable, Endable {
     private List<Wave> myWaves;
     private int myDelay; // defines how many frames to wait between sending waves
     private int myCurrentDelay = 0;

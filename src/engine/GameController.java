@@ -1,14 +1,10 @@
 package engine;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
-import engine.sprites.GridCell;
+import engine.element.Game;
 import engine.sprites.Sprite;
 
 
@@ -24,19 +20,13 @@ import engine.sprites.Sprite;
 
 public class GameController {
     /**
-     * Holds a set of all objects instantiated from data files
+     * Holds an instance of an entire game
      */
-    Set<Sprite> allObjects;
+    Game myGame;
 
     public GameController () throws InsufficientParametersException {
-        allObjects = new HashSet<>();
+        myGame = new Game();
     }
-
-    // still need this?
-    // public GameController (ObservableList<Node> sceneContents, XStream inputStream)
-    // throws InsufficientParametersException {
-    //
-    // }
 
     /**
      * Given a location of a game file, the {@link GameManager#loadGame(String)} method if called,
@@ -51,13 +41,9 @@ public class GameController {
         for (String s : allDataObjects.keySet()) {
             Sprite currentObject = (Sprite) Reflection.createInstance(s);
             currentObject.setParameterMap(allDataObjects.get(s));
-            allObjects.add(currentObject);
+            // allObjects.add(currentObject);
             // TODO need way to load objects into correct classes, like Layout and Wave
         }
-    }
-
-    public ArrayList<Node> displayMap (Iterable<GridCell> map) {
-        return null;
     }
 
     // Will handle hotkeys

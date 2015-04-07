@@ -1,6 +1,8 @@
-package engine;
+package engine.element;
 
 import java.util.List;
+import engine.GameElement;
+import engine.Updateable;
 import engine.sprites.Enemy;
 import engine.sprites.GridCell;
 import engine.sprites.Projectile;
@@ -16,7 +18,7 @@ import engine.sprites.Tower;
  * @author Qian Wang
  *
  */
-public class Layout implements Updateable {
+public class Layout extends GameElement implements Updateable {
 
     private GridCell[][] myGrid;
     private List<Tower> myTowers;

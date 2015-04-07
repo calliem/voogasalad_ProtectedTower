@@ -1,7 +1,10 @@
-package engine;
+package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
+import engine.Endable;
+import engine.GameElement;
+import engine.Updateable;
 
 
 /**
@@ -13,7 +16,7 @@ import java.util.List;
  * @author Bojia Chen
  * @author Qian Wang
  */
-public class Level implements Updateable, Endable {
+public class Level extends GameElement implements Updateable, Endable {
     private List<Round> myRounds;
     private double myHealth;
     private int myLives;

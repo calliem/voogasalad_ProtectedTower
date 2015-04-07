@@ -1,7 +1,10 @@
-package engine;
+package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
+import engine.Endable;
+import engine.GameElement;
+import engine.Updateable;
 import engine.sprites.Enemy;
 
 
@@ -12,7 +15,7 @@ import engine.sprites.Enemy;
  * @author Qian Wang
  *
  */
-public class Wave implements Updateable, Endable {
+public class Wave extends GameElement implements Updateable, Endable {
     private List<Enemy> myEnemies;
     private double mySendRate;
     private int myNumSent = 0;
