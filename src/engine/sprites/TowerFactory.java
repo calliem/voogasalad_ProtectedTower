@@ -8,12 +8,16 @@ import util.reflection.Reflection;
 
 public class TowerFactory {
 
-    private Map<String, String> myTowers;
+    private Map<String, Map<String, Object>> myTowers;
     private final static String MY_CLASS_NAME = "engine.sprites.Tower";
 
     public TowerFactory () {
         myTowers = new HashMap<>();
-        // TODO: Fill tower map
+    }
+    
+    public void addTower(Map<String, Object> towerProperties) {
+        String towerID = (String) towerProperties.get("Group") + "_" + (String) towerProperties.get("Name");
+        myTowers.put(towerID, towerProperties);
     }
 
     public Tower getTower (String userInput) {
@@ -22,7 +26,7 @@ public class TowerFactory {
         }
 
         Tower tower = (Tower) Reflection.createInstance(MY_CLASS_NAME);
-        // TODO: set tower Parameters
+        tower.setParameterMap(myTowers.get(userInput));
 
         return tower;
     }

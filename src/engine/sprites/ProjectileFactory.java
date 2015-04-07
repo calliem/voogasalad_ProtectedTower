@@ -8,12 +8,16 @@ import util.reflection.Reflection;
 
 public class ProjectileFactory {
 
-    private Map<String, String> myProjectiles;
+    private Map<String, Map<String, Object>> myProjectiles;
     private final static String MY_CLASS_NAME = "engine.sprites.Projectile";
 
     public ProjectileFactory () {
         myProjectiles = new HashMap<>();
-        // TODO: Fill projectile map
+    }
+    
+    public void addProjectile(Map<String, Object> projectileProperties) {
+        String enemyID = (String) projectileProperties.get("Group") + "_" + (String) projectileProperties.get("Name");
+        myProjectiles.put(enemyID, projectileProperties);
     }
 
     public Projectile getProjectile (String userInput) {
@@ -22,7 +26,7 @@ public class ProjectileFactory {
         }
 
         Projectile projectile = (Projectile) Reflection.createInstance(MY_CLASS_NAME);
-        // TODO: set projectile Parameters
+        projectile.setParameterMap(myProjectiles.get(userInput));
 
         return projectile;
     }

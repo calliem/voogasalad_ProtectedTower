@@ -7,12 +7,16 @@ import util.reflection.Reflection;
 
 
 public class EnemyFactory {
-    private Map<String, String> myEnemies;
+    private Map<String, Map<String, Object>> myEnemies;
     private final static String MY_CLASS_NAME = "engine.sprites.Enemy";
 
     public EnemyFactory () {
         myEnemies = new HashMap<>();
-        // TODO: Fill enemy map
+    }
+    
+    public void addEnemy(Map<String, Object> enemyProperties) {
+        String enemyID = (String) enemyProperties.get("Group") + "_" + (String) enemyProperties.get("Name");
+        myEnemies.put(enemyID, enemyProperties);
     }
 
     public Enemy getEnemy (String userInput) {
@@ -21,7 +25,7 @@ public class EnemyFactory {
         }
 
         Enemy enemy = (Enemy) Reflection.createInstance(MY_CLASS_NAME);
-        // TODO: set enemy Parameters
+        enemy.setParameterMap(myEnemies.get(userInput));
 
         return enemy;
     }
