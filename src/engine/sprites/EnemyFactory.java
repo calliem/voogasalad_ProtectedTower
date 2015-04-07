@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import util.reflection.Reflection;
+import engine.element.sprites.Enemy;
 
 
 /**
@@ -28,9 +29,8 @@ public class EnemyFactory {
     }
 
     public Enemy getEnemy (String userInput) {
-        if (!myEnemies.containsKey(userInput)) {
-            throw new InvalidParameterException(userInput + " is an undefined enemy");
-        }
+        if (!myEnemies.containsKey(userInput)) { throw new InvalidParameterException(userInput +
+                                                                                     " is an undefined enemy"); }
 
         Enemy enemy = (Enemy) Reflection.createInstance(MY_CLASS_NAME);
         enemy.setParameterMap(myEnemies.get(userInput));

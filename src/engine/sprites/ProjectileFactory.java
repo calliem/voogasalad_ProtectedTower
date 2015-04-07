@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import util.reflection.Reflection;
+import engine.element.sprites.Projectile;
 
 
 /**
@@ -30,9 +31,8 @@ public class ProjectileFactory {
     }
 
     public Projectile getProjectile (String userInput) {
-        if (!myProjectiles.containsKey(userInput)) {
-            throw new InvalidParameterException(userInput + " is an undefined projectile");
-        }
+        if (!myProjectiles.containsKey(userInput)) { throw new InvalidParameterException(userInput +
+                                                                                         " is an undefined projectile"); }
 
         Projectile projectile = (Projectile) Reflection.createInstance(MY_CLASS_NAME);
         projectile.setParameterMap(myProjectiles.get(userInput));

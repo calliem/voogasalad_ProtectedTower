@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import util.reflection.Reflection;
+import engine.element.sprites.Tower;
 
 
 /**
@@ -29,9 +30,8 @@ public class TowerFactory {
     }
 
     public Tower getTower (String userInput) {
-        if (!myTowers.containsKey(userInput)) {
-            throw new InvalidParameterException(userInput + " is an undefined tower");
-        }
+        if (!myTowers.containsKey(userInput)) { throw new InvalidParameterException(userInput +
+                                                                                    " is an undefined tower"); }
 
         Tower tower = (Tower) Reflection.createInstance(MY_CLASS_NAME);
         tower.setParameterMap(myTowers.get(userInput));
