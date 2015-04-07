@@ -5,7 +5,7 @@ import javafx.scene.input.KeyEvent;
 import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
 import engine.element.Game;
-import engine.sprites.Sprite;
+import engine.element.sprites.Sprite;
 
 
 /**

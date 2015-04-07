@@ -2,7 +2,6 @@ package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
-import engine.GameElement;
 import engine.GameState;
 import engine.Updateable;
 import engine.conditions.Condition;

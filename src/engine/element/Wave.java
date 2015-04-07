@@ -3,9 +3,8 @@ package engine.element;
 import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
-import engine.GameElement;
 import engine.Updateable;
-import engine.sprites.Enemy;
+import engine.element.sprites.Enemy;
 
 
 /**

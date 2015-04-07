@@ -3,7 +3,6 @@ package engine.element;
 import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
-import engine.GameElement;
 import engine.Updateable;
 
 

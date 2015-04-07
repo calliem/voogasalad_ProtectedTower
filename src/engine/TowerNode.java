@@ -2,8 +2,7 @@ package engine;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import engine.sprites.Tower;
+import engine.element.sprites.Tower;
 
 /**
  * This object is the node that is added to the tower trees in TowerManager. It

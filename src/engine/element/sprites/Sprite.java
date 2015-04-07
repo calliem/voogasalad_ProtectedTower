@@ -1,9 +1,9 @@
-package engine.sprites;
+package engine.element.sprites;
 
 import java.util.Map;
 import javafx.geometry.Point2D;
-import engine.GameElement;
 import engine.InsufficientParametersException;
+import engine.element.GameElement;
 
 
 /**

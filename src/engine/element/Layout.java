@@ -1,12 +1,11 @@
 package engine.element;
 
 import java.util.List;
-import engine.GameElement;
 import engine.Updateable;
-import engine.sprites.Enemy;
-import engine.sprites.GridCell;
-import engine.sprites.Projectile;
-import engine.sprites.Tower;
+import engine.element.sprites.Enemy;
+import engine.element.sprites.GridCell;
+import engine.element.sprites.Projectile;
+import engine.element.sprites.Tower;
 
 
 /**
