@@ -6,6 +6,13 @@ import java.util.Map;
 import util.reflection.Reflection;
 
 
+/**
+ * Factory for producing towers
+ * 
+ * @author Bojia Chen
+ *
+ */
+
 public class TowerFactory {
 
     private Map<String, Map<String, Object>> myTowers;
@@ -14,9 +21,10 @@ public class TowerFactory {
     public TowerFactory () {
         myTowers = new HashMap<>();
     }
-    
-    public void addTower(Map<String, Object> towerProperties) {
-        String towerID = (String) towerProperties.get("Group") + "_" + (String) towerProperties.get("Name");
+
+    public void addTower (Map<String, Object> towerProperties) {
+        String towerID =
+                (String) towerProperties.get("Group") + "_" + (String) towerProperties.get("Name");
         myTowers.put(towerID, towerProperties);
     }
 

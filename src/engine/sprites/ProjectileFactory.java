@@ -6,6 +6,13 @@ import java.util.Map;
 import util.reflection.Reflection;
 
 
+/**
+ * Factory for producing projectiles
+ * 
+ * @author Bojia Chen
+ *
+ */
+
 public class ProjectileFactory {
 
     private Map<String, Map<String, Object>> myProjectiles;
@@ -14,9 +21,11 @@ public class ProjectileFactory {
     public ProjectileFactory () {
         myProjectiles = new HashMap<>();
     }
-    
-    public void addProjectile(Map<String, Object> projectileProperties) {
-        String enemyID = (String) projectileProperties.get("Group") + "_" + (String) projectileProperties.get("Name");
+
+    public void addProjectile (Map<String, Object> projectileProperties) {
+        String enemyID =
+                (String) projectileProperties.get("Group") + "_" +
+                        (String) projectileProperties.get("Name");
         myProjectiles.put(enemyID, projectileProperties);
     }
 

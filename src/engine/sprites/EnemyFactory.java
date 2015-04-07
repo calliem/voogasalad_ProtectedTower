@@ -6,6 +6,13 @@ import java.util.Map;
 import util.reflection.Reflection;
 
 
+/**
+ * Factory for producing enemies
+ * 
+ * @author Bojia Chen
+ *
+ */
+
 public class EnemyFactory {
     private Map<String, Map<String, Object>> myEnemies;
     private final static String MY_CLASS_NAME = "engine.sprites.Enemy";
@@ -13,9 +20,10 @@ public class EnemyFactory {
     public EnemyFactory () {
         myEnemies = new HashMap<>();
     }
-    
-    public void addEnemy(Map<String, Object> enemyProperties) {
-        String enemyID = (String) enemyProperties.get("Group") + "_" + (String) enemyProperties.get("Name");
+
+    public void addEnemy (Map<String, Object> enemyProperties) {
+        String enemyID =
+                (String) enemyProperties.get("Group") + "_" + (String) enemyProperties.get("Name");
         myEnemies.put(enemyID, enemyProperties);
     }
 
