@@ -20,7 +20,7 @@ public abstract class Sprite {
     private Map<String, Object> myParameters;
     private Point2D myLocation;
     private String myType;
-
+    
     public Sprite () throws InsufficientParametersException {
 
     }
