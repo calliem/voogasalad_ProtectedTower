@@ -40,7 +40,6 @@ public class MainEnvironment {
 	private static final boolean SPRITE_TAB = false;
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
-	private static final String editorsLocation = "authoringEnvironment.editors.";
 
 	//private SceneSetter mySceneSetter = new SceneSetter();
 
@@ -53,7 +52,7 @@ public class MainEnvironment {
 		myGridPane.setGridLinesVisible(true);
 		createEnvironment(myGridPane);
 
-		populateTabBar();
+		ProjectReader.populateTabBar(this, myDimensions, myResources, myStage);
 
 		setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
 	}
@@ -61,36 +60,7 @@ public class MainEnvironment {
 	/**
 	 * Populates the tab bar with 1 tab for every non-abstract class in editors package
 	 */
-	private void populateTabBar(){
-		Map<String, Boolean> tabsToCreate = ProjectReader.tabsToCreate();
-		for(String s : ProjectReader.getOrderedTabList()){
-			if(tabsToCreate.keySet().contains(s)){
-				Editor e = null;
-				String toCreate = editorsLocation + s;
-				try {
-					e = (Editor) Class.forName(toCreate)
-							.getConstructor(Dimension2D.class, Stage.class)
-							.newInstance(myDimensions, myStage);
-				} catch (InstantiationException e1){ 
-					System.err.println("Constructor Editor(Dimension2D.class, Stage.class) doesn't exist or was"
-							+ "incorrectly called");
-					System.err.println("Tab's Editor is currently null");
-					e1.printStackTrace();
-				}
-				catch (ClassNotFoundException e1){
-					System.err.println("Editor not found: " + toCreate);
-					System.err.println("Tab's Editor is currently null");
-					e1.printStackTrace();
-				}
-				catch (IllegalAccessException| IllegalArgumentException | InvocationTargetException
-						| NoSuchMethodException | SecurityException e1) {
-					// something that doesn't let this null go through
-					e1.printStackTrace();
-				}
-				addTab(e, myResources.getString(s), tabsToCreate.get(s));
-			}
-		}
-	}
+	
 
 	public static double getEnvironmentWidth(){
 		return myDimensions.getWidth();
@@ -122,7 +92,7 @@ public class MainEnvironment {
 	}
 
 
-	private void addTab(Editor newEditor, String tabName, boolean main) {
+	protected void addTab(Editor newEditor, String tabName, boolean main) {
 		Tab tab = new Tab();
 		tab.setText(tabName);
 		System.out.println("tabname: " + tabName);
