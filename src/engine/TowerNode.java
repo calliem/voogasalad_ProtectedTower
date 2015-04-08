@@ -1,8 +1,11 @@
 package engine;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import engine.element.sprites.Tower;
+import engine.sprites.TowerFactory;
 
 
 /**
@@ -19,14 +22,24 @@ public class TowerNode {
     private String myName;
     private String myGroup;
 
+    /**
+     * Set of nodes immediately after the current node
+     */
     private Set<TowerNode> myNextNodes;
+
+    /**
+     * Set of nodes immediately before the current node
+     */
     private Set<TowerNode> myPrevNodes;
 
-    public TowerNode (Tower tower) {
-        myName = (String) tower.getParameter("Name");
-        myGroup = (String) tower.getParameter("Group");
+    private Map<String, Object> myParameters;
+
+    public TowerNode (Map<String, Object> parameters) {
+        myName = (String) parameters.get("Name");
+        myGroup = (String) parameters.get("Group");
         myNextNodes = new HashSet<>();
         myPrevNodes = new HashSet<>();
+        myParameters = parameters;
     }
 
     protected String getName () {
@@ -37,18 +50,24 @@ public class TowerNode {
         return myGroup;
     }
 
-    protected Tower getTower () {
-        // TODO: get new tower from towerFactory
-        return null;
+    protected Tower getTower (TowerFactory factory) {
+        String towerID = myGroup + "_" + myName;
+        return factory.getTower(towerID);
     }
 
     protected boolean addNextNode (TowerNode node) {
         return myNextNodes.add(node);
     }
 
-    protected Set<TowerNode> getNextNode () {
+    /*
+     * protected Set<TowerNode> getNextNodes () {
+     * return myNextNodes;
+     * }
+     */
 
-        return myNextNodes;
+    @SuppressWarnings("unchecked")
+    protected List<String> getNextNodes () {
+        return (List<String>) myParameters.get("nextTower");
     }
 
     protected boolean removeNextNode (TowerNode node) {
@@ -59,9 +78,11 @@ public class TowerNode {
         return myPrevNodes.add(node);
     }
 
-    protected Set<TowerNode> getPrevNode () {
-        return myPrevNodes;
-    }
+    /*
+     * protected Set<TowerNode> getPrevNodes () {
+     * return myPrevNodes;
+     * }
+     */
 
     protected boolean removePrevNode (TowerNode node) {
         return myPrevNodes.remove(node);
@@ -83,6 +104,6 @@ public class TowerNode {
 
     @Override
     public int hashCode () {
-        return (myName + myGroup).hashCode();
+        return (myGroup + "_" + myName).hashCode();
     }
 }
