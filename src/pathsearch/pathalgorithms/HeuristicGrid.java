@@ -1,12 +1,12 @@
-package voogasalad.util.pathsearch.pathalgorithms;
+package pathsearch.pathalgorithms;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import voogasalad.util.pathsearch.graph.GraphNode;
-import voogasalad.util.pathsearch.graph.GridCell;
-import voogasalad.util.pathsearch.graph.GridIDTransform;
+import pathsearch.graph.GraphNode;
+import pathsearch.graph.GridCell;
+import pathsearch.graph.GridIDTransform;
 
 /**
  * @author Kaighn

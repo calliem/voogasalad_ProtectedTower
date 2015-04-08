@@ -1,17 +1,17 @@
-package voogasalad.util.pathsearch.wrappers;
+package pathsearch.wrappers;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import voogasalad.util.pathsearch.graph.Graph;
-import voogasalad.util.pathsearch.graph.GraphMakerGrid;
-import voogasalad.util.pathsearch.graph.GraphNode;
-import voogasalad.util.pathsearch.graph.GridCell;
-import voogasalad.util.pathsearch.graph.GridIDTransform;
-import voogasalad.util.pathsearch.pathalgorithms.HeuristicGrid;
-import voogasalad.util.pathsearch.pathalgorithms.NoPathExistsException;
-import voogasalad.util.pathsearch.pathalgorithms.ObstacleFunction;
+import pathsearch.graph.Graph;
+import pathsearch.graph.GraphMakerGrid;
+import pathsearch.graph.GraphNode;
+import pathsearch.graph.GridCell;
+import pathsearch.graph.GridIDTransform;
+import pathsearch.pathalgorithms.HeuristicGrid;
+import pathsearch.pathalgorithms.NoPathExistsException;
+import pathsearch.pathalgorithms.ObstacleFunction;
 
 public class GridWrapper {
 	Graph myGraph;

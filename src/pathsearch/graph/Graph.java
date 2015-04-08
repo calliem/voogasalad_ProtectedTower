@@ -1,4 +1,4 @@
-package voogasalad.util.pathsearch.graph;
+package pathsearch.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import voogasalad.util.pathsearch.pathalgorithms.AStar;
-import voogasalad.util.pathsearch.pathalgorithms.BFS;
-import voogasalad.util.pathsearch.pathalgorithms.Heuristic;
-import voogasalad.util.pathsearch.pathalgorithms.NoPathExistsException;
+import pathsearch.pathalgorithms.AStar;
+import pathsearch.pathalgorithms.BFS;
+import pathsearch.pathalgorithms.Heuristic;
+import pathsearch.pathalgorithms.NoPathExistsException;
 
 /**
  * @author Kaighn
