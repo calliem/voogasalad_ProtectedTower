@@ -1,0 +1,10 @@
+<map>
+  <entry>
+    <string>Speed</string>
+    <double>1.0</double>
+  </entry>
+  <entry>
+    <string>Damage</string>
+    <int>100</int>
+  </entry>
+</map>
