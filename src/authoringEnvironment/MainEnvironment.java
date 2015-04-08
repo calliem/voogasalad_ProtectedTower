@@ -55,7 +55,7 @@ public class MainEnvironment {
 		myGridPane.setGridLinesVisible(true);
 		createEnvironment(myGridPane);
 
-		populateTabBar();
+		ProjectReader.populateTabBar(this, myDimensions, myResources, myStage);
 
 		setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
 	}
@@ -63,28 +63,7 @@ public class MainEnvironment {
 	/**
 	 * Populates the tab bar with 1 tab for every non-abstract class in editors package
 	 */
-	private void populateTabBar(){
-		Map<String, Boolean> tabsToCreate = ProjectReader.tabsToCreate();
-		for(String s : ProjectReader.getOrderedTabList()){
-			if(tabsToCreate.keySet().contains(s)){
-				Editor e = null;
-				try {
-					System.out.println("dim: " + myDimensions);
-					System.out.println("s: " + s);
-					e = (Editor) Class.forName("authoringEnvironment.editors." + s)
-							.getConstructor(Dimension2D.class, Stage.class)
-							.newInstance(myDimensions, myStage);
-				} catch (InstantiationException | IllegalAccessException
-						| IllegalArgumentException | InvocationTargetException
-						| NoSuchMethodException | SecurityException
-						| ClassNotFoundException e1) {
-					// something that doesn't let this null go through
-					e1.printStackTrace();
-				}
-				addTab(e, myResources.getString(s), tabsToCreate.get(s));
-			}
-		}
-	}
+	
 
 	public static double getEnvironmentWidth(){
 		return myDimensions.getWidth();
@@ -116,7 +95,7 @@ public class MainEnvironment {
 	}
 
 
-	private void addTab(Editor newEditor, String tabName, boolean main) {
+	protected void addTab(Editor newEditor, String tabName, boolean main) {
 		Tab tab = new Tab();
 		tab.setText(tabName);
 		System.out.println("tabname: " + tabName);

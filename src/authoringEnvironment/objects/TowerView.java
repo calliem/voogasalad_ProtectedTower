@@ -1,6 +1,6 @@
 package authoringEnvironment.objects;
 
-import imageSelector.util.ScaleImage;
+import imageselector.util.ScaleImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +82,7 @@ public class TowerView extends SpriteView{
     public List<String[]> getTowerInfo(){
         List<String[]> info = new ArrayList<>();
         for(Setting setting : parameterFields){
-            info.add(new String[]{setting.getParameterName(), (String) setting.getParameterValue()});
+            info.add(new String[]{setting.getParameterName(), setting.getParameterValue().toString()});
         }
         return info;
     }
