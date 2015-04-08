@@ -47,6 +47,9 @@ public class MainEnvironment {
 		System.out.println(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
 		initScreen();
 		initStage(s);
+	//	s.setTitle(myResources.getString("MainStageTitle"));
+		//TODO: How to add to the mainenvironment resources without the parser freaking out?
+				//MainStageTitle=protected Tower()
 
 		myGridPane = new GridPane();
 		myGridPane.setGridLinesVisible(true);

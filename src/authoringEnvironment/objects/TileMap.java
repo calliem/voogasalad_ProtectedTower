@@ -36,6 +36,7 @@ public class TileMap {
 	// user specifies rectangle or square dimensions...allow this flexibility
 	public TileMap(int mapRows, int mapCols, int tileSize) {
 		myMap = new Group();
+    	myMap.setOnDragDetected(e -> myMap.startFullDrag());
 		myMapRows = mapRows;
 		myMapCols = mapCols;
 		myTileSize = tileSize;
@@ -68,8 +69,16 @@ public class TileMap {
 	
 	//need to have different selectors for setting path and for changing tile color
 
-    private void attachTileListeners(){
-    	myMap.setOnDragDetected(e -> myMap.startFullDrag());
+	
+	//TODO: attach tile listeners to new tiles but make it to add to specific one
+	
+	private void attachTileListener(Tile tile){
+		tile.setOnMousePressed(e -> tile.setFill(myActiveColor));//myTiles[x][y].setFill(myActiveColor));
+		tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); //TODO: fix dragging errors
+
+	}
+	
+    /*private void attachTileListeners(){
     	for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				int x = i;
@@ -84,7 +93,7 @@ public class TileMap {
 			
 			}
     	}
-    }
+    }*/
 			
 	public void changeTileSize(int tileSize) {
 		myTileSize = tileSize;
@@ -111,10 +120,10 @@ public class TileMap {
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				myTiles[i][j] = new Tile(myTileSize, i, j);
-				myMap.getChildren().add(myTiles[i][j]); // to speed up												// time?
+				myMap.getChildren().add(myTiles[i][j]); // to speed up	
+				attachTileListener(myTiles[i][j]);// time?
 			}
 		}
-		attachTileListeners();
 	}
 
 	//@param myMapRows and myMapCols represent the previous/old rows and cols
@@ -129,12 +138,11 @@ public class TileMap {
 				if (i >= myMapRows || j >= myMapCols)
 					newTiles[i][j] = new Tile(myTileSize, i, j);
 				else{
-					System.out.println("i " + i + " j " + j);
-					System.out.println("newtiles" + newTiles[i][j]);
-					System.out.println("valid mytiles" + myTiles[i][j]);
 					newTiles[i][j] = myTiles[i][j];
 				}
+				attachTileListener(newTiles[i][j]);
 				myMap.getChildren().add(newTiles[i][j]);
+				
 			}
 		}
 

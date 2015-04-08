@@ -1,4 +1,4 @@
-package authoringEnvironment.editors;
+/*package authoringEnvironment.editors;
 
 import java.awt.ScrollPane;
 
@@ -24,4 +24,4 @@ public class RowEditor extends Editor {
 		return ;
 	}
 
-}
+}*/
