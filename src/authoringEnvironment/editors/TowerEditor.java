@@ -38,7 +38,6 @@ import authoringEnvironment.objects.TowerView;
  *
  */
 public class TowerEditor extends PropertyEditor{
-    private Group myRoot;
     private StackPane myContent;
     private HBox currentRow;
     private boolean overlayActive = false;
@@ -74,9 +73,9 @@ public class TowerEditor extends PropertyEditor{
      * Sets up the editor UI.
      */
     @Override
-    public Node configureUI () {
+    protected void configureUI () {
         // TODO Auto-generated method stub
-        myRoot = new Group();
+
         myContent = new StackPane();
         towersCreated = new ArrayList<>();
 
@@ -130,9 +129,7 @@ public class TowerEditor extends PropertyEditor{
 
         myContent.getChildren().addAll(background, towersDisplay, empty);
         StackPane.setAlignment(towersDisplay, Pos.TOP_CENTER);
-        myRoot.getChildren().add(myContent);
-
-        return myRoot;
+        getChildren().add(myContent);
     }
 
     private HBox setupEditControls () {

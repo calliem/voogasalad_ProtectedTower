@@ -27,9 +27,9 @@ public class UnitEditor extends PropertyEditor {
     }
 
     @Override
-    public Node configureUI() {
+    protected void configureUI() {
         // TODO Auto-generated method stub
-        return null;
+     
     }
 
 	@Override

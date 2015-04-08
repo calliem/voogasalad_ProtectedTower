@@ -110,8 +110,8 @@ public class MainEnvironment {
 	}
 	
 	private void update(Tab selectedTab){
-	//	Node editorUI = selectedTab.getContent();
-		//editor.getUI().update();
+		Editor editor = (Editor) selectedTab.getContent();
+		editor.update();
 		System.out.println("changed selection! " + selectedTab.getText());
 		//why does this printout twice????
 				//TODO: alternatively: use reflection to update the tab. unnecessary use of reflection....but might not be able to do anything else because of javafx limitations. that's also bad becasue of dependencies...
@@ -129,7 +129,7 @@ public class MainEnvironment {
 		Tab tab = new Tab();
 		tab.setText(tabName);
 		System.out.println("tabname: " + tabName);
-		tab.setContent(newEditor.configureUI());
+		tab.setContent(newEditor);
 		//TODO: instead of calling configureUI, create a new editor each time, have UI stuff written in the constructor, and have each editor extend a node
 
 		if (main){

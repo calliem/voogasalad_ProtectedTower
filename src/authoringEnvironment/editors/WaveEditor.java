@@ -24,14 +24,11 @@ public class WaveEditor extends MainEditor {
 	}
 	
 	@Override
-	public Node configureUI() {
-		myRoot = new Group();		
-		
+	protected void configureUI() {	
 		Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, Color.GRAY);
 		
 		HBox wave1 = makeNewWave();
-		myRoot.getChildren().add(wave1);
-		return myRoot;
+		getChildren().add(wave1);
 	}
 	
 	private HBox makeNewWave() {

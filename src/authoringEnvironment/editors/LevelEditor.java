@@ -15,11 +15,10 @@ public class LevelEditor extends MainEditor{
 		super(dim, s);
 	}
 
-	/*@Override
-	public Node configureUI() {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
+	@Override
+	protected void configureUI() {
+		
+	}
 
     @Override
     protected void createMap () {
@@ -27,7 +26,8 @@ public class LevelEditor extends MainEditor{
     }
 
 	@Override
-	protected void update() {
+	public void update() {
+		System.out.println("updated level editor");
 		// TODO Auto-generated method stub
 		
 	}

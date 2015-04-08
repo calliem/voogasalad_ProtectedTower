@@ -10,6 +10,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -28,37 +29,36 @@ public abstract class MainEditor extends Editor {
 	
 	public MainEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
-		// TODO Auto-generated constructor stub
+		// TODO refactor this class. It may not be necessary other than setting up gridpane because the grid is really only created once and pulled up in the subsequent maps
 	}
 
-	/**
-	 * Creates a sidebar and general map layout to be utilized by subclasses
-	 */
-	//TODO: return groupor return a parent so that I can directly return a gridpane here?
-	@Override
-	public Node configureUI() {
+	  /**
+		 * Creates a sidebar and general map layout to be utilized by subclasses
+		 */
+		//TODO: return groupor return a parent so that I can directly return a gridpane here?
+		@Override
+		protected void configureUI() {
+			createGridPane();
+			myMapWorkspace = new StackPane();
+			Rectangle background = new Rectangle(myDimensions.getWidth()*MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(), Color.web("2A2A29"));
+			myMapWorkspace.getChildren().add(background);
+			myPane.add(myMapWorkspace, 0, 0);
+			createMap();
 
-		Group root = new Group();
-		createGridPane();
-		myMapWorkspace = new StackPane();
-		Rectangle background = new Rectangle(myDimensions.getWidth()*MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(), Color.web("2A2A29"));
-		myMapWorkspace.getChildren().add(background);
-		myPane.add(myMapWorkspace, 0, 0);
-		createMap();
+			// does it dynamically update or will i have to say
+			// TODO remove magic number
+			//is using MainEnvironment.myDimensions.getWidth() bad?
+		
+			getChildren().add(myPane);
+		}
+		
+		private void createGridPane() {
+			myPane = new GridPane();
+			setGridPaneConstraints(myPane);
+			myPane.setGridLinesVisible(true); //TODO: remove the showing gridlines
+		}
 
-		// does it dynamically update or will i have to say
-		// TODO remove magic number
-		//is using MainEnvironment.myDimensions.getWidth() bad?
-	
-		root.getChildren().add(myPane);
-		return root;
-	}
 
-	private void createGridPane() {
-		myPane = new GridPane();
-		setGridPaneConstraints(myPane);
-		myPane.setGridLinesVisible(true); //TODO: remove the showing gridlines
-	}
 	
 	public StackPane getMapWorkspace(){
 		return myMapWorkspace;

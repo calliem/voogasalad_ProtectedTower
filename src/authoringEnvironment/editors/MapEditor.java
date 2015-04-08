@@ -33,15 +33,11 @@ public class MapEditor extends MainEditor {
 
     public MapEditor(Dimension2D dim, Stage s) {
         super(dim, s);
+        getPane().add(new Sidebar(myResources, myActiveMap, myMaps),1,0); //TODO: check map dependency
         myMaps = FXCollections.observableArrayList();
     }
 
-    @Override
-    public Node configureUI(){
-        Node root = super.configureUI();
-        getPane().add(new Sidebar(myResources, myActiveMap, myMaps),1,0); //TODO: check map dependency
-        return root;
-    }
+
 
     public SpriteView[][] getTiles(){
         // TODO return actual map tiles
@@ -68,7 +64,8 @@ public class MapEditor extends MainEditor {
     }
 
 	@Override
-	protected void update() {
+	public void update() {
+		System.out.println("updated mapeditor!");
 		// TODO Auto-generated method stub
 		
 	}

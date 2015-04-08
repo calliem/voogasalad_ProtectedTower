@@ -20,13 +20,12 @@ public class ProjectileEditor extends PropertyEditor {
     }
 
     @Override
-    public Node configureUI() {
+    public void configureUI() {
         // TODO Auto-generated method stub
-        return null;
     }
 
 	@Override
-	protected void update() {
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}
