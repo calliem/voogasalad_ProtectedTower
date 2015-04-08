@@ -1,4 +1,4 @@
-package authoringEnvironment.objects;
+/*package authoringEnvironment.objects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,4 +176,4 @@ public abstract class test extends StackPane {
 	    public Button getCloseButton(){
 	        return overlayCloseButton;
 	    }
-}
+}*/

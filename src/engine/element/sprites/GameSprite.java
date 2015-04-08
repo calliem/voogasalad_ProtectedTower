@@ -1,4 +1,4 @@
-package engine.sprites;
+package engine.element.sprites;
 
 import engine.InsufficientParametersException;
 

@@ -1,22 +1,21 @@
-/**
- * Displays the general layout for MainEditor classes/subclasses (ie. GameMap, WaveEditor) consisting of a sidebar and a generic map.
- * @author Callie Map
- */
 
 package authoringEnvironment.editors;
 
-import java.util.ResourceBundle;
-
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+/**
+ * Displays the general layout for MainEditor classes/subclasses (ie. GameMap, WaveEditor) consisting of a sidebar and a generic map.
+ * @author Callie Mao
+ */
 
 public abstract class MainEditor extends Editor {
 
@@ -36,7 +35,8 @@ public abstract class MainEditor extends Editor {
 	 * Creates a sidebar and general map layout to be utilized by subclasses
 	 */
 	//TODO: return groupor return a parent so that I can directly return a gridpane here?
-	public Group configureUI() {
+	@Override
+	public Node configureUI() {
 
 		Group root = new Group();
 		createGridPane();
@@ -45,7 +45,7 @@ public abstract class MainEditor extends Editor {
 		myMapWorkspace.getChildren().add(background);
 		myPane.add(myMapWorkspace, 0, 0);
 		createMap();
-		
+
 		// does it dynamically update or will i have to say
 		// TODO remove magic number
 		//is using MainEnvironment.myDimensions.getWidth() bad?
@@ -66,7 +66,7 @@ public abstract class MainEditor extends Editor {
 
 	private void setGridPaneConstraints(GridPane pane) {
 		RowConstraints row0 = new RowConstraints();
-		row0.setPercentHeight(MAP_HEIGHT_PERCENT); 
+		row0.setPercentHeight(MAP_HEIGHT_PERCENT);
 		pane.getRowConstraints().add(row0);
 		ColumnConstraints col0 = new ColumnConstraints();
 		col0.setPrefWidth(getWidth() * MAP_WIDTH_MULTIPLIER);

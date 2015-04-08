@@ -4,10 +4,11 @@ import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-public class ItemEditor extends PropertyEditor{
+public class TileEditor extends PropertyEditor{
 
-	public ItemEditor (Dimension2D dim, Stage s){
+	public TileEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -21,5 +22,5 @@ public class ItemEditor extends PropertyEditor{
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }

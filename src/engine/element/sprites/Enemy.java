@@ -1,17 +1,19 @@
-package engine.sprites;
+package engine.element.sprites;
 
 import engine.InsufficientParametersException;
 
 
 /**
- * This class represents the projectiles shot out by certain Sprites, like towers.
+ * This class represents a sprite that moves across the screen and shoots/is shot at by towers. The
+ * Enemy object is the primary one which can damage a player's health as it move through the map.
+ * Some may also be able to attack towers.
  * 
  * @author Qian Wang
  *
  */
-public class Projectile extends MoveableSprite {
+public class Enemy extends MoveableSprite {
 
-    public Projectile () throws InsufficientParametersException {
+    public Enemy () throws InsufficientParametersException {
         super();
         // TODO Auto-generated constructor stub
     }

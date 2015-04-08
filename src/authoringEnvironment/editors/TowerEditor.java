@@ -1,6 +1,6 @@
 package authoringEnvironment.editors;
 
-import imageselector.ImageSelector;
+import imageSelector.ImageSelector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -73,7 +74,7 @@ public class TowerEditor extends PropertyEditor{
      * Sets up the editor UI.
      */
     @Override
-    public Group configureUI () {
+    public Node configureUI () {
         // TODO Auto-generated method stub
         myRoot = new Group();
         myContent = new StackPane();
@@ -119,7 +120,8 @@ public class TowerEditor extends PropertyEditor{
             }
         });
         
-        empty = new Text("No towers have been made...yet.");
+        empty = new Text("No towers yet");
+        //myResources.getString("NoTowersCreated"));
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
 
@@ -274,4 +276,10 @@ public class TowerEditor extends PropertyEditor{
 
         return scale;
     }
+
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }
