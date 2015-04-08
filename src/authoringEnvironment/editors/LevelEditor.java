@@ -24,7 +24,7 @@ public class LevelEditor extends MainEditor{
 
     @Override
     protected void createMap () {
-        // TODO Auto-generated method stub
+        
 
     }
 }

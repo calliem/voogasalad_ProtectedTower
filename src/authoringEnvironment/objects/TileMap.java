@@ -1,5 +1,8 @@
 package authoringEnvironment.objects;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -19,6 +22,8 @@ public class TileMap {
 	private Tile[][] myTiles;
 	private int myTileSize;
 	private Color myActiveColor;
+	
+	private HashMap<String, Integer> myTags; //maps a string to the number of elements with that tag
 
 	// allowing both width and height gives greater flexibility in map creation
 	private int myMapRows;
@@ -43,6 +48,18 @@ public class TileMap {
 
 	public Group getMap() {
 		return myMap;
+	}
+	
+	public int addTag(int x, int y, String tag){
+		myTiles[x][y].addTag(tag);
+		int numTags = myTags.get(tag);
+		return ++numTags;
+	}
+	
+	public int removeTag(int x, int y, String tag){
+		myTiles[x][y].removeTag(tag);
+		int numTags = myTags.get(tag);
+		return --numTags;
 	}
 	
 /*	public void changeTile(int row, int col, Color color){
@@ -134,6 +151,18 @@ public class TileMap {
 				myMap.getChildren().remove(myTiles[i][j]);
 			}
 		}
+	}
+	
+	public int getNumRows(){
+		return myTiles.length;
+	}
+	
+	public int getNumCols(){
+		return myTiles[0].length;
+	}
+	
+	public int getTileSize(){
+		return myTileSize;
 	}
 		//for (int i = myTiles.length; )
 		

@@ -8,6 +8,8 @@ package authoringEnvironment.editors;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -25,18 +27,20 @@ public class MapEditor extends MainEditor {
     private TileMap myActiveMap;
     private static final int DEFAULT_MAP_ROWS = 14;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
     private static final int DEFAULT_MAP_COLS = 19; //getHeight();
-    private static final int DEFAULT_TILE_SIZE = 50;
+    private static final int DEFAULT_TILE_SIZE = 50; //based on height since monitor height < width and that is usually the limiting factor
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
+	private ObservableList<TileMap> myMaps;
 
     public MapEditor(Dimension2D dim, Stage s) {
         super(dim, s);
+        myMaps = FXCollections.observableArrayList();
     }
 
     @Override
     public Node configureUI(){
         Node root = super.configureUI();
-        getPane().add(new Sidebar(myResources, myActiveMap),1,0); //TODO: check map dependency
+        getPane().add(new Sidebar(myResources, myActiveMap, myMaps),1,0); //TODO: check map dependency
         return root;
     }
 
@@ -45,9 +49,9 @@ public class MapEditor extends MainEditor {
         return new SpriteView[0][0];
     }
 
-	public ArrayList<SpriteView> getMaps() {
+	public ObservableList<TileMap> getMaps() {
 		// TODO return actual GameMaps
-		return new ArrayList<>();
+		return myMaps;
 	};
 
 
