@@ -6,16 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import engine.sprites.Sprite;
+import engine.element.sprites.Sprite;
 
 
 /**
  * CollisionTable Object
  * 
- * This class represents a collision table that's created according to user settings from the
- * authoring environment.
- * The sole method of this class is used to apply the appropriate actions to the two sprites
- * according to user-defined logic
+ * This class represents a collision table that's created according to user settings from the authoring environment. The sole method of this class is used to apply the appropriate actions to the two sprites according to user-defined logic.
  * 
  * @author Janan Zhu
  */
@@ -32,19 +29,11 @@ public class CollisionTable {
      * @TODO Error checking to make sure conditionValues and actionValues are in the right format,
      *       ie. correct array size
      * 
-     * @param conditions A list of predicate functions, the set of all possible conditions about
-     *        sprites that need to be checked
-     * @param actions A list of consumer functions, the set of all possible actions on sprites that
-     *        need to be carried out
-     * @param conditionValues 2D array of booleans representing combinations of conditions for
-     *        various rules. Different rules are along x-axis, different conditions are along
-     *        y-axis. A particular array cell contains true if this condition needs to be checked
-     *        for this rule
+     * @param conditions A list of predicate functions, the set of all possible conditions about  sprites that need to be checked
+     * @param actions A list of consumer functions, the set of all possible actions on sprites that  need to be carried out
+     * @param conditionValues 2D array of booleans representing combinations of conditions for  various rules. Different rules are along x-axis, different conditions are along y-axis. A particular array cell contains true if this condition needs to be checked  for this rule
      * @param actionValues 2D array of booleans representing combinations of actions that need
-     *        to be applied according to various rules. Different rules are along x-axis, different
-     *        actions are along
-     *        y-axis. A particular array cell contains true if this action needs to be checked for
-     *        this rule.
+     *        to be applied according to various rules. Different rules are along x-axis, different actions are along y-axis. A particular array cell contains true if this action needs to be checked for this rule.
      */
     public CollisionTable (List<Predicate<Sprite>> conditions,
                            List<Consumer<Sprite>> actions,
@@ -80,7 +69,7 @@ public class CollisionTable {
                 }
             }
 
-            for (int j = numActions; j < 2*numActions; j++) {
+            for (int j = numActions; j < 2 * numActions; j++) {
                 if (actionValues[j][i]) {
                     spriteTwoActionList.add(actions.get(j));
                 }
@@ -121,12 +110,12 @@ public class CollisionTable {
         }
     }
 
-    
     /**
      * PairList Object
      * 
-     * Nested class created to store multiple lists in one object, used for concisely expressing conditions
-     * and actions that need to be applied on different sprites.
+     * Nested class created to store multiple lists in one object, used for concisely expressing
+     * conditions and actions that need to be applied on different sprites.
+     * 
      * @author Janan
      *
      * @param <T> Type of object contained in pairlist
