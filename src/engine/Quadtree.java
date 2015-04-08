@@ -3,6 +3,7 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.shape.Rectangle;
+import engine.element.sprites.Tower;
 
 
 /**
@@ -66,7 +67,6 @@ public class Quadtree {
      * Determine which node the object belongs to. -1 means object cannot completely fit within a
      * child node and is part of the parent node
      */
-    // TODO: change this to take in a collidable object
     private int getIndex (Collidable spriteToCheck) {
         int index = -1;
         double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
@@ -110,10 +110,8 @@ public class Quadtree {
     public void insert (Collidable pRect) {
         if (nodes[0] != null) {
             int index = getIndex(pRect);
-
             if (index != -1) {
                 nodes[index].insert(pRect);
-
                 return;
             }
         }
@@ -148,5 +146,11 @@ public class Quadtree {
         }
         returnObjects.addAll(objects);
         return returnObjects;
+    }
+
+    public static void main (String[] args) throws InsufficientParametersException {
+        Quadtree q = new Quadtree(3, new Rectangle(3, 4));
+        Tower e = new Tower();
+        q.insert(e);
     }
 }
