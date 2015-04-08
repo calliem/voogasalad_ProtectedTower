@@ -60,7 +60,15 @@ public class GameManager {
 	public static void addPartToGame(String partType, String partName, List<String> params, List<Object> data){
 		currentGame.addPart(partType, partName, params, data);
 	}
-
+	/*
+	addPartToGame("Wave", "IceGuysWave", {"Units", "Times"}, data)
+	List<Object> data = new List<Object>();
+	//filenames
+	list.add(new List<String>());
+	//times
+	list.add(new List<Double>());
+*/
+	
 	/**
 	 * Saves all the parts and the Map<partName, [part data]> into an XML file called gameName + "Parts.xml"
 	 * Ex: "TestGameParts.xml"
