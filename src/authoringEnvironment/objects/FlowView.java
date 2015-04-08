@@ -10,8 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class FlowView extends HBox {
-	private String partFileName;
-	private Double delay;
+//	private String partFileName;
+//	private Double delay;
+	private TextField partSelector;
+	private TextField delayTextField;
 	private int myWidth;
 	private int myHeight;
 	
@@ -19,17 +21,17 @@ public class FlowView extends HBox {
 		super(10);
 		myWidth = width;
 		myHeight = height;
-		TextField partSelector = new TextField();
+		partSelector = new TextField();
 		partSelector.setMaxHeight(myHeight);
 		ImageView arrowImage = new ImageView(new Image("images/arrow_icon.png"));
 		ScaleImage.scaleByWidth(arrowImage, 120);
-		TextField timeTextField = new TextField();
-		timeTextField.setMaxWidth(50);
+		delayTextField = new TextField();
+		delayTextField.setMaxWidth(50);
 		
 		this.getChildren().add(partSelector);
 		VBox arrow = new VBox(10);
 		HBox timeInput = new HBox(10);
-		timeInput.getChildren().add(timeTextField);
+		timeInput.getChildren().add(delayTextField);
 		timeInput.getChildren().add(new Text("s"));
 		timeInput.setAlignment(Pos.CENTER);
 		arrow.getChildren().add(timeInput);
@@ -39,7 +41,15 @@ public class FlowView extends HBox {
 	}
 	
 	public String getFileName() {
-		return partFileName;
+		return partSelector.getText(); //TODO return error if not valid file
+	}
+	
+	public Double getDelay() {
+		try {
+			return Double.parseDouble(delayTextField.getText());
+		} catch (NumberFormatException e) {
+			return 0.0; //TODO return error if not a double
+		}
 	}
 	
 }
