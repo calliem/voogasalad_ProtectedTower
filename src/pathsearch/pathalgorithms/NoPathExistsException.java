@@ -1,4 +1,4 @@
-package voogasalad.util.pathsearch.pathalgorithms;
+package pathsearch.pathalgorithms;
 
 /**
  * Thrown when attempting a graph search that has no feasible path.

@@ -1,10 +1,10 @@
-package voogasalad.util.pathsearch.pathalgorithms;
+package pathsearch.pathalgorithms;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import voogasalad.util.pathsearch.graph.Edge;
-import voogasalad.util.pathsearch.graph.GraphNode;
+import pathsearch.graph.Edge;
+import pathsearch.graph.GraphNode;
 
 /**
  * @author Kaighn

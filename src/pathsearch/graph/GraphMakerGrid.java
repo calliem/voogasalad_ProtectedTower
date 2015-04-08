@@ -1,8 +1,8 @@
-package voogasalad.util.pathsearch.graph;
+package pathsearch.graph;
 
 import java.util.Arrays;
 
-import voogasalad.util.pathsearch.pathalgorithms.ObstacleFunction;
+import pathsearch.pathalgorithms.ObstacleFunction;
 
 /**
  * @author Kaighn

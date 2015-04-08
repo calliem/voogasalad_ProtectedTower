@@ -1,4 +1,4 @@
-package voogasalad.util.pathsearch.graph;
+package pathsearch.graph;
 
 /**
  * Strategy for calculating if two grid entries are neighbors. Ex: Square versus Hexagon.

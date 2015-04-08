@@ -1,4 +1,4 @@
-package voogasalad.util.pathsearch.pathalgorithms;
+package pathsearch.pathalgorithms;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,8 +9,8 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import voogasalad.util.pathsearch.graph.Edge;
-import voogasalad.util.pathsearch.graph.GraphNode;
+import pathsearch.graph.Edge;
+import pathsearch.graph.GraphNode;
 
 /**
  * @author Kaighn
