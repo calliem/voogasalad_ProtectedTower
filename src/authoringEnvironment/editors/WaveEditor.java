@@ -10,8 +10,8 @@ import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
 public class WaveEditor extends MainEditor{
-    public WaveEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
-		super(dim, resources, s);
+    public WaveEditor(Dimension2D dim, Stage s) {
+		super(dim, s);
 		// TODO Auto-generated constructor stub
 	}
 

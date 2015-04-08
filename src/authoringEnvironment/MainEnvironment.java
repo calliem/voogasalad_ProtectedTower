@@ -6,11 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.ResourceBundle;
 import authoringEnvironment.editors.Editor;
-import authoringEnvironment.editors.LevelEditor;
-import authoringEnvironment.editors.MapEditor;
-import authoringEnvironment.editors.TowerEditor;
-import authoringEnvironment.editors.WaveEditor;
-import authoringEnvironment.editors.MainEditor;
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
@@ -43,12 +38,13 @@ public class MainEnvironment {
 	private GridPane myGridPane;
 	private static final boolean MAIN_TAB = true;
 	private static final boolean SPRITE_TAB = false;
-	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "english");
+	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
+	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
 
 	//private SceneSetter mySceneSetter = new SceneSetter();
 
 	public MainEnvironment(Stage s) {
+		System.out.println(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
 		initScreen();
 		initStage(s);
 
@@ -73,8 +69,8 @@ public class MainEnvironment {
 					System.out.println("dim: " + myDimensions);
 					System.out.println("s: " + s);
 					e = (Editor) Class.forName("authoringEnvironment.editors." + s)
-							.getConstructor(Dimension2D.class, ResourceBundle.class, Stage.class)
-							.newInstance(myDimensions, myResources, myStage);
+							.getConstructor(Dimension2D.class, Stage.class)
+							.newInstance(myDimensions, myStage);
 				} catch (InstantiationException | IllegalAccessException
 						| IllegalArgumentException | InvocationTargetException
 						| NoSuchMethodException | SecurityException
@@ -85,7 +81,6 @@ public class MainEnvironment {
 				addTab(e, myResources.getString(s), tabsToCreate.get(s));
 			}
 		}
-
 	}
 
 	public static double getEnvironmentWidth(){
@@ -121,6 +116,7 @@ public class MainEnvironment {
 	private void addTab(Editor newEditor, String tabName, boolean main) {
 		Tab tab = new Tab();
 		tab.setText(tabName);
+		System.out.println("tabname: " + tabName);
 		tab.setContent(newEditor.configureUI());
 		if (main){
 			tab.setStyle("-fx-base: #3c3c3c;");
