@@ -80,7 +80,7 @@ public class CollisionTable {
                 }
             }
 
-            for (int j = 0; j < numActions; j++) {
+            for (int j = numActions; j < 2*numActions; j++) {
                 if (actionValues[j][i]) {
                     spriteTwoActionList.add(actions.get(j));
                 }
