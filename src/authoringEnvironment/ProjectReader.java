@@ -11,6 +11,9 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.Set;
 
+import javafx.geometry.Dimension2D;
+import javafx.stage.Stage;
+import authoringEnvironment.editors.Editor;
 import authoringEnvironment.setting.Setting;
 /**
  * 
@@ -85,6 +88,37 @@ public class ProjectReader {
 
 		return s;
 	}
+	
+	public static void populateTabBar(MainEnvironment m, Dimension2D myDimensions, ResourceBundle myResources, Stage myStage){
+		Map<String, Boolean> tabsToCreate = ProjectReader.tabsToCreate();
+		for(String s : ProjectReader.getOrderedTabList()){
+			if(tabsToCreate.keySet().contains(s)){
+				Editor e = null;
+				String toCreate = "authoringEnvironment.editors." + s;
+				try {
+					e = (Editor) Class.forName(toCreate)
+							.getConstructor(Dimension2D.class, Stage.class)
+							.newInstance(myDimensions, myStage);
+				} catch (InstantiationException e1){ 
+					System.err.println("Constructor Editor(Dimension2D.class, Stage.class) doesn't exist or was"
+							+ "incorrectly called");
+					System.err.println("Tab's Editor is currently null");
+					e1.printStackTrace();
+				}
+				catch (ClassNotFoundException e1){
+					System.err.println("Editor not found: " + toCreate);
+					System.err.println("Tab's Editor is currently null");
+					e1.printStackTrace();
+				}
+				catch (IllegalAccessException| IllegalArgumentException | InvocationTargetException
+						| NoSuchMethodException | SecurityException e1) {
+					System.err.println("Error creating Editor object, Editor is currently null");
+					e1.printStackTrace();
+				}
+				m.addTab(e, myResources.getString(s), tabsToCreate.get(s));
+			}
+		}
+	}
 
 	/**
 	 * Gives the user Editor strings and booleans (main tab or sprite tab) of tabs to create
@@ -103,9 +137,9 @@ public class ProjectReader {
 	 * @return The array of editors to create
 	 */
 	public static String[] editorsToCreate(){
-		
+
 		//TODO: fix order that the tabs are displayed 
-		
+
 		File editors = new File(editorPackage);
 		System.out.println(editors.toString());
 		System.out.println(editorPackage);
@@ -133,8 +167,12 @@ public class ProjectReader {
 			while (s.hasNextLine()) {
 				nextEditor = s.nextLine();
 				nextEditor.replaceAll("\\s+", "");
-				System.out.println("nextEditor: " + nextEditor + nextEditor.indexOf("="));
-				tabList.add(nextEditor.substring(0,  nextEditor.indexOf("=")));
+				int indexOfEquals = nextEditor.indexOf("=");
+				//if nextEditor was a newLine or all whitespace, or something else, don't try this
+				if(indexOfEquals != -1){
+					System.out.println("nextEditor: " + nextEditor + indexOfEquals);
+					tabList.add(nextEditor.substring(0,  indexOfEquals));
+				}
 			}
 			s.close();
 		} catch (FileNotFoundException e) {
