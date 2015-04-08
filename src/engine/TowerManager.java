@@ -2,7 +2,8 @@ package engine;
 
 import java.util.HashMap;
 import java.util.Map;
-import engine.sprites.Tower;
+import engine.element.sprites.Tower;
+
 
 /**
  * 
@@ -17,18 +18,17 @@ import engine.sprites.Tower;
 public class TowerManager {
     private Map<String, TowerNode> myTowerMap;
     private Map<String, TowerNode> myTreeHeads;
-    
-    public TowerManager() {
+
+    public TowerManager () {
         myTowerMap = new HashMap<>();
     }
-    
-    public void addTower(Tower newTower) {
-        
+
+    public void addTower (Tower newTower) {
+
     }
-    
-    public void addTower(Tower attachToTower, Tower newTower) {
-        
+
+    public void addTower (Tower attachToTower, Tower newTower) {
+
     }
-    
-    
+
 }
