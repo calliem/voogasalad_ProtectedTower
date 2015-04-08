@@ -103,9 +103,9 @@ public class ProjectReader {
 	 * @return The array of editors to create
 	 */
 	public static String[] editorsToCreate(){
-		
+
 		//TODO: fix order that the tabs are displayed 
-		
+
 		File editors = new File(editorPackage);
 		System.out.println(editors.toString());
 		System.out.println(editorPackage);
@@ -133,8 +133,11 @@ public class ProjectReader {
 			while (s.hasNextLine()) {
 				nextEditor = s.nextLine();
 				nextEditor.replaceAll("\\s+", "");
-				System.out.println("nextEditor: " + nextEditor + nextEditor.indexOf("="));
-				tabList.add(nextEditor.substring(0,  nextEditor.indexOf("=")));
+				//if nextEditor was a newLine or all whitespace, it will be "" now
+				if(!nextEditor.equals("")){
+					System.out.println("nextEditor: " + nextEditor + nextEditor.indexOf("="));
+					tabList.add(nextEditor.substring(0,  nextEditor.indexOf("=")));
+				}
 			}
 			s.close();
 		} catch (FileNotFoundException e) {
