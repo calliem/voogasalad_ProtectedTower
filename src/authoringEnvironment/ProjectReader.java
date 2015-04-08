@@ -9,14 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-<<<<<<< HEAD
-=======
 import java.util.Set;
-
 import javafx.geometry.Dimension2D;
 import javafx.stage.Stage;
 import authoringEnvironment.editors.Editor;
->>>>>>> e29e296dcb1a764d97633eab12c09793f574b064
 import authoringEnvironment.setting.Setting;
 /**
  * 

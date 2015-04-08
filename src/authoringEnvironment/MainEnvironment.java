@@ -5,9 +5,11 @@ package authoringEnvironment;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -55,7 +57,7 @@ public class MainEnvironment {
 		myGridPane.setGridLinesVisible(true);
 		createEnvironment(myGridPane);
 
-		ProjectReader.populateTabBar(this, myDimensions, myResources, myStage);
+		createTabs();
 
 		setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
 	}
@@ -91,7 +93,28 @@ public class MainEnvironment {
 
 		grid.add(configureTopMenu(),0,0);
 		myTabPane = new TabPane();
+
+		
 		grid.add(myTabPane,0,1);
+	}
+	
+	private void createTabs(){
+		ProjectReader.populateTabBar(this, myDimensions, myResources, myStage);
+		
+		//Tab selectedTab = myTabPane.getSelectionModel().getSelectedItem();
+		for (Tab tab : myTabPane.getTabs()){
+			System.out.println("loop");
+			tab.setOnSelectionChanged(e -> update(tab)); //is this updating the old tab?
+		}
+	}
+	
+	private void update(Tab selectedTab){
+	//	Node editorUI = selectedTab.getContent();
+		//editor.getUI().update();
+		System.out.println("changed selection! " + selectedTab.getText());
+		//why does this printout twice????
+		//TODO: alternatively: use reflection to update the tab. unnecessary use of reflection....but might not be able to do anything else because of javafx limitations. that's also bad becasue of dependencies...
+		//can i get the index of the tab and then match it to the one in the properties file? that's bad because of dependencies...brainstorm more ways
 	}
 
 
@@ -105,7 +128,7 @@ public class MainEnvironment {
 			System.out.println(tabName + "main = true, property set");
 		}
 		tab.setClosable(false);
-		myTabPane.getTabs().add(tab);
+		myTabPane.getTabs().add(tab); 
 	}
 
 	private void initScreen() {

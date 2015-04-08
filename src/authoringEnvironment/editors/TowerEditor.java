@@ -1,6 +1,6 @@
 package authoringEnvironment.editors;
 
-import imageselector.ImageSelector;
+import imageSelector.ImageSelector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -276,4 +276,10 @@ public class TowerEditor extends PropertyEditor{
 
         return scale;
     }
+
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

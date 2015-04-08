@@ -2,18 +2,11 @@
 
 package authoringEnvironment.editors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -64,8 +57,9 @@ public abstract class Editor {
 		stage.setTitle("Error"); //TODO: how to use this parameter? myResources.getString("Error"). How to add to the mainenvironment resources without the parser freaking out?
 		//MainStageTitle=protected Tower()
 		stage.setScene(scene);
-		stage.show();
-		
+		stage.show();	
 	}
+   
+   protected abstract void update();
     
 }

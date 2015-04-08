@@ -2,8 +2,6 @@
 
 package authoringEnvironment.editors;
 
-import java.util.ResourceBundle;
-
 import javafx.geometry.Dimension2D;
 import javafx.stage.Stage;
 

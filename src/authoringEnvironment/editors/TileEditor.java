@@ -17,4 +17,10 @@ public class TileEditor extends PropertyEditor{
 		return null;
 	}
 
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

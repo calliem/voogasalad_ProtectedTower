@@ -1,8 +1,6 @@
 
 package authoringEnvironment.editors;
 
-import java.util.ResourceBundle;
-
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -37,6 +35,7 @@ public abstract class MainEditor extends Editor {
 	 * Creates a sidebar and general map layout to be utilized by subclasses
 	 */
 	//TODO: return groupor return a parent so that I can directly return a gridpane here?
+	@Override
 	public Node configureUI() {
 
 		Group root = new Group();

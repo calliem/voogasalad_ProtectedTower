@@ -54,7 +54,8 @@ public class MapEditor extends MainEditor {
 	};
 
 
-    protected void createMap() {
+    @Override
+	protected void createMap() {
         // TODO Auto-generated method stub
 
         myActiveMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);		
@@ -65,6 +66,12 @@ public class MapEditor extends MainEditor {
         myActiveMap = map;
         //TODO: display the new active map
     }
+
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
 
     /*
      * @Override protected Group configureUI() { // TODO Auto-generated method
