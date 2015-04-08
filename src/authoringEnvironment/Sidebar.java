@@ -31,7 +31,7 @@ import javafx.scene.text.Text;
  */
 
 //TODO: abstract further
-public class Sidebar extends VBox { //add a gridpane
+public class Sidebar extends VBox { //add a gridpane later on. but a gridpane is hard to edit to set things in between other things...
 
 	//TODO: display sidebar with a gridpane not an HBox to keep everything aligned and beautiful
 	
@@ -46,6 +46,7 @@ public class Sidebar extends VBox { //add a gridpane
 	private ResourceBundle myResources;
 	private TileMap myActiveMap;
 	private int myLives;
+	ObservableList<TileMap> myMaps;
 	private static final int DEFAULT_LIVES = 20;
 
 	public Sidebar(ResourceBundle resources, TileMap activeMap, ObservableList<TileMap> maps) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
@@ -55,10 +56,11 @@ public class Sidebar extends VBox { //add a gridpane
 		myLives = DEFAULT_LIVES;
 		//setSpacing(HBOX_SPACING);
 		setDimensionRestrictions();
+		myMaps = maps;
 		createMapSettings();
 		
-		ObservableList<PathView> pathList = FXCollections.observableArrayList();
-		getChildren().add(createListView(pathList, 300));
+		/*ObservableList<PathView> pathList = FXCollections.observableArrayList();
+		getChildren().add(createListView(pathList, 300));*/
 		
 	}
 	
@@ -72,7 +74,7 @@ public class Sidebar extends VBox { //add a gridpane
 		createTitleText(myResources.getString("SetTiles"));
 		selectTile();
 		
-		//createMapSettings();
+		setEditMapButtons();
 
 	}
 	
@@ -200,27 +202,29 @@ public class Sidebar extends VBox { //add a gridpane
 	}
 	
 	
-	/*private void createMapSettings(){
-		createMapButton();
-		removeMap();
-	}
 	
-	private void createMapButton(){
+	private void setEditMapButtons(){
 		Button saveMapButton = new Button(myResources.getString("SaveMap"));
 		saveMapButton.setOnMouseClicked(e -> myMaps.add(myActiveMap));
-		Button deleteMapbutton = new Button(myResources.getString("DeleteMap"));
+		Button deleteMapButton = new Button(myResources.getString("DeleteMap"));
 		deleteMapButton.setOnMouseClicked(e -> removeMap());
-		getChildren().add(saveMapButton, deleteMapButton);
+		getChildren().addAll(saveMapButton, deleteMapButton);
 		
 	}
 	
 	private void removeMap(){
-		if (myMaps.contains(myActiveMap))
+		System.out.println(myMaps);
+		if (myMaps.contains(myActiveMap)){
 			myMaps.remove(myActiveMap);
-		else
+			System.out.println(myMaps);
+		}
+		else{
+			System.out.println("You cannot remove a map that has not been saved previously.");
 			//TODO: show error
 			//or only include delete map buttons for maps that have already been saved
-	}*/
+		}
+			
+	}
 	
 	private void updateMapDim(String numRows, String numCols){
 		myActiveMap.setMapDimensions(Integer.parseInt(numRows), Integer.parseInt(numCols));

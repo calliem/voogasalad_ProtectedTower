@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 public class LevelEditor extends MainEditor{
     public LevelEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
-		// TODO Auto-generated constructor stub
 	}
 
 	/*@Override

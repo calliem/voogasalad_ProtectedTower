@@ -125,8 +125,12 @@ public class TileMap {
 			}
 		}
 	}
-
-	//@param myMapRows and myMapCols represent the previous/old rows and cols
+	
+	/**
+	 * Sets dimensions of the map to the number of rows and columns specified in the parameter. Directly sets the tile dimensions, while pixel adjustment is determined upon separate methods changing tile size. 
+	 * @param newMapRows integer representing the number of rows the new map dimensions should have
+	 * @param newMapCols integer representing the number of columns the new map dimensions should have
+	 */
 	public void setMapDimensions(int newMapRows, int newMapCols){
 		clearTiles();
 		Tile[][] newTiles = new Tile[newMapRows][newMapCols];
@@ -141,8 +145,7 @@ public class TileMap {
 					newTiles[i][j] = myTiles[i][j];
 				}
 				attachTileListener(newTiles[i][j]);
-				myMap.getChildren().add(newTiles[i][j]);
-				
+				myMap.getChildren().add(newTiles[i][j]);	
 			}
 		}
 
@@ -152,7 +155,9 @@ public class TileMap {
 		myTiles = newTiles;
 	}
 	
-	//clears tiles from this current map
+	/**
+	 * Clears all tiles from the current active tile map by iterating through and removing all tiles of the 2D array individually
+	 */
 	private void clearTiles(){
 		for (int i = 0; i < myMapRows; i++) {
 			for (int j = 0; j < myMapCols; j++) {
@@ -172,11 +177,7 @@ public class TileMap {
 	public int getTileSize(){
 		return myTileSize;
 	}
-		//for (int i = myTiles.length; )
-		
-		//delete all extra tiles
-
-	// might be more efficient if in the above for loop
+	
 	/*private void createGridLines() {
 		int mapWidth = myMapRows * myTileSize;
 		int mapHeight = myMapCols * myTileSize; 
