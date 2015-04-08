@@ -25,6 +25,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import authoringEnvironment.editors.Editor;
+import authoringEnvironment.editors.LevelEditor;
 
 /**
  * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
@@ -103,7 +104,7 @@ public class MainEnvironment {
 		
 		//Tab selectedTab = myTabPane.getSelectionModel().getSelectedItem();
 		for (Tab tab : myTabPane.getTabs()){
-			System.out.println("loop");
+			System.out.println("loop " + tab.getText());
 			tab.setOnSelectionChanged(e -> update(tab)); //is this updating the old tab?
 		}
 	}
@@ -113,8 +114,14 @@ public class MainEnvironment {
 		//editor.getUI().update();
 		System.out.println("changed selection! " + selectedTab.getText());
 		//why does this printout twice????
-		//TODO: alternatively: use reflection to update the tab. unnecessary use of reflection....but might not be able to do anything else because of javafx limitations. that's also bad becasue of dependencies...
-		//can i get the index of the tab and then match it to the one in the properties file? that's bad because of dependencies...brainstorm more ways
+				//TODO: alternatively: use reflection to update the tab. unnecessary use of reflection....but might not be able to do anything else because of javafx limitations. that's also bad becasue of dependencies...
+				//can i get the index of the tab and then match it to the one in the properties file? that's bad because of dependencies...brainstorm more ways
+		
+		//below is just to allow for testing of the LevelEditor right now:
+		
+		
+		
+		
 	}
 
 
@@ -123,6 +130,8 @@ public class MainEnvironment {
 		tab.setText(tabName);
 		System.out.println("tabname: " + tabName);
 		tab.setContent(newEditor.configureUI());
+		//TODO: instead of calling configureUI, create a new editor each time, have UI stuff written in the constructor, and have each editor extend a node
+
 		if (main){
 			tab.setStyle("-fx-base: #3c3c3c;");
 			System.out.println(tabName + "main = true, property set");
