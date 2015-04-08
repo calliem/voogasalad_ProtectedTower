@@ -16,8 +16,8 @@ import engine.element.GameElement;
 public abstract class Sprite extends GameElement implements Collidable {
 
     // TODO fill in with correct string
-    private static final String PARAMETER_BOUNDING_HEIGHT = "";
-    private static final String PARAMETER_BOUNDING_WIDTH = "";
+    private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
+    private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
 
     private Point2D myLocation;
     private String myType;

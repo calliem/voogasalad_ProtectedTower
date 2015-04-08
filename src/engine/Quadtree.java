@@ -3,7 +3,6 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.shape.Rectangle;
-import engine.element.sprites.Sprite;
 
 
 /**
@@ -19,7 +18,7 @@ public class Quadtree {
     private int MAX_OBJECTS = 10;
     private int MAX_LEVELS = 5;
     private int level;
-    private List<Sprite> objects;
+    private List<Collidable> objects;
     private Rectangle bounds;
     private Quadtree[] nodes;
 
@@ -33,7 +32,7 @@ public class Quadtree {
         nodes = new Quadtree[4];
     }
 
-    /*
+    /**
      * Clears the quadtree
      */
     public void clear () {
@@ -46,7 +45,7 @@ public class Quadtree {
         }
     }
 
-    /*
+    /**
      * Splits the node into 4 subnodes
      */
     private void split () {
@@ -63,10 +62,9 @@ public class Quadtree {
                                                       subHeight));
     }
 
-    /*
-     * Determine which node the object belongs to. -1 means
-     * object cannot completely fit within a child node and is part
-     * of the parent node
+    /**
+     * Determine which node the object belongs to. -1 means object cannot completely fit within a
+     * child node and is part of the parent node
      */
     // TODO: change this to take in a collidable object
     private int getIndex (Collidable spriteToCheck) {
@@ -105,12 +103,11 @@ public class Quadtree {
         return index;
     }
 
-    /*
-     * Insert the object into the quadtree. If the node
-     * exceeds the capacity, it will split and add all
-     * objects to their corresponding nodes.
+    /**
+     * Insert the object into the quadtree. If the node exceeds the capacity, it will split and add
+     * all objects to their corresponding nodes.
      */
-    public void insert (Sprite pRect) {
+    public void insert (Collidable pRect) {
         if (nodes[0] != null) {
             int index = getIndex(pRect);
 
@@ -144,14 +141,12 @@ public class Quadtree {
     /*
      * Return all objects that could collide with the given object
      */
-    public List<Sprite> retrieve (List<Sprite> returnObjects, Sprite spriteToCheck) {
+    public List<Collidable> retrieve (List<Collidable> returnObjects, Collidable spriteToCheck) {
         int index = getIndex(spriteToCheck);
         if (index != -1 && nodes[0] != null) {
             nodes[index].retrieve(returnObjects, spriteToCheck);
         }
-
         returnObjects.addAll(objects);
-
         return returnObjects;
     }
 }
