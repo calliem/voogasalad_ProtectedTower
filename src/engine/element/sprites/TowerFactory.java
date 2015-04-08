@@ -1,10 +1,9 @@
-package engine.sprites;
+package engine.element.sprites;
 
 import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import util.reflection.Reflection;
-import engine.element.sprites.Tower;
 
 
 /**
