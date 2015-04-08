@@ -1,4 +1,3 @@
-
 package pathsearch.pathalgorithms;
 
 import java.util.HashMap;

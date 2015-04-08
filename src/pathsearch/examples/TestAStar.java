@@ -1,4 +1,3 @@
-
 package pathsearch.examples;
 
 import java.util.ArrayList;

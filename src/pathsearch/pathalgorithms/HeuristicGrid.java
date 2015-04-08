@@ -2,6 +2,7 @@ package pathsearch.pathalgorithms;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import pathsearch.graph.GraphNode;
 import pathsearch.graph.GridCell;
 import pathsearch.graph.GridIDTransform;
