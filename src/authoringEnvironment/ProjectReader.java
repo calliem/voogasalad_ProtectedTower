@@ -94,7 +94,7 @@ public class ProjectReader {
 		for(String s : ProjectReader.getOrderedTabList()){
 			if(tabsToCreate.keySet().contains(s)){
 				Editor e = null;
-				String toCreate = editorPackage + s;
+				String toCreate = "authoringEnvironment.editors." + s;
 				try {
 					e = (Editor) Class.forName(toCreate)
 							.getConstructor(Dimension2D.class, Stage.class)
@@ -167,10 +167,11 @@ public class ProjectReader {
 			while (s.hasNextLine()) {
 				nextEditor = s.nextLine();
 				nextEditor.replaceAll("\\s+", "");
-				//if nextEditor was a newLine or all whitespace, it will be "" now
-				if(!nextEditor.equals("")){
-					System.out.println("nextEditor: " + nextEditor + nextEditor.indexOf("="));
-					tabList.add(nextEditor.substring(0,  nextEditor.indexOf("=")));
+				int indexOfEquals = nextEditor.indexOf("=");
+				//if nextEditor was a newLine or all whitespace, or something else, don't try this
+				if(indexOfEquals != -1){
+					System.out.println("nextEditor: " + nextEditor + indexOfEquals);
+					tabList.add(nextEditor.substring(0,  indexOfEquals));
 				}
 			}
 			s.close();
