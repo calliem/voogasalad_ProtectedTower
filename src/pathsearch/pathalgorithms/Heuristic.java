@@ -1,6 +1,6 @@
-package voogasalad.util.pathsearch.pathalgorithms;
+package pathsearch.pathalgorithms;
 
-import voogasalad.util.pathsearch.graph.GraphNode;
+import pathsearch.graph.GraphNode;
 
 /**
  * @author Kaighn

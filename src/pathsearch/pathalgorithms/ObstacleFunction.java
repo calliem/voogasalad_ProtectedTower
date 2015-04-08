@@ -1,4 +1,4 @@
-package voogasalad.util.pathsearch.pathalgorithms;
+package pathsearch.pathalgorithms;
 
 /**
  * @author Kaighn

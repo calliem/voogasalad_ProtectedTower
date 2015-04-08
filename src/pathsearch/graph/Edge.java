@@ -1,4 +1,4 @@
-package voogasalad.util.pathsearch.graph;
+package pathsearch.graph;
 
 
 /**

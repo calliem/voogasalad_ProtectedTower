@@ -1,11 +1,11 @@
-package voogasalad.util.pathsearch.examples;
+package pathsearch.examples;
 
 import java.util.Arrays;
 import java.util.List;
 
-import voogasalad.util.pathsearch.graph.GridCell;
-import voogasalad.util.pathsearch.pathalgorithms.NoPathExistsException;
-import voogasalad.util.pathsearch.wrappers.GridWrapper;
+import pathsearch.graph.GridCell;
+import pathsearch.pathalgorithms.NoPathExistsException;
+import pathsearch.wrappers.GridWrapper;
 
 /**
  * A basic example of using the grid wrapper to run AStar. There are only three
