@@ -26,7 +26,7 @@ public class ProjectReader {
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
 	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/display/main_environment_english.properties";
-
+	private static final String settingsPackage = "authoringEnvironment.setting.";
 
 	/**
 	 * Generates the Settings objects the Overlay UI needs to allow the user to edit
@@ -65,12 +65,13 @@ public class ProjectReader {
 			String defaultVal, String dataType) {
 		Class<?> c = String.class;
 		Setting s = null;
+		String settingToGet = settingsPackage + dataType + "Setting";
 		// display error message
 		try{
-			c = Class.forName("authoringEnvironment.setting." + dataType + "Setting");
+			c = Class.forName(settingToGet);
 		}
 		catch(ClassNotFoundException e){
-			//something
+			System.err.println("Setting class not found: " + settingToGet);
 		}
 
 		try {
@@ -128,7 +129,7 @@ public class ProjectReader {
 		ArrayList<String> tabList = new	ArrayList<String>();
 		try {
 			Scanner s = new Scanner(new File(tabOrder));
-			String nextEditor = "nothign";
+			String nextEditor = "nothing";
 			while (s.hasNextLine()) {
 				nextEditor = s.nextLine();
 				nextEditor.replaceAll("\\s+", "");

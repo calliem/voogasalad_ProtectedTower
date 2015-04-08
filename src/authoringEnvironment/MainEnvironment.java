@@ -40,6 +40,7 @@ public class MainEnvironment {
 	private static final boolean SPRITE_TAB = false;
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
+	private static final String editorsLocation = "authoringEnvironment.editors.";
 
 	//private SceneSetter mySceneSetter = new SceneSetter();
 
@@ -65,16 +66,24 @@ public class MainEnvironment {
 		for(String s : ProjectReader.getOrderedTabList()){
 			if(tabsToCreate.keySet().contains(s)){
 				Editor e = null;
+				String toCreate = editorsLocation + s;
 				try {
-					System.out.println("dim: " + myDimensions);
-					System.out.println("s: " + s);
-					e = (Editor) Class.forName("authoringEnvironment.editors." + s)
+					e = (Editor) Class.forName(toCreate)
 							.getConstructor(Dimension2D.class, Stage.class)
 							.newInstance(myDimensions, myStage);
-				} catch (InstantiationException | IllegalAccessException
-						| IllegalArgumentException | InvocationTargetException
-						| NoSuchMethodException | SecurityException
-						| ClassNotFoundException e1) {
+				} catch (InstantiationException e1){ 
+					System.err.println("Constructor Editor(Dimension2D.class, Stage.class) doesn't exist or was"
+							+ "incorrectly called");
+					System.err.println("Tab's Editor is currently null");
+					e1.printStackTrace();
+				}
+				catch (ClassNotFoundException e1){
+					System.err.println("Editor not found: " + toCreate);
+					System.err.println("Tab's Editor is currently null");
+					e1.printStackTrace();
+				}
+				catch (IllegalAccessException| IllegalArgumentException | InvocationTargetException
+						| NoSuchMethodException | SecurityException e1) {
 					// something that doesn't let this null go through
 					e1.printStackTrace();
 				}
