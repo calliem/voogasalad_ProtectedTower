@@ -1,6 +1,6 @@
-package imageSelector;
+package imageselector;
 
-import imageSelector.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import java.io.File;
 import java.util.ResourceBundle;
 import javafx.geometry.Pos;

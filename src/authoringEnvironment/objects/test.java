@@ -3,9 +3,9 @@ package authoringEnvironment.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import authoring.environment.setting.IntegerSetting;
-import authoring.environment.setting.Setting;
-import imageSelector.util.ScaleImage;
+import authoringEnvironment.setting.IntegerSetting;
+import authoringEnvironment.setting.Setting;
+import imageselector.util.ScaleImage;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -23,7 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import imageSelector.util.ScaleImage;
+import imageselector.util.ScaleImage;
 
 public abstract class test extends StackPane {
 	
