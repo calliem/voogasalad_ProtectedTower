@@ -7,12 +7,10 @@ package authoringEnvironment.editors;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.stage.Stage;
 import authoringEnvironment.Sidebar;
-import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.SpriteView;
 import authoringEnvironment.objects.TileMap;
 
