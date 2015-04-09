@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import pathsearch.graph.Graph;
 import pathsearch.graph.GraphMakerGrid;
 import pathsearch.graph.GraphNode;
-import pathsearch.graph.GridCell;
+import pathsearch.graph.PathCell;
 import pathsearch.graph.GridIDTransform;
 import pathsearch.pathalgorithms.HeuristicGrid;
 import pathsearch.pathalgorithms.NoPathExistsException;
@@ -30,12 +30,10 @@ public class GridWrapper {
 		idTransform = new GridIDTransform(grid[0].length);
 	}
 
-	public List<GridCell> shortestPath(int startRow, int startCol,
+	public List<PathCell> shortestPath(int startRow, int startCol,
 			int... endsCoords) throws NoPathExistsException {
 		List<Integer> ends = new LinkedList<>();
 		for (int i = 0; i < endsCoords.length; i += 2) {
-			int a = endsCoords[i];
-			a = endsCoords[i+1];
 			idTransform.getID(7, 7);
 			ends.add(idTransform.getID(endsCoords[i], endsCoords[i + 1]));
 		}

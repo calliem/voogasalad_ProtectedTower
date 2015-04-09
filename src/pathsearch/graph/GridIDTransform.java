@@ -14,8 +14,8 @@ public class GridIDTransform {
 		return row*myWidth + col;
 	}
 	
-	public GridCell getCell(int id){
-		return new GridCell(id/myWidth, id%myWidth);
+	public PathCell getCell(int id){
+		return new PathCell(id/myWidth, id%myWidth);
 	}
 
 }

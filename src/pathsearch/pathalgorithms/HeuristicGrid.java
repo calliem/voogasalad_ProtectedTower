@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import pathsearch.graph.GraphNode;
-import pathsearch.graph.GridCell;
+import pathsearch.graph.PathCell;
 import pathsearch.graph.GridIDTransform;
 
 /**
  * @author Kaighn
  */
 public class HeuristicGrid implements Heuristic{
-	List<GridCell> endNodeCoords;
+	List<PathCell> endNodeCoords;
 	GridIDTransform idTransform;
 	
 	public HeuristicGrid(List<Integer> endNodesID, GridIDTransform idTrans){
@@ -21,7 +21,7 @@ public class HeuristicGrid implements Heuristic{
 	
 	@Override
 	public double calculateHeuristic(GraphNode node) {
-		GridCell cell = idTransform.getCell(node.getID());
+		PathCell cell = idTransform.getCell(node.getID());
 		return endNodeCoords.stream().map(gcell -> gcell.distance(cell)).min((a,b) -> Integer.compare(a, b)).get();
 	}
 

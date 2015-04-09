@@ -3,10 +3,10 @@ package pathsearch.graph;
 /**
  * @author Kaighn
  */
-public class GridCell {
+public class PathCell {
 	private int myRow, myCol;
 	
-	public GridCell(int row, int col){
+	public PathCell(int row, int col){
 		myRow = row;
 		myCol = col;
 	}
@@ -17,7 +17,7 @@ public class GridCell {
 	public int getCol(){
 		return myCol;
 	}
-	public int distance(GridCell c){
+	public int distance(PathCell c){
 		return Math.abs(myRow - c.getRow()) + Math.abs(myCol - c.getCol());
 	}
 }

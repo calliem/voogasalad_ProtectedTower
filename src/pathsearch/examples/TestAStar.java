@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import pathsearch.graph.Graph;
 import pathsearch.graph.GraphMakerGrid;
 import pathsearch.graph.GraphNode;
-import pathsearch.graph.GridCell;
+import pathsearch.graph.PathCell;
 import pathsearch.graph.GridIDTransform;
 import pathsearch.pathalgorithms.HeuristicGrid;
 import pathsearch.pathalgorithms.NoPathExistsException;
@@ -50,7 +50,7 @@ public class TestAStar {
 		try {
 			list = g.shortestPath(start, ends, new HeuristicGrid(ends,
 					idTransform));
-			List<GridCell> cells = list.stream()
+			List<PathCell> cells = list.stream()
 					.map(node -> idTransform.getCell(node.getID()))
 					.collect(Collectors.toList());
 			printCells(grid, cells);
@@ -59,7 +59,7 @@ public class TestAStar {
 		}
 	}
 
-	public static void printCells(Object[][] grid, List<GridCell> list) {
+	public static void printCells(Object[][] grid, List<PathCell> list) {
 		Object[][] dest = new Object[grid[0].length][grid.length];
 
 		for (int i = 0; i < grid.length; i++) {
@@ -68,7 +68,7 @@ public class TestAStar {
 			}
 		}
 
-		for (GridCell cell : list) {
+		for (PathCell cell : list) {
 			dest[cell.getRow()][cell.getCol()] = 1;
 		}
 

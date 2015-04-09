@@ -3,7 +3,7 @@ package pathsearch.examples;
 import java.util.Arrays;
 import java.util.List;
 
-import pathsearch.graph.GridCell;
+import pathsearch.graph.PathCell;
 import pathsearch.pathalgorithms.NoPathExistsException;
 import pathsearch.wrappers.GridWrapper;
 /**
@@ -37,7 +37,7 @@ public class TestAStarBasic {
 		 */
 		wrap.initializeGraph(grid, i -> (Integer) i == 7);
 	
-		List<GridCell> cellPath;
+		List<PathCell> cellPath;
 		
 		//Example 1: (0,0) -> (7,7). Top left cell to bottom right cell.
 		cellPath = wrap.shortestPath(0, 0, 7, 7); // line 3
