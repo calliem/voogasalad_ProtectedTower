@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 public class ProjectileEditor extends PropertyEditor {
     public ProjectileEditor(Dimension2D dim, Stage s) {
-        super(dim, s);
+        super(dim);
         // TODO Auto-generated constructor stub
     }
 

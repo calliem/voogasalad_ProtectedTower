@@ -1,10 +1,9 @@
 package authoringEnvironment.objects;
 
-import imageSelector.util.ScaleImage;
+import imageselector.util.ScaleImage;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -21,8 +20,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.setting.FileNameSetting;
 import authoringEnvironment.setting.IntegerSetting;
 import authoringEnvironment.setting.Setting;
 
@@ -129,13 +130,6 @@ public class TowerView extends SpriteView{
         this.getChildren().remove(this.getChildren().size()-1);
     }
     
-    public void discardUnsavedChanges(){
-        for(Setting s : parameterFields){
-            s.displaySavedValue();
-        }
-        saveParameterFields();
-    }
-    
     private void setupEditableContent(){
         editableContent = new VBox(10);
         editableContent.setAlignment(Pos.TOP_CENTER);
@@ -155,6 +149,8 @@ public class TowerView extends SpriteView{
         Setting test = new IntegerSetting("Health", "0");
         parameterFields.add(test);
         
+        //Setting fileTest = new FileNameSetting("Projectile", "tower.png");
+        
         HBox buttons = new HBox(10);
         
         Button save = new Button("Save");
@@ -171,12 +167,19 @@ public class TowerView extends SpriteView{
     private void saveParameterFields(){
         boolean correctFormat = true;
         for(Setting s : parameterFields){
-            boolean correct = s.parseField();
+            boolean correct = s.processData();
             if(correctFormat && !correct){
                 correctFormat = false;
             }
         }
         overlayErrorMessage.setVisible(!correctFormat);
+    }
+    
+    public void discardUnsavedChanges(){
+        for(Setting s : parameterFields){
+            s.displaySavedValue();
+        }
+        saveParameterFields();
     }
     
     private void setupOverlayContent(){

@@ -29,7 +29,6 @@ import authoringEnvironment.editors.Editor;
  */
 
 public class MainEnvironment {
-
 	private static Dimension2D myDimensions;
 	private Stage myStage; //is this necessary
 	private TabPane myTabPane;

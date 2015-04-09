@@ -32,7 +32,8 @@ public abstract class MainEditor extends Editor {
 
 	
 	public MainEditor(Dimension2D dim, Stage s) {
-		super(dim, s);
+		super(dim);
+		// TODO Auto-generated constructor stub
 	}
 
 	  /**
