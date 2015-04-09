@@ -43,6 +43,7 @@ public class MainEnvironment {
 	private static final boolean SPRITE_TAB = false;
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
+	private Tab myCurrentTab;
 
 	//private SceneSetter mySceneSetter = new SceneSetter();
 
@@ -107,18 +108,49 @@ public class MainEnvironment {
 			System.out.println("loop " + tab.getText());
 			tab.setOnSelectionChanged(e -> update(tab)); //is this updating the old tab?
 		}
+		myCurrentTab = myTabPane.getSelectionModel().getSelectedItem();
 	}
 	
 	private void update(Tab selectedTab){
+		System.out.println("UPDATETAB()---------");
+		/*
+		System.out.println("previousTab" + previousTab);
+		System.out.println("selectedTab" + selectedTab);
 		Editor editor = (Editor) selectedTab.getContent();
+		System.out.println("changed selection to this selected tab: " + selectedTab.getText());
+		
+		//if (previousTab != newTab)
 		editor.update();
-		System.out.println("changed selection! " + selectedTab.getText());
-		Controller.updateEditor(selectedTab.getText(), editor); //this is dependent on the tab's name not changing, which may not be optimal design
+		//update the previous tab, not the current tab below!
+	//	Controller.updateEditor(selectedTab.getText(), editor); //this is dependent on the tab's name not changing, which may not be optimal design
 		//why does this printout twice????
 				//TODO: alternatively: use reflection to update the tab. unnecessary use of reflection....but might not be able to do anything else because of javafx limitations. that's also bad becasue of dependencies...
 				//can i get the index of the tab and then match it to the one in the properties file? that's bad because of dependencies...brainstorm more ways
 		
-		//below is just to allow for testing of the LevelEditor right now:
+		//below is just to allow for testing of the LevelEditor right now:*/
+		if (myCurrentTab != selectedTab){
+			System.out.println("pls printout only once for tab " + myCurrentTab.getText());
+			Editor editor = (Editor) myCurrentTab.getContent();
+			//System.out.println("changed selection to this selected tab: " + selectedTab.getText());
+//			editor.update(); //this should be editor.save
+			Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the controller
+			
+			myCurrentTab = selectedTab;
+			Editor editor2 = (Editor) myCurrentTab.getContent();
+			editor2.update();
+		}
+		/*System.out.println("before" + myCurrentTab.getText());
+		myCurrentTab = selectedTab;
+		System.out.println("after" + myCurrentTab.getText());
+		if (myCurrentTab == selectedTab){
+			System.out.println("Update" + myCurrentTab.getText());
+			Editor editor = (Editor) myCurrentTab.getContent();
+			editor.update();
+		}*/
+			
+			
+		
+		//this should be editor.update
 	}
 
 
@@ -177,6 +209,7 @@ public class MainEnvironment {
 		webEngine.load("file://" + System.getProperty("user.dir") + loc);
 		Stage stage = new Stage();
 		setupScene(stage, browser, 1000, 750);
+		
 	}
 
 	public void setupScene(Stage stage, Parent root, double width, double height) {
@@ -185,4 +218,5 @@ public class MainEnvironment {
 		myStage.setScene(scene);
 		myStage.show();
 	}
+	
 }

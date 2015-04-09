@@ -275,10 +275,4 @@ public class TowerEditor extends PropertyEditor{
         return scale;
     }
 
-	@Override
-	public void update() {
-		
-		//TODO: update allowable tags 
-		
-	}
 }

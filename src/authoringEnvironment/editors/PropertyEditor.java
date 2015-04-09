@@ -16,4 +16,7 @@ public abstract class PropertyEditor extends Editor {
 		// TODO Auto-generated constructor stub
 	} // abstract class?
 
+	public void update(){
+		System.out.println("hi");
+	}
 }

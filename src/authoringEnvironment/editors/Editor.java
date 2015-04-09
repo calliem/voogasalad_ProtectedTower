@@ -65,6 +65,7 @@ public abstract class Editor extends Group{
 	}
    
    public abstract void update();
+   
 
    
 /*   public static void getInstance(){

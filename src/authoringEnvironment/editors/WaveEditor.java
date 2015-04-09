@@ -14,7 +14,7 @@ import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.UnitView;
 
-public class WaveEditor extends MainEditor {
+public class WaveEditor extends PropertyEditor {
 	private Group myRoot;
 	private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
@@ -48,9 +48,6 @@ public class WaveEditor extends MainEditor {
 		return new ArrayList<>();
 	}
 
-	@Override
-	protected void createMap() {
-	}
 
 	@Override
 	public void update() {

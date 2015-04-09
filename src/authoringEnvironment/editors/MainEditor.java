@@ -62,6 +62,7 @@ public abstract class MainEditor extends Editor {
 
 	
 	public StackPane getMapWorkspace(){
+		System.out.println(myMapWorkspace);
 		return myMapWorkspace;
 	}
 
@@ -83,9 +84,14 @@ public abstract class MainEditor extends Editor {
 
 	protected abstract void createMap();
 	
-	public void update(){
+
+	//idk why the method can't go here and has to go int he subclasses. putting it here seems to break all the other tabs
+	/*public void update(){
 		MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps");  //TODO: find a way to get sthe same resource file but to also use myResources.getString() on the proper resource file //how to avoid this issue of more dependencies on this string name. lots of code will have to change in order to change this; maybe use indexes instead?
-    	getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());
-	}
+		getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());
+	}*/
+	
+
+
 
 }
