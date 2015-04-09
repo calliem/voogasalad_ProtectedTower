@@ -48,6 +48,12 @@ public class WaveEditor extends MainEditor {
 		StackPane editor = new StackPane();
 		HBox newWavePanel = new HBox(10);
 		VBox contents = new VBox(10);
+		
+		ScrollPane contentScrollPane = new ScrollPane();
+		contentScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+		contentScrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		contentScrollPane.setMaxHeight(myDimensions.getHeight());
+		contentScrollPane.setMaxWidth(myDimensions.getWidth());
 
 		Button makeNewWave = new Button("Create New Wave");
 		makeNewWave.setOnAction(e -> {
@@ -57,8 +63,9 @@ public class WaveEditor extends MainEditor {
 
 		newWavePanel.getChildren().add(makeNewWave);
 		contents.getChildren().add(newWavePanel);
+		contentScrollPane.setContent(contents);
 
-		editor.getChildren().add(contents);
+		editor.getChildren().add(contentScrollPane);
 		myRoot.getChildren().add(editor);
 		return myRoot;
 	}
@@ -122,16 +129,12 @@ public class WaveEditor extends MainEditor {
 				delays.add(unit.getDelay());
 			}
 
-//			Map<String, ArrayList<String>> waveUnits = new HashMap<String, ArrayList<String>>();
-//			Map<String, ArrayList<Double>> waveDelays = new HashMap<String, ArrayList<Double>>();
-//			waveUnits.put(waveName, partFileNames);
-//			waveDelays.put(waveName, delays);
 			ArrayList<Object> data = new ArrayList<Object>();
 			data.add(partFileNames);
 			data.add(delays);
 			
 			//addPartToGame("wave", waveName, params, data);
-		});
+			});
 
 		VBox buttons = new VBox(10);
 		buttons.getChildren().add(addUnit);
