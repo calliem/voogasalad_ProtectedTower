@@ -4,11 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import util.reflection.Reflection;
-<<<<<<< HEAD:src/engine/sprites/TowerFactory.java
 import engine.TowerManager;
-import engine.element.sprites.Tower;
-=======
->>>>>>> master:src/engine/element/sprites/TowerFactory.java
 
 
 /**
