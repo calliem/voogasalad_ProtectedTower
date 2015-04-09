@@ -1,19 +1,21 @@
-package engine.sprites;
+package engine.element.sprites;
 
 import engine.InsufficientParametersException;
 
 
 /**
- * This class represents a sprite that moves across the screen and shoots/is shot at by towers. The
- * Enemy object is the primary one which can damage a player's health as it move through the map.
- * Some may also be able to attack towers.
+ * This class represents the tower object in the game, which usually does not move and is used to
+ * defend a map from Enemy objects. The tower shoots projectiles which target enemies.
  * 
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
-public class Enemy extends MoveableSprite {
+public class Tower extends GameSprite {
+    // TODO Specify instance variables specific to Tower, such as a build time. Add to the main    
+    // parameter map
 
-    public Enemy () throws InsufficientParametersException {
+    public Tower () throws InsufficientParametersException {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,9 +33,16 @@ public class Enemy extends MoveableSprite {
     }
 
     @Override
-    public void move () {
-        // TODO Auto-generated method stub
+    public Tower clone () {
+        return null;
+    }
 
+    /**
+     * The tower does not move.
+     */
+    @Override
+    public void move () {
+        return;
     }
 
     @Override

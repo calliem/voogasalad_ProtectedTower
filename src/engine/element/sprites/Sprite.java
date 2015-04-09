@@ -1,8 +1,9 @@
-package engine.sprites;
+package engine.element.sprites;
 
-import java.util.Map;
 import javafx.geometry.Point2D;
+import engine.Collidable;
 import engine.InsufficientParametersException;
+import engine.element.GameElement;
 
 
 /**
@@ -12,12 +13,12 @@ import engine.InsufficientParametersException;
  * @author Qian Wang
  *
  */
-public abstract class Sprite {
+public abstract class Sprite extends GameElement implements Collidable {
 
-    /**
-     * Holds the parameters of each object, like health/power/defense/etc
-     */
-    private Map<String, Object> myParameters;
+    // TODO fill in with correct string
+    private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
+    private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
+
     private Point2D myLocation;
     private String myType;
 
@@ -32,25 +33,6 @@ public abstract class Sprite {
     // }
 
     // Setters and getters
-
-    /**
-     * Loads an map of strings of parameters names to the object that carries their value
-     * 
-     * @param map of string to object
-     */
-    public void setParameterMap (Map<String, Object> map) {
-        myParameters = map;
-    }
-
-    /**
-     * Returns the specified parameter
-     * 
-     * @param name String of the parameter
-     * @return Object of a certain type representing value of name
-     */
-    protected Object getParameter (String name) {
-        return myParameters.get(name);
-    }
 
     /**
      * Sets the location of the sprite
@@ -72,6 +54,23 @@ public abstract class Sprite {
     }
 
     /**
+     * @return Point2D representing coordinate location of object
+     */
+    public Point2D getLocation () {
+        return new Point2D(myLocation.getX(), myLocation.getY());
+    }
+
+    @Override
+    public double getLocationX () {
+        return myLocation.getX();
+    }
+
+    @Override
+    public double getLocationY () {
+        return myLocation.getY();
+    }
+
+    /**
      * Sets the type of object this is as an uppercase string
      * 
      * @param type String of the type of object
@@ -85,6 +84,16 @@ public abstract class Sprite {
      */
     protected String getType () {
         return myType;
+    }
+
+    @Override
+    public double getBoundingHeight () {
+        return (double) super.getParameter(PARAMETER_BOUNDING_HEIGHT);
+    }
+
+    @Override
+    public double getBoundingWidth () {
+        return (double) super.getParameter(PARAMETER_BOUNDING_WIDTH);
     }
 
     // Abstract methods

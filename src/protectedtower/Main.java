@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 /**
  * Creates the view and runs the game engine
- * @author Callie
+ * @author Callie Mao
  *
  */
 

@@ -31,7 +31,7 @@ public class ImageSelector extends VBox {
     private double previewImageWidth = 100;
     private static final int PADDING = 10;
     private static final String NOT_AVAILABLE = "imageselector/img_not_available.png";
-    private static final String SELECTOR_RESOURCES = "imageselector/SelectorText";
+    private static final String SELECTOR_RESOURCES = "imageselector/SelectorText.properties";
     
     /**
      * Creates an ImageSelector object.

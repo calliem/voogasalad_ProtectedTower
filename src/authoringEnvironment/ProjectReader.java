@@ -10,7 +10,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.Set;
-
+import javafx.geometry.Dimension2D;
+import javafx.stage.Stage;
+import authoringEnvironment.editors.Editor;
 import authoringEnvironment.setting.Setting;
 /**
  * 
@@ -25,8 +27,8 @@ public class ProjectReader {
 	private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
 	private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
 	private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
-	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/english.properties";
-
+	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/display/main_environment_english.properties";
+	private static final String settingsPackage = "authoringEnvironment.setting.";
 
 	/**
 	 * Generates the Settings objects the Overlay UI needs to allow the user to edit
@@ -65,12 +67,13 @@ public class ProjectReader {
 			String defaultVal, String dataType) {
 		Class<?> c = String.class;
 		Setting s = null;
+		String settingToGet = settingsPackage + dataType + "Setting";
 		// display error message
 		try{
-			c = Class.forName("authoringEnvironment.setting." + dataType + "Setting");
+			c = Class.forName(settingToGet);
 		}
 		catch(ClassNotFoundException e){
-			//something
+			System.err.println("Setting class not found: " + settingToGet);
 		}
 
 		try {
@@ -83,6 +86,37 @@ public class ProjectReader {
 		}
 
 		return s;
+	}
+	
+	public static void populateTabBar(MainEnvironment m, Dimension2D myDimensions, ResourceBundle myResources, Stage myStage){
+		Map<String, Boolean> tabsToCreate = ProjectReader.tabsToCreate();
+		for(String s : ProjectReader.getOrderedTabList()){
+			if(tabsToCreate.keySet().contains(s)){
+				Editor e = null;
+				String toCreate = "authoringEnvironment.editors." + s;
+				try {
+					e = (Editor) Class.forName(toCreate)
+							.getConstructor(Dimension2D.class, Stage.class)
+							.newInstance(myDimensions, myStage);
+				} catch (InstantiationException e1){ 
+					System.err.println("Constructor Editor(Dimension2D.class, Stage.class) doesn't exist or was"
+							+ "incorrectly called");
+					System.err.println("Tab's Editor is currently null");
+					e1.printStackTrace();
+				}
+				catch (ClassNotFoundException e1){
+					System.err.println("Editor not found: " + toCreate);
+					System.err.println("Tab's Editor is currently null");
+					e1.printStackTrace();
+				}
+				catch (IllegalAccessException| IllegalArgumentException | InvocationTargetException
+						| NoSuchMethodException | SecurityException e1) {
+					System.err.println("Error creating Editor object, Editor is currently null");
+					e1.printStackTrace();
+				}
+				m.addTab(e, myResources.getString(s), tabsToCreate.get(s));
+			}
+		}
 	}
 
 	/**
@@ -102,7 +136,11 @@ public class ProjectReader {
 	 * @return The array of editors to create
 	 */
 	public static String[] editorsToCreate(){
+
+		//TODO: fix order that the tabs are displayed 
+
 		File editors = new File(editorPackage);
+		System.out.println(editors.toString());
 		System.out.println(editorPackage);
 		File[] allEditors = editors.listFiles();
 		System.out.println("All editors " + allEditors);
@@ -124,12 +162,16 @@ public class ProjectReader {
 		ArrayList<String> tabList = new	ArrayList<String>();
 		try {
 			Scanner s = new Scanner(new File(tabOrder));
-			String nextEditor = "nothign";
+			String nextEditor = "nothing";
 			while (s.hasNextLine()) {
 				nextEditor = s.nextLine();
 				nextEditor.replaceAll("\\s+", "");
-				System.out.println("nextEditor: " + nextEditor + nextEditor.indexOf("="));
-				tabList.add(nextEditor.substring(0,  nextEditor.indexOf("=")));
+				int indexOfEquals = nextEditor.indexOf("=");
+				//if nextEditor was a newLine or all whitespace, or something else, don't try this
+				if(indexOfEquals != -1){
+					System.out.println("nextEditor: " + nextEditor + indexOfEquals);
+					tabList.add(nextEditor.substring(0,  indexOfEquals));
+				}
 			}
 			s.close();
 		} catch (FileNotFoundException e) {
