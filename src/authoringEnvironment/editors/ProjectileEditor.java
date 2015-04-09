@@ -24,4 +24,10 @@ public class ProjectileEditor extends PropertyEditor {
         // TODO Auto-generated method stub
         return null;
     }
+
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

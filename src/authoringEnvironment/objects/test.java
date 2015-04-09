@@ -1,11 +1,15 @@
-package authoringEnvironment.objects;
+/*package authoringEnvironment.objects;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import authoringEnvironment.setting.IntegerSetting;
 import authoringEnvironment.setting.Setting;
+<<<<<<< HEAD
 import imageSelector.util.ScaleImage;
+=======
+import imageselector.util.ScaleImage;
+>>>>>>> a5665ad94f6170f36e89e5ff6164333fc8cea6df
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -23,7 +27,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import imageSelector.util.ScaleImage;
+import imageselector.util.ScaleImage;
 
 public abstract class test extends StackPane {
 	
@@ -176,4 +180,4 @@ public abstract class test extends StackPane {
 	    public Button getCloseButton(){
 	        return overlayCloseButton;
 	    }
-}
+}*/

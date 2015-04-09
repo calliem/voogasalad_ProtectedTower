@@ -5,10 +5,11 @@ package authoringEnvironment;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.ResourceBundle;
-import authoringEnvironment.editors.Editor;
+
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -23,6 +24,8 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import authoringEnvironment.editors.Editor;
+import authoringEnvironment.editors.LevelEditor;
 
 /**
  * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
@@ -47,12 +50,15 @@ public class MainEnvironment {
 		System.out.println(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
 		initScreen();
 		initStage(s);
+	//	s.setTitle(myResources.getString("MainStageTitle"));
+		//TODO: How to add to the mainenvironment resources without the parser freaking out?
+				//MainStageTitle=protected Tower()
 
 		myGridPane = new GridPane();
 		myGridPane.setGridLinesVisible(true);
 		createEnvironment(myGridPane);
 
-		populateTabBar();
+		createTabs();
 
 		setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
 	}
@@ -60,28 +66,7 @@ public class MainEnvironment {
 	/**
 	 * Populates the tab bar with 1 tab for every non-abstract class in editors package
 	 */
-	private void populateTabBar(){
-		Map<String, Boolean> tabsToCreate = ProjectReader.tabsToCreate();
-		for(String s : ProjectReader.getOrderedTabList()){
-			if(tabsToCreate.keySet().contains(s)){
-				Editor e = null;
-				try {
-					System.out.println("dim: " + myDimensions);
-					System.out.println("s: " + s);
-					e = (Editor) Class.forName("authoringEnvironment.editors." + s)
-							.getConstructor(Dimension2D.class, Stage.class)
-							.newInstance(myDimensions, myStage);
-				} catch (InstantiationException | IllegalAccessException
-						| IllegalArgumentException | InvocationTargetException
-						| NoSuchMethodException | SecurityException
-						| ClassNotFoundException e1) {
-					// something that doesn't let this null go through
-					e1.printStackTrace();
-				}
-				addTab(e, myResources.getString(s), tabsToCreate.get(s));
-			}
-		}
-	}
+	
 
 	public static double getEnvironmentWidth(){
 		return myDimensions.getWidth();
@@ -109,21 +94,50 @@ public class MainEnvironment {
 
 		grid.add(configureTopMenu(),0,0);
 		myTabPane = new TabPane();
+
+		
 		grid.add(myTabPane,0,1);
+	}
+	
+	private void createTabs(){
+		ProjectReader.populateTabBar(this, myDimensions, myResources, myStage);
+		
+		//Tab selectedTab = myTabPane.getSelectionModel().getSelectedItem();
+		for (Tab tab : myTabPane.getTabs()){
+			System.out.println("loop " + tab.getText());
+			tab.setOnSelectionChanged(e -> update(tab)); //is this updating the old tab?
+		}
+	}
+	
+	private void update(Tab selectedTab){
+	//	Node editorUI = selectedTab.getContent();
+		//editor.getUI().update();
+		System.out.println("changed selection! " + selectedTab.getText());
+		//why does this printout twice????
+				//TODO: alternatively: use reflection to update the tab. unnecessary use of reflection....but might not be able to do anything else because of javafx limitations. that's also bad becasue of dependencies...
+				//can i get the index of the tab and then match it to the one in the properties file? that's bad because of dependencies...brainstorm more ways
+		
+		//below is just to allow for testing of the LevelEditor right now:
+		
+		
+		
+		
 	}
 
 
-	private void addTab(Editor newEditor, String tabName, boolean main) {
+	protected void addTab(Editor newEditor, String tabName, boolean main) {
 		Tab tab = new Tab();
 		tab.setText(tabName);
 		System.out.println("tabname: " + tabName);
 		tab.setContent(newEditor.configureUI());
+		//TODO: instead of calling configureUI, create a new editor each time, have UI stuff written in the constructor, and have each editor extend a node
+
 		if (main){
 			tab.setStyle("-fx-base: #3c3c3c;");
 			System.out.println(tabName + "main = true, property set");
 		}
 		tab.setClosable(false);
-		myTabPane.getTabs().add(tab);
+		myTabPane.getTabs().add(tab); 
 	}
 
 	private void initScreen() {

@@ -1,5 +1,7 @@
 package authoringEnvironment.objects;
 
+import java.util.ArrayList;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -17,6 +19,7 @@ public class Tile extends Rectangle {
 	private double myTileSize;
 	private int myColNum;
 	private int myRowNum;
+	private ArrayList<String> myTags;
 
 	// will have the same image for a path?
 	// TODO: create a text box to set grid size and a slider to set tile size
@@ -42,6 +45,15 @@ public class Tile extends Rectangle {
 		
 		isPath = false;
 		isSelected = false;
+	}
+	
+	public void addTag(String tag){
+		myTags.add(tag);
+	}
+	
+	//should only be able to remove already existing tags
+	public void removeTag(String tag){
+		myTags.remove(tag);
 	}
 
 	/*
@@ -73,9 +85,6 @@ public class Tile extends Rectangle {
 			setOpacity(1);
 		}
 		isSelected = !isSelected;
-		
-//		setStyle("-fx-base: #3c3c3c;");
-		//isPath = true;
 	}
 	
 	//not sure if this below method belongs here
@@ -98,5 +107,6 @@ public class Tile extends Rectangle {
 	public boolean isActivePath() {
 		return isPath;
 	}
+
 
 }

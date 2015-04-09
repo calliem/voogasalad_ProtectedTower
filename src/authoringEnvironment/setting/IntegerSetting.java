@@ -14,7 +14,7 @@ import javafx.scene.text.TextAlignment;
  *
  */
 public class IntegerSetting extends Setting {
-    private int dataAsInteger;
+    private Integer dataAsInteger;
     
     public IntegerSetting(String label, String defaultVal){
         super(label, defaultVal);

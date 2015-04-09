@@ -1,11 +1,5 @@
-/**
- * Displays the general layout for MainEditor classes/subclasses (ie. GameMap, WaveEditor) consisting of a sidebar and a generic map.
- * @author Callie Map
- */
 
 package authoringEnvironment.editors;
-
-import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
@@ -17,6 +11,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+/**
+ * Displays the general layout for MainEditor classes/subclasses (ie. GameMap, WaveEditor) consisting of a sidebar and a generic map.
+ * @author Callie Mao
+ */
 
 public abstract class MainEditor extends Editor {
 
@@ -36,6 +35,7 @@ public abstract class MainEditor extends Editor {
 	 * Creates a sidebar and general map layout to be utilized by subclasses
 	 */
 	//TODO: return groupor return a parent so that I can directly return a gridpane here?
+	@Override
 	public Node configureUI() {
 
 		Group root = new Group();

@@ -120,7 +120,8 @@ public class TowerEditor extends PropertyEditor{
             }
         });
         
-        empty = new Text("No towers have been made...yet.");
+        empty = new Text("No towers yet");
+        //myResources.getString("NoTowersCreated"));
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
 
@@ -275,4 +276,10 @@ public class TowerEditor extends PropertyEditor{
 
         return scale;
     }
+
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }
