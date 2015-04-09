@@ -3,7 +3,6 @@ package engine.element.sprites;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.geometry.Point2D;
 import pathsearch.graph.PathCell;
 import pathsearch.pathalgorithms.NoPathExistsException;
 import pathsearch.pathalgorithms.ObstacleFunction;
@@ -42,8 +41,8 @@ public class Enemy extends MoveableSprite {
 
     @Override
     public void move () {
-        // TODO Auto-generated method stub
-
+    	int speed = (int) super.getParameter("Speed");
+    	//need avatar info
     }
 
     @Override
