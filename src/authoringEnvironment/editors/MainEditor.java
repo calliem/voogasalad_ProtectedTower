@@ -2,6 +2,7 @@
 package authoringEnvironment.editors;
 
 import authoringEnvironment.Controller;
+import authoringEnvironment.objects.TileMap;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -22,11 +23,12 @@ import javafx.stage.Stage;
 public abstract class MainEditor extends Editor {
 
 	private GridPane myPane;
-	private StackPane myMapWorkspace;
+	private MapWorkspace myMapWorkspace;
 	
 	public static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
-	public static final double MAP_WIDTH_MULTIPLIER = .75;
-	public static final double MAP_HEIGHT_PERCENT = 100;
+	public static final double MAP_WIDTH_MULTIPLIER = .75; //THIS IS REPLICATED WITH THOSE VARIABLES IN MAP WORKSPACE
+	public static final double MAP_HEIGHT_PERCENT = 100; //THIS IS REPLICATED WITH THOSE VARIABLES IN MAP WORKSPACE
+
 	
 	public MainEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
@@ -39,11 +41,9 @@ public abstract class MainEditor extends Editor {
 		@Override
 		protected void configureUI() {
 			createGridPane();
-			myMapWorkspace = new StackPane();
-			Rectangle background = new Rectangle(myDimensions.getWidth()*MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(), Color.web("2A2A29"));
-			myMapWorkspace.getChildren().add(background);
+			myMapWorkspace = new MapWorkspace();
+
 			myPane.add(myMapWorkspace, 0, 0);
-			createMap();
 
 			// does it dynamically update or will i have to say
 			// TODO remove magic number
@@ -58,9 +58,12 @@ public abstract class MainEditor extends Editor {
 			myPane.setGridLinesVisible(true); //TODO: remove the showing gridlines
 		}
 	
-	public StackPane getMapWorkspace(){
-		System.out.println(myMapWorkspace);
+	public MapWorkspace getMapWorkspace(){
 		return myMapWorkspace;
+	}
+	
+	public TileMap getActiveMap(){
+		return myMapWorkspace.getActiveMap();
 	}
 
 	private void setGridPaneConstraints(GridPane pane) {

@@ -7,9 +7,11 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import authoringEnvironment.editors.MapWorkspace;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 
@@ -23,18 +25,24 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 	
 	private ResourceBundle myResources;
 	private List<Node> myMaps;
+	private MapWorkspace myMapWorkspace; //TODO: or use more general StackPane?
 	
 	private static final double PADDING = MainEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead
 	private static final double LISTVIEW_HEIGHT = MainEnvironment.getEnvironmentHeight()/6;
 	private static final double TITLE_FONT_SIZE = MainEnvironment.getEnvironmentWidth()/85;
 
 
-	public Sidebar(ResourceBundle resources, List<Node> maps){
+	public Sidebar(ResourceBundle resources, List<Node> maps, MapWorkspace mapWorkspace){
 		
 		myResources = resources;
 		myMaps = maps;
+		myMapWorkspace = mapWorkspace;
 		setDimensionRestrictions();
 		//createMapSettings();
+	}
+	
+	protected MapWorkspace getMapWorkspace(){
+		return myMapWorkspace;
 	}
 	
 
@@ -62,7 +70,6 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 		list.setPrefHeight(LISTVIEW_HEIGHT);
 		return list;
 	}
-	
 
 	private void setDimensionRestrictions() {
 		setPadding(new Insets(PADDING));

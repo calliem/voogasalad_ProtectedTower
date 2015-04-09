@@ -34,17 +34,16 @@ public class LevelEditor extends MainEditor{
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/"; //TODO: stop duplicating this default resource package line
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "level_editor_english");
 	
-	
     public LevelEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
-		 getPane().add(new LevelSidebar(myResources, Controller.getEditor("Maps").getObjects()),1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
+		 getPane().add(new LevelSidebar(myResources, Controller.getEditor("Maps").getObjects(), getMapWorkspace()),1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
 	     myLevels = new ArrayList<Node>();
 	}
 
     @Override
     protected void createMap() {
     	
-    	
+    	//pass something here that will be helpful
     }
 
 	@Override

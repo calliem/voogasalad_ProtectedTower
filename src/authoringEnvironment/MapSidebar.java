@@ -3,6 +3,7 @@ package authoringEnvironment;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import authoringEnvironment.editors.MapWorkspace;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -44,13 +46,12 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	private static final double TEXT_FIELD_WIDTH = MainEnvironment.getEnvironmentWidth()/32;
 	private int myLives;
 	private TileMap myActiveMap;
-	private TileMap mySelectedMap;
-	private static final int DEFAULT_LIVES = 20;
+//	private TileMap mySelectedMap;
+	private static final int DEFAULT_LIVES = 20; //TODO: how to get this number from Johnny
 
-	public MapSidebar(ResourceBundle resources,List<Node> maps, TileMap activeMap) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
-		super(resources, maps);
+	public MapSidebar(ResourceBundle resources,List<Node> maps, MapWorkspace mapWorkspace, TileMap activeMap) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
+		super(resources, maps, mapWorkspace);
 		myActiveMap = activeMap;
-		
 		//mySelectedMap = activeMap;
 		myLives = DEFAULT_LIVES;		
 		/*ObservableList<PathView> pathList = FXCollections.observableArrayList();
@@ -58,7 +59,8 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		createMapSettings();
 		
 	}
-	
+
+
 	protected void createMapSettings(){
 		//TODO: make a main tab to display the stuff here
 		createTitleText(getResources().getString("GameSettings"));
@@ -97,6 +99,7 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		Text px = new Text(getResources().getString("PxSuffix"));
 		selection.getChildren().addAll(lives, textField, px, button);
 		getChildren().add(selection);
+		
 	}
 	
 	private void selectTile(){
@@ -181,6 +184,8 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 //TODO: path view
 
 	private void setEditMapButtons(){
+		Button createMapButton = new Button(getResources().getString("CreateMap"));
+		createMapButton.setOnMouseClicked(e -> createMap());
 		Button saveMapButton = new Button(getResources().getString("SaveMap"));
 		saveMapButton.setOnMouseClicked(e -> saveMap(myActiveMap));
 		Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
@@ -190,15 +195,20 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	
 	private void removeMap(){
 		System.out.println(getMaps());
-		if (getMaps().contains(myActiveMap)){
 			getMaps().remove(myActiveMap);
+			getMapWorkspace().getChildren().remove(myActiveMap);
 			System.out.println(getMaps());
-		}
-		else{
-			System.out.println("You cannot remove a map that has not been saved previously.");
-			//TODO: show error
-			//or only include delete map buttons for maps that have already been saved
-		}	
+	}
+	
+	/*//TODO: remove duplication since this is the exact code written in mapeditor
+	protected void createMap() {
+        myActiveMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);	
+        setDefaultTextFieldValues(); //TODO: ______
+        getMapWorkspace().getChildren().add(myActiveMap);
+    }*/
+	
+	protected void createMap(){
+		getMapWorkspace().createDefaultMap();
 	}
 	
 	/**
@@ -206,11 +216,14 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	 * @param activeMap
 	 */
 	private void saveMap(TileMap activeMap){
-		if (!getMaps().contains(activeMap)) //the edited and stored activemaps technically should map to the same address right?
+		if (!getMaps().contains(activeMap)){ //the edited and stored activemaps technically should map to the same address right?
 			getMaps().add(activeMap);
+			System.out.println(getMaps());
+		}
 		else{
 			getMaps().remove(activeMap);
 			getMaps().add(activeMap);
+			System.out.println(getMaps());
 		}
 	}
 	
