@@ -31,12 +31,14 @@ import authoringEnvironment.objects.UnitView;
  */
 
 public class WaveEditor extends MainEditor {
+	private Dimension2D myDimensions;
 	private Group myRoot;
 	private Map<String, ArrayList<FlowView>> myWaves;
 
 	public WaveEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
 		myWaves = new HashMap<String, ArrayList<FlowView>>();
+		myDimensions = dim;
 	}
 
 	@Override
@@ -99,6 +101,7 @@ public class WaveEditor extends MainEditor {
 		ScrollPane newWave = new ScrollPane();
 		newWave.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 		newWave.setVbarPolicy(ScrollBarPolicy.NEVER);
+		newWave.setMaxWidth(myDimensions.getWidth());
 
 		HBox waveContent = new HBox(10);
 
@@ -114,9 +117,19 @@ public class WaveEditor extends MainEditor {
 
 			for (FlowView unit : myWaves.get(waveName)) {
 				partFileNames.add(unit.getFileName());
-				//System.out.println(unit.getFileName());
+				// System.out.println(unit.getFileName());
 				delays.add(unit.getDelay());
 			}
+
+//			Map<String, ArrayList<String>> waveUnits = new HashMap<String, ArrayList<String>>();
+//			Map<String, ArrayList<Double>> waveDelays = new HashMap<String, ArrayList<Double>>();
+//			waveUnits.put(waveName, partFileNames);
+//			waveDelays.put(waveName, delays);
+			ArrayList<Object> data = new ArrayList<Object>();
+			data.add(partFileNames);
+			data.add(delays);
+			
+			//addPartToGame("wave", waveName, params, data);
 		});
 
 		VBox buttons = new VBox(10);
