@@ -10,21 +10,19 @@ import pathsearch.graph.GridIDTransform;
 /**
  * @author Kaighn
  */
-public class HeuristicGrid implements Heuristic {
+public class HeuristicGrid implements Heuristic{
 	List<GridCell> endNodeCoords;
 	GridIDTransform idTransform;
-
-	public HeuristicGrid(List<Integer> endNodesID, GridIDTransform idTrans) {
-		endNodeCoords = endNodesID.stream().map(id -> idTrans.getCell(id))
-				.collect(Collectors.toList());
+	
+	public HeuristicGrid(List<Integer> endNodesID, GridIDTransform idTrans){
+		endNodeCoords = endNodesID.stream().map(id -> idTrans.getCell(id)).collect(Collectors.toList());
 		idTransform = idTrans;
 	}
-
+	
 	@Override
 	public double calculateHeuristic(GraphNode node) {
 		GridCell cell = idTransform.getCell(node.getID());
-		return endNodeCoords.stream().map(gcell -> gcell.distance(cell))
-				.min((a, b) -> Integer.compare(a, b)).get();
+		return endNodeCoords.stream().map(gcell -> gcell.distance(cell)).min((a,b) -> Integer.compare(a, b)).get();
 	}
 
 }
