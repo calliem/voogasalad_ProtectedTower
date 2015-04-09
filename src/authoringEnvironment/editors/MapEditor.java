@@ -39,15 +39,7 @@ public class MapEditor extends MainEditor {
     }
 
 
-    @Override
-	protected void createMap() {
-        //myActiveMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);	
-        //getMapWorkspace().getChildren().add(myActiveMap);
-    	
-    	
-     
-        //mySidebar = setDefaultTextFieldValues()
-    }
+
 
 	@Override
 	public List<Node> getObjects() {

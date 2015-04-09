@@ -3,7 +3,6 @@ package authoringEnvironment;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import authoringEnvironment.editors.MapWorkspace;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 import javafx.collections.FXCollections;
@@ -141,12 +140,12 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	
 	//TODO: remove duplicated code
 	private void setGridDimensions(){
-		if (myActiveMap == null)
+	/*	if (myActiveMap == null)
 			System.out.println("LE MAP IS NULLL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			else
 				System.out.println(myActiveMap.getNumRows());
 		
-		System.out.println("setting grid dimensions");
+		System.out.println("setting grid dimensions");*/
 		HBox selection = new HBox();
 		selection.setSpacing(PADDING); 
 		Text text = new Text(getResources().getString("GridDimensions"));
@@ -190,7 +189,7 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		saveMapButton.setOnMouseClicked(e -> saveMap(myActiveMap));
 		Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
 		deleteMapButton.setOnMouseClicked(e -> removeMap());
-		getChildren().addAll(saveMapButton, deleteMapButton);	
+		getChildren().addAll(createMapButton, saveMapButton, deleteMapButton);	
 	}
 	
 	private void removeMap(){

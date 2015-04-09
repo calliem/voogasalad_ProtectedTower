@@ -1,17 +1,16 @@
-package authoringEnvironment.editors;
+package authoringEnvironment;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.objects.TileMap;
 
 public class MapWorkspace extends StackPane{
 	
 	private TileMap myActiveMap;
 	private static final int DEFAULT_MAP_ROWS = (int) (MainEnvironment.getEnvironmentWidth()*.8/50);// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
-    private static final int DEFAULT_MAP_COLS = (int) (MainEnvironment.getEnvironmentHeight()*.8/50); //getHeight();
+    private static final int DEFAULT_MAP_COLS = (int) (MainEnvironment.getEnvironmentHeight()*.9/25); //getHeight();
     private static final int DEFAULT_TILE_SIZE = 30; //based on height since monitor height < width and that is usually the limiting factor
     
 	public static final double MAP_WIDTH_MULTIPLIER = .75;
@@ -27,28 +26,27 @@ public class MapWorkspace extends StackPane{
 	}
 	
 	public void createDefaultMap() {
-        myActiveMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);	
-        getChildren().add(myActiveMap);
+        TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
+        updateWithNewMap(defaultMap);
+        
     }
-	
-	public static double getDefaultMapRows(){
-		return DEFAULT_MAP_ROWS;
-	}
-	
-	public static double getDefaultMapCols(){
-		return DEFAULT_MAP_COLS;
-	}
-	
-	public static double getDefa(){
-		return DEFAULT_MAP_COLS;
-	}
 	
 	public TileMap getActiveMap(){
 		return myActiveMap;
 	}
 	
 	public void removeMap(){
+		System.out.println("removing map");
 		getChildren().remove(myActiveMap);
+		myActiveMap = null;
+	}
+	
+	public void updateWithNewMap(TileMap newMap){
+		if (myActiveMap != null){
+			getChildren().remove(myActiveMap);
+		}
+		myActiveMap = newMap;
+		getChildren().add(newMap);
 	}
 
 }

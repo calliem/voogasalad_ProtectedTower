@@ -2,6 +2,7 @@
 package authoringEnvironment.editors;
 
 import authoringEnvironment.Controller;
+import authoringEnvironment.MapWorkspace;
 import authoringEnvironment.objects.TileMap;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
@@ -89,20 +90,19 @@ public abstract class MainEditor extends Editor {
 		if(!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap())){
 
 			//System.out.println("stored Maps map workspace: ");
-			mapEditor.getMapWorkspace();
+			//mapEditor.getMapWorkspace();
 			//.getChildren().remove(mapEditor.getActiveMap().getMap());
 			//System.out.println("this specific map workspace: ");
-			getMapWorkspace();
+			//getMapWorkspace();
 			//System.out.println("--");
 			//.getChildren().add(mapEditor.getActiveMap().getMap());
 		
 			//mapEditor.getMapWorkspace().getChildren().remove(mapEditor.getActiveMap().getMap());
-			getMapWorkspace().getChildren().add(mapEditor.getActiveMap());
+			getMapWorkspace().updateWithNewMap(mapEditor.getActiveMap());
+			//getMapWorkspace().getChildren().add(mapEditor.getActiveMap());
 	}
 	
 }
-
-	protected abstract void createMap();
 	
 
 	//idk why the method can't go here and has to go int he subclasses. putting it here seems to break all the other tabs

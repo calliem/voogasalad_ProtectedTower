@@ -40,12 +40,6 @@ public class LevelEditor extends MainEditor{
 	     myLevels = new ArrayList<Node>();
 	}
 
-    @Override
-    protected void createMap() {
-    	
-    	//pass something here that will be helpful
-    }
-
 	@Override
 	public List<Node> getObjects() {
 		// TODO Auto-generated method stub

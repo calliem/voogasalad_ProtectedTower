@@ -131,8 +131,6 @@ public class MainEnvironment {
 		if (myCurrentTab != selectedTab){
 			System.out.println("pls printout only once for tab " + myCurrentTab.getText());
 			Editor editor = (Editor) myCurrentTab.getContent();
-			//System.out.println("changed selection to this selected tab: " + selectedTab.getText());
-//			editor.update(); //this should be editor.save
 			Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the controller
 			
 			myCurrentTab = selectedTab;
