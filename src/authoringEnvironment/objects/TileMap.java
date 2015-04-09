@@ -43,7 +43,7 @@ public class TileMap extends Group{
 		myActiveColor = DEFAULT_TILE_COLOR;
 		//TODO: sethover x, y coordinate, tile size, etc.
 		createMap();
-		//createGridLines();
+		createGridLines();
 	}
 
 	
@@ -60,7 +60,7 @@ public class TileMap extends Group{
 	}
 	
 	private void attachTileListener(Tile tile){
-		tile.setOnMousePressed(e -> tile.setFill(myActiveColor));//myTiles[x][y].setFill(myActiveColor));
+		tile.setOnMousePressed(e -> {tile.setFill(myActiveColor); System.out.println("I have been clicked!" + tile.getFill().toString()) ;});//myTiles[x][y].setFill(myActiveColor));
 		tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); //TODO: fix dragging errors
 
 	}
@@ -72,6 +72,8 @@ public class TileMap extends Group{
 				myTiles[i][j].setTileSizeDynamically(tileSize);
 			}
 		}
+		updateGridLines();
+
 	//	myMap.getChildren().remove(myGridLines);
 	//	createGridLines();
 	}
@@ -91,6 +93,7 @@ public class TileMap extends Group{
 				myTiles[i][j] = new Tile(myTileSize, i, j);
 				getChildren().add(myTiles[i][j]); // to speed up	
 				attachTileListener(myTiles[i][j]);// time?
+				//System.out.println("tile listener has been attached!");
 			}
 		}
 	}
@@ -122,6 +125,7 @@ public class TileMap extends Group{
 		myMapRows = newMapRows;
 		
 		myTiles = newTiles;
+		updateGridLines();
 	}
 	
 	/**
@@ -133,6 +137,7 @@ public class TileMap extends Group{
 				getChildren().remove(myTiles[i][j]);
 			}
 		}
+		getChildren().remove(myGridLines);
 	}
 	
 	public int getNumRows(){
@@ -147,9 +152,9 @@ public class TileMap extends Group{
 		return myTileSize;
 	}
 	
-	/*private void createGridLines() {
-		int mapWidth = myMapRows * myTileSize;
-		int mapHeight = myMapCols * myTileSize; 
+	private void createGridLines() {
+		int mapWidth = myMapCols * myTileSize;
+		int mapHeight = myMapRows * myTileSize; 
 		
 		//TODO: make an error display if mapwidth or mapheight is greater than allowed or create a scrollpane instead
 		// vertical lines
@@ -164,6 +169,15 @@ public class TileMap extends Group{
 			horizontalLine.setStroke(Color.web("B2B2B2"));
 			myGridLines.getChildren().add(horizontalLine);
 		}
-		myMap.getChildren().add(myGridLines);
-	}*/
+		getChildren().add(myGridLines);
+	}
+	
+	private void removeGridLines(){
+		myGridLines.getChildren().clear();
+	}
+	
+	private void updateGridLines(){
+		removeGridLines();
+		createGridLines();
+	}
 }

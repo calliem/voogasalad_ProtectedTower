@@ -36,7 +36,6 @@ public class MapWorkspace extends StackPane{
 	}
 	
 	public void removeMap(){
-		System.out.println("removing map");
 		getChildren().remove(myActiveMap);
 		myActiveMap = null;
 	}

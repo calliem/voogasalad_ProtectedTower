@@ -56,7 +56,7 @@ public abstract class MainEditor extends Editor {
 		private void createGridPane() {
 			myPane = new GridPane();
 			setGridPaneConstraints(myPane);
-			myPane.setGridLinesVisible(true); //TODO: remove the showing gridlines
+			//myPane.setGridLinesVisible(true); 
 		}
 	
 	public MapWorkspace getMapWorkspace(){

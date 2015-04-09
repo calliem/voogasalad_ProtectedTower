@@ -26,7 +26,7 @@ public class Tile extends Rectangle {
 	// that would only allow numbers in correct increments that would fit
 
 	public Tile(double tileSize, int rowNum, int colNum) {
-		myTileSize = tileSize+5;
+		myTileSize = tileSize;
 		myColNum = colNum;
 		myRowNum = rowNum;
 		// setImage(new Image("/resources/white_square.png"));
@@ -60,9 +60,7 @@ public class Tile extends Rectangle {
 	public void setTileSizeDynamically(double size) {
 		setTileSize(size);
 		setTranslateX(myColNum*size);
-		System.out.println("col " + myColNum*size);
 		setTranslateY(myRowNum*size);
-		System.out.println("row " + myRowNum*size);
 	}
 	// this may not be necessary if the 2D array will update itself
 	private void setTileSize(double size) {
@@ -103,6 +101,7 @@ public class Tile extends Rectangle {
 	public boolean isActivePath() {
 		return isPath;
 	}
+	
 
 
 }

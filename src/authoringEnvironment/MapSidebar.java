@@ -44,14 +44,19 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	//TODO: is importing the main environment bad design? is this an added dependency?
 	private static final double TEXT_FIELD_WIDTH = MainEnvironment.getEnvironmentWidth()/32;
 	private int myLives;
-	private TileMap myActiveMap;
+	private MapWorkspace myMapWorkspace;
 //	private TileMap mySelectedMap;
 	private static final int DEFAULT_LIVES = 20; //TODO: how to get this number from Johnny
+	private Color myActiveColor;
+	
+	private TextField tileRowDisplay;
+	private TextField tileColDisplay;
+	private TextField tileSizeDisplay;
 
 	public MapSidebar(ResourceBundle resources,List<Node> maps, MapWorkspace mapWorkspace, TileMap activeMap) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
 		super(resources, maps, mapWorkspace);
-		myActiveMap = activeMap;
 		//mySelectedMap = activeMap;
+		myMapWorkspace = mapWorkspace;
 		myLives = DEFAULT_LIVES;		
 		/*ObservableList<PathView> pathList = FXCollections.observableArrayList();
 		getChildren().add(createListView(pathList, 300));*/
@@ -80,8 +85,10 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		selection.setSpacing(PADDING);
 		Text lives = new Text(getResources().getString("Lives"));
 		TextField textField = new TextField(Integer.toString(myLives));
+		
 		Button button = new Button(getResources().getString("Update"));
 		button.setOnMouseClicked(e -> System.out.println(textField.getText())); //TODO: add to properties file to be saved
+		
 		textField.setPrefWidth(TEXT_FIELD_WIDTH);
 		selection.getChildren().addAll(lives, textField, button);
 		getChildren().add(selection);
@@ -91,12 +98,12 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		HBox selection = new HBox();
 		selection.setSpacing(PADDING);
 		Text lives = new Text(getResources().getString("TileSize"));
-		TextField textField = new TextField(Integer.toString(myActiveMap.getTileSize()));
+		tileSizeDisplay = new TextField(Integer.toString(myMapWorkspace.getActiveMap().getTileSize()));
 		Button button = new Button(getResources().getString("Update"));
-		button.setOnMouseClicked(e -> myActiveMap.changeTileSize(Integer.parseInt(textField.getText())));
-		textField.setPrefWidth(TEXT_FIELD_WIDTH);
+		button.setOnMouseClicked(e -> myMapWorkspace.getActiveMap().changeTileSize(Integer.parseInt(tileSizeDisplay.getText())));
+		tileSizeDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
 		Text px = new Text(getResources().getString("PxSuffix"));
-		selection.getChildren().addAll(lives, textField, px, button);
+		selection.getChildren().addAll(lives, tileSizeDisplay, px, button);
 		getChildren().add(selection);
 		
 	}
@@ -111,11 +118,7 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		selection.getChildren().addAll(selectTileColor, picker);
 		
 		Rectangle rectangleDisplay = new Rectangle(DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_COLOR); //remove hardcoded including the color;
-		
-		//Button placeTile = new Button("Place Tile"); //TODO:
-		//placeTile.setPrefHeight(40);
-		
-		
+
 		selectTile.getChildren().addAll(selection, rectangleDisplay);
 	
 		
@@ -130,36 +133,42 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	}
 	
 	private void changeActiveTileColor(Color color, Rectangle display){
+		myActiveColor = color;
+		display.setFill(color);
+		myMapWorkspace.getActiveMap().setActiveColor(color); 
+	}
+	
+/*	private void changeActiveTileColor(Color color, Rectangle display){
 		//TODO: make this do the right thing
 		display.setFill(color);
-		myActiveMap.setActiveColor(color); 
+		myMapWorkspace.getActiveMap().setActiveColor(color); 
 		
 		
 		//TODO: make it update the color in the actual grid 
-	}
+	}*/
 	
 	//TODO: remove duplicated code
 	private void setGridDimensions(){
 	/*	if (myActiveMap == null)
 			System.out.println("LE MAP IS NULLL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			else
-				System.out.println(myActiveMap.getNumRows());
+				System.out.println(myActiveMap.getN	umRows());
 		
 		System.out.println("setting grid dimensions");*/
 		HBox selection = new HBox();
 		selection.setSpacing(PADDING); 
-		Text text = new Text(getResources().getString("GridDimensions"));
+		Text text = new Text(getResources().getString("MapDimensions"));
 		
 		HBox textFields = new HBox();
-		TextField x = new TextField(Integer.toString(myActiveMap.getNumRows()));
-		x.setPrefWidth(TEXT_FIELD_WIDTH); 
+		tileRowDisplay = new TextField(Integer.toString(myMapWorkspace.getActiveMap().getNumRows()));
+		tileRowDisplay.setPrefWidth(TEXT_FIELD_WIDTH); 
 		Text xSeparator = new Text(getResources().getString("DimensionXSeparation"));
-		TextField y = new TextField(Integer.toString(myActiveMap.getNumCols()));
-		textFields.getChildren().addAll(x, xSeparator, y);
+		tileColDisplay = new TextField(Integer.toString(myMapWorkspace.getActiveMap().getNumCols()));
+		textFields.getChildren().addAll(tileRowDisplay, xSeparator, tileColDisplay);
 		
-		y.setPrefWidth(TEXT_FIELD_WIDTH);
+		tileColDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
 		Button setGridDimButton = new Button(getResources().getString("Update"));
-		setGridDimButton.setOnMouseClicked(e -> updateMapDim(x.getText(), y.getText()));
+		setGridDimButton.setOnMouseClicked(e -> updateMapDim(tileRowDisplay.getText(), tileColDisplay.getText()));
 		selection.getChildren().addAll(text, textFields,setGridDimButton);
 		getChildren().add(selection);
 	}
@@ -183,20 +192,26 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 //TODO: path view
 
 	private void setEditMapButtons(){
+		HBox mapButtons = new HBox();
+		mapButtons.setSpacing(20);
 		Button createMapButton = new Button(getResources().getString("CreateMap"));
 		createMapButton.setOnMouseClicked(e -> createMap());
 		Button saveMapButton = new Button(getResources().getString("SaveMap"));
-		saveMapButton.setOnMouseClicked(e -> saveMap(myActiveMap));
+		saveMapButton.setStyle("-fx-background-color: #6e8b3d; -fx-text-fill: white;");
+		saveMapButton.setOnMouseClicked(e -> saveMap(myMapWorkspace.getActiveMap()));
 		Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
+		deleteMapButton.setStyle("-fx-background-color: #cd3333; -fx-text-fill: white;");
 		deleteMapButton.setOnMouseClicked(e -> removeMap());
-		getChildren().addAll(createMapButton, saveMapButton, deleteMapButton);	
+		mapButtons.getChildren().addAll(createMapButton, saveMapButton, deleteMapButton);	
+		getChildren().add(mapButtons);
 	}
 	
 	private void removeMap(){
-		System.out.println(getMaps());
-			getMaps().remove(myActiveMap);
-			getMapWorkspace().getChildren().remove(myActiveMap);
-			System.out.println(getMaps());
+		System.out.println("removing map from map sidebar");
+		System.out.println("Maps before remove: " + getMaps());
+		getMaps().remove(myMapWorkspace.getActiveMap());
+		getMapWorkspace().removeMap();
+		System.out.println("Maps after remove: " + getMaps());
 	}
 	
 	/*//TODO: remove duplication since this is the exact code written in mapeditor
@@ -208,6 +223,11 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	
 	protected void createMap(){
 		getMapWorkspace().createDefaultMap();
+		tileRowDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap().getNumRows()));
+		tileColDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap().getNumCols()));
+		tileSizeDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap().getTileSize()));
+		myMapWorkspace.getActiveMap().setActiveColor(myActiveColor); 
+		//TODO: textField.setText to update it 
 	}
 	
 	/**
@@ -217,16 +237,20 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	private void saveMap(TileMap activeMap){
 		if (!getMaps().contains(activeMap)){ //the edited and stored activemaps technically should map to the same address right?
 			getMaps().add(activeMap);
-			System.out.println(getMaps());
+			System.out.println("Maps after save: " + getMaps());
 		}
 		else{
 			getMaps().remove(activeMap);
 			getMaps().add(activeMap);
-			System.out.println(getMaps());
+			System.out.println("Maps after save: " + getMaps());
 		}
 	}
 	
 	private void updateMapDim(String numRows, String numCols){
-		myActiveMap.setMapDimensions(Integer.parseInt(numRows), Integer.parseInt(numCols));
+		myMapWorkspace.getActiveMap().setMapDimensions(Integer.parseInt(numRows), Integer.parseInt(numCols));
+		//myMapWorkspace.getActiveMap().update();
+		//createGridLines();
 	}
+	
+	//Con: myMapWorkspace.getActiveMap(). instead of myActiveMap introduces a dependency on my workspace. if something is changed there without this class knowing, the code is easy to break
 }
