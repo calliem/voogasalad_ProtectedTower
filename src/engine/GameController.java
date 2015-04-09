@@ -1,6 +1,7 @@
 package engine;
 
 import java.util.Map;
+import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
@@ -22,10 +23,18 @@ public class GameController {
     /**
      * Holds an instance of an entire game
      */
-    Game myGame;
+    private Game myGame;
+    /**
+     * Javafx object so that new nodes can be added for the player to display
+     */
+    private Group myGroup;
+    private Bank myBank;
+    private int myPoints;
 
-    public GameController () throws InsufficientParametersException {
+    public GameController () {
         myGame = new Game();
+        myBank = new Bank();
+        myPoints = 0;
     }
 
     /**
@@ -44,6 +53,10 @@ public class GameController {
             // allObjects.add(currentObject);
             // TODO need way to load objects into correct classes, like Layout and Wave
         }
+    }
+
+    public void setGroup (Group g) {
+        myGroup = g;
     }
 
     // Will handle hotkeys
