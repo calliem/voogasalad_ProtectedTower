@@ -58,8 +58,6 @@ public abstract class MainEditor extends Editor {
 			setGridPaneConstraints(myPane);
 			myPane.setGridLinesVisible(true); //TODO: remove the showing gridlines
 		}
-
-
 	
 	public StackPane getMapWorkspace(){
 		System.out.println(myMapWorkspace);
@@ -68,7 +66,7 @@ public abstract class MainEditor extends Editor {
 
 	private void setGridPaneConstraints(GridPane pane) {
 		RowConstraints row0 = new RowConstraints();
-		row0.setPercentHeight(MAP_HEIGHT_PERCENT);
+		row0.setPercentHeight(MAP_HEIGHT_PERCENT); 
 		pane.getRowConstraints().add(row0);
 		ColumnConstraints col0 = new ColumnConstraints();
 		col0.setPrefWidth(getWidth() * MAP_WIDTH_MULTIPLIER);
