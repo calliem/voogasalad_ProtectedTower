@@ -9,12 +9,11 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
 /**
- * Holds a 2D array of tiles, attaches listeners, and draws lines to display on the editor
+ * Holds a 2D array of tiles, attaches listeners, and draws gridlines to display on the map workspace
  * @author Callie Mao
  *
  */
 
-//potentially make abstract?
 public class TileMap extends Group{
 
 	//TODO: figure out why gridlines are so weird
@@ -34,7 +33,6 @@ public class TileMap extends Group{
 
 	// user specifies rectangle or square dimensions...allow this flexibility
 	public TileMap(int mapRows, int mapCols, int tileSize) {
-		
     	setOnDragDetected(e -> startFullDrag());
 		myMapRows = mapRows;
 		myMapCols = mapCols;
@@ -45,7 +43,6 @@ public class TileMap extends Group{
 		createMap();
 		createGridLines();
 	}
-
 	
 	public int addTag(int x, int y, String tag){
 		myTiles[x][y].addTag(tag);
@@ -62,7 +59,6 @@ public class TileMap extends Group{
 	private void attachTileListener(Tile tile){
 		tile.setOnMousePressed(e -> {tile.setFill(myActiveColor); System.out.println("I have been clicked!" + tile.getFill().toString()) ;});//myTiles[x][y].setFill(myActiveColor));
 		tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); //TODO: fix dragging errors
-
 	}
 			
 	public void changeTileSize(int tileSize) {
@@ -73,9 +69,6 @@ public class TileMap extends Group{
 			}
 		}
 		updateGridLines();
-
-	//	myMap.getChildren().remove(myGridLines);
-	//	createGridLines();
 	}
 
 	public Tile getTile(int x, int y) {
@@ -91,9 +84,8 @@ public class TileMap extends Group{
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				myTiles[i][j] = new Tile(myTileSize, i, j);
-				getChildren().add(myTiles[i][j]); // to speed up	
-				attachTileListener(myTiles[i][j]);// time?
-				//System.out.println("tile listener has been attached!");
+				getChildren().add(myTiles[i][j]); 	
+				attachTileListener(myTiles[i][j]);
 			}
 		}
 	}
@@ -108,7 +100,6 @@ public class TileMap extends Group{
 		Tile[][] newTiles = new Tile[newMapRows][newMapCols];
 		
 		//TODO make newmethod to avoid duplication since this is similar to createMap
-
 		for (int i = 0; i < newMapRows; i++) {
 			for (int j = 0; j < newMapCols; j++) {
 				if (i >= myMapRows || j >= myMapCols)
@@ -122,8 +113,7 @@ public class TileMap extends Group{
 		}
 
 		myMapCols = newMapCols;
-		myMapRows = newMapRows;
-		
+		myMapRows = newMapRows;	
 		myTiles = newTiles;
 		updateGridLines();
 	}
@@ -176,6 +166,9 @@ public class TileMap extends Group{
 		myGridLines.getChildren().clear();
 	}
 	
+	/**
+	 * Updates the length and location of gridlines (usually after the size of the tile or grid has been adjusted
+	 */
 	private void updateGridLines(){
 		removeGridLines();
 		createGridLines();
