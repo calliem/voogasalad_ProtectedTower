@@ -1,5 +1,7 @@
 package engine.element.sprites;
 
+import java.util.List;
+
 import engine.InsufficientParametersException;
 
 
@@ -13,11 +15,13 @@ import engine.InsufficientParametersException;
  */
 public class GridCell extends Sprite {
 
+	private List<String> tags;
+	
     public GridCell () throws InsufficientParametersException {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
     @Override
     public boolean isTargetableBy (String type) {
         // TODO Auto-generated method stub
