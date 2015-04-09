@@ -9,14 +9,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * Creates the visual selector for adding a unit/wave and the time delay. 
+ * Stores the information for the WaveEditor
+ * 
+ * @author Megan Gutter
+ *
+ */
+
 public class FlowView extends HBox {
-//	private String partFileName;
-//	private Double delay;
+	// private String partFileName;
+	// private Double delay;
 	private TextField partSelector;
 	private TextField delayTextField;
 	private int myWidth;
 	private int myHeight;
-	
+
 	public FlowView(int width, int height) {
 		super(10);
 		myWidth = width;
@@ -27,7 +35,7 @@ public class FlowView extends HBox {
 		ScaleImage.scaleByWidth(arrowImage, 120);
 		delayTextField = new TextField();
 		delayTextField.setMaxWidth(50);
-		
+
 		this.getChildren().add(partSelector);
 		VBox arrow = new VBox(10);
 		HBox timeInput = new HBox(10);
@@ -39,17 +47,17 @@ public class FlowView extends HBox {
 		this.getChildren().add(arrow);
 		this.setPrefHeight(myHeight);
 	}
-	
+
 	public String getFileName() {
-		return partSelector.getText(); //TODO return error if not valid file
+		return partSelector.getText(); // TODO return error if not valid file
 	}
-	
+
 	public Double getDelay() {
 		try {
 			return Double.parseDouble(delayTextField.getText());
 		} catch (NumberFormatException e) {
-			return 0.0; //TODO return error if not a double
+			return 0.0; // TODO return error if not a double
 		}
 	}
-	
+
 }

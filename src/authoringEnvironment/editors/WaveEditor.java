@@ -13,18 +13,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.HBox;
-<<<<<<< HEAD
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-=======
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
->>>>>>> a5665ad94f6170f36e89e5ff6164333fc8cea6df
 import javafx.stage.Stage;
-import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.UnitView;
 
@@ -39,14 +33,9 @@ import authoringEnvironment.objects.UnitView;
 public class WaveEditor extends MainEditor {
 	private Dimension2D myDimensions;
 	private Group myRoot;
-<<<<<<< HEAD
 	private Map<String, ArrayList<FlowView>> myWaves;
 
-=======
-	private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
-    private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
-    
->>>>>>> a5665ad94f6170f36e89e5ff6164333fc8cea6df
+
 	public WaveEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
 		myWaves = new HashMap<String, ArrayList<FlowView>>();
@@ -55,7 +44,6 @@ public class WaveEditor extends MainEditor {
 
 	@Override
 	public Node configureUI() {
-<<<<<<< HEAD
 		myRoot = new Group();
 		StackPane editor = new StackPane();
 		HBox newWavePanel = new HBox(10);
@@ -72,14 +60,6 @@ public class WaveEditor extends MainEditor {
 
 		editor.getChildren().add(contents);
 		myRoot.getChildren().add(editor);
-=======
-		myRoot = new Group();		
-		
-		Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, Color.GRAY);
-		
-		HBox wave1 = makeNewWave();
-		myRoot.getChildren().add(wave1);
->>>>>>> a5665ad94f6170f36e89e5ff6164333fc8cea6df
 		return myRoot;
 	}
 
