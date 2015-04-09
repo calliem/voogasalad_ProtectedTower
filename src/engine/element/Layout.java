@@ -1,18 +1,31 @@
-package engine;
+package engine.element;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import authoringEnvironment.objects.Tile;
-import authoringEnvironment.objects.TileMap;
 import javafx.geometry.Point2D;
-import engine.sprites.GridCell;
-import engine.sprites.Sprite;
+import authoringEnvironment.objects.TileMap;
+import engine.element.sprites.Sprite;
+import engine.Updateable;
+import engine.element.sprites.Enemy;
+import engine.element.sprites.GridCell;
+import engine.element.sprites.Projectile;
+import engine.element.sprites.Tower;
 
-public class Layout {
-	
+
+/**
+ * This class holds the layout of the game, including the locations of the game elements like grid
+ * cells and towers/enemies. It also call on these objects to update their location and behaviors,
+ * while functioning as a controller to tell objects what to do, such as telling towers what enemies
+ * are within range.
+ * 
+ * @author Michael Yang
+ * @author Qian Wang
+ *
+ */
+public class Layout extends GameElement implements Updateable {
+
 	private List<Sprite> towerList;
 	private List<Sprite> enemyList;
 	private List<Sprite> projectileList;
@@ -20,7 +33,7 @@ public class Layout {
 	//private List<List<GridCell>> spriteMap; not sure if neccessary yet
 	private List<Sprite> spritesList;
 	private double gridSize;
-	
+
 	public Layout(TileMap map){
 		//take in either a tile map or a Tile[][]
 		//create a 2D arraylist of gridcells
@@ -32,7 +45,13 @@ public class Layout {
 		*/		
 	}
 	
-	public List<Sprite> update(){
+    @Override
+    public void update (int counter) {
+        // TODO Update all game elements
+
+    }
+    
+    public List<Sprite> updateSprites(){
 		for (Sprite s: projectileList){
 			//s.update();
 		}
@@ -124,5 +143,6 @@ public class Layout {
 		spritesList.addAll(projectileList);
 		return spritesList;
 	}
+
 
 }
