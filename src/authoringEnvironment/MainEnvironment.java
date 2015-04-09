@@ -28,7 +28,7 @@ import authoringEnvironment.editors.Editor;
 import authoringEnvironment.editors.LevelEditor;
 
 /**
- * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
+ * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed. When switching tabs, each tab's editor is automatically updated to the controller
  * @author Callie Mao
  * @author Johnny Kumpf, populateTabBar() methods
  */
@@ -209,7 +209,6 @@ public class MainEnvironment {
 		webEngine.load("file://" + System.getProperty("user.dir") + loc);
 		Stage stage = new Stage();
 		setupScene(stage, browser, 1000, 750);
-		
 	}
 
 	public void setupScene(Stage stage, Parent root, double width, double height) {

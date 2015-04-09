@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import authoringEnvironment.Controller;
+import authoringEnvironment.MapSidebar;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.objects.SpriteView;
 import authoringEnvironment.objects.TileMap;
