@@ -33,7 +33,7 @@ public class UnitEditor extends PropertyEditor {
     }
 
 	@Override
-	protected void update() {
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}

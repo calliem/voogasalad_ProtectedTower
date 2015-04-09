@@ -63,37 +63,11 @@ public class TileMap {
 		return --numTags;
 	}
 	
-/*	public void changeTile(int row, int col, Color color){
-		myTiles[row][col].setFill(color);
-	}*/
-	
-	//need to have different selectors for setting path and for changing tile color
-
-	
-	//TODO: attach tile listeners to new tiles but make it to add to specific one
-	
 	private void attachTileListener(Tile tile){
 		tile.setOnMousePressed(e -> tile.setFill(myActiveColor));//myTiles[x][y].setFill(myActiveColor));
 		tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); //TODO: fix dragging errors
 
 	}
-	
-    /*private void attachTileListeners(){
-    	for (int i = 0; i < myTiles.length; i++) {
-			for (int j = 0; j < myTiles[0].length; j++) {
-				int x = i;
-				int y = j;
-				myTiles[i][j].setOnMousePressed(e -> myTiles[x][y].setFill(myActiveColor));//myTiles[x][y].setFill(myActiveColor));
-				myTiles[i][j].setOnMouseDragEntered(e -> myTiles[x][y].setFill(myActiveColor)); //TODO: fix dragging errors
-
-				
-//				myTiles[i][j].setOnMousePressed(e -> myTiles[x][y].select());
-//				myTiles[i][j].setOnMouseDragEntered(e -> myTiles[x][y].dragSelect());
-//				these above lines are to set pathing
-			
-			}
-    	}
-    }*/
 			
 	public void changeTileSize(int tileSize) {
 		myTileSize = tileSize;
@@ -111,7 +85,6 @@ public class TileMap {
 	}
 	
 	public void setActiveColor(Color color){
-		System.out.println("update color");
 		myActiveColor = color;
 	}
 

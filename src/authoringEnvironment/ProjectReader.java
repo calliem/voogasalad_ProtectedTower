@@ -115,6 +115,8 @@ public class ProjectReader {
 					e1.printStackTrace();
 				}
 				m.addTab(e, myResources.getString(s), tabsToCreate.get(s));
+				System.out.println("editor"  + e);
+				Controller.updateEditor(myResources.getString(s), e);
 			}
 		}
 	}

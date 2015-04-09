@@ -113,22 +113,18 @@ public class MainEnvironment {
 		Editor editor = (Editor) selectedTab.getContent();
 		editor.update();
 		System.out.println("changed selection! " + selectedTab.getText());
+		Controller.updateEditor(selectedTab.getText(), editor); //this is dependent on the tab's name not changing, which may not be optimal design
 		//why does this printout twice????
 				//TODO: alternatively: use reflection to update the tab. unnecessary use of reflection....but might not be able to do anything else because of javafx limitations. that's also bad becasue of dependencies...
 				//can i get the index of the tab and then match it to the one in the properties file? that's bad because of dependencies...brainstorm more ways
 		
 		//below is just to allow for testing of the LevelEditor right now:
-		
-		
-		
-		
 	}
 
 
 	protected void addTab(Editor newEditor, String tabName, boolean main) {
 		Tab tab = new Tab();
 		tab.setText(tabName);
-		System.out.println("tabname: " + tabName);
 		tab.setContent(newEditor);
 		//TODO: instead of calling configureUI, create a new editor each time, have UI stuff written in the constructor, and have each editor extend a node
 
@@ -185,7 +181,7 @@ public class MainEnvironment {
 
 	public void setupScene(Stage stage, Parent root, double width, double height) {
 		Scene scene = new Scene(root, width, height);
-		// myStage.setTitle(myResources.getString("Title"));
+		myStage.setTitle(myResources.getString("Title"));
 		myStage.setScene(scene);
 		myStage.show();
 	}

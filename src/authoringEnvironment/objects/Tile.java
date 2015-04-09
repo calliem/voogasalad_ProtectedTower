@@ -26,7 +26,6 @@ public class Tile extends Rectangle {
 	// that would only allow numbers in correct increments that would fit
 
 	public Tile(double tileSize, int rowNum, int colNum) {
-		System.out.println("tileSize" + tileSize);
 		myTileSize = tileSize+5;
 		myColNum = colNum;
 		myRowNum = rowNum;
@@ -39,9 +38,6 @@ public class Tile extends Rectangle {
 
 		setTranslateX(colNum * tileSize);
 		setTranslateY(rowNum * tileSize);
-		System.out.println("col " + colNum*tileSize);
-		System.out.println("row " + rowNum*tileSize);
-
 		
 		isPath = false;
 		isSelected = false;

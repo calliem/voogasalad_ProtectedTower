@@ -17,7 +17,7 @@ public class TileEditor extends PropertyEditor{
 	}
 
 	@Override
-	protected void update() {
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}

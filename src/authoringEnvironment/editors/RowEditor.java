@@ -1,4 +1,4 @@
-/*package authoringEnvironment.editors;
+package authoringEnvironment.editors;
 
 import java.awt.ScrollPane;
 
@@ -16,12 +16,18 @@ public class RowEditor extends Editor {
 	}
 
 	@Override
-	public Node configureUI() {
+	public void configureUI() {
 		ScrollPane foundation = new ScrollPane();
-		Rectangle background = new Rectangle(myDimensions.getWidth()*MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(), Color.web("2A2A29"));
+		Rectangle background = new Rectangle();
 		
 		// TODO Auto-generated method stub
-		return ;
+		
 	}
 
-}*/
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

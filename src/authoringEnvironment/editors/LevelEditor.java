@@ -2,6 +2,7 @@
 
 package authoringEnvironment.editors;
 
+import authoringEnvironment.Controller;
 import javafx.geometry.Dimension2D;
 import javafx.stage.Stage;
 
@@ -15,20 +16,16 @@ public class LevelEditor extends MainEditor{
 		super(dim, s);
 	}
 
-	@Override
-	protected void configureUI() {
-		
-	}
-
     @Override
-    protected void createMap () {
+    protected void createMap() {
+    	
     	
     }
 
-	@Override
+/*	@Override
 	public void update() {
-		System.out.println("updated level editor");
-		// TODO Auto-generated method stub
-		
-	}
+		System.out.println("level editor updated");		// TODO Auto-generated method stub		
+		MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps");  //TODO: find a way to get sthe same resource file but to also use myResources.getString() on the proper resource file //how to avoid this issue of more dependencies on this string name. lots of code will have to change in order to change this; maybe use indexes instead?
+    	getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());
+	}*/
 }

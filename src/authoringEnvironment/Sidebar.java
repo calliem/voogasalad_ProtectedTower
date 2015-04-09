@@ -200,16 +200,13 @@ public class Sidebar extends VBox { //add a gridpane later on. but a gridpane is
 		list.setPrefHeight(LISTVIEW_HEIGHT);
 		return list;
 	}
-	
-	
-	
+
 	private void setEditMapButtons(){
 		Button saveMapButton = new Button(myResources.getString("SaveMap"));
 		saveMapButton.setOnMouseClicked(e -> myMaps.add(myActiveMap));
 		Button deleteMapButton = new Button(myResources.getString("DeleteMap"));
 		deleteMapButton.setOnMouseClicked(e -> removeMap());
-		getChildren().addAll(saveMapButton, deleteMapButton);
-		
+		getChildren().addAll(saveMapButton, deleteMapButton);	
 	}
 	
 	private void removeMap(){

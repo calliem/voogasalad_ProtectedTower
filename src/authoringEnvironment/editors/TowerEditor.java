@@ -45,6 +45,7 @@ public class TowerEditor extends PropertyEditor{
     private Text empty;
     private List<TowerView> towersCreated;
     private IntegerProperty numTowers;
+    private List<String> myTags;
 
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
@@ -275,8 +276,9 @@ public class TowerEditor extends PropertyEditor{
     }
 
 	@Override
-	protected void update() {
-		// TODO Auto-generated method stub
+	public void update() {
+		
+		//TODO: update allowable tags 
 		
 	}
 }

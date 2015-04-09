@@ -53,7 +53,7 @@ public class WaveEditor extends MainEditor {
 	}
 
 	@Override
-	protected void update() {
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}

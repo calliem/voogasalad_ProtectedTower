@@ -16,8 +16,9 @@ public class ItemEditor extends PropertyEditor{
 	}
 
 	@Override
-	protected void update() {
+	public void update() {
 		// TODO Auto-generated method stub
+		System.out.println("itemeditor updated");
 		
 	}
 	

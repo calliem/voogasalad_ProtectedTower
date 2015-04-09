@@ -18,7 +18,6 @@ import javafx.stage.Stage;
  */
 
 
-
 public abstract class Editor extends Group{
 	// or use a ArrayList<?> getObjects() method in this superclass?
 	//TODO: have later methods get myDimensions from a closer class not mainenvironment. THey are passed as parameters for a reason.
@@ -66,5 +65,9 @@ public abstract class Editor extends Group{
 	}
    
    public abstract void update();
+
+   
+/*   public static void getInstance(){
+}*/
     
 }
