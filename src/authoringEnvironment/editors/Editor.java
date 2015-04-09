@@ -21,9 +21,8 @@ public abstract class Editor {
 	protected ResourceBundle myResources;
 	protected Stage myStage;
 	
-	public Editor(Dimension2D dim, ResourceBundle resources, Stage s){
+	public Editor(Dimension2D dim, ResourceBundle resources){
 		myDimensions = dim;
-		myStage = s;
 		myResources = resources;
 	}
 

@@ -26,7 +26,7 @@ public abstract class MainEditor extends Editor {
 	public static final double MAP_HEIGHT_PERCENT = 100;
 	
 	public MainEditor(Dimension2D dim, ResourceBundle resources, Stage s) {
-		super(dim, resources, s);
+		super(dim, resources);
 		// TODO Auto-generated constructor stub
 	}
 
