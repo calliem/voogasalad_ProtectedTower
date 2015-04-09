@@ -28,10 +28,16 @@ public class TowerFactory {
     public void addManager(TowerManager manager) {
         myTowerManager = manager;
     }
+    
+    public void addTower (Map<String, Map<String, Object>> allTowers) {
+        for (String towerID : allTowers.keySet()) {
+            Map<String, Object> towerProperties = allTowers.get(towerID);
+            addTower(towerID, towerProperties);
+            myTowerManager.addTower(towerID, towerProperties);
+        }
+    }
 
-    public void addTower (Map<String, Object> towerProperties) {
-        String towerID =
-                (String) towerProperties.get("Group") + "_" + (String) towerProperties.get("Name");
+    public void addTower (String towerID, Map<String, Object> towerProperties) {
         myTowers.put(towerID, towerProperties);
     }
 

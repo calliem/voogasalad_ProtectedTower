@@ -30,24 +30,18 @@ public class TowerManager {
         myTowerFactory = factory;
     }
 
-    @SuppressWarnings("unchecked")
-    public void addAllTowers (Map<String, Map<String, Object>> towers) {
-        for (String s : towers.keySet()) {
-            myTowerMap.put(s, new TowerNode(towers.get(s)));
-        }
-        for (String s : myTowerMap.keySet()) {
-            // TODO find way to do this without casting
-            for (String n : (List<String>) towers.get(s).get(NEXT_TOWER)) {
-                myTowerMap.get(s).addNextNode(myTowerMap.get(n));
-            }
-        }
-    }
+    /*
+     * TODO: Update tower health on upgrade/downgrade.
+     * Downgrade health is MIN(Current_health,Max_Health)
+     */
     
-    //TODO: Update tower health on upgrade/downgrade. Downgrade health is MIN(Current_health, Max_Health)
-
+    @SuppressWarnings("unchecked")
     public void addTower (String towerID, Map<String, Object> towerProperties) {
-        TowerNode node = new TowerNode(towerProperties);
-        myTowerMap.put(towerID, node);
+        myTowerMap.put(towerID, new TowerNode(towerProperties));
+        // TODO find way to do this without casting
+        for (String n : (List<String>) towerProperties.get(NEXT_TOWER)) {
+            myTowerMap.get(towerID).addNextNode(myTowerMap.get(n));
+        }
     }
 
     public List<String> getNextTowers (String towerID) {
