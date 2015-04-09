@@ -5,12 +5,6 @@ package authoringEnvironment;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.ResourceBundle;
-import authoringEnvironment.editors.Editor;
-import authoringEnvironment.editors.LevelEditor;
-import authoringEnvironment.editors.MapEditor;
-import authoringEnvironment.editors.TowerEditor;
-import authoringEnvironment.editors.WaveEditor;
-import authoringEnvironment.editors.MainEditor;
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
@@ -28,6 +22,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import authoringEnvironment.editors.Editor;
 
 /**
  * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
