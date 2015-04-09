@@ -35,10 +35,5 @@ public class Controller {
 	public static Editor getEditor(String s){
 		return myEditors.get(s);
 	}
-	
-	public static TileMap getActiveMap(){
-		return myEditors.get("maps").getActiveMap();  //TODO: bad hardcoding again
-	}
-	
 
 }

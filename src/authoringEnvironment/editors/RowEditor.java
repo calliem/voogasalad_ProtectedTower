@@ -1,6 +1,7 @@
 package authoringEnvironment.editors;
 
 import java.awt.ScrollPane;
+import java.util.List;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
@@ -28,6 +29,12 @@ public class RowEditor extends Editor {
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

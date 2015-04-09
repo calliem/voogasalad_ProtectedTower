@@ -44,14 +44,18 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	private static final double TEXT_FIELD_WIDTH = MainEnvironment.getEnvironmentWidth()/32;
 	private int myLives;
 	private TileMap myActiveMap;
+	private TileMap mySelectedMap;
 	private static final int DEFAULT_LIVES = 20;
 
-	public MapSidebar(ResourceBundle resources, TileMap activeMap, List<Node> maps) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
+	public MapSidebar(ResourceBundle resources,List<Node> maps, TileMap activeMap) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
 		super(resources, maps);
 		myActiveMap = activeMap;
+		
+		//mySelectedMap = activeMap;
 		myLives = DEFAULT_LIVES;		
 		/*ObservableList<PathView> pathList = FXCollections.observableArrayList();
 		getChildren().add(createListView(pathList, 300));*/
+		createMapSettings();
 		
 	}
 	
@@ -134,6 +138,12 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	
 	//TODO: remove duplicated code
 	private void setGridDimensions(){
+		if (myActiveMap == null)
+			System.out.println("LE MAP IS NULLL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			else
+				System.out.println(myActiveMap.getNumRows());
+		
+		System.out.println("setting grid dimensions");
 		HBox selection = new HBox();
 		selection.setSpacing(PADDING); 
 		Text text = new Text(getResources().getString("GridDimensions"));
@@ -172,24 +182,36 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 
 	private void setEditMapButtons(){
 		Button saveMapButton = new Button(getResources().getString("SaveMap"));
-		saveMapButton.setOnMouseClicked(e -> myMaps.add(myActiveMap));
+		saveMapButton.setOnMouseClicked(e -> saveMap(myActiveMap));
 		Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
 		deleteMapButton.setOnMouseClicked(e -> removeMap());
 		getChildren().addAll(saveMapButton, deleteMapButton);	
 	}
 	
 	private void removeMap(){
-		System.out.println(myMaps);
-		if (myMaps.contains(myActiveMap)){
-			myMaps.remove(myActiveMap);
-			System.out.println(myMaps);
+		System.out.println(getMaps());
+		if (getMaps().contains(myActiveMap)){
+			getMaps().remove(myActiveMap);
+			System.out.println(getMaps());
 		}
 		else{
 			System.out.println("You cannot remove a map that has not been saved previously.");
 			//TODO: show error
 			//or only include delete map buttons for maps that have already been saved
+		}	
+	}
+	
+	/**
+	 * Saves the current active map into the map arraylist. The ArrayList is ordered by most recently saved maps, which will contain the highest index. Saving a currently existing map will update its index to the highest possible one. This allows for easy searching and also for getting the most recently used active map from other methods/classes.
+	 * @param activeMap
+	 */
+	private void saveMap(TileMap activeMap){
+		if (!getMaps().contains(activeMap)) //the edited and stored activemaps technically should map to the same address right?
+			getMaps().add(activeMap);
+		else{
+			getMaps().remove(activeMap);
+			getMaps().add(activeMap);
 		}
-			
 	}
 	
 	private void updateMapDim(String numRows, String numCols){

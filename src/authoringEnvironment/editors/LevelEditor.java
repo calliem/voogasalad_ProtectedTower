@@ -46,10 +46,6 @@ public class LevelEditor extends MainEditor{
     	
     	
     }
-    
-    public ObservableList<LevelView> getLevels(){
-    	return myLevels;
-    }
 
 	@Override
 	public List<Node> getObjects() {

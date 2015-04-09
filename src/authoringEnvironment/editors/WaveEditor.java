@@ -2,6 +2,7 @@ package authoringEnvironment.editors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javafx.geometry.Dimension2D;
@@ -152,7 +153,6 @@ public class WaveEditor extends MainEditor {
 		return new ArrayList<>();
 	}
 
-
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
@@ -163,5 +163,11 @@ public class WaveEditor extends MainEditor {
 	protected void createMap() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

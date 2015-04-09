@@ -30,7 +30,6 @@ public abstract class MainEditor extends Editor {
 	
 	public MainEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
-		// TODO refactor this class. It may not be necessary other than setting up gridpane because the grid is really only created once and pulled up in the subsequent maps
 	}
 
 	  /**

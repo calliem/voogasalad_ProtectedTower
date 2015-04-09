@@ -112,7 +112,7 @@ public class MainEnvironment {
 	}
 	
 	private void update(Tab selectedTab){
-		System.out.println("UPDATETAB()---------");
+		//System.out.println("UPDATETAB()---------");
 		/*
 		System.out.println("previousTab" + previousTab);
 		System.out.println("selectedTab" + selectedTab);

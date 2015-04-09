@@ -275,4 +275,10 @@ public class TowerEditor extends PropertyEditor{
         return scale;
     }
 
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

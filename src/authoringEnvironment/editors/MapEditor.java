@@ -37,23 +37,23 @@ public class MapEditor extends MainEditor {
 
     public MapEditor(Dimension2D dim, Stage s) {
         super(dim, s);
-        getPane().add(new MapSidebar(myResources, myActiveMap, myMaps),1,0); //TODO: check map dependency
+        System.out.println("hi i got here");
+        if (myActiveMap == null){
+        	System.out.println("THE MAP EDITOR'S ACTIVE MAP IS ALSO NULLLLLLLL");
+        }
+        getPane().add(new MapSidebar(myResources, myMaps, myActiveMap),1,0); //TODO: check map dependency //if you use this it seems to break the code 
         //myMaps = FXCollections.observableArrayList();
         myMaps = new ArrayList<Node>(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
-        myMaps.add(new TileMap(10, 10, 10));
-        myMaps.add(new Rectangle());
-
+        myMaps.add(myActiveMap);
+        System.out.println("Hi");
+        
+        
     }
 
     public SpriteView[][] getTiles(){
         // TODO return actual map tiles
         return new SpriteView[0][0];
     }
-
- /*   public List<Node> getMaps() {
-		// TODO return actual GameMaps
-		return myMaps;
-	};*/
     
     public TileMap getActiveMap(){
     	return myActiveMap;
@@ -61,18 +61,13 @@ public class MapEditor extends MainEditor {
 
     @Override
 	protected void createMap() {
-        // TODO Auto-generated method stub
         myActiveMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);	
+        System.out.println("THE ACTIVE MAP IS ALREADY CREATED ==========================");
         getMapWorkspace().getChildren().add(myActiveMap);
-        
-        //need to somehow update here as well
-     /*   MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps");  //TODO: find a way to get sthe same resource file but to also use myResources.getString() on the proper resource file //how to avoid this issue of more dependencies on this string name. lots of code will have to change in order to change this; maybe use indexes instead?
-    	getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());*/
     }
 
 	@Override
 	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
 		return myMaps;
 	}
 

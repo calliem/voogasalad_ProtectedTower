@@ -1,5 +1,7 @@
 package authoringEnvironment.editors;
 
+import java.util.List;
+
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.stage.Stage;
@@ -20,6 +22,12 @@ public class TileEditor extends PropertyEditor{
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

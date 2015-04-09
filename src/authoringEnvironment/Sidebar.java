@@ -22,7 +22,7 @@ import authoringEnvironment.objects.TileMap;
 public abstract class Sidebar extends VBox { //extend gridpane pls
 	
 	private ResourceBundle myResources;
-	ObservableList<TileMap> myMaps;
+	private List<Node> myMaps;
 	
 	private static final double PADDING = MainEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead
 	private static final double LISTVIEW_HEIGHT = MainEnvironment.getEnvironmentHeight()/6;
@@ -30,16 +30,19 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 
 
 	public Sidebar(ResourceBundle resources, List<Node> maps){
+		
 		myResources = resources;
+		myMaps = maps;
 		setDimensionRestrictions();
-		createMapSettings();
+		//createMapSettings();
 	}
+	
 
 	protected ResourceBundle getResources(){
 		return myResources;
 	}
 
-	protected ObservableList<TileMap> getMaps(){
+	protected List<Node> getMaps(){
 		return myMaps;
 	}
 	

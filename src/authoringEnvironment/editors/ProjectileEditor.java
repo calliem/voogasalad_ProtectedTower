@@ -1,11 +1,13 @@
 package authoringEnvironment.editors;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * Sets up the projectile editor that allows the user to create projectiles as well as specify their parameters and properties 
  * @author Callie Mao
  */
+
 
 
 import javafx.geometry.Dimension2D;
@@ -28,5 +30,11 @@ public class ProjectileEditor extends PropertyEditor {
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

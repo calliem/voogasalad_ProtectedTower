@@ -115,7 +115,7 @@ public class ProjectReader {
 					e1.printStackTrace();
 				}
 				m.addTab(e, myResources.getString(s), tabsToCreate.get(s));
-				System.out.println("editor"  + e);
+				System.out.println("=/////editor " + myResources.getString(s) + " "  + e);
 				Controller.updateEditor(myResources.getString(s), e);
 			}
 		}
@@ -142,16 +142,16 @@ public class ProjectReader {
 		//TODO: fix order that the tabs are displayed 
 
 		File editors = new File(editorPackage);
-		System.out.println(editors.toString());
-		System.out.println(editorPackage);
+		//System.out.println(editors.toString());
+		//System.out.println(editorPackage);
 		File[] allEditors = editors.listFiles();
-		System.out.println("All editors " + allEditors);
+		//System.out.println("All editors " + allEditors);
 		String[] editorNames = new String[allEditors.length];
 		for(int i = 0; i < allEditors.length; i++){
 			String untrimmedName = allEditors[i].getName();
 			//trim off ".java"
 			editorNames[i] = untrimmedName.substring(0, untrimmedName.indexOf("."));
-			System.out.println(editorNames[i]);
+		//	System.out.println(editorNames[i]);
 		}
 		return editorNames;
 	}
