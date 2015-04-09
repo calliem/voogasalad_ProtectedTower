@@ -3,7 +3,8 @@ package engine.element;
 import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
-import engine.Updateable;
+import engine.UpdateAndReturnable;
+import engine.element.sprites.Enemy;
 
 
 /**
@@ -13,7 +14,7 @@ import engine.Updateable;
  * @author Qian Wang
  *
  */
-public class Round extends GameElement implements Updateable, Endable {
+public class Round extends GameElement implements UpdateAndReturnable, Endable {
     private List<Wave> myWaves;
     private int myDelay; // defines how many frames to wait between sending waves
     private int myCurrentDelay = 0;
@@ -25,14 +26,16 @@ public class Round extends GameElement implements Updateable, Endable {
 
     @Override
     public boolean hasEnded () {
-        if (myActiveWaveIndex >= myWaves.size()) { return true; }
+        if (myActiveWaveIndex >= myWaves.size()) {
+            return true;
+        }
         return false;
     }
 
     @Override
-    public void update (int counter) {
+    public List<Enemy> update (int counter) {
         if (myCurrentDelay == 0) {
-            myWaves.get(myActiveWaveIndex).update(counter);
+            return myWaves.get(myActiveWaveIndex).update(counter);
         }
         if (myWaves.get(myActiveWaveIndex).hasEnded()) {
             myCurrentDelay++;
@@ -41,6 +44,7 @@ public class Round extends GameElement implements Updateable, Endable {
                 myActiveWaveIndex++;
             }
         }
+        return null;
     }
 
 }

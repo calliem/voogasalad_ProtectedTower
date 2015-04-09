@@ -3,7 +3,8 @@ package engine.element;
 import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
-import engine.Updateable;
+import engine.UpdateAndReturnable;
+import engine.element.sprites.Enemy;
 
 
 /**
@@ -15,15 +16,17 @@ import engine.Updateable;
  * @author Bojia Chen
  * @author Qian Wang
  */
-public class Level extends GameElement implements Updateable, Endable {
+public class Level extends GameElement implements UpdateAndReturnable, Endable {
     private List<Round> myRounds;
     private double myHealth;
     private int myLives;
+    private int myCurrentRound;
 
     // TODO: Win/Lose Conditions
 
     public Level () {
         myRounds = new ArrayList<>();
+        myCurrentRound = 0;
     }
 
     @Override
@@ -33,9 +36,9 @@ public class Level extends GameElement implements Updateable, Endable {
     }
 
     @Override
-    public void update (int counter) {
+    public List<Enemy> update (int counter) {
         // TODO Auto-generated method stub
-
+        return myRounds.get(myCurrentRound).update(counter);
     }
 
 }

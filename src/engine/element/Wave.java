@@ -3,7 +3,7 @@ package engine.element;
 import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
-import engine.Updateable;
+import engine.UpdateAndReturnable;
 import engine.element.sprites.Enemy;
 
 
@@ -14,7 +14,7 @@ import engine.element.sprites.Enemy;
  * @author Qian Wang
  *
  */
-public class Wave extends GameElement implements Updateable, Endable {
+public class Wave extends GameElement implements UpdateAndReturnable, Endable {
     private List<Enemy> myEnemies;
     private double mySendRate;
     private int myNumSent = 0;
@@ -25,16 +25,19 @@ public class Wave extends GameElement implements Updateable, Endable {
 
     @Override
     public boolean hasEnded () {
-        if (myNumSent >= myEnemies.size()) { return true; }
+        if (myNumSent >= myEnemies.size()) {
+            return true;
+        }
         return false;
     }
 
     @Override
-    public void update (int counter) {
+    public List<Enemy> update (int counter) {
         if (counter % mySendRate == 0) {
             // TODO send enemy
             myNumSent++;
         }
+        return null; // TODO: Return list of enemies
     }
 
 }
