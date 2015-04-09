@@ -28,13 +28,9 @@ public class GameController {
      * Javafx object so that new nodes can be added for the player to display
      */
     private Group myGroup;
-    private Bank myBank;
-    private int myPoints;
 
     public GameController () {
         myGame = new Game();
-        myBank = new Bank();
-        myPoints = 0;
     }
 
     /**
