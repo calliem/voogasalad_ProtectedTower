@@ -6,6 +6,7 @@
 package authoringEnvironment.editors;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import authoringEnvironment.Controller;
 import authoringEnvironment.MapSidebar;
@@ -31,12 +33,15 @@ public class MapEditor extends MainEditor {
     private static final int DEFAULT_TILE_SIZE = 50; //based on height since monitor height < width and that is usually the limiting factor
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
-	private ObservableList<TileMap> myMaps;
+	private List<Node> myMaps;
 
     public MapEditor(Dimension2D dim, Stage s) {
         super(dim, s);
-        getPane().add(new Sidebar(myResources, myActiveMap, myMaps),1,0); //TODO: check map dependency
-        myMaps = FXCollections.observableArrayList();
+        getPane().add(new MapSidebar(myResources, myActiveMap, myMaps),1,0); //TODO: check map dependency
+        //myMaps = FXCollections.observableArrayList();
+        myMaps = new ArrayList<Node>(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
+        myMaps.add(new TileMap(10, 10, 10));
+        myMaps.add(new Rectangle());
 
     }
 
@@ -45,30 +50,31 @@ public class MapEditor extends MainEditor {
         return new SpriteView[0][0];
     }
 
-	public ObservableList<TileMap> getMaps() {
+ /*   public List<Node> getMaps() {
 		// TODO return actual GameMaps
 		return myMaps;
-	};
+	};*/
+    
+    public TileMap getActiveMap(){
+    	return myActiveMap;
+    }
 
     @Override
 	protected void createMap() {
         // TODO Auto-generated method stub
         myActiveMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);	
-        getMapWorkspace().getChildren().add(myActiveMap.getMap());
+        getMapWorkspace().getChildren().add(myActiveMap);
         
         //need to somehow update here as well
      /*   MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps");  //TODO: find a way to get sthe same resource file but to also use myResources.getString() on the proper resource file //how to avoid this issue of more dependencies on this string name. lots of code will have to change in order to change this; maybe use indexes instead?
     	getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());*/
     }
 
-    public void setActiveMap(TileMap map){
-        myActiveMap = map;
-        //TODO: display the new active map
-    }
-    
-    public TileMap getActiveMap(){
-    	return myActiveMap;
-    }
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return myMaps;
+	}
 
 	
 

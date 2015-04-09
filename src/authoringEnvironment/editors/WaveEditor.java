@@ -158,4 +158,10 @@ public class WaveEditor extends MainEditor {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void createMap() {
+		// TODO Auto-generated method stub
+		
+	}
 }

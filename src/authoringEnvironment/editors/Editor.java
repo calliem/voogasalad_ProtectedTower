@@ -2,6 +2,10 @@
 
 package authoringEnvironment.editors;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.collections.ObservableList;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -65,6 +69,8 @@ public abstract class Editor extends Group{
 	}
    
    public abstract void update();
+   
+   public abstract List<Node> getObjects();
    
 
    

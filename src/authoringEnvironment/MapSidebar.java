@@ -1,5 +1,6 @@
 package authoringEnvironment;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import authoringEnvironment.objects.PathView;
@@ -31,7 +32,7 @@ import javafx.scene.text.Text;
  */
 
 //TODO: abstract further
-public class MapSidebar extends AbstractSideBar { //add a gridpane later on. but a gridpane is hard to edit to set things in between other things...
+public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridpane is hard to edit to set things in between other things...
 
 	//TODO: display sidebar with a gridpane not an HBox to keep everything aligned and beautiful
 	
@@ -41,14 +42,13 @@ public class MapSidebar extends AbstractSideBar { //add a gridpane later on. but
 	private static final double DEFAULT_TILE_DISPLAY_SIZE = MainEnvironment.getEnvironmentWidth()/32;
 	//TODO: is importing the main environment bad design? is this an added dependency?
 	private static final double TEXT_FIELD_WIDTH = MainEnvironment.getEnvironmentWidth()/32;
-	private ResourceBundle myResources;
-	private TileMap myActiveMap;
 	private int myLives;
-	ObservableList<TileMap> myMaps;
+	private TileMap myActiveMap;
 	private static final int DEFAULT_LIVES = 20;
 
-	public MapSidebar(ResourceBundle resources, TileMap activeMap, ObservableList<TileMap> maps) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
-		super(resources, activeMap, maps);
+	public MapSidebar(ResourceBundle resources, TileMap activeMap, List<Node> maps) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
+		super(resources, maps);
+		myActiveMap = activeMap;
 		myLives = DEFAULT_LIVES;		
 		/*ObservableList<PathView> pathList = FXCollections.observableArrayList();
 		getChildren().add(createListView(pathList, 300));*/
@@ -57,12 +57,12 @@ public class MapSidebar extends AbstractSideBar { //add a gridpane later on. but
 	
 	protected void createMapSettings(){
 		//TODO: make a main tab to display the stuff here
-		createTitleText(myResources.getString("GameSettings"));
+		createTitleText(getResources().getString("GameSettings"));
 		setLives();
-		createTitleText(myResources.getString("MapSettings"));
+		createTitleText(getResources().getString("MapSettings"));
 		setGridDimensions();
 		setTileSize();
-		createTitleText(myResources.getString("SetTiles"));
+		createTitleText(getResources().getString("SetTiles"));
 		selectTile();
 		
 		setEditMapButtons();
@@ -73,9 +73,9 @@ public class MapSidebar extends AbstractSideBar { //add a gridpane later on. but
 	private void setLives(){
 		HBox selection = new HBox();
 		selection.setSpacing(PADDING);
-		Text lives = new Text(myResources.getString("Lives"));
+		Text lives = new Text(getResources().getString("Lives"));
 		TextField textField = new TextField(Integer.toString(myLives));
-		Button button = new Button(myResources.getString("Update"));
+		Button button = new Button(getResources().getString("Update"));
 		button.setOnMouseClicked(e -> System.out.println(textField.getText())); //TODO: add to properties file to be saved
 		textField.setPrefWidth(TEXT_FIELD_WIDTH);
 		selection.getChildren().addAll(lives, textField, button);
@@ -85,12 +85,12 @@ public class MapSidebar extends AbstractSideBar { //add a gridpane later on. but
 	private void setTileSize(){
 		HBox selection = new HBox();
 		selection.setSpacing(PADDING);
-		Text lives = new Text(myResources.getString("TileSize"));
+		Text lives = new Text(getResources().getString("TileSize"));
 		TextField textField = new TextField(Integer.toString(myActiveMap.getTileSize()));
-		Button button = new Button(myResources.getString("Update"));
+		Button button = new Button(getResources().getString("Update"));
 		button.setOnMouseClicked(e -> myActiveMap.changeTileSize(Integer.parseInt(textField.getText())));
 		textField.setPrefWidth(TEXT_FIELD_WIDTH);
-		Text px = new Text(myResources.getString("PxSuffix"));
+		Text px = new Text(getResources().getString("PxSuffix"));
 		selection.getChildren().addAll(lives, textField, px, button);
 		getChildren().add(selection);
 	}
@@ -100,7 +100,7 @@ public class MapSidebar extends AbstractSideBar { //add a gridpane later on. but
 		selectTile.setSpacing(30); //remove hardcoding
 		
 		VBox selection = new VBox();
-		Text selectTileColor = new Text(myResources.getString("SelectTileColor")); //TODO: fix
+		Text selectTileColor = new Text(getResources().getString("SelectTileColor")); //TODO: fix
 		ColorPicker picker = new ColorPicker();
 		selection.getChildren().addAll(selectTileColor, picker);
 		
@@ -136,17 +136,17 @@ public class MapSidebar extends AbstractSideBar { //add a gridpane later on. but
 	private void setGridDimensions(){
 		HBox selection = new HBox();
 		selection.setSpacing(PADDING); 
-		Text text = new Text(myResources.getString("GridDimensions"));
+		Text text = new Text(getResources().getString("GridDimensions"));
 		
 		HBox textFields = new HBox();
 		TextField x = new TextField(Integer.toString(myActiveMap.getNumRows()));
 		x.setPrefWidth(TEXT_FIELD_WIDTH); 
-		Text xSeparator = new Text(myResources.getString("DimensionXSeparation"));
+		Text xSeparator = new Text(getResources().getString("DimensionXSeparation"));
 		TextField y = new TextField(Integer.toString(myActiveMap.getNumCols()));
 		textFields.getChildren().addAll(x, xSeparator, y);
 		
 		y.setPrefWidth(TEXT_FIELD_WIDTH);
-		Button setGridDimButton = new Button(myResources.getString("Update"));
+		Button setGridDimButton = new Button(getResources().getString("Update"));
 		setGridDimButton.setOnMouseClicked(e -> updateMapDim(x.getText(), y.getText()));
 		selection.getChildren().addAll(text, textFields,setGridDimButton);
 		getChildren().add(selection);
@@ -158,9 +158,9 @@ public class MapSidebar extends AbstractSideBar { //add a gridpane later on. but
 /*	private Button updateTextField(String s, int boxWidth){
 		HBox selection = new HBox();
 		selection.setSpacing(10);
-		Text lives = new Text(myResources.getString(s));
+		Text lives = new Text(getResources().getString(s));
 		TextField textField = new TextField();
-		Button button = new Button(myResources.getString("Update"));
+		Button button = new Button(getResources().getString("Update"));
 		textField.setPrefWidth(boxWidth);
 		selection.getChildren().addAll(lives, textField, button);
 		getChildren().add(selection);
@@ -171,9 +171,9 @@ public class MapSidebar extends AbstractSideBar { //add a gridpane later on. but
 //TODO: path view
 
 	private void setEditMapButtons(){
-		Button saveMapButton = new Button(myResources.getString("SaveMap"));
+		Button saveMapButton = new Button(getResources().getString("SaveMap"));
 		saveMapButton.setOnMouseClicked(e -> myMaps.add(myActiveMap));
-		Button deleteMapButton = new Button(myResources.getString("DeleteMap"));
+		Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
 		deleteMapButton.setOnMouseClicked(e -> removeMap());
 		getChildren().addAll(saveMapButton, deleteMapButton);	
 	}

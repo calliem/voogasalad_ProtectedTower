@@ -15,10 +15,9 @@ import javafx.scene.text.Text;
  */
 
 //potentially make abstract?
-public class TileMap {
+public class TileMap extends Group{
 
 	//TODO: figure out why gridlines are so weird
-	private Group myMap;
 	private Tile[][] myTiles;
 	private int myTileSize;
 	private Color myActiveColor;
@@ -35,8 +34,8 @@ public class TileMap {
 
 	// user specifies rectangle or square dimensions...allow this flexibility
 	public TileMap(int mapRows, int mapCols, int tileSize) {
-		myMap = new Group();
-    	myMap.setOnDragDetected(e -> myMap.startFullDrag());
+		
+    	setOnDragDetected(e -> startFullDrag());
 		myMapRows = mapRows;
 		myMapCols = mapCols;
 		myTileSize = tileSize;
@@ -47,9 +46,6 @@ public class TileMap {
 		//createGridLines();
 	}
 
-	public Group getMap() {
-		return myMap;
-	}
 	
 	public int addTag(int x, int y, String tag){
 		myTiles[x][y].addTag(tag);
@@ -93,7 +89,7 @@ public class TileMap {
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				myTiles[i][j] = new Tile(myTileSize, i, j);
-				myMap.getChildren().add(myTiles[i][j]); // to speed up	
+				getChildren().add(myTiles[i][j]); // to speed up	
 				attachTileListener(myTiles[i][j]);// time?
 			}
 		}
@@ -118,7 +114,7 @@ public class TileMap {
 					newTiles[i][j] = myTiles[i][j];
 				}
 				attachTileListener(newTiles[i][j]);
-				myMap.getChildren().add(newTiles[i][j]);	
+				getChildren().add(newTiles[i][j]);	
 			}
 		}
 
@@ -134,7 +130,7 @@ public class TileMap {
 	private void clearTiles(){
 		for (int i = 0; i < myMapRows; i++) {
 			for (int j = 0; j < myMapCols; j++) {
-				myMap.getChildren().remove(myTiles[i][j]);
+				getChildren().remove(myTiles[i][j]);
 			}
 		}
 	}

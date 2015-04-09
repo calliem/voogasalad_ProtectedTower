@@ -20,19 +20,25 @@ public class Controller {
 	
 	//private static Controller controller = new Controller();
 	private static  Map<String, Editor> myEditors = new HashMap<String, Editor>(); //is it bad that this is up here
-	private static List<Editor> editors = new ArrayList<Editor>();
+	//private static List<Editor> editors = new ArrayList<Editor>();
 	
 	private Controller(){
 	}
 	
 	public static void updateEditor(String s, Editor editor){
 		myEditors.put(s, editor);
-		editors.add(editor);
+	//	editors.add(editor);
 		System.out.println("Controller list of editors: " + myEditors);
-		System.out.println("Controller list of editors in an arraylist: " + editors);
+	//	System.out.println("Controller list of editors in an arraylist: " + editors);
 	}
 	
 	public static Editor getEditor(String s){
 		return myEditors.get(s);
 	}
+	
+	public static TileMap getActiveMap(){
+		return myEditors.get("maps").getActiveMap();  //TODO: bad hardcoding again
+	}
+	
+
 }

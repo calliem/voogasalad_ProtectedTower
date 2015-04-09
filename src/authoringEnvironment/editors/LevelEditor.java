@@ -2,8 +2,19 @@
 
 package authoringEnvironment.editors;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import authoringEnvironment.Controller;
+import authoringEnvironment.LevelSidebar;
+import authoringEnvironment.MapSidebar;
+import authoringEnvironment.objects.LevelView;
+import authoringEnvironment.objects.TileMap;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Dimension2D;
+import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -12,9 +23,22 @@ import javafx.stage.Stage;
  * @author Callie Mao
  */
 
+//private ObservableList<Round> myRounds;
+
+
+
 public class LevelEditor extends MainEditor{
+	
+	public List<Node> myLevels;
+
+	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/"; //TODO: stop duplicating this default resource package line
+	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "level_editor_english");
+	
+	
     public LevelEditor(Dimension2D dim, Stage s) {
 		super(dim, s);
+		 getPane().add(new LevelSidebar(myResources, Controller.getEditor("Maps").getObjects()),1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
+	     myLevels = new ArrayList<Node>();
 	}
 
     @Override
@@ -22,6 +46,16 @@ public class LevelEditor extends MainEditor{
     	
     	
     }
+    
+    public ObservableList<LevelView> getLevels(){
+    	return myLevels;
+    }
+
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return myLevels;
+	}
 
 	
 	
