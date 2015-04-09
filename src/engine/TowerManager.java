@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import engine.element.sprites.Tower;
-import engine.sprites.TowerFactory;
+import engine.element.sprites.TowerFactory;
 
 
 /**
@@ -34,8 +34,7 @@ public class TowerManager {
      * TODO: Update tower health on upgrade/downgrade.
      * Downgrade health is MIN(Current_health,Max_Health)
      */
-    
-    @SuppressWarnings("unchecked")
+
     public void addTower (String towerID, Map<String, Object> towerProperties) {
         myTowerMap.put(towerID, new TowerNode(towerProperties));
         // TODO find way to do this without casting
