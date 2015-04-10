@@ -18,12 +18,17 @@ public abstract class MoveableSprite extends Sprite {
 //    private Point2D myVelocity;
 //    private double myRange;
 
-    public MoveableSprite (Map<String, Object> params) throws InsufficientParametersException {
+    public MoveableSprite () {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    public MoveableSprite (Map<String, Object> params){
         super(params);
     }
     
-    public MoveableSprite (ImageView img) throws InsufficientParametersException {
-        super(img);
+    public MoveableSprite (ImageView image) {
+        super(image);
+        // TODO Auto-generated constructor stub
     }
 
     // Setters and getters

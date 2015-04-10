@@ -16,13 +16,16 @@ import engine.InsufficientParametersException;
  */
 public class GridCell extends Sprite {
 
+    public GridCell (){
+        super();
+    }
     private List<String> myTags;
 
-    public GridCell (Map<String, Object> params) throws InsufficientParametersException {
+    public GridCell (Map<String, Object> params) {
         super(params);
     }
 
-    public GridCell (ImageView img) throws InsufficientParametersException {
+    public GridCell (ImageView img) {
         super(img);
     }
 

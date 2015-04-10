@@ -15,11 +15,15 @@ import engine.InsufficientParametersException;
  */
 public class Modifier extends Sprite {
 
-	public Modifier (Map<String, Object> params) throws InsufficientParametersException {
+
+    public Modifier (){
+        super();
+    }
+	public Modifier (Map<String, Object> params){
         super(params);
     }
     
-    public Modifier (ImageView img) throws InsufficientParametersException {
+    public Modifier (ImageView img){
         super(img);
     }
 

@@ -4,7 +4,6 @@ import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import engine.Collidable;
-import engine.InsufficientParametersException;
 import engine.element.GameElement;
 
 
@@ -21,17 +20,20 @@ public abstract class Sprite extends GameElement implements Collidable {
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
 
+    private ImageView myImage;
     private Point2D myLocation;
     private String myType;
-    private ImageView myImage;
     private Map<String, Object> myParams;
 
-    public Sprite (Map<String, Object> params) throws InsufficientParametersException {
+    public Sprite () {
+    }
+
+    public Sprite (Map<String, Object> params) {
         myParams = params;
     }
 
-    public Sprite (ImageView img) throws InsufficientParametersException {
-        myImage = img;
+    public Sprite (ImageView i) {
+        myImage = i;
     }
 
     // public abstract List<String> getParameters ();
@@ -110,6 +112,10 @@ public abstract class Sprite extends GameElement implements Collidable {
     @Override
     public double getBoundingWidth () {
         return (double) super.getParameter(PARAMETER_BOUNDING_WIDTH);
+    }
+
+    public ImageView getImageView () {
+        return myImage;
     }
 
     // Abstract methods

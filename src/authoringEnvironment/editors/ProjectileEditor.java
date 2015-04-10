@@ -1,5 +1,6 @@
 package authoringEnvironment.editors;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -8,26 +9,32 @@ import java.util.ResourceBundle;
  */
 
 
+
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
 public class ProjectileEditor extends PropertyEditor {
-    public ProjectileEditor(Dimension2D dim, Stage s) {
-        super(dim);
+    public ProjectileEditor() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public Node configureUI() {
+    public void configureUI() {
         // TODO Auto-generated method stub
-        return null;
     }
 
 	@Override
-	protected void update() {
+	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

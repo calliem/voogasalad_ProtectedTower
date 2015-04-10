@@ -17,9 +17,10 @@ import authoringEnvironment.setting.Setting;
 /**
  * 
  * @author Johnny Kumpf
- *
+ * @author Callie Mao (updates to controller)
  */
 public class ProjectReader {
+
 
     private static final String paramListFile = "resources/part_parameters";
     private static final String paramSpecsFile = "resources/parameter_datatype";
@@ -110,8 +111,8 @@ public class ProjectReader {
                 String toCreate = "authoringEnvironment.editors." + s;
                 try {
                     e = (Editor) Class.forName(toCreate)
-                            .getConstructor(Dimension2D.class, Stage.class)
-                            .newInstance(myDimensions, myStage);
+                            .getConstructor()
+                            .newInstance();
                 } catch (InstantiationException e1){ 
                     System.err.println("Constructor Editor(Dimension2D.class, Stage.class) doesn't exist or was"
                             + "incorrectly called");
@@ -129,6 +130,8 @@ public class ProjectReader {
                     e1.printStackTrace();
                 }
                 m.addTab(e, myResources.getString(s), tabsToCreate.get(s));
+				Controller.updateEditor(myResources.getString(s), e);
+
             }
         }
     }
