@@ -24,8 +24,8 @@ public class GridCell extends Sprite {
 	public GridCell (Map<String, Object> params) throws InsufficientParametersException {
         super(params);
     }
-    
-    public GridCell (ImageView img) throws InsufficientParametersException {
+
+    public GridCell (ImageView img) {
         super(img);
     }
     
@@ -62,7 +62,7 @@ public class GridCell extends Sprite {
     public double getCenterY () {
         return centerLocation.getY();
     }
-    
+
     @Override
     public boolean isTargetableBy (String type) {
         // TODO Auto-generated method stub
@@ -73,5 +73,16 @@ public class GridCell extends Sprite {
     public boolean isCollidableWith (String type) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    public boolean isObstacle (String type) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void collide (Sprite sprite) {
+        // TODO Auto-generated method stub
+
     }
 }
