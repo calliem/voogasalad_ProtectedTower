@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -79,11 +80,11 @@ public class GamePlayer extends Application{
 				}
 			});
 			//game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight, availableTowers);
-			ImageView test = new ImageView(".\\images\\addtower.png");
-			ImageView test2 = new ImageView(".\\images\\addtower.png");
-			ImageView test3 = new ImageView(".\\images\\addtower.png");
-			ImageView test4 = new ImageView(".\\images\\addtower.png");
-			ImageView test5 = new ImageView(".\\images\\addtower.png");
+			ImageView test = new ImageView(".\\images\\liltower.jpg");
+			ImageView test2 = new ImageView(".\\images\\liltower.jpg");
+			ImageView test3 = new ImageView(".\\images\\liltower.jpg");
+			ImageView test4 = new ImageView(".\\images\\liltower.jpg");
+			ImageView test5 = new ImageView(".\\images\\liltower.jpg");
 			availableTowers.add(new Tower(test));
 			availableTowers.add(new Tower(test2));
 			availableTowers.add(new Tower(test3));
@@ -117,7 +118,6 @@ public class GamePlayer extends Application{
 				    }
 				
 			});
-			myView.setFitWidth(towerGrid.getColumnConstraints().get(currentSize%2).getPrefWidth());
 			towerGrid.add(myView, currentSize%2, currentSize/2);
 			GridPane.setHgrow(myView, Priority.NEVER);
 		}	
@@ -228,39 +228,28 @@ public class GamePlayer extends Application{
 		mainArea.setPrefWidth(screenWidth - screenWidth/4);
 		mainArea.setPrefHeight(screenHeight);
 		mainArea.setStyle("-fx-background-color: #00dbc1");
-		mainArea.setOnDragEntered(new EventHandler<DragEvent>() {
+		mainArea.setOnDragOver(new EventHandler<DragEvent>() {
+			@Override 
 		    public void handle(DragEvent event) {
-		    /* the drag-and-drop gesture entered the target */
-		    /* show to the user that it is an actual gesture target */
-		         if (event.getGestureSource() != mainArea &&
-		                 event.getDragboard().hasImage()) {
-		             mainArea.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
-		         }
-		                
-		         event.consume();
-		    }
-		});
-		mainArea.setOnDragExited(new EventHandler<DragEvent>() {
-		    public void handle(DragEvent event) {
-		    /* the drag-and-drop gesture entered the target */
-		    /* show to the user that it is an actual gesture target */
-		         if (event.getGestureSource() != mainArea &&
-		                 event.getDragboard().hasImage()) {
-		             mainArea.setBackground(new Background(new BackgroundFill(Color.BLUE, null, null)));
-		         }
-		                
-		         event.consume();
+		        Dragboard db = event.getDragboard();
+		        if (db.hasImage()) {
+		            event.acceptTransferModes(TransferMode.ANY);
+		        }
+		        event.consume();
 		    }
 		});
 		mainArea.setOnDragDropped(new EventHandler<DragEvent>(){
 			 public void handle(DragEvent event) {
-	                /* data dropped */
-	                System.out.println("onDragDropped");
 	                /* if there is a string data on dragboard, read it and use it */
 	                Dragboard db = event.getDragboard();
 	                boolean success = false;
 	                if (db.hasImage()) {
-	                    mainArea.getChildren().add(new ImageView(db.getImage()));
+	                	ImageView place = new ImageView(db.getImage());
+	                	place.setTranslateX(event.getScreenX()-place.getBoundsInLocal().getWidth()/2);
+	                	place.setTranslateY(event.getScreenY()-place.getBoundsInLocal().getHeight()/2);
+	                	// TODO: tell engine about this
+	                	//game.addTower(place,);
+	                    mainArea.getChildren().add(place);
 	                    success = true;
 	                }
 	                /* let the source know whether the string was successfully 
