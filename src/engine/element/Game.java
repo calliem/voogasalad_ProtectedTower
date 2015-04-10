@@ -2,7 +2,7 @@ package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
-import engine.GameState;
+import engine.Bank;
 import engine.Updateable;
 import engine.conditions.Condition;
 
@@ -17,18 +17,24 @@ import engine.conditions.Condition;
  */
 public class Game extends GameElement implements Updateable {
 
+    private static final String PARAMETER_HEALTH = "HP";
+    
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
     private int myActiveLevel;
-    public GameState myGameState;
+    // public GameState myGameState;
+    private Bank myBank;
+    private int myPoints;
 
     public Game () {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
         myLayout = new Layout();
         myActiveLevel = 0;
-        myGameState = new GameState();
+        // myGameState = new GameState();
+        myBank = new Bank();
+        myPoints = 0;
     }
 
     public void endGame () {
@@ -37,7 +43,7 @@ public class Game extends GameElement implements Updateable {
 
     @Override
     public void update (int counter) {
-        myConditions.forEach(c -> c.act(myGameState));
+        myConditions.forEach(c -> c.act((int) super.getParameter(PARAMETER_HEALTH)));
         myLevels.get(myActiveLevel).update(counter);
         myLayout.update(counter);
     }
