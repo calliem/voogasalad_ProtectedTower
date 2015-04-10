@@ -16,7 +16,7 @@ public class Tile extends Rectangle {
 	// private ImageView myImage;
 	private boolean isPath;
 	private boolean isSelected;
-	private double myTileSize;
+	private double myTileSize; //TODO: this should be written in the map since the tile does not need to kno this 
 	private int myColNum;
 	private int myRowNum;
 	private ArrayList<String> myTags;
@@ -25,7 +25,7 @@ public class Tile extends Rectangle {
 	// will have the same image for a path?
 	// TODO: create a text box to set grid size and a slider to set tile size
 	// that would only allow numbers in correct increments that would fit
-
+	private static final Color DEFAULT_COLOR = Color.TRANSPARENT;
 	public Tile(double tileSize, int rowNum, int colNum) {
 		myTileSize = tileSize;
 		myColNum = colNum;
@@ -33,7 +33,8 @@ public class Tile extends Rectangle {
 		// setImage(new Image("/resources/white_square.png"));
 		// setFitWidth(tileSize);
 		// setFitHeight(tileSize);
-		setFill(Color.WHITE);
+		setFill(DEFAULT_COLOR);
+		setOpacity(0.4);
 		setWidth(tileSize);
 		setHeight(tileSize);
 

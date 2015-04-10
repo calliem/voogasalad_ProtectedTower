@@ -175,6 +175,7 @@ public class TowerEditor extends PropertyEditor{
         ImageSelector imgSelector = new ImageSelector();
         imgSelector.addExtensionFilter("png");
         imgSelector.addExtensionFilter("jpg");
+        imgSelector.addExtensionFilter("gif");
         imgSelector.setPreviewImageSize(225, 150);
 
         HBox buttons = new HBox(10);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -23,6 +24,7 @@ public class TileMap extends Group{
 	private Color myActiveColor;
 	private String myName;
 	private ImageView myBackground;
+	private static final String DEFAULT_BACKGROUND_PATH = "resources/Park_Path.png";//white_square.png"; 
 	
 	private HashMap<String, Integer> myTags; //maps a string to the number of elements with that tag
 
@@ -33,7 +35,7 @@ public class TileMap extends Group{
 	private Group myGridLines;
 	
 	private static final Color DEFAULT_TILE_COLOR = Color.WHITE;
-	private static final String DEFAULT_IMAGE_PATH = "/src/resources/white_square.png"; 
+	
 
 	// user specifies rectangle or square dimensions...allow this flexibility
 	public TileMap(int mapRows, int mapCols, int tileSize) {
@@ -43,9 +45,18 @@ public class TileMap extends Group{
 		myTileSize = tileSize;
 		myGridLines = new Group();
 		myActiveColor = DEFAULT_TILE_COLOR;
+		myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
+		setImageDimensions(myBackground, myMapCols*myTileSize, myMapRows*myTileSize);
+		getChildren().add(myBackground);
 		//TODO: sethover x, y coordinate, tile size, etc.
+		
 		createMap();
 		createGridLines();
+	}
+	
+	private void setImageDimensions(ImageView image, int width, int height){
+		image.setFitWidth(width);
+		image.setFitHeight(height);
 	}
 	
 	public int addTag(int x, int y, String tag){
@@ -58,6 +69,10 @@ public class TileMap extends Group{
 		myTiles[x][y].removeTag(tag);
 		int numTags = myTags.get(tag);
 		return --numTags;
+	}
+	
+	public void setBackground(String filepath){
+		myBackground = new ImageView(filepath);
 	}
 	
 	//TODO:duplicated tile listeners being added/deleted?
@@ -75,6 +90,7 @@ public class TileMap extends Group{
 	}
 			
 	public void changeTileSize(int tileSize) {
+		System.out.println(myMapCols*myTileSize);
 		myTileSize = tileSize;
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
@@ -82,6 +98,8 @@ public class TileMap extends Group{
 			}
 		}
 		updateGridLines();
+		System.out.println(myMapCols*myTileSize);
+		setImageDimensions(myBackground, myMapCols*myTileSize, myMapRows*myTileSize);
 	}
 	
 	public void removeTileListeners(){
@@ -110,6 +128,7 @@ public class TileMap extends Group{
 				attachTileListener(myTiles[i][j]);
 			}
 		}
+		setImageDimensions(myBackground, myMapCols*myTileSize, myMapRows*myTileSize);
 	}
 	
 	/**
@@ -137,6 +156,7 @@ public class TileMap extends Group{
 		myMapCols = newMapCols;
 		myMapRows = newMapRows;	
 		myTiles = newTiles;
+		setImageDimensions(myBackground, myMapCols*myTileSize, myMapRows*myTileSize);
 		updateGridLines();
 	}
 	

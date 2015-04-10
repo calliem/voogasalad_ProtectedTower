@@ -1,5 +1,8 @@
 package authoringEnvironment.map;
 
+import imageselectorTEMP.GraphicFileChooser;
+import imageselectorTEMP.ImageSelector;
+
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -16,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -40,8 +44,9 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	//TODO: display sidebar with a gridpane not an HBox to keep everything aligned and beautiful
 	
 	private static final double PADDING = MainEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead
+	
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
-	private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.WHITE;
+	private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
 	private static final double DEFAULT_TILE_DISPLAY_SIZE = MainEnvironment.getEnvironmentWidth()/32;
 	//TODO: is importing the main environment bad design? is this an added dependency?
 	private static final double TEXT_FIELD_WIDTH = MainEnvironment.getEnvironmentWidth()/32;
@@ -63,7 +68,6 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		/*ObservableList<PathView> pathList = FXCollections.observableArrayList();
 		getChildren().add(createListView(pathList, 300));*/
 		createMapSettings();
-		
 	}
 
 
@@ -72,9 +76,10 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		//createTitleText(getResources().getString("GameSettings"));
 		//setLives();
 		createTitleText(getResources().getString("MapSettings"));
-		createSettings();
 		createTitleText(getResources().getString("SetTiles"));
 		selectTile();
+		createSettings();
+		
 		
 		setEditMapButtons();
 
@@ -172,6 +177,41 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		setGridDimButton.setOnMouseClicked(e -> updateMapDim(tileRowDisplay.getText(), tileColDisplay.getText()));
 		selection.getChildren().addAll(text, textFields,setGridDimButton);
 		getChildren().add(selection);
+		
+		
+		
+		setImage();
+		setTileSize();
+	}
+	
+	private void setImage(){
+		HBox selection = new HBox();
+		selection.setSpacing(PADDING); 
+		
+	//	Text text = new Text("Select Background Image");
+		//getResources().getString("Select Background Image")
+		
+		//TODO: this is duplicated from Kevin's class
+		GraphicFileChooser imgSelector = new GraphicFileChooser("Select background");
+        imgSelector.addExtensionFilter("png");
+        imgSelector.addExtensionFilter("jpg");
+        
+        Button create = new Button("Create");
+        create.setOnAction((e) -> {
+            doCoolStuff(imgSelector.getSelectedFileName());
+        });
+        
+        getChildren().addAll(imgSelector, create);
+
+        /*Button cancel = new Button("Cancel");
+        cancel.setOnAction((e) -> {
+            hideEditScreen(promptDisplay);
+        });*/
+		
+	}
+	
+	private void doCoolStuff(String image){
+		System.out.println("image " + image);
 	}
 
 	
@@ -221,6 +261,7 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
         setDefaultTextFieldValues(); //TODO: ______
         getMapWorkspace().getChildren().add(myActiveMap);
     }*/
+	
 	
 	protected void createMap(){
 		getMapWorkspace().createDefaultMap();

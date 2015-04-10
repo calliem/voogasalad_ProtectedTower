@@ -38,6 +38,7 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 		myMaps = maps;
 		myMapWorkspace = mapWorkspace;
 		setDimensionRestrictions();
+		setSpacing(10);
 		//createMapSettings();
 	}
 	
