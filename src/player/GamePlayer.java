@@ -59,6 +59,7 @@ public class GamePlayer extends Application{
 	private GridPane towerGrid;
 	private double screenWidth = 0;
 	private double screenHeight = 0;
+	private Pane mainArea;
 	public GamePlayer() throws InsufficientParametersException {
 		game = new GameController();
 	}
@@ -67,6 +68,7 @@ public class GamePlayer extends Application{
 		
 		try{
 			engineRoot.getChildren().clear();
+			towerGrid.getChildren().clear();
 			File gameFile = getGameFile();
 			playerStage.setTitle(gameFile.getName().split("\\.")[0]);
 			ObservableList<Tower> availableTowers = FXCollections.observableArrayList(new ArrayList<>());
@@ -79,17 +81,35 @@ public class GamePlayer extends Application{
 				}
 				}
 			});
+			ObservableList<Tower> displayList = FXCollections.observableArrayList(new ArrayList<>());
+			displayList.addListener(new ListChangeListener<Sprite>(){
+				@Override
+				public void onChanged(Change change) {
+				while(change.next()){
+					for(Object obj:change.getAddedSubList()){
+						Sprite placeSprite =(Sprite) obj;
+						mainArea.getChildren().add(placeSprite.getImageView());
+					}
+					for(Object obj:change.getRemoved()){
+						Sprite placeSprite =(Sprite) obj;
+						mainArea.getChildren().remove(placeSprite.getImageView());
+					}
+				}
+				}
+			});
 			//game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight, availableTowers);
 			ImageView test = new ImageView(".\\images\\liltower.jpg");
 			ImageView test2 = new ImageView(".\\images\\liltower.jpg");
 			ImageView test3 = new ImageView(".\\images\\liltower.jpg");
 			ImageView test4 = new ImageView(".\\images\\liltower.jpg");
 			ImageView test5 = new ImageView(".\\images\\liltower.jpg");
+			test5.setTranslateX(300);
+			test5.setTranslateY(300);
 			availableTowers.add(new Tower(test));
 			availableTowers.add(new Tower(test2));
 			availableTowers.add(new Tower(test3));
 			availableTowers.add(new Tower(test4));
-			availableTowers.add(new Tower(test5));
+			displayList.add(new Tower(test5));
 		}
 		catch(NullPointerException e){
 		}
@@ -145,7 +165,7 @@ public class GamePlayer extends Application{
 		Group root = new Group();
 		Group menu = new Group();
 		sideBar = makeSideBar();
-		Pane mainArea = makeMainPane();
+		mainArea = makeMainPane();
 		mainScene = new Scene(root);
 		root.getChildren().addAll(mainArea,sideBar,menu);
 		menu.getChildren().add(setUpMenu());
@@ -245,8 +265,8 @@ public class GamePlayer extends Application{
 	                boolean success = false;
 	                if (db.hasImage()) {
 	                	ImageView place = new ImageView(db.getImage());
-	                	place.setTranslateX(event.getScreenX()-place.getBoundsInLocal().getWidth()/2);
-	                	place.setTranslateY(event.getScreenY()-place.getBoundsInLocal().getHeight()/2);
+	                	place.setTranslateX(event.getSceneX()-Math.floor(db.getImage().getWidth()/2));
+	                	place.setTranslateY(event.getSceneY()-Math.floor(db.getImage().getHeight()/2));
 	                	// TODO: tell engine about this
 	                	//game.addTower(place,);
 	                    mainArea.getChildren().add(place);
