@@ -7,6 +7,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -18,8 +19,9 @@ import javafx.scene.text.Text;
  * @author Johnny
  *
  */
-public abstract class Setting extends HBox{
+public abstract class Setting extends VBox{
     private String label;
+    protected HBox basicLayout;
     protected ImageView error;
     protected String dataAsString;
     private TextField editableField;
@@ -27,8 +29,11 @@ public abstract class Setting extends HBox{
     public Setting(String label, String value){
         //TODO: remove magic number
         super(10);
-        dataAsString = value;
         this.setAlignment(Pos.CENTER);
+        
+        dataAsString = value;
+        basicLayout = new HBox(10);
+        basicLayout.setAlignment(Pos.CENTER);
         
         error = new ImageView(new Image(String.format("images/%s.png", "error")));
         ScaleImage.scale(error, 20, 20);
@@ -37,7 +42,8 @@ public abstract class Setting extends HBox{
         Text parameter = new Text(String.format("%s:", label));
         parameter.setFill(Color.WHITE);
         
-        this.getChildren().add(parameter);
+        basicLayout.getChildren().add(parameter);
+        this.getChildren().add(basicLayout);
         setupInteractionLayout();
         parseField();
     }
@@ -52,7 +58,8 @@ public abstract class Setting extends HBox{
     //if not, we can have two setting subclasses, one for normal stuff, one for file selectors
     protected void setupInteractionLayout(){
         editableField = new TextField(dataAsString);
-        this.getChildren().add(editableField);
+        editableField.setAlignment(Pos.CENTER);
+        basicLayout.getChildren().add(editableField);
     }
     /**
      * Returns the name of the parameter represented
@@ -76,7 +83,7 @@ public abstract class Setting extends HBox{
      * Hides the error alert for this parameter.
      */
     protected void hideErrorAlert(){
-        this.getChildren().remove(error);
+        basicLayout.getChildren().remove(error);
     }
     
     protected TextField textBox(){
@@ -87,8 +94,8 @@ public abstract class Setting extends HBox{
      * Displays the error alert for this parameter.
      */
     protected void displayErrorAlert(String message){
-        if(this.getChildren().get(0) != error){
-            this.getChildren().add(0, error);
+        if(basicLayout.getChildren().get(0) != error){
+            basicLayout.getChildren().add(0, error);
         }
         Tooltip tooltip = new Tooltip(message);
         Tooltip.install(error, tooltip);

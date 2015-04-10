@@ -11,16 +11,9 @@ import javafx.stage.Stage;
  */
 
 public class Main extends Application {
-    private static Stage environmentStage; 
-    
     @Override
     public void start(Stage stage) throws Exception {
-        environmentStage = stage;
         MainEnvironment myView = new MainEnvironment(stage);
-    }
-
-    public static Stage getStage(){
-        return environmentStage;
     }
     
     public static void main(String[] args) {
