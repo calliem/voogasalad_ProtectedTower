@@ -63,7 +63,7 @@ public class Enemy extends MoveableSprite {
     	int speed = (int) super.getParameter(PARAMETER_SPEED);
     	Path path = new Path();
     	for (GridCell cell: myPath){
-    		path.getElements().add(new MoveTo(cell.getLocationX(),cell.getLocationY()));
+    		path.getElements().add(new MoveTo(cell.getCenterX(),cell.getCenterY()));
     	}
     	PathTransition pathTransition = new PathTransition();
     	pathTransition.setDuration(Duration.millis(MOVE_DURATION*(myPath.size())/speed));
