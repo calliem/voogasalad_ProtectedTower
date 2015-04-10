@@ -45,9 +45,11 @@ public class XMLWriter {
 	 * @return Exact location where the file was saved
 	 */
 	public static String toXML(Object o, String fileName, String dir) {
-		if (!fileName.substring(fileName.length() - 4, fileName.length()).equals(".xml"))
+		if (fileName.indexOf(".") == -1)
 			fileName = fileName + ".xml";
 		File partFile = new File(dir, fileName);
+		System.out.println("dir: " + dir);
+		System.out.println("filename: " + fileName);
 		try {
 			PrintStream out = new PrintStream(partFile);
 			out.println(stream.toXML(o));
@@ -57,7 +59,7 @@ public class XMLWriter {
 			e.printStackTrace();
 		}
 		// System.out.println(fileName + " saved at: " + dir);
-		return dir + "\\" + fileName;
+		return dir + "/" + fileName;
 	}
 
 	/**
