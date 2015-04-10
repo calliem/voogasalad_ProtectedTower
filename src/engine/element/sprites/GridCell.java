@@ -38,4 +38,10 @@ public class GridCell extends Sprite {
         // TODO Auto-generated method stub
 		return false;
     }
+
+	@Override
+	public void collide(Sprite sprite) {
+		// TODO Auto-generated method stub
+		
+	}
 }

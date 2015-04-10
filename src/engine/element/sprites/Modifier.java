@@ -29,4 +29,10 @@ public class Modifier extends Sprite {
         return false;
     }
 
+	@Override
+	public void collide(Sprite sprite) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
