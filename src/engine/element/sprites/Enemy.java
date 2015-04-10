@@ -2,9 +2,10 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javafx.scene.image.ImageView;
 import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -29,9 +30,12 @@ public class Enemy extends MoveableSprite {
 	private static final double MOVE_DURATION = 1000;
 	private static final String PARAMETER_SPEED = "Speed";
 	
-    public Enemy () throws InsufficientParametersException {
-        super();
-        // TODO Auto-generated constructor stub
+	public Enemy (Map<String, Object> params) throws InsufficientParametersException {
+        super(params);
+    }
+    
+    public Enemy (ImageView img) throws InsufficientParametersException {
+        super(img);
     }
 
     @Override
