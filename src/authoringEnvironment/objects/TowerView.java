@@ -1,6 +1,6 @@
 package authoringEnvironment.objects;
 
-import imageselector.util.ScaleImage;
+import imageSelector.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.ScaleTransition;

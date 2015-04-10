@@ -1,6 +1,6 @@
 package authoringEnvironment.editors;
 
-import imageselector.ImageSelector;
+import imageSelector.ImageSelector;
 
 import java.util.ArrayList;
 import java.util.List;

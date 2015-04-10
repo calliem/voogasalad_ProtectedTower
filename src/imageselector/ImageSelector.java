@@ -1,6 +1,6 @@
-package imageselector;
+package imageSelector;
 
-import imageselector.util.ScaleImage;
+import imageSelector.util.ScaleImage;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

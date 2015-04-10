@@ -20,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import authoringEnvironment.GameManager;
+import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.UnitView;
 
@@ -35,6 +36,7 @@ public class WaveEditor extends MainEditor {
 	private Dimension2D myDimensions;
 	private Group myRoot;
 	private Map<String, ArrayList<FlowView>> myWaves;
+	private final String WAVE = "wave";
 
 
 	public WaveEditor(Dimension2D dim, Stage s) {
@@ -134,7 +136,11 @@ public class WaveEditor extends MainEditor {
 			data.add(partFileNames);
 			data.add(delays);
 			
-			//GameManager.addPartToGame("wave", waveName, ProjectReader.something, data);
+			for (String part : ProjectReader.getParamsNoTypeOrName(WAVE)) {
+				System.out.println(part);
+			}
+			
+			GameManager.addPartToGame(WAVE, waveName, ProjectReader.getParamsNoTypeOrName(WAVE), data);
 			});
 
 		VBox buttons = new VBox(10);

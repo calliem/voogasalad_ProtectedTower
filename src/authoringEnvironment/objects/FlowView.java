@@ -1,6 +1,6 @@
 package authoringEnvironment.objects;
 
-import imageselector.util.ScaleImage;
+import imageSelector.util.ScaleImage;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
