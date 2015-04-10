@@ -38,7 +38,7 @@ public class GameController {
      * Those objects are then instantiated and their parameter lists are set.
      * 
      * @param filepath String of location of the game file
-     * @param engineRoot 
+     * @param engineRoot
      */
 
     public void loadGame (String filepath) {

@@ -1,7 +1,6 @@
 package engine.element.sprites;
 
 import java.util.Map;
-
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import engine.Collidable;
@@ -28,15 +27,15 @@ public abstract class Sprite extends GameElement implements Collidable {
 
     public Sprite () {
     }
-    
-    public Sprite (Map<String, Object> params){
-    	myParams = params;
+
+    public Sprite (Map<String, Object> params) {
+        myParams = params;
     }
-    
+
     public Sprite (ImageView i) {
-    	myImage = i;
+        myImage = i;
     }
-    
+
     // public abstract List<String> getParameters ();
 
     // public double getSize () {
@@ -81,9 +80,10 @@ public abstract class Sprite extends GameElement implements Collidable {
         return myLocation.getY();
     }
 
-    public ImageView getImage(){
-    	return myImage;
+    public ImageView getImage () {
+        return myImage;
     }
+
     /**
      * Sets the type of object this is as an uppercase string
      * 
@@ -99,9 +99,9 @@ public abstract class Sprite extends GameElement implements Collidable {
     protected String getType () {
         return myType;
     }
-    
-    public Map<String,Object> getParams () {
-    	return myParams;
+
+    public Map<String, Object> getParams () {
+        return myParams;
     }
 
     @Override
@@ -113,10 +113,11 @@ public abstract class Sprite extends GameElement implements Collidable {
     public double getBoundingWidth () {
         return (double) super.getParameter(PARAMETER_BOUNDING_WIDTH);
     }
-    
-    public ImageView getImageView(){
-    	return myImage;
+
+    public ImageView getImageView () {
+        return myImage;
     }
+
     // Abstract methods
 
     /**
@@ -134,7 +135,6 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @return true if the given type can collide with this object's type
      */
     public abstract boolean isCollidableWith (String type);
-    
 
     /**
      * This method is called when this object collides with another and should include the behavior
@@ -144,5 +144,5 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @return
      */
     public abstract void collide (Sprite sprite);
-    
+
 }
