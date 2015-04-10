@@ -33,7 +33,7 @@ public abstract class Setting extends VBox{
         
         dataAsString = value;
         basicLayout = new HBox(10);
-        basicLayout.setAlignment(Pos.CENTER);
+        basicLayout.setAlignment(Pos.CENTER_RIGHT);
         
         error = new ImageView(new Image(String.format("images/%s.png", "error")));
         ScaleImage.scale(error, 20, 20);
@@ -58,8 +58,12 @@ public abstract class Setting extends VBox{
     //if not, we can have two setting subclasses, one for normal stuff, one for file selectors
     protected void setupInteractionLayout(){
         editableField = new TextField(dataAsString);
+        editableField.setMaxWidth(125);
+        editableField.setMinWidth(125);
         editableField.setAlignment(Pos.CENTER);
-        basicLayout.getChildren().add(editableField);
+        
+        error.setVisible(false);
+        basicLayout.getChildren().addAll(editableField, error);
     }
     /**
      * Returns the name of the parameter represented
@@ -83,7 +87,7 @@ public abstract class Setting extends VBox{
      * Hides the error alert for this parameter.
      */
     protected void hideErrorAlert(){
-        basicLayout.getChildren().remove(error);
+        error.setVisible(false);
     }
     
     protected TextField textBox(){
@@ -94,9 +98,7 @@ public abstract class Setting extends VBox{
      * Displays the error alert for this parameter.
      */
     protected void displayErrorAlert(String message){
-        if(basicLayout.getChildren().get(0) != error){
-            basicLayout.getChildren().add(0, error);
-        }
+        error.setVisible(true);
         Tooltip tooltip = new Tooltip(message);
         Tooltip.install(error, tooltip);
     }
