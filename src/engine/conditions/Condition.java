@@ -1,8 +1,5 @@
 package engine.conditions;
 
-import engine.GameState;
-
-
 /**
  * This abstract class is used as a base class for objects which hold code to check a condition
  * during the game, such as a win condition, lose condition, or condition which triggers an event
@@ -18,16 +15,16 @@ public abstract class Condition {
     /**
      * This method contains the code which checks the specific condition this class implements.
      * 
-     * @param state the current health/score/etc of the game
+     * @param livesRemaining the current health/score/etc of the game
      * @return true if the condition is reached
      */
-    public abstract boolean checkCondition (GameState state);
+    public abstract boolean checkCondition (int livesRemaining);
 
     /**
      * Performs the action that will occur when a condition is reached. This is done by calling on
      * methods in other classes which need to be updated.
      * 
-     * @param state the current health/score/etc of the game
+     * @param livesRemaining the current health/score/etc of the game
      */
-    public abstract void act (GameState state);
+    public abstract void act (int livesRemaining);
 }

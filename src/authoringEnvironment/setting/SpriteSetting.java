@@ -1,6 +1,6 @@
 package authoringEnvironment.setting;
 
-import imageselector.util.ScaleImage;
+import imageselectorTEMP.util.ScaleImage;
 import java.util.ArrayList;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

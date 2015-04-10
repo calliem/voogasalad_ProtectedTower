@@ -1,7 +1,6 @@
 package authoringEnvironment.setting;
 
 import imageselectorTEMP.GraphicFileChooser;
-
 import java.io.File;
 
 import protectedtower.Main;
