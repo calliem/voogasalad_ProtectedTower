@@ -23,8 +23,6 @@ public class GraphicFileChooser extends StackPane{
     private static final int FILE_DISPLAY_HEIGHT = 24;
     private static final int LOAD_BUTTON_WIDTH = 65;
     
-    private Stage myStage;
-    
     private HBox selector;
     private Button loader;
     private FileChooser fileChooser;
@@ -32,9 +30,7 @@ public class GraphicFileChooser extends StackPane{
     private StringProperty filePath;
     private StackPane textDisplay;
     
-    public GraphicFileChooser(Stage stage, String prompt, String defaultFile){
-        myStage = stage;
-        
+    public GraphicFileChooser(String prompt, String defaultFile){
         selector = new HBox(PADDING);
         textDisplay = new StackPane();
 
@@ -60,12 +56,12 @@ public class GraphicFileChooser extends StackPane{
         getChildren().add(selector);
     }
     
-    public GraphicFileChooser(Stage stage, String prompt){
-        this(stage, prompt, null);
+    public GraphicFileChooser(String prompt){
+        this(prompt, null);
     }
     
     private void selectFile(){
-        File file = fileChooser.showOpenDialog(myStage.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             String fileName = file.getName();
             fileDisplay.setText(fileName);
@@ -73,24 +69,24 @@ public class GraphicFileChooser extends StackPane{
         }
     }
     
-    public void setAdditionalOptions(boolean show){
-        if(show){
-            displayAdditionalOptions();
-        }
-    }
-    
-    public void displayAdditionalOptions(){
-        selector.getChildren().remove(0);
-
-        ImageView more = new ImageView(new Image("images/more.png"));
-        ScaleImage.scale(more, 20, 20);
-
-        HBox arrangement = new HBox(10);
-        arrangement.getChildren().addAll(more, textDisplay);
-        arrangement.setAlignment(Pos.CENTER);
-        
-        selector.getChildren().add(0, arrangement);
-    }
+//    public void setAdditionalOptions(boolean show){
+//        if(show){
+//            displayAdditionalOptions();
+//        }
+//    }
+//    
+//    public void displayAdditionalOptions(){
+//        selector.getChildren().remove(0);
+//
+//        ImageView more = new ImageView(new Image("images/more.png"));
+//        ScaleImage.scale(more, 20, 20);
+//
+//        HBox arrangement = new HBox(10);
+//        arrangement.getChildren().addAll(more, textDisplay);
+//        arrangement.setAlignment(Pos.CENTER);
+//        
+//        selector.getChildren().add(0, arrangement);
+//    }
     
     protected Text getFileDisplay(){
         return fileDisplay;

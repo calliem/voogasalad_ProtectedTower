@@ -109,7 +109,7 @@ public abstract class Setting extends HBox{
         return readable;
     }
     
-    public void displaySavedValue () {
+    public void displaySavedValue(){
         editableField.setText(""+dataAsString);
     }
 }
