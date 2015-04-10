@@ -260,7 +260,6 @@ public class GamePlayer extends Application{
 		});
 		mainArea.setOnDragDropped(new EventHandler<DragEvent>(){
 			 public void handle(DragEvent event) {
-	                /* if there is a string data on dragboard, read it and use it */
 	                Dragboard db = event.getDragboard();
 	                boolean success = false;
 	                if (db.hasImage()) {
@@ -275,7 +274,6 @@ public class GamePlayer extends Application{
 	                /* let the source know whether the string was successfully 
 	                 * transferred and used */
 	                event.setDropCompleted(success);
-	                
 	                event.consume();
 	            }
 		});
