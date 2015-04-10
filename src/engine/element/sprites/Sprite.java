@@ -1,11 +1,9 @@
 package engine.element.sprites;
 
 import java.util.Map;
-
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import engine.Collidable;
-import engine.InsufficientParametersException;
 import engine.element.GameElement;
 
 
@@ -22,17 +20,20 @@ public abstract class Sprite extends GameElement implements Collidable {
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
 
+    private ImageView myImage;
     private Point2D myLocation;
     private String myType;
-    private ImageView myImage;
     private Map<String, Object> myParams;
 
-    public Sprite (Map<String, Object> params) throws InsufficientParametersException {
-    	myParams = params;
+    public Sprite () {
     }
-    
-    public Sprite (ImageView img) throws InsufficientParametersException {
-    	myImage = img;
+
+    public Sprite (Map<String, Object> params) {
+        myParams = params;
+    }
+
+    public Sprite (ImageView i) {
+        myImage = i;
     }
 
     // public abstract List<String> getParameters ();
@@ -48,7 +49,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      * 
      * @param location Point2D object representing (x, y) coordinates
      */
-    protected void setLocation (Point2D location) {
+    public void setLocation (Point2D location) {
         myLocation = location;
     }
 
@@ -58,7 +59,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @param x double of x-coordinate
      * @param y double of y-coordinate
      */
-    protected void setLocation (double x, double y) {
+    public void setLocation (double x, double y) {
         myLocation = new Point2D(x, y);
     }
 
@@ -79,9 +80,10 @@ public abstract class Sprite extends GameElement implements Collidable {
         return myLocation.getY();
     }
 
-    public ImageView getImage(){
-    	return myImage;
+    public ImageView getImage () {
+        return myImage;
     }
+
     /**
      * Sets the type of object this is as an uppercase string
      * 
@@ -97,9 +99,9 @@ public abstract class Sprite extends GameElement implements Collidable {
     protected String getType () {
         return myType;
     }
-    
-    public Map<String,Object> getParams () {
-    	return myParams;
+
+    public Map<String, Object> getParams () {
+        return myParams;
     }
 
     @Override
@@ -110,6 +112,10 @@ public abstract class Sprite extends GameElement implements Collidable {
     @Override
     public double getBoundingWidth () {
         return (double) super.getParameter(PARAMETER_BOUNDING_WIDTH);
+    }
+
+    public ImageView getImageView () {
+        return myImage;
     }
 
     // Abstract methods
@@ -129,5 +135,14 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @return true if the given type can collide with this object's type
      */
     public abstract boolean isCollidableWith (String type);
+
+    /**
+     * This method is called when this object collides with another and should include the behavior
+     * of this object, such as stopping movement, or damaging the other object.
+     * 
+     * @param sprite Sprite object that this object collides with
+     * @return
+     */
+    public abstract void collide (Sprite sprite);
 
 }

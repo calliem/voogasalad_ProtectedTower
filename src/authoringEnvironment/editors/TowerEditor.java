@@ -39,7 +39,6 @@ import authoringEnvironment.objects.TowerView;
  *
  */
 public class TowerEditor extends PropertyEditor{
-    private Group myRoot;
     private StackPane myContent;
     private HBox currentRow;
     private boolean overlayActive = false;
@@ -47,6 +46,7 @@ public class TowerEditor extends PropertyEditor{
     private Text empty;
     private List<TowerView> towersCreated;
     private IntegerProperty numTowers;
+    private List<String> myTags;
 
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
@@ -59,8 +59,8 @@ public class TowerEditor extends PropertyEditor{
      * @param rb        the resource bundle containing displayed strings
      * @param s the stage on which the authoring environment is displayed
      */
-    public TowerEditor(Dimension2D dim, Stage s) {
-        super(dim);
+    public TowerEditor() {
+        super();
     }
 
     /**
@@ -75,9 +75,9 @@ public class TowerEditor extends PropertyEditor{
      * Sets up the editor UI.
      */
     @Override
-    public Node configureUI () {
+    protected void configureUI () {
         // TODO Auto-generated method stub
-        myRoot = new Group();
+
         myContent = new StackPane();
         towersCreated = new ArrayList<>();
 
@@ -131,9 +131,7 @@ public class TowerEditor extends PropertyEditor{
 
         myContent.getChildren().addAll(background, towersDisplay, empty);
         StackPane.setAlignment(towersDisplay, Pos.TOP_CENTER);
-        myRoot.getChildren().add(myContent);
-
-        return myRoot;
+        getChildren().add(myContent);
     }
 
     private HBox setupEditControls () {
@@ -177,6 +175,7 @@ public class TowerEditor extends PropertyEditor{
         ImageSelector imgSelector = new ImageSelector();
         imgSelector.addExtensionFilter("png");
         imgSelector.addExtensionFilter("jpg");
+        imgSelector.addExtensionFilter("gif");
         imgSelector.setPreviewImageSize(225, 150);
 
         HBox buttons = new HBox(10);
@@ -278,9 +277,17 @@ public class TowerEditor extends PropertyEditor{
         return scale;
     }
 
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
     @Override
-    protected void update() {
+    public  void update() {
         // TODO Auto-generated method stub
 
     }
+
 }

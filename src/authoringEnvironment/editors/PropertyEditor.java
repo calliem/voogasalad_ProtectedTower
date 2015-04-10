@@ -11,9 +11,12 @@ import javafx.stage.Stage;
  */
 public abstract class PropertyEditor extends Editor {
 
-	public PropertyEditor(Dimension2D dim) {
-		super(dim);
+	public PropertyEditor() {
+		super();
 		// TODO Auto-generated constructor stub
 	} // abstract class?
 
+	public void update(){
+		System.out.println("hi");
+	}
 }

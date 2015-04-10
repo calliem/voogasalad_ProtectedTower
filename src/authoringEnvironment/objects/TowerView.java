@@ -1,10 +1,8 @@
 package authoringEnvironment.objects;
 
 import imageselectorTEMP.util.ScaleImage;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -23,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.IntegerSetting;
 import authoringEnvironment.setting.Setting;
 import authoringEnvironment.setting.SpriteSetting;
@@ -150,14 +149,23 @@ public class TowerView extends SpriteView{
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
         
-        Setting towerName = new StringSetting("Name", name);
-        parameterFields.add(towerName);
+//        Setting towerName = new StringSetting("Name", name);
+//        parameterFields.add(towerName);
+//        
+//        Setting test = new IntegerSetting("Health", "0");
+//        parameterFields.add(test);
+//        
+//        Setting fileTest = new SpriteSetting("Projectile", null);
+//        parameterFields.add(fileTest);
         
-        Setting test = new IntegerSetting("Health", "0");
-        parameterFields.add(test);
+        VBox settingsObjects = new VBox(10);
         
-        Setting fileTest = new SpriteSetting("Projectile", null);
-        parameterFields.add(fileTest);
+        List<Setting> penii = ProjectReader.generateSettingsList("Tower");
+        for(Setting penis : penii){
+            System.out.println("Johnny's penis" + penis);
+            parameterFields.add(penis);
+            settingsObjects.getChildren().add(penis);
+        }
         
         HBox buttons = new HBox(10);
         
@@ -169,7 +177,7 @@ public class TowerView extends SpriteView{
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(save, overlayCloseButton);
         
-        editableContent.getChildren().addAll(overlayTowerNameDisplay, towerImage, overlayErrorMessage, towerName, test, fileTest, buttons);
+        editableContent.getChildren().addAll(overlayTowerNameDisplay, towerImage, overlayErrorMessage, settingsObjects, buttons);
     }
     
     private void saveParameterFields(){

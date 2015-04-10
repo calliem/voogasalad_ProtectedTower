@@ -1,6 +1,7 @@
-/*package authoringEnvironment.editors;
+package authoringEnvironment.editors;
 
 import java.awt.ScrollPane;
+import java.util.List;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
@@ -10,18 +11,30 @@ import javafx.stage.Stage;
 
 public class RowEditor extends Editor {
 
-	public RowEditor(Dimension2D dim, Stage s) {
-		super(dim, s);
+	public RowEditor() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Node configureUI() {
+	public void configureUI() {
 		ScrollPane foundation = new ScrollPane();
-		Rectangle background = new Rectangle(myDimensions.getWidth()*MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(), Color.web("2A2A29"));
+		Rectangle background = new Rectangle();
 		
 		// TODO Auto-generated method stub
-		return ;
+		
 	}
 
-}*/
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Node> getObjects() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

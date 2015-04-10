@@ -3,7 +3,6 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.shape.Rectangle;
-import engine.element.sprites.Tower;
 
 
 /**
@@ -148,9 +147,11 @@ public class Quadtree {
         return returnObjects;
     }
 
-    /*public static void main (String[] args) throws InsufficientParametersException {
-        Quadtree q = new Quadtree(3, new Rectangle(3, 4));
-        Tower e = new Tower();
-        q.insert(e);
-    }*/
+    /*
+     * public static void main (String[] args) throws InsufficientParametersException {
+     * Quadtree q = new Quadtree(3, new Rectangle(3, 4));
+     * Tower e = new Tower();
+     * q.insert(e);
+     * }
+     */
 }
