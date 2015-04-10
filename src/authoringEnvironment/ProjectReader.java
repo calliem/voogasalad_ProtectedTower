@@ -73,9 +73,12 @@ public class ProjectReader {
     }
     
     private static List<String> trimBeforeDot(List<String> toTrim){
-    	for (String s: toTrim)
-    		s = s.substring(s.indexOf(".") + 1, s.length());
-    	return toTrim;
+    	List<String> trimmed = new ArrayList<String>();
+    	for (int i = 0; i < toTrim.size(); i++){
+    		String current = toTrim.get(i);
+    		trimmed.add(current.substring(current.indexOf(".") + 1, current.length()));
+    	}
+    	return trimmed;
     }
 
     /**
