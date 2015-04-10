@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import authoringEnvironment.GameManager;
+import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.UnitView;
@@ -50,12 +51,11 @@ public class WaveEditor extends MainEditor {
 		StackPane editor = new StackPane();
 		HBox newWavePanel = new HBox(10);
 		VBox contents = new VBox(10);
-		
 		ScrollPane contentScrollPane = new ScrollPane();
 		contentScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 		contentScrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		contentScrollPane.setMaxHeight(myDimensions.getHeight());
-		contentScrollPane.setMaxWidth(myDimensions.getWidth());
+		contentScrollPane.setMaxHeight(MainEnvironment.getEnvironmentHeight());
+		contentScrollPane.setMaxWidth(MainEnvironment.getEnvironmentWidth());
 
 		Button makeNewWave = new Button("Create New Wave");
 		makeNewWave.setOnAction(e -> {
@@ -68,7 +68,7 @@ public class WaveEditor extends MainEditor {
 		contentScrollPane.setContent(contents);
 
 		editor.getChildren().add(contentScrollPane);
-		myRoot.getChildren().add(editor);
+		getChildren().add(editor);
 
 	}
 
