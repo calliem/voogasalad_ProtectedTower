@@ -2,6 +2,7 @@
 package authoringEnvironment.editors;
 
 import authoringEnvironment.Controller;
+import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.TileMap;
 import javafx.geometry.Dimension2D;
@@ -31,8 +32,8 @@ public abstract class MainEditor extends Editor {
 	public static final double MAP_HEIGHT_PERCENT = 100; //THIS IS REPLICATED WITH THOSE VARIABLES IN MAP WORKSPACE
 
 	
-	public MainEditor(Dimension2D dim, Stage s) {
-		super(dim);
+	public MainEditor() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -66,11 +67,11 @@ public abstract class MainEditor extends Editor {
 		row0.setPercentHeight(MAP_HEIGHT_PERCENT); 
 		pane.getRowConstraints().add(row0);
 		ColumnConstraints col0 = new ColumnConstraints();
-		col0.setPrefWidth(getWidth() * MAP_WIDTH_MULTIPLIER);
+		col0.setPrefWidth(MainEnvironment.getEnvironmentWidth() * MAP_WIDTH_MULTIPLIER);
 		ColumnConstraints col1 = new ColumnConstraints();
-		col1.setPrefWidth(getWidth() * SIDEBAR_WIDTH_MULTIPLIER);
+		//col1.setPrefWidth((MainEnvironment.getEnvironmentWidth() * SIDEBAR_WIDTH_MULTIPLIER); TODO: add this back
 		pane.getColumnConstraints().add(col0);
-		pane.getColumnConstraints().add(col1);
+		//pane.getColumnConstraints().add(col1);
 	}
 
 	protected GridPane getPane() {
@@ -78,9 +79,7 @@ public abstract class MainEditor extends Editor {
 	}
 	
 	public void update(){
-		System.out.println("Controller.MAPS: " + Controller.MAPS);
-		
-		MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps");  //TODO: find a way to get sthe same resource file but to also use myResources.getString() on the proper resource file //how to avoid this issue of more dependencies on this string name. lots of code will have to change in order to change this; maybe use indexes instead?
+		MapEditor mapEditor = (MapEditor) Controller.getEditor(Controller.MAPS);  
 		if(!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap())){
 			getMapWorkspace().updateWithNewMap(mapEditor.getActiveMap());
 		}

@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 
 public class RowEditor extends Editor {
 
-	public RowEditor(Dimension2D dim, Stage s) {
-		super(dim, s);
+	public RowEditor() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 

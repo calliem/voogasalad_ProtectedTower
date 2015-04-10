@@ -63,8 +63,8 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 		getChildren().add(title);
 	}
 	
-	protected ListView<PathView> createListView(ObservableList<PathView> items, int height) {
-		ListView<PathView> list = new ListView<PathView>();
+	protected ListView<Node> createListView(ObservableList<Node> items, int height) {
+		ListView<Node> list = new ListView<Node>();
 		list.setItems(items);
 		list.setMaxWidth(Double.MAX_VALUE);
 		list.setPrefHeight(LISTVIEW_HEIGHT);

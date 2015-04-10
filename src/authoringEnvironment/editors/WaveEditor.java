@@ -37,10 +37,9 @@ public class WaveEditor extends MainEditor {
 	private Map<String, ArrayList<FlowView>> myWaves;
 
 
-	public WaveEditor(Dimension2D dim, Stage s) {
-		super(dim, s);
+	public WaveEditor() {
+		super();
 		myWaves = new HashMap<String, ArrayList<FlowView>>();
-		myDimensions = dim;
 	}
 
 	@Override
@@ -155,12 +154,6 @@ public class WaveEditor extends MainEditor {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void createMap() {
 		// TODO Auto-generated method stub
 		
 	}

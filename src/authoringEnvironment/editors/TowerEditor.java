@@ -59,8 +59,8 @@ public class TowerEditor extends PropertyEditor{
      * @param rb        the resource bundle containing displayed strings
      * @param s the stage on which the authoring environment is displayed
      */
-    public TowerEditor(Dimension2D dim, Stage s) {
-        super(dim);
+    public TowerEditor() {
+        super();
     }
     
     /**

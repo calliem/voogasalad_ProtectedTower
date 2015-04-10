@@ -31,8 +31,8 @@ public class MapEditor extends MainEditor {
 
 	
 	//TODO: remove the dimensions parameter because we apparently can ust get that form the main enviornment?
-    public MapEditor(Dimension2D dim, Stage s) {
-        super(dim, s);
+    public MapEditor() {
+        super();
         myMaps = new ArrayList<Node>(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
         myMaps.add(getMapWorkspace().getActiveMap());
         mySidebar = new MapSidebar(myResources, myMaps, getMapWorkspace()); //now don't need to pass in so much stuff

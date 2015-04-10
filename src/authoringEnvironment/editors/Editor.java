@@ -26,22 +26,12 @@ public abstract class Editor extends Group{
 	// or use a ArrayList<?> getObjects() method in this superclass?
 	//TODO: have later methods get myDimensions from a closer class not mainenvironment. THey are passed as parameters for a reason.
 
-	protected Dimension2D myDimensions;
 	
-	public Editor(Dimension2D dim){
-		myDimensions = dim;
+	public Editor(){
 		configureUI();
 	}
 
-    protected abstract void configureUI(); //or make it a Node instead of a gridPane?
-    
-    protected double getWidth(){
-    	return myDimensions.getWidth();
-    }
-    
-    protected double getHeight(){
-    	return myDimensions.getHeight();
-    }
+    protected abstract void configureUI();
     
     //to be used by backend 
    public void displayError(String s){

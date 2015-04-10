@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.scene.Group;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -20,6 +21,8 @@ public class TileMap extends Group{
 	private Tile[][] myTiles;
 	private int myTileSize;
 	private Color myActiveColor;
+	private String myName;
+	private ImageView myBackground;
 	
 	private HashMap<String, Integer> myTags; //maps a string to the number of elements with that tag
 
@@ -30,6 +33,7 @@ public class TileMap extends Group{
 	private Group myGridLines;
 	
 	private static final Color DEFAULT_TILE_COLOR = Color.WHITE;
+	private static final String DEFAULT_IMAGE_PATH = "/src/resources/white_square.png"; 
 
 	// user specifies rectangle or square dimensions...allow this flexibility
 	public TileMap(int mapRows, int mapCols, int tileSize) {

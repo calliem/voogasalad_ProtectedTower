@@ -69,11 +69,10 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 
 	protected void createMapSettings(){
 		//TODO: make a main tab to display the stuff here
-		createTitleText(getResources().getString("GameSettings"));
-		setLives();
+		//createTitleText(getResources().getString("GameSettings"));
+		//setLives();
 		createTitleText(getResources().getString("MapSettings"));
-		setGridDimensions();
-		setTileSize();
+		createSettings();
 		createTitleText(getResources().getString("SetTiles"));
 		selectTile();
 		
@@ -150,7 +149,7 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	}*/
 	
 	//TODO: remove duplicated code
-	private void setGridDimensions(){
+	private void createSettings(){
 	/*	if (myActiveMap == null)
 			System.out.println("LE MAP IS NULLL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			else

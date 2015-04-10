@@ -18,8 +18,8 @@ import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
-    public UnitEditor(Dimension2D dim, Stage s) {
-        super(dim);
+    public UnitEditor() {
+        super();
         // TODO Auto-generated constructor stub
     }
 

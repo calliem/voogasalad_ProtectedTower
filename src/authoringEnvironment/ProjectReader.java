@@ -96,8 +96,8 @@ public class ProjectReader {
 				String toCreate = "authoringEnvironment.editors." + s;
 				try {
 					e = (Editor) Class.forName(toCreate)
-							.getConstructor(Dimension2D.class, Stage.class)
-							.newInstance(myDimensions, myStage);
+							.getConstructor()
+							.newInstance();
 				} catch (InstantiationException e1){ 
 					System.err.println("Constructor Editor(Dimension2D.class, Stage.class) doesn't exist or was"
 							+ "incorrectly called");

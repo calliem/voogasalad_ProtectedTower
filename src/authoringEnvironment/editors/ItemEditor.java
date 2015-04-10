@@ -11,8 +11,8 @@ public class ItemEditor extends PropertyEditor{
 	
 	private List<Node> myItems;
 
-	public ItemEditor (Dimension2D dim, Stage s){
-		super(dim);
+	public ItemEditor (){
+		super();
 	}
 	
 

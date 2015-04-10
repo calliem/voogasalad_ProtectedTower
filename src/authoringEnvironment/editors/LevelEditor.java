@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import authoringEnvironment.Controller;
 import authoringEnvironment.LevelSidebar;
+import authoringEnvironment.Sidebar;
 import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.objects.LevelView;
 import authoringEnvironment.objects.TileMap;
@@ -30,14 +31,16 @@ import javafx.stage.Stage;
 public class LevelEditor extends MainEditor{
 	
 	public List<Node> myLevels;
+	private LevelSidebar mySidebar; //LevelSidebar is used instead of Sidebar because there are functionality in LevelSidebar not provided in Sidebar
 
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/"; //TODO: stop duplicating this default resource package line
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "level_editor_english");
 	
-    public LevelEditor(Dimension2D dim, Stage s) {
-		super(dim, s);
-		 getPane().add(new LevelSidebar(myResources, Controller.getEditor("Maps").getObjects(), getMapWorkspace()),1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
-	     myLevels = new ArrayList<Node>();
+    public LevelEditor() {
+		super();
+		mySidebar = new LevelSidebar(myResources, Controller.getEditor("Maps").getObjects(), getMapWorkspace());
+		getPane().add(mySidebar,1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
+	    myLevels = new ArrayList<Node>();
 	}
 
 	@Override
@@ -48,6 +51,7 @@ public class LevelEditor extends MainEditor{
 
 	
 	
+	
 	@Override
 	public void update() {
 	/*	System.out.println("level editor updated");		// TODO Auto-generated method stub		
@@ -55,6 +59,6 @@ public class LevelEditor extends MainEditor{
     	getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());*/
 		super.update();
 		getMapWorkspace().getActiveMap().removeTileListeners();
-		
+		mySidebar.update();
 	}
 }

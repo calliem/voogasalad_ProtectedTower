@@ -20,6 +20,7 @@ public class Tile extends Rectangle {
 	private int myColNum;
 	private int myRowNum;
 	private ArrayList<String> myTags;
+	private Color myColor;
 
 	// will have the same image for a path?
 	// TODO: create a text box to set grid size and a slider to set tile size

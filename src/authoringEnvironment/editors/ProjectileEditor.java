@@ -16,8 +16,8 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 
 public class ProjectileEditor extends PropertyEditor {
-    public ProjectileEditor(Dimension2D dim, Stage s) {
-        super(dim);
+    public ProjectileEditor() {
+        super();
         // TODO Auto-generated constructor stub
     }
 

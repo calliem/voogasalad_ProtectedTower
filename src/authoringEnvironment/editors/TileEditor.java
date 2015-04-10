@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 
 public class TileEditor extends PropertyEditor{
 
-	public TileEditor(Dimension2D dim, Stage s) {
-		super(dim);
+	public TileEditor() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
