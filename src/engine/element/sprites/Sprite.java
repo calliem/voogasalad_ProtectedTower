@@ -1,6 +1,9 @@
 package engine.element.sprites;
 
+import java.util.Map;
+
 import javafx.geometry.Point2D;
+import javafx.scene.image.ImageView;
 import engine.Collidable;
 import engine.InsufficientParametersException;
 import engine.element.GameElement;
@@ -21,9 +24,15 @@ public abstract class Sprite extends GameElement implements Collidable {
 
     private Point2D myLocation;
     private String myType;
+    private ImageView myImage;
+    private Map<String, Object> myParams;
 
-    public Sprite () throws InsufficientParametersException {
-
+    public Sprite (Map<String, Object> params) throws InsufficientParametersException {
+    	myParams = params;
+    }
+    
+    public Sprite (ImageView img) throws InsufficientParametersException {
+    	myImage = img;
     }
 
     // public abstract List<String> getParameters ();
@@ -84,6 +93,10 @@ public abstract class Sprite extends GameElement implements Collidable {
      */
     protected String getType () {
         return myType;
+    }
+    
+    public Map<String,Object> getParams () {
+    	return myParams;
     }
 
     @Override

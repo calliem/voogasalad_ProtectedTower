@@ -2,7 +2,9 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javafx.scene.image.ImageView;
 import pathsearch.graph.PathCell;
 import pathsearch.pathalgorithms.NoPathExistsException;
 import pathsearch.pathalgorithms.ObstacleFunction;
@@ -22,9 +24,12 @@ public class Enemy extends MoveableSprite {
 
 	private List<GridCell> myPath;
 	
-    public Enemy () throws InsufficientParametersException {
-        super();
-        // TODO Auto-generated constructor stub
+	public Enemy (Map<String, Object> params) throws InsufficientParametersException {
+        super(params);
+    }
+    
+    public Enemy (ImageView img) throws InsufficientParametersException {
+        super(img);
     }
 
     @Override
@@ -75,9 +80,7 @@ public class Enemy extends MoveableSprite {
     	List<PathCell> coordPath = wrap.shortestPath((int)super.getLocationY(), (int)super.getLocationX(), goalRow, goalCol);
     	List<GridCell> gridPath = new ArrayList<>();
     	for (PathCell coord: coordPath){
-    		GridCell cell = new GridCell();
-    		cell.setLocation(coord.getCol(), coord.getRow());
-    		gridPath.add(cell);
+    		//
     	}
     	myPath = gridPath;
     }

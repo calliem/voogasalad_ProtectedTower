@@ -1,7 +1,9 @@
 package engine.element.sprites;
 
 import java.util.List;
+import java.util.Map;
 
+import javafx.scene.image.ImageView;
 import engine.InsufficientParametersException;
 
 
@@ -17,9 +19,12 @@ public class GridCell extends Sprite {
 
 	private List<String> tags;
 	
-    public GridCell () throws InsufficientParametersException {
-        super();
-        // TODO Auto-generated constructor stub
+	public GridCell (Map<String, Object> params) throws InsufficientParametersException {
+        super(params);
+    }
+    
+    public GridCell (ImageView img) throws InsufficientParametersException {
+        super(img);
     }
     
     @Override
