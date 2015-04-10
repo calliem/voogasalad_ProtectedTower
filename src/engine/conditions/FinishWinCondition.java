@@ -1,8 +1,5 @@
 package engine.conditions;
 
-import engine.GameState;
-
-
 /**
  * This class checks if a player wins after defeating all waves of enemies.
  * 
@@ -12,15 +9,14 @@ import engine.GameState;
 public class FinishWinCondition extends Condition {
 
     @Override
-    public boolean checkCondition (GameState state) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean checkCondition (int livesRemaining) {
+        return livesRemaining > 0;
     }
 
     @Override
-    public void act (GameState state) {
-        // TODO Auto-generated method stub
-
+    public void act (int livesRemaining) {
+        if (checkCondition(livesRemaining)) {
+            // TODO end game
+        }
     }
-
 }
