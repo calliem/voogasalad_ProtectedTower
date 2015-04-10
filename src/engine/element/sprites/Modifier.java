@@ -12,7 +12,7 @@ import engine.InsufficientParametersException;
  */
 public class Modifier extends Sprite {
 
-    public Modifier () throws InsufficientParametersException {
+    public Modifier (){
         super();
         // TODO Auto-generated constructor stub
     }

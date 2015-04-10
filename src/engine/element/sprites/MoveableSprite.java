@@ -1,6 +1,7 @@
 package engine.element.sprites;
 
 import javafx.geometry.Point2D;
+import javafx.scene.image.ImageView;
 import engine.InsufficientParametersException;
 
 
@@ -15,8 +16,12 @@ public abstract class MoveableSprite extends Sprite {
     private Point2D myVelocity;
     private double myRange;
 
-    public MoveableSprite () throws InsufficientParametersException {
+    public MoveableSprite () {
         super();
+        // TODO Auto-generated constructor stub
+    }
+    public MoveableSprite (ImageView i) {
+        super(i);
         // TODO Auto-generated constructor stub
     }
 

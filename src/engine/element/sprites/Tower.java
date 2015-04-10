@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import javafx.scene.image.ImageView;
 import engine.InsufficientParametersException;
 
 
@@ -15,8 +16,13 @@ public class Tower extends GameSprite {
     // TODO Specify instance variables specific to Tower, such as a build time. Add to the main    
     // parameter map
 
-    public Tower () throws InsufficientParametersException {
-        super();
+	  public Tower () {
+	        super();
+	        // TODO Auto-generated constructor stub
+	    }
+	  
+    public Tower (ImageView i) {
+        super(i);
         // TODO Auto-generated constructor stub
     }
 

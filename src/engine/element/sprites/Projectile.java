@@ -11,7 +11,7 @@ import engine.InsufficientParametersException;
  */
 public class Projectile extends MoveableSprite {
 
-    public Projectile () throws InsufficientParametersException {
+    public Projectile () {
         super();
         // TODO Auto-generated constructor stub
     }

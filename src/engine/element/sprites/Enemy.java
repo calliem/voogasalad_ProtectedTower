@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import javafx.scene.image.ImageView;
 import engine.InsufficientParametersException;
 
 
@@ -13,9 +14,12 @@ import engine.InsufficientParametersException;
  */
 public class Enemy extends MoveableSprite {
 
-    public Enemy () throws InsufficientParametersException {
+    public Enemy (){
         super();
-        // TODO Auto-generated constructor stub
+    }
+    
+    public Enemy (ImageView image){
+        super(image);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package engine;
 
 import java.util.Map;
+
+import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
@@ -34,8 +36,9 @@ public class GameController {
      * Those objects are then instantiated and their parameter lists are set.
      * 
      * @param filepath String of location of the game file
+     * @param engineRoot 
      */
-    public void loadGame (String filepath) {
+    public void loadGame (String filepath, Group engineRoot) {
         Map<String, Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
 
         for (String s : allDataObjects.keySet()) {

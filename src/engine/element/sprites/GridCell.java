@@ -17,7 +17,7 @@ public class GridCell extends Sprite {
 
 	private List<String> tags;
 	
-    public GridCell () throws InsufficientParametersException {
+    public GridCell (){
         super();
         // TODO Auto-generated constructor stub
     }
