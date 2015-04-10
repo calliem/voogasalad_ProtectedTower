@@ -2,10 +2,12 @@ package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import engine.GameState;
 import engine.TowerManager;
 import engine.Updateable;
 import engine.conditions.Condition;
+import engine.element.sprites.Tower;
 import engine.element.sprites.TowerFactory;
 
 
@@ -24,14 +26,15 @@ public class Game extends GameElement implements Updateable {
     private Layout myLayout;
     private int myActiveLevel;
     public GameState myGameState;
+    private TowerFactory myTowerFactory;
 
     public Game () {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
         
-        TowerFactory factory = new TowerFactory();
-        TowerManager manager = new TowerManager(factory);
-        factory.addManager(manager);
+        myTowerFactory = new TowerFactory();
+        TowerManager manager = new TowerManager(myTowerFactory);
+        myTowerFactory.addManager(manager);
         
         myLayout = new Layout(manager);
         myActiveLevel = 0;
@@ -49,8 +52,8 @@ public class Game extends GameElement implements Updateable {
         myLayout.update(counter);
     }
 
-    protected void addTower () {
-
+    protected void addTowers(Map<String,Map<String,Object>> allTowers) {
+        myTowerFactory.addTower(allTowers);
     }
 
     protected void addEnemy () {
