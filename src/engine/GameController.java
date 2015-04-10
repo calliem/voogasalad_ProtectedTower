@@ -1,16 +1,19 @@
 package engine;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
+import authoringEnvironment.InstanceManager;
 import engine.element.Game;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
-import java.util.Collection;
 
 
 /**
@@ -28,10 +31,27 @@ public class GameController {
      * Holds an instance of an entire game
      */
     Game myGame;
+    /**
+     * Holds a map of a part name to the package to use to reflect
+     */
+    Map<String, String> myPartTypeToPackage = new HashMap<>();
 
-    public GameController (String filepath) throws InsufficientParametersException {
+    public GameController (String filepath) {
         myGame = new Game();
         loadGame(filepath, myGame);
+        fillPackageMap();
+    }
+
+    private void fillPackageMap () {
+        myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
+        myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
+        myPartTypeToPackage.put("Projectile", "engine.element.sprites.Projectile");
+        myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
+        myPartTypeToPackage.put("Game", "engine.element.Game");
+        myPartTypeToPackage.put("Level", "engine.element.Level");
+        myPartTypeToPackage.put("Round", "engine.element.Round");
+        myPartTypeToPackage.put("Wave", "engine.element.Wave");
+        myPartTypeToPackage.put("Layout", "engine.element.Layout");
     }
 
     /**
@@ -42,17 +62,17 @@ public class GameController {
      * @param filepath String of location of the game file
      */
     public void loadGame (String filepath, Game game) {
-        Map<String, Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
+        Collection<Tower> towerObjects = new HashSet<Tower>();
+        Collection<Enemy> enemyObjects = new HashSet<Enemy>();
+        Collection<Projectile> projectileObjects = new HashSet<Projectile>();
+        List<Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
 
-        Collection<Tower> towerObjects = new ArrayList<Tower>();
-        Collection<Enemy> enemyObjects = new ArrayList<Enemy>();
-        Collection<Projectile> projectileObjects = new ArrayList<Projectile>();
-
-        for (String s : allDataObjects.keySet()) {
-            Sprite currentObject = (Sprite) Reflection.createInstance(s);
-            currentObject.setParameterMap(allDataObjects.get(s));
-            // allObjects.add(currentObject);
-            // TODO need way to load objects into correct classes, like Layout and Wave
+        for (Map<String, Object> obj : allDataObjects) {
+            String partType = (String) obj.get(InstanceManager.partTypeKey);
+            String packageLocation = myPartTypeToPackage.get(partType);
+            Sprite currentObject = (Sprite) Reflection.createInstance(packageLocation);
+            currentObject.setParameterMap(obj);
+            
         }
 
     }
