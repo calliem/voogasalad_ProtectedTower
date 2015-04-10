@@ -52,4 +52,10 @@ public class Projectile extends MoveableSprite {
         return false;
     }
 
+    @Override
+    public void update (int counter) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

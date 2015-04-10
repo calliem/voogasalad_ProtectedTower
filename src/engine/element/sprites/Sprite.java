@@ -1,11 +1,11 @@
 package engine.element.sprites;
 
 import java.util.Map;
-
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import engine.Collidable;
 import engine.InsufficientParametersException;
+import engine.Updateable;
 import engine.element.GameElement;
 
 
@@ -16,7 +16,7 @@ import engine.element.GameElement;
  * @author Qian Wang
  *
  */
-public abstract class Sprite extends GameElement implements Collidable {
+public abstract class Sprite extends GameElement implements Collidable, Updateable{
 
     // TODO fill in with correct string
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
