@@ -24,7 +24,7 @@ import authoringEnvironment.objects.TileMap;
 public abstract class Sidebar extends VBox { //extend gridpane pls
 	
 	private ResourceBundle myResources;
-	private List<Node> myMaps;
+	private List<Node> myMaps; //can't seem to use list with this
 	private MapWorkspace myMapWorkspace; //TODO: or use more general StackPane?
 	
 	private static final double PADDING = MainEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead

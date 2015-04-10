@@ -10,6 +10,7 @@ import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -18,8 +19,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -60,11 +63,11 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	private TextField tileColDisplay;
 	private TextField tileSizeDisplay;
 
-	public MapSidebar(ResourceBundle resources,List<Node> maps, MapWorkspace mapWorkspace) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
+	public MapSidebar(ResourceBundle resources,ObservableList<Node> maps, MapWorkspace mapWorkspace) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
 		super(resources, maps, mapWorkspace);
 		//mySelectedMap = activeMap;
 		myMapWorkspace = mapWorkspace;
-		myLives = DEFAULT_LIVES;		
+		myLives = DEFAULT_LIVES;	
 		/*ObservableList<PathView> pathList = FXCollections.observableArrayList();
 		getChildren().add(createListView(pathList, 300));*/
 		createMapSettings();
@@ -82,7 +85,26 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		
 		
 		setEditMapButtons();
+		displayMaps();
+	}
+	
+	private void displayMaps(){
+		
+		ScrollPane mapDisplay = new ScrollPane();
+		VBox container = new VBox(); 
+		
 
+		
+		for (Node map: getMaps()){
+			HBox mapInfo = new HBox();
+			mapInfo.setSpacing(10);
+			Text mapName = new Text("hi");
+			ImageView image = new ImageView();
+			mapInfo.getChildren().addAll(mapName, image);
+			container.getChildren().add(mapInfo);
+		}
+		mapDisplay.setContent(container);
+		getChildren().add(mapDisplay);
 	}
 	
 	//Lots of duplication below
@@ -155,12 +177,6 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	
 	//TODO: remove duplicated code
 	private void createSettings(){
-	/*	if (myActiveMap == null)
-			System.out.println("LE MAP IS NULLL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			else
-				System.out.println(myActiveMap.getN	umRows());
-		
-		System.out.println("setting grid dimensions");*/
 		HBox selection = new HBox();
 		selection.setSpacing(PADDING); 
 		Text text = new Text(getResources().getString("MapDimensions"));
@@ -178,8 +194,6 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 		selection.getChildren().addAll(text, textFields,setGridDimButton);
 		getChildren().add(selection);
 		
-		
-		
 		setImage();
 		setTileSize();
 	}
@@ -196,24 +210,15 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
         imgSelector.addExtensionFilter("png");
         imgSelector.addExtensionFilter("jpg");
         
-        Button create = new Button("Create");
-        create.setOnAction((e) -> {
-            doCoolStuff(imgSelector.getSelectedFileName());
+        StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
+        imgFile.addListener((obs, oldValue, newValue) -> {
+        	System.out.println(newValue);
+        	myMapWorkspace.getActiveMap().setBackground(newValue); 
+        	
         });
         
-        getChildren().addAll(imgSelector, create);
-
-        /*Button cancel = new Button("Cancel");
-        cancel.setOnAction((e) -> {
-            hideEditScreen(promptDisplay);
-        });*/
-		
+        getChildren().add(imgSelector);
 	}
-	
-	private void doCoolStuff(String image){
-		System.out.println("image " + image);
-	}
-
 	
 	
 	//TODO: find a way to make this work

@@ -24,7 +24,7 @@ import authoringEnvironment.objects.TileMap;
 public class LevelSidebar extends Sidebar{
 
 	private Editor myMapEditor; 
-	private ObservableList<Node> myMapList;
+	private List<Node> myMapList;
 	private ObservableList<Node> myRounds;
 	
 	private static final int LISTVIEW_HEIGHT = 200;
@@ -45,8 +45,8 @@ public class LevelSidebar extends Sidebar{
 		
 		//Editor mapEditor = Controller.getEditor(Controller.MAPS);
 		
-		ListView mapList = createListView(myMapList, LISTVIEW_HEIGHT);
-		myRounds = FXCollections.observableArrayList();
+	//	ListView mapList = createListView(FXCollections.observableArrayList(myMapList), LISTVIEW_HEIGHT);
+	//	myRounds = FXCollections.observableArrayList();
 /*		mapList.setCellFactory(new Callback<ListView<String>, 
 		            ListCell<String>>() {
 		                @Override 
@@ -56,11 +56,7 @@ public class LevelSidebar extends Sidebar{
 		            }
 		        );*/
 		 
-		getChildren().add(mapList);
-
-		
-		
-		
+		//getChildren().add(mapList);
 		
 		createTitleText(getResources().getString("RoundOrder"));
 		getChildren().add(createListView(myRounds, LISTVIEW_HEIGHT));

@@ -24,7 +24,7 @@ public class TileMap extends Group{
 	private Color myActiveColor;
 	private String myName;
 	private ImageView myBackground;
-	private static final String DEFAULT_BACKGROUND_PATH = "resources/Park_Path.png";//white_square.png"; 
+	private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png"; 
 	
 	private HashMap<String, Integer> myTags; //maps a string to the number of elements with that tag
 
@@ -46,17 +46,18 @@ public class TileMap extends Group{
 		myGridLines = new Group();
 		myActiveColor = DEFAULT_TILE_COLOR;
 		myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
-		setImageDimensions(myBackground, myMapCols*myTileSize, myMapRows*myTileSize);
+		setImageDimensions(myBackground);
 		getChildren().add(myBackground);
 		//TODO: sethover x, y coordinate, tile size, etc.
 		
 		createMap();
 		createGridLines();
 	}
+	 
 	
-	private void setImageDimensions(ImageView image, int width, int height){
-		image.setFitWidth(width);
-		image.setFitHeight(height);
+	private void setImageDimensions(ImageView image){
+		image.setFitWidth(myMapCols*myTileSize);
+		image.setFitHeight(myMapRows*myTileSize);
 	}
 	
 	public int addTag(int x, int y, String tag){
@@ -72,7 +73,11 @@ public class TileMap extends Group{
 	}
 	
 	public void setBackground(String filepath){
-		myBackground = new ImageView(filepath);
+		getChildren().remove(myBackground);
+		myBackground = new ImageView(new Image(filepath));
+		setImageDimensions(myBackground);
+		getChildren().add(0, myBackground);
+		
 	}
 	
 	//TODO:duplicated tile listeners being added/deleted?
@@ -99,7 +104,7 @@ public class TileMap extends Group{
 		}
 		updateGridLines();
 		System.out.println(myMapCols*myTileSize);
-		setImageDimensions(myBackground, myMapCols*myTileSize, myMapRows*myTileSize);
+		setImageDimensions(myBackground);
 	}
 	
 	public void removeTileListeners(){
@@ -128,7 +133,7 @@ public class TileMap extends Group{
 				attachTileListener(myTiles[i][j]);
 			}
 		}
-		setImageDimensions(myBackground, myMapCols*myTileSize, myMapRows*myTileSize);
+		setImageDimensions(myBackground);
 	}
 	
 	/**
@@ -156,7 +161,7 @@ public class TileMap extends Group{
 		myMapCols = newMapCols;
 		myMapRows = newMapRows;	
 		myTiles = newTiles;
-		setImageDimensions(myBackground, myMapCols*myTileSize, myMapRows*myTileSize);
+		setImageDimensions(myBackground);
 		updateGridLines();
 	}
 	
@@ -201,7 +206,9 @@ public class TileMap extends Group{
 			horizontalLine.setStroke(Color.web("B2B2B2"));
 			myGridLines.getChildren().add(horizontalLine);
 		}
-		getChildren().add(myGridLines);
+		
+		if (!getChildren().contains(myGridLines))
+			getChildren().add(myGridLines);
 	}
 	
 	private void removeGridLines(){

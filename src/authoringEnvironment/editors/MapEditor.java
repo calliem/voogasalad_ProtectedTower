@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.stage.Stage;
@@ -26,14 +28,14 @@ public class MapEditor extends MainEditor {
     private static final int DEFAULT_TILE_SIZE = 50; //based on height since monitor height < width and that is usually the limiting factor
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
-	private List<Node> myMaps;
+	private ObservableList<Node> myMaps;
 	private Sidebar mySidebar;  //TODO: maybe move this into the superclass?
 
 	
 	//TODO: remove the dimensions parameter because we apparently can ust get that form the main enviornment?
     public MapEditor() {
         super();
-        myMaps = new ArrayList<Node>(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
+        myMaps = FXCollections.observableArrayList(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
         myMaps.add(getMapWorkspace().getActiveMap());
         mySidebar = new MapSidebar(myResources, myMaps, getMapWorkspace()); //now don't need to pass in so much stuff
         getPane().add(mySidebar,1,0); 
