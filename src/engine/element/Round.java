@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
 import engine.UpdateAndReturnable;
-import engine.element.sprites.Enemy;
 
 
 /**
@@ -12,6 +11,7 @@ import engine.element.sprites.Enemy;
  * or multiple waves spaced out.
  * 
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
 public class Round extends GameElement implements UpdateAndReturnable, Endable {
@@ -33,7 +33,7 @@ public class Round extends GameElement implements UpdateAndReturnable, Endable {
     }
 
     @Override
-    public List<Enemy> update (int counter) {
+    public List<String> update (int counter) {
         if (myCurrentDelay == 0) {
             return myWaves.get(myActiveWaveIndex).update(counter);
         }

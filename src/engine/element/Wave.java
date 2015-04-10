@@ -12,6 +12,7 @@ import engine.element.sprites.Enemy;
  * enemies may be sent all at once, randomly, or spaced evenly.
  * 
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
 public class Wave extends GameElement implements UpdateAndReturnable, Endable {
@@ -32,12 +33,12 @@ public class Wave extends GameElement implements UpdateAndReturnable, Endable {
     }
 
     @Override
-    public List<Enemy> update (int counter) {
+    public List<String> update (int counter) {
         if (counter % mySendRate == 0) {
-            // TODO send enemy
             myNumSent++;
+            // TODO return (list of) enemy GUIDs
         }
-        return null; // TODO: Return list of enemies
+        return null; // No enemies to return
     }
 
 }

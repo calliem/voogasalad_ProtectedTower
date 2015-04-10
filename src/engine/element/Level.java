@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
 import engine.UpdateAndReturnable;
-import engine.element.sprites.Enemy;
 
 
 /**
@@ -36,7 +35,7 @@ public class Level extends GameElement implements UpdateAndReturnable, Endable {
     }
 
     @Override
-    public List<Enemy> update (int counter) {
+    public List<String> update (int counter) {
         // TODO Auto-generated method stub
         return myRounds.get(myCurrentRound).update(counter);
     }
