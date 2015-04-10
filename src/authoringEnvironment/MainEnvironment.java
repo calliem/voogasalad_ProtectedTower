@@ -2,14 +2,10 @@
 
 package authoringEnvironment;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -25,10 +21,9 @@ import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import authoringEnvironment.editors.Editor;
-import authoringEnvironment.editors.LevelEditor;
 
 /**
- * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed
+ * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed. When switching tabs, each tab's editor is automatically updated to the controller
  * @author Callie Mao
  * @author Johnny Kumpf, populateTabBar() methods
  */
@@ -38,10 +33,9 @@ public class MainEnvironment {
 	private Stage myStage; //is this necessary
 	private TabPane myTabPane;
 	private GridPane myGridPane;
-	private static final boolean MAIN_TAB = true;
-	private static final boolean SPRITE_TAB = false;
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
+	private Tab myCurrentTab;
 
 	//private SceneSetter mySceneSetter = new SceneSetter();
 
@@ -62,10 +56,7 @@ public class MainEnvironment {
 		setupScene(myStage, myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
 	}
 
-	/**
-	 * Populates the tab bar with 1 tab for every non-abstract class in editors package
-	 */
-	
+
 
 	public static double getEnvironmentWidth(){
 		return myDimensions.getWidth();
@@ -98,6 +89,10 @@ public class MainEnvironment {
 		grid.add(myTabPane,0,1);
 	}
 	
+	
+	/**
+	 * Populates the tab bar with 1 tab for every non-abstract class in editors package
+	 */
 	private void createTabs(){
 		ProjectReader.populateTabBar(this, myDimensions, myResources, myStage);
 		
@@ -106,31 +101,25 @@ public class MainEnvironment {
 			System.out.println("loop " + tab.getText());
 			tab.setOnSelectionChanged(e -> update(tab)); //is this updating the old tab?
 		}
+		myCurrentTab = myTabPane.getSelectionModel().getSelectedItem();
 	}
 	
 	private void update(Tab selectedTab){
-	//	Node editorUI = selectedTab.getContent();
-		//editor.getUI().update();
-		System.out.println("changed selection! " + selectedTab.getText());
-		//why does this printout twice????
-				//TODO: alternatively: use reflection to update the tab. unnecessary use of reflection....but might not be able to do anything else because of javafx limitations. that's also bad becasue of dependencies...
-				//can i get the index of the tab and then match it to the one in the properties file? that's bad because of dependencies...brainstorm more ways
-		
-		//below is just to allow for testing of the LevelEditor right now:
-		
-		
-		
-		
+		if (myCurrentTab != selectedTab){
+			Editor editor = (Editor) myCurrentTab.getContent();
+			Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the controller
+			
+			myCurrentTab = selectedTab;
+			Editor editor2 = (Editor) myCurrentTab.getContent();
+			editor2.update();
+		}
 	}
 
 
 	protected void addTab(Editor newEditor, String tabName, boolean main) {
 		Tab tab = new Tab();
 		tab.setText(tabName);
-		System.out.println("tabname: " + tabName);
-		tab.setContent(newEditor.configureUI());
-		//TODO: instead of calling configureUI, create a new editor each time, have UI stuff written in the constructor, and have each editor extend a node
-
+		tab.setContent(newEditor);
 		if (main){
 			tab.setStyle("-fx-base: #3c3c3c;");
 			System.out.println(tabName + "main = true, property set");
@@ -184,8 +173,9 @@ public class MainEnvironment {
 
 	public void setupScene(Stage stage, Parent root, double width, double height) {
 		Scene scene = new Scene(root, width, height);
-		// myStage.setTitle(myResources.getString("Title"));
+		myStage.setTitle(myResources.getString("Title"));
 		myStage.setScene(scene);
 		myStage.show();
 	}
+	
 }

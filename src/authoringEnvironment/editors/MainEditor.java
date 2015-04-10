@@ -1,6 +1,10 @@
 
 package authoringEnvironment.editors;
 
+import authoringEnvironment.Controller;
+import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.map.MapWorkspace;
+import authoringEnvironment.objects.TileMap;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -10,6 +14,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -20,48 +25,41 @@ import javafx.stage.Stage;
 public abstract class MainEditor extends Editor {
 
 	private GridPane myPane;
-	private StackPane myMapWorkspace;
+	private MapWorkspace myMapWorkspace;
 	
 	public static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
-	public static final double MAP_WIDTH_MULTIPLIER = .75;
-	public static final double MAP_HEIGHT_PERCENT = 100;
+	public static final double MAP_WIDTH_MULTIPLIER = .75; //THIS IS REPLICATED WITH THOSE VARIABLES IN MAP WORKSPACE
+	public static final double MAP_HEIGHT_PERCENT = 100; //THIS IS REPLICATED WITH THOSE VARIABLES IN MAP WORKSPACE
+
 	
-	public MainEditor(Dimension2D dim, Stage s) {
-		super(dim);
+	public MainEditor() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * Creates a sidebar and general map layout to be utilized by subclasses
-	 */
-	//TODO: return groupor return a parent so that I can directly return a gridpane here?
-	@Override
-	public Node configureUI() {
-
-		Group root = new Group();
-		createGridPane();
-		myMapWorkspace = new StackPane();
-		Rectangle background = new Rectangle(myDimensions.getWidth()*MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(), Color.web("2A2A29"));
-		myMapWorkspace.getChildren().add(background);
-		myPane.add(myMapWorkspace, 0, 0);
-		createMap();
+	  /**
+		 * Creates a sidebar and general map layout to be utilized by subclasses
+		 */
+		//TODO: return groupor return a parent so that I can directly return a gridpane here?
+		@Override
+		protected void configureUI() {
+			createGridPane();
+			myMapWorkspace = new MapWorkspace();
+			myPane.add(myMapWorkspace, 0, 0);
+			getChildren().add(myPane);
+		}
 		
-		// does it dynamically update or will i have to say
-		// TODO remove magic number
-		//is using MainEnvironment.myDimensions.getWidth() bad?
+		private void createGridPane() {
+			myPane = new GridPane();
+			setGridPaneConstraints(myPane);
+		}
 	
-		root.getChildren().add(myPane);
-		return root;
-	}
-
-	private void createGridPane() {
-		myPane = new GridPane();
-		setGridPaneConstraints(myPane);
-		myPane.setGridLinesVisible(true); //TODO: remove the showing gridlines
-	}
-	
-	public StackPane getMapWorkspace(){
+	public MapWorkspace getMapWorkspace(){
 		return myMapWorkspace;
+	}
+	
+	public TileMap getActiveMap(){
+		return myMapWorkspace.getActiveMap();
 	}
 
 	private void setGridPaneConstraints(GridPane pane) {
@@ -69,17 +67,21 @@ public abstract class MainEditor extends Editor {
 		row0.setPercentHeight(MAP_HEIGHT_PERCENT); 
 		pane.getRowConstraints().add(row0);
 		ColumnConstraints col0 = new ColumnConstraints();
-		col0.setPrefWidth(getWidth() * MAP_WIDTH_MULTIPLIER);
+		col0.setPrefWidth(MainEnvironment.getEnvironmentWidth() * MAP_WIDTH_MULTIPLIER);
 		ColumnConstraints col1 = new ColumnConstraints();
-		col1.setPrefWidth(getWidth() * SIDEBAR_WIDTH_MULTIPLIER);
+		//col1.setPrefWidth((MainEnvironment.getEnvironmentWidth() * SIDEBAR_WIDTH_MULTIPLIER); TODO: add this back
 		pane.getColumnConstraints().add(col0);
-		pane.getColumnConstraints().add(col1);
+		//pane.getColumnConstraints().add(col1);
 	}
 
 	protected GridPane getPane() {
 		return myPane;
 	}
-
-	protected abstract void createMap();
-
+	
+	public void update(){
+		MapEditor mapEditor = (MapEditor) Controller.getEditor(Controller.MAPS);  
+		if(!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap())){
+			getMapWorkspace().updateWithNewMap(mapEditor.getActiveMap());
+		}
+	}
 }
