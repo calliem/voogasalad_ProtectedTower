@@ -1,8 +1,10 @@
 package authoringEnvironment.objects;
 
-import imageselector.util.ScaleImage;
+import imageselectorTEMP.util.ScaleImage;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
