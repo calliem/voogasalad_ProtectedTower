@@ -1,6 +1,7 @@
 package engine.element.sprites;
 
 import javafx.geometry.Point2D;
+import javafx.scene.image.ImageView;
 import engine.Collidable;
 import engine.InsufficientParametersException;
 import engine.element.GameElement;
@@ -21,9 +22,10 @@ public abstract class Sprite extends GameElement implements Collidable {
 
     private Point2D myLocation;
     private String myType;
+    private ImageView myImage;
 
     public Sprite () throws InsufficientParametersException {
-
+    	
     }
 
     // public abstract List<String> getParameters ();
@@ -70,6 +72,9 @@ public abstract class Sprite extends GameElement implements Collidable {
         return myLocation.getY();
     }
 
+    public ImageView getImage(){
+    	return myImage;
+    }
     /**
      * Sets the type of object this is as an uppercase string
      * 
