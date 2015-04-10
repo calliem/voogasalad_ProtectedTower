@@ -62,15 +62,6 @@ public abstract class MoveableSprite extends Sprite {
     public abstract void target (Sprite sprite);
 
     /**
-     * This method is called when this object collides with another and should include the behavior
-     * of this object, such as stopping movement, or damaging the other object.
-     * 
-     * @param sprite Sprite object that this object collides with
-     * @return
-     */
-    public abstract void collide (Sprite sprite);
-
-    /**
      * This method is called by the game loop to update the view of the MovableSprite object. This
      * method should be used to define how this object moves and changes coordinates on the screen.
      */
