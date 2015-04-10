@@ -4,24 +4,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
 /**
- * Holds a 2D array of tiles, attaches listeners, and draws lines to display on the editor
+ * Holds a 2D array of tiles, attaches listeners, and draws gridlines to display on the map workspace
  * @author Callie Mao
  *
  */
 
-//potentially make abstract?
-public class TileMap {
+public class TileMap extends Group{
 
 	//TODO: figure out why gridlines are so weird
-	private Group myMap;
 	private Tile[][] myTiles;
 	private int myTileSize;
 	private Color myActiveColor;
+	private String myName;
+	private ImageView myBackground;
+	private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png"; 
 	
 	private HashMap<String, Integer> myTags; //maps a string to the number of elements with that tag
 
@@ -32,23 +35,29 @@ public class TileMap {
 	private Group myGridLines;
 	
 	private static final Color DEFAULT_TILE_COLOR = Color.WHITE;
+	
 
 	// user specifies rectangle or square dimensions...allow this flexibility
 	public TileMap(int mapRows, int mapCols, int tileSize) {
-		myMap = new Group();
-    	myMap.setOnDragDetected(e -> myMap.startFullDrag());
+    	setOnDragDetected(e -> startFullDrag());
 		myMapRows = mapRows;
 		myMapCols = mapCols;
 		myTileSize = tileSize;
 		myGridLines = new Group();
 		myActiveColor = DEFAULT_TILE_COLOR;
+		myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
+		setImageDimensions(myBackground);
+		getChildren().add(myBackground);
 		//TODO: sethover x, y coordinate, tile size, etc.
+		
 		createMap();
-		//createGridLines();
+		createGridLines();
 	}
-
-	public Group getMap() {
-		return myMap;
+	 
+	
+	private void setImageDimensions(ImageView image){
+		image.setFitWidth(myMapCols*myTileSize);
+		image.setFitHeight(myMapRows*myTileSize);
 	}
 	
 	public int addTag(int x, int y, String tag){
@@ -63,47 +72,48 @@ public class TileMap {
 		return --numTags;
 	}
 	
-/*	public void changeTile(int row, int col, Color color){
-		myTiles[row][col].setFill(color);
-	}*/
-	
-	//need to have different selectors for setting path and for changing tile color
-
-	
-	//TODO: attach tile listeners to new tiles but make it to add to specific one
-	
-	private void attachTileListener(Tile tile){
-		tile.setOnMousePressed(e -> tile.setFill(myActiveColor));//myTiles[x][y].setFill(myActiveColor));
-		tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); //TODO: fix dragging errors
-
+	public void setBackground(String filepath){
+		getChildren().remove(myBackground);
+		myBackground = new ImageView(new Image(filepath));
+		setImageDimensions(myBackground);
+		getChildren().add(0, myBackground);
+		
 	}
 	
-    /*private void attachTileListeners(){
-    	for (int i = 0; i < myTiles.length; i++) {
+	//TODO:duplicated tile listeners being added/deleted?
+	public void attachTileListeners(){
+		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
-				int x = i;
-				int y = j;
-				myTiles[i][j].setOnMousePressed(e -> myTiles[x][y].setFill(myActiveColor));//myTiles[x][y].setFill(myActiveColor));
-				myTiles[i][j].setOnMouseDragEntered(e -> myTiles[x][y].setFill(myActiveColor)); //TODO: fix dragging errors
-
-				
-//				myTiles[i][j].setOnMousePressed(e -> myTiles[x][y].select());
-//				myTiles[i][j].setOnMouseDragEntered(e -> myTiles[x][y].dragSelect());
-//				these above lines are to set pathing
-			
+				attachTileListener(myTiles[i][j]);
 			}
-    	}
-    }*/
+		}
+	}
+	
+	private void attachTileListener(Tile tile){
+		tile.setOnMousePressed(e -> {tile.setFill(myActiveColor); System.out.println("I have been clicked!" + tile.getFill().toString()) ;});//myTiles[x][y].setFill(myActiveColor));
+		tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); //TODO: fix dragging errors
+	}
 			
 	public void changeTileSize(int tileSize) {
+		System.out.println(myMapCols*myTileSize);
 		myTileSize = tileSize;
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				myTiles[i][j].setTileSizeDynamically(tileSize);
 			}
 		}
-	//	myMap.getChildren().remove(myGridLines);
-	//	createGridLines();
+		updateGridLines();
+		System.out.println(myMapCols*myTileSize);
+		setImageDimensions(myBackground);
+	}
+	
+	public void removeTileListeners(){
+		for (int i = 0; i < myTiles.length; i++) {
+			for (int j = 0; j < myTiles[0].length; j++) {
+				myTiles[i][j].setOnMousePressed(e -> {});
+				myTiles[i][j].setOnMouseDragEntered(e -> {});
+			}
+		}
 	}
 
 	public Tile getTile(int x, int y) {
@@ -111,7 +121,6 @@ public class TileMap {
 	}
 	
 	public void setActiveColor(Color color){
-		System.out.println("update color");
 		myActiveColor = color;
 	}
 
@@ -120,10 +129,11 @@ public class TileMap {
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				myTiles[i][j] = new Tile(myTileSize, i, j);
-				myMap.getChildren().add(myTiles[i][j]); // to speed up	
-				attachTileListener(myTiles[i][j]);// time?
+				getChildren().add(myTiles[i][j]); 	
+				attachTileListener(myTiles[i][j]);
 			}
 		}
+		setImageDimensions(myBackground);
 	}
 	
 	/**
@@ -136,7 +146,6 @@ public class TileMap {
 		Tile[][] newTiles = new Tile[newMapRows][newMapCols];
 		
 		//TODO make newmethod to avoid duplication since this is similar to createMap
-
 		for (int i = 0; i < newMapRows; i++) {
 			for (int j = 0; j < newMapCols; j++) {
 				if (i >= myMapRows || j >= myMapCols)
@@ -145,14 +154,15 @@ public class TileMap {
 					newTiles[i][j] = myTiles[i][j];
 				}
 				attachTileListener(newTiles[i][j]);
-				myMap.getChildren().add(newTiles[i][j]);	
+				getChildren().add(newTiles[i][j]);	
 			}
 		}
 
 		myMapCols = newMapCols;
-		myMapRows = newMapRows;
-		
+		myMapRows = newMapRows;	
 		myTiles = newTiles;
+		setImageDimensions(myBackground);
+		updateGridLines();
 	}
 	
 	/**
@@ -161,9 +171,10 @@ public class TileMap {
 	private void clearTiles(){
 		for (int i = 0; i < myMapRows; i++) {
 			for (int j = 0; j < myMapCols; j++) {
-				myMap.getChildren().remove(myTiles[i][j]);
+				getChildren().remove(myTiles[i][j]);
 			}
 		}
+		getChildren().remove(myGridLines);
 	}
 	
 	public int getNumRows(){
@@ -178,9 +189,9 @@ public class TileMap {
 		return myTileSize;
 	}
 	
-	/*private void createGridLines() {
-		int mapWidth = myMapRows * myTileSize;
-		int mapHeight = myMapCols * myTileSize; 
+	private void createGridLines() {
+		int mapWidth = myMapCols * myTileSize;
+		int mapHeight = myMapRows * myTileSize; 
 		
 		//TODO: make an error display if mapwidth or mapheight is greater than allowed or create a scrollpane instead
 		// vertical lines
@@ -195,6 +206,26 @@ public class TileMap {
 			horizontalLine.setStroke(Color.web("B2B2B2"));
 			myGridLines.getChildren().add(horizontalLine);
 		}
-		myMap.getChildren().add(myGridLines);
-	}*/
+		
+		if (!getChildren().contains(myGridLines))
+			getChildren().add(myGridLines);
+	}
+	
+	private void removeGridLines(){
+		myGridLines.getChildren().clear();
+	}
+	
+	/**
+	 * Updates the length and location of gridlines (usually after the size of the tile or grid has been adjusted
+	 */
+	private void updateGridLines(){
+		removeGridLines();
+		createGridLines();
+	}
+
+	public void addTileListeners() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

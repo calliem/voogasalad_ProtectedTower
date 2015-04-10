@@ -6,75 +6,55 @@
 package authoringEnvironment.editors;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Dimension2D;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import authoringEnvironment.Sidebar;
-import authoringEnvironment.objects.SpriteView;
+import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.objects.TileMap;
 
 public class MapEditor extends MainEditor {
 
-	//TODO: create a stackpane and put the grid onto the stackpane and put the background 
+	//TODO: store tags within map editor or within each individual map? different maps can have same and different tags. how will the tower editor display the drop down menu? all of them? 
 	
-    private TileMap myActiveMap;
+    //private TileMap myActiveMap;
     private static final int DEFAULT_MAP_ROWS = 14;// getWidth()*.8; //TODO: get the .8 from above class. also getWidth() is not static and so it cannot be used. maybe make it static or just mathis this a final variale? 
     private static final int DEFAULT_MAP_COLS = 19; //getHeight();
     private static final int DEFAULT_TILE_SIZE = 50; //based on height since monitor height < width and that is usually the limiting factor
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
-	private ObservableList<TileMap> myMaps;
+	private ObservableList<Node> myMaps;
+	private Sidebar mySidebar;  //TODO: maybe move this into the superclass?
 
-    public MapEditor(Dimension2D dim, Stage s) {
-        super(dim, s);
-        myMaps = FXCollections.observableArrayList();
-    }
-
-    @Override
-    public Node configureUI(){
-        Node root = super.configureUI();
-        getPane().add(new Sidebar(myResources, myActiveMap, myMaps),1,0); //TODO: check map dependency
-        return root;
-    }
-
-    public SpriteView[][] getTiles(){
-        // TODO return actual map tiles
-        return new SpriteView[0][0];
-    }
-
-	public ObservableList<TileMap> getMaps() {
-		// TODO return actual GameMaps
-		return myMaps;
-	};
-
-
-    @Override
-	protected void createMap() {
-        // TODO Auto-generated method stub
-
-        myActiveMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);		
-        getMapWorkspace().getChildren().add(myActiveMap.getMap());
-    }
-
-    public void setActiveMap(TileMap map){
-        myActiveMap = map;
-        //TODO: display the new active map
+	
+	//TODO: remove the dimensions parameter because we apparently can ust get that form the main enviornment?
+    public MapEditor() {
+        super();
+        myMaps = FXCollections.observableArrayList(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
+        myMaps.add(getMapWorkspace().getActiveMap());
+        mySidebar = new MapSidebar(myResources, myMaps, getMapWorkspace()); //now don't need to pass in so much stuff
+        getPane().add(mySidebar,1,0); 
     }
 
 	@Override
-	protected void update() {
-		// TODO Auto-generated method stub
-		
+	public List<Node> getObjects() {
+		return myMaps;
 	}
 
-    /*
-     * @Override protected Group configureUI() { // TODO Auto-generated method
-     * stub return null; }
-     */
+	@Override
+	public void update() {
+		super.update();
+		getMapWorkspace().getActiveMap().attachTileListeners();
+	}
+/*	@Override
+	public void update() {
+		System.out.println("updated mapeditor!");	
+		//getMapWorkspace().getChildren().add(myActiveMap.getMap()); //why can't just do this? isn't it bad to have to call the controller for the exact same editor? or maybe to get its new state? yeah that sounds about right
+		
+	}*/
 }

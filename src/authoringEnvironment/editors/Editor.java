@@ -2,9 +2,13 @@
 
 package authoringEnvironment.editors;
 
+
+import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,26 +22,16 @@ import javafx.stage.Stage;
  */
 
 
-
-public abstract class Editor {
+public abstract class Editor extends Group{
 	// or use a ArrayList<?> getObjects() method in this superclass?
 	//TODO: have later methods get myDimensions from a closer class not mainenvironment. THey are passed as parameters for a reason.
 
-	protected Dimension2D myDimensions;
 	
-	public Editor(Dimension2D dim){
-		myDimensions = dim;
+	public Editor(){
+		configureUI();
 	}
 
-    public abstract Node configureUI(); //or make it a Node instead of a gridPane?
-    
-    protected double getWidth(){
-    	return myDimensions.getWidth();
-    }
-    
-    protected double getHeight(){
-    	return myDimensions.getHeight();
-    }
+    protected abstract void configureUI();
     
     //to be used by backend 
    public void displayError(String s){
@@ -58,6 +52,13 @@ public abstract class Editor {
 		stage.show();	
 	}
    
-   protected abstract void update();
+   public abstract void update();
+   
+   public abstract List<Node> getObjects();
+   
+
+   
+/*   public static void getInstance(){
+}*/
     
 }
