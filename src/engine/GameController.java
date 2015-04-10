@@ -1,12 +1,11 @@
 package engine;
 
+import java.util.List;
 import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
-import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
 import engine.element.Game;
-import engine.element.sprites.Sprite;
 
 
 /**
@@ -41,14 +40,16 @@ public class GameController {
      * @param filepath String of location of the game file
      */
     public void loadGame (String filepath) {
-        Map<String, Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
+        List<Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
 
-        for (String s : allDataObjects.keySet()) {
-            Sprite currentObject = (Sprite) Reflection.createInstance(s);
-            currentObject.setParameterMap(allDataObjects.get(s));
-            // allObjects.add(currentObject);
-            // TODO need way to load objects into correct classes, like Layout and Wave
-        }
+        /*
+         * for (String s : allDataObjects.keySet()) {
+         * Sprite currentObject = (Sprite) Reflection.createInstance(s);
+         * currentObject.setParameterMap(allDataObjects.get(s));
+         * // allObjects.add(currentObject);
+         * // TODO need way to load objects into correct classes, like Layout and Wave
+         * }
+         */
     }
 
     /**
