@@ -2,6 +2,7 @@ package authoringEnvironment.editors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javafx.geometry.Dimension2D;
@@ -20,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import authoringEnvironment.GameManager;
+import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.UnitView;
@@ -39,24 +41,21 @@ public class WaveEditor extends MainEditor {
 	private final String WAVE = "Wave";
 
 
-	public WaveEditor(Dimension2D dim, Stage s) {
-		super(dim, s);
+	public WaveEditor() {
+		super();
 		myWaves = new HashMap<String, ArrayList<FlowView>>();
-		myDimensions = dim;
 	}
 
 	@Override
-	public Node configureUI() {
-		myRoot = new Group();
+	public void configureUI() {
 		StackPane editor = new StackPane();
 		HBox newWavePanel = new HBox(10);
 		VBox contents = new VBox(10);
-		
 		ScrollPane contentScrollPane = new ScrollPane();
 		contentScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 		contentScrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		contentScrollPane.setMaxHeight(myDimensions.getHeight());
-		contentScrollPane.setMaxWidth(myDimensions.getWidth());
+		contentScrollPane.setMaxHeight(MainEnvironment.getEnvironmentHeight());
+		contentScrollPane.setMaxWidth(MainEnvironment.getEnvironmentWidth());
 
 		Button makeNewWave = new Button("Create New Wave");
 		makeNewWave.setOnAction(e -> {
@@ -69,8 +68,8 @@ public class WaveEditor extends MainEditor {
 		contentScrollPane.setContent(contents);
 
 		editor.getChildren().add(contentScrollPane);
-		myRoot.getChildren().add(editor);
-		return myRoot;
+		getChildren().add(editor);
+
 	}
 
 	private void promptNewWaveName(StackPane editor, VBox contents) {
@@ -165,12 +164,14 @@ public class WaveEditor extends MainEditor {
 	}
 
 	@Override
-	protected void createMap() {
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	protected void update() {
+	public List<Node> getObjects() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }
