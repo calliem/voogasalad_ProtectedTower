@@ -2,10 +2,6 @@ package engine;
 
 import java.util.List;
 import java.util.Map;
-<<<<<<< HEAD
-
-=======
->>>>>>> 58685c6ca7b085f1dac14413b3bdfecfbf4ca9c7
 import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 import authoringEnvironment.GameManager;
@@ -42,7 +38,7 @@ public class GameController {
      * Those objects are then instantiated and their parameter lists are set.
      * 
      * @param filepath String of location of the game file
-     * @param engineRoot 
+     * @param engineRoot
      */
 
     public void loadGame (String filepath) {
