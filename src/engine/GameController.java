@@ -51,12 +51,21 @@ public class GameController {
         }
     }
 
-    public void setGroup (Group g) {
-        myGroup = g;
+    /**
+     * Called by the player to give the engine a group to add sprite nodes to
+     * 
+     * @param group Javafx Group object
+     */
+    public void setGroup (Group group) {
+        myGroup = group;
     }
 
-    // Will handle hotkeys
-    public void handleKeyInput (KeyEvent k) {
+    /**
+     * Called by the player to tell engine about keypressed
+     * 
+     * @param key KeyEvent object
+     */
+    public void handleKeyInput (KeyEvent key) {
 
     }
 
