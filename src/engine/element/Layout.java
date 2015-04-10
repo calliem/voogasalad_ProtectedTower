@@ -35,6 +35,7 @@ import engine.element.sprites.TowerFactory;
  */
 public class Layout extends GameElement implements Updateable {
 
+    private static final String PARAMETER_SIZE = "TileSize";
     private List<Sprite> towerList;
     private List<Sprite> enemyList;
     private List<Sprite> projectileList;
@@ -61,7 +62,7 @@ public class Layout extends GameElement implements Updateable {
     public void init (GridCell[][] map, CollisionTable table) {
         terrainMap = map;
         collisionTable = table;
-        gridSize = (double) map[0][0].getParameter("size");
+        gridSize = (double) map[0][0].getParameter(PARAMETER_SIZE);
         Rectangle pBounds = new Rectangle(map.length * gridSize, map[0].length * gridSize);
         quadTree = new Quadtree(1, pBounds);
     }
