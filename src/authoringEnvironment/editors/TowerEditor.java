@@ -1,12 +1,12 @@
 package authoringEnvironment.editors;
 
-import imageselector.ImageSelector;
+import imageselectorTEMP.ImageSelector;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import protectedtower.Main;
 
+import protectedtower.Main;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
@@ -172,7 +172,7 @@ public class TowerEditor extends PropertyEditor{
         promptField.setMaxWidth(225);
         promptField.setPromptText("Enter a name...");
         
-        ImageSelector imgSelector = new ImageSelector(Main.getStage());
+        ImageSelector imgSelector = new ImageSelector();
         imgSelector.addExtensionFilter("png");
         imgSelector.addExtensionFilter("jpg");
         imgSelector.setPreviewImageSize(225, 150);

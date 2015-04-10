@@ -1,6 +1,6 @@
 package authoringEnvironment.setting;
 
-import imageselector.util.ScaleImage;
+import imageselectorTEMP.util.ScaleImage;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -109,7 +109,7 @@ public abstract class Setting extends HBox{
         return readable;
     }
     
-    public void displaySavedValue () {
+    public void displaySavedValue(){
         editableField.setText(""+dataAsString);
     }
 }

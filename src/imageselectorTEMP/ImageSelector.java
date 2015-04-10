@@ -1,7 +1,9 @@
-package imageselector;
+package imageselectorTEMP;
 
-import imageselector.util.ScaleImage;
+import imageselectorTEMP.util.ScaleImage;
+
 import java.util.ResourceBundle;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
@@ -39,11 +41,13 @@ public class ImageSelector extends VBox {
      * @param stage the stage that the application is displayed on.
      * This is required to display an open-file dialog window.
      */
-    public ImageSelector (Stage stage) {
+    public ImageSelector () {
         super(2*PADDING);
         setAlignment(Pos.CENTER);
 
-        fileSelection = new GraphicFileChooser(stage, "Choose an image...", NOT_AVAILABLE);
+//        myResources = ResourceBundle.getBundle(SELECTOR_RESOURCES);
+        
+        fileSelection = new GraphicFileChooser("Choose an image...", NOT_AVAILABLE);
 
         filePath = NOT_AVAILABLE;
         preview = new ImageView(new Image(filePath));

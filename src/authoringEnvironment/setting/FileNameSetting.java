@@ -1,7 +1,9 @@
 package authoringEnvironment.setting;
 
-import imageselector.GraphicFileChooser;
+import imageselectorTEMP.GraphicFileChooser;
+
 import java.io.File;
+
 import protectedtower.Main;
 
 /**
@@ -19,19 +21,35 @@ public class FileNameSetting extends Setting{
 
     @Override
     protected void setupInteractionLayout(){
-        spriteFileChooser = new GraphicFileChooser(Main.getStage(), "Select a File...", null);
-        spriteFileChooser.setAdditionalOptions(true);
+        spriteFileChooser = new GraphicFileChooser("Select a File...", null);
+//        spriteFileChooser.setAdditionalOptions(true);
         spriteFileChooser.addExtensionFilter("xml");
         
         this.getChildren().add(spriteFileChooser);
     }
     
+    @Override
     public boolean parseField(){
         dataAsString = spriteFileChooser.getSelectedFileNameProperty().getValue();
-        return new File(dataAsString).isFile();
+        if(dataAsString == null){
+            displayErrorAlert("Please choose a file!");
+            return false;
+        }
+        hideErrorAlert();
+        return true;
+    }
+    
+    @Override
+    public boolean processData(){
+        return parseField();
     }
 
     public String getParameterValue(){
-        return getDataAsString();
+        return dataAsString;
+    }
+    
+    @Override
+    public void displaySavedValue(){
+        
     }
 }
