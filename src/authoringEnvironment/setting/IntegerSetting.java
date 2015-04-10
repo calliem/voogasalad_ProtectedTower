@@ -1,4 +1,4 @@
-package authoring.environment.setting;
+package authoringEnvironment.setting;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -10,31 +10,26 @@ import javafx.scene.text.TextAlignment;
  * A Setting object for integer parameters.
  * 
  * @author Kevin He
+ * @author Johnny
  *
  */
 public class IntegerSetting extends Setting {
-    private int value;
-    private TextField editableField;
+    private Integer dataAsInteger;
     
-    public IntegerSetting(String label){
-        super(label);
+    public IntegerSetting(String label, String defaultVal){
+        super(label, defaultVal);
     }
     
     @Override
-    protected void setupInteractionLayout(){
-        editableField = new TextField("0");
-        this.getChildren().add(editableField);
+    public Integer getParameterValue(){
+    	return dataAsInteger;
     }
-    
-    @Override
-    public String getParameterValue(){
-        return editableField.getText();
-    }
+  
 
     @Override
     public boolean parseField () {
         try{
-            value = Integer.parseInt(editableField.getText());
+            dataAsInteger = Integer.parseInt(textBox().getText());
             hideErrorAlert();
             return true;
         }
@@ -44,8 +39,4 @@ public class IntegerSetting extends Setting {
         }
     }
     
-    @Override
-    public void displaySavedValue () {
-        editableField.setText(""+value);
-    }
 }

@@ -1,6 +1,7 @@
 package engine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import util.reflection.Reflection;
@@ -51,16 +52,16 @@ public class GameController {
      * @param filepath String of location of the game file
      */
     public void loadGame (String filepath) {
-        Map<String, Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
+        List<Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
 
-        for (String s : allDataObjects.keySet()) {
-//            String partType = part.get(InstanceManager.partTypeKey);
-            String packageLocation = myPartTypeToPackage.get(s);
-            Sprite currentObject = (Sprite) Reflection.createInstance(s);
-            currentObject.setParameterMap(allDataObjects.get(s));
-            // allObjects.add(currentObject);
+        for (Map<String, Object> obj : allDataObjects) {
+            String partType = (String) obj.get(InstanceManager.partTypeKey);
+            String packageLocation = myPartTypeToPackage.get(partType);
+            Sprite currentObject = (Sprite) Reflection.createInstance(packageLocation);
+            currentObject.setParameterMap(obj);
             // TODO need way to load objects into correct classes, like Layout and Wave
         }
+
     }
 
     // Will handle hotkeys
