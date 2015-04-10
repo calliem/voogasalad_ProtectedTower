@@ -27,6 +27,7 @@ import engine.element.sprites.Tower;
  */
 
 public class GameController {
+    private static final String PARAMETER_GUID = "GUID";
     /**
      * Holds an instance of an entire game
      */
@@ -42,6 +43,7 @@ public class GameController {
         fillPackageMap();
     }
 
+    // TODO replace this with loading from data file
     private void fillPackageMap () {
         myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
         myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
@@ -62,19 +64,32 @@ public class GameController {
      * @param filepath String of location of the game file
      */
     public void loadGame (String filepath, Game game) {
-        Collection<Tower> towerObjects = new HashSet<Tower>();
-        Collection<Enemy> enemyObjects = new HashSet<Enemy>();
-        Collection<Projectile> projectileObjects = new HashSet<Projectile>();
-        List<Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
-
-        for (Map<String, Object> obj : allDataObjects) {
-            String partType = (String) obj.get(InstanceManager.partTypeKey);
-            String packageLocation = myPartTypeToPackage.get(partType);
-            Sprite currentObject = (Sprite) Reflection.createInstance(packageLocation);
-            currentObject.setParameterMap(obj);
-            
+        // Collection<Tower> towerObjects = new HashSet<Tower>();
+        // Collection<Enemy> enemyObjects = new HashSet<Enemy>();
+        // Collection<Projectile> projectileObjects = new HashSet<Projectile>();
+        Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
+        for (String s : myPartTypeToPackage.keySet()) {
+            myObjects.put(s, new HashMap<>());
         }
 
+        // Get list of parameters maps for all objects
+        // TODO change to collection or set
+        List<Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
+
+        // Organize parameters maps
+        for (Map<String, Object> obj : allDataObjects) {
+            String partType = (String) obj.get(InstanceManager.partTypeKey);
+            // String packageLocation = myPartTypeToPackage.get(partType);
+            // Sprite currentObject = (Sprite) Reflection.createInstance(packageLocation);
+            // currentObject.setParameterMap(obj);
+            myObjects.get(partType).put((String) obj.get(PARAMETER_GUID), obj);
+        }
+
+        // Send right sets of objects to the right objects
+        myGame.addTowers(myObjects.get("Tower"));
+        myGame.addTowers(myObjects.get("Enemy"));
+        myGame.addTowers(myObjects.get("Projectile"));
+        myGame.addTowers(myObjects.get("GridCell"));
     }
 
     // Will handle hotkeys
