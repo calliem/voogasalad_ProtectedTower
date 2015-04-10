@@ -1,7 +1,9 @@
 package authoringEnvironment.setting;
 
-import imageselector.GraphicFileChooser;
+import imageselectorTEMP.GraphicFileChooser;
+
 import java.io.File;
+
 import protectedtower.Main;
 
 /**
