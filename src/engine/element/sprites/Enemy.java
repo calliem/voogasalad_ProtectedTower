@@ -27,6 +27,7 @@ public class Enemy extends MoveableSprite {
 
 	private List<GridCell> myPath;
 	private static final double MOVE_DURATION = 1000;
+	private static final String PARAMETER_SPEED = "Speed";
 	
     public Enemy () throws InsufficientParametersException {
         super();
@@ -47,7 +48,7 @@ public class Enemy extends MoveableSprite {
 
     @Override
     public void move () {
-    	int speed = (int) super.getParameter("Speed");
+    	int speed = (int) super.getParameter(PARAMETER_SPEED);
     	Path path = new Path();
     	for (GridCell cell: myPath){
     		path.getElements().add(new MoveTo(cell.getLocationX(),cell.getLocationY()));
@@ -84,7 +85,7 @@ public class Enemy extends MoveableSprite {
 			@Override
 			public boolean isObstacle(Object o) {
 				GridCell cell = (GridCell)o;
-				return cell.isObstacle(type);
+				return false;
 			}
     	});
     	List<PathCell> coordPath = wrap.shortestPath(startRow, startCol, goalRow, goalCol);

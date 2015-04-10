@@ -2,6 +2,7 @@ package engine.element.sprites;
 
 import java.util.List;
 
+import engine.CollisionTable;
 import engine.InsufficientParametersException;
 
 
@@ -32,10 +33,5 @@ public class GridCell extends Sprite {
     public boolean isCollidableWith (String type) {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    public boolean isObstacle(String type){
-        // TODO Auto-generated method stub
-		return false;
     }
 }
