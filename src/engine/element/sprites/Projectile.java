@@ -14,11 +14,14 @@ import engine.InsufficientParametersException;
  */
 public class Projectile extends MoveableSprite {
 
-	public Projectile (Map<String, Object> params) throws InsufficientParametersException {
+    public Projectile () {
+        super();
+    }
+	public Projectile (Map<String, Object> params){
         super(params);
     }
     
-    public Projectile (ImageView img) throws InsufficientParametersException {
+    public Projectile (ImageView img){
         super(img);
     }
 
