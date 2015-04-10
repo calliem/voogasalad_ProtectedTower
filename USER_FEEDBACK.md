@@ -1,5 +1,5 @@
 
-///Recitation 4/10/15: User Testing
+###Recitation 4/10/15: User Testing
 
 - Wave Editor: Box to display seconds elapsed between each unit is not clear. After creating a wave, the name of the wave is no longer displayed and thus it is difficult for the user to keep track of the wave he/she created. Nesting waves allows the user to create many different units. Also, there should be the ability to set quantity and default time in between each wave (ie. default time can be set in the "Create Wave" box)
 - Tower Editor: Save button should close after press, while the Close button should be a Cancel button.  We got lots of positive feedback on the layout and overall aesthetic appeal on the editor window, so we'll look to recycle that code in other sprite editors we create.
