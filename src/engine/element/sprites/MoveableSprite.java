@@ -18,12 +18,17 @@ public abstract class MoveableSprite extends Sprite {
 //    private Point2D myVelocity;
 //    private double myRange;
 
-    public MoveableSprite (Map<String, Object> params) throws InsufficientParametersException {
+    public MoveableSprite () {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    public MoveableSprite (Map<String, Object> params){
         super(params);
     }
     
-    public MoveableSprite (ImageView img) throws InsufficientParametersException {
-        super(img);
+    public MoveableSprite (ImageView image) {
+        super(image);
+        // TODO Auto-generated constructor stub
     }
 
     // Setters and getters
@@ -66,15 +71,6 @@ public abstract class MoveableSprite extends Sprite {
      * @param sprite Sprite object that is targeted
      */
     public abstract void target (Sprite sprite);
-
-    /**
-     * This method is called when this object collides with another and should include the behavior
-     * of this object, such as stopping movement, or damaging the other object.
-     * 
-     * @param sprite Sprite object that this object collides with
-     * @return
-     */
-    public abstract void collide (Sprite sprite);
 
     /**
      * This method is called by the game loop to update the view of the MovableSprite object. This

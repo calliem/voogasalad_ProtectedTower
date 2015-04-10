@@ -1,5 +1,7 @@
 package engine.element.sprites;
 
+
+import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +15,7 @@ import pathsearch.graph.PathCell;
 import pathsearch.pathalgorithms.NoPathExistsException;
 import pathsearch.pathalgorithms.ObstacleFunction;
 import pathsearch.wrappers.GridWrapper;
-import engine.InsufficientParametersException;
+
 
 
 /**
@@ -26,17 +28,23 @@ import engine.InsufficientParametersException;
  */
 public class Enemy extends MoveableSprite {
 
+    public Enemy (){
+        super();
+    }
+    
+    public Enemy (ImageView image){
+        super(image);
+    }
+    
 	private List<GridCell> myPath;
 	private static final double MOVE_DURATION = 1000;
 	private static final String PARAMETER_SPEED = "Speed";
 	
-	public Enemy (Map<String, Object> params) throws InsufficientParametersException {
+	public Enemy (Map<String, Object> params){
         super(params);
     }
     
-    public Enemy (ImageView img) throws InsufficientParametersException {
-        super(img);
-    }
+ 
 
     @Override
     public void target (Sprite sprite) {
@@ -55,7 +63,7 @@ public class Enemy extends MoveableSprite {
     	int speed = (int) super.getParameter(PARAMETER_SPEED);
     	Path path = new Path();
     	for (GridCell cell: myPath){
-    		path.getElements().add(new MoveTo(cell.getLocationX(),cell.getLocationY()));
+    		path.getElements().add(new MoveTo(cell.getCenterX(),cell.getCenterY()));
     	}
     	PathTransition pathTransition = new PathTransition();
     	pathTransition.setDuration(Duration.millis(MOVE_DURATION*(myPath.size())/speed));
@@ -83,7 +91,7 @@ public class Enemy extends MoveableSprite {
      * @throws NoPathExistsException 
      * @throws InsufficientParametersException 
      */
-    public void updatePath(GridCell[][] grid, String type, int startRow, int startCol, int goalRow, int goalCol) throws NoPathExistsException, InsufficientParametersException{
+    public void updatePath(GridCell[][] grid, String type, int startRow, int startCol, int goalRow, int goalCol) throws NoPathExistsException{
     	GridWrapper wrap = new GridWrapper();
     	wrap.initializeGraph(grid, new ObstacleFunction() {
 			@Override

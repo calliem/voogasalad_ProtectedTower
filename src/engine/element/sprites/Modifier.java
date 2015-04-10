@@ -15,11 +15,15 @@ import engine.InsufficientParametersException;
  */
 public class Modifier extends Sprite {
 
-	public Modifier (Map<String, Object> params) throws InsufficientParametersException {
+
+    public Modifier (){
+        super();
+    }
+	public Modifier (Map<String, Object> params){
         super(params);
     }
     
-    public Modifier (ImageView img) throws InsufficientParametersException {
+    public Modifier (ImageView img){
         super(img);
     }
 
@@ -34,5 +38,11 @@ public class Modifier extends Sprite {
         // TODO Auto-generated method stub
         return false;
     }
+
+	@Override
+	public void collide(Sprite sprite) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

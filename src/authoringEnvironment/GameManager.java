@@ -46,7 +46,7 @@ public class GameManager {
 		//this file is stored in rootDir/gameName, i.e.: Users/Johnny/Documents/KingdomRush/KingdomRush.game
 		XMLWriter.toXML(nameAndDirectory, gameName + ".game", gameDirectory);
 	}
-	
+
 	/**
 	 * Creates subdirectories for each kind of part, i.e. "Tower", "Unit", etc. in a 
 	 * subdirectory of ... userData\gameName
@@ -59,11 +59,11 @@ public class GameManager {
 		setUserDataLocation(rootDir + "/" + gameName);
 		XMLWriter.createDirectories(userDataLocation, dirsToBeCreated());
 	}
-	
+
 	public static void setUserDataLocation(String rootDir){
 		userDataLocation = rootDir;
 	}
-	
+
 	public static void addPartToGame(String partType, String partName, List<String> params, List<Object> data){
 		currentGame.addPart(partType, partName, params, data);
 	}
@@ -74,8 +74,8 @@ public class GameManager {
 	list.add(new List<String>());
 	//times
 	list.add(new List<Double>());
-*/
-	
+	 */
+
 	/**
 	 * Saves all the parts and the Map<partName, [part data]> into an XML file called gameName + "Parts.xml"
 	 * Ex: "TestGameParts.xml"
@@ -85,7 +85,7 @@ public class GameManager {
 		currentGame.writeAllPartsToXML(userDataLocation);
 		return XMLWriter.toXML(currentGame.getAllPartData(), partFileName, userDataLocation + partFileDir);
 	}
-	
+
 
 	/**
 	 * Loads in the Map<partName, [part data]> representing all the parts of the game
@@ -101,7 +101,7 @@ public class GameManager {
 		currentGame = new InstanceManager(nameAndDirectory[0], allUserData);
 		return allUserData;
 	}
-	
+
 	public static Map<String, Object> loadPart(String dir){
 		System.out.println("loading: " + dir);
 		try {
@@ -112,7 +112,12 @@ public class GameManager {
 		}
 		return null;
 	}
-	
+
+	public static Map<String, Object> loadPartFromFileName(String partType, String fileName){
+		String dir = userDataLocation + "/" + partType + "/" + fileName;
+		return loadPart(dir);
+	}
+
 	private static Set<String> dirsToBeCreated(){
 		Set<String> toAdd = paramLists.keySet();
 		toAdd.add(partFileDir);

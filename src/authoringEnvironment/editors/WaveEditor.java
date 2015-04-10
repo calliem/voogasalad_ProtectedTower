@@ -2,12 +2,11 @@ package authoringEnvironment.editors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -18,8 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import authoringEnvironment.GameManager;
+import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.UnitView;
@@ -33,30 +32,24 @@ import authoringEnvironment.objects.UnitView;
  */
 
 public class WaveEditor extends MainEditor {
-	private Dimension2D myDimensions;
-	private Group myRoot;
 	private Map<String, ArrayList<FlowView>> myWaves;
 	private final String WAVE = "Wave";
 
-
-	public WaveEditor(Dimension2D dim, Stage s) {
-		super(dim, s);
+	public WaveEditor() {
+		super();
 		myWaves = new HashMap<String, ArrayList<FlowView>>();
-		myDimensions = dim;
 	}
 
 	@Override
-	public Node configureUI() {
-		myRoot = new Group();
+	public void configureUI() {
 		StackPane editor = new StackPane();
 		HBox newWavePanel = new HBox(10);
 		VBox contents = new VBox(10);
-		
 		ScrollPane contentScrollPane = new ScrollPane();
 		contentScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 		contentScrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		contentScrollPane.setMaxHeight(myDimensions.getHeight());
-		contentScrollPane.setMaxWidth(myDimensions.getWidth());
+		contentScrollPane.setMaxHeight(MainEnvironment.getEnvironmentHeight());
+		contentScrollPane.setMaxWidth(MainEnvironment.getEnvironmentWidth());
 
 		Button makeNewWave = new Button("Create New Wave");
 		makeNewWave.setOnAction(e -> {
@@ -69,8 +62,8 @@ public class WaveEditor extends MainEditor {
 		contentScrollPane.setContent(contents);
 
 		editor.getChildren().add(contentScrollPane);
-		myRoot.getChildren().add(editor);
-		return myRoot;
+		getChildren().add(editor);
+
 	}
 
 	private void promptNewWaveName(StackPane editor, VBox contents) {
@@ -112,7 +105,7 @@ public class WaveEditor extends MainEditor {
 		ScrollPane newWave = new ScrollPane();
 		newWave.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 		newWave.setVbarPolicy(ScrollBarPolicy.NEVER);
-		newWave.setMaxWidth(myDimensions.getWidth());
+		newWave.setMaxWidth(MainEnvironment.getEnvironmentWidth());
 
 		HBox waveContent = new HBox(10);
 
@@ -123,25 +116,30 @@ public class WaveEditor extends MainEditor {
 
 		Button save = new Button("Save");
 		save.setOnAction(e -> {
-			ArrayList<String> partFileNames = new ArrayList<String>();
-			ArrayList<Double> delays = new ArrayList<Double>();
+			List<String> partFileNames = new ArrayList<String>();
+			List<Double> delays = new ArrayList<Double>();
+			List<Double> times = new ArrayList<Double>();
+			times.add(0.0);
 
 			for (FlowView unit : myWaves.get(waveName)) {
-				partFileNames.add(unit.getFileName());
-				// System.out.println(unit.getFileName());
-				delays.add(unit.getDelay());
+				partFileNames.addAll(unit.getFileNames());
+				delays.addAll(unit.getDelays());
 			}
 
-			ArrayList<Object> data = new ArrayList<Object>();
-			data.add(partFileNames);
-			data.add(delays);
-			
-			for (String part : ProjectReader.getParamsNoTypeOrName(WAVE)) {
-				System.out.println(part);
+			for (Double d : delays) {
+				Double all = 0.0;
+				for (Double t : times)
+					all += t;
+				times.add(all + d);
 			}
-			
-			GameManager.addPartToGame(WAVE, waveName, ProjectReader.getParamsNoTypeOrName(WAVE), data);
-			});
+
+			List<Object> data = new ArrayList<Object>();
+			data.add(partFileNames);
+			data.add(times);
+
+			GameManager.addPartToGame(WAVE, waveName,
+					ProjectReader.getParamsNoTypeOrName(WAVE), data);
+		});
 
 		VBox buttons = new VBox(10);
 		buttons.getChildren().add(addUnit);
@@ -151,7 +149,6 @@ public class WaveEditor extends MainEditor {
 		newWave.setContent(waveContent);
 
 		contents.getChildren().add(newWave);
-		// return newWave;
 	}
 
 	private void addUnitToWave(HBox wave, String waveName) {
@@ -165,12 +162,14 @@ public class WaveEditor extends MainEditor {
 	}
 
 	@Override
-	protected void createMap() {
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	protected void update() {
+	public List<Node> getObjects() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }

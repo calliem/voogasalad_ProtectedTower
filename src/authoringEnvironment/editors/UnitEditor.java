@@ -4,6 +4,7 @@ package authoringEnvironment.editors;
 
 import java.util.ArrayList;
 
+import java.util.List;
 /**
  * Sets up the unit editor that allows the user to create units as well as update their parameters/properties 
  * @author Callie Mao
@@ -17,8 +18,8 @@ import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
-    public UnitEditor(Dimension2D dim, Stage s) {
-        super(dim);
+    public UnitEditor() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -27,14 +28,15 @@ public class UnitEditor extends PropertyEditor {
     }
 
     @Override
-    public Node configureUI() {
+    protected void configureUI() {
         // TODO Auto-generated method stub
-        return null;
+     
     }
 
 	@Override
-	protected void update() {
+	public List<Node> getObjects() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
+
 }

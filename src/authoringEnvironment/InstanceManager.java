@@ -231,6 +231,7 @@ public class InstanceManager {
 		GameManager.saveGame();
 		GameManager.loadPart("C:/Users/Johnny/workspace/voogasalad_ProtectedTower/src/exampleUserData/ExampleGame/Tower/MyFirstTower.xml");
 		List<Map<String, Object>> game = GameManager.loadGame(gameRootDirectory + "/ExampleGame/ExampleGame.game");
+		System.out.println("load? " + GameManager.loadPartFromFileName("Tower", "MyFirstTower.xml"));
 		System.out.println("all data: ");
 		System.out.println(game.toString());
 		/*

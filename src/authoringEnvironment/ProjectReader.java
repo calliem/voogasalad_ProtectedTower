@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.Set;
+
 import javafx.geometry.Dimension2D;
 import javafx.stage.Stage;
 import authoringEnvironment.editors.Editor;
@@ -17,9 +19,10 @@ import authoringEnvironment.setting.Setting;
 /**
  * 
  * @author Johnny Kumpf
- *
+ * @author Callie Mao (updates to controller)
  */
 public class ProjectReader {
+
 
     private static final String paramListFile = "resources/part_parameters";
     private static final String paramSpecsFile = "resources/parameter_datatype";
@@ -56,8 +59,10 @@ public class ProjectReader {
         ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
 
         String[] params = getParamListForPart(partType);
-
-        for(String param : params){
+        List<String> paramsList = listFromArray(params);
+        Collections.sort(paramsList);
+        paramsList = trimBeforeDot(paramsList);
+        for(String param : paramsList){
             String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
             String dataType = typeAndDefault[0];
             String defaultVal = typeAndDefault[1];
@@ -66,6 +71,15 @@ public class ProjectReader {
         }
 
         return settingsList;
+    }
+    
+    private static List<String> trimBeforeDot(List<String> toTrim){
+    	List<String> trimmed = new ArrayList<String>();
+    	for (int i = 0; i < toTrim.size(); i++){
+    		String current = toTrim.get(i);
+    		trimmed.add(current.substring(current.indexOf(".") + 1, current.length()));
+    	}
+    	return trimmed;
     }
 
     /**
@@ -110,8 +124,8 @@ public class ProjectReader {
                 String toCreate = "authoringEnvironment.editors." + s;
                 try {
                     e = (Editor) Class.forName(toCreate)
-                            .getConstructor(Dimension2D.class, Stage.class)
-                            .newInstance(myDimensions, myStage);
+                            .getConstructor()
+                            .newInstance();
                 } catch (InstantiationException e1){ 
                     System.err.println("Constructor Editor(Dimension2D.class, Stage.class) doesn't exist or was"
                             + "incorrectly called");
@@ -129,6 +143,8 @@ public class ProjectReader {
                     e1.printStackTrace();
                 }
                 m.addTab(e, myResources.getString(s), tabsToCreate.get(s));
+				Controller.updateEditor(myResources.getString(s), e);
+
             }
         }
     }
