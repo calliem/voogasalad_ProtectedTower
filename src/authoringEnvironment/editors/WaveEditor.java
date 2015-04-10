@@ -19,6 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import authoringEnvironment.GameManager;
+import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.UnitView;
 
@@ -34,6 +36,7 @@ public class WaveEditor extends MainEditor {
 	private Dimension2D myDimensions;
 	private Group myRoot;
 	private Map<String, ArrayList<FlowView>> myWaves;
+	private final String WAVE = "Wave";
 
 
 	public WaveEditor(Dimension2D dim, Stage s) {
@@ -48,6 +51,12 @@ public class WaveEditor extends MainEditor {
 		StackPane editor = new StackPane();
 		HBox newWavePanel = new HBox(10);
 		VBox contents = new VBox(10);
+		
+		ScrollPane contentScrollPane = new ScrollPane();
+		contentScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+		contentScrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		contentScrollPane.setMaxHeight(myDimensions.getHeight());
+		contentScrollPane.setMaxWidth(myDimensions.getWidth());
 
 		Button makeNewWave = new Button("Create New Wave");
 		makeNewWave.setOnAction(e -> {
@@ -57,8 +66,9 @@ public class WaveEditor extends MainEditor {
 
 		newWavePanel.getChildren().add(makeNewWave);
 		contents.getChildren().add(newWavePanel);
+		contentScrollPane.setContent(contents);
 
-		editor.getChildren().add(contents);
+		editor.getChildren().add(contentScrollPane);
 		myRoot.getChildren().add(editor);
 		return myRoot;
 	}
@@ -122,16 +132,16 @@ public class WaveEditor extends MainEditor {
 				delays.add(unit.getDelay());
 			}
 
-//			Map<String, ArrayList<String>> waveUnits = new HashMap<String, ArrayList<String>>();
-//			Map<String, ArrayList<Double>> waveDelays = new HashMap<String, ArrayList<Double>>();
-//			waveUnits.put(waveName, partFileNames);
-//			waveDelays.put(waveName, delays);
 			ArrayList<Object> data = new ArrayList<Object>();
 			data.add(partFileNames);
 			data.add(delays);
 			
-			//addPartToGame("wave", waveName, params, data);
-		});
+			for (String part : ProjectReader.getParamsNoTypeOrName(WAVE)) {
+				System.out.println(part);
+			}
+			
+			GameManager.addPartToGame(WAVE, waveName, ProjectReader.getParamsNoTypeOrName(WAVE), data);
+			});
 
 		VBox buttons = new VBox(10);
 		buttons.getChildren().add(addUnit);
