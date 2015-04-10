@@ -4,6 +4,7 @@
 package authoringEnvironment;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,15 +14,16 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import authoring.environment.setting.Setting;
+import authoringEnvironment.setting.Setting;
 
 public class GameManager {
 
-	private static String userDataPackage = System.getProperty("user.dir").concat("/src/userData");
+	private static String userDataLocation = System.getProperty("user.dir").concat("/src/userData");
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
-	private static final String gameFileDir = "/AllPartsData";
+	private static final String partFileDir = "/AllPartsData";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
+	private static final String partFileName = "GameParts.xml";
 
 	private static InstanceManager currentGame = new InstanceManager();
 
@@ -33,12 +35,13 @@ public class GameManager {
 	 * @param rootDir The place where the game and subsequent folders will be created
 	 */
 	public static void createNewGame(String gameName, String rootDir){
+		currentGame = new InstanceManager(gameName);
 		String gameDirectory = rootDir + "/" + gameName;
 		String[] nameAndDirectory = new String[2];
 		nameAndDirectory[0] = gameName;
 		nameAndDirectory[1] = gameDirectory;
-		setUserDataPackage(rootDir);
-		createGameFolders(gameName);
+		createGameFolders(gameName, rootDir);
+		System.out.println("Game root dir: " + userDataLocation);
 		//writes the rootDir string into a file
 		//this file is stored in rootDir/gameName, i.e.: Users/Johnny/Documents/KingdomRush/KingdomRush.game
 		XMLWriter.toXML(nameAndDirectory, gameName + ".game", gameDirectory);
@@ -49,44 +52,70 @@ public class GameManager {
 	 * subdirectory of ... userData\gameName
 	 * @param gameName The name of the new game we're going to create subdirectories for
 	 */
-	public static void createGameFolders(String gameName){
-		XMLWriter.createDirectories(userDataPackage, dirsToBeCreated());
+	public static void createGameFolders(String gameName, String rootDir){
+		Set<String> name = new HashSet<String>();
+		name.add(gameName);
+		XMLWriter.createDirectories(rootDir, name);
+		setUserDataLocation(rootDir + "/" + gameName);
+		XMLWriter.createDirectories(userDataLocation, dirsToBeCreated());
 	}
 	
-	public static void setUserDataPackage(String rootDir){
-		userDataPackage = rootDir;
+	public static void setUserDataLocation(String rootDir){
+		userDataLocation = rootDir;
 	}
 	
 	public static void addPartToGame(String partType, String partName, List<String> params, List<Object> data){
 		currentGame.addPart(partType, partName, params, data);
 	}
-
+	/*
+	addPartToGame("Wave", "IceGuysWave", {"Units", "Times"}, data)
+	List<Object> data = new List<Object>();
+	//filenames
+	list.add(new List<String>());
+	//times
+	list.add(new List<Double>());
+*/
+	
 	/**
 	 * Saves all the parts and the Map<partName, [part data]> into an XML file called gameName + "Parts.xml"
 	 * Ex: "TestGameParts.xml"
 	 * @param gameManager the InstanceManager of the game that's being saved
 	 */
-	public static void saveGame(){
-		currentGame.writeAllPartsToXML();
-		currentGame.writeGameToXML();
+	public static String saveGame(){
+		currentGame.writeAllPartsToXML(userDataLocation);
+		return XMLWriter.toXML(currentGame.getAllPartData(), partFileName, userDataLocation + partFileDir);
 	}
+	
 
 	/**
 	 * Loads in the Map<partName, [part data]> representing all the parts of the game
 	 * @param gameName The name of the game for which to load in the parts
 	 * @return
 	 */
-	public static Map<String, Map<String, Object>> loadGame(String pathToRootDirectoryFile){
+	public static List<Map<String, Object>> loadGame(String pathToRootDirectoryFile){
 		String[] nameAndDirectory = (String[]) XMLWriter.fromXML(pathToRootDirectoryFile);
-		setUserDataPackage(nameAndDirectory[1]);
-		String dir = userDataPackage + gameFileDir;
-		currentGame = new InstanceManager(nameAndDirectory[0], (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir));
-		return (Map<String, Map<String, Object>>) XMLWriter.fromXML(dir);
+		setUserDataLocation(nameAndDirectory[1]);
+		String dir = userDataLocation + partFileDir + "/" + partFileName;
+		System.out.println("dir loading: " + dir);
+		List<Map<String,Object>> allUserData = (List<Map<String, Object>>) XMLWriter.fromXML(dir);
+		currentGame = new InstanceManager(nameAndDirectory[0], allUserData);
+		return allUserData;
+	}
+	
+	public static Map<String, Object> loadPart(String dir){
+		System.out.println("loading: " + dir);
+		try {
+			return currentGame.getPartFromXML(dir);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	private static Set<String> dirsToBeCreated(){
 		Set<String> toAdd = paramLists.keySet();
-		toAdd.add(gameFileDir);
+		toAdd.add(partFileDir);
 		return toAdd;
 	}
 

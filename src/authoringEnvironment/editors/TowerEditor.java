@@ -1,9 +1,12 @@
 package authoringEnvironment.editors;
 
-import imageSelector.ImageSelector;
+import imageselectorTEMP.ImageSelector;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import protectedtower.Main;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
@@ -13,6 +16,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -47,16 +51,18 @@ public class TowerEditor extends PropertyEditor{
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
 
+    private static final int ROW_SIZE = 2;
+
     /**
      * Creates a tower object.
      * @param dim       dimensions of the environment
      * @param rb        the resource bundle containing displayed strings
      * @param s the stage on which the authoring environment is displayed
      */
-    public TowerEditor(Dimension2D dim, ResourceBundle rb, Stage s) {
-        super(dim, rb, s);
+    public TowerEditor(Dimension2D dim, Stage s) {
+        super(dim);
     }
-    
+
     /**
      * Gets the list of towers that the user has created.
      * @return towersCreated    the list of towers that the user has created.
@@ -69,7 +75,7 @@ public class TowerEditor extends PropertyEditor{
      * Sets up the editor UI.
      */
     @Override
-    public Group configureUI () {
+    public Node configureUI () {
         // TODO Auto-generated method stub
         myRoot = new Group();
         myContent = new StackPane();
@@ -78,15 +84,19 @@ public class TowerEditor extends PropertyEditor{
         // TODO remove magic number
         Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, Color.GRAY);
 
-        VBox towersDisplay = new VBox(10);
+        VBox towersDisplay = new VBox(20);
         towersDisplay.setTranslateY(10);
 
         HBox editControls = setupEditControls();
         towersDisplay.getChildren().add(editControls);
-        
+
+        ArrayList<HBox> rows = new ArrayList<>();
+
         // TODO remove magic numbers
-        currentRow = new HBox(20);
-        towersDisplay.getChildren().add(currentRow);
+        HBox row = new HBox(20);
+        currentRow = row;
+        towersDisplay.getChildren().add(row);
+        rows.add(row);
 
         numTowers = new SimpleIntegerProperty(0);
         numTowers.addListener((obs, oldValue, newValue) -> {
@@ -96,12 +106,23 @@ public class TowerEditor extends PropertyEditor{
             else if((int) newValue > 0 && myContent.getChildren().contains(empty)){
                 myContent.getChildren().remove(empty);
             }
-            
-            //TODO: dynamically put new towers onto new line
-            //so that each row has 7 towers.
+
+            // if there's 2 on a row already
+            else if(currentRow.getChildren().size() == ROW_SIZE){
+                HBox newRow = new HBox(20);
+                newRow.setAlignment(Pos.TOP_CENTER);
+                currentRow = newRow;
+                rows.add(newRow);
+                towersDisplay.getChildren().add(newRow);
+            }
+
+            else if((int)newValue < (int)oldValue){
+                System.out.println("rows: " + rows.size());
+            }
         });
-        
-        empty = new Text("No towers have been made...yet.");
+
+        empty = new Text("No towers yet");
+        //myResources.getString("NoTowersCreated"));
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
 
@@ -152,13 +173,16 @@ public class TowerEditor extends PropertyEditor{
         TextField promptField = new TextField();
         promptField.setMaxWidth(225);
         promptField.setPromptText("Enter a name...");
-        
-        ImageSelector imgSelector = new ImageSelector(myStage);
+
+        ImageSelector imgSelector = new ImageSelector();
+        imgSelector.addExtensionFilter("png");
+        imgSelector.addExtensionFilter("jpg");
+        imgSelector.setPreviewImageSize(225, 150);
 
         HBox buttons = new HBox(10);
         Button create = new Button("Create");
         create.setOnAction((e) -> {
-            addTower(promptField.getText(), imgSelector.getSelectedImageFile());
+            addTower(promptField.getText(), imgSelector.getSelectedImageFile(), currentRow);
             hideEditScreen(promptDisplay);
         });
 
@@ -191,7 +215,7 @@ public class TowerEditor extends PropertyEditor{
         }
     }
 
-    private void addTower(String name, String imageFile){
+    private void addTower(String name, String imageFile, HBox row){
         TowerView tower = new TowerView(name, imageFile);
         tower.initiateEditableState();
         setupTowerAction(tower);
@@ -200,13 +224,14 @@ public class TowerEditor extends PropertyEditor{
         towerExists.addListener((obs, oldValue, newValue) -> {
             if(!newValue){
                 PauseTransition wait = new PauseTransition(Duration.millis(200));
-                wait.setOnFinished((e) -> currentRow.getChildren().remove(tower));
+                wait.setOnFinished((e) -> row.getChildren().remove(tower));
+                wait.play();
                 towersCreated.remove(tower);
                 numTowers.setValue(towersCreated.size());
             }
         });
 
-        currentRow.getChildren().add(tower);
+        row.getChildren().add(tower);
         towersCreated.add(tower);
         numTowers.setValue(towersCreated.size());
     }
@@ -251,5 +276,11 @@ public class TowerEditor extends PropertyEditor{
         scale.play();
 
         return scale;
+    }
+
+    @Override
+    protected void update() {
+        // TODO Auto-generated method stub
+
     }
 }
