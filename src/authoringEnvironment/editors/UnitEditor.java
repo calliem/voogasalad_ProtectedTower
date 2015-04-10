@@ -12,12 +12,13 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 import authoringEnvironment.objects.UnitView;
 
 public class UnitEditor extends PropertyEditor {
     public UnitEditor(Dimension2D dim, Stage s) {
-        super(dim, s);
+        super(dim);
         // TODO Auto-generated constructor stub
     }
 
@@ -26,8 +27,14 @@ public class UnitEditor extends PropertyEditor {
     }
 
     @Override
-    public Group configureUI() {
+    public Node configureUI() {
         // TODO Auto-generated method stub
         return null;
     }
+
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

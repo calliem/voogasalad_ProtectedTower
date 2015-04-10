@@ -1,5 +1,8 @@
 package authoringEnvironment.objects;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -19,6 +22,8 @@ public class TileMap {
 	private Tile[][] myTiles;
 	private int myTileSize;
 	private Color myActiveColor;
+	
+	private HashMap<String, Integer> myTags; //maps a string to the number of elements with that tag
 
 	// allowing both width and height gives greater flexibility in map creation
 	private int myMapRows;
@@ -31,6 +36,7 @@ public class TileMap {
 	// user specifies rectangle or square dimensions...allow this flexibility
 	public TileMap(int mapRows, int mapCols, int tileSize) {
 		myMap = new Group();
+    	myMap.setOnDragDetected(e -> myMap.startFullDrag());
 		myMapRows = mapRows;
 		myMapCols = mapCols;
 		myTileSize = tileSize;
@@ -45,14 +51,34 @@ public class TileMap {
 		return myMap;
 	}
 	
+	public int addTag(int x, int y, String tag){
+		myTiles[x][y].addTag(tag);
+		int numTags = myTags.get(tag);
+		return ++numTags;
+	}
+	
+	public int removeTag(int x, int y, String tag){
+		myTiles[x][y].removeTag(tag);
+		int numTags = myTags.get(tag);
+		return --numTags;
+	}
+	
 /*	public void changeTile(int row, int col, Color color){
 		myTiles[row][col].setFill(color);
 	}*/
 	
 	//need to have different selectors for setting path and for changing tile color
 
-    private void attachTileListeners(){
-    	myMap.setOnDragDetected(e -> myMap.startFullDrag());
+	
+	//TODO: attach tile listeners to new tiles but make it to add to specific one
+	
+	private void attachTileListener(Tile tile){
+		tile.setOnMousePressed(e -> tile.setFill(myActiveColor));//myTiles[x][y].setFill(myActiveColor));
+		tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); //TODO: fix dragging errors
+
+	}
+	
+    /*private void attachTileListeners(){
     	for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				int x = i;
@@ -67,7 +93,7 @@ public class TileMap {
 			
 			}
     	}
-    }
+    }*/
 			
 	public void changeTileSize(int tileSize) {
 		myTileSize = tileSize;
@@ -94,13 +120,17 @@ public class TileMap {
 		for (int i = 0; i < myTiles.length; i++) {
 			for (int j = 0; j < myTiles[0].length; j++) {
 				myTiles[i][j] = new Tile(myTileSize, i, j);
-				myMap.getChildren().add(myTiles[i][j]); // to speed up												// time?
+				myMap.getChildren().add(myTiles[i][j]); // to speed up	
+				attachTileListener(myTiles[i][j]);// time?
 			}
 		}
-		attachTileListeners();
 	}
-
-	//@param myMapRows and myMapCols represent the previous/old rows and cols
+	
+	/**
+	 * Sets dimensions of the map to the number of rows and columns specified in the parameter. Directly sets the tile dimensions, while pixel adjustment is determined upon separate methods changing tile size. 
+	 * @param newMapRows integer representing the number of rows the new map dimensions should have
+	 * @param newMapCols integer representing the number of columns the new map dimensions should have
+	 */
 	public void setMapDimensions(int newMapRows, int newMapCols){
 		clearTiles();
 		Tile[][] newTiles = new Tile[newMapRows][newMapCols];
@@ -112,12 +142,10 @@ public class TileMap {
 				if (i >= myMapRows || j >= myMapCols)
 					newTiles[i][j] = new Tile(myTileSize, i, j);
 				else{
-					System.out.println("i " + i + " j " + j);
-					System.out.println("newtiles" + newTiles[i][j]);
-					System.out.println("valid mytiles" + myTiles[i][j]);
 					newTiles[i][j] = myTiles[i][j];
 				}
-				myMap.getChildren().add(newTiles[i][j]);
+				attachTileListener(newTiles[i][j]);
+				myMap.getChildren().add(newTiles[i][j]);	
 			}
 		}
 
@@ -127,7 +155,9 @@ public class TileMap {
 		myTiles = newTiles;
 	}
 	
-	//clears tiles from this current map
+	/**
+	 * Clears all tiles from the current active tile map by iterating through and removing all tiles of the 2D array individually
+	 */
 	private void clearTiles(){
 		for (int i = 0; i < myMapRows; i++) {
 			for (int j = 0; j < myMapCols; j++) {
@@ -135,11 +165,19 @@ public class TileMap {
 			}
 		}
 	}
-		//for (int i = myTiles.length; )
-		
-		//delete all extra tiles
-
-	// might be more efficient if in the above for loop
+	
+	public int getNumRows(){
+		return myTiles.length;
+	}
+	
+	public int getNumCols(){
+		return myTiles[0].length;
+	}
+	
+	public int getTileSize(){
+		return myTileSize;
+	}
+	
 	/*private void createGridLines() {
 		int mapWidth = myMapRows * myTileSize;
 		int mapHeight = myMapCols * myTileSize; 

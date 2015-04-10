@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.Set;
-
 import javafx.geometry.Dimension2D;
 import javafx.stage.Stage;
 import authoringEnvironment.editors.Editor;

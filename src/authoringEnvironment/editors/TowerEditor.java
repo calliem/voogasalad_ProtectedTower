@@ -5,6 +5,7 @@ import imageselector.ImageSelector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import protectedtower.Main;
 
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
@@ -15,6 +16,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -58,7 +60,7 @@ public class TowerEditor extends PropertyEditor{
      * @param s the stage on which the authoring environment is displayed
      */
     public TowerEditor(Dimension2D dim, Stage s) {
-        super(dim, s);
+        super(dim);
     }
     
     /**
@@ -73,7 +75,7 @@ public class TowerEditor extends PropertyEditor{
      * Sets up the editor UI.
      */
     @Override
-    public Group configureUI () {
+    public Node configureUI () {
         // TODO Auto-generated method stub
         myRoot = new Group();
         myContent = new StackPane();
@@ -119,7 +121,8 @@ public class TowerEditor extends PropertyEditor{
             }
         });
         
-        empty = new Text("No towers have been made...yet.");
+        empty = new Text("No towers yet");
+        //myResources.getString("NoTowersCreated"));
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
 
@@ -171,7 +174,7 @@ public class TowerEditor extends PropertyEditor{
         promptField.setMaxWidth(225);
         promptField.setPromptText("Enter a name...");
         
-        ImageSelector imgSelector = new ImageSelector(myStage);
+        ImageSelector imgSelector = new ImageSelector();
         imgSelector.addExtensionFilter("png");
         imgSelector.addExtensionFilter("jpg");
         imgSelector.setPreviewImageSize(225, 150);
@@ -274,4 +277,10 @@ public class TowerEditor extends PropertyEditor{
 
         return scale;
     }
+
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }
