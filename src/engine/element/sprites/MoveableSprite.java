@@ -12,8 +12,8 @@ import engine.InsufficientParametersException;
  *
  */
 public abstract class MoveableSprite extends Sprite {
-    private Point2D myVelocity;
-    private double myRange;
+//    private Point2D myVelocity;
+//    private double myRange;
 
     public MoveableSprite () throws InsufficientParametersException {
         super();
@@ -27,9 +27,9 @@ public abstract class MoveableSprite extends Sprite {
      * 
      * @param velocity Point2D object representing x and y components of velocity
      */
-    protected void setLocation (Point2D velocity) {
-        myVelocity = velocity.normalize();
-    }
+//    protected void setLocation (Point2D velocity) {
+//        myVelocity = velocity.normalize();
+//    }
 
     /**
      * Sets the velocity of the sprite to a normalized value
@@ -37,9 +37,9 @@ public abstract class MoveableSprite extends Sprite {
      * @param x double of x component of velocity
      * @param y double of y component of velocity
      */
-    protected void setLocation (double x, double y) {
-        myVelocity = new Point2D(x, y).normalize();
-    }
+//    protected void setVelocity (double x, double y) {
+//        myVelocity = new Point2D(x, y).normalize();
+//    }
 
     /**
      * Sets the range of the sprite movement. This value is used to test is the sprite has traveled
@@ -47,9 +47,9 @@ public abstract class MoveableSprite extends Sprite {
      * 
      * @param range double value of the range the sprite should move before stopping
      */
-    protected void setRange (double range) {
-        myRange = range;
-    }
+//    protected void setRange (double range) {
+//        myRange = range;
+//    }
 
     // Abstract methods
 

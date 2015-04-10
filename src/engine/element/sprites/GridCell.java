@@ -34,4 +34,8 @@ public class GridCell extends Sprite {
         return false;
     }
 
+    public boolean isObstacle(String type){
+        // TODO Auto-generated method stub
+		return false;
+    }
 }
