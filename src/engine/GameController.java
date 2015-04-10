@@ -35,6 +35,10 @@ public class GameController {
      */
     private Group myGroup;
 
+    public GameController () {
+
+    }
+
     public GameController (String filepath) {
         myGame = new Game();
         loadGame(filepath, myGame);
