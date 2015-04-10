@@ -34,10 +34,12 @@ import authoringEnvironment.objects.UnitView;
 public class WaveEditor extends MainEditor {
 	private Map<String, ArrayList<FlowView>> myWaves;
 	private final String WAVE = "Wave";
+	private List<String> params;
 
 	public WaveEditor() {
 		super();
 		myWaves = new HashMap<String, ArrayList<FlowView>>();
+		params = ProjectReader.getParamsNoTypeOrName(WAVE);
 	}
 
 	@Override
@@ -137,8 +139,7 @@ public class WaveEditor extends MainEditor {
 			data.add(partFileNames);
 			data.add(times);
 
-			GameManager.addPartToGame(WAVE, waveName,
-					ProjectReader.getParamsNoTypeOrName(WAVE), data);
+			GameManager.addPartToGame(WAVE, waveName, params, data);
 		});
 
 		VBox buttons = new VBox(10);
@@ -164,7 +165,7 @@ public class WaveEditor extends MainEditor {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

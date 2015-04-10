@@ -3,7 +3,10 @@ package authoringEnvironment.objects;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import authoringEnvironment.GameManager;
+import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.SpriteSetting;
 import imageselectorTEMP.util.ScaleImage;
 import javafx.geometry.Pos;
@@ -40,6 +43,7 @@ public class FlowView extends HBox {
 	private final static String UNIT = "Unit";
 	private List<String> partFileNames;
 	private List<Double> delays;
+	private List<String> params;
 
 	public FlowView(int width, int height) {
 		super(10);
@@ -48,6 +52,7 @@ public class FlowView extends HBox {
 		fileChooser = new FileChooser();
 		partFileNames = new ArrayList<String>();
 		delays = new ArrayList<Double>();
+		params = ProjectReader.getParamsNoTypeOrName(WAVE);
 		
 		VBox partSelector = new VBox(10);
 		//partSelector.setMaxHeight(myHeight);
@@ -96,6 +101,7 @@ public class FlowView extends HBox {
 		List<String> fileNames = new ArrayList<String>();
 		try {
 			unitDelay.add(Double.parseDouble(delayTextField.getText()));
+			delays = unitDelay;
 		} catch (NumberFormatException e) {
 			
 		}
@@ -105,9 +111,10 @@ public class FlowView extends HBox {
 		File file = fileChooser.showOpenDialog(null);
 		Text waveNameDisplay = new Text(file.getName());
 		insertElement(waveNameDisplay);
-		
-		List<Double> unitDelay = new ArrayList<Double>();
 
+		Map<String, Object> lists = GameManager.loadPartFromFileName(WAVE, file.getName());
+		delays = (List<Double>) lists.get("Times");
+		partFileNames = (List<String>) lists.get("Enemies");
 	}
 
 	private void insertElement(Node node) {
