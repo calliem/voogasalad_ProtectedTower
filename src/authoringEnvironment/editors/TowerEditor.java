@@ -1,12 +1,12 @@
 package authoringEnvironment.editors;
 
-import imageSelector.ImageSelector;
+import imageselectorTEMP.ImageSelector;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import protectedtower.Main;
 
+import protectedtower.Main;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;

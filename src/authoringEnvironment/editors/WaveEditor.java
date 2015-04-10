@@ -36,7 +36,7 @@ public class WaveEditor extends MainEditor {
 	private Dimension2D myDimensions;
 	private Group myRoot;
 	private Map<String, ArrayList<FlowView>> myWaves;
-	private final String WAVE = "wave";
+	private final String WAVE = "Wave";
 
 
 	public WaveEditor(Dimension2D dim, Stage s) {

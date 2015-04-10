@@ -1,7 +1,9 @@
-package imageSelector;
+package imageselectorTEMP;
 
-import imageSelector.util.ScaleImage;
+import imageselectorTEMP.util.ScaleImage;
+
 import java.util.ResourceBundle;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
