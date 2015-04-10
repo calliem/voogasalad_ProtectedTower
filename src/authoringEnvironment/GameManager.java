@@ -81,9 +81,9 @@ public class GameManager {
 	 * Ex: "TestGameParts.xml"
 	 * @param gameManager the InstanceManager of the game that's being saved
 	 */
-	public static void saveGame(){
+	public static String saveGame(){
 		currentGame.writeAllPartsToXML(userDataLocation);
-		XMLWriter.toXML(currentGame.getAllPartData(), partFileName, userDataLocation + partFileDir);
+		return XMLWriter.toXML(currentGame.getAllPartData(), partFileName, userDataLocation + partFileDir);
 	}
 	
 

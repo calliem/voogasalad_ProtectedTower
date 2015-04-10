@@ -229,18 +229,8 @@ public class InstanceManager {
 		data2.add(new Double(10));
 		GameManager.addPartToGame("Unit", "MyFirstEnemy", params2, data2);
 		GameManager.saveGame();
-		List<Map<String, Object>> testFuckPenis = new ArrayList<Map<String, Object>>();
-		Map<String, Object> hard = new HashMap<String, Object>();
-		hard.put("Length", new Double(7.5));
-		Map<String, Object> flaccid = new HashMap<String, Object>();
-		flaccid.put("length", new Double(4.0));
-		testFuckPenis.add(hard);
-		testFuckPenis.add(flaccid);
-		String loc = XMLWriter.toXML(testFuckPenis, "TestFUckPenis");
-		List<Map<String, Object>> penisRetrieved = (List<Map<String, Object>>) XMLWriter.fromXML(loc);
-		System.out.println(penisRetrieved.toString());
 		GameManager.loadPart("C:/Users/Johnny/workspace/voogasalad_ProtectedTower/src/exampleUserData/ExampleGame/Tower/MyFirstTower.xml");
-		List<Map<String, Object>> game = GameManager.loadGame("C:/Users/Johnny/workspace/voogasalad_ProtectedTower/src/exampleUserData/ExampleGame/ExampleGame.game");
+		List<Map<String, Object>> game = GameManager.loadGame(gameRootDirectory + "/ExampleGame/ExampleGame.game");
 		System.out.println("all data: ");
 		System.out.println(game.toString());
 		/*
