@@ -5,11 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import engine.GameState;
-import engine.TowerManager;
 import engine.Updateable;
 import engine.conditions.Condition;
-import engine.element.sprites.Tower;
-import engine.element.sprites.TowerFactory;
 
 
 /**
@@ -31,7 +28,7 @@ public class Game extends GameElement implements Updateable {
     public Game () {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
-        
+
         myLayout = new Layout();
         myActiveLevel = 0;
         myGameState = new GameState();
@@ -48,18 +45,18 @@ public class Game extends GameElement implements Updateable {
         myLayout.update(counter);
     }
 
-    protected void addTowers(Map<String,Map<String,Object>> allTowers) {
+    public void addTowers (Map<String, Map<String, Object>> allTowers) {
         myLayout.initializeTowers(allTowers);
     }
 
-    protected void addEnemies(Collection<Map<String,Object>> enemyParameters) {
-        for(Map<String,Object> map : enemyParameters){
+    public void addEnemies (Collection<Map<String, Object>> enemyParameters) {
+        for (Map<String, Object> map : enemyParameters) {
             myLayout.initializeEnemy(map);
         }
     }
-    
-    protected void addProjectiles(Collection<Map<String,Object>> projectileParameters){
-        for(Map<String,Object> map: projectileParameters){
+
+    public void addProjectiles (Collection<Map<String, Object>> projectileParameters) {
+        for (Map<String, Object> map : projectileParameters) {
             myLayout.initializeProjectile(map);
         }
     }
