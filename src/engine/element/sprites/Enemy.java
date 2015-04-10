@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.image.ImageView;
+import javafx.animation.PathTransition;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 import pathsearch.graph.PathCell;
 import pathsearch.pathalgorithms.NoPathExistsException;
 import pathsearch.pathalgorithms.ObstacleFunction;
@@ -23,6 +27,8 @@ import engine.InsufficientParametersException;
 public class Enemy extends MoveableSprite {
 
 	private List<GridCell> myPath;
+	private static final double MOVE_DURATION = 1000;
+	private static final String PARAMETER_SPEED = "Speed";
 	
 	public Enemy (Map<String, Object> params) throws InsufficientParametersException {
         super(params);
@@ -46,8 +52,17 @@ public class Enemy extends MoveableSprite {
 
     @Override
     public void move () {
-    	int speed = (int) super.getParameter("Speed");
-    	//need avatar info
+    	int speed = (int) super.getParameter(PARAMETER_SPEED);
+    	Path path = new Path();
+    	for (GridCell cell: myPath){
+    		path.getElements().add(new MoveTo(cell.getLocationX(),cell.getLocationY()));
+    	}
+    	PathTransition pathTransition = new PathTransition();
+    	pathTransition.setDuration(Duration.millis(MOVE_DURATION*(myPath.size())/speed));
+    	pathTransition.setPath(path);
+    	pathTransition.setNode(super.getImage());
+    	pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+    	pathTransition.play();
     }
 
     @Override
@@ -68,19 +83,19 @@ public class Enemy extends MoveableSprite {
      * @throws NoPathExistsException 
      * @throws InsufficientParametersException 
      */
-    public void updatePath(GridCell[][] grid, String type, int goalRow, int goalCol) throws NoPathExistsException, InsufficientParametersException{
+    public void updatePath(GridCell[][] grid, String type, int startRow, int startCol, int goalRow, int goalCol) throws NoPathExistsException, InsufficientParametersException{
     	GridWrapper wrap = new GridWrapper();
     	wrap.initializeGraph(grid, new ObstacleFunction() {
 			@Override
 			public boolean isObstacle(Object o) {
 				GridCell cell = (GridCell)o;
-				return cell.isObstacle(type);
+				return false;
 			}
     	});
-    	List<PathCell> coordPath = wrap.shortestPath((int)super.getLocationY(), (int)super.getLocationX(), goalRow, goalCol);
+    	List<PathCell> coordPath = wrap.shortestPath(startRow, startCol, goalRow, goalCol);
     	List<GridCell> gridPath = new ArrayList<>();
     	for (PathCell coord: coordPath){
-    		//
+    		gridPath.add(grid[coord.getRow()][coord.getCol()]);
     	}
     	myPath = gridPath;
     }

@@ -17,7 +17,7 @@ import engine.InsufficientParametersException;
  */
 public class GridCell extends Sprite {
 
-	private List<String> tags;
+	private List<String> myTags;
 	
 	public GridCell (Map<String, Object> params) throws InsufficientParametersException {
         super(params);
@@ -37,10 +37,5 @@ public class GridCell extends Sprite {
     public boolean isCollidableWith (String type) {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    public boolean isObstacle(String type){
-        // TODO Auto-generated method stub
-		return false;
     }
 }

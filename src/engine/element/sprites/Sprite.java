@@ -79,6 +79,9 @@ public abstract class Sprite extends GameElement implements Collidable {
         return myLocation.getY();
     }
 
+    public ImageView getImage(){
+    	return myImage;
+    }
     /**
      * Sets the type of object this is as an uppercase string
      * 
