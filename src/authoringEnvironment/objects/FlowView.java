@@ -93,6 +93,7 @@ public class FlowView extends HBox {
 		insertElement(chooseUnit);
 		
 		List<Double> unitDelay = new ArrayList<Double>();
+		List<String> fileNames = new ArrayList<String>();
 		try {
 			unitDelay.add(Double.parseDouble(delayTextField.getText()));
 		} catch (NumberFormatException e) {
@@ -104,6 +105,9 @@ public class FlowView extends HBox {
 		File file = fileChooser.showOpenDialog(null);
 		Text waveNameDisplay = new Text(file.getName());
 		insertElement(waveNameDisplay);
+		
+		List<Double> unitDelay = new ArrayList<Double>();
+
 	}
 
 	private void insertElement(Node node) {
