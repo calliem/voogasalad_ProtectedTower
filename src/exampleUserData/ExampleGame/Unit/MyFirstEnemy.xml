@@ -1,0 +1,22 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Unit</string>
+  </entry>
+  <entry>
+    <string>Speed</string>
+    <double>1.5</double>
+  </entry>
+  <entry>
+    <string>HP</string>
+    <int>100</int>
+  </entry>
+  <entry>
+    <string>Damage</string>
+    <double>10.0</double>
+  </entry>
+  <entry>
+    <string>Name</string>
+    <string>MyFirstEnemy</string>
+  </entry>
+</map>

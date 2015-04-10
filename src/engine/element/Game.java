@@ -3,8 +3,10 @@ package engine.element;
 import java.util.ArrayList;
 import java.util.List;
 import engine.GameState;
+import engine.TowerManager;
 import engine.Updateable;
 import engine.conditions.Condition;
+import engine.element.sprites.TowerFactory;
 
 
 /**
@@ -26,7 +28,12 @@ public class Game extends GameElement implements Updateable {
     public Game () {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
-        myLayout = new Layout();
+        
+        TowerFactory factory = new TowerFactory();
+        TowerManager manager = new TowerManager(factory);
+        factory.addManager(manager);
+        
+        myLayout = new Layout(manager);
         myActiveLevel = 0;
         myGameState = new GameState();
     }
