@@ -30,6 +30,20 @@ public class ProjectReader {
 	private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/display/main_environment_english.properties";
 	private static final String settingsPackage = "authoringEnvironment.setting.";
 
+	
+	public static String[] getParamListForPart(String partType){
+		return paramLists.getString(partType).split("\\s+");
+	}
+	
+	public static List<String> getParamsNoTypeOrName(String partType){
+		String[] params = getParamListForPart(partType);
+		List<String> finalList = new ArrayList<String>();
+		for(String param : params){
+			if(!param.equals(InstanceManager.nameKey) && !param.equals(InstanceManager.partTypeKey))
+				finalList.add(param);
+		}
+		return finalList;
+	}
 	/**
 	 * Generates the Settings objects the Overlay UI needs to allow the user to edit
 	 * all of this part's parameters.
@@ -41,7 +55,7 @@ public class ProjectReader {
 		List<Setting> settingsList = new ArrayList<Setting>();
 		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
 
-		String[] params = paramLists.getString(partType).split("\\s+");
+		String[] params = getParamListForPart(partType);
 
 		for(String param : params){
 			String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
