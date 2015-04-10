@@ -1,9 +1,11 @@
 package engine;
 
+import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
+import authoringEnvironment.InstanceManager;
 import engine.element.Game;
 import engine.element.sprites.Sprite;
 
@@ -23,9 +25,22 @@ public class GameController {
      * Holds an instance of an entire game
      */
     Game myGame;
+    /**
+     * Holds a map of a part name to the package to use to reflect
+     */
+    Map<String, String> myPartTypeToPackage = new HashMap<>();
 
-    public GameController () throws InsufficientParametersException {
+    public GameController () {
         myGame = new Game();
+        myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
+        myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
+        myPartTypeToPackage.put("Projectile", "engine.element.sprites.Projectile");
+        myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
+        myPartTypeToPackage.put("Game", "engine.element.Game");
+        myPartTypeToPackage.put("Level", "engine.element.Level");
+        myPartTypeToPackage.put("Round", "engine.element.Round");
+        myPartTypeToPackage.put("Wave", "engine.element.Wave");
+        myPartTypeToPackage.put("Layout", "engine.element.Layout");
     }
 
     /**
@@ -39,6 +54,8 @@ public class GameController {
         Map<String, Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
 
         for (String s : allDataObjects.keySet()) {
+//            String partType = part.get(InstanceManager.partTypeKey);
+            String packageLocation = myPartTypeToPackage.get(s);
             Sprite currentObject = (Sprite) Reflection.createInstance(s);
             currentObject.setParameterMap(allDataObjects.get(s));
             // allObjects.add(currentObject);
