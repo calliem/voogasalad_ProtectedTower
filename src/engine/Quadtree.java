@@ -150,9 +150,9 @@ public class Quadtree {
         return returnObjects;
     }
 
-    public static void main (String[] args) throws InsufficientParametersException {
+    /*public static void main (String[] args) throws InsufficientParametersException {
         Quadtree q = new Quadtree(3, new Rectangle(3, 4));
         Tower e = new Tower();
         q.insert(e);
-    }
+    }*/
 }

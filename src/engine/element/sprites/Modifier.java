@@ -1,5 +1,8 @@
 package engine.element.sprites;
 
+import java.util.Map;
+
+import javafx.scene.image.ImageView;
 import engine.InsufficientParametersException;
 
 
@@ -12,9 +15,12 @@ import engine.InsufficientParametersException;
  */
 public class Modifier extends Sprite {
 
-    public Modifier () throws InsufficientParametersException {
-        super();
-        // TODO Auto-generated constructor stub
+	public Modifier (Map<String, Object> params) throws InsufficientParametersException {
+        super(params);
+    }
+    
+    public Modifier (ImageView img) throws InsufficientParametersException {
+        super(img);
     }
 
     @Override
