@@ -1,11 +1,16 @@
 package engine;
 
+import java.util.ArrayList;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
 import engine.element.Game;
+import engine.element.sprites.Enemy;
+import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
+import engine.element.sprites.Tower;
+import java.util.Collection;
 
 
 /**
@@ -24,8 +29,9 @@ public class GameController {
      */
     Game myGame;
 
-    public GameController () throws InsufficientParametersException {
+    public GameController (String filepath) throws InsufficientParametersException {
         myGame = new Game();
+        loadGame(filepath, myGame);
     }
 
     /**
@@ -35,8 +41,12 @@ public class GameController {
      * 
      * @param filepath String of location of the game file
      */
-    public void loadGame (String filepath) {
+    public void loadGame (String filepath, Game game) {
         Map<String, Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
+
+        Collection<Tower> towerObjects = new ArrayList<Tower>();
+        Collection<Enemy> enemyObjects = new ArrayList<Enemy>();
+        Collection<Projectile> projectileObjects = new ArrayList<Projectile>();
 
         for (String s : allDataObjects.keySet()) {
             Sprite currentObject = (Sprite) Reflection.createInstance(s);
@@ -44,6 +54,7 @@ public class GameController {
             // allObjects.add(currentObject);
             // TODO need way to load objects into correct classes, like Layout and Wave
         }
+
     }
 
     // Will handle hotkeys

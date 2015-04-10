@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Set;
 import javafx.geometry.Point2D;
 import authoringEnvironment.objects.TileMap;
+import engine.TowerManager;
 import engine.Updateable;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.Sprite;
+import engine.element.sprites.TowerFactory;
 
 
 /**
@@ -29,9 +31,10 @@ public class Layout extends GameElement implements Updateable {
     // private List<List<GridCell>> spriteMap; not sure if neccessary yet
     private List<Sprite> spritesList;
     private double gridSize;
+    private TowerManager myTowerManager;
 
-    public Layout () {
-
+    public Layout (TowerManager manager) {
+        myTowerManager = manager;
     }
 
     public Layout (TileMap map) {
