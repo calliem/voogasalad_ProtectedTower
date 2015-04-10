@@ -7,6 +7,8 @@ package engine;
  * @author Qian Wang
  *
  */
+
+@Deprecated
 public class GameState {
 
     private Bank myBank;

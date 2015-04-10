@@ -1,14 +1,13 @@
 package authoringEnvironment.objects;
 
 import imageselectorTEMP.util.ScaleImage;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -23,10 +22,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.MainEnvironment;
-import authoringEnvironment.setting.FileNameSetting;
-import authoringEnvironment.setting.IntegerSetting;
+import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.Setting;
-import authoringEnvironment.setting.StringSetting;
 
 /**
  * Creates the visual tower object containing
@@ -150,14 +147,14 @@ public class TowerView extends SpriteView{
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
         
-        Setting towerName = new StringSetting("Name", name);
-        parameterFields.add(towerName);
+        VBox settingsObjects = new VBox(10);
+        settingsObjects.setMaxWidth(150);
         
-        Setting test = new IntegerSetting("Health", "0");
-        parameterFields.add(test);
-        
-        Setting fileTest = new FileNameSetting("Projectile", "tower.png");
-        parameterFields.add(fileTest);
+        List<Setting> settings = ProjectReader.generateSettingsList("Tower");
+        for(Setting s : settings){
+            parameterFields.add(s);
+            settingsObjects.getChildren().add(s);
+        }
         
         HBox buttons = new HBox(10);
         
@@ -169,7 +166,7 @@ public class TowerView extends SpriteView{
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(save, overlayCloseButton);
         
-        editableContent.getChildren().addAll(overlayTowerNameDisplay, towerImage, overlayErrorMessage, towerName, test, fileTest, buttons);
+        editableContent.getChildren().addAll(overlayTowerNameDisplay, towerImage, overlayErrorMessage, settingsObjects, buttons);
     }
     
     private void saveParameterFields(){
@@ -181,7 +178,7 @@ public class TowerView extends SpriteView{
             }
         }
         overlayErrorMessage.setVisible(!correctFormat);
-        if(parameterFields.get(0).getChildren().size() == 2){
+        if(parameterFields.get(0).processData()){
             name = parameterFields.get(0).getDataAsString();
             updateTowerName();
         }

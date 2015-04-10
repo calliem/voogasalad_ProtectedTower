@@ -1,19 +1,13 @@
 package engine;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
-import util.reflection.Reflection;
 import authoringEnvironment.GameManager;
 import authoringEnvironment.InstanceManager;
 import engine.element.Game;
-import engine.element.sprites.Enemy;
-import engine.element.sprites.Projectile;
-import engine.element.sprites.Sprite;
-import engine.element.sprites.Tower;
 
 
 /**
@@ -36,6 +30,10 @@ public class GameController {
      * Holds a map of a part name to the package to use to reflect
      */
     Map<String, String> myPartTypeToPackage = new HashMap<>();
+    /**
+     * Javafx object so that new nodes can be added for the player to display
+     */
+    private Group myGroup;
 
     public GameController (String filepath) {
         myGame = new Game();
@@ -62,6 +60,7 @@ public class GameController {
      * Those objects are then instantiated and their parameter lists are set.
      * 
      * @param filepath String of location of the game file
+     * @param engineRoot
      */
     public void loadGame (String filepath, Game game) {
         // Collection<Tower> towerObjects = new HashSet<Tower>();
@@ -90,10 +89,24 @@ public class GameController {
         myGame.addTowers(myObjects.get("Enemy"));
         myGame.addTowers(myObjects.get("Projectile"));
         myGame.addTowers(myObjects.get("GridCell"));
+
     }
 
-    // Will handle hotkeys
-    public void handleKeyInput (KeyEvent k) {
+    /**
+     * Called by the player to give the engine a group to add sprite nodes to
+     * 
+     * @param group Javafx Group object
+     */
+    public void setGroup (Group group) {
+        myGroup = group;
+    }
+
+    /**
+     * Called by the player to tell engine about keypressed
+     * 
+     * @param key KeyEvent object
+     */
+    public void handleKeyInput (KeyEvent key) {
 
     }
 
