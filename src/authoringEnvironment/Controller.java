@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
+import javafx.scene.paint.Color;
 import authoringEnvironment.editors.MapEditor;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.objects.TileMap;
@@ -18,6 +20,14 @@ import authoringEnvironment.objects.TileMap;
 //Is this unnecessary?? This doesn't feel like it is useful. 
 public class Controller {
 	
+	//these probably aren't very good since they are the same as  what is in the properties file. instead consider using files to share informationb etween tabs?
+	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
+	private static ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
+	
+	public static final String MAPS = myResources.getString("MapEditor");
+	public static final String LEVELS = myResources.getString("LevelEditor");
+	public static final String TOWERS = myResources.getString("TowerEditor");
+	
 	//private static Controller controller = new Controller();
 	private static  Map<String, Editor> myEditors = new HashMap<String, Editor>(); //is it bad that this is up here
 	//private static List<Editor> editors = new ArrayList<Editor>();
@@ -27,9 +37,7 @@ public class Controller {
 	
 	public static void updateEditor(String s, Editor editor){
 		myEditors.put(s, editor);
-	//	editors.add(editor);
 		System.out.println("Controller list of editors: " + myEditors);
-	//	System.out.println("Controller list of editors in an arraylist: " + editors);
 	}
 	
 	public static Editor getEditor(String s){

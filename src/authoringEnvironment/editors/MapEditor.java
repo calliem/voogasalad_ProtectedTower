@@ -8,11 +8,12 @@ package authoringEnvironment.editors;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import authoringEnvironment.MapSidebar;
 import authoringEnvironment.Sidebar;
+import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.objects.TileMap;
 
 public class MapEditor extends MainEditor {
@@ -34,20 +35,20 @@ public class MapEditor extends MainEditor {
         super(dim, s);
         myMaps = new ArrayList<Node>(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
         myMaps.add(getMapWorkspace().getActiveMap());
-        mySidebar = new MapSidebar(myResources, myMaps, getMapWorkspace(), getMapWorkspace().getActiveMap()); //now don't need to pass in so much stuff
+        mySidebar = new MapSidebar(myResources, myMaps, getMapWorkspace()); //now don't need to pass in so much stuff
         getPane().add(mySidebar,1,0); 
     }
-
-
-
 
 	@Override
 	public List<Node> getObjects() {
 		return myMaps;
 	}
 
-	
-
+	@Override
+	public void update() {
+		super.update();
+		getMapWorkspace().getActiveMap().attachTileListeners();
+	}
 /*	@Override
 	public void update() {
 		System.out.println("updated mapeditor!");	

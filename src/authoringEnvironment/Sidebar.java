@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 

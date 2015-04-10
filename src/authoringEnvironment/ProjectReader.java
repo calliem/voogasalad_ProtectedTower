@@ -17,7 +17,7 @@ import authoringEnvironment.setting.Setting;
 /**
  * 
  * @author Johnny Kumpf
- *
+ * @author Callie Mao (updates to controller)
  */
 public class ProjectReader {
 

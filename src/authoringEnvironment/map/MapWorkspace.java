@@ -1,9 +1,10 @@
-package authoringEnvironment;
+package authoringEnvironment.map;
 
 import javafx.geometry.Dimension2D;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.objects.TileMap;
 
 public class MapWorkspace extends StackPane{

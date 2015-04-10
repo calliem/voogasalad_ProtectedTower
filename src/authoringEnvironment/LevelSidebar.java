@@ -5,7 +5,9 @@ import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.TileMap;
 
 /**
@@ -25,9 +27,14 @@ public class LevelSidebar extends Sidebar{
 
 	@Override
 	protected void createMapSettings() {
-		createTitleText(getResources().getString("Rounds"));
-
+		createTitleText(getResources().getString("SelectMap"));
+		createTitleText(getResources().getString("PlaceWave"));
 		
+		Button createRound = new Button(getResources().getString("CreateRound"));
+	//	getChildren().add(createListView(items, height));
+		
+		createTitleText(getResources().getString("Round Order"));
+	//	getChildren().add(createListView(items, height));
 	}
 
 }

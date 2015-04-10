@@ -1,8 +1,10 @@
-package authoringEnvironment;
+package authoringEnvironment.map;
 
 import java.util.List;
 import java.util.ResourceBundle;
 
+import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.Sidebar;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 import javafx.collections.FXCollections;
@@ -53,7 +55,7 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	private TextField tileColDisplay;
 	private TextField tileSizeDisplay;
 
-	public MapSidebar(ResourceBundle resources,List<Node> maps, MapWorkspace mapWorkspace, TileMap activeMap) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
+	public MapSidebar(ResourceBundle resources,List<Node> maps, MapWorkspace mapWorkspace) { //active map may not yet be saved and thus we cannot simply pull it out of the observable list
 		super(resources, maps, mapWorkspace);
 		//mySelectedMap = activeMap;
 		myMapWorkspace = mapWorkspace;
@@ -248,8 +250,6 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	
 	private void updateMapDim(String numRows, String numCols){
 		myMapWorkspace.getActiveMap().setMapDimensions(Integer.parseInt(numRows), Integer.parseInt(numCols));
-		//myMapWorkspace.getActiveMap().update();
-		//createGridLines();
 	}
 	
 	//Con: myMapWorkspace.getActiveMap(). instead of myActiveMap introduces a dependency on my workspace. if something is changed there without this class knowing, the code is easy to break

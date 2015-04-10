@@ -56,6 +56,15 @@ public class TileMap extends Group{
 		return --numTags;
 	}
 	
+	//TODO:duplicated tile listeners being added/deleted?
+	public void attachTileListeners(){
+		for (int i = 0; i < myTiles.length; i++) {
+			for (int j = 0; j < myTiles[0].length; j++) {
+				attachTileListener(myTiles[i][j]);
+			}
+		}
+	}
+	
 	private void attachTileListener(Tile tile){
 		tile.setOnMousePressed(e -> {tile.setFill(myActiveColor); System.out.println("I have been clicked!" + tile.getFill().toString()) ;});//myTiles[x][y].setFill(myActiveColor));
 		tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); //TODO: fix dragging errors
@@ -69,6 +78,15 @@ public class TileMap extends Group{
 			}
 		}
 		updateGridLines();
+	}
+	
+	public void removeTileListeners(){
+		for (int i = 0; i < myTiles.length; i++) {
+			for (int j = 0; j < myTiles[0].length; j++) {
+				myTiles[i][j].setOnMousePressed(e -> {});
+				myTiles[i][j].setOnMouseDragEntered(e -> {});
+			}
+		}
 	}
 
 	public Tile getTile(int x, int y) {
@@ -173,4 +191,10 @@ public class TileMap extends Group{
 		removeGridLines();
 		createGridLines();
 	}
+
+	public void addTileListeners() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

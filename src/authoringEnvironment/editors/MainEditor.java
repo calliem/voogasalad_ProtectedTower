@@ -2,7 +2,7 @@
 package authoringEnvironment.editors;
 
 import authoringEnvironment.Controller;
-import authoringEnvironment.MapWorkspace;
+import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.TileMap;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
@@ -44,20 +44,13 @@ public abstract class MainEditor extends Editor {
 		protected void configureUI() {
 			createGridPane();
 			myMapWorkspace = new MapWorkspace();
-
 			myPane.add(myMapWorkspace, 0, 0);
-
-			// does it dynamically update or will i have to say
-			// TODO remove magic number
-			//is using MainEnvironment.myDimensions.getWidth() bad?
-		
 			getChildren().add(myPane);
 		}
 		
 		private void createGridPane() {
 			myPane = new GridPane();
 			setGridPaneConstraints(myPane);
-			//myPane.setGridLinesVisible(true); 
 		}
 	
 	public MapWorkspace getMapWorkspace(){
@@ -85,34 +78,11 @@ public abstract class MainEditor extends Editor {
 	}
 	
 	public void update(){
+		System.out.println("Controller.MAPS: " + Controller.MAPS);
 		
-		//System.out.println("====================leveleditor update method called=================");
 		MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps");  //TODO: find a way to get sthe same resource file but to also use myResources.getString() on the proper resource file //how to avoid this issue of more dependencies on this string name. lots of code will have to change in order to change this; maybe use indexes instead?
 		if(!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap())){
-
-			//System.out.println("stored Maps map workspace: ");
-			//mapEditor.getMapWorkspace();
-			//.getChildren().remove(mapEditor.getActiveMap().getMap());
-			//System.out.println("this specific map workspace: ");
-			//getMapWorkspace();
-			//System.out.println("--");
-			//.getChildren().add(mapEditor.getActiveMap().getMap());
-		
-			//mapEditor.getMapWorkspace().getChildren().remove(mapEditor.getActiveMap().getMap());
 			getMapWorkspace().updateWithNewMap(mapEditor.getActiveMap());
-			//getMapWorkspace().getChildren().add(mapEditor.getActiveMap());
+		}
 	}
-	
-}
-	
-
-	//idk why the method can't go here and has to go int he subclasses. putting it here seems to break all the other tabs
-	/*public void update(){
-		MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps");  //TODO: find a way to get sthe same resource file but to also use myResources.getString() on the proper resource file //how to avoid this issue of more dependencies on this string name. lots of code will have to change in order to change this; maybe use indexes instead?
-		getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());
-	}*/
-	
-
-
-
 }
