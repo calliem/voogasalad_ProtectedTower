@@ -1,10 +1,12 @@
 package engine;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 import authoringEnvironment.GameManager;
+import authoringEnvironment.InstanceManager;
 import engine.element.Game;
 
 
@@ -19,17 +21,41 @@ import engine.element.Game;
  */
 
 public class GameController {
+    private static final String PARAMETER_GUID = "GUID";
     /**
      * Holds an instance of an entire game
      */
-    private Game myGame;
+    Game myGame;
+    /**
+     * Holds a map of a part name to the package to use to reflect
+     */
+    Map<String, String> myPartTypeToPackage = new HashMap<>();
     /**
      * Javafx object so that new nodes can be added for the player to display
      */
     private Group myGroup;
 
     public GameController () {
+
+    }
+
+    public GameController (String filepath) {
         myGame = new Game();
+        loadGame(filepath, myGame);
+        fillPackageMap();
+    }
+
+    // TODO replace this with loading from data file
+    private void fillPackageMap () {
+        myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
+        myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
+        myPartTypeToPackage.put("Projectile", "engine.element.sprites.Projectile");
+        myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
+        myPartTypeToPackage.put("Game", "engine.element.Game");
+        myPartTypeToPackage.put("Level", "engine.element.Level");
+        myPartTypeToPackage.put("Round", "engine.element.Round");
+        myPartTypeToPackage.put("Wave", "engine.element.Wave");
+        myPartTypeToPackage.put("Layout", "engine.element.Layout");
     }
 
     /**
@@ -40,18 +66,34 @@ public class GameController {
      * @param filepath String of location of the game file
      * @param engineRoot
      */
+    public void loadGame (String filepath, Game game) {
+        // Collection<Tower> towerObjects = new HashSet<Tower>();
+        // Collection<Enemy> enemyObjects = new HashSet<Enemy>();
+        // Collection<Projectile> projectileObjects = new HashSet<Projectile>();
+        Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
+        for (String s : myPartTypeToPackage.keySet()) {
+            myObjects.put(s, new HashMap<>());
+        }
 
-    public void loadGame (String filepath) {
+        // Get list of parameters maps for all objects
+        // TODO change to collection or set
         List<Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
 
-        /*
-         * for (String s : allDataObjects.keySet()) {
-         * Sprite currentObject = (Sprite) Reflection.createInstance(s);
-         * currentObject.setParameterMap(allDataObjects.get(s));
-         * // allObjects.add(currentObject);
-         * // TODO need way to load objects into correct classes, like Layout and Wave
-         * }
-         */
+        // Organize parameters maps
+        for (Map<String, Object> obj : allDataObjects) {
+            String partType = (String) obj.get(InstanceManager.partTypeKey);
+            // String packageLocation = myPartTypeToPackage.get(partType);
+            // Sprite currentObject = (Sprite) Reflection.createInstance(packageLocation);
+            // currentObject.setParameterMap(obj);
+            myObjects.get(partType).put((String) obj.get(PARAMETER_GUID), obj);
+        }
+
+        // Send right sets of objects to the right objects
+        myGame.addTowers(myObjects.get("Tower"));
+        myGame.addTowers(myObjects.get("Enemy"));
+        myGame.addTowers(myObjects.get("Projectile"));
+        myGame.addTowers(myObjects.get("GridCell"));
+
     }
 
     /**

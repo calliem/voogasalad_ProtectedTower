@@ -23,6 +23,8 @@ public class SpriteSetting extends Setting {
     
     @Override
     protected void setupInteractionLayout(){
+        basicLayout.setAlignment(Pos.CENTER);
+        
         StackPane spriteFileDisplay = new StackPane();
         Rectangle displayBackground = new Rectangle(150, 24, Color.WHITE);
         displayBackground.setArcWidth(5);

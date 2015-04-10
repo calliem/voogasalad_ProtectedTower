@@ -1,7 +1,9 @@
 package engine.element;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import engine.Bank;
 import engine.Updateable;
 import engine.conditions.Condition;
@@ -18,7 +20,7 @@ import engine.conditions.Condition;
 public class Game extends GameElement implements Updateable {
 
     private static final String PARAMETER_HEALTH = "HP";
-    
+
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
@@ -30,6 +32,7 @@ public class Game extends GameElement implements Updateable {
     public Game () {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
+
         myLayout = new Layout();
         myActiveLevel = 0;
         // myGameState = new GameState();
@@ -48,11 +51,19 @@ public class Game extends GameElement implements Updateable {
         myLayout.update(counter);
     }
 
-    protected void addTower () {
-
+    public void addTowers (Map<String, Map<String, Object>> allTowers) {
+        myLayout.initializeTowers(allTowers);
     }
 
-    protected void addEnemy () {
+    public void addEnemies (Collection<Map<String, Object>> enemyParameters) {
+        for (Map<String, Object> map : enemyParameters) {
+            myLayout.initializeEnemy(map);
+        }
+    }
 
+    public void addProjectiles (Collection<Map<String, Object>> projectileParameters) {
+        for (Map<String, Object> map : projectileParameters) {
+            myLayout.initializeProjectile(map);
+        }
     }
 }

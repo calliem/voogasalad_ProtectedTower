@@ -7,6 +7,7 @@ import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -22,10 +23,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.ProjectReader;
-import authoringEnvironment.setting.IntegerSetting;
 import authoringEnvironment.setting.Setting;
-import authoringEnvironment.setting.SpriteSetting;
-import authoringEnvironment.setting.StringSetting;
 
 /**
  * Creates the visual tower object containing
@@ -149,22 +147,13 @@ public class TowerView extends SpriteView{
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
         
-//        Setting towerName = new StringSetting("Name", name);
-//        parameterFields.add(towerName);
-//        
-//        Setting test = new IntegerSetting("Health", "0");
-//        parameterFields.add(test);
-//        
-//        Setting fileTest = new SpriteSetting("Projectile", null);
-//        parameterFields.add(fileTest);
-        
         VBox settingsObjects = new VBox(10);
+        settingsObjects.setMaxWidth(150);
         
-        List<Setting> penii = ProjectReader.generateSettingsList("Tower");
-        for(Setting penis : penii){
-            System.out.println("Johnny's penis" + penis);
-            parameterFields.add(penis);
-            settingsObjects.getChildren().add(penis);
+        List<Setting> settings = ProjectReader.generateSettingsList("Tower");
+        for(Setting s : settings){
+            parameterFields.add(s);
+            settingsObjects.getChildren().add(s);
         }
         
         HBox buttons = new HBox(10);
