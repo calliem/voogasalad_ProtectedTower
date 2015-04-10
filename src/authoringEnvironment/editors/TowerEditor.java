@@ -50,7 +50,7 @@ public class TowerEditor extends PropertyEditor{
 
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
-    
+
     private static final int ROW_SIZE = 2;
 
     /**
@@ -62,7 +62,7 @@ public class TowerEditor extends PropertyEditor{
     public TowerEditor(Dimension2D dim, Stage s) {
         super(dim);
     }
-    
+
     /**
      * Gets the list of towers that the user has created.
      * @return towersCreated    the list of towers that the user has created.
@@ -89,9 +89,9 @@ public class TowerEditor extends PropertyEditor{
 
         HBox editControls = setupEditControls();
         towersDisplay.getChildren().add(editControls);
-        
+
         ArrayList<HBox> rows = new ArrayList<>();
-        
+
         // TODO remove magic numbers
         HBox row = new HBox(20);
         currentRow = row;
@@ -106,7 +106,7 @@ public class TowerEditor extends PropertyEditor{
             else if((int) newValue > 0 && myContent.getChildren().contains(empty)){
                 myContent.getChildren().remove(empty);
             }
-            
+
             // if there's 2 on a row already
             else if(currentRow.getChildren().size() == ROW_SIZE){
                 HBox newRow = new HBox(20);
@@ -115,12 +115,12 @@ public class TowerEditor extends PropertyEditor{
                 rows.add(newRow);
                 towersDisplay.getChildren().add(newRow);
             }
-            
+
             else if((int)newValue < (int)oldValue){
                 System.out.println("rows: " + rows.size());
             }
         });
-        
+
         empty = new Text("No towers yet");
         //myResources.getString("NoTowersCreated"));
         empty.setFont(new Font(30));
@@ -173,7 +173,7 @@ public class TowerEditor extends PropertyEditor{
         TextField promptField = new TextField();
         promptField.setMaxWidth(225);
         promptField.setPromptText("Enter a name...");
-        
+
         ImageSelector imgSelector = new ImageSelector();
         imgSelector.addExtensionFilter("png");
         imgSelector.addExtensionFilter("jpg");
@@ -278,9 +278,9 @@ public class TowerEditor extends PropertyEditor{
         return scale;
     }
 
-	@Override
-	protected void update() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    protected void update() {
+        // TODO Auto-generated method stub
+
+    }
 }
