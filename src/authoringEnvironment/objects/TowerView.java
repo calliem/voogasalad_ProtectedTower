@@ -1,11 +1,7 @@
 package authoringEnvironment.objects;
 
-<<<<<<< HEAD
-import imageSelector.util.ScaleImage;
-=======
 import imageselectorTEMP.util.ScaleImage;
 
->>>>>>> 5ab402fbfcd989fb793d71fa381102f60b56ac48
 import java.util.ArrayList;
 import java.util.List;
 
