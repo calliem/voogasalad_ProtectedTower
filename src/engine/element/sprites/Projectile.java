@@ -1,5 +1,8 @@
 package engine.element.sprites;
 
+import java.util.Map;
+
+import javafx.scene.image.ImageView;
 import engine.InsufficientParametersException;
 
 
@@ -11,9 +14,12 @@ import engine.InsufficientParametersException;
  */
 public class Projectile extends MoveableSprite {
 
-    public Projectile () throws InsufficientParametersException {
-        super();
-        // TODO Auto-generated constructor stub
+	public Projectile (Map<String, Object> params) throws InsufficientParametersException {
+        super(params);
+    }
+    
+    public Projectile (ImageView img) throws InsufficientParametersException {
+        super(img);
     }
 
     @Override

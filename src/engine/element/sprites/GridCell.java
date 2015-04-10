@@ -1,7 +1,8 @@
 package engine.element.sprites;
 
 import java.util.List;
-
+import java.util.Map;
+import javafx.scene.image.ImageView;
 import engine.InsufficientParametersException;
 
 
@@ -15,13 +16,16 @@ import engine.InsufficientParametersException;
  */
 public class GridCell extends Sprite {
 
-	private List<String> tags;
-	
-    public GridCell () throws InsufficientParametersException {
-        super();
-        // TODO Auto-generated constructor stub
+    private List<String> myTags;
+
+    public GridCell (Map<String, Object> params) throws InsufficientParametersException {
+        super(params);
     }
-    
+
+    public GridCell (ImageView img) throws InsufficientParametersException {
+        super(img);
+    }
+
     @Override
     public boolean isTargetableBy (String type) {
         // TODO Auto-generated method stub
@@ -34,8 +38,14 @@ public class GridCell extends Sprite {
         return false;
     }
 
-    public boolean isObstacle(String type){
+    public boolean isObstacle (String type) {
         // TODO Auto-generated method stub
-		return false;
+        return false;
+    }
+
+    @Override
+    public void collide (Sprite sprite) {
+        // TODO Auto-generated method stub
+
     }
 }

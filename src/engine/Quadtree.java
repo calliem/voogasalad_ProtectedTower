@@ -2,7 +2,9 @@ package engine;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.scene.shape.Rectangle;
+import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 
 
@@ -19,7 +21,7 @@ public class Quadtree {
     private int MAX_OBJECTS = 10;
     private int MAX_LEVELS = 5;
     private int level;
-    private List<Collidable> objects;
+    private List<Sprite> objects;
     private Rectangle bounds;
     private Quadtree[] nodes;
 
@@ -107,7 +109,7 @@ public class Quadtree {
      * Insert the object into the quadtree. If the node exceeds the capacity, it will split and add
      * all objects to their corresponding nodes.
      */
-    public void insert (Collidable pRect) {
+    public void insert (Sprite pRect) {
         if (nodes[0] != null) {
             int index = getIndex(pRect);
             if (index != -1) {
@@ -139,7 +141,7 @@ public class Quadtree {
     /*
      * Return all objects that could collide with the given object
      */
-    public List<Collidable> retrieve (List<Collidable> returnObjects, Collidable spriteToCheck) {
+    public List<Sprite> retrieve (List<Sprite> returnObjects, Collidable spriteToCheck) {
         int index = getIndex(spriteToCheck);
         if (index != -1 && nodes[0] != null) {
             nodes[index].retrieve(returnObjects, spriteToCheck);
@@ -148,9 +150,9 @@ public class Quadtree {
         return returnObjects;
     }
 
-    public static void main (String[] args) throws InsufficientParametersException {
+    /*public static void main (String[] args) throws InsufficientParametersException {
         Quadtree q = new Quadtree(3, new Rectangle(3, 4));
         Tower e = new Tower();
         q.insert(e);
-    }
+    }*/
 }
