@@ -30,11 +30,6 @@ import javafx.stage.FileChooser;
  */
 
 public class FlowView extends HBox {
-	// private String partFileName;
-	// private Double delay;
-	//private TextField partSelector;
-	private SpriteSetting unitSelector;
-	private SpriteSetting waveSelector;
 	private TextField delayTextField;
 	private FileChooser fileChooser;
 	private int myWidth;
@@ -43,7 +38,6 @@ public class FlowView extends HBox {
 	private final static String UNIT = "Unit";
 	private List<String> partFileNames;
 	private List<Double> delays;
-	private List<String> params;
 
 	public FlowView(int width, int height) {
 		super(10);
@@ -52,15 +46,8 @@ public class FlowView extends HBox {
 		fileChooser = new FileChooser();
 		partFileNames = new ArrayList<String>();
 		delays = new ArrayList<Double>();
-		params = ProjectReader.getParamsNoTypeOrName(WAVE);
 		
-		VBox partSelector = new VBox(10);
-		//partSelector.setMaxHeight(myHeight);
-//		unitSelector = new SpriteSetting(UNIT, UNIT);
-//		waveSelector = new SpriteSetting(WAVE, WAVE);
-//		partSelector.getChildren().add(unitSelector);
-//		partSelector.getChildren().add(waveSelector);
-		
+		VBox partSelector = new VBox(10);		
 		Button selectUnitButton = new Button("Select Unit");
 		Button selectWaveButton = new Button("Select Wave");
 		
