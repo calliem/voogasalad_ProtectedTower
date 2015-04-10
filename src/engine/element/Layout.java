@@ -2,12 +2,15 @@ package engine.element;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javafx.geometry.Point2D;
 import authoringEnvironment.objects.TileMap;
 import engine.TowerManager;
 import engine.Updateable;
+import engine.element.sprites.EnemyFactory;
 import engine.element.sprites.GridCell;
+import engine.element.sprites.ProjectileFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.TowerFactory;
 
@@ -32,9 +35,17 @@ public class Layout extends GameElement implements Updateable {
     private List<Sprite> spritesList;
     private double gridSize;
     private TowerManager myTowerManager;
+    private TowerFactory myTowerFactory;
+    private EnemyFactory myEnemyFactory;
+    private ProjectileFactory myProjectileFactory;
 
-    public Layout (TowerManager manager) {
-        myTowerManager = manager;
+    public Layout () {
+        myTowerFactory = new TowerFactory();
+        myTowerManager = new TowerManager(myTowerFactory);
+        myTowerFactory.addManager(myTowerManager);
+
+        myEnemyFactory = new EnemyFactory();
+        myProjectileFactory = new ProjectileFactory();
     }
 
     public Layout (TileMap map) {
@@ -155,4 +166,15 @@ public class Layout extends GameElement implements Updateable {
         return spritesList;
     }
 
+    public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
+        myTowerFactory.addTower(allTowers);
+    }
+
+    public void initializeEnemy (Map<String, Object> parameters) {
+        myEnemyFactory.addEnemy(parameters);
+    }
+
+    public void initializeProjectile (Map<String, Object> parameters){
+        myProjectileFactory.addProjectile(parameters);
+    }
 }

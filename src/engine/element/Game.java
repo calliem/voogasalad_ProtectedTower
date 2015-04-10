@@ -1,6 +1,7 @@
 package engine.element;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import engine.GameState;
@@ -26,17 +27,12 @@ public class Game extends GameElement implements Updateable {
     private Layout myLayout;
     private int myActiveLevel;
     public GameState myGameState;
-    private TowerFactory myTowerFactory;
 
     public Game () {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
         
-        myTowerFactory = new TowerFactory();
-        TowerManager manager = new TowerManager(myTowerFactory);
-        myTowerFactory.addManager(manager);
-        
-        myLayout = new Layout(manager);
+        myLayout = new Layout();
         myActiveLevel = 0;
         myGameState = new GameState();
     }
@@ -53,10 +49,18 @@ public class Game extends GameElement implements Updateable {
     }
 
     protected void addTowers(Map<String,Map<String,Object>> allTowers) {
-        myTowerFactory.addTower(allTowers);
+        myLayout.initializeTowers(allTowers);
     }
 
-    protected void addEnemy () {
-
+    protected void addEnemies(Collection<Map<String,Object>> enemyParameters) {
+        for(Map<String,Object> map : enemyParameters){
+            myLayout.initializeEnemy(map);
+        }
+    }
+    
+    protected void addProjectiles(Collection<Map<String,Object>> projectileParameters){
+        for(Map<String,Object> map: projectileParameters){
+            myLayout.initializeProjectile(map);
+        }
     }
 }
