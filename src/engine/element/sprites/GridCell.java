@@ -15,7 +15,7 @@ import engine.InsufficientParametersException;
  */
 public class GridCell extends Sprite {
 
-	private List<String> tags;
+	private List<String> myTags;
 	
     public GridCell () throws InsufficientParametersException {
         super();
