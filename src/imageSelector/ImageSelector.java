@@ -1,19 +1,14 @@
-package imageSelector;
+package imageselector;
 
-import imageSelector.util.ScaleImage;
-import java.io.File;
+import imageselector.util.ScaleImage;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -29,13 +24,11 @@ import javafx.stage.Stage;
 public class ImageSelector extends VBox {
     private ImageView preview;
     private String filePath;
-    private FileChooser fileChooser;
+    protected ResourceBundle myResources;
+    private GraphicFileChooser fileSelection;
     
     private double previewImageHeight = 100;
     private double previewImageWidth = 100;
-    private static final int LOAD_BUTTON_WIDTH = 65;
-    private static final int FILE_DISPLAY_WIDTH = 150;
-    private static final int FILE_DISPLAY_HEIGHT = 24;
     private static final int PADDING = 10;
     private static final String NOT_AVAILABLE = "imageselector/img_not_available.png";
     private static final String SELECTOR_RESOURCES = "imageselector/SelectorText.properties";
@@ -46,68 +39,41 @@ public class ImageSelector extends VBox {
      * @param stage the stage that the application is displayed on.
      * This is required to display an open-file dialog window.
      */
-    public ImageSelector (Stage stage) {
+    public ImageSelector () {
         super(2*PADDING);
         setAlignment(Pos.CENTER);
 
-        ResourceBundle myResources = ResourceBundle.getBundle(SELECTOR_RESOURCES);
+//        myResources = ResourceBundle.getBundle(SELECTOR_RESOURCES);
         
-        HBox fileSelection = new HBox(PADDING);
-        StackPane textDisplay = new StackPane();
-
-        Text fileDisplay = new Text(myResources.getString("filePrompt"));
-        Rectangle textBox = new Rectangle(FILE_DISPLAY_WIDTH, FILE_DISPLAY_HEIGHT);
-        textBox.setFill(Color.WHITE);
+        fileSelection = new GraphicFileChooser("Choose an image...", NOT_AVAILABLE);
 
         filePath = NOT_AVAILABLE;
         preview = new ImageView(new Image(filePath));
-
-        fileChooser = new FileChooser();
         
-        Button loader = new Button(myResources.getString("browse"));
-        loader.setMaxWidth(LOAD_BUTTON_WIDTH);
-        loader.setOnAction( (event) -> {
-            openFileChooser(stage, fileDisplay);
+//        Button loader = fileSelection.getButton();
+        StringProperty file = new SimpleStringProperty();
+        file.bind(fileSelection.getSelectedFileNameProperty());
+        file.addListener((obs, oldValue, newValue) -> {
+            filePath = fileSelection.getSelectedFileName();
+            uploadImage();
             setPreviewImageSize(previewImageWidth, previewImageHeight);
         });
-        fileDisplay.setTextAlignment(TextAlignment.LEFT);
-        textDisplay.getChildren().addAll(textBox, fileDisplay);
-
-        fileSelection.getChildren().addAll(textDisplay, loader);
-        fileSelection.setAlignment(Pos.CENTER);
 
         getChildren().addAll(preview, fileSelection);
     }
 
     /**
-     * This method opens the file chooser dialog window.
+     * This method opens the file chooser dialog window and updates the preview image.
      * 
-     * @param fileDisplay       the text object that displays what file the user has chosen
-     * @param stage     the stage that the application is being displayed on
      */
-    private void openFileChooser (Stage stage, Text fileDisplay) {
-        File file = fileChooser.showOpenDialog(stage.getScene().getWindow());
-        if (file != null) {
-            String fileName = file.getName();
-            fileDisplay.setText(fileName);
-            filePath = String.format("images/%s", fileName);
-            preview = new ImageView(new Image(filePath));
-            this.getChildren().remove(0);
-            this.getChildren().add(0, preview);
-        }
+    private void uploadImage () {
+        preview = new ImageView(new Image(filePath));
+        this.getChildren().remove(0);
+        this.getChildren().add(0, preview);
     }
-
-    /**
-     * Allows the user to add a valid image extension for the file chooser.
-     * @param extension the extension name (i.e. jpg or png)
-     */
-    public void addExtensionFilter (String extension) {
-        FileChooser.ExtensionFilter extFilter =
-                new FileChooser.ExtensionFilter(String.format("%s Images (*.%s)",
-                                                              extension.toUpperCase(),
-                                                              extension.toLowerCase()),
-                                                String.format("*.%s", extension.toLowerCase()));
-        fileChooser.getExtensionFilters().add(extFilter);
+    
+    public void addExtensionFilter(String extension){
+        fileSelection.addExtensionFilter(extension);
     }
     
     /**

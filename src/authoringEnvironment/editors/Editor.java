@@ -2,6 +2,7 @@
 
 package authoringEnvironment.editors;
 
+import java.util.ResourceBundle;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -23,12 +24,9 @@ public abstract class Editor {
 	//TODO: have later methods get myDimensions from a closer class not mainenvironment. THey are passed as parameters for a reason.
 
 	protected Dimension2D myDimensions;
-	protected Stage myStage;
 	
-	public Editor(Dimension2D dim, Stage s){
-//		displayError("test");
+	public Editor(Dimension2D dim){
 		myDimensions = dim;
-		myStage = s;
 	}
 
     public abstract Node configureUI(); //or make it a Node instead of a gridPane?

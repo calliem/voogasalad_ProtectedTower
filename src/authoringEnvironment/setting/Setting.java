@@ -1,6 +1,6 @@
 package authoringEnvironment.setting;
 
-import imageSelector.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -21,7 +21,7 @@ import javafx.scene.text.Text;
 public abstract class Setting extends HBox{
     private String label;
     protected ImageView error;
-    private String dataAsString;
+    protected String dataAsString;
     private TextField editableField;
     
     public Setting(String label, String value){
@@ -101,7 +101,15 @@ public abstract class Setting extends HBox{
      */
     public abstract boolean parseField();
     
-    public void displaySavedValue () {
+    public boolean processData(){
+        boolean readable = parseField();
+        if(readable){
+            dataAsString = editableField.getText();
+        }
+        return readable;
+    }
+    
+    public void displaySavedValue(){
         editableField.setText(""+dataAsString);
     }
 }

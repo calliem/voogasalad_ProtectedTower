@@ -21,7 +21,7 @@ public class DoubleSetting extends Setting{
             return true;
         }
         catch(NumberFormatException e){
-            displayErrorAlert("This is not a percentage!");
+            displayErrorAlert("This is not a decimal!");
             return false;
         }
     }

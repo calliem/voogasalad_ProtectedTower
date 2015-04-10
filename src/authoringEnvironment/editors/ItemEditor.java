@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class ItemEditor extends PropertyEditor{
 
 	public ItemEditor (Dimension2D dim, Stage s){
-		super(dim, s);
+		super(dim);
 	}
 
 	@Override

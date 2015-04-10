@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 public class TileEditor extends PropertyEditor{
 
 	public TileEditor(Dimension2D dim, Stage s) {
-		super(dim, s);
+		super(dim);
 		// TODO Auto-generated constructor stub
 	}
 

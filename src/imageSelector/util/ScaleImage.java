@@ -1,4 +1,4 @@
-package imageSelector.util;
+package imageselector.util;
 
 import javafx.scene.image.ImageView;
 
