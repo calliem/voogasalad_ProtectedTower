@@ -80,6 +80,12 @@ public class InstanceManager {
 		// "Tower_IceTower.xml")
 		return part;
 	}
+	
+	public Map<String, Object> addPart(String partType, Map<String, Object> part){
+		part.put(partTypeKey, partType);
+		userParts.add(part);
+		return part;
+	}
 
 	/**
 	 * Writes the part of partName into an XML file
