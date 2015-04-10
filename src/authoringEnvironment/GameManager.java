@@ -23,6 +23,7 @@ public class GameManager {
 	private static final String paramSpecsFile = "resources/parameter_datatype";
 	private static final String partFileDir = "/AllPartsData";
 	public static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
+	private static final String partFileName = "GameParts.xml";
 
 	private static InstanceManager currentGame = new InstanceManager();
 
@@ -82,7 +83,7 @@ public class GameManager {
 	 */
 	public static void saveGame(){
 		currentGame.writeAllPartsToXML(userDataLocation);
-		XMLWriter.toXML(currentGame.getAllPartData(), currentGame.getName() + "_Parts.xml", userDataLocation + partFileDir);
+		XMLWriter.toXML(currentGame.getAllPartData(), partFileName, userDataLocation + partFileDir);
 	}
 	
 
@@ -94,7 +95,7 @@ public class GameManager {
 	public static List<Map<String, Object>> loadGame(String pathToRootDirectoryFile){
 		String[] nameAndDirectory = (String[]) XMLWriter.fromXML(pathToRootDirectoryFile);
 		setUserDataLocation(nameAndDirectory[1]);
-		String dir = userDataLocation + partFileDir;
+		String dir = userDataLocation + partFileDir + "/" + partFileName;
 		System.out.println("dir loading: " + dir);
 		List<Map<String,Object>> allUserData = (List<Map<String, Object>>) XMLWriter.fromXML(dir);
 		currentGame = new InstanceManager(nameAndDirectory[0], allUserData);
