@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import authoringEnvironment.GameManager;
+import authoringEnvironment.GameCreator;
 import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
@@ -136,8 +136,8 @@ public class WaveEditor extends MainEditor {
 			List<Object> data = new ArrayList<Object>();
 			data.add(partFileNames);
 			data.add(times);
-
-			GameManager.addPartToGame(WAVE, waveName,
+//TODO fix this before merging with master
+			GameCreator.addPartToGame(WAVE, waveName,
 					ProjectReader.getParamsNoTypeOrName(WAVE), data);
 		});
 
