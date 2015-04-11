@@ -67,7 +67,7 @@ public class GameManager {
 	public static void addPartToGame(String partType, String partName, List<String> params, List<Object> data){
 		currentGame.addPart(partType, partName, params, data);
 	}
-	
+
 	public static void addPartToGame(String partType, List<Setting> settings){
 		Map<String, Object> partToAdd = new HashMap<String, Object>();
 		for(Setting s : settings)
