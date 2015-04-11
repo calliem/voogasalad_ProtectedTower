@@ -30,7 +30,7 @@ public class Controller {
 	
 	//private static Controller controller = new Controller();
 	private static  Map<String, Editor> myEditors = new HashMap<String, Editor>(); //is it bad that this is up here
-	//private static List<Editor> editors = new ArrayList<Editor>();
+	private InstanceManager currentGame;
 	
 	private Controller(){
 	}
