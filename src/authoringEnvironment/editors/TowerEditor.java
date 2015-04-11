@@ -51,7 +51,7 @@ public class TowerEditor extends PropertyEditor{
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
 
-    private static final int ROW_SIZE = 2;
+    private static final int ROW_SIZE = 7;
 
     /**
      * Creates a tower object.

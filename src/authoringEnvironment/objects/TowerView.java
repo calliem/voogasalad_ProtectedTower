@@ -182,6 +182,10 @@ public class TowerView extends SpriteView{
             name = parameterFields.get(0).getDataAsString();
             updateTowerName();
         }
+        
+        if(correctFormat){
+            
+        }
     }
     
     private void updateTowerName(){
