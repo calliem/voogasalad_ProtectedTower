@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.Set;
 
+import util.misc.SetHandler;
 import javafx.geometry.Dimension2D;
 import javafx.stage.Stage;
 import authoringEnvironment.editors.Editor;
@@ -28,8 +29,8 @@ public class ProjectReader {
     private static final String paramSpecsFile = "resources/parameter_datatype";
     private static final ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
     private static final String editorPackage = System.getProperty("user.dir").concat("/src/authoringEnvironment/editors");
-    private static final List<String> abstractEditors = listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
-    private static final List<String> mainEditors = listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
+    private static final List<String> abstractEditors = SetHandler.listFromArray(new String[] {"Editor", "MainEditor", "PropertyEditor"});
+    private static final List<String> mainEditors = SetHandler.listFromArray(new String[] {"LevelEditor", "MapEditor", "WaveEditor"});
     private static final String tabOrder = System.getProperty("user.dir") + "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
 
@@ -59,7 +60,7 @@ public class ProjectReader {
         ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
 
         String[] params = getParamListForPart(partType);
-        List<String> paramsList = listFromArray(params);
+        List<String> paramsList = SetHandler.listFromArray(params);
         Collections.sort(paramsList);
         paramsList = trimBeforeDot(paramsList);
         for(String param : paramsList){
@@ -211,15 +212,5 @@ public class ProjectReader {
         return tabList;
     }
 
-    /**
-     * because String[]'s don't have .contains
-     * @param s array to be converted to List<String>
-     * @return s in List form
-     */
-    public static List<String> listFromArray(String[] s){
-        List<String> l = new ArrayList<String>();
-        for(String word : s)
-            l.add(word);
-        return l;
-    }
+    
 }
