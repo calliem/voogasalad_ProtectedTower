@@ -146,18 +146,27 @@ public class InstanceManager {
 	}
 
 	/**
-	 * Writes the part of partName into an XML file
+	 * Writes the part, passed as a Map, into an XML file in:
+	 * rootDirectory/partType/partName.xml, for example:
+	 * ...myTowerGames/Tower/IceShootingTower.xml
 	 * 
-	 * @param partName
+	 * @param part
 	 *            The part to write to XML
 	 */
-	private void writePartToXML(Map<String, Object> part, String rootDir) {
+	private void writePartToXML(Map<String, Object> part) {
 		String partType = (String) part.get(partTypeKey);
-		String partName = (String) part.get(nameKey);
-		// partName = partType + "_" + partName;
-		String partFileName = partName + ".xml";
-		String dir = rootDir + "/" + partType;
-		XMLWriter.toXML(part, partFileName, dir);
+		String partFileName = (String) part.get(nameKey) + ".xml";
+		String directory = rootDirectory + "/" + partType;
+		XMLWriter.toXML(part, partFileName, directory);
+	}
+	
+
+	/**
+	 * Writes all parts of the current game into their respective files
+	 */
+	public void writeAllPartsToXML(String rootDir) {
+		for (Map<String, Object> part : userParts)
+			writePartToXML(part);
 	}
 
 	/**
@@ -172,13 +181,6 @@ public class InstanceManager {
 		return partName.substring(0, partName.indexOf("_"));
 	}
 
-	/**
-	 * Writes all parts of the current game into their respective files
-	 */
-	public void writeAllPartsToXML(String rootDir) {
-		for (Map<String, Object> part : userParts)
-			writePartToXML(part, rootDir);
-	}
 
 	/**
 	 * Writes the Map<partName, [part data]> into an XML file called
