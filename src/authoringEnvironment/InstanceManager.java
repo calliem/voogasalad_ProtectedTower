@@ -27,7 +27,8 @@ public class InstanceManager {
 	private static final String listSizesDiffer = "Lists passed must contain same number of elements.";
 	private static final String partFileName = "GameParts.xml";
 	private static final String IMFileName = "GameManager.xml";
-	private static final String partsFileDir = "/AllPartData";
+	public static final String partsFileDir = "/AllPartData";
+	private static final String partKeyKey = "PartKey";
 
 	// a map of all the parts the user has created
 	// each part is represented by a map mapping the part's parameters to their
@@ -35,7 +36,7 @@ public class InstanceManager {
 	// the fields look like: Map<partName, Map<parameterName, parameterData>>
 	// private Map<String, Map<String, Object>> userParts;
 
-	private List<Map<String, Object>> userParts;
+	private Map<String, Map<String, Object>> userParts;
 	private String gameName;
 	private String rootDirectory;
 
@@ -53,7 +54,7 @@ public class InstanceManager {
 	 *            The root directory in which all these parts and all other game
 	 *            information is stored.
 	 */
-	public InstanceManager(String name, List<Map<String, Object>> partData,
+	public InstanceManager(String name, Map<String, Map<String, Object>> partData,
 			String rootDir) {
 		gameName = name;
 		userParts = partData;
@@ -61,20 +62,20 @@ public class InstanceManager {
 	}
 
 	public InstanceManager() {
-		this("Unnamed_Game", new ArrayList<Map<String, Object>>(),
+		this("Unnamed_Game", new HashMap<String, Map<String, Object>>(),
 				defaultSaveLocation + "/Unnamed_Game");
 	}
 
 	public InstanceManager(String name) {
-		this(name, new ArrayList<Map<String, Object>>(), defaultSaveLocation
+		this(name, new HashMap<String, Map<String, Object>>(), defaultSaveLocation
 				+ "/" + name);
 	}
 
 	public InstanceManager(String name, String rootDir) {
-		this(name, new ArrayList<Map<String, Object>>(), rootDir);
+		this(name, new HashMap<String, Map<String, Object>>(), rootDir);
 	}
 
-	public InstanceManager(String name, List<Map<String, Object>> partData) {
+	public InstanceManager(String name, Map<String, Map<String, Object>> partData) {
 		this(name, partData, defaultSaveLocation + "/" + name);
 	}
 
@@ -136,8 +137,10 @@ public class InstanceManager {
 	 */
 	public Map<String, Object> addPart(String partType, Map<String, Object> part) {
 		part.put(partTypeKey, partType);
+		String partKey = gameName + "_" + (String) part.get(nameKey) + "." + partType;
+		part.put(partKeyKey, partKey);
 		try {
-			writePartToXML(addPartToUserParts(part));
+			writePartToXML(addPartToUserParts(part, partKey));
 		} catch (DataFormatException e) {
 			System.err.println("Part was not added.");
 		}
@@ -145,9 +148,9 @@ public class InstanceManager {
 	}
 
 	private Map<String, Object> addPartToUserParts(
-			Map<String, Object> partToCheck) throws DataFormatException {
+			Map<String, Object> partToCheck, String partKey) throws DataFormatException {
 		if (partToCheck.containsKey("Name")) {
-			userParts.add(partToCheck);
+			userParts.put(partKey, partToCheck);
 			return partToCheck;
 		} else
 			throw new DataFormatException(missingNameKey);
@@ -172,8 +175,8 @@ public class InstanceManager {
 	 * Writes all parts of the current game into their respective files
 	 */
 	public void writeAllPartsToXML() {
-		for (Map<String, Object> part : userParts)
-			writePartToXML(part);
+		for (String key : userParts.keySet())
+			writePartToXML(userParts.get(key));
 	}
 
 	/**
@@ -188,6 +191,7 @@ public class InstanceManager {
 		writeAllPartsToXML();
 		// XMLWriter.toXML(userParts, partFileName, rootDirectory +
 		// partsFileDir);
+		System.out.println("writing to xml manager");
 		XMLWriter.toXML(this, IMFileName, rootDirectory + partsFileDir);
 		return rootDirectory + partsFileDir;
 	}
@@ -209,7 +213,7 @@ public class InstanceManager {
 				.fromXML(pathToRootDirFile);
 		String rootDirectory = nameAndDirectory[1];
 		return (InstanceManager) XMLWriter
-				.fromXML(rootDirectory + partsFileDir);
+				.fromXML(rootDirectory + partsFileDir + "/" + IMFileName);
 	}
 
 	/**
@@ -221,7 +225,7 @@ public class InstanceManager {
 	 *            directory of the game whose data is being loaded.
 	 * @return The list reperesnting the data of all the parts in this game
 	 */
-	public static List<Map<String, Object>> loadGameData(
+	public static Map<String, Map<String, Object>> loadGameData(
 			String pathToRootDirFile) {
 		return loadGameManager(pathToRootDirFile).getAllPartData();
 	}
@@ -229,12 +233,13 @@ public class InstanceManager {
 	/**
 	 * Gets a copy of the data representing all the parts of this game. Altering
 	 * this list will not alter the actual game data in any way.
+	 * @return 
 	 * 
 	 * @return A copy of all the part data in this game, stored as a list of
 	 *         maps.
 	 */
-	public List<Map<String, Object>> getAllPartData() {
-		return new ArrayList<Map<String, Object>>(userParts);
+	public Map<String, Map<String, Object>> getAllPartData() {
+		return new HashMap<String, Map<String, Object>>(userParts);
 	}
 
 	/**
@@ -300,8 +305,10 @@ public class InstanceManager {
 	@Override
 	public String toString() {
 		StringBuilder toPrint = new StringBuilder();
-		for (Map<String, Object> part : userParts)
-			toPrint.append(part.toString() + "\n");
+		for (String key : userParts.keySet())
+			toPrint.append("Key: " + key)
+			.append(" = \n")
+			.append("    " + userParts.get(key).toString() + "\n");
 		return toPrint.toString();
 	}
 
@@ -328,7 +335,7 @@ public class InstanceManager {
 
 		// gameRootDirectory will be chosen by the user, but here we're just
 		// putting an exmaple folder
-		GameCreator.createNewGame("ExampleGame", gameRootDirectory);
+		InstanceManager example = GameCreator.createNewGame("TestingManagerGame", gameRootDirectory);
 		// hardcode in an example part to show how it works
 		List<String> params = new ArrayList<String>();
 		params.add("HP");
@@ -336,7 +343,7 @@ public class InstanceManager {
 		List<Object> data = new ArrayList<Object>();
 		data.add(new Integer(500));
 		data.add(new Double(1.5));
-		// GameManager.addPartToGame("Tower", "MyFirstTower", params, data);
+		example.addPart("Tower", "MyFirstTower", params, data);
 		List<String> params2 = new ArrayList<String>();
 		params2.add("HP");
 		params2.add("Speed");
@@ -345,18 +352,16 @@ public class InstanceManager {
 		data2.add(new Integer(100));
 		data2.add(new Double(1.5));
 		data2.add(new Double(10));
-		// GameManager.addPartToGame("Unit", "MyFirstEnemy", params2, data2);
-		// GameManager.saveGame();
-		/*
-		 * GameManager .loadPart(
-		 * "C:/Users/Johnny/workspace/voogasalad_ProtectedTower/src/exampleUserData/ExampleGame/Tower/MyFirstTower.xml"
-		 * ); List<Map<String, Object>> game =
-		 * GameManager.loadGame(gameRootDirectory +
-		 * "/ExampleGame/ExampleGame.game"); System.out .println("load? " +
-		 * GameManager.loadPartFromFileName("Tower", "MyFirstTower.xml"));
-		 * System.out.println("all data: ");
-		 * System.out.println(game.toString());
-		 */
+		example.addPart("Enemy", "MyFirstEnemy", params2, data2);
+		example.saveGame();
+		Map<String, Map<String, Object>> gamedata = 
+				InstanceManager.loadGameData(gameRootDirectory + "/TestingManagerGame/TestingManagerGame.game");
+		InstanceManager loadedIn = InstanceManager
+				.loadGameManager(gameRootDirectory + "/TestingManagerGame/TestingManagerGame.game");
+		System.out.println("GAME DATA AS MAP: \n" + gamedata.toString());
+		System.out.println("GAME AS MANAGER: \n" + loadedIn.toString());
+		 
+		 
 		/*
 		 * InstanceManager gameManager = new InstanceManager("TestGame");
 		 * GameManager.createGameFolders(gameManager.getName());
