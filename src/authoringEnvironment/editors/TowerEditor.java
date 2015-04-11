@@ -255,7 +255,7 @@ public class TowerEditor extends PropertyEditor{
 
     private void setupTowerAction(TowerView tower){
         tower.setOnMousePressed((e) -> {
-            if(tower.isExisting().getValue())
+            if(tower.isExisting().getValue() && editing)
                 showEditScreen(tower.getEditorOverlay());
         });
         tower.getCloseButton().setOnAction((e) -> {
@@ -277,17 +277,15 @@ public class TowerEditor extends PropertyEditor{
         return scale;
     }
 
-	@Override
-	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+    @Override
+    public List<Node> getObjects() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     @Override
     public  void update() {
         // TODO Auto-generated method stub
 
     }
-
 }

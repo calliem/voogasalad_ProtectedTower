@@ -21,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+import authoringEnvironment.GameManager;
 import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.Setting;
@@ -41,7 +42,7 @@ public class TowerView extends SpriteView{
     private Text overlayErrorMessage;
     private BooleanProperty exists;
     
-    private String name;
+    private String towerName;
     private String imageFile;
     private List<Setting> parameterFields;
     
@@ -51,8 +52,16 @@ public class TowerView extends SpriteView{
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
     
+    private static final int NAME_INDEX = 0;
+    private static final String DEFAULT_NAME = "Unnamed";
+    
     public TowerView(String name, String imageFile){
-        this.name = name;
+        if(name.length() == 0){
+            towerName = DEFAULT_NAME;
+        }
+        else{
+            towerName = name;
+        }
         this.imageFile = imageFile;
         ImageView image = new ImageView(new Image(imageFile));
         ScaleImage.scale(image, 90, 70);
@@ -64,7 +73,7 @@ public class TowerView extends SpriteView{
         display.setAlignment(Pos.CENTER);
         
         Rectangle towerBackground = new Rectangle(100, 100, Color.WHITE);
-        towerNameDisplay = new Text(name);
+        towerNameDisplay = new Text(towerName);
         towerNameDisplay.setFont(new Font(10));
         towerNameDisplay.setTextAlignment(TextAlignment.CENTER);
         towerNameDisplay.setWrappingWidth(90);
@@ -90,7 +99,7 @@ public class TowerView extends SpriteView{
     }
     
     public void setupTooltipText(List<String[]> info){
-        String tooltipText = String.format("%s: %s\n", "Name", name);
+        String tooltipText = "";
         for(String[] parameter : info){
             tooltipText += String.format("%s: %s\n", parameter[0], parameter[1]);
         }
@@ -136,7 +145,7 @@ public class TowerView extends SpriteView{
         editableContent.setAlignment(Pos.TOP_CENTER);
         editableContent.setTranslateY(10);
         
-        overlayTowerNameDisplay = new Text(name);
+        overlayTowerNameDisplay = new Text(towerName);
         overlayTowerNameDisplay.setFont(new Font(30));
         overlayTowerNameDisplay.setFill(Color.WHITE);
         
@@ -154,6 +163,10 @@ public class TowerView extends SpriteView{
         for(Setting s : settings){
             parameterFields.add(s);
             settingsObjects.getChildren().add(s);
+        }
+        
+        if(towerName.length() > 1){
+            parameterFields.get(0).setParameterValue(towerName);
         }
         
         HBox buttons = new HBox(10);
@@ -179,18 +192,18 @@ public class TowerView extends SpriteView{
         }
         overlayErrorMessage.setVisible(!correctFormat);
         if(parameterFields.get(0).processData()){
-            name = parameterFields.get(0).getDataAsString();
+            towerName = parameterFields.get(0).getDataAsString();
             updateTowerName();
         }
         
         if(correctFormat){
-            
+            GameManager.addPartToGame("Tower", parameterFields);
         }
     }
     
     private void updateTowerName(){
-        towerNameDisplay.setText(name);
-        overlayTowerNameDisplay.setText(name);
+        towerNameDisplay.setText(towerName);
+        overlayTowerNameDisplay.setText(towerName);
     }
     
     public void discardUnsavedChanges(){
