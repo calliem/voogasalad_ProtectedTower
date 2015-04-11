@@ -354,6 +354,7 @@ public class InstanceManager {
 		data2.add(new Double(10));
 		example.addPart("Enemy", "MyFirstEnemy", params2, data2);
 		example.saveGame();
+		//this method is called with the path to the .game file, which will be received from the user
 		Map<String, Map<String, Object>> gamedata = 
 				InstanceManager.loadGameData(gameRootDirectory + "/TestingManagerGame/TestingManagerGame.game");
 		InstanceManager loadedIn = InstanceManager
