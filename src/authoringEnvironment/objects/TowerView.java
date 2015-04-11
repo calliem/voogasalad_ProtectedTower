@@ -211,7 +211,6 @@ public class TowerView extends SpriteView{
         //removes the 'x' button.
         this.getChildren().remove(this.getChildren().size()-1);
     }
-    
 
     public BooleanProperty isExisting(){
         return exists;
