@@ -334,7 +334,7 @@ public class InstanceManager {
 	public static void main(String[] args) {
 
 		// gameRootDirectory will be chosen by the user, but here we're just
-		// putting an exmaple folder
+		// putting an an example
 		InstanceManager example = GameCreator.createNewGame("TestingManagerGame", gameRootDirectory);
 		// hardcode in an example part to show how it works
 		List<String> params = new ArrayList<String>();
