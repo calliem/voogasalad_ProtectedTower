@@ -87,60 +87,6 @@ public class TowerView extends SpriteView{
         setupTooltipText(getTowerInfo());
     }
     
-    public BooleanProperty isExisting(){
-        return exists;
-    }
-    
-    public List<String[]> getTowerInfo(){
-        List<String[]> info = new ArrayList<>();
-        for(Setting setting : parameterFields){
-            info.add(new String[]{setting.getParameterName(), setting.getDataAsString()});
-        }
-        return info;
-    }
-    
-    public void setupTooltipText(List<String[]> info){
-        String tooltipText = "";
-        for(String[] parameter : info){
-            tooltipText += String.format("%s: %s\n", parameter[0], parameter[1]);
-        }
-
-        Tooltip tooltip = new Tooltip(tooltipText);
-        tooltip.setTextAlignment(TextAlignment.LEFT);
-        Tooltip.install(this, tooltip);
-    }
-    
-    public void initiateEditableState(){
-        ImageView close = new ImageView(new Image("images/close.png"));
-        close.setTranslateX(10);
-        close.setTranslateY(-10);
-        close.setFitWidth(20);
-        close.setPreserveRatio(true);
-        close.setOnMousePressed((e) -> {
-            playDeletionAnimation();
-            exists.setValue(false);
-        });
-        this.getChildren().add(close);
-        StackPane.setAlignment(close, Pos.TOP_RIGHT);
-    }
-    
-    private ScaleTransition playDeletionAnimation(){
-        ScaleTransition delete = new ScaleTransition(Duration.millis(200), this);
-        delete.setFromX(1.0);
-        delete.setFromY(1.0);
-        delete.setToX(0.0);
-        delete.setToY(0.0);
-        delete.setCycleCount(1);
-        delete.play();
-        
-        return delete;
-    }
-    
-    public void exitEditableState(){
-        //removes the 'x' button.
-        this.getChildren().remove(this.getChildren().size()-1);
-    }
-    
     private void setupEditableContent(){
         editableContent = new VBox(10);
         editableContent.setAlignment(Pos.CENTER);
@@ -233,6 +179,61 @@ public class TowerView extends SpriteView{
         Rectangle overlayBackground = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT);
         overlayBackground.setOpacity(0.8);
         overlayContent.getChildren().addAll(overlayBackground, editableContent);
+    }
+
+    public void initiateEditableState(){
+        ImageView close = new ImageView(new Image("images/close.png"));
+        close.setTranslateX(10);
+        close.setTranslateY(-10);
+        close.setFitWidth(20);
+        close.setPreserveRatio(true);
+        close.setOnMousePressed((e) -> {
+            playDeletionAnimation();
+            exists.setValue(false);
+        });
+        this.getChildren().add(close);
+        StackPane.setAlignment(close, Pos.TOP_RIGHT);
+    }
+    
+    private ScaleTransition playDeletionAnimation(){
+        ScaleTransition delete = new ScaleTransition(Duration.millis(200), this);
+        delete.setFromX(1.0);
+        delete.setFromY(1.0);
+        delete.setToX(0.0);
+        delete.setToY(0.0);
+        delete.setCycleCount(1);
+        delete.play();
+        
+        return delete;
+    }
+    
+    public void exitEditableState(){
+        //removes the 'x' button.
+        this.getChildren().remove(this.getChildren().size()-1);
+    }
+    
+
+    public BooleanProperty isExisting(){
+        return exists;
+    }
+    
+    public List<String[]> getTowerInfo(){
+        List<String[]> info = new ArrayList<>();
+        for(Setting setting : parameterFields){
+            info.add(new String[]{setting.getParameterName(), setting.getDataAsString()});
+        }
+        return info;
+    }
+    
+    public void setupTooltipText(List<String[]> info){
+        String tooltipText = "";
+        for(String[] parameter : info){
+            tooltipText += String.format("%s: %s\n", parameter[0], parameter[1]);
+        }
+
+        Tooltip tooltip = new Tooltip(tooltipText);
+        tooltip.setTextAlignment(TextAlignment.LEFT);
+        Tooltip.install(this, tooltip);
     }
     
     public StackPane getEditorOverlay(){
