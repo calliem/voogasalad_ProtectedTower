@@ -3,11 +3,11 @@ package authoringEnvironment.objects;
 import imageselectorTEMP.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -48,6 +48,7 @@ public class TowerView extends SpriteView{
     
     private Text towerNameDisplay;
     private Text overlayTowerNameDisplay;
+    private Text saved;
     
     private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
@@ -142,8 +143,8 @@ public class TowerView extends SpriteView{
     
     private void setupEditableContent(){
         editableContent = new VBox(10);
-        editableContent.setAlignment(Pos.TOP_CENTER);
-        editableContent.setTranslateY(10);
+        editableContent.setAlignment(Pos.CENTER);
+//        editableContent.setTranslateY(10);
         
         overlayTowerNameDisplay = new Text(towerName);
         overlayTowerNameDisplay.setFont(new Font(30));
@@ -165,24 +166,30 @@ public class TowerView extends SpriteView{
             settingsObjects.getChildren().add(s);
         }
         
-        if(towerName.length() > 1){
-            parameterFields.get(0).setParameterValue(towerName);
+        if(towerName.length() >= 1){
+            parameterFields.get(NAME_INDEX).setParameterValue(towerName);
         }
         
         HBox buttons = new HBox(10);
         
-        Button save = new Button("Save");
-        save.setOnAction((e)-> saveParameterFields());
+        saved = new Text("Tower saved!");
+        saved.setFill(Color.YELLOW);
+        saved.setVisible(false);
         
-        overlayCloseButton = new Button("Close");
+        Button save = new Button("Save");
+        save.setOnAction((e)-> {
+            saveParameterFields(true);
+        });
+        
+        overlayCloseButton = new Button("Cancel");
         
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(save, overlayCloseButton);
         
-        editableContent.getChildren().addAll(overlayTowerNameDisplay, towerImage, overlayErrorMessage, settingsObjects, buttons);
+        editableContent.getChildren().addAll(overlayTowerNameDisplay, towerImage, overlayErrorMessage, settingsObjects, buttons, saved);
     }
     
-    private void saveParameterFields(){
+    private void saveParameterFields(boolean save){
         boolean correctFormat = true;
         for(Setting s : parameterFields){
             boolean correct = s.processData();
@@ -196,9 +203,17 @@ public class TowerView extends SpriteView{
             updateTowerName();
         }
         
-        if(correctFormat){
+        if(correctFormat && save){
             GameManager.addPartToGame("Tower", parameterFields);
+            displaySavedMessage();
         }
+    }
+
+    private void displaySavedMessage () {
+        saved.setVisible(true);
+        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+        pause.play();
+        pause.setOnFinished(ae -> saved.setVisible(false));
     }
     
     private void updateTowerName(){
@@ -210,7 +225,7 @@ public class TowerView extends SpriteView{
         for(Setting s : parameterFields){
             s.displaySavedValue();
         }
-        saveParameterFields();
+        saveParameterFields(false);
     }
     
     private void setupOverlayContent(){
