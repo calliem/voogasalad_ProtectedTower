@@ -80,6 +80,11 @@ public abstract class Setting extends VBox{
      */
     public abstract Object getParameterValue();
     
+    public void setParameterValue(Object value){
+        dataAsString = (String) value;
+        editableField.setText((String) value);
+    }
+    
     public String getDataAsString(){
     	return dataAsString;
     }
