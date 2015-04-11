@@ -6,7 +6,7 @@ import imageselectorTEMP.ImageSelector;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
@@ -46,13 +46,13 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 
 	//TODO: display sidebar with a gridpane not an HBox to keep everything aligned and beautiful
 	
-	private static final double PADDING = MainEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead
+	private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead
 	
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 	private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
-	private static final double DEFAULT_TILE_DISPLAY_SIZE = MainEnvironment.getEnvironmentWidth()/32;
+	private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment.getEnvironmentWidth()/32;
 	//TODO: is importing the main environment bad design? is this an added dependency?
-	private static final double TEXT_FIELD_WIDTH = MainEnvironment.getEnvironmentWidth()/32;
+	private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment.getEnvironmentWidth()/32;
 	private int myLives;
 	private MapWorkspace myMapWorkspace;
 //	private TileMap mySelectedMap;

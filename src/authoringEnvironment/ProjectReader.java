@@ -116,7 +116,7 @@ public class ProjectReader {
         return s;
     }
 
-    public static void populateTabBar(MainEnvironment m, Dimension2D myDimensions, ResourceBundle myResources, Stage myStage){
+    public static void populateTabBar(AuthoringEnvironment m, Dimension2D myDimensions, ResourceBundle myResources, Stage myStage){
         Map<String, Boolean> tabsToCreate = ProjectReader.tabsToCreate();
         for(String s : ProjectReader.getOrderedTabList()){
             if(tabsToCreate.keySet().contains(s)){

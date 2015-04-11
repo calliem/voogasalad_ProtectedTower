@@ -22,7 +22,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.GameManager;
-import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.Setting;
 
@@ -50,8 +50,8 @@ public class TowerView extends SpriteView{
     private Text overlayTowerNameDisplay;
     private Text saved;
     
-    private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
-    private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
+    private static final double CONTENT_WIDTH = AuthoringEnvironment.getEnvironmentWidth();
+    private static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment.getEnvironmentHeight();
     
     private static final int NAME_INDEX = 0;
     private static final String DEFAULT_NAME = "Unnamed";
