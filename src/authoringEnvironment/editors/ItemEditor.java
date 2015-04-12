@@ -15,18 +15,18 @@ public class ItemEditor extends PropertyEditor{
 	}
 	
 
-	@Override
-	protected Group configureUI() {
-		// TODO Auto-generated method stub
-	    return new Group();
-	}
+//	@Override
+//	protected Group configureUI() {
+//		// TODO Auto-generated method stub
+//	    return new Group();
+//	}
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		System.out.println("itemeditor updated");
-		
-	}
+//	@Override
+//	public void update() {
+//		// TODO Auto-generated method stub
+//		System.out.println("itemeditor updated");
+//		
+//	}
 
 	
 }
