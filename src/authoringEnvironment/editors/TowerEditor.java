@@ -1,10 +1,8 @@
 package authoringEnvironment.editors;
 
 import imageselectorTEMP.ImageSelector;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -27,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.objects.SpriteView;
 import authoringEnvironment.objects.TowerView;
 
 /**
@@ -42,9 +41,8 @@ public class TowerEditor extends PropertyEditor{
     private boolean overlayActive = false;
     private boolean editing = false;
     private Text empty;
-    private List<TowerView> towersCreated;
-    private IntegerProperty numTowers;
-    private List<String> myTags;
+    private List<Node> spritesCreated;
+    private IntegerProperty numSprites;
 
     private static final double CONTENT_WIDTH = AuthoringEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment.getEnvironmentHeight();
@@ -62,14 +60,6 @@ public class TowerEditor extends PropertyEditor{
     }
 
     /**
-     * Gets the list of towers that the user has created.
-     * @return towersCreated    the list of towers that the user has created.
-     */
-    public List<TowerView> getTowers(){
-        return towersCreated;
-    }
-
-    /**
      * Sets up the editor UI.
      */
     @Override
@@ -77,27 +67,27 @@ public class TowerEditor extends PropertyEditor{
         // TODO Auto-generated method stub
         Group visuals = new Group();
         myContent = new StackPane();
-        towersCreated = new ArrayList<>();
+        spritesCreated = new ArrayList<>();
 
         // TODO remove magic number
         Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, Color.GRAY);
 
-        VBox towersDisplay = new VBox(20);
-        towersDisplay.setTranslateY(10);
+        VBox spriteDisplay = new VBox(20);
+        spriteDisplay.setTranslateY(10);
 
         HBox editControls = setupEditControls();
-        towersDisplay.getChildren().add(editControls);
+        spriteDisplay.getChildren().add(editControls);
 
         ArrayList<HBox> rows = new ArrayList<>();
 
         // TODO remove magic numbers
         HBox row = new HBox(20);
         currentRow = row;
-        towersDisplay.getChildren().add(row);
+        spriteDisplay.getChildren().add(row);
         rows.add(row);
 
-        numTowers = new SimpleIntegerProperty(0);
-        numTowers.addListener((obs, oldValue, newValue) -> {
+        numSprites = new SimpleIntegerProperty(0);
+        numSprites.addListener((obs, oldValue, newValue) -> {
             if((int) newValue == 0){
                 myContent.getChildren().add(empty);
             }
@@ -111,7 +101,7 @@ public class TowerEditor extends PropertyEditor{
                 newRow.setAlignment(Pos.TOP_CENTER);
                 currentRow = newRow;
                 rows.add(newRow);
-                towersDisplay.getChildren().add(newRow);
+                spriteDisplay.getChildren().add(newRow);
             }
 
             else if((int)newValue < (int)oldValue){
@@ -119,7 +109,7 @@ public class TowerEditor extends PropertyEditor{
             }
         });
 
-        empty = new Text("No towers yet...");
+        empty = new Text("No " + tabName.toLowerCase() + " yet...");
         //myResources.getString("NoTowersCreated"));
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
@@ -127,8 +117,8 @@ public class TowerEditor extends PropertyEditor{
         currentRow.setAlignment(Pos.TOP_CENTER);
         currentRow.setMaxHeight(100);
 
-        myContent.getChildren().addAll(background, towersDisplay, empty);
-        StackPane.setAlignment(towersDisplay, Pos.TOP_CENTER);
+        myContent.getChildren().addAll(background, spriteDisplay, empty);
+        StackPane.setAlignment(spriteDisplay, Pos.TOP_CENTER);
         visuals.getChildren().add(myContent);
         return visuals;
     }
@@ -140,11 +130,11 @@ public class TowerEditor extends PropertyEditor{
         fixButtonDimensions(edit);
         edit.setTranslateX(-10);
 
-        Button add = new Button("Add Tower");
+        Button add = new Button("Add " + tabName);
         add.setTranslateX(-10);
         fixButtonDimensions(add);
         add.setOnMousePressed((e) -> {
-            promptNewTowerName();
+            promptSpriteCreation();
         });
 
         edit.setOnAction((e) -> {
@@ -160,14 +150,14 @@ public class TowerEditor extends PropertyEditor{
         return editControls;
     }
 
-    private void promptNewTowerName(){
+    private void promptSpriteCreation(){
         StackPane promptDisplay = new StackPane();
         Rectangle promptBackground = new Rectangle(300, 400);
         promptBackground.setOpacity(0.8);
 
         VBox promptContent = new VBox(20);
         promptContent.setAlignment(Pos.CENTER);
-        Text prompt = new Text("Creating a new tower...");
+        Text prompt = new Text("Creating a new " + tabName.toLowerCase().substring(0, tabName.length()-1) + "...");
         prompt.setFill(Color.WHITE);
         TextField promptField = new TextField();
         promptField.setMaxWidth(225);
@@ -182,7 +172,7 @@ public class TowerEditor extends PropertyEditor{
         HBox buttons = new HBox(10);
         Button create = new Button("Create");
         create.setOnAction((e) -> {
-            addTower(promptField.getText(), imgSelector.getSelectedImageFile(), currentRow);
+            addSprite(promptField.getText(), imgSelector.getSelectedImageFile(), currentRow);
             hideEditScreen(promptDisplay);
         });
 
@@ -199,36 +189,36 @@ public class TowerEditor extends PropertyEditor{
         showEditScreen(promptDisplay);
     }
 
-    private void addTower(String name, String imageFile, HBox row){
-        TowerView tower = new TowerView(name, imageFile);
-        tower.initiateEditableState();
-        setupTowerAction(tower);
-        BooleanProperty towerExists = new SimpleBooleanProperty(true);
-        towerExists.bind(tower.isExisting());
-        towerExists.addListener((obs, oldValue, newValue) -> {
+    private void addSprite(String name, String imageFile, HBox row){
+        SpriteView sprite = new TowerView(name, imageFile);
+        sprite.initiateEditableState();
+        setupSpriteAction(sprite);
+        BooleanProperty spriteExists = new SimpleBooleanProperty(true);
+        spriteExists.bind(sprite.isExisting());
+        spriteExists.addListener((obs, oldValue, newValue) -> {
             if(!newValue){
                 PauseTransition wait = new PauseTransition(Duration.millis(200));
-                wait.setOnFinished((e) -> row.getChildren().remove(tower));
+                wait.setOnFinished((e) -> row.getChildren().remove(sprite));
                 wait.play();
-                towersCreated.remove(tower);
-                numTowers.setValue(towersCreated.size());
+                spritesCreated.remove(sprite);
+                numSprites.setValue(spritesCreated.size());
             }
         });
 
-        row.getChildren().add(tower);
-        towersCreated.add(tower);
-        numTowers.setValue(towersCreated.size());
+        row.getChildren().add(sprite);
+        spritesCreated.add(sprite);
+        numSprites.setValue(spritesCreated.size());
     }
 
-    private void setupTowerAction(TowerView tower){
-        tower.setOnMousePressed((e) -> {
-            if(tower.isExisting().getValue() && editing)
-                showEditScreen(tower.getEditorOverlay());
+    private void setupSpriteAction(SpriteView sprite){
+        sprite.setOnMousePressed((e) -> {
+            if(sprite.isExisting().getValue() && editing)
+                showEditScreen(sprite.getEditorOverlay());
         });
-        tower.getCloseButton().setOnAction((e) -> {
-            hideEditScreen(tower.getEditorOverlay());
-            tower.discardUnsavedChanges();
-            tower.setupTooltipText(tower.getTowerInfo());
+        sprite.getCloseButton().setOnAction((e) -> {
+            hideEditScreen(sprite.getEditorOverlay());
+            sprite.discardUnsavedChanges();
+            sprite.setupTooltipText(sprite.getSpriteInfo());
         });
     }
     
@@ -266,8 +256,8 @@ public class TowerEditor extends PropertyEditor{
         TranslateTransition move = transitionButton(add, -10, 90);
         move.setOnFinished(e -> editControls.getChildren().remove(0));
         edit.setText("Edit");
-        for(TowerView tower: towersCreated){
-            tower.exitEditableState();
+        for(Node sprite: spritesCreated){
+            ((SpriteView) sprite).exitEditableState();
         }
     }
 
@@ -275,8 +265,8 @@ public class TowerEditor extends PropertyEditor{
         editControls.getChildren().add(0, add);
         transitionButton(add, 90, -10);
         edit.setText("Done");
-        for(TowerView tower: towersCreated){
-            tower.initiateEditableState();
+        for(Node sprite: spritesCreated){
+            ((SpriteView) sprite).initiateEditableState();
         }
     }
     
@@ -298,7 +288,7 @@ public class TowerEditor extends PropertyEditor{
     @Override
     public List<Node> getObjects() {
         // TODO Auto-generated method stub
-        return null;
+        return spritesCreated;
     }
 
     @Override
