@@ -107,7 +107,8 @@ public class WaveEditor extends MainEditor {
 		ScrollPane newWave = new ScrollPane();
 		newWave.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 		newWave.setVbarPolicy(ScrollBarPolicy.NEVER);
-		newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth());
+		//newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth());
+		newWave.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth());
 
 		HBox waveContent = new HBox(PADDING_SIZE);
 

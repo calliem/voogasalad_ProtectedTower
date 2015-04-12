@@ -76,6 +76,7 @@ public class FlowView extends HBox {
 		//IntegerSetting timeInput = new IntegerSetting("Time delay", "0.5");
 		arrow.getChildren().add(timeInput);
 		arrow.getChildren().add(arrowImage);
+		arrow.setAlignment(Pos.CENTER);
 		this.getChildren().add(arrow);
 		this.setPrefHeight(myHeight);
 	}
