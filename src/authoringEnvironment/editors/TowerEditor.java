@@ -22,7 +22,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.objects.TowerView;
 
 /**
@@ -42,8 +42,8 @@ public class TowerEditor extends PropertyEditor{
     private IntegerProperty numTowers;
     private List<String> myTags;
 
-    private static final double CONTENT_WIDTH = MainEnvironment.getEnvironmentWidth();
-    private static final double CONTENT_HEIGHT = 0.89 * MainEnvironment.getEnvironmentHeight();
+    private static final double CONTENT_WIDTH = AuthoringEnvironment.getEnvironmentWidth();
+    private static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment.getEnvironmentHeight();
 
     private static final int ROW_SIZE = 7;
 

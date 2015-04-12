@@ -2,7 +2,7 @@
 package authoringEnvironment.editors;
 
 import authoringEnvironment.Controller;
-import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.TileMap;
 import javafx.geometry.Dimension2D;
@@ -67,7 +67,7 @@ public abstract class MainEditor extends Editor {
 		row0.setPercentHeight(MAP_HEIGHT_PERCENT); 
 		pane.getRowConstraints().add(row0);
 		ColumnConstraints col0 = new ColumnConstraints();
-		col0.setPrefWidth(MainEnvironment.getEnvironmentWidth() * MAP_WIDTH_MULTIPLIER);
+		col0.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth() * MAP_WIDTH_MULTIPLIER);
 		ColumnConstraints col1 = new ColumnConstraints();
 		//col1.setPrefWidth((MainEnvironment.getEnvironmentWidth() * SIDEBAR_WIDTH_MULTIPLIER); TODO: add this back
 		pane.getColumnConstraints().add(col0);
