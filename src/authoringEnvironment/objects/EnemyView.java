@@ -1,8 +1,8 @@
 package authoringEnvironment.objects;
 
-public class ProjectileView extends SpriteView {
+public class EnemyView extends SpriteView {
 
-    public ProjectileView (String name, String imageFile) {
+    public EnemyView (String name, String imageFile) {
         super(name, imageFile);
         // TODO Auto-generated constructor stub
     }

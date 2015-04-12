@@ -56,7 +56,7 @@ public class WaveEditor extends MainEditor {
 		Button makeNewWave = new Button("Create New Wave");
 		makeNewWave.setOnAction(e -> {
 			promptNewWaveName(editor, contents);
-			});
+		});
 
 		newWavePanel.getChildren().add(makeNewWave);
 		contents.getChildren().add(newWavePanel);
@@ -68,7 +68,7 @@ public class WaveEditor extends MainEditor {
 	}
 
 	private void promptNewWaveName(StackPane editor, VBox contents) {
-		//TODO remove duplicated from Kevin lol
+		// TODO remove duplicated from Kevin lol
 		StackPane promptDisplay = new StackPane();
 		Rectangle promptBackground = new Rectangle(300, 400);
 		promptBackground.setOpacity(0.8);
@@ -107,7 +107,7 @@ public class WaveEditor extends MainEditor {
 		ScrollPane newWave = new ScrollPane();
 		newWave.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 		newWave.setVbarPolicy(ScrollBarPolicy.NEVER);
-		//newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth());
+		// newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth());
 		newWave.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth());
 
 		HBox waveContent = new HBox(PADDING_SIZE);

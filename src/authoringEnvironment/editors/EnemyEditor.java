@@ -15,23 +15,23 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import authoringEnvironment.Controller;
-import authoringEnvironment.objects.UnitView;
+import authoringEnvironment.objects.EnemyView;
 
-public class UnitEditor extends PropertyEditor {
-    public UnitEditor(Controller c, String name) {
+public class EnemyEditor extends PropertyEditor {
+    public EnemyEditor(Controller c, String name) {
         super(c, name);
         // TODO Auto-generated constructor stub
     }
 
-    public ArrayList<UnitView> getUnits(){
+    public ArrayList<EnemyView> getUnits(){
         return null;
     }
 
-    @Override
-    protected Group configureUI() {
-        // TODO Auto-generated method stub
-        return new Group();
-    }
+//    @Override
+//    protected Group configureUI() {
+//        // TODO Auto-generated method stub
+//        return new Group();
+//    }
 
 
 }
