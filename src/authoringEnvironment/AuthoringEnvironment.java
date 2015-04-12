@@ -28,7 +28,7 @@ import authoringEnvironment.editors.Editor;
 /**
  * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed. When switching tabs, each tab's editor is automatically updated to the controller
  * @author Callie Mao
- * @author Johnny Kumpf, populateTabBar() methods
+ * @author Johnny Kumpf
  * @author Kevin He
  */
 
