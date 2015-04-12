@@ -34,8 +34,7 @@ import authoringEnvironment.objects.UnitView;
 public class WaveEditor extends MainEditor {
     private Map<String, ArrayList<FlowView>> myWaves;
     private final String WAVE = "Wave";
-    private Controller myController;
-
+    
     public WaveEditor(Controller c, String name) {
         super(c, name);
         myWaves = new HashMap<String, ArrayList<FlowView>>();
@@ -139,7 +138,7 @@ public class WaveEditor extends MainEditor {
             data.add(partFileNames);
             data.add(times);
             //TODO fix this before merging with master
-            myController.addPartToGame(WAVE, waveName,
+           addPartToGame(WAVE, waveName,
                                        ProjectReader.getParamsNoTypeOrName(WAVE), data);
         });
 
