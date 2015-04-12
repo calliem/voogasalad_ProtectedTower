@@ -8,6 +8,10 @@
     <int>500</int>
   </entry>
   <entry>
+    <string>PartKey</string>
+    <string>TestingManagerGame_MyFirstTower.Tower</string>
+  </entry>
+  <entry>
     <string>Range</string>
     <double>1.5</double>
   </entry>

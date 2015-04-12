@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import authoringEnvironment.GameManager;
-import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.SpriteSetting;
 import imageselectorTEMP.util.ScaleImage;
 import javafx.geometry.Pos;
@@ -32,7 +31,7 @@ import javafx.stage.FileChooser;
 public class FlowView extends HBox {
 	private TextField delayTextField;
 	private FileChooser fileChooser;
-	private int myWidth;
+	//private int myWidth;
 	private int myHeight;
 	private final static String WAVE = "Wave";
 	private final static String UNIT = "Unit";
@@ -41,7 +40,7 @@ public class FlowView extends HBox {
 
 	public FlowView(int width, int height) {
 		super(10);
-		myWidth = width;
+		//myWidth = width;
 		myHeight = height;
 		fileChooser = new FileChooser();
 		partFileNames = new ArrayList<String>();
@@ -100,8 +99,12 @@ public class FlowView extends HBox {
 		insertElement(waveNameDisplay);
 
 		Map<String, Object> lists = GameManager.loadPartFromFileName(WAVE, file.getName());
-		delays = (List<Double>) lists.get("Times");
-		partFileNames = (List<String>) lists.get("Enemies");
+		try {
+			delays = (List<Double>) lists.get("Times");
+			partFileNames = (List<String>) lists.get("Enemies");
+		} catch(Exception e) {
+			
+		}
 	}
 
 	private void insertElement(Node node) {

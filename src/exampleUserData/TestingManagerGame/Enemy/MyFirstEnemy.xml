@@ -1,7 +1,7 @@
 <map>
   <entry>
     <string>PartType</string>
-    <string>Unit</string>
+    <string>Enemy</string>
   </entry>
   <entry>
     <string>Speed</string>
@@ -10,6 +10,10 @@
   <entry>
     <string>HP</string>
     <int>100</int>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>TestingManagerGame_MyFirstEnemy.Enemy</string>
   </entry>
   <entry>
     <string>Damage</string>

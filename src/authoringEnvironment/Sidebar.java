@@ -27,9 +27,9 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 	private List<Node> myMaps; //can't seem to use list with this
 	private MapWorkspace myMapWorkspace; //TODO: or use more general StackPane?
 	
-	private static final double PADDING = MainEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead
-	private static final double LISTVIEW_HEIGHT = MainEnvironment.getEnvironmentHeight()/6;
-	private static final double TITLE_FONT_SIZE = MainEnvironment.getEnvironmentWidth()/85;
+	private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead
+	private static final double LISTVIEW_HEIGHT = AuthoringEnvironment.getEnvironmentHeight()/6;
+	private static final double TITLE_FONT_SIZE = AuthoringEnvironment.getEnvironmentWidth()/85;
 
 
 	public Sidebar(ResourceBundle resources, List<Node> maps, MapWorkspace mapWorkspace){

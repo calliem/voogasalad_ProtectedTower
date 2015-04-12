@@ -2,23 +2,23 @@ package authoringEnvironment.editors;
 
 import java.util.List;
 
-import javafx.collections.ObservableList;
-import javafx.geometry.Dimension2D;
+import authoringEnvironment.Controller;
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.stage.Stage;
 
 public class ItemEditor extends PropertyEditor{
 	
 	private List<Node> myItems;
 
-	public ItemEditor (){
-		super();
+	public ItemEditor (Controller c, String name){
+		super(c, name);
 	}
 	
 
 	@Override
-	protected void configureUI() {
+	protected Group configureUI() {
 		// TODO Auto-generated method stub
+	    return new Group();
 	}
 
 	@Override
@@ -28,10 +28,5 @@ public class ItemEditor extends PropertyEditor{
 		
 	}
 
-	@Override
-	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
-		return myItems;
-	}
 	
 }
