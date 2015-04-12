@@ -35,9 +35,4 @@ public class ProjectileEditor extends PropertyEditor {
 
     }
 
-    @Override
-    public List<Node> getObjects() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

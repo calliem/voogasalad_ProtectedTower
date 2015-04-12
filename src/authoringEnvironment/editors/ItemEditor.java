@@ -28,10 +28,5 @@ public class ItemEditor extends PropertyEditor{
 		
 	}
 
-	@Override
-	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
-		return myItems;
-	}
 	
 }

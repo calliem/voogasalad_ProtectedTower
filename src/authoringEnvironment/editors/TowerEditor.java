@@ -284,12 +284,12 @@ public class TowerEditor extends PropertyEditor{
         button.setMinWidth(100);
         button.setMaxWidth(100);
     }
-    
-    @Override
-    public List<Node> getObjects() {
-        // TODO Auto-generated method stub
-        return spritesCreated;
-    }
+//    
+//    @Override
+//    public List<Node> getObjects() {
+//        // TODO Auto-generated method stub
+//        return spritesCreated;
+//    }
 
     @Override
     public  void update() {

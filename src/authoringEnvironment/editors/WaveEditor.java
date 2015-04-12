@@ -163,15 +163,4 @@ public class WaveEditor extends MainEditor {
         return new ArrayList<>();
     }
 
-    @Override
-    public void update() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public List<Node> getObjects() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }
