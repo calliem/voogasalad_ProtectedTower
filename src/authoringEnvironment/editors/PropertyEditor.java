@@ -3,12 +3,17 @@
 package authoringEnvironment.editors;
 
 import imageselectorTEMP.ImageSelector;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+
 import util.reflection.Reflection;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.objects.ProjectileView;
 import authoringEnvironment.objects.SpriteView;
+import authoringEnvironment.objects.TowerView;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -191,25 +196,43 @@ public abstract class PropertyEditor extends Editor {
     }
 
     private void addSprite(String name, String imageFile, HBox row){
-        SpriteView sprite = (SpriteView) Reflection.createInstance("authoringEnvironment.objects."+tabName.substring(0, tabName.length()-1)+"View", name, imageFile);
+    	String className = "authoringEnvironment.objects." + tabName.substring(0, tabName.length() - 1) + "View";
+    	SpriteView sprite = generateSpriteView(name, imageFile, className);
         sprite.initiateEditableState();
         setupSpriteAction(sprite);
         BooleanProperty spriteExists = new SimpleBooleanProperty(true);
         spriteExists.bind(sprite.isExisting());
         spriteExists.addListener((obs, oldValue, newValue) -> {
-            if(!newValue){
-                PauseTransition wait = new PauseTransition(Duration.millis(200));
-                wait.setOnFinished((e) -> row.getChildren().remove(sprite));
-                wait.play();
-                spritesCreated.remove(sprite);
-                numSprites.setValue(spritesCreated.size());
-            }
+            idk(row, sprite, newValue);
         });
 
         row.getChildren().add(sprite);
         spritesCreated.add(sprite);
         numSprites.setValue(spritesCreated.size());
     }
+
+    private SpriteView generateSpriteView(String name, String imageFile, String className){
+    	SpriteView sprite = null;
+    	try {
+			sprite = (SpriteView) Class.forName(className).getConstructor(String.class, String.class).newInstance(name, imageFile);
+    	} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException
+				| ClassNotFoundException e1) {
+			System.err.println("Class: " + className + "\nCouldn't be created with constructor (String, String)");
+			e1.printStackTrace();
+		}
+    	return sprite;
+    }
+	private void idk(HBox row, SpriteView sprite, Boolean newValue) {
+		if(!newValue){
+		    PauseTransition wait = new PauseTransition(Duration.millis(200));
+		    wait.setOnFinished((e) -> row.getChildren().remove(sprite));
+		    wait.play();
+		    spritesCreated.remove(sprite);
+		    numSprites.setValue(spritesCreated.size());
+		}
+	}
 
     private void setupSpriteAction(SpriteView sprite){
         sprite.setOnMousePressed((e) -> {

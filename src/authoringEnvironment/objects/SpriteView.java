@@ -104,10 +104,12 @@ public abstract class SpriteView extends StackPane {
         settingsObjects.setMaxWidth(150);
         
         List<Setting> settings = ProjectReader.generateSettingsList(getSpriteType());
+        System.out.println("setting gen done");
         for(Setting s : settings){
             parameterFields.add(s);
             settingsObjects.getChildren().add(s);
         }
+        System.out.println("params created");
         
         if(spriteName.length() >= 1){
             parameterFields.get(NAME_INDEX).setParameterValue(spriteName);
@@ -130,6 +132,7 @@ public abstract class SpriteView extends StackPane {
         buttons.getChildren().addAll(save, overlayCloseButton);
         
         editableContent.getChildren().addAll(overlaySpriteNameDisplay, spriteImage, overlayErrorMessage, settingsObjects, buttons, saved);
+   System.out.println("ENd of that method");
     }
     
     private void saveParameterFields(boolean save){

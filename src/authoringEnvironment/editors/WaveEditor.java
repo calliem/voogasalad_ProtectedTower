@@ -21,7 +21,7 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
-import authoringEnvironment.objects.UnitView;
+import authoringEnvironment.objects.EnemyView;
 
 /**
  * Creates the Wave Editor that allows the user to create and edit waves made
@@ -158,7 +158,7 @@ public class WaveEditor extends MainEditor {
         myWaves.get(waveName).add(unit);
     }
 
-    public ArrayList<UnitView> getWaves() {
+    public ArrayList<EnemyView> getWaves() {
         return new ArrayList<>();
     }
 
