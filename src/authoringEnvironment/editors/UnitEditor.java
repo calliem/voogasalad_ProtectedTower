@@ -28,15 +28,15 @@ public class UnitEditor extends PropertyEditor {
     }
 
     @Override
-    protected void configureUI() {
+    protected Group configureUI() {
         // TODO Auto-generated method stub
-     
+        return new Group();
     }
 
-	@Override
-	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<Node> getObjects() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

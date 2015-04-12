@@ -11,6 +11,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -69,9 +70,9 @@ public class TowerEditor extends PropertyEditor{
      * Sets up the editor UI.
      */
     @Override
-    protected void configureUI () {
+    protected Group configureUI () {
         // TODO Auto-generated method stub
-
+        Group visuals = new Group();
         myContent = new StackPane();
         towersCreated = new ArrayList<>();
 
@@ -125,7 +126,8 @@ public class TowerEditor extends PropertyEditor{
 
         myContent.getChildren().addAll(background, towersDisplay, empty);
         StackPane.setAlignment(towersDisplay, Pos.TOP_CENTER);
-        getChildren().add(myContent);
+        visuals.getChildren().add(myContent);
+        return visuals;
     }
 
     private HBox setupEditControls () {

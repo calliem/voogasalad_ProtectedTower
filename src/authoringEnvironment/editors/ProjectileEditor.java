@@ -22,19 +22,20 @@ public class ProjectileEditor extends PropertyEditor {
     }
 
     @Override
-    public void configureUI() {
+    public Group configureUI() {
         // TODO Auto-generated method stub
+        return new Group();
     }
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void update() {
+        // TODO Auto-generated method stub
 
-	@Override
-	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    }
+
+    @Override
+    public List<Node> getObjects() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

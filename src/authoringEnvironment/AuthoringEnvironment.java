@@ -112,13 +112,12 @@ public class AuthoringEnvironment {
         }
     }
 
-    protected void addTab(Editor newEditor, String tabName, boolean main) {
+    protected void addTab(String tabName) {
         Tab tab = new Tab();
         tab.setText(tabName);
         tab.setContent(newEditor);
         if (main){
             tab.setStyle("-fx-base: #3c3c3c;");
-            System.out.println(tabName + "main = true, property set");
         }
         tab.setClosable(false);
         myTabPane.getTabs().add(tab); 

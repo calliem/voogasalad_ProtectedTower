@@ -77,10 +77,11 @@ public class GameController {
 
         // Get list of parameters maps for all objects
         // TODO change to collection or set
-        List<Map<String, Object>> allDataObjects = GameCreator.loadGame(filepath);
+        Map<String, Map<String, Object>> allDataObjects = InstanceManager.loadGameData(filepath);
 
         // Organize parameters maps
-        for (Map<String, Object> obj : allDataObjects) {
+        for (String key : allDataObjects.keySet()) {
+            Map<String, Object> obj = allDataObjects.get(key);
             String partType = (String) obj.get(InstanceManager.partTypeKey);
             // String packageLocation = myPartTypeToPackage.get(partType);
             // Sprite currentObject = (Sprite) Reflection.createInstance(packageLocation);

@@ -1,11 +1,8 @@
 package authoringEnvironment.editors;
 
 import java.util.List;
-
-import javafx.collections.ObservableList;
-import javafx.geometry.Dimension2D;
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.stage.Stage;
 
 public class ItemEditor extends PropertyEditor{
 	
@@ -17,8 +14,9 @@ public class ItemEditor extends PropertyEditor{
 	
 
 	@Override
-	protected void configureUI() {
+	protected Group configureUI() {
 		// TODO Auto-generated method stub
+	    return new Group();
 	}
 
 	@Override
