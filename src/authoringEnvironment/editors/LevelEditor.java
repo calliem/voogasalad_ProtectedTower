@@ -43,22 +43,17 @@ public class LevelEditor extends MainEditor{
 	  //  myLevels = new ArrayList<Node>();
 	}
 
-	@Override
-	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
-		return myLevels;
-	}
 
 	
 	
-	
+	/*
 	@Override
 	public void update() {
-	/*	System.out.println("level editor updated");		// TODO Auto-generated method stub		
+		System.out.println("level editor updated");		// TODO Auto-generated method stub		
 		MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps");  //TODO: find a way to get sthe same resource file but to also use myResources.getString() on the proper resource file //how to avoid this issue of more dependencies on this string name. lots of code will have to change in order to change this; maybe use indexes instead?
-    	getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());*/
+    	getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());
 		super.update();
 		getMapWorkspace().getActiveMap().removeTileListeners();
 		mySidebar.update();
-	}
+	}*/
 }

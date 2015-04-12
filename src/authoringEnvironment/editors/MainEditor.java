@@ -79,11 +79,11 @@ public abstract class MainEditor extends Editor {
     protected GridPane getPane() {
         return myPane;
     }
-
+/*
     public void update(){
         MapEditor mapEditor = (MapEditor) Controller.getEditor(Controller.MAPS);  
         if(!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap())){
             getMapWorkspace().updateWithNewMap(mapEditor.getActiveMap());
         }
-    }
+    }*/
 }

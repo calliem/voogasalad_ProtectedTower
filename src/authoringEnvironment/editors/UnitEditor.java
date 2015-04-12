@@ -33,10 +33,5 @@ public class UnitEditor extends PropertyEditor {
         return new Group();
     }
 
-    @Override
-    public List<Node> getObjects() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 }
