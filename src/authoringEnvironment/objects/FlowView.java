@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoringEnvironment.setting.IntegerSetting;
 import authoringEnvironment.setting.SpriteSetting;
 import imageselectorTEMP.util.ScaleImage;
 import javafx.geometry.Pos;
@@ -27,11 +28,6 @@ import javafx.stage.FileChooser;
  */
 
 public class FlowView extends HBox {
-	// private String partFileName;
-	// private Double delay;
-	//private TextField partSelector;
-	private SpriteSetting unitSelector;
-	private SpriteSetting waveSelector;
 	private TextField delayTextField;
 	private FileChooser fileChooser;
 	private int myWidth;
@@ -50,11 +46,6 @@ public class FlowView extends HBox {
 		delays = new ArrayList<Double>();
 		
 		VBox partSelector = new VBox(10);
-		//partSelector.setMaxHeight(myHeight);
-//		unitSelector = new SpriteSetting(UNIT, UNIT);
-//		waveSelector = new SpriteSetting(WAVE, WAVE);
-//		partSelector.getChildren().add(unitSelector);
-//		partSelector.getChildren().add(waveSelector);
 		
 		Button selectUnitButton = new Button("Select Unit");
 		Button selectWaveButton = new Button("Select Wave");
@@ -82,6 +73,7 @@ public class FlowView extends HBox {
 		timeInput.getChildren().add(delayTextField);
 		timeInput.getChildren().add(new Text("s"));
 		timeInput.setAlignment(Pos.CENTER);
+		//IntegerSetting timeInput = new IntegerSetting("Time delay", "0.5");
 		arrow.getChildren().add(timeInput);
 		arrow.getChildren().add(arrowImage);
 		this.getChildren().add(arrow);
@@ -96,6 +88,7 @@ public class FlowView extends HBox {
 		List<String> fileNames = new ArrayList<String>();
 		try {
 			unitDelay.add(Double.parseDouble(delayTextField.getText()));
+			delays = unitDelay;
 		} catch (NumberFormatException e) {
 			
 		}
