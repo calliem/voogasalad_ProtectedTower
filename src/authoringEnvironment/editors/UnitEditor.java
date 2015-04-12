@@ -27,11 +27,11 @@ public class UnitEditor extends PropertyEditor {
         return null;
     }
 
-    @Override
-    protected Group configureUI() {
-        // TODO Auto-generated method stub
-        return new Group();
-    }
+//    @Override
+//    protected Group configureUI() {
+//        // TODO Auto-generated method stub
+//        return new Group();
+//    }
 
 
 }
