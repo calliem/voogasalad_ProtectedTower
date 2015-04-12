@@ -151,7 +151,7 @@ public class TowerView extends SpriteView{
         
         if(correctFormat && save){
             //TODO: UPDATE THIS
-//            GameCreator.addPartToGame("Tower", parameterFields);
+           // addPartToGame("Tower", parameterFields);
             displaySavedMessage();
         }
     }
