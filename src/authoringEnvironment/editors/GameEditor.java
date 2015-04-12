@@ -1,6 +1,8 @@
 package authoringEnvironment.editors;
 
 import java.util.List;
+
+import authoringEnvironment.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -11,8 +13,8 @@ import javafx.scene.text.Text;
 
 public class GameEditor extends Editor{
 
-    public GameEditor() {
-        super();
+    public GameEditor(Controller controller, String name) {
+        super(controller, name);
     }
 
     @Override

@@ -36,8 +36,8 @@ public class WaveEditor extends MainEditor {
     private final String WAVE = "Wave";
     private Controller myController;
 
-    public WaveEditor() {
-        super();
+    public WaveEditor(Controller c, String name) {
+        super(c, name);
         myWaves = new HashMap<String, ArrayList<FlowView>>();
     }
 

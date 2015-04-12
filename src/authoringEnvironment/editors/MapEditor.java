@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import authoringEnvironment.Controller;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.objects.TileMap;
@@ -33,8 +34,8 @@ public class MapEditor extends MainEditor {
 
 	
 	//TODO: remove the dimensions parameter because we apparently can ust get that form the main enviornment?
-    public MapEditor() {
-        super();
+    public MapEditor(Controller c, String name) {
+        super(c, name);
         myMaps = FXCollections.observableArrayList(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
         myMaps.add(getMapWorkspace().getActiveMap());
         mySidebar = new MapSidebar(myResources, myMaps, getMapWorkspace()); //now don't need to pass in so much stuff

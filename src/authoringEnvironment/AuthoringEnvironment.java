@@ -2,7 +2,9 @@
 
 package authoringEnvironment;
 
+import java.util.List;
 import java.util.ResourceBundle;
+
 import protectedtower.Main;
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
@@ -39,9 +41,11 @@ public class AuthoringEnvironment {
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
     private Tab myCurrentTab;
+    private Controller myController;
     
     public AuthoringEnvironment(Stage s){
         myStage = s;
+        myController = new Controller();
     }
 
     public Scene initScene(Dimension2D dimensions) {
@@ -50,9 +54,6 @@ public class AuthoringEnvironment {
         myGridPane = new GridPane();
         myGridPane.setGridLinesVisible(true);
         createEnvironment(myGridPane);
-
-        createTabs();
-
         myScene = new Scene(myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
         return myScene;
     }
@@ -80,10 +81,11 @@ public class AuthoringEnvironment {
         grid.getRowConstraints().add(row0);
         grid.getRowConstraints().add(row1);
         grid.getColumnConstraints().add(col0);
-
         grid.add(configureTopMenu(),0,0);
         myTabPane = new TabPane();
-
+        List<Editor> editorsToAdd =	ProjectReader.getOrderedEditorsList(myController);
+        for(Editor e : editorsToAdd)
+        	myTabPane.getTabs().add(e);
         grid.add(myTabPane,0,1);
     }
 
@@ -91,16 +93,7 @@ public class AuthoringEnvironment {
     /**
      * Populates the tab bar with 1 tab for every non-abstract class in editors package
      */
-    private void createTabs(){
-        ProjectReader.populateTabBar(this, myDimensions, myResources, myStage);
-
-        //Tab selectedTab = myTabPane.getSelectionModel().getSelectedItem();
-        for (Tab tab : myTabPane.getTabs()){
-            tab.setOnSelectionChanged(e -> update(tab)); //is this updating the old tab?
-        }
-        myCurrentTab = myTabPane.getSelectionModel().getSelectedItem();
-    }
-
+    /*
     private void update(Tab selectedTab){
         if (myCurrentTab != selectedTab){
             Editor editor = (Editor) myCurrentTab.getContent();
@@ -122,7 +115,7 @@ public class AuthoringEnvironment {
         tab.setClosable(false);
         myTabPane.getTabs().add(tab); 
     }
-
+*/
     private MenuBar configureTopMenu() {
         Menu file = configureFileMenu();
         MenuBar menuBar = new MenuBar();

@@ -32,8 +32,8 @@ public abstract class MainEditor extends Editor {
     public static final double MAP_HEIGHT_PERCENT = 100; //THIS IS REPLICATED WITH THOSE VARIABLES IN MAP WORKSPACE
 
 
-    public MainEditor() {
-        super();
+    public MainEditor(Controller c, String name) {
+        super(c, name);
         this.setStyle("-fx-base: #3c3c3c;");
     }
 

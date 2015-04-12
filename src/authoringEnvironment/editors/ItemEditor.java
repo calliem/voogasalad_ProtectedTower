@@ -1,6 +1,8 @@
 package authoringEnvironment.editors;
 
 import java.util.List;
+
+import authoringEnvironment.Controller;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
@@ -8,8 +10,8 @@ public class ItemEditor extends PropertyEditor{
 	
 	private List<Node> myItems;
 
-	public ItemEditor (){
-		super();
+	public ItemEditor (Controller c, String name){
+		super(c, name);
 	}
 	
 

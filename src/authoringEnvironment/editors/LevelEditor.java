@@ -36,11 +36,11 @@ public class LevelEditor extends MainEditor{
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/"; //TODO: stop duplicating this default resource package line
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "level_editor_english");
 	
-    public LevelEditor() {
-		super();
-		mySidebar = new LevelSidebar(myResources, Controller.getEditor("Maps").getObjects(), getMapWorkspace());
-		getPane().add(mySidebar,1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
-	    myLevels = new ArrayList<Node>();
+    public LevelEditor(Controller c, String name) {
+		super(c, name);
+		//mySidebar = new LevelSidebar(myResources, Controller.getEditor("Maps").getObjects(), getMapWorkspace());
+		//getPane().add(mySidebar,1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
+	  //  myLevels = new ArrayList<Node>();
 	}
 
 	@Override
