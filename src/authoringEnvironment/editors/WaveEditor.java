@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import authoringEnvironment.GameCreator;
-import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.UnitView;
@@ -50,8 +50,8 @@ public class WaveEditor extends MainEditor {
 		ScrollPane contentScrollPane = new ScrollPane();
 		contentScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 		contentScrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		contentScrollPane.setMaxHeight(MainEnvironment.getEnvironmentHeight());
-		contentScrollPane.setMaxWidth(MainEnvironment.getEnvironmentWidth());
+		contentScrollPane.setMaxHeight(AuthoringEnvironment.getEnvironmentHeight());
+		contentScrollPane.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth());
 
 		Button makeNewWave = new Button("Create New Wave");
 		makeNewWave.setOnAction(e -> {
@@ -107,7 +107,7 @@ public class WaveEditor extends MainEditor {
 		ScrollPane newWave = new ScrollPane();
 		newWave.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 		newWave.setVbarPolicy(ScrollBarPolicy.NEVER);
-		newWave.setMaxWidth(MainEnvironment.getEnvironmentWidth());
+		newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth());
 
 		HBox waveContent = new HBox(10);
 
