@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
-import authoringEnvironment.GameManager;
+import authoringEnvironment.GameCreator;
 import authoringEnvironment.InstanceManager;
 import engine.element.Game;
 
@@ -59,7 +59,7 @@ public class GameController {
     }
 
     /**
-     * Given a location of a game file, the {@link GameManager#loadGame(String)} method if called,
+     * Given a location of a game file, the {@link GameCreator#loadGame(String)} method if called,
      * which generates a map of objects names to the parameters which those objects should contain.
      * Those objects are then instantiated and their parameter lists are set.
      * 
@@ -77,7 +77,7 @@ public class GameController {
 
         // Get list of parameters maps for all objects
         // TODO change to collection or set
-        List<Map<String, Object>> allDataObjects = GameManager.loadGame(filepath);
+        List<Map<String, Object>> allDataObjects = GameCreator.loadGame(filepath);
 
         // Organize parameters maps
         for (Map<String, Object> obj : allDataObjects) {

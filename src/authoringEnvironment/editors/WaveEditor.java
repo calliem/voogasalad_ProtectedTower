@@ -1,5 +1,6 @@
 package authoringEnvironment.editors;
 
+import authoringEnvironment.Controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import authoringEnvironment.GameManager;
+import authoringEnvironment.GameCreator;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
@@ -34,6 +35,7 @@ import authoringEnvironment.objects.UnitView;
 public class WaveEditor extends MainEditor {
 	private Map<String, ArrayList<FlowView>> myWaves;
 	private final String WAVE = "Wave";
+	private Controller myController;
 
 	public WaveEditor() {
 		super();
@@ -136,8 +138,8 @@ public class WaveEditor extends MainEditor {
 			List<Object> data = new ArrayList<Object>();
 			data.add(partFileNames);
 			data.add(times);
-
-			GameManager.addPartToGame(WAVE, waveName,
+//TODO fix this before merging with master
+			myController.addPartToGame(WAVE, waveName,
 					ProjectReader.getParamsNoTypeOrName(WAVE), data);
 		});
 
