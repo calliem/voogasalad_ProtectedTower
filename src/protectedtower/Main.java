@@ -3,6 +3,7 @@ package protectedtower;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
@@ -23,13 +24,15 @@ public class Main extends Application {
     private static Scene[] scenes;
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
+    private static final String defaultSaveLocation = System.getProperty(
+			"user.dir").concat("/src/myTowerGames");
     
     @Override
     public void start(Stage stage) throws Exception {
         initScreen();
         myStage = stage;
         
-        AuthoringEnvironment myView = new AuthoringEnvironment(stage);
+        AuthoringEnvironment myView = new AuthoringEnvironment(stage, "ExampleGame", defaultSaveLocation);
         Scene authoring = myView.initScene(myDimensions);
         
         MainMenu myMainMenu = new MainMenu(stage);

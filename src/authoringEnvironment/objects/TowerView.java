@@ -21,7 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import authoringEnvironment.GameManager;
+import authoringEnvironment.GameCreator;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.Setting;
@@ -150,7 +150,8 @@ public class TowerView extends SpriteView{
         }
         
         if(correctFormat && save){
-            GameManager.addPartToGame("Tower", parameterFields);
+            //TODO: UPDATE THIS
+           // addPartToGame("Tower", parameterFields);
             displaySavedMessage();
         }
     }

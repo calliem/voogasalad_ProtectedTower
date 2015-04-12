@@ -1,8 +1,10 @@
 package authoringEnvironment.editors;
 
 import imageselectorTEMP.ImageSelector;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -11,6 +13,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -23,6 +26,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
 import authoringEnvironment.objects.TowerView;
 
 /**
@@ -53,8 +57,8 @@ public class TowerEditor extends PropertyEditor{
      * @param rb        the resource bundle containing displayed strings
      * @param s the stage on which the authoring environment is displayed
      */
-    public TowerEditor() {
-        super();
+    public TowerEditor(Controller c, String name) {
+        super(c, name);
     }
 
     /**
@@ -69,9 +73,9 @@ public class TowerEditor extends PropertyEditor{
      * Sets up the editor UI.
      */
     @Override
-    protected void configureUI () {
+    protected Group configureUI () {
         // TODO Auto-generated method stub
-
+        Group visuals = new Group();
         myContent = new StackPane();
         towersCreated = new ArrayList<>();
 
@@ -125,7 +129,8 @@ public class TowerEditor extends PropertyEditor{
 
         myContent.getChildren().addAll(background, towersDisplay, empty);
         StackPane.setAlignment(towersDisplay, Pos.TOP_CENTER);
-        getChildren().add(myContent);
+        visuals.getChildren().add(myContent);
+        return visuals;
     }
 
     private HBox setupEditControls () {
@@ -290,11 +295,6 @@ public class TowerEditor extends PropertyEditor{
         button.setMaxWidth(100);
     }
     
-    @Override
-    public List<Node> getObjects() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     @Override
     public  void update() {
