@@ -295,11 +295,6 @@ public class TowerEditor extends PropertyEditor{
         button.setMaxWidth(100);
     }
     
-    @Override
-    public List<Node> getObjects() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     @Override
     public  void update() {

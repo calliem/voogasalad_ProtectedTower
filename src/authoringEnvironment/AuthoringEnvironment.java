@@ -43,9 +43,15 @@ public class AuthoringEnvironment {
     private Tab myCurrentTab;
     private Controller myController;
     
-    public AuthoringEnvironment(Stage s){
+    public AuthoringEnvironment(Stage s, String gameName, String rootDir){
         myStage = s;
-        myController = new Controller();
+        InstanceManager myGame = GameCreator.createNewGame(gameName, rootDir);
+        myController = new Controller(myGame);
+    }
+    
+    public AuthoringEnvironment(Stage s, InstanceManager loadedGame){
+    	myStage = s;
+    	myController = new Controller(loadedGame);
     }
 
     public Scene initScene(Dimension2D dimensions) {
@@ -84,8 +90,10 @@ public class AuthoringEnvironment {
         grid.add(configureTopMenu(),0,0);
         myTabPane = new TabPane();
         List<Editor> editorsToAdd =	ProjectReader.getOrderedEditorsList(myController);
-        for(Editor e : editorsToAdd)
+        for(Editor e : editorsToAdd){
+        	myController.addEditor(e);
         	myTabPane.getTabs().add(e);
+        }
         grid.add(myTabPane,0,1);
     }
 

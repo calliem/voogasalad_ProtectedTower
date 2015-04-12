@@ -25,10 +25,5 @@ public class TileEditor extends PropertyEditor{
 
     }
 
-    @Override
-    public List<Node> getObjects() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 }

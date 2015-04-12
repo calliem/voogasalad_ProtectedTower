@@ -42,16 +42,12 @@ public class MapEditor extends MainEditor {
         getPane().add(mySidebar,1,0); 
     }
 
-	@Override
-	public List<Node> getObjects() {
-		return myMaps;
-	}
-
+/*
 	@Override
 	public void update() {
 		super.update();
 		getMapWorkspace().getActiveMap().attachTileListeners();
-	}
+	}*/
 /*	@Override
 	public void update() {
 		System.out.println("updated mapeditor!");	
