@@ -154,7 +154,7 @@ public class WaveEditor extends MainEditor {
 		List<Object> data = new ArrayList<Object>();
 		data.add(partFileNames);
 		data.add(times);
-		addPartToGame(WAVE, waveName,
+		myController.addPartToGame(WAVE, waveName,
 				ProjectReader.getParamsNoTypeOrName(WAVE), data);
 	}
 

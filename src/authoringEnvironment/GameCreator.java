@@ -26,6 +26,7 @@ public class GameCreator {
 	public static final ResourceBundle paramLists = ResourceBundle
 			.getBundle(paramListFile);
 	private static final String partFileName = "GameParts.xml";
+	private static final String gameExtension = ".gamefile";
 
 	//private static InstanceManager currentGame = new InstanceManager();
 
@@ -46,7 +47,7 @@ public class GameCreator {
 		nameAndDirectory[1] = gameDirectory;
 		createGameFolders(gameName, rootDirBeforeGameName);
 		System.out.println("Game root dir: " + userDataLocation);
-		XMLWriter.toXML(nameAndDirectory, gameName + ".game", gameDirectory);
+		XMLWriter.toXML(nameAndDirectory, gameName + gameExtension, gameDirectory);
 		return new InstanceManager(gameName, gameDirectory);
 	}
 
