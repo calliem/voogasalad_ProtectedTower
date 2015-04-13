@@ -53,12 +53,19 @@ public class EnemyFactory {
         myEnemies.put(enemyID, enemyProperties);
     }
 
-    public Enemy getEnemy (String userInput) {
-        if (!myEnemies.containsKey(userInput)) { throw new InvalidParameterException(userInput +
-                                                                                     " is an undefined enemy"); }
+    /**
+     * Given a GUID, returns the enemy object with a prefilled parameters map and values that
+     * it represents
+     * 
+     * @param guid String of GUID identifying the object
+     * @return Enemy object
+     */
+    public Enemy getEnemy (String guid) {
+        if (!myEnemies.containsKey(guid)) { throw new InvalidParameterException(guid +
+                                                                                " is an undefined enemy"); }
 
         Enemy enemy = (Enemy) Reflection.createInstance(MY_CLASS_NAME);
-        enemy.setParameterMap(myEnemies.get(userInput));
+        enemy.setParameterMap(myEnemies.get(guid));
 
         return enemy;
     }

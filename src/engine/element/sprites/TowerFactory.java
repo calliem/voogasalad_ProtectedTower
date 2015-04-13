@@ -57,12 +57,19 @@ public class TowerFactory {
         myTowers.put(towerID, towerProperties);
     }
 
-    public Tower getTower (String userInput) {
-        if (!myTowers.containsKey(userInput)) { throw new InvalidParameterException(userInput +
-                                                                                    " is an undefined tower"); }
+    /**
+     * Given a GUID, returns the tower object with a tower parameters map and values that
+     * it represents
+     * 
+     * @param guid String of GUID identifying the object
+     * @return Tower object
+     */
+    public Tower getTower (String guid) {
+        if (!myTowers.containsKey(guid)) { throw new InvalidParameterException(guid +
+                                                                               " is an undefined tower"); }
 
         Tower tower = (Tower) Reflection.createInstance(MY_CLASS_NAME);
-        tower.setParameterMap(myTowers.get(userInput));
+        tower.setParameterMap(myTowers.get(guid));
 
         return tower;
     }

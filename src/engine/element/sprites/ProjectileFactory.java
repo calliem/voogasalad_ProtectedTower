@@ -56,12 +56,19 @@ public class ProjectileFactory {
         myProjectiles.put(enemyID, projectileProperties);
     }
 
-    public Projectile getProjectile (String userInput) {
-        if (!myProjectiles.containsKey(userInput)) { throw new InvalidParameterException(userInput +
-                                                                                         " is an undefined projectile"); }
+    /**
+     * Given a GUID, returns the projectile object with a prefilled parameters map and values that
+     * it represents
+     * 
+     * @param guid String of GUID identifying the object
+     * @return Projectile object
+     */
+    public Projectile getProjectile (String guid) {
+        if (!myProjectiles.containsKey(guid)) { throw new InvalidParameterException(guid +
+                                                                                    " is an undefined projectile"); }
 
         Projectile projectile = (Projectile) Reflection.createInstance(MY_CLASS_NAME);
-        projectile.setParameterMap(myProjectiles.get(userInput));
+        projectile.setParameterMap(myProjectiles.get(guid));
 
         return projectile;
     }
