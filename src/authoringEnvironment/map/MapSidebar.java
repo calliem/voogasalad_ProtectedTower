@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import authoringEnvironment.MainEnvironment;
 import authoringEnvironment.Sidebar;
+import authoringEnvironment.UpdatableDisplay;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 import javafx.beans.property.StringProperty;
@@ -89,21 +90,7 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	}
 	
 	private void displayMaps(){
-		
-		ScrollPane mapDisplay = new ScrollPane();
-		VBox container = new VBox(); 
-		
-
-		
-		for (Node map: getMaps()){
-			HBox mapInfo = new HBox();
-			mapInfo.setSpacing(10);
-			Text mapName = new Text("hi");
-			ImageView image = new ImageView();
-			mapInfo.getChildren().addAll(mapName, image);
-			container.getChildren().add(mapInfo);
-		}
-		mapDisplay.setContent(container);
+		UpdatableDisplay mapDisplay = new UpdatableDisplay(getMaps());
 		getChildren().add(mapDisplay);
 	}
 	
@@ -200,7 +187,7 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
 	
 	private void setImage(){
 		HBox selection = new HBox();
-		selection.setSpacing(PADDING); 
+		selection.setSpacing(PADDING);
 		
 	//	Text text = new Text("Select Background Image");
 		//getResources().getString("Select Background Image")
@@ -213,8 +200,7 @@ public class MapSidebar extends Sidebar { //add a gridpane later on. but a gridp
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener((obs, oldValue, newValue) -> {
         	System.out.println(newValue);
-        	myMapWorkspace.getActiveMap().setBackground(newValue); 
-        	
+        	myMapWorkspace.getActiveMap().setBackground(newValue); 	
         });
         
         getChildren().add(imgSelector);

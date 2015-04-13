@@ -51,10 +51,4 @@ public class MapEditor extends MainEditor {
 		super.update();
 		getMapWorkspace().getActiveMap().attachTileListeners();
 	}
-/*	@Override
-	public void update() {
-		System.out.println("updated mapeditor!");	
-		//getMapWorkspace().getChildren().add(myActiveMap.getMap()); //why can't just do this? isn't it bad to have to call the controller for the exact same editor? or maybe to get its new state? yeah that sounds about right
-		
-	}*/
 }

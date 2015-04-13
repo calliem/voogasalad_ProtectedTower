@@ -265,7 +265,7 @@ public class TowerEditor extends PropertyEditor{
         });
     }
 
-    private ScaleTransition scaleEditScreen(double from, double to, StackPane overlay){
+    protected ScaleTransition scaleEditScreen(double from, double to, StackPane overlay){
         ScaleTransition scale = new ScaleTransition(Duration.millis(200), overlay);
         scale.setFromX(from);
         scale.setFromY(from);
