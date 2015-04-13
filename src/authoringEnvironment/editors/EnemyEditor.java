@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.EnemyView;
 
-public class EnemyEditor extends PropertyEditor {
+public class EnemyEditor extends SpriteEditor {
     public EnemyEditor(Controller c, String name) {
         super(c, name);
         // TODO Auto-generated constructor stub

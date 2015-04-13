@@ -6,7 +6,7 @@ import authoringEnvironment.Controller;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
-public class ItemEditor extends PropertyEditor{
+public class ItemEditor extends SpriteEditor{
 	
 	private List<Node> myItems;
 
