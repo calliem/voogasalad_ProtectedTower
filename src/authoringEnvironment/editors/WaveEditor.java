@@ -34,11 +34,28 @@ public class WaveEditor extends MainEditor {
 	private Map<String, ArrayList<FlowView>> myWaves;
 	private final String WAVE = "Wave";
 
+	/**
+	 * WaveEditor constructor, calls MainEditor superclass and initializes a map
+	 * of string (wave name) to array list of FlowViews (wave information) to
+	 * store waves
+	 * 
+	 * @param c
+	 *            Instance of the controller
+	 * @param name
+	 *            Name of the tab
+	 */
+
 	public WaveEditor(Controller c, String name) {
 		super(c, name);
 		myWaves = new HashMap<String, ArrayList<FlowView>>();
 	}
 
+	/**
+	 * Overrides the configureUI() method in Editor and to be called in the
+	 * Editor superclass constructor. Sets up content for the WaveEditor tab
+	 * 
+	 * @return Group object that adds all visual elements
+	 */
 	@Override
 	public Group configureUI() {
 		Group visuals = new Group();
@@ -68,7 +85,7 @@ public class WaveEditor extends MainEditor {
 	}
 
 	private void promptNewWaveName(StackPane editor, VBox contents) {
-		// TODO remove duplicated from Kevin lol
+		// TODO remove duplicated code from Kevin lol
 		StackPane promptDisplay = new StackPane();
 		Rectangle promptBackground = new Rectangle(300, 400);
 		promptBackground.setOpacity(0.8);
@@ -113,14 +130,10 @@ public class WaveEditor extends MainEditor {
 		HBox waveContent = new HBox(PADDING_SIZE);
 
 		Button addUnit = new Button("Add Unit");
-		addUnit.setOnAction(e -> {
-			addUnitToWave(waveContent, waveName);
-		});
+		addUnit.setOnAction(e -> addUnitToWave(waveContent, waveName));
 
 		Button save = new Button("Save");
-		save.setOnAction(e -> {
-			saveWaveData(waveName);
-		});
+		save.setOnAction(e -> saveWaveData(waveName));
 
 		VBox buttons = new VBox(PADDING_SIZE);
 		buttons.getChildren().add(new Text("Wave: " + waveName));
@@ -159,11 +172,18 @@ public class WaveEditor extends MainEditor {
 	}
 
 	private void addUnitToWave(HBox wave, String waveName) {
-		FlowView unit = new FlowView(100, 100);
+		FlowView unit = new FlowView(100);
 		wave.getChildren().add(unit);
 		myWaves.get(waveName).add(unit);
 	}
 
+	/**
+	 * Gets wave information
+	 * 
+	 * @return Map of wave information, where the name of the wave is the key
+	 *         and the value is its corresponding information stored in an array
+	 *         list of FlowViews.
+	 */
 	public Map<String, ArrayList<FlowView>> getWaves() {
 		return myWaves;
 	}
