@@ -17,7 +17,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-public class ProjectileEditor extends PropertyEditor {
+public class ProjectileEditor extends SpriteEditor {
     public ProjectileEditor(Controller c, String name) {
         super(c, name);
         // TODO Auto-generated constructor stub
