@@ -25,9 +25,6 @@ import javafx.stage.Stage;
  */
 
 public abstract class Editor extends Tab {
-	// or use a ArrayList<?> getObjects() method in this superclass?
-	// TODO: have later methods get myDimensions from a closer class not
-	// mainenvironment. THey are passed as parameters for a reason.
 
 	protected String tabName;
 	private Group contentRoot;
@@ -41,13 +38,12 @@ public abstract class Editor extends Tab {
 		this.setText(tabName);
 		this.setClosable(false);
 	}
-
+	
 	protected abstract Group configureUI();
 
 	public String getName() {
 		return tabName;
 	}
-
 
 	// to be used by backend
 	public void displayError(String s) {
