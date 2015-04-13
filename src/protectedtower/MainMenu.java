@@ -9,6 +9,8 @@ import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,6 +23,25 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MainMenu {
+    private static final double BACKGROUND_OPACITY = 0.8;
+    
+    private static final double PRE_EXPAND_WIDTH = 0.01;
+    private static final int SCENE_BUTTON_WIDTH = 200;
+    private static final int SCENE_BUTTON_HEIGHT = 80;
+    private static final int GO_BUTTON_WIDTH = 100;
+    private static final int GO_BUTTON_HEIGHT = 50;
+    private static final int BORDER_WIDTH = 2;
+    
+    private static final int GALLERY_WIDTH = 600;
+    private static final int GALLERY_HEIGHT = 400;
+    
+    private static final String TITLE = "Protected Tower Game Creator";
+    private static final String AUTHORING_LABEL = "Authoring Environment";
+    private static final String AUTHORING_INFO = "Create a game!";
+    private static final String PLAYER_LABEL = "Game Player";
+    private static final String PLAYER_INFO = "Play a game!";
+    private static final String FONT = "Helvetica";
+    
     private Stage myStage;
     private Group myRoot;
     private Scene myScene;
@@ -40,9 +61,9 @@ public class MainMenu {
         StackPane splashContent = new StackPane();
 
         Rectangle background = new Rectangle(myDimensions.getWidth(), myDimensions.getHeight());
-        background.setOpacity(0.8);
+        background.setOpacity(BACKGROUND_OPACITY);
 
-        Text title = new Text("Protected Tower Game Creator");
+        Text title = new Text(TITLE);
         title.setFont(new Font(42));
         title.setFill(Color.WHITE);
         animateText(title);
@@ -50,32 +71,18 @@ public class MainMenu {
         VBox mainContent = new VBox(20);
         mainContent.setAlignment(Pos.CENTER);
 
-        Rectangle test = new Rectangle(600, 400, Color.WHITE);
+        Rectangle test = new Rectangle(GALLERY_WIDTH, GALLERY_HEIGHT, Color.WHITE);
 
         HBox buttons = new HBox(20);
         buttons.setAlignment(Pos.CENTER);
         
-        StackPane authoring = createButton("Authoring Environment", "Create a game!");
+        StackPane authoring = createButton(AUTHORING_LABEL, AUTHORING_INFO);
         
-        StackPane player = createButton("Game Player", "Play a game!");
+        StackPane player = createButton(PLAYER_LABEL, PLAYER_INFO);
         buttons.getChildren().addAll(authoring, player);
         
-        StackPane go = new StackPane();
-        Rectangle goButton = new Rectangle(100, 50, Color.RED);
-        goButton.setArcWidth(10);
-        goButton.setArcHeight(10);
-        goButton.setStrokeWidth(2);
-        goButton.setStroke(Color.RED);
-        Text goText = new Text("Go");
-        goText.setFill(Color.WHITE);
-        go.getChildren().addAll(goButton, goText);
-        go.setOnMouseEntered(e -> {
-            goButton.setFill(Color.DARKRED);
-        });
-        go.setOnMouseExited(e -> {
-            goButton.setFill(Color.RED);
-        });
-        go.setVisible(false);
+        StackPane go = makeGoButton();
+        
         mainContent.getChildren().addAll(buttons, go);
         
         authoring.setOnMouseClicked(e -> {
@@ -100,6 +107,28 @@ public class MainMenu {
         return myScene;
     }
 
+    private StackPane makeGoButton () {
+        StackPane go = new StackPane();
+        Rectangle goButton = new Rectangle(GO_BUTTON_WIDTH, GO_BUTTON_HEIGHT, Color.RED);
+        goButton.setArcWidth(10);
+        goButton.setArcHeight(10);
+        goButton.setStrokeWidth(BORDER_WIDTH);
+        goButton.setStroke(Color.RED);
+        Text goText = new Text("Go"); //TODO
+        goText.setFill(Color.WHITE);
+        goText.setFont(new Font(FONT, 20));
+
+        go.getChildren().addAll(goButton, goText);
+        goButton.setOnMouseEntered(e -> {
+            goButton.setFill(Color.DARKRED);
+        });
+        go.setOnMouseExited(e -> {
+            goButton.setFill(Color.RED);
+        });
+        go.setVisible(false);
+        return go;
+    }
+
     /**
      * @param container
      * @param content
@@ -107,22 +136,19 @@ public class MainMenu {
     private void entryAnimation (VBox container, Rectangle content, StackPane go) {
         moving = true;
         TranslateTransition moveButtons = new TranslateTransition(Duration.millis(800), container);
-        moveButtons.setFromY(210);
-        moveButtons.setToY(30);
-        moveButtons.setCycleCount(1);
+        moveButtons.setFromY(210); //TODO
+        moveButtons.setToY(30); //TODO
         moveButtons.setOnFinished(ae -> moving = false);
         
         ScaleTransition expandY = new ScaleTransition(Duration.millis(500), content);
         expandY.setFromY(0.0);
-        expandY.setFromX(0.01);
+        expandY.setFromX(PRE_EXPAND_WIDTH);
         expandY.setToY(1.0);
-        expandY.setToX(0.01);
-        expandY.setCycleCount(1);
+        expandY.setToX(PRE_EXPAND_WIDTH);
         
         ScaleTransition expandX = new ScaleTransition(Duration.millis(700), content);
-        expandX.setFromX(0.01);
-        expandX.setToX(1);
-        expandX.setCycleCount(1);
+        expandX.setFromX(PRE_EXPAND_WIDTH);
+        expandX.setToX(1.0);
         
         go.setVisible(true);
         FadeTransition buttonAppear = new FadeTransition(Duration.millis(500), go);
@@ -135,13 +161,13 @@ public class MainMenu {
     
     private StackPane createButton(String label, String description){
         StackPane button = new StackPane();
-        Rectangle buttonBackground = new Rectangle(200, 80, Color.WHITE);
+        Rectangle buttonBackground = new Rectangle(SCENE_BUTTON_WIDTH, SCENE_BUTTON_HEIGHT, Color.WHITE);
         buttonBackground.setArcWidth(10);
         buttonBackground.setArcHeight(10);
-        buttonBackground.setStrokeWidth(2);
+        buttonBackground.setStrokeWidth(BORDER_WIDTH);
         buttonBackground.setStroke(Color.GOLDENROD);
         Text labelDisplay = new Text(label);
-        labelDisplay.setFont(new Font("Helvetica", 18));
+        labelDisplay.setFont(new Font(FONT, 18));
         labelDisplay.setWrappingWidth(150);
         labelDisplay.setTextAlignment(TextAlignment.CENTER);
         button.getChildren().addAll(buttonBackground, labelDisplay);
