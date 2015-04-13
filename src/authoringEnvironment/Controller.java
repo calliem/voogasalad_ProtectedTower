@@ -34,6 +34,7 @@ public class Controller {
 
 	protected Controller(InstanceManager IM) {
 		currentGame = IM;
+		partTypeToKeyList = new HashMap<String, List<String>>();
 		populateKeyList();
 	}
 

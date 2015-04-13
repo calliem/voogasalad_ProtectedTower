@@ -209,7 +209,7 @@ public abstract class SpriteEditor extends Editor {
 	private void addSprite(String name, String imageFile, HBox row) {
 		String className = "authoringEnvironment.objects."
 				+ tabName.substring(0, tabName.length() - 1) + "View";
-		SpriteView sprite = generateSpriteView(name, imageFile, className);
+		SpriteView sprite = generateSpriteView(myController, name, imageFile, className);
 		sprite.initiateEditableState();
 		setupSpriteAction(sprite);
 		BooleanProperty spriteExists = new SimpleBooleanProperty(true);
@@ -227,13 +227,13 @@ public abstract class SpriteEditor extends Editor {
 		numSprites.setValue(spritesCreated.size());
 	}
 
-	private SpriteView generateSpriteView(String name, String imageFile,
+	private SpriteView generateSpriteView(Controller c, String name, String imageFile,
 			String className) {
 		SpriteView sprite = null;
 		try {
 			sprite = (SpriteView) Class.forName(className)
-					.getConstructor(String.class, String.class)
-					.newInstance(name, imageFile);
+					.getConstructor(Controller.class, String.class, String.class)
+					.newInstance(c, name, imageFile);
 		} catch (InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException
@@ -241,7 +241,7 @@ public abstract class SpriteEditor extends Editor {
 			System.err
 					.println("Class: "
 							+ className
-							+ "\nCouldn't be created with constructor (String, String)");
+							+ "\nCouldn't be created with constructor (Controller, String, String)");
 			e1.printStackTrace();
 		}
 		return sprite;
