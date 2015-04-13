@@ -29,7 +29,7 @@ public class InstanceManager {
 	private static final String partFileName = "GameParts.xml";
 	private static final String IMFileName = "GameManager.xml";
 	public static final String partsFileDir = "/AllPartData";
-	private static final String partKeyKey = "PartKey";
+	public static final String partKeyKey = "PartKey";
 	public static final String imageKey = "Image";
 
 	// a map of all the parts the user has created
@@ -82,6 +82,11 @@ public class InstanceManager {
 		this(name, partData, defaultSaveLocation + "/" + name);
 	}
 
+	public String addPartWithKey(String key, Map<String, Object> part) {
+		userParts.put(key, part);
+		return key;
+	}
+
 	/**
 	 * This is one way parts will be added from the Editor windows like
 	 * TowerEditor If convenient, any editor can pass the addPart method two
@@ -131,8 +136,8 @@ public class InstanceManager {
 			partToAdd.put(s.getParameterName(), s.getParameterValue());
 		return addPart(partType, partToAdd);
 	}
-	
-	public void specifyPartImage(String partKey, String imageFilePath){
+
+	public void specifyPartImage(String partKey, String imageFilePath) {
 		userParts.get(partKey).put(imageKey, imageFilePath);
 	}
 
@@ -162,12 +167,11 @@ public class InstanceManager {
 		return partKey;
 	}
 
-	private Map<String, Object> addPartToUserParts(
-			Map<String, Object> partToCheck, String partKey)
-			throws DataFormatException {
-		if (partToCheck.containsKey("Name")) {
-			userParts.put(partKey, partToCheck);
-			return partToCheck;
+	private Map<String, Object> addPartToUserParts(Map<String, Object> part,
+			String partKey) throws DataFormatException {
+		if (part.containsKey("Name")) {
+			addPartWithKey(partKey, part);
+			return part;
 		} else
 			throw new DataFormatException(missingNameKey);
 	}
