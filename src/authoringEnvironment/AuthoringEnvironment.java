@@ -91,7 +91,6 @@ public class AuthoringEnvironment {
         myTabPane = new TabPane();
         List<Editor> editorsToAdd =	ProjectReader.getOrderedEditorsList(myController);
         for(Editor e : editorsToAdd){
-        	myController.addEditor(e);
         	myTabPane.getTabs().add(e);
         }
         grid.add(myTabPane,0,1);

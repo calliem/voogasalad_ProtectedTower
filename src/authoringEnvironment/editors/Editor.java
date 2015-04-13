@@ -25,55 +25,24 @@ import javafx.stage.Stage;
  */
 
 public abstract class Editor extends Tab {
-	// or use a ArrayList<?> getObjects() method in this superclass?
-	// TODO: have later methods get myDimensions from a closer class not
-	// mainenvironment. THey are passed as parameters for a reason.
 
 	protected String tabName;
 	private Group contentRoot;
-	protected List<String> partKeys;
-	private Controller myController;
+	protected Controller myController;
 
 	public Editor(Controller controller, String name) {
 		myController = controller;
 		tabName = name;
 		contentRoot = configureUI();
-		partKeys = new ArrayList<String>();
 		this.setContent(contentRoot);
 		this.setText(tabName);
 		this.setClosable(false);
 	}
-
+	
 	protected abstract Group configureUI();
-
-	protected void addPartToGame(String partType, String partName,
-			List<String> params, List<Object> data) {
-		partKeys.add(myController.addPartToGame(partType, partName, params,
-				data));
-	}
-
-	protected void addPartToGame(String partType, Map<String, Object> part) {
-		partKeys.add(myController.addPartToGame(partType, part));
-	}
-
-	protected List<String> getKeysForParts(String partTabName) {
-		return myController.getKeysForParts(partTabName);
-	}
-
-	protected Map<String, Object> getPartCopy(String partKey) {
-		return myController.getPartCopy(partKey);
-	}
-
-	protected Map<String, String> getSpriteFileMap(String partTabName) {
-		return myController.getSpriteFileMap(partTabName);
-	}
 
 	public String getName() {
 		return tabName;
-	}
-
-	public List<String> getPartKeys() {
-		return new ArrayList<String>(partKeys);
 	}
 
 	// to be used by backend
