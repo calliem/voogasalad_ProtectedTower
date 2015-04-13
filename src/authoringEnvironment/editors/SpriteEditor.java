@@ -220,10 +220,8 @@ public abstract class SpriteEditor extends Editor {
 
 		row.getChildren().add(sprite);
 		spritesCreated.add(sprite);
-		String key = myController.addPartToGame(
-				tabName.substring(0, tabName.length() - 1),
-				sprite.getParameterFields());
-		myController.specifyPartImage(key, sprite.getImageFilePath());
+		sprite.saveParameterFields(true);
+		
 		numSprites.setValue(spritesCreated.size());
 	}
 
