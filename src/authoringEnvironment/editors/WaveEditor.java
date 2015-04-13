@@ -113,14 +113,10 @@ public class WaveEditor extends MainEditor {
 		HBox waveContent = new HBox(PADDING_SIZE);
 
 		Button addUnit = new Button("Add Unit");
-		addUnit.setOnAction(e -> {
-			addUnitToWave(waveContent, waveName);
-		});
+		addUnit.setOnAction(e -> addUnitToWave(waveContent, waveName));
 
 		Button save = new Button("Save");
-		save.setOnAction(e -> {
-			saveWaveData(waveName);
-		});
+		save.setOnAction(e -> saveWaveData(waveName));
 
 		VBox buttons = new VBox(PADDING_SIZE);
 		buttons.getChildren().add(new Text("Wave: " + waveName));
