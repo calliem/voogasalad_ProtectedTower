@@ -34,12 +34,14 @@ public class Controller {
 
 	protected Controller(InstanceManager IM) {
 		currentGame = IM;
+		partTypeToKeyList = new HashMap<String, List<String>>();
 		populateKeyList();
 	}
 
 	protected Controller(String gameName, String rootDir) {
 		this(new InstanceManager(gameName, rootDir));
 	}
+	
 
 	/**
 	 * This method adds a part to the current game. Information about that part
@@ -57,9 +59,9 @@ public class Controller {
 	 * @param data
 	 *            The data corresponding to those parameters.
 	 */
-	public void addPartToGame(String partType, String partName,
+	public String addPartToGame(String partType, String partName,
 			List<String> params, List<Object> data) {
-		addKey(currentGame.addPart(partType, partName, params, data));
+		return addKey(currentGame.addPart(partType, partName, params, data));
 	}
 
 	/**
@@ -71,8 +73,8 @@ public class Controller {
 	 *            The map representing all the part's data. Must contain a
 	 *            "Name" key.
 	 */
-	public void addPartToGame(String partType, Map<String, Object> part) {
-		addKey(currentGame.addPart(partType, part));
+	public String addPartToGame(String partType, Map<String, Object> part) {
+		return addKey(currentGame.addPart(partType, part));
 	}
 
 	/**
@@ -83,11 +85,11 @@ public class Controller {
 	 * @param settings
 	 *            A list of Settings objects that hold all the parts data
 	 */
-	public void addPartToGame(String partType, List<Setting> settings) {
+	public String addPartToGame(String partType, List<Setting> settings) {
 		Map<String, Object> partToAdd = new HashMap<String, Object>();
 		for (Setting s : settings)
 			partToAdd.put(s.getParameterName(), s.getParameterValue());
-		addPartToGame(partType, partToAdd);
+		return addPartToGame(partType, partToAdd);
 	}
 
 	/**
@@ -100,7 +102,7 @@ public class Controller {
 	 *         the editor.
 	 */
 	public List<String> getKeysForPartType(String partType) {
-		return partTypeToKeyList.get(partType.toLowerCase());
+		return partTypeToKeyList.get(partType);
 	}
 
 	/**
@@ -132,6 +134,18 @@ public class Controller {
 	 */
 	public Map<String, Object> getPartCopy(String partKey) {
 		return currentGame.getAllPartData().get(partKey);
+	}
+	
+	public void specifyPartImage(String partKey, String imageFilePath){
+		currentGame.specifyPartImage(partKey, imageFilePath);
+	}
+	
+	public Map<String, Object> loadPart(String fullPartFilePath){
+		Map<String, Object> part = (Map<String, Object>) XMLWriter.fromXML(fullPartFilePath);
+		String partKey = (String) part.get(InstanceManager.partKeyKey);
+		currentGame.addPart(partKey, part);
+		addKey(partKey);
+		return part;
 	}
 
 	private String addKey(String key) {

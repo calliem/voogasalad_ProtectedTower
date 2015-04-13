@@ -2,10 +2,12 @@ package authoringEnvironment.objects;
 
 import java.util.List;
 
+import authoringEnvironment.Controller;
+
 public class RoundView extends SpriteView{
 	
-	public RoundView (String name, String imageFile) {
-        super(name, imageFile);
+	public RoundView (Controller c, String name, String imageFile) {
+        super(c, name, imageFile);
         // TODO Auto-generated constructor stub
     }
 

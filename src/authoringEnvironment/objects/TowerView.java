@@ -1,5 +1,7 @@
 package authoringEnvironment.objects;
 
+import authoringEnvironment.Controller;
+
 /**
  * Creates the visual tower object containing
  * the tower's image, name, and the overlay that
@@ -10,7 +12,7 @@ package authoringEnvironment.objects;
  */
 public class TowerView extends SpriteView{
     
-    public TowerView(String name, String imageFile){
-        super(name, imageFile);
+    public TowerView(Controller c, String name, String imageFile){
+        super(c, name, imageFile);
     }
 }

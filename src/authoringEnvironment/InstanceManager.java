@@ -22,15 +22,16 @@ public class InstanceManager {
 			"user.dir").concat("/src/myTowerGames");
 	private static final String gameRootDirectory = System.getProperty(
 			"user.dir").concat("/src/exampleUserData");
-	public static final String partTypeKey = "PartType";
-	public static final String nameKey = "Name";
 	private static final String missingNameKey = "Map passed must contain a \"Name\" key. Key is case sensitive.";
 	private static final String listSizesDiffer = "Lists passed must contain same number of elements.";
 	private static final String partFileName = "GameParts.xml";
 	private static final String IMFileName = "GameManager.xml";
 	public static final String partsFileDir = "/AllPartData";
-	private static final String partKeyKey = "PartKey";
+	public static final String partTypeKey = "PartType";
+	public static final String nameKey = "Name";
+	public static final String partKeyKey = "PartKey";
 	public static final String imageKey = "Image";
+	public static final String savePathKey = "SavePath";
 
 	// a map of all the parts the user has created
 	// each part is represented by a map mapping the part's parameters to their
@@ -82,6 +83,11 @@ public class InstanceManager {
 		this(name, partData, defaultSaveLocation + "/" + name);
 	}
 
+	public String addPartWithKey(String key, Map<String, Object> part) {
+		userParts.put(key, part);
+		return key;
+	}
+
 	/**
 	 * This is one way parts will be added from the Editor windows like
 	 * TowerEditor If convenient, any editor can pass the addPart method two
@@ -131,8 +137,8 @@ public class InstanceManager {
 			partToAdd.put(s.getParameterName(), s.getParameterValue());
 		return addPart(partType, partToAdd);
 	}
-	
-	public void specifyPartImage(String partKey, String imageFilePath){
+
+	public void specifyPartImage(String partKey, String imageFilePath) {
 		userParts.get(partKey).put(imageKey, imageFilePath);
 	}
 
@@ -156,20 +162,20 @@ public class InstanceManager {
 		part.put(partKeyKey, partKey);
 		try {
 			writePartToXML(addPartToUserParts(part, partKey));
+
 		} catch (DataFormatException e) {
 			System.err.println("Part was not added.");
 		}
 		return partKey;
 	}
 
-	private Map<String, Object> addPartToUserParts(
-			Map<String, Object> partToCheck, String partKey)
-			throws DataFormatException {
-		if (partToCheck.containsKey("Name")) {
-			userParts.put(partKey, partToCheck);
-			return partToCheck;
-		} else
-			throw new DataFormatException(missingNameKey);
+	private Map<String, Object> addPartToUserParts(Map<String, Object> part,
+			String partKey) throws DataFormatException {
+		if (part.containsKey("Name")) {
+			addPartWithKey(partKey, part);
+			return part;
+		}
+		throw new DataFormatException(missingNameKey);
 	}
 
 	/**
@@ -180,11 +186,11 @@ public class InstanceManager {
 	 * @param part
 	 *            The part to write to XML
 	 */
-	private void writePartToXML(Map<String, Object> part) {
+	private String writePartToXML(Map<String, Object> part) {
 		String partType = (String) part.get(partTypeKey);
 		String partFileName = (String) part.get(nameKey) + ".xml";
 		String directory = rootDirectory + "/" + partType;
-		XMLWriter.toXML(part, partFileName, directory);
+		return XMLWriter.toXML(part, partFileName, directory);
 	}
 
 	/**
@@ -296,8 +302,7 @@ public class InstanceManager {
 	 * .newInstance(newData); } catch (InstantiationException |
 	 * IllegalAccessException | IllegalArgumentException |
 	 * InvocationTargetException | NoSuchMethodException | SecurityException e)
-	 * { // TODO Auto-generated catch block e.printStackTrace(); }
-	 * partToBeUpdated.put(param, data); }
+	 * { e.printStackTrace(); } partToBeUpdated.put(param, data); }
 	 * 
 	 * public void updatePart(String partName, String param, Object newData) {
 	 * userParts.get(partName).put(param, newData); }
@@ -373,6 +378,7 @@ public class InstanceManager {
 		example.saveGame();
 		// this method is called with the path to the .game file, which will be
 		// received from the user
+		//TODO:  Use this statement to load the example map
 		Map<String, Map<String, Object>> gamedata = InstanceManager
 				.loadGameData(gameRootDirectory
 						+ "/TestingManagerGame/TestingManagerGame.gamefile");
@@ -390,9 +396,9 @@ public class InstanceManager {
 		 * gameManager.addPart(UNIT); gameManager.addPart(UNIT);
 		 * gameManager.addPart(TOWER); System.out.println(gameManager);
 		 * 
-		 * // TODO: Remove hardcoded "magic values" // Or if this is a test,
-		 * then ignore this. gameManager.updatePart("Tower_Part_0", "HP",
-		 * "5000"); gameManager.updatePart("Tower_Part_0", "FireRate", "8");
+		 * // d "magic values" // Or if this is a test, then ignore this.
+		 * gameManager.updatePart("Tower_Part_0", "HP", "5000");
+		 * gameManager.updatePart("Tower_Part_0", "FireRate", "8");
 		 * gameManager.updatePart("Unit_Part_4", "Speed", "3");
 		 * System.out.println(gameManager);
 		 * 
@@ -405,7 +411,7 @@ public class InstanceManager {
 		 * System.out.println("Stringy test: " + stringyLoaded); try {
 		 * System.out.println("from xml: " +
 		 * gameManager.getPartFromXML("Tower_Part_0")); } catch (IOException e)
-		 * { // TODO Auto-generated catch block e.printStackTrace();
+		 * { // e.printStackTrace();
 		 * 
 		 * }
 		 */

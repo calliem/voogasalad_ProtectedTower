@@ -71,7 +71,9 @@ public class MainMenu {
         VBox mainContent = new VBox(20);
         mainContent.setAlignment(Pos.CENTER);
 
-        Rectangle test = new Rectangle(GALLERY_WIDTH, GALLERY_HEIGHT, Color.WHITE);
+//        Rectangle test = new Rectangle(GALLERY_WIDTH, GALLERY_HEIGHT, Color.WHITE);
+        String[] pics = {"images/map_example.png", "images/proj_example.png"};
+        Gallery test = new Gallery(pics, 600, 400, 5);
 
         HBox buttons = new HBox(20);
         buttons.setAlignment(Pos.CENTER);
@@ -133,29 +135,22 @@ public class MainMenu {
      * @param container
      * @param content
      */
-    private void entryAnimation (VBox container, Rectangle content, StackPane go) {
+    private void entryAnimation (VBox container, Gallery content, StackPane go) {
         moving = true;
         TranslateTransition moveButtons = new TranslateTransition(Duration.millis(800), container);
         moveButtons.setFromY(210); //TODO
-        moveButtons.setToY(30); //TODO
-        moveButtons.setOnFinished(ae -> moving = false);
-        
-        ScaleTransition expandY = new ScaleTransition(Duration.millis(500), content);
-        expandY.setFromY(0.0);
-        expandY.setFromX(PRE_EXPAND_WIDTH);
-        expandY.setToY(1.0);
-        expandY.setToX(PRE_EXPAND_WIDTH);
-        
-        ScaleTransition expandX = new ScaleTransition(Duration.millis(700), content);
-        expandX.setFromX(PRE_EXPAND_WIDTH);
-        expandX.setToX(1.0);
+        moveButtons.setToY(20); //TODO
+        moveButtons.setOnFinished(ae -> {
+            moving = false;
+            content.showBackground();
+        });
         
         go.setVisible(true);
         FadeTransition buttonAppear = new FadeTransition(Duration.millis(500), go);
         buttonAppear.setFromValue(0.0);
         buttonAppear.setToValue(1.0);
         
-        SequentialTransition pt = new SequentialTransition(moveButtons, expandY, expandX, buttonAppear);
+        SequentialTransition pt = new SequentialTransition(moveButtons, content.playEntryAnimation(), buttonAppear);
         pt.play();
     }
     
@@ -174,7 +169,7 @@ public class MainMenu {
         
         button.setOnMouseEntered(e -> {
             if(!moving){
-                buttonBackground.setFill(Color.DARKGRAY);
+                buttonBackground.setFill(Color.web("#1D2951"));
                 labelDisplay.setFill(Color.WHITE);
                 labelDisplay.setText(description);
             }
