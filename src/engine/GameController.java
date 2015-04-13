@@ -91,9 +91,9 @@ public class GameController {
 
         // Send right sets of objects to the right objects
         myGame.addTowers(myObjects.get("Tower"));
-        myGame.addTowers(myObjects.get("Enemy"));
-        myGame.addTowers(myObjects.get("Projectile"));
-        myGame.addTowers(myObjects.get("GridCell"));
+        myGame.addEnemies(myObjects.get("Enemy"));
+        myGame.addProjectiles(myObjects.get("Projectile"));
+//        myGame.addGridCells(myObjects.get("GridCell"));
 
     }
 

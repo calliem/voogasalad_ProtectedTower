@@ -23,20 +23,37 @@ public class TowerFactory {
     public TowerFactory () {
         myTowers = new HashMap<>();
     }
-    
-    public void addManager(TowerManager manager) {
+
+    public void addManager (TowerManager manager) {
         myTowerManager = manager;
     }
-    
-    public void addTower (Map<String, Map<String, Object>> allTowers) {
-        for (String towerID : allTowers.keySet()) {
-            Map<String, Object> towerProperties = allTowers.get(towerID);
-            addTower(towerID, towerProperties);
-            myTowerManager.addTower(towerID, towerProperties);
-        }
+
+    /**
+     * Adds new towers to the list of all possible towers, can be called with a map of tower GUID to
+     * the parameters map of that tower, or also with a single GUID and a single parameters map.
+     * 
+     * @param allSprites Map<String, Map<String, Object>> object
+     */
+    public void add (Map<String, Map<String, Object>> allSprites) {
+        // for (String towerID : allSprites.keySet()) {
+        // Map<String, Object> towerProperties = allSprites.get(towerID);
+        // this.add(towerID, towerProperties);
+        // myTowerManager.addTower(towerID, towerProperties);
+        // }
+        // TODO refactor into superclass for factories
+        allSprites.keySet().forEach(t -> {
+            this.add(t, allSprites.get(t));
+            myTowerManager.addTower(t, allSprites.get(t));
+        });
     }
 
-    public void addTower (String towerID, Map<String, Object> towerProperties) {
+    /**
+     * @see TowerFactory#add(Map)
+     * 
+     * @param towerID String of the GUID of the tower
+     * @param towerProperties the properties Map<String, Object> object of the tower
+     */
+    public void add (String towerID, Map<String, Object> towerProperties) {
         myTowers.put(towerID, towerProperties);
     }
 

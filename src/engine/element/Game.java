@@ -51,19 +51,16 @@ public class Game extends GameElement implements Updateable {
         myLayout.update(counter);
     }
 
-    public void addTowers (Map<String, Map<String, Object>> allTowers) {
-        myLayout.initializeTowers(allTowers);
+    // TODO refactor add methods below
+    public void addTowers (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeTowers(allObjects);
     }
 
-    public void addEnemies (Collection<Map<String, Object>> enemyParameters) {
-        for (Map<String, Object> map : enemyParameters) {
-            myLayout.initializeEnemy(map);
-        }
+    public void addEnemies (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeEnemies(allObjects);
     }
 
-    public void addProjectiles (Collection<Map<String, Object>> projectileParameters) {
-        for (Map<String, Object> map : projectileParameters) {
-            myLayout.initializeProjectile(map);
-        }
+    public void addProjectiles (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeProjectiles(allObjects);
     }
 }

@@ -243,15 +243,16 @@ public class Layout extends GameElement implements Updateable {
         return spritesList;
     }
 
-    public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
-        myTowerFactory.addTower(allTowers);
+    // TODO refactor next methods
+    public void initializeTowers (Map<String, Map<String, Object>> allObjects) {
+        myTowerFactory.add(allObjects);
     }
 
-    public void initializeEnemy (Map<String, Object> parameters) {
-        myEnemyFactory.addEnemy(parameters);
+    public void initializeEnemies (Map<String, Map<String, Object>> allObjects) {
+        myEnemyFactory.add(allObjects);
     }
 
-    public void initializeProjectile (Map<String, Object> parameters) {
-        myProjectileFactory.addProjectile(parameters);
+    public void initializeProjectiles (Map<String, Map<String, Object>> allObjects) {
+        myProjectileFactory.add(allObjects);
     }
 }
