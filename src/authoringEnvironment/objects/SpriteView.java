@@ -47,6 +47,8 @@ public abstract class SpriteView extends StackPane {
 
     private static final int NAME_INDEX = 0;
     private static final String DEFAULT_NAME = "Unnamed";
+    
+    private Controller myController;
 
     /**
      * Creates visual representation of a sprite created by
@@ -57,6 +59,7 @@ public abstract class SpriteView extends StackPane {
      * @param imageFile the file path of this sprite's image
      */
     public SpriteView (Controller c, String name, String imageFile) {
+        myController = c;
         if (name.length() == 0) {
             spriteName = DEFAULT_NAME;
         }
@@ -158,8 +161,9 @@ public abstract class SpriteView extends StackPane {
         }
 
         if (correctFormat && save) {
-            // TODO: UPDATE THIS
-            // GameCreator.addPartToGame("Tower", parameterFields);
+            String key = myController.addPartToGame(getSpriteType(),
+                                                    parameterFields);
+                                    myController.specifyPartImage(key, imageFile);
             displaySavedMessage();
         }
     }

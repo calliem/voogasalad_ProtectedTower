@@ -22,15 +22,16 @@ public class InstanceManager {
 			"user.dir").concat("/src/myTowerGames");
 	private static final String gameRootDirectory = System.getProperty(
 			"user.dir").concat("/src/exampleUserData");
-	public static final String partTypeKey = "PartType";
-	public static final String nameKey = "Name";
 	private static final String missingNameKey = "Map passed must contain a \"Name\" key. Key is case sensitive.";
 	private static final String listSizesDiffer = "Lists passed must contain same number of elements.";
 	private static final String partFileName = "GameParts.xml";
 	private static final String IMFileName = "GameManager.xml";
 	public static final String partsFileDir = "/AllPartData";
+	public static final String partTypeKey = "PartType";
+	public static final String nameKey = "Name";
 	public static final String partKeyKey = "PartKey";
 	public static final String imageKey = "Image";
+	public static final String savePathKey = "SavePath";
 
 	// a map of all the parts the user has created
 	// each part is represented by a map mapping the part's parameters to their
@@ -161,6 +162,7 @@ public class InstanceManager {
 		part.put(partKeyKey, partKey);
 		try {
 			writePartToXML(addPartToUserParts(part, partKey));
+
 		} catch (DataFormatException e) {
 			System.err.println("Part was not added.");
 		}
@@ -172,8 +174,8 @@ public class InstanceManager {
 		if (part.containsKey("Name")) {
 			addPartWithKey(partKey, part);
 			return part;
-		} else
-			throw new DataFormatException(missingNameKey);
+		}
+		throw new DataFormatException(missingNameKey);
 	}
 
 	/**
@@ -184,11 +186,11 @@ public class InstanceManager {
 	 * @param part
 	 *            The part to write to XML
 	 */
-	private void writePartToXML(Map<String, Object> part) {
+	private String writePartToXML(Map<String, Object> part) {
 		String partType = (String) part.get(partTypeKey);
 		String partFileName = (String) part.get(nameKey) + ".xml";
 		String directory = rootDirectory + "/" + partType;
-		XMLWriter.toXML(part, partFileName, directory);
+		return XMLWriter.toXML(part, partFileName, directory);
 	}
 
 	/**
@@ -300,8 +302,7 @@ public class InstanceManager {
 	 * .newInstance(newData); } catch (InstantiationException |
 	 * IllegalAccessException | IllegalArgumentException |
 	 * InvocationTargetException | NoSuchMethodException | SecurityException e)
-	 * { // TODO Auto-generated catch block e.printStackTrace(); }
-	 * partToBeUpdated.put(param, data); }
+	 * { e.printStackTrace(); } partToBeUpdated.put(param, data); }
 	 * 
 	 * public void updatePart(String partName, String param, Object newData) {
 	 * userParts.get(partName).put(param, newData); }
@@ -394,9 +395,9 @@ public class InstanceManager {
 		 * gameManager.addPart(UNIT); gameManager.addPart(UNIT);
 		 * gameManager.addPart(TOWER); System.out.println(gameManager);
 		 * 
-		 * // TODO: Remove hardcoded "magic values" // Or if this is a test,
-		 * then ignore this. gameManager.updatePart("Tower_Part_0", "HP",
-		 * "5000"); gameManager.updatePart("Tower_Part_0", "FireRate", "8");
+		 * // d "magic values" // Or if this is a test, then ignore this.
+		 * gameManager.updatePart("Tower_Part_0", "HP", "5000");
+		 * gameManager.updatePart("Tower_Part_0", "FireRate", "8");
 		 * gameManager.updatePart("Unit_Part_4", "Speed", "3");
 		 * System.out.println(gameManager);
 		 * 
@@ -409,7 +410,7 @@ public class InstanceManager {
 		 * System.out.println("Stringy test: " + stringyLoaded); try {
 		 * System.out.println("from xml: " +
 		 * gameManager.getPartFromXML("Tower_Part_0")); } catch (IOException e)
-		 * { // TODO Auto-generated catch block e.printStackTrace();
+		 * { // e.printStackTrace();
 		 * 
 		 * }
 		 */
