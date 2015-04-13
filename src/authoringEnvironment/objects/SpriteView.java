@@ -1,9 +1,12 @@
 package authoringEnvironment.objects;
 
 import imageselectorTEMP.util.ScaleImage;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.Setting;
 import javafx.animation.PauseTransition;
@@ -46,7 +49,7 @@ public abstract class SpriteView extends StackPane {
     private static final int NAME_INDEX = 0;
     private static final String DEFAULT_NAME = "Unnamed";
     
-    public SpriteView(String name, String imageFile) {
+    public SpriteView(Controller c, String name, String imageFile) {
         if(name.length() == 0){
             spriteName = DEFAULT_NAME;
         }
@@ -104,12 +107,10 @@ public abstract class SpriteView extends StackPane {
         settingsObjects.setMaxWidth(150);
         
         List<Setting> settings = ProjectReader.generateSettingsList(getSpriteType());
-        System.out.println("setting gen done");
         for(Setting s : settings){
             parameterFields.add(s);
             settingsObjects.getChildren().add(s);
         }
-        System.out.println("params created");
         
         if(spriteName.length() >= 1){
             parameterFields.get(NAME_INDEX).setParameterValue(spriteName);
@@ -132,7 +133,6 @@ public abstract class SpriteView extends StackPane {
         buttons.getChildren().addAll(save, overlayCloseButton);
         
         editableContent.getChildren().addAll(overlaySpriteNameDisplay, spriteImage, overlayErrorMessage, settingsObjects, buttons, saved);
-   System.out.println("ENd of that method");
     }
     
     private void saveParameterFields(boolean save){
@@ -234,6 +234,14 @@ public abstract class SpriteView extends StackPane {
         Tooltip tooltip = new Tooltip(tooltipText);
         tooltip.setTextAlignment(TextAlignment.LEFT);
         Tooltip.install(this, tooltip);
+    }
+    
+    public String getImageFilePath(){
+    	return imageFile;
+    }
+    
+    public List<Setting> getParameterFields(){
+    	return parameterFields;
     }
     
     public StackPane getEditorOverlay(){

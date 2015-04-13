@@ -6,7 +6,7 @@ import authoringEnvironment.Controller;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
-public class TileEditor extends PropertyEditor{
+public class TileEditor extends SpriteEditor{
 
     public TileEditor(Controller c, String name) {
         super(c, name);
