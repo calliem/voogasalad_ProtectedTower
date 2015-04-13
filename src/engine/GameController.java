@@ -1,7 +1,6 @@
 package engine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
@@ -39,9 +38,9 @@ public class GameController {
 
     }
 
-    public GameController (String filepath) {
+    public GameController (String filepath) throws InsufficientParametersException {
         myGame = new Game();
-        loadGame(filepath, myGame);
+        this.loadGame(filepath, myGame);
         fillPackageMap();
     }
 
@@ -65,11 +64,10 @@ public class GameController {
      * 
      * @param filepath String of location of the game file
      * @param engineRoot
+     * @throws InsufficientParametersException when multiple games/layouts are created, or when no
+     *         game elements are specified
      */
-    public void loadGame (String filepath, Game game) {
-        // Collection<Tower> towerObjects = new HashSet<Tower>();
-        // Collection<Enemy> enemyObjects = new HashSet<Enemy>();
-        // Collection<Projectile> projectileObjects = new HashSet<Projectile>();
+    public void loadGame (String filepath, Game game) throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String s : myPartTypeToPackage.keySet()) {
             myObjects.put(s, new HashMap<>());
@@ -89,12 +87,31 @@ public class GameController {
             myObjects.get(partType).put((String) obj.get(PARAMETER_GUID), obj);
         }
 
+        // store game parameters
+        // TODO test for errors for 0 data files, or too many
+        if (myObjects.get("Game").size() > 1) {
+            throw new InsufficientParametersException("Multiple game data files created");
+        }
+        else {
+            for (Map<String, Object> map : myObjects.get("Game").values()) {
+                myGame.setParameterMap(map);
+            }
+        }
+        if (myObjects.get("Layout").size() > 1) {
+            throw new InsufficientParametersException("Multiple game layouts created");
+        }
+        else {
+            for (Map<String, Object> map : myObjects.get("Layout").values()) {
+                myGame.addLayoutParameters(map);
+            }
+        }
+
         // Send right sets of objects to the right objects
         myGame.addTowers(myObjects.get("Tower"));
         myGame.addEnemies(myObjects.get("Enemy"));
         myGame.addProjectiles(myObjects.get("Projectile"));
         myGame.addGridCells(myObjects.get("GridCell"));
-
+        myGame.addLevels(myObjects.get("Level"));
     }
 
     /**
