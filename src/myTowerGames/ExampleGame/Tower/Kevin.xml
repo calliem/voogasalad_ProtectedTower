@@ -21,15 +21,15 @@
   </entry>
   <entry>
     <string>AttackRange</string>
-    <double>15.0</double>
+    <double>1.0</double>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Unnamed.Tower</string>
+    <string>ExampleGame_Kevin.Tower</string>
   </entry>
   <entry>
     <string>AttackSpeed</string>
-    <double>15.0</double>
+    <double>1.0</double>
   </entry>
   <entry>
     <string>BoundingHeight</string>
@@ -37,7 +37,7 @@
   </entry>
   <entry>
     <string>Name</string>
-    <string>Unnamed</string>
+    <string>Kevin</string>
   </entry>
   <entry>
     <string>Projectile</string>
