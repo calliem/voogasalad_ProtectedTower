@@ -112,6 +112,8 @@ public class GameController {
         myGame.addProjectiles(myObjects.get("Projectile"));
         myGame.addGridCells(myObjects.get("GridCell"));
         myGame.addLevels(myObjects.get("Level"));
+        // TODO add rounds to levels
+        // TODO add rounds and waves to factory
     }
 
     /**
