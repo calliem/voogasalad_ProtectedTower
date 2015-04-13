@@ -16,6 +16,7 @@ import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.EnemyFactory;
 import engine.element.sprites.GridCell;
+import engine.element.sprites.GridCellFactory;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.ProjectileFactory;
 import engine.element.sprites.Sprite;
@@ -47,6 +48,7 @@ public class Layout extends GameElement implements Updateable {
     private TowerFactory myTowerFactory;
     private EnemyFactory myEnemyFactory;
     private ProjectileFactory myProjectileFactory;
+    private GridCellFactory myGridCellFactory;
     private Quadtree quadTree;
     private CollisionTable collisionTable;
 
@@ -57,6 +59,7 @@ public class Layout extends GameElement implements Updateable {
 
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
+        myGridCellFactory = new GridCellFactory();
     }
 
     public void init (GridCell[][] map, CollisionTable table) {
@@ -254,5 +257,9 @@ public class Layout extends GameElement implements Updateable {
 
     public void initializeProjectiles (Map<String, Map<String, Object>> allObjects) {
         myProjectileFactory.add(allObjects);
+    }
+
+    public void initializeGridCells (Map<String, Map<String, Object>> allObjects) {
+        myGridCellFactory.add(allObjects);
     }
 }

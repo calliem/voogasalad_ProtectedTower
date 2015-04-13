@@ -63,4 +63,8 @@ public class Game extends GameElement implements Updateable {
     public void addProjectiles (Map<String, Map<String, Object>> allObjects) {
         myLayout.initializeProjectiles(allObjects);
     }
+
+    public void addGridCells (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeGridCells(allObjects);
+    }
 }

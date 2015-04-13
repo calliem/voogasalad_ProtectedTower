@@ -93,7 +93,7 @@ public class GameController {
         myGame.addTowers(myObjects.get("Tower"));
         myGame.addEnemies(myObjects.get("Enemy"));
         myGame.addProjectiles(myObjects.get("Projectile"));
-//        myGame.addGridCells(myObjects.get("GridCell"));
+        myGame.addGridCells(myObjects.get("GridCell"));
 
     }
 
