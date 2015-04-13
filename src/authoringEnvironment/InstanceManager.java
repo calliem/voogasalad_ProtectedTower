@@ -375,10 +375,10 @@ public class InstanceManager {
 		// received from the user
 		Map<String, Map<String, Object>> gamedata = InstanceManager
 				.loadGameData(gameRootDirectory
-						+ "/TestingManagerGame/TestingManagerGame.game");
+						+ "/TestingManagerGame/TestingManagerGame.gamefile");
 		InstanceManager loadedIn = InstanceManager
 				.loadGameManager(gameRootDirectory
-						+ "/TestingManagerGame/TestingManagerGame.game");
+						+ "/TestingManagerGame/TestingManagerGame.gamefile");
 		System.out.println("GAME DATA AS MAP: \n" + gamedata.toString());
 		System.out.println("GAME AS MANAGER: \n" + loadedIn.toString());
 

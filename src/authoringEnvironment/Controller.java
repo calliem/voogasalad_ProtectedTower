@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import authoringEnvironment.editors.MapEditor;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.setting.Setting;
 
 /**
  * This class is a singleton that holds a map of all the editors that are
@@ -27,33 +28,37 @@ public class Controller {
 	// properties file. instead consider using files to share information
 	// between tabs?
 
-	private Map<String, Editor> myEditors = new HashMap<String, Editor>();
 	private InstanceManager currentGame;
+	private Map<String, List<String>> partTypeToKeyList;
 
 	protected Controller(InstanceManager IM) {
 		currentGame = IM;
+		populateKeyList();
 	}
 
 	protected Controller(String gameName, String rootDir) {
 		this(new InstanceManager(gameName, rootDir));
 	}
 
-	public String addPartToGame(String partType, String partName,
+	public void addPartToGame(String partType, String partName,
 			List<String> params, List<Object> data) {
-		return currentGame.addPart(partType, partName, params, data);
+		addKey(currentGame.addPart(partType, partName, params, data));
 	}
 
-	public String addPartToGame(String partType, Map<String, Object> part) {
-		return currentGame.addPart(partType, part);
+	public void addPartToGame(String partType, Map<String, Object> part) {
+		addKey(currentGame.addPart(partType, part));
 	}
 
-	public void addEditor(Editor e) {
-		myEditors.put(e.getName(), e);
+	public void addPartToGame(String partType, List<Setting> settings) {
+		Map<String, Object> partToAdd = new HashMap<String, Object>();
+		for (Setting s : settings)
+			partToAdd.put(s.getParameterName(), s.getParameterValue());
+		addPartToGame(partType, partToAdd);
 	}
 
 	public Map<String, String> getSpriteFileMap(String partTabName) {
 		Map<String, String> keysAndImagePaths = new HashMap<String, String>();
-		List<String> partKeys = getKeysForParts(partTabName);
+		List<String> partKeys = getKeysForPartType(partTabName);
 		for (String key : partKeys) {
 			Map<String, Object> partCopy = getPartCopy(key);
 			if (partCopy.keySet().contains(InstanceManager.imageKey))
@@ -63,13 +68,24 @@ public class Controller {
 		return keysAndImagePaths;
 	}
 
-	public List<String> getKeysForParts(String partTabName) {
-		Editor editorToQuery = myEditors.get(partTabName);
-		return editorToQuery.getPartKeys();
+	public List<String> getKeysForPartType(String partType) {
+		return partTypeToKeyList.get(partType.toLowerCase());
 	}
 
 	public Map<String, Object> getPartCopy(String partKey) {
 		return currentGame.getAllPartData().get(partKey);
 	}
 
+	private String addKey(String key) {
+		String partType = key.substring(key.indexOf(".") + 1, key.length());
+		if (!partTypeToKeyList.keySet().contains(partType))
+			partTypeToKeyList.put(partType, new ArrayList<String>());
+		partTypeToKeyList.get(partType).add(key);
+		return key;
+	}
+
+	private void populateKeyList() {
+		for (String key : currentGame.getAllPartData().keySet())
+			addKey(key);
+	}
 }
