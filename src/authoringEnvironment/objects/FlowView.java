@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import authoringEnvironment.setting.IntegerSetting;
 import authoringEnvironment.setting.SpriteSetting;
 import imageselectorTEMP.util.ScaleImage;
 import javafx.geometry.Pos;
@@ -19,93 +20,94 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 /**
- * Creates the visual selector for adding a unit/wave and the time delay. 
- * Stores the information for the WaveEditor
+ * Creates the visual selector for adding a unit/wave and the time delay. Stores
+ * the information for the WaveEditor
  * 
  * @author Megan Gutter
  *
  */
 
 public class FlowView extends HBox {
-	// private String partFileName;
-	// private Double delay;
-	//private TextField partSelector;
-	private SpriteSetting unitSelector;
-	private SpriteSetting waveSelector;
 	private TextField delayTextField;
 	private FileChooser fileChooser;
-	private int myWidth;
+	// private int myWidth;
 	private int myHeight;
 	private final static String WAVE = "Wave";
 	private final static String UNIT = "Unit";
+	private static final int PADDING_SIZE = 10;
 	private List<String> partFileNames;
 	private List<Double> delays;
 
-	public FlowView(int width, int height) {
-		super(10);
-		myWidth = width;
+	/**
+	 * Creates the visual and input elements for the "timeline" in the
+	 * WaveEditor. Contains buttons to add a unit or wave and the delay time
+	 * between units/waves in a wave.
+	 * 
+	 * @param height
+	 *            Height of the hbox display
+	 */
+	public FlowView(int height) {
+		super(PADDING_SIZE);
+		// myWidth = width;
 		myHeight = height;
 		fileChooser = new FileChooser();
 		partFileNames = new ArrayList<String>();
 		delays = new ArrayList<Double>();
-		
-		VBox partSelector = new VBox(10);
-		//partSelector.setMaxHeight(myHeight);
-//		unitSelector = new SpriteSetting(UNIT, UNIT);
-//		waveSelector = new SpriteSetting(WAVE, WAVE);
-//		partSelector.getChildren().add(unitSelector);
-//		partSelector.getChildren().add(waveSelector);
-		
+
+		VBox partSelector = new VBox(PADDING_SIZE);
+
+		// TODO remove duplication when figure out how to do the lambda thing
 		Button selectUnitButton = new Button("Select Unit");
-		Button selectWaveButton = new Button("Select Wave");
-		
-		selectUnitButton.setOnAction(e -> {
-			selectUnit();
-		});
-		
-		selectWaveButton.setOnAction(e -> {
-			selectWave();
-		});
-		
+		selectUnitButton.setOnAction(e -> selectUnit());
 		partSelector.getChildren().add(selectUnitButton);
+
+		Button selectWaveButton = new Button("Select Wave");
+		selectWaveButton.setOnAction(e -> selectWave());
 		partSelector.getChildren().add(selectWaveButton);
-		
+
+		this.getChildren().add(partSelector);
+		this.getChildren().add(new Rectangle());
+
+		VBox arrow = createArrowAndDelayVisuals();
+		this.getChildren().add(arrow);
+		this.setPrefHeight(myHeight);
+	}
+
+	private VBox createArrowAndDelayVisuals() {
 		ImageView arrowImage = new ImageView(new Image("images/arrow_icon.png"));
 		ScaleImage.scaleByWidth(arrowImage, 120);
 		delayTextField = new TextField();
 		delayTextField.setMaxWidth(50);
-
-		this.getChildren().add(partSelector);
-		this.getChildren().add(new Rectangle());
-		VBox arrow = new VBox(10);
-		HBox timeInput = new HBox(10);
+		VBox arrow = new VBox(PADDING_SIZE);
+		HBox timeInput = new HBox(PADDING_SIZE);
 		timeInput.getChildren().add(delayTextField);
 		timeInput.getChildren().add(new Text("s"));
 		timeInput.setAlignment(Pos.CENTER);
 		arrow.getChildren().add(timeInput);
 		arrow.getChildren().add(arrowImage);
-		this.getChildren().add(arrow);
-		this.setPrefHeight(myHeight);
+		arrow.setAlignment(Pos.CENTER);
+		return arrow;
 	}
-	
+
 	private void selectUnit() {
 		SpriteSetting chooseUnit = new SpriteSetting(UNIT, UNIT);
 		insertElement(chooseUnit);
-		
+
 		List<Double> unitDelay = new ArrayList<Double>();
 		List<String> fileNames = new ArrayList<String>();
 		try {
 			unitDelay.add(Double.parseDouble(delayTextField.getText()));
+			delays = unitDelay;
 		} catch (NumberFormatException e) {
-			
+
 		}
 	}
-	
+
 	private void selectWave() {
 		File file = fileChooser.showOpenDialog(null);
 		Text waveNameDisplay = new Text(file.getName());
 		insertElement(waveNameDisplay);
-		
+
 		List<Double> unitDelay = new ArrayList<Double>();
 
 	}
@@ -114,12 +116,21 @@ public class FlowView extends HBox {
 		this.getChildren().remove(1);
 		this.getChildren().add(1, node);
 	}
-	
 
+	/**
+	 * Gets the file names of units/other waves in the wave.
+	 * 
+	 * @return List<String> of file names
+	 */
 	public List<String> getFileNames() {
 		return partFileNames;
 	}
 
+	/**
+	 * Gets the doubles corresponding to delay times between units in the wave.
+	 * 
+	 * @return List<Double> of delay times between units in the wave
+	 */
 	public List<Double> getDelays() {
 		return delays;
 	}

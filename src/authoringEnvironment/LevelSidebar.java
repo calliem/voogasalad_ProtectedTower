@@ -31,7 +31,7 @@ public class LevelSidebar extends Sidebar{
 	
 	public LevelSidebar(ResourceBundle resources, List<Node> maps, MapWorkspace mapWorkspace) {
 		super(resources, maps, mapWorkspace);
-		myMapEditor = Controller.getEditor(Controller.MAPS);
+		//myMapEditor = Controller.getEditor(Controller.MAPS);
 		createMapSettings();
 		
 	}
@@ -63,8 +63,8 @@ public class LevelSidebar extends Sidebar{
 	}
 	
 	public void update(){
-		myMapEditor = Controller.getEditor(Controller.MAPS); //update map editor from the controller
-		myMapList = FXCollections.observableArrayList(myMapEditor.getObjects());
+		//myMapEditor = Controller.getEditor(Controller.MAPS); //update map editor from the controller
+		//myMapList = FXCollections.observableArrayList(myMapEditor.getObjects());
 		
 	}
 

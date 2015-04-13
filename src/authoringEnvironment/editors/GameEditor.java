@@ -2,25 +2,35 @@ package authoringEnvironment.editors;
 
 import java.util.List;
 
-import javafx.geometry.Dimension2D;
+import authoringEnvironment.Controller;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+/**
+ * This displays the Main Game tab that prompts the user to enter information
+ * regarding descriptions of their game and general features that will hold true
+ * throughout. Updates here will be sent to the controller.
+ * 
+ * @author Callie Mao
+ *
+ */
+
 public class GameEditor extends Editor {
 
-	public GameEditor() {
-		super();
+	public GameEditor(Controller controller, String name) {
+		super(controller, name);
 	}
 
 	@Override
-	protected void configureUI() {
+	protected Group configureUI() {
 
 		// TODO: put everything into a StringSetting object
-
+		Group visuals = new Group();
 		GridPane framework = new GridPane();
 		framework.setVgap(10);
 		framework.setHgap(10);
@@ -47,19 +57,8 @@ public class GameEditor extends Editor {
 		framework.add(totalLives, 0, 2);
 		framework.add(totalLivesEntry, 1, 2);
 
-		getChildren().add(framework);
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
-		return null;
+		visuals.getChildren().add(framework);
+		return visuals;
 	}
 
 }

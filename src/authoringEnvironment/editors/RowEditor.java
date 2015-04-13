@@ -3,38 +3,24 @@ package authoringEnvironment.editors;
 import java.awt.ScrollPane;
 import java.util.List;
 
-import javafx.geometry.Dimension2D;
+import authoringEnvironment.Controller;
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 public class RowEditor extends Editor {
 
-	public RowEditor() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public RowEditor(Controller c, String name) {
+        super(c, name);
+    }
 
-	@Override
-	public void configureUI() {
-		ScrollPane foundation = new ScrollPane();
-		Rectangle background = new Rectangle();
-		
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public Group configureUI() {
+        ScrollPane foundation = new ScrollPane();
+        Rectangle background = new Rectangle();
+        return new Group();
+    }
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

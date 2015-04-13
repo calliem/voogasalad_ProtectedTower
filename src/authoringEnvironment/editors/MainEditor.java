@@ -1,16 +1,18 @@
 package authoringEnvironment.editors;
 
 import authoringEnvironment.Controller;
-import authoringEnvironment.MainEnvironment;
+import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.TileMap;
+import javafx.scene.Group;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
 /**
  * Displays the general layout for MainEditor classes/subclasses (ie. GameMap,
- * WaveEditor) consisting of a sidebar and a generic map.
+ * WaveEditor) consisting of a sidebar and a generic map. Users will be able to
+ * interact with both the map and the sidebar in subsequent subclasses.
  * 
  * @author Callie Mao
  */
@@ -30,9 +32,9 @@ public abstract class MainEditor extends Editor {
 															// VARIABLES IN MAP
 															// WORKSPACE
 
-	public MainEditor() {
-		super();
-		// TODO Auto-generated constructor stub
+	public MainEditor(Controller c, String name) {
+		super(c, name);
+		this.setStyle("-fx-base: #3c3c3c;");
 	}
 
 	/**
@@ -41,11 +43,13 @@ public abstract class MainEditor extends Editor {
 	// TODO: return groupor return a parent so that I can directly return a
 	// gridpane here?
 	@Override
-	protected void configureUI() {
+	protected Group configureUI() {
+		Group visuals = new Group();
 		createGridPane();
 		myMapWorkspace = new MapWorkspace();
 		myPane.add(myMapWorkspace, 0, 0);
-		getChildren().add(myPane);
+		visuals.getChildren().add(myPane);
+		return visuals;
 	}
 
 	private void createGridPane() {
@@ -66,7 +70,8 @@ public abstract class MainEditor extends Editor {
 		row0.setPercentHeight(MAP_HEIGHT_PERCENT);
 		pane.getRowConstraints().add(row0);
 		ColumnConstraints col0 = new ColumnConstraints();
-		col0.setPrefWidth(MainEnvironment.getEnvironmentWidth() * MAP_WIDTH_MULTIPLIER);
+		col0.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth()
+				* MAP_WIDTH_MULTIPLIER);
 		ColumnConstraints col1 = new ColumnConstraints();
 		// col1.setPrefWidth((MainEnvironment.getEnvironmentWidth() *
 		// SIDEBAR_WIDTH_MULTIPLIER); TODO: add this back
@@ -77,12 +82,10 @@ public abstract class MainEditor extends Editor {
 	protected GridPane getPane() {
 		return myPane;
 	}
-
-	@Override
-	public void update() {
-		MapEditor mapEditor = (MapEditor) Controller.getEditor(Controller.MAPS);
-		if (!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap())) {
-			getMapWorkspace().updateWithNewMap(mapEditor.getActiveMap());
-		}
-	}
+	/*
+	 * public void update(){ MapEditor mapEditor = (MapEditor)
+	 * Controller.getEditor(Controller.MAPS);
+	 * if(!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap())){
+	 * getMapWorkspace().updateWithNewMap(mapEditor.getActiveMap()); } }
+	 */
 }

@@ -36,29 +36,24 @@ public class LevelEditor extends MainEditor{
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/"; //TODO: stop duplicating this default resource package line
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "level_editor_english");
 	
-    public LevelEditor() {
-		super();
-		mySidebar = new LevelSidebar(myResources, Controller.getEditor("Maps").getObjects(), getMapWorkspace());
-		getPane().add(mySidebar,1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
-	    myLevels = new ArrayList<Node>();
+    public LevelEditor(Controller c, String name) {
+		super(c, name);
+		//mySidebar = new LevelSidebar(myResources, myMaps, getMapWorkspace());
+		//getPane().add(mySidebar,1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
+	  //  myLevels = new ArrayList<Node>();
 	}
 
-	@Override
-	public List<Node> getObjects() {
-		// TODO Auto-generated method stub
-		return myLevels;
-	}
-
+    
 	
 	
-	
+	/*
 	@Override
 	public void update() {
-	/*	System.out.println("level editor updated");		// TODO Auto-generated method stub		
+		System.out.println("level editor updated");		// TODO Auto-generated method stub		
 		MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps");  //TODO: find a way to get sthe same resource file but to also use myResources.getString() on the proper resource file //how to avoid this issue of more dependencies on this string name. lots of code will have to change in order to change this; maybe use indexes instead?
-    	getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());*/
+    	getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());
 		super.update();
 		getMapWorkspace().getActiveMap().removeTileListeners();
 		mySidebar.update();
-	}
+	}*/
 }

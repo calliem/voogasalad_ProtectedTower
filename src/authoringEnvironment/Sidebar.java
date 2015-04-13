@@ -16,8 +16,8 @@ import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 
 /**
- * This class is the generic sidebar method that contains the resource file and generalmethods shared by all sidebars
- * @author callie
+ * This class is the generic sidebar method that contains the resource file and general methods shared by all sidebars. Sidebars throughout the authoring environment will be of consistent proportional size and have consistency in how information (ie. titles and lists) are displayed.
+ * @author Callie Mao
  *
  */
 
@@ -27,10 +27,9 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 	private List<Node> myMaps; //can't seem to use list with this
 	private MapWorkspace myMapWorkspace; //TODO: or use more general StackPane?
 	
-	private static final double PADDING = MainEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead
-	private static final double LISTVIEW_HEIGHT = MainEnvironment.getEnvironmentHeight()/6;
-	private static final double TITLE_FONT_SIZE = MainEnvironment.getEnvironmentWidth()/85;
-
+	private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth()/128; //maybe set the spacing dynamically instead
+	private static final double LISTVIEW_HEIGHT = AuthoringEnvironment.getEnvironmentHeight()/6;
+	private static final double TITLE_FONT_SIZE = AuthoringEnvironment.getEnvironmentWidth()/85;
 
 	public Sidebar(ResourceBundle resources, List<Node> maps, MapWorkspace mapWorkspace){
 		
