@@ -1,5 +1,6 @@
 package engine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +44,7 @@ public class GameController {
     private void fillPackageMap () {
         myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
         myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
-        myPartTypeToPackage.put("Projectile",
-                                "engine.element.sprites.Projectile");
+        myPartTypeToPackage.put("Projectile", "engine.element.sprites.Projectile");
         myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
         myPartTypeToPackage.put("Game", "engine.element.Game");
         myPartTypeToPackage.put("Level", "engine.element.Level");
@@ -129,8 +129,9 @@ public class GameController {
     }
 
     public static void main (String[] args) throws InsufficientParametersException {
-        // GameController test =
-        // new GameController(
-        // "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile");
+        GameController test =
+                new GameController(
+                                   "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile",
+                                   new ArrayList<Node>());
     }
 }
