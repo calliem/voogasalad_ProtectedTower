@@ -1,8 +1,9 @@
 package engine;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import authoringEnvironment.GameCreator;
 import authoringEnvironment.InstanceManager;
@@ -10,11 +11,12 @@ import engine.element.Game;
 
 
 /**
- * This class contains the main game loop which runs the game and updates the Scene. The constructor
- * is given an ObservableList of nodes in the scene, as well as a list of the towers, enemies and
- * map created by the authoring environment. A new version of this class must be created by the
- * player whenever a new game is loaded. The player calls this class when it loads a new game, and
- * this class then runs the game.
+ * This class contains the main game loop which runs the game and updates the
+ * Scene. The constructor is given an ObservableList of nodes in the scene, as
+ * well as a list of the towers, enemies and map created by the authoring
+ * environment. A new version of this class must be created by the player
+ * whenever a new game is loaded. The player calls this class when it loads a
+ * new game, and this class then runs the game.
  * 
  * @author Qian Wang
  */
@@ -31,16 +33,15 @@ public class GameController {
      */
     Map<String, String> myPartTypeToPackage = new HashMap<>();
     /**
-     * Javafx object so that new nodes can be added for the player to display
+     * List of Javafx objects so that new nodes can be added for the player to
+     * display
      */
-    private Group myGroup;
+    private List<Node> myNodes;
 
-    public GameController () {
+    public GameController (String filepath, List<Node> nodes)
+        throws InsufficientParametersException {
         fillPackageMap();
-    }
-
-    public GameController (String filepath) throws InsufficientParametersException {
-        this();
+        myNodes = nodes;
         myGame = this.loadGame(filepath);
     }
 
@@ -48,7 +49,8 @@ public class GameController {
     private void fillPackageMap () {
         myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
         myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
-        myPartTypeToPackage.put("Projectile", "engine.element.sprites.Projectile");
+        myPartTypeToPackage.put("Projectile",
+                                "engine.element.sprites.Projectile");
         myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
         myPartTypeToPackage.put("Game", "engine.element.Game");
         myPartTypeToPackage.put("Level", "engine.element.Level");
@@ -59,14 +61,18 @@ public class GameController {
 
     /**
      * Given a location of a game file, the {@link GameCreator#loadGame(String)} method if called,
-     * which generates a map of objects names to the parameters which those objects should contain.
-     * Those objects are then instantiated and their parameter lists are set.
+     * which generates a map of objects names to the
+     * parameters which those objects should contain. Those objects are then
+     * instantiated and their parameter lists are set.
      * 
-     * @param filepath String of location of the game file
-     * @throws InsufficientParametersException when multiple games/layouts are created, or when no
-     *         game elements are specified
+     * @param filepath
+     *        String of location of the game file
+     * @throws InsufficientParametersException
+     *         when multiple games/layouts are created, or when no game
+     *         elements are specified
      */
-    private Game loadGame (String filepath) throws InsufficientParametersException {
+    private Game loadGame (String filepath)
+                                           throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String s : myPartTypeToPackage.keySet()) {
             myObjects.put(s, new HashMap<>());
@@ -74,7 +80,8 @@ public class GameController {
 
         // Get list of parameters maps for all objects
         // TODO change to collection or set
-        Map<String, Map<String, Object>> allDataObjects = InstanceManager.loadGameData(filepath);
+        Map<String, Map<String, Object>> allDataObjects = InstanceManager
+                .loadGameData(filepath);
 
         // Organize parameters maps
         for (String key : allDataObjects.keySet()) {
@@ -87,11 +94,12 @@ public class GameController {
         }
 
         // store game parameters
-        Game myGame = new Game();
+        Game myGame = new Game(myNodes);
 
         // TODO test for errors for 0 data files, or too many
         if (myObjects.get("Game").size() > 1) {
-            throw new InsufficientParametersException("Multiple game data files created");
+            throw new InsufficientParametersException(
+                                                      "Multiple game data files created");
         }
         else {
             for (Map<String, Object> map : myObjects.get("Game").values()) {
@@ -99,7 +107,8 @@ public class GameController {
             }
         }
         if (myObjects.get("Layout").size() > 1) {
-            throw new InsufficientParametersException("Multiple game layouts created");
+            throw new InsufficientParametersException(
+                                                      "Multiple game layouts created");
         }
         else {
             for (Map<String, Object> map : myObjects.get("Layout").values()) {
@@ -120,26 +129,19 @@ public class GameController {
     }
 
     /**
-     * Called by the player to give the engine a group to add sprite nodes to
-     * 
-     * @param group Javafx Group object
-     */
-    public void setGroup (Group group) {
-        myGroup = group;
-    }
-
-    /**
      * Called by the player to tell engine about keypressed
      * 
-     * @param key KeyEvent object
+     * @param key
+     *        KeyEvent object
      */
     public void handleKeyInput (KeyEvent key) {
 
     }
 
-    public static void main (String[] args) throws InsufficientParametersException {
-        GameController test =
-                new GameController(
-                                   "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile");
+    public static void main (String[] args)
+                                           throws InsufficientParametersException {
+        // GameController test =
+        // new GameController(
+        // "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile");
     }
 }
