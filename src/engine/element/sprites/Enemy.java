@@ -5,16 +5,15 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javafx.scene.image.ImageView;
 import javafx.animation.PathTransition;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
-import pathsearch.graph.PathCell;
-import pathsearch.pathalgorithms.NoPathExistsException;
-import pathsearch.pathalgorithms.ObstacleFunction;
-import pathsearch.wrappers.GridWrapper;
+import util.pathsearch.graph.PathCell;
+import util.pathsearch.pathalgorithms.NoPathExistsException;
+import util.pathsearch.pathalgorithms.ObstacleFunction;
+import util.pathsearch.wrappers.GridWrapper;
 
 
 

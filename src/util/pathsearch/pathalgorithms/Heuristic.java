@@ -1,6 +1,6 @@
-package pathsearch.pathalgorithms;
+package util.pathsearch.pathalgorithms;
 
-import pathsearch.graph.GraphNode;
+import util.pathsearch.graph.GraphNode;
 
 /**
  * @author Kaighn

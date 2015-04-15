@@ -1,4 +1,4 @@
-package pathsearch.graph;
+package util.pathsearch.graph;
 
 /**
  * Strategy for calculating if two grid entries are neighbors. Ex: Square versus Hexagon.
