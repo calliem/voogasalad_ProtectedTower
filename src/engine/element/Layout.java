@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Circle;
@@ -39,38 +38,57 @@ import engine.element.sprites.TowerFactory;
 public class Layout extends GameElement implements Updateable {
 
     private static final String PARAMETER_SIZE = "TileSize";
+
+    /**
+     * List of Javafx objects so that new nodes can be added for the player to display
+     */
+    private List<Node> myNodeList;
+    /**
+     * Contains the map of the current game
+     */
+    private GameMap myGameMap;
+    // Lists of game elements
     private List<Sprite> towerList;
     private List<Sprite> enemyList;
     private List<Sprite> projectileList;
-    private GridCell[][] terrainMap;
-    // private List<List<GridCell>> spriteMap; not sure if necessary yet
-    // private List<Sprite> spritesList; not sure if necessary
-    private double gridSize;
+    // Factories to create game elements
     private TowerManager myTowerManager;
     private TowerFactory myTowerFactory;
     private EnemyFactory myEnemyFactory;
     private ProjectileFactory myProjectileFactory;
     private GridCellFactory myGridCellFactory;
-    private List<Node> myNodeList;
-    private Quadtree quadTree;
-    private CollisionTable collisionTable;
+    /**
+     * Quad tree object used for collision
+     */
+    private Quadtree myQuadTree = null;
+    /**
+     * Table which contains interactions between game elements
+     */
+    private CollisionTable myCollisionTable;
 
-    public Layout (List<Node> nodeList) {
+    // private List<List<GridCell>> spriteMap; not sure if necessary yet
+    // private List<Sprite> spritesList; not sure if necessary
+
+    public Layout (List<Node> nodes) {
+        myNodeList = nodes;
+        // TODO fix this dependency, get rid of TowerManager?
         myTowerFactory = new TowerFactory();
         myTowerManager = new TowerManager(myTowerFactory);
         myTowerFactory.addManager(myTowerManager);
-        myNodeList = nodeList;
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
         myGridCellFactory = new GridCellFactory();
     }
 
-    public void init (GridCell[][] map, CollisionTable table) {
-        terrainMap = map;
-        collisionTable = table;
+    public void setMap (String mapName) {
+        myGameMap = new GameMap(mapName);
         gridSize = (double) map[0][0].getParameter(PARAMETER_SIZE);
         Rectangle pBounds = new Rectangle(map.length * gridSize, map[0].length * gridSize);
-        quadTree = new Quadtree(1, pBounds);
+        myQuadTree = new Quadtree(1, pBounds);
+    }
+
+    public void setCollisionTable (CollisionTable table) {
+        myCollisionTable = table;
     }
 
     @Override
@@ -110,7 +128,7 @@ public class Layout extends GameElement implements Updateable {
             List<Sprite> sprites = getPossibleCollisions(s);
             for (Sprite t : sprites)
                 if (collides(createHitBox(s), createHitBox(t)) &&
-                    collisionTable.collisionCheck(s, t))
+                    myCollisionTable.collisionCheck(s, t))
                     s.collide(t);
         }
     }
@@ -183,14 +201,14 @@ public class Layout extends GameElement implements Updateable {
     }
 
     private void createQuadTree (List<Sprite> inserts) {
-        quadTree.clear();
+        myQuadTree.clear();
         for (Sprite e : inserts)
-            quadTree.insert(e);
+            myQuadTree.insert(e);
     }
 
     private List<Sprite> getPossibleCollisions (Sprite target) {
         List<Sprite> collidable = new ArrayList<>();
-        quadTree.retrieve(collidable, target);
+        myQuadTree.retrieve(collidable, target);
         return collidable;
     }
 
