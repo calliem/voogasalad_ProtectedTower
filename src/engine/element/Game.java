@@ -27,7 +27,6 @@ public class Game extends GameElement implements Updateable {
     private List<Level> myLevels;
     private Layout myLayout;
     private int myActiveLevel;
-    // public GameState myGameState;
     private Bank myBank;
     private int myPoints;
 
@@ -37,7 +36,6 @@ public class Game extends GameElement implements Updateable {
 
         myLayout = new Layout();
         myActiveLevel = 0;
-        // myGameState = new GameState();
         myBank = new Bank();
         myPoints = 0;
     }

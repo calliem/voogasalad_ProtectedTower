@@ -20,7 +20,8 @@ import engine.element.Game;
  */
 
 public class GameController {
-    private static final String PARAMETER_GUID = "GUID";
+    private static final String PARAMETER_PARTTYPE = "PartType";
+    private static final String PARAMETER_GUID = "PartKey";
     /**
      * Holds an instance of an entire game
      */
@@ -35,13 +36,12 @@ public class GameController {
     private Group myGroup;
 
     public GameController () {
-
+        fillPackageMap();
     }
 
     public GameController (String filepath) throws InsufficientParametersException {
-        myGame = new Game();
-        this.loadGame(filepath, myGame);
-        fillPackageMap();
+        this();
+        myGame = this.loadGame(filepath);
     }
 
     // TODO replace this with loading from data file
@@ -63,11 +63,10 @@ public class GameController {
      * Those objects are then instantiated and their parameter lists are set.
      * 
      * @param filepath String of location of the game file
-     * @param engineRoot
      * @throws InsufficientParametersException when multiple games/layouts are created, or when no
      *         game elements are specified
      */
-    public void loadGame (String filepath, Game game) throws InsufficientParametersException {
+    private Game loadGame (String filepath) throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String s : myPartTypeToPackage.keySet()) {
             myObjects.put(s, new HashMap<>());
@@ -80,14 +79,16 @@ public class GameController {
         // Organize parameters maps
         for (String key : allDataObjects.keySet()) {
             Map<String, Object> obj = allDataObjects.get(key);
-            String partType = (String) obj.get(InstanceManager.partTypeKey);
-            // String packageLocation = myPartTypeToPackage.get(partType);
-            // Sprite currentObject = (Sprite) Reflection.createInstance(packageLocation);
-            // currentObject.setParameterMap(obj);
+            String partType = (String) obj.get(PARAMETER_PARTTYPE);
+
+            // System.out.println(obj);
             myObjects.get(partType).put((String) obj.get(PARAMETER_GUID), obj);
+            System.out.println((String) obj.get(PARAMETER_GUID));
         }
 
         // store game parameters
+        Game myGame = new Game();
+
         // TODO test for errors for 0 data files, or too many
         if (myObjects.get("Game").size() > 1) {
             throw new InsufficientParametersException("Multiple game data files created");
@@ -114,6 +115,8 @@ public class GameController {
         myGame.addLevels(myObjects.get("Level"));
         // TODO add rounds to levels
         // TODO add rounds and waves to factory
+
+        return myGame;
     }
 
     /**
@@ -134,4 +137,9 @@ public class GameController {
 
     }
 
+    public static void main (String[] args) throws InsufficientParametersException {
+        GameController test =
+                new GameController(
+                                   "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile");
+    }
 }
