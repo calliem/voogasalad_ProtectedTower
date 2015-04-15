@@ -17,7 +17,7 @@ import engine.TowerManager;
 public class TowerFactory {
 
     private Map<String, Map<String, Object>> myTowers;
-    private final static String MY_CLASS_NAME = "engine.sprites.Tower";
+    private final static String MY_CLASS_NAME = "engine.element.sprites.Tower";
     private TowerManager myTowerManager;
 
     public TowerFactory () {

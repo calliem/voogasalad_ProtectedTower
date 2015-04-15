@@ -15,7 +15,7 @@ import util.reflection.Reflection;
 
 public class EnemyFactory {
     private Map<String, Map<String, Object>> myEnemies;
-    private final static String MY_CLASS_NAME = "engine.sprites.Enemy";
+    private final static String MY_CLASS_NAME = "engine.element.sprites.Enemy";
 
     public EnemyFactory () {
         myEnemies = new HashMap<>();

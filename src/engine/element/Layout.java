@@ -18,11 +18,14 @@ import engine.element.sprites.Enemy;
 import engine.element.sprites.EnemyFactory;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.GridCellFactory;
+import engine.element.sprites.MapFactory;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.ProjectileFactory;
+import engine.element.sprites.RoundFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 import engine.element.sprites.TowerFactory;
+import engine.element.sprites.WaveFactory;
 
 
 /**
@@ -57,6 +60,9 @@ public class Layout extends GameElement implements Updateable {
     private EnemyFactory myEnemyFactory;
     private ProjectileFactory myProjectileFactory;
     private GridCellFactory myGridCellFactory;
+    private MapFactory myGameMapFactory;
+    private RoundFactory myRoundFactory;
+    private WaveFactory myWaveFactory;
     /**
      * Quad tree object used for collision
      */
@@ -78,10 +84,13 @@ public class Layout extends GameElement implements Updateable {
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
         myGridCellFactory = new GridCellFactory();
+        myGameMapFactory = new MapFactory();
+        myRoundFactory = new RoundFactory();
+        myWaveFactory = new WaveFactory();
     }
 
     public void setMap (String mapName) {
-        myGameMap = new GameMap(mapName);
+        myGameMap = myGameMapFactory.getMap(mapName);
         gridSize = (double) map[0][0].getParameter(PARAMETER_SIZE);
         Rectangle pBounds = new Rectangle(map.length * gridSize, map[0].length * gridSize);
         myQuadTree = new Quadtree(1, pBounds);
@@ -282,5 +291,17 @@ public class Layout extends GameElement implements Updateable {
 
     public void initializeGridCells (Map<String, Map<String, Object>> allObjects) {
         myGridCellFactory.add(allObjects);
+    }
+
+    public void initializeGameMaps (Map<String, Map<String, Object>> allObjects) {
+        myGameMapFactory.add(allObjects);
+    }
+
+    public void initializeRounds (Map<String, Map<String, Object>> allObjects) {
+        myRoundFactory.add(allObjects);
+    }
+
+    public void initializeWaves (Map<String, Map<String, Object>> allObjects) {
+        myWaveFactory.add(allObjects);
     }
 }

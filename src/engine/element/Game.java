@@ -87,6 +87,18 @@ public class Game extends GameElement implements Updateable {
         myLayout.initializeGridCells(allObjects);
     }
 
+    public void addGameMaps (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeGameMaps(allObjects);
+    }
+
+    public void addRounds (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeRounds(allObjects);
+    }
+
+    public void addWaves (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeWaves(allObjects);
+    }
+
     public void addLayoutParameters (Map<String, Object> parameters) {
         myLayout.setParameterMap(parameters);
     }

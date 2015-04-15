@@ -48,6 +48,7 @@ public class GameController {
         myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
         myPartTypeToPackage.put("Game", "engine.element.Game");
         myPartTypeToPackage.put("Level", "engine.element.Level");
+        myPartTypeToPackage.put("GameMap", "engine.element.GameMap");
         myPartTypeToPackage.put("Round", "engine.element.Round");
         myPartTypeToPackage.put("Wave", "engine.element.Wave");
         myPartTypeToPackage.put("Layout", "engine.element.Layout");
@@ -112,8 +113,9 @@ public class GameController {
         myGame.addProjectiles(myObjects.get("Projectile"));
         myGame.addGridCells(myObjects.get("GridCell"));
         myGame.addLevels(myObjects.get("Level"));
-        // TODO add rounds to levels
-        // TODO add rounds and waves to factory
+        myGame.addGameMaps(myObjects.get("GameMap"));
+        myGame.addRounds(myObjects.get("Round"));
+        myGame.addWaves(myObjects.get("Wave"));
 
         return myGame;
     }
