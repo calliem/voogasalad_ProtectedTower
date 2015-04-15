@@ -4,15 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.javafx.event.DirectEvent;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -22,21 +20,18 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Screen;
@@ -56,10 +51,11 @@ public class GamePlayer extends Application{
 	private Group engineRoot = new Group();
 	private Scene mainScene;
 	private VBox sideBar;
-	private GridPane towerGrid;
+	private GridPane towerGrid= new GridPane();
 	private double screenWidth = 0;
 	private double screenHeight = 0;
 	private Pane mainArea;
+	private ScrollPane towerDisplay;
 	public GamePlayer() throws InsufficientParametersException {
 		game = new GameController();
 	}
@@ -75,10 +71,7 @@ public class GamePlayer extends Application{
 			availableTowers.addListener(new ListChangeListener<Tower>(){
 				@Override
 				public void onChanged(Change change) {
-				while(change.next()){
-				addToSideBar(change.getAddedSubList());
-				deleteFromSideBar(change.getRemoved());
-				}
+				 makeTowerGrid(change.getList());
 				}
 			});
 			ObservableList<Tower> displayList = FXCollections.observableArrayList(new ArrayList<>());
@@ -98,51 +91,29 @@ public class GamePlayer extends Application{
 				}
 			});
 			//game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight, availableTowers);
-			ImageView test = new ImageView(".\\images\\liltower.jpg");
-			ImageView test2 = new ImageView(".\\images\\liltower.jpg");
-			ImageView test3 = new ImageView(".\\images\\liltower.jpg");
-			ImageView test4 = new ImageView(".\\images\\liltower.jpg");
-			ImageView test5 = new ImageView(".\\images\\liltower.jpg");
-			test5.setTranslateX(300);
-			test5.setTranslateY(300);
+			Image myImage = new Image(".\\images\\liltower.jpg");
+			ImageView test = new ImageView(myImage);
+			ImageView test1 = new ImageView(myImage);
+//			ImageView test2 = new ImageView(myImage);
+//			ImageView test3 = new ImageView(myImage);
+//			ImageView test4 = new ImageView(myImage);
+//			ImageView test5 = new ImageView(myImage);
+//			test5.setTranslateX(300);
+//			test5.setTranslateY(300);
 			availableTowers.add(new Tower(test));
-			availableTowers.add(new Tower(test2));
-			availableTowers.add(new Tower(test3));
-			availableTowers.add(new Tower(test4));
-			displayList.add(new Tower(test5));
+			availableTowers.add(new Tower(test1));
+//			availableTowers.add(new Tower(test2));
+//			availableTowers.add(new Tower(test3));
+//			availableTowers.add(new Tower(test4));
+//			displayList.add(new Tower(test5));
 		}
 		catch(NullPointerException e){
+			System.out.println("hi");
 		}
 		
 	
 	}
-	private void addToSideBar(List<Sprite> addedSubList) {
-		if(addedSubList.size()!=0){
-		for(Sprite s:addedSubList){
-			int currentSize = towerGrid.getChildren().size();
-			double oldWidth = s.getImageView().getBoundsInLocal().getWidth();
-			ImageView myView = s.getImageView();
-			myView.setOnDragDetected(new EventHandler<MouseEvent>(){
 
-				@Override
-				public void handle(MouseEvent event) {
-				      Dragboard db = myView.startDragAndDrop(TransferMode.ANY);
-				        
-				        /* Put a string on a dragboard */
-				        ClipboardContent content = new ClipboardContent();
-				        content.putImage(myView.getImage());
-				        db.setContent(content);
-				        
-				        event.consume();
-				        System.out.println("started drag");
-				    }
-				
-			});
-			towerGrid.add(myView, currentSize%2, currentSize/2);
-			GridPane.setHgrow(myView, Priority.NEVER);
-		}	
-		}
-	}
 	private void deleteFromSideBar(List<Sprite> deletedSubList) {
 		while(!deletedSubList.isEmpty()){
 				Sprite toDeleteSprite = deletedSubList.remove(0);
@@ -162,6 +133,7 @@ public class GamePlayer extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		playerStage = primaryStage;
 		setScreenBounds(primaryStage);
+		playerStage.setMaximized(true);
 		Group root = new Group();
 		Group menu = new Group();
 		sideBar = makeSideBar();
@@ -214,33 +186,67 @@ public class GamePlayer extends Application{
 		sideBar.setStyle("-fx-border-style: solid outside; -fx-border-size: 0 0 0 2; -fx-border-color: transparent transparent transparent black; -fx-padding: 0; -fx-background-color: #00fb10");
 		//makeGameVarBox();
 		//makeSpriteInfoBox();
-		ScrollPane towerDisplay = makeTurretBox();
+		towerDisplay = makeTowerScrollBox();
 		sideBar.getChildren().add(towerDisplay);
 		VBox.setMargin(towerDisplay, new Insets(0));
 		return sideBar;
 	}
 	
-	private ScrollPane makeTurretBox() {
-		// TODO Auto-generated method stub
-		ScrollPane towerDisplay = new ScrollPane();
+	private ScrollPane makeTowerScrollBox() {
+		towerDisplay = new ScrollPane();
 		towerDisplay.setPrefWidth(screenWidth/4);
 		towerDisplay.setPrefHeight(screenHeight/2);
 		towerDisplay.setTranslateY(screenHeight/2);
 		towerDisplay.setStyle("-fx-background-color:transparent");
 		towerDisplay.vbarPolicyProperty().set(ScrollBarPolicy.AS_NEEDED);
 		towerDisplay.hbarPolicyProperty().set(ScrollBarPolicy.AS_NEEDED);
-		towerDisplay.setContent(makeGridPane(towerDisplay));
 		return towerDisplay;
 	}
-	private GridPane makeGridPane(ScrollPane gridHolder){
+	private void makeTowerGrid(ObservableList<Tower> towerList){
 		towerGrid = new GridPane();
-		 ColumnConstraints col1 = new ColumnConstraints();
-	     col1.setMaxWidth(gridHolder.getPrefWidth()/2);
-	     ColumnConstraints col2 = new ColumnConstraints();
-	     col2.setMaxWidth(gridHolder.getPrefWidth()/2);
-	     towerGrid.getColumnConstraints().addAll(col1,col2);
-	     towerGrid.setHgap(50);
-		return towerGrid;
+		towerGrid.setPadding(new Insets(20));
+		towerGrid.setAlignment(Pos.CENTER);
+		double maxWidth = 0;
+		for(Tower tower: towerList){
+			double towerWidth = tower.getImageView().getBoundsInParent().getWidth();
+			if(towerWidth>maxWidth){
+				maxWidth = towerWidth;
+			}
+		}
+		int numCols =(int) Math.floor((towerDisplay.getPrefWidth()-40)/(maxWidth));
+		if(numCols>towerList.size()){
+			numCols = towerList.size();
+		}
+		System.out.println(numCols);
+		towerGrid.setHgap((towerDisplay.getPrefWidth()-40-numCols*maxWidth)/(numCols-1));
+		for(int i = 0; i<numCols;i++){
+			 ColumnConstraints currCol = new ColumnConstraints();
+			 currCol.setMaxWidth(maxWidth);
+		 	 towerGrid.getColumnConstraints().add(currCol);	
+		}
+		//if(numCols!=1){
+			//}
+		for(int i=0; i<towerList.size(); i++){
+			ImageView myView = towerList.get(i).getImageView();
+			myView.setOnDragDetected(new EventHandler<MouseEvent>(){
+
+				@Override
+				public void handle(MouseEvent event) {
+				      Dragboard db = myView.startDragAndDrop(TransferMode.ANY);
+				        
+				        /* Put a string on a dragboard */
+				        ClipboardContent content = new ClipboardContent();
+				        content.putImage(myView.getImage());
+				        db.setContent(content);
+				        
+				        event.consume();
+				        System.out.println("started drag");
+				    }
+				
+			});
+			towerGrid.add(myView, i%numCols, i/numCols);
+		}
+	     towerDisplay.setContent(towerGrid);
 	}
 	private Pane makeMainPane() {
 		Pane mainArea = new Pane(engineRoot);
