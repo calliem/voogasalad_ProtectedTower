@@ -1,8 +1,5 @@
 package engine.element.sprites;
 
-import java.security.InvalidParameterException;
-import java.util.HashMap;
-import java.util.Map;
 import util.reflection.Reflection;
 
 
@@ -13,28 +10,18 @@ import util.reflection.Reflection;
  *
  */
 
-public class ProjectileFactory {
-
-    private Map<String, Map<String, Object>> myProjectiles;
+public class ProjectileFactory extends SpriteFactory {
     private final static String MY_CLASS_NAME = "engine.sprites.Projectile";
 
     public ProjectileFactory () {
-        myProjectiles = new HashMap<>();
+        super(MY_CLASS_NAME);
     }
 
-    public void addProjectile (Map<String, Object> projectileProperties) {
-        String enemyID =
-                (String) projectileProperties.get("Group") + "_" +
-                        (String) projectileProperties.get("Name");
-        myProjectiles.put(enemyID, projectileProperties);
-    }
-
-    public Projectile getProjectile (String userInput) {
-        if (!myProjectiles.containsKey(userInput)) { throw new InvalidParameterException(userInput +
-                                                                                         " is an undefined projectile"); }
+    public Projectile getProjectile (String projectileID) {
+        super.checkID(projectileID);
 
         Projectile projectile = (Projectile) Reflection.createInstance(MY_CLASS_NAME);
-        projectile.setParameterMap(myProjectiles.get(userInput));
+        projectile.setParameterMap(super.getSpriteParameters(projectileID));
 
         return projectile;
     }
