@@ -20,7 +20,6 @@ import engine.element.sprites.Projectile;
 import engine.element.sprites.ProjectileFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
-import engine.element.sprites.TowerFactory;
 
 
 /**
@@ -31,6 +30,7 @@ import engine.element.sprites.TowerFactory;
  * 
  * @author Michael Yang
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
 public class Layout extends GameElement implements Updateable {
@@ -44,16 +44,13 @@ public class Layout extends GameElement implements Updateable {
     // private List<Sprite> spritesList; not sure if necessary
     private double gridSize;
     private TowerManager myTowerManager;
-    private TowerFactory myTowerFactory;
     private EnemyFactory myEnemyFactory;
     private ProjectileFactory myProjectileFactory;
     private Quadtree quadTree;
     private CollisionTable collisionTable;
 
     public Layout () {
-        myTowerFactory = new TowerFactory();
-        myTowerManager = new TowerManager(myTowerFactory);
-        myTowerFactory.addManager(myTowerManager);
+        myTowerManager = new TowerManager();
 
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
@@ -244,7 +241,7 @@ public class Layout extends GameElement implements Updateable {
     }
 
     public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
-        myTowerFactory.addTower(allTowers);
+        myTowerManager.addTower(allTowers);
     }
 
     public void initializeEnemy (Map<String, Object> parameters) {

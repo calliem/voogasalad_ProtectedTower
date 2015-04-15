@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import engine.element.sprites.Tower;
-import engine.element.sprites.TowerFactory;
 
 
 /**
@@ -50,9 +48,8 @@ public class TowerNode {
         return myGroup;
     }
 
-    protected Tower getTower (TowerFactory factory) {
-        String towerID = myGroup + "_" + myName;
-        return factory.getTower(towerID);
+    protected Map<String, Object> getTowerParameters () {
+        return myParameters;
     }
 
     protected boolean addNextNode (TowerNode node) {
@@ -65,7 +62,6 @@ public class TowerNode {
      * }
      */
 
-    @SuppressWarnings("unchecked")
     protected List<String> getNextNodes () {
         return (List<String>) myParameters.get("nextTower");
     }
