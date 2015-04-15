@@ -1,4 +1,4 @@
-package pathsearch.pathalgorithms;
+package util.pathsearch.pathalgorithms;
 
 /**
  * @author Kaighn

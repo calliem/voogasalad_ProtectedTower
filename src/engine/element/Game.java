@@ -1,9 +1,10 @@
 package engine.element;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import util.reflection.Reflection;
 import engine.Bank;
 import engine.Updateable;
 import engine.conditions.Condition;
@@ -19,13 +20,13 @@ import engine.conditions.Condition;
  */
 public class Game extends GameElement implements Updateable {
 
+    private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
     private static final String PARAMETER_HEALTH = "HP";
 
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
     private int myActiveLevel;
-    // public GameState myGameState;
     private Bank myBank;
     private int myPoints;
 
@@ -35,7 +36,6 @@ public class Game extends GameElement implements Updateable {
 
         myLayout = new Layout();
         myActiveLevel = 0;
-        // myGameState = new GameState();
         myBank = new Bank();
         myPoints = 0;
     }
@@ -51,19 +51,38 @@ public class Game extends GameElement implements Updateable {
         myLayout.update(counter);
     }
 
-    public void addTowers (Map<String, Map<String, Object>> allTowers) {
-        myLayout.initializeTowers(allTowers);
+    /**
+     * Adds levels to the list of all levels, fills their parameter maps, and sorts levels by number
+     * 
+     * @param levels Map<String, Map<String, Object>> mapping GUID to parameters map for each level
+     */
+    public void addLevels (Map<String, Map<String, Object>> levels) {
+        levels.keySet().forEach(l -> {
+            Level tempLevel = (Level) Reflection.createInstance(PACKAGE_LOCATION_LEVEL);
+            tempLevel.setParameterMap(levels.get(l));
+            myLevels.add(tempLevel);
+        });
+        Collections.sort(myLevels);
     }
 
-    public void addEnemies (Collection<Map<String, Object>> enemyParameters) {
-        for (Map<String, Object> map : enemyParameters) {
-            myLayout.initializeEnemy(map);
-        }
+    // TODO refactor add methods below
+    public void addTowers (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeTowers(allObjects);
     }
 
-    public void addProjectiles (Collection<Map<String, Object>> projectileParameters) {
-        for (Map<String, Object> map : projectileParameters) {
-            myLayout.initializeProjectile(map);
-        }
+    public void addEnemies (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeEnemies(allObjects);
+    }
+
+    public void addProjectiles (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeProjectiles(allObjects);
+    }
+
+    public void addGridCells (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeGridCells(allObjects);
+    }
+
+    public void addLayoutParameters (Map<String, Object> parameters) {
+        myLayout.setParameterMap(parameters);
     }
 }

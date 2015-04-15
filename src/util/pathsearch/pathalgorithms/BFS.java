@@ -1,4 +1,4 @@
-package pathsearch.pathalgorithms;
+package util.pathsearch.pathalgorithms;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,9 +8,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import pathsearch.graph.Edge;
-import pathsearch.graph.GraphNode;
+import util.pathsearch.graph.Edge;
+import util.pathsearch.graph.GraphNode;
 
 /**
  * @author Kaighn
