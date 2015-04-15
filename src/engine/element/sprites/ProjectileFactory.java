@@ -16,7 +16,7 @@ import util.reflection.Reflection;
 public class ProjectileFactory {
 
     private Map<String, Map<String, Object>> myProjectiles;
-    private final static String MY_CLASS_NAME = "engine.sprites.Projectile";
+    private final static String MY_CLASS_NAME = "engine.element.sprites.Projectile";
 
     public ProjectileFactory () {
         myProjectiles = new HashMap<>();

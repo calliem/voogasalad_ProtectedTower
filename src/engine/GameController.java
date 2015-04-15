@@ -43,11 +43,11 @@ public class GameController {
     private void fillPackageMap () {
         myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
         myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
-        myPartTypeToPackage.put("Projectile",
-                                "engine.element.sprites.Projectile");
+        myPartTypeToPackage.put("Projectile", "engine.element.sprites.Projectile");
         myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
         myPartTypeToPackage.put("Game", "engine.element.Game");
         myPartTypeToPackage.put("Level", "engine.element.Level");
+        myPartTypeToPackage.put("GameMap", "engine.element.GameMap");
         myPartTypeToPackage.put("Round", "engine.element.Round");
         myPartTypeToPackage.put("Wave", "engine.element.Wave");
         myPartTypeToPackage.put("Layout", "engine.element.Layout");
