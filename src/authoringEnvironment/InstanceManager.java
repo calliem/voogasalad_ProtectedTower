@@ -378,6 +378,7 @@ public class InstanceManager {
 		example.saveGame();
 		// this method is called with the path to the .game file, which will be
 		// received from the user
+		//TODO:  Use this statement to load the example map
 		Map<String, Map<String, Object>> gamedata = InstanceManager
 				.loadGameData(gameRootDirectory
 						+ "/TestingManagerGame/TestingManagerGame.gamefile");
