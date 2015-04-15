@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Scaler;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.UpdatableDisplay;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
+import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +35,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 /**
  * Right sidebar on the map editor containing display properties that allows a
@@ -75,6 +79,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 	private TextField tileColDisplay;
 	private TextField tileSizeDisplay;
 	private VBox mapSettings;
+	private Scaler myScaler;
 
 	public MapSidebar(ResourceBundle resources, ObservableList<Node> maps,
 			MapWorkspace mapWorkspace) { // active map may not yet be saved and
@@ -84,6 +89,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 		// mySelectedMap = activeMap;
 		myMapWorkspace = mapWorkspace;
 		myLives = DEFAULT_LIVES;
+		myScaler = new Scaler(); //TODO: might be able to move this to superclass
 		/*
 		 * ObservableList<PathView> pathList =
 		 * FXCollections.observableArrayList();
@@ -269,8 +275,26 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 	private void removeMap() {
 		System.out.println("removing map from map sidebar");
 		System.out.println("Maps before remove: " + getMaps());
-		getMaps().remove(myMapWorkspace.getActiveMap());
-		getMapWorkspace().removeMap();
+		
+		ScaleTransition scale = myScaler.scaleEditScreen(1.0, 0.0, myMapWorkspace.getActiveMap());
+		scale.setOnFinished((e) -> {
+			getMaps().remove(myMapWorkspace.getActiveMap());
+			getMapWorkspace().removeMap();
+		});
+		
+		
+		//PauseTransition wait = new PauseTransition(Duration.millis(200));
+		//wait.setOnFinished((e) -> getMapWorkspace().removeMap());
+		
+//		ScaleTransition scale = myScaler.scaleEditScreen(1.0, 0.0, overlay);
+//		scale.setOnFinished((e) -> {
+//			myContent.getChildren().remove(overlay);
+//			overlayActive = false;
+//		});
+		
+		//wait.play();
+		
+		
 		System.out.println("Maps after remove: " + getMaps());
 	}
 
@@ -283,14 +307,23 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 	 */
 
 	protected void createMap() {
-		getMapWorkspace().createDefaultMap();
-		tileRowDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
-				.getNumRows()));
-		tileColDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
-				.getNumCols()));
-		tileSizeDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
-				.getTileSize()));
-		myMapWorkspace.getActiveMap().setActiveColor(myActiveColor);
+		
+		TileMap newMap = getMapWorkspace().createDefaultMap();
+		ScaleTransition scale = myScaler.scaleEditScreen(0.0, 1.0, newMap);
+		scale.setOnFinished((e) -> {
+			getMaps().remove(myMapWorkspace.getActiveMap());
+			//getMapWorkspace().getChildren().add(newMap);
+			tileRowDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
+					.getNumRows()));
+			tileColDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
+					.getNumCols()));
+			tileSizeDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
+					.getTileSize()));
+			myMapWorkspace.getActiveMap().setActiveColor(myActiveColor);
+		});
+		
+		
+		
 		// TODO: textField.setText to update it
 	}
 

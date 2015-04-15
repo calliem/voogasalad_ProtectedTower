@@ -9,6 +9,7 @@ import java.util.List;
 import util.reflection.Reflection;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.Scaler;
 import authoringEnvironment.objects.ProjectileView;
 import authoringEnvironment.objects.SpriteView;
 import authoringEnvironment.objects.TowerView;
@@ -49,6 +50,7 @@ public abstract class SpriteEditor extends Editor {
 	private Text empty;
 	private List<Node> spritesCreated;
 	private IntegerProperty numSprites;
+	private Scaler myScaler;
 
 	private static final double CONTENT_WIDTH = AuthoringEnvironment
 			.getEnvironmentWidth();
@@ -69,6 +71,7 @@ public abstract class SpriteEditor extends Editor {
 	 */
 	public SpriteEditor(Controller c, String name) {
 		super(c, name);
+		myScaler = new Scaler();
 	}
 
 	/**
@@ -270,14 +273,14 @@ public abstract class SpriteEditor extends Editor {
 	private void showEditScreen(StackPane overlay) {
 		if (!overlayActive) {
 			myContent.getChildren().add(overlay);
-			scaleEditScreen(0.0, 1.0, overlay);
+			myScaler.scaleEditScreen(0.0, 1.0, overlay);
 			overlayActive = true;
 		}
 	}
 
 	private void hideEditScreen(StackPane overlay) {
 		if (overlayActive) {
-			ScaleTransition scale = scaleEditScreen(1.0, 0.0, overlay);
+			ScaleTransition scale = myScaler.scaleEditScreen(1.0, 0.0, overlay);
 			scale.setOnFinished((e) -> {
 				myContent.getChildren().remove(overlay);
 				overlayActive = false;
@@ -285,7 +288,7 @@ public abstract class SpriteEditor extends Editor {
 		}
 	}
 
-	private ScaleTransition scaleEditScreen(double from, double to,
+	/*private ScaleTransition scaleEditScreen(double from, double to,
 			StackPane overlay) {
 		ScaleTransition scale = new ScaleTransition(Duration.millis(200),
 				overlay);
@@ -297,7 +300,7 @@ public abstract class SpriteEditor extends Editor {
 		scale.play();
 
 		return scale;
-	}
+	}*/
 
 	private void finishEditing(HBox editControls, Button edit, Button add) {
 		TranslateTransition move = transitionButton(add, -10, 90);
