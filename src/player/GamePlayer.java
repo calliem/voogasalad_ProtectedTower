@@ -62,7 +62,6 @@ public class GamePlayer extends Application{
 	// find and open .game file
 	public void loadGame(){
 		
-		try{
 			engineRoot.getChildren().clear();
 			towerGrid.getChildren().clear();
 			File gameFile = getGameFile();
@@ -107,12 +106,6 @@ public class GamePlayer extends Application{
 //			availableTowers.add(new Tower(test4));
 //			displayList.add(new Tower(test5));
 		}
-		catch(NullPointerException e){
-			System.out.println("hi");
-		}
-		
-	
-	}
 
 	private void deleteFromSideBar(List<Sprite> deletedSubList) {
 		while(!deletedSubList.isEmpty()){
