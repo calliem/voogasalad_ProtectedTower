@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import javafx.scene.Node;
 import util.reflection.Reflection;
 import engine.Bank;
 import engine.Updateable;
@@ -29,12 +31,13 @@ public class Game extends GameElement implements Updateable {
     private int myActiveLevel;
     private Bank myBank;
     private int myPoints;
+    private List<Node> myNodes;
 
-    public Game () {
+    public Game (List<Node> nodes) {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
-
-        myLayout = new Layout();
+        myNodes = nodes;
+        myLayout = new Layout(myNodes);
         myActiveLevel = 0;
         myBank = new Bank();
         myPoints = 0;

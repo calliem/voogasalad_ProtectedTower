@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -49,14 +51,15 @@ public class Layout extends GameElement implements Updateable {
     private EnemyFactory myEnemyFactory;
     private ProjectileFactory myProjectileFactory;
     private GridCellFactory myGridCellFactory;
+    private List<Node> myNodeList;
     private Quadtree quadTree;
     private CollisionTable collisionTable;
 
-    public Layout () {
+    public Layout (List<Node> nodeList) {
         myTowerFactory = new TowerFactory();
         myTowerManager = new TowerManager(myTowerFactory);
         myTowerFactory.addManager(myTowerManager);
-
+        myNodeList = nodeList;
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
         myGridCellFactory = new GridCellFactory();

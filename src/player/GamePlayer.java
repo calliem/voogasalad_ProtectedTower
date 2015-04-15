@@ -56,12 +56,10 @@ public class GamePlayer extends Application{
 	private double screenHeight = 0;
 	private Pane mainArea;
 	private ScrollPane towerDisplay;
-	public GamePlayer() throws InsufficientParametersException {
-		game = new GameController();
-	}
+	private GameController myGameController;
 	// find and open .game file
-	public void loadGame(){
-		
+	public void loadGame() {
+			
 			engineRoot.getChildren().clear();
 			towerGrid.getChildren().clear();
 			File gameFile = getGameFile();
@@ -73,8 +71,14 @@ public class GamePlayer extends Application{
 				 makeTowerGrid(change.getList());
 				}
 			});
-			ObservableList<Tower> displayList = FXCollections.observableArrayList(new ArrayList<>());
-			displayList.addListener(new ListChangeListener<Sprite>(){
+			ObservableList<Node> displayList = FXCollections.observableArrayList(new ArrayList<>());
+			//try{
+			//myGameController = new GameController(gameFile.getParent(),displayList);
+			//}
+			//catch(InsufficientParametersException e){
+				//return;
+			//}
+			displayList.addListener(new ListChangeListener<Node>(){
 				@Override
 				public void onChanged(Change change) {
 				while(change.next()){
@@ -106,19 +110,6 @@ public class GamePlayer extends Application{
 //			availableTowers.add(new Tower(test4));
 //			displayList.add(new Tower(test5));
 		}
-
-	private void deleteFromSideBar(List<Sprite> deletedSubList) {
-		while(!deletedSubList.isEmpty()){
-				Sprite toDeleteSprite = deletedSubList.remove(0);
-				ImageView toDelete = deletedSubList.remove(0).getImageView();
-				ArrayList<Node> currentList= new ArrayList<>(towerGrid.getChildren());
-					for(Node node:currentList){
-						if(toDelete.equals(node)){
-							towerGrid.getChildren().remove(toDeleteSprite);
-						}
-			}
-		}
-	}
 	public static void main(String[] args){
 		launch(args);
 	}
