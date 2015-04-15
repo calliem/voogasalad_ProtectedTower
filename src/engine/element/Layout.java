@@ -91,8 +91,8 @@ public class Layout extends GameElement implements Updateable {
 
     public void setMap (String mapName) {
         myGameMap = myGameMapFactory.getMap(mapName);
-        gridSize = (double) map[0][0].getParameter(PARAMETER_SIZE);
-        Rectangle pBounds = new Rectangle(map.length * gridSize, map[0].length * gridSize);
+        Rectangle pBounds =
+                new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
         myQuadTree = new Quadtree(1, pBounds);
     }
 

@@ -35,4 +35,12 @@ public class GameMap extends GameElement {
     public GridCell[][] getMap () {
         return myMap;
     }
+
+    public double getCoordinateHeight () {
+        return (double) super.getParameter("Rows") * (double) super.getParameter("TileSize");
+    }
+
+    public double getCoordinateWidth () {
+        return (double) super.getParameter("Columns") * (double) super.getParameter("TileSize");
+    }
 }
