@@ -6,7 +6,9 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -21,7 +23,7 @@ import authoringEnvironment.objects.TileMap;
  *
  */
 
-public abstract class Sidebar extends VBox { //extend gridpane pls
+public abstract class Sidebar extends Accordion { //extend gridpane pls
 	
 	private ResourceBundle myResources;
 	private List<Node> myMaps; //can't seem to use list with this
@@ -37,7 +39,7 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 		myMaps = maps;
 		myMapWorkspace = mapWorkspace;
 		setDimensionRestrictions();
-		setSpacing(10);
+		//setSpacing(10);
 		//createMapSettings();
 	}
 	
@@ -56,11 +58,14 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 	
 	protected abstract void createMapSettings();
 	
-	protected void createTitleText(String s) {
+	protected VBox createTitleText(String s) {
 		Text title = new Text(s);
 		title.setFont(new Font(TITLE_FONT_SIZE));
 		title.setUnderline(true);
-		getChildren().add(title);
+		VBox context = new VBox();
+		TitledPane organizer = new TitledPane(s, context);
+		getPanes().add(organizer);
+		return context;
 	}
 	
 	protected ListView<Node> createListView(ObservableList<Node> items, int height) {
@@ -72,9 +77,9 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 	}
 
 	private void setDimensionRestrictions() {
-		setPadding(new Insets(PADDING));
+		//setPadding(new Insets(PADDING));
 		//setSpacing(3);
-		setMaxWidth(Double.MAX_VALUE);
+	//	setMaxWidth(Double.MAX_VALUE);
 	}
 	
 	

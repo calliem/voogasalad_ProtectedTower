@@ -67,7 +67,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 			.getEnvironmentWidth() / 32;
 	private int myLives;
 	private MapWorkspace myMapWorkspace;
-	// private TileMap mySelectedMap;
 	private static final int DEFAULT_LIVES = 20; // TODO: how to get this number
 													// from Johnny
 	private Color myActiveColor;
@@ -75,6 +74,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 	private TextField tileRowDisplay;
 	private TextField tileColDisplay;
 	private TextField tileSizeDisplay;
+	private VBox mapSettings;
 
 	public MapSidebar(ResourceBundle resources, ObservableList<Node> maps,
 			MapWorkspace mapWorkspace) { // active map may not yet be saved and
@@ -96,7 +96,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 		// TODO: make a main tab to display the stuff here
 		// createTitleText(getResources().getString("GameSettings"));
 		// setLives();
-		createTitleText(getResources().getString("MapSettings"));
+		mapSettings = createTitleText(getResources().getString("MapSettings"));
 	//	createTitleText(getResources().getString("SetTiles"));
 		selectTile();
 		createSettings();
@@ -107,7 +107,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
 	private void displayMaps() {
 		UpdatableDisplay mapDisplay = new UpdatableDisplay(getMaps());
-		getChildren().add(mapDisplay);
+		mapSettings.getChildren().add(mapDisplay);
 	}
 
 	// Lots of duplication below
@@ -129,7 +129,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
 		textField.setPrefWidth(TEXT_FIELD_WIDTH);
 		selection.getChildren().addAll(lives, textField, button);
-		getChildren().add(selection);
+		mapSettings.getChildren().add(selection);
 	}
 
 	private void setTileSize() {
@@ -144,7 +144,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 		tileSizeDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
 		Text px = new Text(getResources().getString("PxSuffix"));
 		selection.getChildren().addAll(lives, tileSizeDisplay, px, button);
-		getChildren().add(selection);
+		mapSettings.getChildren().add(selection);
 
 	}
 
@@ -167,7 +167,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
 		selectTile.getChildren().addAll(selection, rectangleDisplay);
 
-		getChildren().add(selectTile);
+		mapSettings.getChildren().add(selectTile);
 		picker.setOnAction(e -> changeActiveTileColor(picker.getValue(), rectangleDisplay));
 	}
 
@@ -212,7 +212,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 		setTileSize();
 
 		
-		getChildren().add(selection);
+		mapSettings.getChildren().add(selection);
 
 	}
 
@@ -234,7 +234,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 			myMapWorkspace.getActiveMap().setBackground(newValue);
 		});
 
-		getChildren().add(imgSelector);
+		mapSettings.getChildren().add(imgSelector);
 	}
 
 	// TODO: find a way to make this work
@@ -263,7 +263,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 		deleteMapButton.setStyle("-fx-background-color: #cd3333; -fx-text-fill: white;");
 		deleteMapButton.setOnMouseClicked(e -> removeMap());
 		mapButtons.getChildren().addAll(createMapButton, saveMapButton, deleteMapButton);
-		getChildren().add(mapButtons);
+		mapSettings.getChildren().add(mapButtons);
 	}
 
 	private void removeMap() {
