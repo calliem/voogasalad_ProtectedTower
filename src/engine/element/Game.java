@@ -30,6 +30,10 @@ public class Game extends GameElement implements Updateable {
     private int myActiveLevel;
     private Bank myBank;
     private int myPoints;
+    /**
+     * List of Javafx objects so that new nodes can be added for the player to
+     * display
+     */
     private List<Node> myNodes;
 
     public Game (List<Node> nodes) {

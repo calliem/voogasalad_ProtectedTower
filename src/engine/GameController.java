@@ -32,17 +32,11 @@ public class GameController {
      * Holds a map of a part name to the package to use to reflect
      */
     Map<String, String> myPartTypeToPackage = new HashMap<>();
-    /**
-     * List of Javafx objects so that new nodes can be added for the player to
-     * display
-     */
-    private List<Node> myNodes;
 
     public GameController (String filepath, List<Node> nodes)
         throws InsufficientParametersException {
         fillPackageMap();
-        myNodes = nodes;
-        myGame = this.loadGame(filepath);
+        myGame = this.loadGame(filepath, nodes);
     }
 
     // TODO replace this with loading from data file
@@ -65,14 +59,13 @@ public class GameController {
      * parameters which those objects should contain. Those objects are then
      * instantiated and their parameter lists are set.
      * 
-     * @param filepath
-     *        String of location of the game file
-     * @throws InsufficientParametersException
-     *         when multiple games/layouts are created, or when no game
-     *         elements are specified
+     * @param filepath String of location of the game file
+     * @param nodes List<Node> list of javafx nodes that the game can update
+     * @throws InsufficientParametersException when multiple games/layouts are created, or when no
+     *         game elements are specified
      */
-    private Game loadGame (String filepath)
-                                           throws InsufficientParametersException {
+    private Game loadGame (String filepath, List<Node> nodes)
+                                                             throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String s : myPartTypeToPackage.keySet()) {
             myObjects.put(s, new HashMap<>());
@@ -80,8 +73,7 @@ public class GameController {
 
         // Get list of parameters maps for all objects
         // TODO change to collection or set
-        Map<String, Map<String, Object>> allDataObjects = InstanceManager
-                .loadGameData(filepath);
+        Map<String, Map<String, Object>> allDataObjects = InstanceManager.loadGameData(filepath);
 
         // Organize parameters maps
         for (String key : allDataObjects.keySet()) {
@@ -94,12 +86,11 @@ public class GameController {
         }
 
         // store game parameters
-        Game myGame = new Game(myNodes);
+        Game myGame = new Game(nodes);
 
         // TODO test for errors for 0 data files, or too many
         if (myObjects.get("Game").size() > 1) {
-            throw new InsufficientParametersException(
-                                                      "Multiple game data files created");
+            throw new InsufficientParametersException("Multiple game data files created");
         }
         else {
             for (Map<String, Object> map : myObjects.get("Game").values()) {
@@ -107,8 +98,7 @@ public class GameController {
             }
         }
         if (myObjects.get("Layout").size() > 1) {
-            throw new InsufficientParametersException(
-                                                      "Multiple game layouts created");
+            throw new InsufficientParametersException("Multiple game layouts created");
         }
         else {
             for (Map<String, Object> map : myObjects.get("Layout").values()) {
@@ -138,8 +128,7 @@ public class GameController {
 
     }
 
-    public static void main (String[] args)
-                                           throws InsufficientParametersException {
+    public static void main (String[] args) throws InsufficientParametersException {
         // GameController test =
         // new GameController(
         // "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile");
