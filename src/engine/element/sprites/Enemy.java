@@ -2,6 +2,7 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.animation.PathTransition;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -53,7 +54,7 @@ public class Enemy extends MoveableSprite {
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) / speed));
         pathTransition.setPath(path);
-        pathTransition.setNode(super.getImage());
+        pathTransition.setNode(super.getImageView());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.play();
     }
