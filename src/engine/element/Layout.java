@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Circle;
@@ -19,11 +18,14 @@ import engine.element.sprites.Enemy;
 import engine.element.sprites.EnemyFactory;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.GridCellFactory;
+import engine.element.sprites.MapFactory;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.ProjectileFactory;
+import engine.element.sprites.RoundFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 import engine.element.sprites.TowerFactory;
+import engine.element.sprites.WaveFactory;
 
 
 /**
@@ -54,6 +56,9 @@ public class Layout extends GameElement implements Updateable {
     private List<Node> myNodeList;
     private Quadtree quadTree;
     private CollisionTable collisionTable;
+    private MapFactory myGameMapFactory;
+    private RoundFactory myRoundFactory;
+    private WaveFactory myWaveFactory;
 
     public Layout (List<Node> nodeList) {
         myTowerFactory = new TowerFactory();
@@ -264,5 +269,17 @@ public class Layout extends GameElement implements Updateable {
 
     public void initializeGridCells (Map<String, Map<String, Object>> allObjects) {
         myGridCellFactory.add(allObjects);
+    }
+
+    public void initializeGameMaps (Map<String, Map<String, Object>> allObjects) {
+        myGameMapFactory.add(allObjects);
+    }
+
+    public void initializeRounds (Map<String, Map<String, Object>> allObjects) {
+        myRoundFactory.add(allObjects);
+    }
+
+    public void initializeWaves (Map<String, Map<String, Object>> allObjects) {
+        myWaveFactory.add(allObjects);
     }
 }
