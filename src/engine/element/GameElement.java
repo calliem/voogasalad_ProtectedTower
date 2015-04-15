@@ -1,5 +1,6 @@
 package engine.element;
 
+import java.util.Collections;
 import java.util.Map;
 
 
@@ -35,5 +36,12 @@ public abstract class GameElement {
      */
     public Object getParameter (String name) {
         return myParameters.get(name);
+    }
+
+    /**
+     * @return the full Map<String, Object> object representing all parameters
+     */
+    protected Map<String, Object> getAllParameters () {
+        return Collections.unmodifiableMap(myParameters);
     }
 }
