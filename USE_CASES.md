@@ -51,31 +51,3 @@ Editor Cases
 43. User assigns enemies their spawn points
 44. User assigns enemies the path they will follow
 
-Second Sprint Implementation Use Cases
-User creates a new wave
-User uses previously saved wave in creation of a new wave
-User adds a unit to the wave
-User determines time delay between units/waves in a wave
-User sets background image for map
-User sets grid size of map
-User sets tile size of the tiles that make up the grid of the map
-User sets tile color
-User names a new game
-User determines how many lives the player has in a game
-User adds a description to the game
-User defines a new tile type for the Map
-User sets towers to only be set on certain types of tiles
-User goes back to menu from inside the authoring environment
-User deletes a map
-User dictates a unit as friendly
-User changes lose condition for player
-User creates paths on his map
-User assigns waves to those paths
-User builds a round out of waves
-User builds a level out of rounds
-User specifies what happens in between rounds 
-User adds level to tower hierarchy
-User specifies changes of this hierarchy level
-User recycles this hierarchy on another tower
-User creates a new item
-User updates item’s parameters

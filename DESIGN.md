@@ -268,3 +268,12 @@ public void loseScreen(){}
 
 
 }
+
+Engine Design Updates
+---
+The engine is now run by a `GameController` class whose job is to set up the animation of the game, load the game, and handle input and play/pause. The `Game` object has to hold the players points and the bank, but mainly involves the `Layout` class and the `Levels` class. The `Layout` class is responsible for storing the positions of all game elements, as well as add new elements and take old elements away from the game. This class is used to handle the calling of movement and collision methods so that the game will animate. The `Level` class is responsible for knowing what is contained in each level/round/wave as well as at what time a new enemy should be spawned and in what location.
+
+The communication between the front-end player and the back-end engine is handled through public API calls such as ones to load a game and control it's progress (through play and pause) as well as give key input. An observable list is used so that the engine may add elements that the player should display. We have decided to allow javafx objects within the engine so that the handling of these elements can be done by the engine classes since they are the ones that knew when new enemies or towers are added, or when to remove them from the screen.
+
+The use of data files to store the parameters of each object and their interactions is still being used, but there has been talk of moving to using annotations to decide what parameters may be changed by the user.
+
