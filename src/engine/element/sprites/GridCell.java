@@ -1,11 +1,7 @@
 package engine.element.sprites;
 
 import java.util.List;
-import java.util.Map;
-
 import javafx.geometry.Point2D;
-import javafx.scene.image.ImageView;
-import engine.InsufficientParametersException;
 
 
 /**
@@ -18,24 +14,16 @@ import engine.InsufficientParametersException;
  */
 public class GridCell extends Sprite {
 
-	private List<String> myTags;
-	private Point2D centerLocation;
-	
-	public GridCell (Map<String, Object> params) throws InsufficientParametersException {
-        super(params);
-    }
+    private List<String> myTags;
+    private Point2D centerLocation;
 
-    public GridCell (ImageView img) {
-        super(img);
-    }
-    
     /**
      * Sets the center of grid cell
      * 
      * @param location Point2D object representing (x, y) coordinates
      */
     public void setCenter (Point2D location) {
-    	centerLocation = location;
+        centerLocation = location;
     }
 
     /**
@@ -45,7 +33,7 @@ public class GridCell extends Sprite {
      * @param y double of y-coordinate
      */
     public void setCenter (double x, double y) {
-    	centerLocation = new Point2D(x, y);
+        centerLocation = new Point2D(x, y);
     }
 
     /**

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -16,11 +17,14 @@ import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.EnemyFactory;
 import engine.element.sprites.GridCell;
+import engine.element.sprites.GridCellFactory;
+import engine.element.sprites.MapFactory;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.ProjectileFactory;
+import engine.element.sprites.RoundFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
-import engine.element.sprites.TowerFactory;
+import engine.element.sprites.WaveFactory;
 
 
 /**
@@ -31,40 +35,70 @@ import engine.element.sprites.TowerFactory;
  * 
  * @author Michael Yang
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
 public class Layout extends GameElement implements Updateable {
 
     private static final String PARAMETER_SIZE = "TileSize";
+    private static final String PARAMETER_HP = "HP";
+    private static final String PARAMETER_RANGE = "range";
+    private static final String PARAMETER_BOUNDINGHEIGHT = "BoundingHeight";
+    private static final String PARAMETER_BOUNDINGWIDTH = "BoundingWidth";
+
+    /**
+     * List of Javafx objects so that new nodes can be added for the player to display
+     */
+    private List<Node> myNodeList;
+    /**
+     * Contains the map of the current game
+     */
+    private GameMap myGameMap;
+    // Lists of game elements
     private List<Sprite> towerList;
     private List<Sprite> enemyList;
     private List<Sprite> projectileList;
-    private GridCell[][] terrainMap;
-    // private List<List<GridCell>> spriteMap; not sure if necessary yet
-    // private List<Sprite> spritesList; not sure if necessary
-    private double gridSize;
+    // Factories to create game elements
     private TowerManager myTowerManager;
-    private TowerFactory myTowerFactory;
     private EnemyFactory myEnemyFactory;
     private ProjectileFactory myProjectileFactory;
-    private Quadtree quadTree;
-    private CollisionTable collisionTable;
+    private GridCellFactory myGridCellFactory;
+    private MapFactory myGameMapFactory;
+    private RoundFactory myRoundFactory;
+    private WaveFactory myWaveFactory;
+    /**
+     * Quad tree object used for collision
+     */
+    private Quadtree myQuadTree = null;
+    /**
+     * Table which contains interactions between game elements
+     */
+    private CollisionTable myCollisionTable;
 
-    public Layout () {
-        myTowerFactory = new TowerFactory();
-        myTowerManager = new TowerManager(myTowerFactory);
-        myTowerFactory.addManager(myTowerManager);
+    // private List<List<GridCell>> spriteMap; not sure if necessary yet
+    // private List<Sprite> spritesList; not sure if necessary
 
+    public Layout (List<Node> nodes) {
+        myNodeList = nodes;
+        // TODO fix this dependency, get rid of TowerManager?
+        myTowerManager = new TowerManager();
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
+        myGridCellFactory = new GridCellFactory();
+        myGameMapFactory = new MapFactory();
+        myRoundFactory = new RoundFactory();
+        myWaveFactory = new WaveFactory();
     }
 
-    public void init (GridCell[][] map, CollisionTable table) {
-        terrainMap = map;
-        collisionTable = table;
-        gridSize = (double) map[0][0].getParameter(PARAMETER_SIZE);
-        Rectangle pBounds = new Rectangle(map.length * gridSize, map[0].length * gridSize);
-        quadTree = new Quadtree(1, pBounds);
+    public void setMap (String mapName) {
+        myGameMap = myGameMapFactory.getMap(mapName);
+        Rectangle pBounds =
+                new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
+        myQuadTree = new Quadtree(1, pBounds);
+    }
+
+    public void setCollisionTable (CollisionTable table) {
+        myCollisionTable = table;
     }
 
     @Override
@@ -88,7 +122,7 @@ public class Layout extends GameElement implements Updateable {
         }
         for (Sprite s : enemyList) {
             // check if dead or to be removed
-            if ((int) s.getParameter("HP") <= 0)
+            if ((int) s.getParameter(PARAMETER_HP) <= 0)
                 enemyList.remove(s);
             // else
             // s.update();
@@ -104,7 +138,7 @@ public class Layout extends GameElement implements Updateable {
             List<Sprite> sprites = getPossibleCollisions(s);
             for (Sprite t : sprites)
                 if (collides(createHitBox(s), createHitBox(t)) &&
-                    collisionTable.collisionCheck(s, t))
+                    myCollisionTable.collisionCheck(s, t))
                     s.collide(t);
         }
     }
@@ -144,13 +178,13 @@ public class Layout extends GameElement implements Updateable {
 
     private Circle createRange (Sprite s) {
         return new Circle(s.getLocation().getX(), s.getLocation().getY(),
-                          (double) s.getParameter("range"));
+                          (double) s.getParameter(PARAMETER_RANGE));
     }
 
     private Rectangle createHitBox (Sprite s) {
         return new Rectangle(s.getLocation().getX(), s.getLocation().getY(),
-                             (double) s.getParameter("BoundingWidth"),
-                             (double) s.getParameter("BoundingHeight"));
+                             (double) s.getParameter(PARAMETER_BOUNDINGWIDTH),
+                             (double) s.getParameter(PARAMETER_BOUNDINGHEIGHT));
     }
 
     private boolean collides (Shape sprite1, Shape sprite2) {
@@ -177,14 +211,14 @@ public class Layout extends GameElement implements Updateable {
     }
 
     private void createQuadTree (List<Sprite> inserts) {
-        quadTree.clear();
+        myQuadTree.clear();
         for (Sprite e : inserts)
-            quadTree.insert(e);
+            myQuadTree.insert(e);
     }
 
     private List<Sprite> getPossibleCollisions (Sprite target) {
         List<Sprite> collidable = new ArrayList<>();
-        quadTree.retrieve(collidable, target);
+        myQuadTree.retrieve(collidable, target);
         return collidable;
     }
 
@@ -244,14 +278,30 @@ public class Layout extends GameElement implements Updateable {
     }
 
     public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
-        myTowerFactory.addTower(allTowers);
+        myTowerManager.addTower(allTowers);
     }
 
-    public void initializeEnemy (Map<String, Object> parameters) {
-        myEnemyFactory.addEnemy(parameters);
+    public void initializeEnemies (Map<String, Map<String, Object>> allObjects) {
+        myEnemyFactory.add(allObjects);
     }
 
-    public void initializeProjectile (Map<String, Object> parameters) {
-        myProjectileFactory.addProjectile(parameters);
+    public void initializeProjectiles (Map<String, Map<String, Object>> allObjects) {
+        myProjectileFactory.add(allObjects);
+    }
+
+    public void initializeGridCells (Map<String, Map<String, Object>> allObjects) {
+        myGridCellFactory.add(allObjects);
+    }
+
+    public void initializeGameMaps (Map<String, Map<String, Object>> allObjects) {
+        myGameMapFactory.add(allObjects);
+    }
+
+    public void initializeRounds (Map<String, Map<String, Object>> allObjects) {
+        myRoundFactory.add(allObjects);
+    }
+
+    public void initializeWaves (Map<String, Map<String, Object>> allObjects) {
+        myWaveFactory.add(allObjects);
     }
 }

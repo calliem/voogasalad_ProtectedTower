@@ -3,8 +3,9 @@ package authoringEnvironment.objects;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import authoringEnvironment.setting.IntegerSetting;
+import authoringEnvironment.Controller;
 import authoringEnvironment.setting.SpriteSetting;
 import imageselectorTEMP.util.ScaleImage;
 import javafx.geometry.Pos;
@@ -30,11 +31,11 @@ import javafx.stage.FileChooser;
 public class FlowView extends HBox {
 	private TextField delayTextField;
 	private FileChooser fileChooser;
-	// private int myWidth;
+	private Controller myController;
 	private int myHeight;
 	private final static String WAVE = "Wave";
-	private final static String UNIT = "Unit";
-	private static final int PADDING_SIZE = 10;
+	private final static String enemies = "Enemies";
+	private static final int paddingSize = 10;
 	private List<String> partFileNames;
 	private List<Double> delays;
 
@@ -46,15 +47,15 @@ public class FlowView extends HBox {
 	 * @param height
 	 *            Height of the hbox display
 	 */
-	public FlowView(int height) {
-		super(PADDING_SIZE);
-		// myWidth = width;
+	public FlowView(int height, Controller c) {
+		super(paddingSize);
+		c = myController;
 		myHeight = height;
 		fileChooser = new FileChooser();
 		partFileNames = new ArrayList<String>();
 		delays = new ArrayList<Double>();
 
-		VBox partSelector = new VBox(PADDING_SIZE);
+		VBox partSelector = new VBox(paddingSize);
 
 		// TODO remove duplication when figure out how to do the lambda thing
 		Button selectUnitButton = new Button("Select Unit");
@@ -78,8 +79,8 @@ public class FlowView extends HBox {
 		ScaleImage.scaleByWidth(arrowImage, 120);
 		delayTextField = new TextField();
 		delayTextField.setMaxWidth(50);
-		VBox arrow = new VBox(PADDING_SIZE);
-		HBox timeInput = new HBox(PADDING_SIZE);
+		VBox arrow = new VBox(paddingSize);
+		HBox timeInput = new HBox(paddingSize);
 		timeInput.getChildren().add(delayTextField);
 		timeInput.getChildren().add(new Text("s"));
 		timeInput.setAlignment(Pos.CENTER);
@@ -90,7 +91,7 @@ public class FlowView extends HBox {
 	}
 
 	private void selectUnit() {
-		SpriteSetting chooseUnit = new SpriteSetting(UNIT, UNIT);
+		SpriteSetting chooseUnit = new SpriteSetting(enemies, enemies);
 		insertElement(chooseUnit);
 
 		List<Double> unitDelay = new ArrayList<Double>();
@@ -108,8 +109,15 @@ public class FlowView extends HBox {
 		Text waveNameDisplay = new Text(file.getName());
 		insertElement(waveNameDisplay);
 
-		List<Double> unitDelay = new ArrayList<Double>();
+		Map<String, Object> waveInfo = myController.loadPart(file
+				.getAbsolutePath());
+		try {
+			String times = "Times";
+			delays = (List<Double>) waveInfo.get(times);
+			partFileNames = (List<String>) waveInfo.get(enemies);
+		} catch (NullPointerException e) {
 
+		}
 	}
 
 	private void insertElement(Node node) {

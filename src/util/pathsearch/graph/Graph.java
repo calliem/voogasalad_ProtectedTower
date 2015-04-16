@@ -1,4 +1,4 @@
-package pathsearch.graph;
+package util.pathsearch.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import pathsearch.pathalgorithms.AStar;
-import pathsearch.pathalgorithms.BFS;
-import pathsearch.pathalgorithms.Heuristic;
-import pathsearch.pathalgorithms.NoPathExistsException;
+import util.pathsearch.pathalgorithms.AStar;
+import util.pathsearch.pathalgorithms.BFS;
+import util.pathsearch.pathalgorithms.Heuristic;
+import util.pathsearch.pathalgorithms.NoPathExistsException;
 
 /**
  * @author Kaighn

@@ -1,4 +1,4 @@
-package pathsearch.graph;
+package util.pathsearch.graph;
 
 
 /**
