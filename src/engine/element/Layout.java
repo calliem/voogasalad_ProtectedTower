@@ -278,7 +278,7 @@ public class Layout extends GameElement implements Updateable {
     }
 
     public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
-        myTowerManager.addTower(allTowers);
+        myTowerManager.add(allTowers);
     }
 
     public void initializeEnemies (Map<String, Map<String, Object>> allObjects) {
