@@ -23,24 +23,21 @@ public abstract class Sprite extends GameElement implements Collidable {
     private ImageView myImage;
     private Point2D myLocation;
     private String myType;
-    private Map<String, Object> myParams;
 
     public Sprite () {
+
     }
 
-    public Sprite (Map<String, Object> params) {
-        myParams = params;
+    // TODO remove these once testing is over
+    @Deprecated
+    public ImageView getImageView () {
+        return myImage;
     }
 
-    public Sprite (ImageView i) {
-        myImage = i;
+    @Deprecated
+    protected void setImageView (ImageView image) {
+        myImage = image;
     }
-
-    // public abstract List<String> getParameters ();
-
-    // public double getSize () {
-    // return 0;
-    // }
 
     // Setters and getters
 
@@ -80,15 +77,12 @@ public abstract class Sprite extends GameElement implements Collidable {
         return myLocation.getY();
     }
 
-    public ImageView getImage () {
-        return myImage;
-    }
-
     /**
      * Sets the type of object this is as an uppercase string
      * 
      * @param type String of the type of object
      */
+    @Deprecated
     protected void setType (String type) {
         myType = type.toUpperCase();
     }
@@ -96,12 +90,13 @@ public abstract class Sprite extends GameElement implements Collidable {
     /**
      * @return uppercase String of the type of object this is
      */
+    @Deprecated
     protected String getType () {
         return myType;
     }
 
-    public Map<String, Object> getParams () {
-        return myParams;
+    public Map<String, Object> getAllParameters () {
+        return super.getAllParameters();
     }
 
     @Override
@@ -112,10 +107,6 @@ public abstract class Sprite extends GameElement implements Collidable {
     @Override
     public double getBoundingWidth () {
         return (double) super.getParameter(PARAMETER_BOUNDING_WIDTH);
-    }
-
-    public ImageView getImageView () {
-        return myImage;
     }
 
     // Abstract methods

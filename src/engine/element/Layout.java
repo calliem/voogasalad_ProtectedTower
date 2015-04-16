@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -16,11 +17,15 @@ import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.EnemyFactory;
 import engine.element.sprites.GridCell;
+import engine.element.sprites.GridCellFactory;
+import engine.element.sprites.MapFactory;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.ProjectileFactory;
+import engine.element.sprites.RoundFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 import engine.element.sprites.TowerFactory;
+import engine.element.sprites.WaveFactory;
 
 
 /**
@@ -47,16 +52,22 @@ public class Layout extends GameElement implements Updateable {
     private TowerFactory myTowerFactory;
     private EnemyFactory myEnemyFactory;
     private ProjectileFactory myProjectileFactory;
+    private GridCellFactory myGridCellFactory;
+    private List<Node> myNodeList;
     private Quadtree quadTree;
     private CollisionTable collisionTable;
+    private MapFactory myGameMapFactory;
+    private RoundFactory myRoundFactory;
+    private WaveFactory myWaveFactory;
 
-    public Layout () {
+    public Layout (List<Node> nodeList) {
         myTowerFactory = new TowerFactory();
         myTowerManager = new TowerManager(myTowerFactory);
         myTowerFactory.addManager(myTowerManager);
-
+        myNodeList = nodeList;
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
+        myGridCellFactory = new GridCellFactory();
     }
 
     public void init (GridCell[][] map, CollisionTable table) {
@@ -243,15 +254,32 @@ public class Layout extends GameElement implements Updateable {
         return spritesList;
     }
 
-    public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
-        myTowerFactory.addTower(allTowers);
+    // TODO refactor next methods
+    public void initializeTowers (Map<String, Map<String, Object>> allObjects) {
+        myTowerFactory.add(allObjects);
     }
 
-    public void initializeEnemy (Map<String, Object> parameters) {
-        myEnemyFactory.addEnemy(parameters);
+    public void initializeEnemies (Map<String, Map<String, Object>> allObjects) {
+        myEnemyFactory.add(allObjects);
     }
 
-    public void initializeProjectile (Map<String, Object> parameters) {
-        myProjectileFactory.addProjectile(parameters);
+    public void initializeProjectiles (Map<String, Map<String, Object>> allObjects) {
+        myProjectileFactory.add(allObjects);
+    }
+
+    public void initializeGridCells (Map<String, Map<String, Object>> allObjects) {
+        myGridCellFactory.add(allObjects);
+    }
+
+    public void initializeGameMaps (Map<String, Map<String, Object>> allObjects) {
+        myGameMapFactory.add(allObjects);
+    }
+
+    public void initializeRounds (Map<String, Map<String, Object>> allObjects) {
+        myRoundFactory.add(allObjects);
+    }
+
+    public void initializeWaves (Map<String, Map<String, Object>> allObjects) {
+        myWaveFactory.add(allObjects);
     }
 }

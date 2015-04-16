@@ -1,11 +1,10 @@
-package pathsearch.pathalgorithms;
+package util.pathsearch.pathalgorithms;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import pathsearch.graph.GraphNode;
-import pathsearch.graph.PathCell;
-import pathsearch.graph.GridIDTransform;
+import util.pathsearch.graph.GraphNode;
+import util.pathsearch.graph.GridIDTransform;
+import util.pathsearch.graph.PathCell;
 
 /**
  * @author Kaighn
