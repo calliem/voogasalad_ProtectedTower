@@ -90,7 +90,7 @@ public class SpriteSetting extends Setting {
             }
         }
     }
-
+    
     @Override
     public Object getParameterValue () {
         return dataAsString;
