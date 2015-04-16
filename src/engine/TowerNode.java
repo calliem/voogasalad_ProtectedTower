@@ -17,9 +17,9 @@ import java.util.Set;
 
 public class TowerNode {
 
-    private final static String PARAM_NAME = "Name";
-    private final static String PARAM_GROUP = "Group";
-    private final static String PARAM_NEXT_TOWER = "NextTower";
+    private final static String PARAMETER_NAME = "Name";
+    private final static String PARAMETER_GROUP = "Group";
+    private final static String PARAMETER_NEXT_TOWER = "NextTower";
 
     private String myName;
     private String myGroup;
@@ -37,8 +37,8 @@ public class TowerNode {
     private Map<String, Object> myParameters;
 
     public TowerNode (Map<String, Object> parameters) {
-        myName = (String) parameters.get(PARAM_NAME);
-        myGroup = (String) parameters.get(PARAM_GROUP);
+        myName = (String) parameters.get(PARAMETER_NAME);
+        myGroup = (String) parameters.get(PARAMETER_GROUP);
         myNextNodes = new HashSet<>();
         myPrevNodes = new HashSet<>();
         myParameters = parameters;
@@ -67,7 +67,7 @@ public class TowerNode {
      */
 
     protected List<String> getNextNodes () {
-        return (List<String>) myParameters.get(PARAM_NEXT_TOWER);
+        return (List<String>) myParameters.get(PARAMETER_NEXT_TOWER);
     }
 
     protected boolean removeNextNode (TowerNode node) {

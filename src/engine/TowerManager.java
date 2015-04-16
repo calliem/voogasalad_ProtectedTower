@@ -23,8 +23,8 @@ import engine.element.sprites.Tower;
 
 public class TowerManager {
 
-    private final static String MY_CLASS_NAME = "engine.sprites.Tower";
-    private static final String NEXT_TOWER = "NextTower";
+    private final static String PARAMETER_MY_CLASS_NAME = "engine.sprites.Tower";
+    private final static String PARAMETER_NEXT_TOWER = "NextTower";
     private Map<String, TowerNode> myTowerMap;
 
     // private Map<String, TowerNode> myTreeHeads;
@@ -48,7 +48,7 @@ public class TowerManager {
         myTowerMap.put(towerID, new TowerNode(towerProperties));
 
         // TODO find way to do this without casting
-        for (String n : (List<String>) towerProperties.get(NEXT_TOWER)) {
+        for (String n : (List<String>) towerProperties.get(PARAMETER_NEXT_TOWER)) {
             myTowerMap.get(towerID).addNextNode(myTowerMap.get(n));
         }
     }
@@ -80,7 +80,7 @@ public class TowerManager {
                                                 + " is an undefined tower");
         }
 
-        Tower tower = (Tower) Reflection.createInstance(MY_CLASS_NAME);
+        Tower tower = (Tower) Reflection.createInstance(PARAMETER_MY_CLASS_NAME);
         tower.setParameterMap(myTowerMap.get(towerID).getTowerParameters());
 
         return tower;
