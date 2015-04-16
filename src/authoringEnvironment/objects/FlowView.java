@@ -115,13 +115,8 @@ public class FlowView extends HBox {
         delayTextField.setPromptText("(sec)");
         delayTextField.setAlignment(Pos.CENTER);
         delayTextField.setMaxWidth(50);
+        
         VBox arrow = new VBox(0.5*PADDING);
-        
-        HBox timeInput = new HBox(PADDING);
-        timeInput.getChildren().add(delayTextField);
-        timeInput.getChildren().add(new Text("s"));
-        timeInput.setAlignment(Pos.CENTER);
-        
         arrow.getChildren().addAll(delayTextField, arrowImage);
         arrow.setAlignment(Pos.CENTER);
         
