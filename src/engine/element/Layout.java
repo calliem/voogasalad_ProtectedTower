@@ -248,10 +248,10 @@ public class Layout extends GameElement implements Updateable {
     }
 
     public void initializeEnemy (Map<String, Object> parameters) {
-        myEnemyFactory.addEnemy(parameters);
+        myEnemyFactory.addSprite(parameters);
     }
 
     public void initializeProjectile (Map<String, Object> parameters) {
-        myProjectileFactory.addProjectile(parameters);
+        myProjectileFactory.addSprite(parameters);
     }
 }
