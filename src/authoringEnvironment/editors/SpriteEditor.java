@@ -17,7 +17,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -30,8 +29,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
+import authoringEnvironment.Scaler;
+import authoringEnvironment.objects.SpriteView;
+
 
 
 /**
@@ -48,6 +51,7 @@ public abstract class SpriteEditor extends Editor {
     private Text empty;
     private List<Node> spritesCreated;
     private IntegerProperty numSprites;
+    private Scaler myScaler;
 
     private static final int ROW_SIZE = 7;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
@@ -64,6 +68,7 @@ public abstract class SpriteEditor extends Editor {
      */
     public SpriteEditor (Controller c, String name) {
         super(c, name);
+        myScaler = new Scaler();
     }
 
     /**
@@ -159,7 +164,7 @@ public abstract class SpriteEditor extends Editor {
         return editControls;
     }
 
-    private void promptSpriteCreation () {
+    protected void promptSpriteCreation () {
         StackPane promptDisplay = new StackPane();
         Rectangle promptBackground = new Rectangle(300, 400);
         promptBackground.setOpacity(0.8);
@@ -216,10 +221,8 @@ public abstract class SpriteEditor extends Editor {
 
         row.getChildren().add(sprite);
         spritesCreated.add(sprite);
-        String key = myController.addPartToGame(
-                                                tabName.substring(0, tabName.length() - 1),
-                                                sprite.getParameterFields());
-        myController.specifyPartImage(key, sprite.getImageFilePath());
+        sprite.saveParameterFields(true);
+
         numSprites.setValue(spritesCreated.size());
     }
 
@@ -270,14 +273,14 @@ public abstract class SpriteEditor extends Editor {
     private void showEditScreen (StackPane overlay) {
         if (!overlayActive) {
             myContent.getChildren().add(overlay);
-            scaleEditScreen(0.0, 1.0, overlay);
+            myScaler.scaleEditScreen(0.0, 1.0, overlay);
             overlayActive = true;
         }
     }
 
     private void hideEditScreen (StackPane overlay) {
         if (overlayActive) {
-            ScaleTransition scale = scaleEditScreen(1.0, 0.0, overlay);
+            ScaleTransition scale = myScaler.scaleEditScreen(1.0, 0.0, overlay);
             scale.setOnFinished( (e) -> {
                 myContent.getChildren().remove(overlay);
                 overlayActive = false;
@@ -285,19 +288,21 @@ public abstract class SpriteEditor extends Editor {
         }
     }
 
-    private ScaleTransition scaleEditScreen (double from, double to,
-                                             StackPane overlay) {
-        ScaleTransition scale = new ScaleTransition(Duration.millis(200),
-                                                    overlay);
-        scale.setFromX(from);
-        scale.setFromY(from);
-        scale.setToX(to);
-        scale.setToY(to);
-        scale.setCycleCount(1);
-        scale.play();
-
-        return scale;
-    }
+    /*
+     * private ScaleTransition scaleEditScreen(double from, double to,
+     * StackPane overlay) {
+     * ScaleTransition scale = new ScaleTransition(Duration.millis(200),
+     * overlay);
+     * scale.setFromX(from);
+     * scale.setFromY(from);
+     * scale.setToX(to);
+     * scale.setToY(to);
+     * scale.setCycleCount(1);
+     * scale.play();
+     * 
+     * return scale;
+     * }
+     */
 
     private void finishEditing (HBox editControls, Button edit, Button add) {
         TranslateTransition move = transitionButton(add, -10, 90);

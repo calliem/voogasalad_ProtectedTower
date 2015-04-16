@@ -77,4 +77,11 @@ public abstract class Editor extends Tab {
         stage.show();
     }
 
+	protected void promptSpriteCreation() {
+		// TODO Auto-generated method stub
+		//this doesn't quite belong in this editor superclass. consider alternatives.
+		
+	}
+
+
 }
