@@ -1,7 +1,6 @@
-package engine;
+package engine.element.sprites;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,7 +18,6 @@ public class TowerNode {
 
     private final static String PARAMETER_NAME = "Name";
     private final static String PARAMETER_GROUP = "Group";
-    private final static String PARAMETER_NEXT_TOWER = "NextTower";
 
     private String myName;
     private String myGroup;
@@ -34,14 +32,11 @@ public class TowerNode {
      */
     private Set<TowerNode> myPrevNodes;
 
-    private Map<String, Object> myParameters;
-
     public TowerNode (Map<String, Object> parameters) {
         myName = (String) parameters.get(PARAMETER_NAME);
         myGroup = (String) parameters.get(PARAMETER_GROUP);
         myNextNodes = new HashSet<>();
         myPrevNodes = new HashSet<>();
-        myParameters = parameters;
     }
 
     protected String getName () {
@@ -52,22 +47,12 @@ public class TowerNode {
         return myGroup;
     }
 
-    protected Map<String, Object> getTowerParameters () {
-        return myParameters;
-    }
-
     protected boolean addNextNode (TowerNode node) {
         return myNextNodes.add(node);
     }
 
-    /*
-     * protected Set<TowerNode> getNextNodes () {
-     * return myNextNodes;
-     * }
-     */
-
-    protected List<String> getNextNodes () {
-        return (List<String>) myParameters.get(PARAMETER_NEXT_TOWER);
+    protected Set<TowerNode> getNextNodes () {
+        return myNextNodes;
     }
 
     protected boolean removeNextNode (TowerNode node) {
@@ -78,11 +63,9 @@ public class TowerNode {
         return myPrevNodes.add(node);
     }
 
-    /*
-     * protected Set<TowerNode> getPrevNodes () {
-     * return myPrevNodes;
-     * }
-     */
+    protected Set<TowerNode> getPrevNodes () {
+        return myPrevNodes;
+    }
 
     protected boolean removePrevNode (TowerNode node) {
         return myPrevNodes.remove(node);

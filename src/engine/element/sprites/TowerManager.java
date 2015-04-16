@@ -1,11 +1,10 @@
-package engine;
+package engine.element.sprites;
 
-import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import util.reflection.Reflection;
-import engine.element.sprites.Tower;
 
 
 /**
@@ -21,15 +20,16 @@ import engine.element.sprites.Tower;
  *
  */
 
-public class TowerManager {
+public class TowerManager extends SpriteFactory {
 
-    private final static String PARAMETER_MY_CLASS_NAME = "engine.sprites.Tower";
+    private final static String PARAMETER_MY_CLASS_NAME = "engine.element.sprites.Tower";
     private final static String PARAMETER_NEXT_TOWER = "NextTower";
     private Map<String, TowerNode> myTowerMap;
 
     // private Map<String, TowerNode> myTreeHeads;
 
     public TowerManager () {
+        super(PARAMETER_MY_CLASS_NAME);
         myTowerMap = new HashMap<>();
     }
 
@@ -44,25 +44,13 @@ public class TowerManager {
      * @param towerID GUID of the tower being added
      * @param towerProperties Map of tower parameters and their values
      */
-    public void addTower (String towerID, Map<String, Object> towerProperties) {
+    public void add (String towerID, Map<String, Object> towerProperties) {
+        super.add(towerID, towerProperties);
         myTowerMap.put(towerID, new TowerNode(towerProperties));
 
         // TODO find way to do this without casting
         for (String n : (List<String>) towerProperties.get(PARAMETER_NEXT_TOWER)) {
             myTowerMap.get(towerID).addNextNode(myTowerMap.get(n));
-        }
-    }
-
-    /**
-     * Method for adding in a group of towers to the local TowerMap
-     * 
-     * @param allTowers Map of all towers to be added where the first string is the GUID and the
-     *        internal map is the parameter map
-     */
-    public void addTower (Map<String, Map<String, Object>> allTowers) {
-        for (String towerID : allTowers.keySet()) {
-            Map<String, Object> towerProperties = allTowers.get(towerID);
-            addTower(towerID, towerProperties);
         }
     }
 
@@ -75,13 +63,10 @@ public class TowerManager {
      */
 
     public Tower getTower (String towerID) {
-        if (!myTowerMap.containsKey(towerID)) {
-            throw new InvalidParameterException(towerID
-                                                + " is an undefined tower");
-        }
+        super.checkID(towerID);
 
         Tower tower = (Tower) Reflection.createInstance(PARAMETER_MY_CLASS_NAME);
-        tower.setParameterMap(myTowerMap.get(towerID).getTowerParameters());
+        tower.setParameterMap(super.getParameters(towerID));
 
         return tower;
     }
@@ -92,7 +77,7 @@ public class TowerManager {
      * @return List of GUIDs of towers immediately following the specified one
      */
 
-    public List<String> getNextTowers (String towerID) {
+    public Set<TowerNode> getNextTowers (String towerID) {
         TowerNode node = myTowerMap.get(towerID);
         return node.getNextNodes();
     }
