@@ -169,6 +169,12 @@ public class WaveEditor extends MainEditor {
 		data.add(times);
 		myController.addPartToGame(WAVE, waveName,
 				ProjectReader.getParamsNoTypeOrName(WAVE), data);
+		/*
+		 * Throw an exception for fun
+		ArrayList<Object> o = new ArrayList<>();
+		o.add("1");
+		myController.addPartToGame("whatever", "whatever", new ArrayList<String>(), o);
+		*/
 	}
 
 	private void addUnitToWave(HBox wave, String waveName) {
