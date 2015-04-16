@@ -36,6 +36,10 @@ import engine.element.sprites.Tower;
 public class Layout extends GameElement implements Updateable {
 
     private static final String PARAMETER_SIZE = "TileSize";
+    private static final String PARAMETER_HP = "HP";
+    private static final String PARAMETER_RANGE = "range";
+    private static final String PARAMETER_BOUNDINGHEIGHT = "BoundingHeight";
+    private static final String PARAMETER_BOUNDINGWIDTH = "BoundingWidth";
     private List<Sprite> towerList;
     private List<Sprite> enemyList;
     private List<Sprite> projectileList;
@@ -85,7 +89,7 @@ public class Layout extends GameElement implements Updateable {
         }
         for (Sprite s : enemyList) {
             // check if dead or to be removed
-            if ((int) s.getParameter("HP") <= 0)
+            if ((int) s.getParameter(PARAMETER_HP) <= 0)
                 enemyList.remove(s);
             // else
             // s.update();
@@ -141,13 +145,13 @@ public class Layout extends GameElement implements Updateable {
 
     private Circle createRange (Sprite s) {
         return new Circle(s.getLocation().getX(), s.getLocation().getY(),
-                          (double) s.getParameter("range"));
+                          (double) s.getParameter(PARAMETER_RANGE));
     }
 
     private Rectangle createHitBox (Sprite s) {
         return new Rectangle(s.getLocation().getX(), s.getLocation().getY(),
-                             (double) s.getParameter("BoundingWidth"),
-                             (double) s.getParameter("BoundingHeight"));
+                             (double) s.getParameter(PARAMETER_BOUNDINGWIDTH),
+                             (double) s.getParameter(PARAMETER_BOUNDINGHEIGHT));
     }
 
     private boolean collides (Shape sprite1, Shape sprite2) {
