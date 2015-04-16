@@ -1,5 +1,6 @@
 package engine;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,6 +31,11 @@ public class CollisionManager {
      */
     public CollisionManager (Map<String[], List<Integer>[]> interactionMap,
                              List<Consumer<Sprite>> actions) {
+        for(String[] key : interactionMap.keySet()){
+            if(key.length != 2 || interactionMap.get(key).length != 2){
+                throw new InvalidParameterException("InteractionMap is in invalid format");
+            }
+        }
         decisionMap = new HashMap<String[], Collection<Consumer<Sprite>>[]>();
         for (String[] pair : interactionMap.keySet()) {
             @SuppressWarnings("unchecked")
