@@ -1,11 +1,5 @@
 package engine.element.sprites;
 
-import java.util.Map;
-
-import javafx.scene.image.ImageView;
-import engine.InsufficientParametersException;
-
-
 /**
  * This class represents an object which may carry a modification to set upon another object, such
  * as a status effect.
@@ -15,16 +9,8 @@ import engine.InsufficientParametersException;
  */
 public class Modifier extends Sprite {
 
-
-    public Modifier (){
+    public Modifier () {
         super();
-    }
-	public Modifier (Map<String, Object> params){
-        super(params);
-    }
-    
-    public Modifier (ImageView img){
-        super(img);
     }
 
     @Override
@@ -39,10 +25,10 @@ public class Modifier extends Sprite {
         return false;
     }
 
-	@Override
-	public void collide(Sprite sprite) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void collide (Sprite sprite) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

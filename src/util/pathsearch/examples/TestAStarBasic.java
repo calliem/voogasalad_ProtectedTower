@@ -1,11 +1,10 @@
-package pathsearch.examples;
+package util.pathsearch.examples;
 
 import java.util.Arrays;
 import java.util.List;
-
-import pathsearch.graph.PathCell;
-import pathsearch.pathalgorithms.NoPathExistsException;
-import pathsearch.wrappers.GridWrapper;
+import util.pathsearch.graph.PathCell;
+import util.pathsearch.pathalgorithms.NoPathExistsException;
+import util.pathsearch.wrappers.GridWrapper;
 /**
  * A basic example of using the grid wrapper to run AStar. There are only three
  * lines of wrapper code. They are: (1) construct the wrapper, (2) initialize

@@ -1,8 +1,7 @@
-package pathsearch.graph;
+package util.pathsearch.graph;
 
 import java.util.Arrays;
-
-import pathsearch.pathalgorithms.ObstacleFunction;
+import util.pathsearch.pathalgorithms.ObstacleFunction;
 
 /**
  * @author Kaighn
