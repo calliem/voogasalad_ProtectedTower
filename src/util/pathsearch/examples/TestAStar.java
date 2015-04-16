@@ -1,18 +1,17 @@
-package pathsearch.examples;
+package util.pathsearch.examples;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import pathsearch.graph.Graph;
-import pathsearch.graph.GraphMakerGrid;
-import pathsearch.graph.GraphNode;
-import pathsearch.graph.PathCell;
-import pathsearch.graph.GridIDTransform;
-import pathsearch.pathalgorithms.HeuristicGrid;
-import pathsearch.pathalgorithms.NoPathExistsException;
+import util.pathsearch.graph.Graph;
+import util.pathsearch.graph.GraphMakerGrid;
+import util.pathsearch.graph.GraphNode;
+import util.pathsearch.graph.GridIDTransform;
+import util.pathsearch.graph.PathCell;
+import util.pathsearch.pathalgorithms.HeuristicGrid;
+import util.pathsearch.pathalgorithms.NoPathExistsException;
 
 /**
  * @author Kaighn

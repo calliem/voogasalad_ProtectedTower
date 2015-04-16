@@ -1,10 +1,9 @@
-package pathsearch.pathalgorithms;
+package util.pathsearch.pathalgorithms;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import pathsearch.graph.Edge;
-import pathsearch.graph.GraphNode;
+import util.pathsearch.graph.Edge;
+import util.pathsearch.graph.GraphNode;
 
 /**
  * @author Kaighn

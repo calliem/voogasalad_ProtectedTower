@@ -2,7 +2,6 @@ package engine;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import engine.element.sprites.Sprite;
 import javafx.scene.shape.Rectangle;
 

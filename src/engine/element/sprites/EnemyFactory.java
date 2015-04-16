@@ -13,6 +13,7 @@ import util.reflection.Reflection;
 public class EnemyFactory extends SpriteFactory {
     private final static String MY_CLASS_NAME = "engine.sprites.Enemy";
 
+
     public EnemyFactory () {
         super(MY_CLASS_NAME);
     }
@@ -21,8 +22,7 @@ public class EnemyFactory extends SpriteFactory {
         super.checkID(enemyID);
 
         Enemy enemy = (Enemy) Reflection.createInstance(MY_CLASS_NAME);
-        enemy.setParameterMap(super.getSpriteParameters(enemyID));
-
+        enemy.setParameterMap(super.getParameters(enemyID));
         return enemy;
     }
 }

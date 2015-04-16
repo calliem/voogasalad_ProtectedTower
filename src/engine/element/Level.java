@@ -15,7 +15,10 @@ import engine.Updateable;
  * @author Bojia Chen
  * @author Qian Wang
  */
-public class Level extends GameElement implements Updateable, Endable {
+public class Level extends GameElement implements Updateable, Endable, Comparable<Level> {
+
+    private static final String PARAMETER_NUMBER = "Number";
+
     private List<Round> myRounds;
     private double myHealth;
     private int myLives;
@@ -35,7 +38,13 @@ public class Level extends GameElement implements Updateable, Endable {
     @Override
     public void update (int counter) {
         // TODO Auto-generated method stub
+    }
 
+    @Override
+    public int compareTo (Level o) {
+        int thisLevel = (int) this.getParameter(PARAMETER_NUMBER);
+        int otherLevel = (int) o.getParameter(PARAMETER_NUMBER);
+        return thisLevel - otherLevel;
     }
 
 }
