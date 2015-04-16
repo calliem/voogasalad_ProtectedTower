@@ -26,6 +26,7 @@ public class GameCreator {
 	public static final ResourceBundle paramLists = ResourceBundle
 			.getBundle(paramListFile);
 	private static final String partFileName = "GameParts.xml";
+	private static final String gameExtension = ".gamefile";
 
 	//private static InstanceManager currentGame = new InstanceManager();
 
@@ -46,7 +47,7 @@ public class GameCreator {
 		nameAndDirectory[1] = gameDirectory;
 		createGameFolders(gameName, rootDirBeforeGameName);
 		System.out.println("Game root dir: " + userDataLocation);
-		XMLWriter.toXML(nameAndDirectory, gameName + ".game", gameDirectory);
+		XMLWriter.toXML(nameAndDirectory, gameName + gameExtension, gameDirectory);
 		return new InstanceManager(gameName, gameDirectory);
 	}
 
@@ -87,7 +88,6 @@ public class GameCreator {
 		currentGame.addPart(partType, partName, params, data);
 	}
 	
-
 	public static void addPartToGame(String partType, List<Setting> settings) {
 		Map<String, Object> partToAdd = new HashMap<String, Object>();
 		for (Setting s : settings)
@@ -167,19 +167,15 @@ public class GameCreator {
 	 */
 	/*
 	public static Map<String, Object> createDefaultPart(String partType) {
-
 		Map<String, Object> part = new HashMap<String, Object>();
 		// ResourceBundle paramLists = ResourceBundle.getBundle(paramListFile);
 		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-
 		String[] params = paramLists.getString(partType).split("\\s+");
-
 		for (String paramName : params) {
 			String[] typeAndDefault = paramSpecs.getString(paramName).split(
 					"\\s+");
 			String dataType = typeAndDefault[0];
 			String defaultVal = typeAndDefault[1];
-
 			part.put(paramName, makeDefaultData(dataType, defaultVal));
 		}
 		return part;
@@ -189,12 +185,10 @@ public class GameCreator {
 	// also going to change, probably will be an unnecessary method by the end
 	/*
 	private static Object makeDefaultData(String dataType, String defaultVal) {
-
 		Class<?> c = String.class;
 		Object data = "N/A";
 		String settingClass = "authoringEnvironment.editors." + dataType
 				+ "Setting";
-
 		try {
 			c = Class.forName(settingClass);
 		} catch (ClassNotFoundException e) {
@@ -202,7 +196,6 @@ public class GameCreator {
 			// do something, but this shouldn't happen if the properties file is
 			// correct
 		}
-
 		try {
 			data = ((Setting) (c.getConstructor(String.class, String.class,
 					String.class).newInstance("Doesn't", "Matter", defaultVal)))
@@ -213,7 +206,6 @@ public class GameCreator {
 			// hopefully this won't happen
 			System.out.println("Constructor couldn't be called with a String");
 		}
-
 		return data;
 	}
 */

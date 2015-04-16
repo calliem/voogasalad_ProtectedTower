@@ -101,6 +101,9 @@ public class XMLWriter {
 		return stream.fromXML(new File(dir));
 	}
 	
+	public static void deleteFile(String filePath){
+		new File(filePath).delete();
+	}
 	//maybe unnecessary
 	public static Object fromXML(File f){
 		return stream.fromXML(f);

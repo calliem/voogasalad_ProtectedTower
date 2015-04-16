@@ -6,7 +6,7 @@ import authoringEnvironment.Controller;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
-public class ItemEditor extends PropertyEditor{
+public class ItemEditor extends SpriteEditor{
 	
 	private List<Node> myItems;
 
@@ -15,18 +15,18 @@ public class ItemEditor extends PropertyEditor{
 	}
 	
 
-	@Override
-	protected Group configureUI() {
-		// TODO Auto-generated method stub
-	    return new Group();
-	}
+//	@Override
+//	protected Group configureUI() {
+//		// TODO Auto-generated method stub
+//	    return new Group();
+//	}
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		System.out.println("itemeditor updated");
-		
-	}
+//	@Override
+//	public void update() {
+//		// TODO Auto-generated method stub
+//		System.out.println("itemeditor updated");
+//		
+//	}
 
 	
 }

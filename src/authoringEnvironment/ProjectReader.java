@@ -65,13 +65,15 @@ public class ProjectReader {
 	 * @return The corresponding Settings list
 	 */
 	public static List<Setting> generateSettingsList(String partType) {
-
+System.out.println("genreate stginsgl list calle");
 		List<Setting> settingsList = new ArrayList<Setting>();
 		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
 
 		String[] params = getParamListForPart(partType);
+		System.out.println("params for " + partType + ": " + SetHandler.listFromArray(params));
 		List<String> paramsList = SetHandler.listFromArray(params);
 		Collections.sort(paramsList);
+		System.out.println("sorted? param list: " + paramsList);
 		paramsList = SetHandler.trimBeforeDot(paramsList);
 		for (String param : paramsList) {
 			String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");

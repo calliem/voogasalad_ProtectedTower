@@ -1,5 +1,4 @@
 
-
 package authoringEnvironment;
 
 import java.util.List;
@@ -28,7 +27,7 @@ import authoringEnvironment.editors.Editor;
 /**
  * Sets up the main environment where the MenuPane, TabPane, and editor classes are displayed. When switching tabs, each tab's editor is automatically updated to the controller
  * @author Callie Mao
- * @author Johnny Kumpf, populateTabBar() methods
+ * @author Johnny Kumpf
  * @author Kevin He
  */
 
@@ -91,7 +90,6 @@ public class AuthoringEnvironment {
         myTabPane = new TabPane();
         List<Editor> editorsToAdd =	ProjectReader.getOrderedEditorsList(myController);
         for(Editor e : editorsToAdd){
-        	myController.addEditor(e);
         	myTabPane.getTabs().add(e);
         }
         grid.add(myTabPane,0,1);
@@ -106,13 +104,11 @@ public class AuthoringEnvironment {
         if (myCurrentTab != selectedTab){
             Editor editor = (Editor) myCurrentTab.getContent();
             Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the controller
-
             myCurrentTab = selectedTab;
             Editor editor2 = (Editor) myCurrentTab.getContent();
             editor2.update();
         }
     }
-
     protected void addTab(String tabName) {
         Tab tab = new Tab();
         tab.setText(tabName);

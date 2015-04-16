@@ -26,17 +26,21 @@ public abstract class Setting extends VBox{
     protected String dataAsString;
     private TextField editableField;
     
+    private static final int FIELD_WIDTH = 125;
+    private static final int PADDING = 10;
+    private static final int MESSAGE_SIZE = 20;
+    
     public Setting(String label, String value){
         //TODO: remove magic number
-        super(10);
+        super(PADDING);
         this.setAlignment(Pos.CENTER);
         
         dataAsString = value;
-        basicLayout = new HBox(10);
+        basicLayout = new HBox(PADDING);
         basicLayout.setAlignment(Pos.CENTER_RIGHT);
         
         error = new ImageView(new Image(String.format("images/%s.png", "error")));
-        ScaleImage.scale(error, 20, 20);
+        ScaleImage.scale(error, MESSAGE_SIZE, MESSAGE_SIZE);
         
         this.label = label;
         Text parameter = new Text(String.format("%s:", label));
@@ -54,12 +58,10 @@ public abstract class Setting extends VBox{
      * textfield)
      */
     
-    //this is the same for every setting object
-    //if not, we can have two setting subclasses, one for normal stuff, one for file selectors
     protected void setupInteractionLayout(){
         editableField = new TextField(dataAsString);
-        editableField.setMaxWidth(125);
-        editableField.setMinWidth(125);
+        editableField.setMaxWidth(FIELD_WIDTH);
+        editableField.setMinWidth(FIELD_WIDTH);
         editableField.setAlignment(Pos.CENTER);
         
         error.setVisible(false);
@@ -84,15 +86,17 @@ public abstract class Setting extends VBox{
         dataAsString = (String) value;
         editableField.setText((String) value);
     }
+
     
-    public String getDataAsString(){
-    	return dataAsString;
-    }
     /**
      * Hides the error alert for this parameter.
      */
     protected void hideErrorAlert(){
         error.setVisible(false);
+    }
+
+    public String getDataAsString(){
+        return dataAsString;
     }
     
     protected TextField textBox(){
@@ -100,21 +104,16 @@ public abstract class Setting extends VBox{
     }
     
     /**
-     * Displays the error alert for this parameter.
-     */
-    protected void displayErrorAlert(String message){
-        error.setVisible(true);
-        Tooltip tooltip = new Tooltip(message);
-        Tooltip.install(error, tooltip);
-    }
-    
-    /**
      * Parses the parameter field and displays an error if
      * the data in the field is not of the correct type.
-     * @return true if the user-entered data is correctly formatted
+     * @return true     if the user-entered data is correctly formatted
      */
     public abstract boolean parseField();
     
+    /**
+     * Processes the data and updates dataAsString and the textField.
+     * @return true     if user-entered data is correctly formatted
+     */
     public boolean processData(){
         boolean readable = parseField();
         if(readable){
@@ -123,7 +122,12 @@ public abstract class Setting extends VBox{
         return readable;
     }
     
+    /**
+     * Displays previously saved value of dataAsString. If user-entered
+     * data is incorrectly formatted, this is the last value of dataAsString
+     * (before the error).
+     */
     public void displaySavedValue(){
-        editableField.setText(""+dataAsString);
+        editableField.setText(dataAsString);
     }
 }
