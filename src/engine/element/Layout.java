@@ -10,7 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import engine.CollisionTable;
+import engine.CollisionManager;
 import engine.Quadtree;
 import engine.TowerManager;
 import engine.Updateable;
@@ -70,7 +70,7 @@ public class Layout extends GameElement implements Updateable {
     /**
      * Table which contains interactions between game elements
      */
-    private CollisionTable myCollisionTable;
+    private CollisionManager myCollisionTable;
 
     // private List<List<GridCell>> spriteMap; not sure if necessary yet
     // private List<Sprite> spritesList; not sure if necessary
@@ -96,7 +96,7 @@ public class Layout extends GameElement implements Updateable {
         myQuadTree = new Quadtree(1, pBounds);
     }
 
-    public void setCollisionTable (CollisionTable table) {
+    public void setCollisionTable (CollisionManager table) {
         myCollisionTable = table;
     }
 

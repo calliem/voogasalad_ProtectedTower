@@ -19,6 +19,7 @@ public abstract class Sprite extends GameElement implements Collidable {
     // TODO fill in with correct string
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
+    private boolean isAlive;
 
     private ImageView myImage;
     private Point2D myLocation;
