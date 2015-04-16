@@ -39,7 +39,8 @@ public class ProjectReader {
 	private static final String tabOrder = System.getProperty("user.dir")
 			+ "/src/resources/display/main_environment_english.properties";
 	private static final String settingsPackage = "authoringEnvironment.setting.";
-	private static final ResourceBundle tabNames = ResourceBundle.getBundle(englishSpecsFile);
+	private static final ResourceBundle tabNames = ResourceBundle
+			.getBundle(englishSpecsFile);
 
 	public static String[] getParamListForPart(String partType) {
 		return paramLists.getString(partType).split("\\s+");
@@ -65,12 +66,13 @@ public class ProjectReader {
 	 * @return The corresponding Settings list
 	 */
 	public static List<Setting> generateSettingsList(String partType) {
-System.out.println("genreate stginsgl list calle");
+		System.out.println("genreate stginsgl list calle");
 		List<Setting> settingsList = new ArrayList<Setting>();
 		ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
 
 		String[] params = getParamListForPart(partType);
-		System.out.println("params for " + partType + ": " + SetHandler.listFromArray(params));
+		System.out.println("params for " + partType + ": "
+				+ SetHandler.listFromArray(params));
 		List<String> paramsList = SetHandler.listFromArray(params);
 		Collections.sort(paramsList);
 		System.out.println("sorted? param list: " + paramsList);
@@ -101,7 +103,6 @@ System.out.println("genreate stginsgl list calle");
 	 *            The type of the data, i.e. "Integer"
 	 * @return The Setting object corresponding to these parameters
 	 */
-
 	public static Setting generateSetting(String partType, String param,
 			String defaultVal, String dataType) {
 		Class<?> c = String.class;
