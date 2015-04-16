@@ -1,12 +1,10 @@
-package engine;
+package engine.element.sprites;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import util.reflection.Reflection;
-import engine.element.sprites.SpriteFactory;
-import engine.element.sprites.Tower;
 
 
 /**
@@ -24,7 +22,7 @@ import engine.element.sprites.Tower;
 
 public class TowerManager extends SpriteFactory {
 
-    private final static String PARAMETER_MY_CLASS_NAME = "engine.sprites.Tower";
+    private final static String PARAMETER_MY_CLASS_NAME = "engine.element.sprites.Tower";
     private final static String PARAMETER_NEXT_TOWER = "NextTower";
     private Map<String, TowerNode> myTowerMap;
 

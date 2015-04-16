@@ -12,7 +12,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import engine.CollisionTable;
 import engine.Quadtree;
-import engine.TowerManager;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.EnemyFactory;
@@ -24,6 +23,7 @@ import engine.element.sprites.ProjectileFactory;
 import engine.element.sprites.RoundFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
+import engine.element.sprites.TowerManager;
 import engine.element.sprites.WaveFactory;
 
 

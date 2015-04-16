@@ -1,4 +1,4 @@
-package engine;
+package engine.element.sprites;
 
 import java.util.HashSet;
 import java.util.Map;
