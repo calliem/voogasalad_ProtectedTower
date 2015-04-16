@@ -100,4 +100,8 @@ public class Enemy extends MoveableSprite {
         myPath = gridPath;
     }
 
+    @Override
+    public void update (int counter) {
+    }
+
 }

@@ -1,9 +1,11 @@
 package engine.element.sprites;
 
 import java.util.Map;
+import sun.net.www.content.audio.x_aiff;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import engine.Collidable;
+import engine.Updateable;
 import engine.element.GameElement;
 
 
@@ -14,7 +16,7 @@ import engine.element.GameElement;
  * @author Qian Wang
  *
  */
-public abstract class Sprite extends GameElement implements Collidable {
+public abstract class Sprite extends GameElement implements Updateable,Collidable {
 
     // TODO fill in with correct string
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
@@ -48,6 +50,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      */
     public void setLocation (Point2D location) {
         myLocation = location;
+        updateImageView();
     }
 
     /**
@@ -58,6 +61,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      */
     public void setLocation (double x, double y) {
         myLocation = new Point2D(x, y);
+        updateImageView();
     }
 
     /**
@@ -134,6 +138,10 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @param sprite Sprite object that this object collides with
      * @return
      */
+    private void updateImageView(){
+        myImage.setTranslateX(myLocation.getX());
+        myImage.setTranslateY(myLocation.getY());
+    }
     public abstract void collide (Sprite sprite);
 
 }

@@ -73,4 +73,10 @@ public class GridCell extends Sprite {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public void update (int counter) {
+        // TODO Auto-generated method stub
+        
+    }
 }

@@ -75,33 +75,33 @@ public class GamePlayer extends Application {
             }
         });
         ObservableList<Node> displayList = FXCollections.observableArrayList(new ArrayList<>());
-        // try{
-        // myGameController = new GameController(gameFile.getParent(),displayList);
-        // }
-        // catch(InsufficientParametersException e){
-        // return;
-        // }
+        try{
+         myGameController = new GameController(gameFile.getParent(),displayList, availableTowers);
+        }
+        catch(InsufficientParametersException e){
+         return;
+         }
         displayList.addListener(new ListChangeListener<Node>() {
             @Override
             public void onChanged (Change change) {
                 while (change.next()) {
                     for (Object obj : change.getAddedSubList()) {
-                        Sprite placeSprite = (Sprite) obj;
-                        mainArea.getChildren().add(placeSprite.getImageView());
+                        Node placeSprite = (Node) obj;
+                        mainArea.getChildren().add(placeSprite);
                     }
                     for (Object obj : change.getRemoved()) {
-                        Sprite placeSprite = (Sprite) obj;
-                        mainArea.getChildren().remove(placeSprite.getImageView());
+                        Node placeSprite = (Node) obj;
+                        mainArea.getChildren().remove(placeSprite);
                     }
                 }
             }
         });
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
-        Image myImage = new Image(".\\images\\liltower.jpg");
-        ImageView test = new ImageView(myImage);
-        ImageView test1 = new ImageView(myImage);
-        // ImageView test2 = new ImageView(myImage);
+         Image myImage = new Image(".\\images\\liltower.jpg");
+         ImageView test = new ImageView(myImage);
+         ImageView test1 = new ImageView(myImage);
+         ImageView test2 = new ImageView(myImage);
         // ImageView test3 = new ImageView(myImage);
         // ImageView test4 = new ImageView(myImage);
         // ImageView test5 = new ImageView(myImage);
@@ -113,6 +113,7 @@ public class GamePlayer extends Application {
         // availableTowers.add(new Tower(test3));
         // availableTowers.add(new Tower(test4));
         // displayList.add(new Tower(test5));
+        myGameController.startGame(60);
     }
 
     public static void main (String[] args) {
@@ -226,11 +227,13 @@ public class GamePlayer extends Application {
 
                 @Override
                 public void handle (MouseEvent event) {
-                    Dragboard db = myView.startDragAndDrop(TransferMode.ANY);
+                    Dragboard db = myView.startDragAndDrop(TransferMode.COPY);
 
                     /* Put a string on a dragboard */
                     ClipboardContent content = new ClipboardContent();
+                    myView.setId("tower");
                     content.putImage(myView.getImage());
+                    content.putString(myView.getId());
                     db.setContent(content);
 
                     event.consume();
@@ -253,8 +256,8 @@ public class GamePlayer extends Application {
             @Override
             public void handle (DragEvent event) {
                 Dragboard db = event.getDragboard();
-                if (db.hasImage()) {
-                    event.acceptTransferModes(TransferMode.ANY);
+                if (db.hasString()) {
+                    event.acceptTransferModes(TransferMode.COPY);
                 }
                 event.consume();
             }
@@ -263,15 +266,17 @@ public class GamePlayer extends Application {
             public void handle (DragEvent event) {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
-                if (db.hasImage()) {
-                    ImageView place = new ImageView(db.getImage());
-                    place.setTranslateX(event.getSceneX() -
-                                        Math.floor(db.getImage().getWidth() / 2));
-                    place.setTranslateY(event.getSceneY() -
-                                        Math.floor(db.getImage().getHeight() / 2));
+                if (db.hasString()) {
+                    //ImageView place = new ImageView(db.getImage());
+                    System.out.println(db.getString());
+                    myGameController.addPlaceable(db.getString(), event.getSceneX(),event.getSceneY());
+                    //place.setTranslateX(event.getSceneX() -
+                    //                    Math.floor(db.getImage().getWidth() / 2));
+                    //place.setTranslateY(event.getSceneY() -
+                    //                    Math.floor(db.getImage().getHeight() / 2));
                     // TODO: tell engine about this
                     // game.addTower(place,);
-                    mainArea.getChildren().add(place);
+                    //mainArea.getChildren().add(place);
                     success = true;
                 }
                 /*

@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -75,16 +75,16 @@ public class Layout extends GameElement implements Updateable {
 
     @Override
     public void update (int counter) {
-        for (int i = 0; i < counter; i++)
-            updateSprites();
+        updateSprites(counter);
     }
 
-    public List<Sprite> updateSprites () {
+    public List<Sprite> updateSprites (int counter) {
         checkCollisions();
         for (Sprite s : projectileList) {
-            // s.update();
+            s.update(counter);
         }
         for (Sprite t : towerList) {
+            t.update(counter);
             // give every tower the enemies within its range
             // t.enemiesInRange(getEnemiesInRange(t));
             // fire projectiles
@@ -94,10 +94,12 @@ public class Layout extends GameElement implements Updateable {
         }
         for (Sprite s : enemyList) {
             // check if dead or to be removed
-            if ((int) s.getParameter("HP") <= 0)
+            if ((int) s.getParameter("HP") <= 0) {
                 enemyList.remove(s);
-            // else
-            // s.update();
+                myNodeList.remove(s);
+            }
+            else
+                s.update(counter);
         }
         // collision checking either before or after
         // probably before so that update can handle removing sprites too
@@ -115,13 +117,16 @@ public class Layout extends GameElement implements Updateable {
         }
     }
 
+    public void addToScene (Sprite s) {
+       // myNodeList.add(s.getImageView());
+    }
+
     public void placeTower (String tower, Point2D loc) {
-        // loc param can probably be removed because the tower can just hold its location to be
-        // placed at
-        Tower temp = myTowerManager.getTower(tower);
-        temp.setLocation(loc);
+        // Tower temp = myTowerManager.getTower(tower);
+        Tower temp = new Tower(new ImageView(".\\images\\liltower.jpg"));
+        temp.setLocation(loc.getX() - Math.floor(temp.getImageView().getImage().getWidth() / 2),loc.getY() - Math.floor(temp.getImageView().getImage().getHeight() / 2));
         if (canPlace(temp, loc))
-            towerList.add(temp);
+            myNodeList.add(temp.getImageView());
     }
 
     public boolean canPlace (Sprite tower, Point2D loc) {

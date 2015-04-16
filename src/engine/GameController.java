@@ -3,11 +3,15 @@ package engine;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 import authoringEnvironment.GameCreator;
 import authoringEnvironment.InstanceManager;
 import engine.element.Game;
+import engine.element.sprites.Tower;
 
 
 /**
@@ -37,14 +41,20 @@ public class GameController {
      * display
      */
     private List<Node> myNodes;
-
-    public GameController (String filepath, List<Node> nodes)
+    public GameController (String filepath, List<Node> nodes, List<Tower> possibleTowers)
         throws InsufficientParametersException {
-        fillPackageMap();
+       // fillPackageMap();
         myNodes = nodes;
-        myGame = this.loadGame(filepath);
+        //myGame = this.loadGame(filepath);
+        myGame = new Game(myNodes);
     }
-
+    public void startGame(long frameRate){
+        Timeline gameTimeline = new Timeline();
+        KeyFrame game = new KeyFrame(Duration.millis(1/frameRate),
+                        e -> myGame.update((int)(Integer.parseInt(gameTimeline.currentTimeProperty().toString())/(1/frameRate))));
+        gameTimeline.getKeyFrames().add(game);
+        gameTimeline.play();
+    }
     // TODO replace this with loading from data file
     private void fillPackageMap () {
         myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
@@ -143,5 +153,9 @@ public class GameController {
         // GameController test =
         // new GameController(
         // "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile");
+    }
+    public void addPlaceable (String id, double sceneX, double sceneY) {
+        // TODO Auto-generated method stub
+        myGame.placeTower(id, sceneX, sceneY);
     }
 }

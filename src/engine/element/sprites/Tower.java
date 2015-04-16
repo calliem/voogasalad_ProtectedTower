@@ -12,10 +12,9 @@ import javafx.scene.image.ImageView;
  *
  */
 public class Tower extends GameSprite {
-
+    
     public Tower () {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     // TODO remove once testing is over
@@ -58,6 +57,12 @@ public class Tower extends GameSprite {
     public boolean isCollidableWith (String type) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public void update (int counter) {
+        // TODO Auto-generated method stub
+        System.out.println("Tower updated");
     }
 
 }

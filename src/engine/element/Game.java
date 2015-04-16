@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.reflection.Reflection;
 import engine.Bank;
@@ -48,6 +49,7 @@ public class Game extends GameElement implements Updateable {
 
     @Override
     public void update (int counter) {
+        System.out.println("Beginning cycle " + counter);
         myConditions.forEach(c -> c.act((int) super.getParameter(PARAMETER_HEALTH)));
         myLevels.get(myActiveLevel).update(counter);
         myLayout.update(counter);
@@ -86,5 +88,10 @@ public class Game extends GameElement implements Updateable {
 
     public void addLayoutParameters (Map<String, Object> parameters) {
         myLayout.setParameterMap(parameters);
+    }
+
+    public void placeTower (String id, double sceneX, double sceneY) {
+        System.out.println("sup");
+        myLayout.placeTower(id, new Point2D(sceneX, sceneY));
     }
 }

@@ -31,4 +31,10 @@ public class Modifier extends Sprite {
 
     }
 
+    @Override
+    public void update (int counter) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
