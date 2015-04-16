@@ -24,7 +24,6 @@ import engine.element.sprites.ProjectileFactory;
 import engine.element.sprites.RoundFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
-import engine.element.sprites.TowerFactory;
 import engine.element.sprites.WaveFactory;
 
 
@@ -36,11 +35,16 @@ import engine.element.sprites.WaveFactory;
  * 
  * @author Michael Yang
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
 public class Layout extends GameElement implements Updateable {
 
     private static final String PARAMETER_SIZE = "TileSize";
+    private static final String PARAMETER_HP = "HP";
+    private static final String PARAMETER_RANGE = "range";
+    private static final String PARAMETER_BOUNDINGHEIGHT = "BoundingHeight";
+    private static final String PARAMETER_BOUNDINGWIDTH = "BoundingWidth";
 
     /**
      * List of Javafx objects so that new nodes can be added for the player to display
@@ -56,7 +60,6 @@ public class Layout extends GameElement implements Updateable {
     private List<Sprite> projectileList;
     // Factories to create game elements
     private TowerManager myTowerManager;
-    private TowerFactory myTowerFactory;
     private EnemyFactory myEnemyFactory;
     private ProjectileFactory myProjectileFactory;
     private GridCellFactory myGridCellFactory;
@@ -78,9 +81,7 @@ public class Layout extends GameElement implements Updateable {
     public Layout (List<Node> nodes) {
         myNodeList = nodes;
         // TODO fix this dependency, get rid of TowerManager?
-        myTowerFactory = new TowerFactory();
-        myTowerManager = new TowerManager(myTowerFactory);
-        myTowerFactory.addManager(myTowerManager);
+        myTowerManager = new TowerManager();
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
         myGridCellFactory = new GridCellFactory();
@@ -121,7 +122,7 @@ public class Layout extends GameElement implements Updateable {
         }
         for (Sprite s : enemyList) {
             // check if dead or to be removed
-            if ((int) s.getParameter("HP") <= 0)
+            if ((int) s.getParameter(PARAMETER_HP) <= 0)
                 enemyList.remove(s);
             // else
             // s.update();
@@ -177,13 +178,13 @@ public class Layout extends GameElement implements Updateable {
 
     private Circle createRange (Sprite s) {
         return new Circle(s.getLocation().getX(), s.getLocation().getY(),
-                          (double) s.getParameter("range"));
+                          (double) s.getParameter(PARAMETER_RANGE));
     }
 
     private Rectangle createHitBox (Sprite s) {
         return new Rectangle(s.getLocation().getX(), s.getLocation().getY(),
-                             (double) s.getParameter("BoundingWidth"),
-                             (double) s.getParameter("BoundingHeight"));
+                             (double) s.getParameter(PARAMETER_BOUNDINGWIDTH),
+                             (double) s.getParameter(PARAMETER_BOUNDINGHEIGHT));
     }
 
     private boolean collides (Shape sprite1, Shape sprite2) {
@@ -276,9 +277,8 @@ public class Layout extends GameElement implements Updateable {
         return spritesList;
     }
 
-    // TODO refactor next methods
-    public void initializeTowers (Map<String, Map<String, Object>> allObjects) {
-        myTowerFactory.add(allObjects);
+    public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
+        myTowerManager.addTower(allTowers);
     }
 
     public void initializeEnemies (Map<String, Map<String, Object>> allObjects) {

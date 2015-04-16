@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import engine.element.sprites.Tower;
-import engine.element.sprites.TowerFactory;
 
 
 /**
@@ -18,6 +16,10 @@ import engine.element.sprites.TowerFactory;
  */
 
 public class TowerNode {
+
+    private final static String PARAMETER_NAME = "Name";
+    private final static String PARAMETER_GROUP = "Group";
+    private final static String PARAMETER_NEXT_TOWER = "NextTower";
 
     private String myName;
     private String myGroup;
@@ -35,8 +37,8 @@ public class TowerNode {
     private Map<String, Object> myParameters;
 
     public TowerNode (Map<String, Object> parameters) {
-        myName = (String) parameters.get("Name");
-        myGroup = (String) parameters.get("Group");
+        myName = (String) parameters.get(PARAMETER_NAME);
+        myGroup = (String) parameters.get(PARAMETER_GROUP);
         myNextNodes = new HashSet<>();
         myPrevNodes = new HashSet<>();
         myParameters = parameters;
@@ -50,9 +52,8 @@ public class TowerNode {
         return myGroup;
     }
 
-    protected Tower getTower (TowerFactory factory) {
-        String towerID = myGroup + "_" + myName;
-        return factory.getTower(towerID);
+    protected Map<String, Object> getTowerParameters () {
+        return myParameters;
     }
 
     protected boolean addNextNode (TowerNode node) {
@@ -65,9 +66,8 @@ public class TowerNode {
      * }
      */
 
-    @SuppressWarnings("unchecked")
     protected List<String> getNextNodes () {
-        return (List<String>) myParameters.get("nextTower");
+        return (List<String>) myParameters.get(PARAMETER_NEXT_TOWER);
     }
 
     protected boolean removeNextNode (TowerNode node) {

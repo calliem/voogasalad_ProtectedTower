@@ -1,23 +1,19 @@
+
+package authoringEnvironment.editors;
+
+
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import authoringEnvironment.Controller;
+import authoringEnvironment.Sidebar;
+import authoringEnvironment.map.MapSidebar;
+
 /**
  * Sets up the map editor that allows the user to create a map utilizing individual tiles, set paths along their map, and save these dynamically so that these components are updated on all other relevant tabs
  * @author Callie Mao
  */
-
-package authoringEnvironment.editors;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Dimension2D;
-import javafx.scene.Node;
-import javafx.stage.Stage;
-import authoringEnvironment.Controller;
-import authoringEnvironment.Sidebar;
-import authoringEnvironment.map.MapSidebar;
-import authoringEnvironment.objects.TileMap;
 
 public class MapEditor extends MainEditor {
 
@@ -41,17 +37,4 @@ public class MapEditor extends MainEditor {
         mySidebar = new MapSidebar(myResources, myMaps, getMapWorkspace()); //now don't need to pass in so much stuff
         getPane().add(mySidebar,1,0); 
     }
-
-/*
-	@Override
-	public void update() {
-		super.update();
-		getMapWorkspace().getActiveMap().attachTileListeners();
-	}*/
-/*	@Override
-	public void update() {
-		System.out.println("updated mapeditor!");	
-		//getMapWorkspace().getChildren().add(myActiveMap.getMap()); //why can't just do this? isn't it bad to have to call the controller for the exact same editor? or maybe to get its new state? yeah that sounds about right
-		
-	}*/
 }
