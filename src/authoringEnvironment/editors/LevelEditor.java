@@ -4,8 +4,8 @@ package authoringEnvironment.editors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
-
 import authoringEnvironment.Controller;
 import authoringEnvironment.LevelSidebar;
 import authoringEnvironment.Sidebar;
@@ -36,11 +36,20 @@ public class LevelEditor extends MainEditor{
 	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/"; //TODO: stop duplicating this default resource package line
 	private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "level_editor_english");
 	
+	
     public LevelEditor(Controller c, String name) {
 		super(c, name);
 		//mySidebar = new LevelSidebar(myResources, myMaps, getMapWorkspace());
 		//getPane().add(mySidebar,1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
 	  //  myLevels = new ArrayList<Node>();
+		myController = c;
+		
+//		List<String> temp = myController.getKeysForPartType(MapEditor.MAP_PART_NAME);
+//		for (String key : temp){
+//		    Map<String, Object> part = c.getPartCopy(key);
+//		}
+//		part.get(InstanceManager.nameKey);
+//		part.get(MapEditor.TILE_MAP);
 	}
 
     

@@ -136,6 +136,8 @@ public class Controller {
 		return currentGame.getAllPartData().get(partKey);
 	}
 	
+	
+	
 	public void specifyPartImage(String partKey, String imageFilePath){
 		currentGame.specifyPartImage(partKey, imageFilePath);
 	}
