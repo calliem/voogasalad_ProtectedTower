@@ -51,7 +51,7 @@ public abstract class SpriteEditor extends Editor {
     private Text empty;
     private List<Node> spritesCreated;
     private IntegerProperty numSprites;
-    private Scaler myScaler;
+  
 
     private static final int ROW_SIZE = 7;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
@@ -68,7 +68,6 @@ public abstract class SpriteEditor extends Editor {
      */
     public SpriteEditor (Controller c, String name) {
         super(c, name);
-        myScaler = new Scaler();
     }
 
     /**
@@ -273,14 +272,14 @@ public abstract class SpriteEditor extends Editor {
     private void showEditScreen (StackPane overlay) {
         if (!overlayActive) {
             myContent.getChildren().add(overlay);
-            myScaler.scaleEditScreen(0.0, 1.0, overlay);
+            Scaler.scaleEditScreen(0.0, 1.0, overlay);
             overlayActive = true;
         }
     }
 
     private void hideEditScreen (StackPane overlay) {
         if (overlayActive) {
-            ScaleTransition scale = myScaler.scaleEditScreen(1.0, 0.0, overlay);
+            ScaleTransition scale = Scaler.scaleEditScreen(1.0, 0.0, overlay);
             scale.setOnFinished( (e) -> {
                 myContent.getChildren().remove(overlay);
                 overlayActive = false;
