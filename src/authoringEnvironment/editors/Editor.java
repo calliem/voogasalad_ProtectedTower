@@ -62,13 +62,16 @@ public abstract class Editor extends Tab {
 		Scene scene = new Scene(root, 400, 200);// getWidth() / 4, getHeight() /
 												// 6);
 
-		stage.setTitle("Error"); // TODO: how to use this parameter?
-									// myResources.getString("Error"). How to
-									// add to the mainenvironment resources
-									// without the parser freaking out?
-		// MainStageTitle=protected Tower()
+		stage.setTitle("Error"); 
 		stage.setScene(scene);
 		stage.show();
 	}
+
+	protected void promptSpriteCreation() {
+		// TODO Auto-generated method stub
+		//this doesn't quite belong in this editor superclass. consider alternatives.
+		
+	}
+
 
 }

@@ -6,7 +6,9 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -16,12 +18,12 @@ import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 
 /**
- * This class is the generic sidebar method that contains the resource file and generalmethods shared by all sidebars
- * @author callie
+ * This class is the generic sidebar method that contains the resource file and general methods shared by all sidebars. Sidebars throughout the authoring environment will be of consistent proportional size and have consistency in how information (ie. titles and lists) are displayed.
+ * @author Callie Mao
  *
  */
 
-public abstract class Sidebar extends VBox { //extend gridpane pls
+public abstract class Sidebar extends Accordion { //extend gridpane pls
 	
 	private ResourceBundle myResources;
 	private List<Node> myMaps; //can't seem to use list with this
@@ -31,14 +33,13 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 	private static final double LISTVIEW_HEIGHT = AuthoringEnvironment.getEnvironmentHeight()/6;
 	private static final double TITLE_FONT_SIZE = AuthoringEnvironment.getEnvironmentWidth()/85;
 
-
 	public Sidebar(ResourceBundle resources, List<Node> maps, MapWorkspace mapWorkspace){
 		
 		myResources = resources;
 		myMaps = maps;
 		myMapWorkspace = mapWorkspace;
 		setDimensionRestrictions();
-		setSpacing(10);
+		//setSpacing(10);
 		//createMapSettings();
 	}
 	
@@ -57,11 +58,14 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 	
 	protected abstract void createMapSettings();
 	
-	protected void createTitleText(String s) {
+	protected VBox createTitleText(String s) {
 		Text title = new Text(s);
 		title.setFont(new Font(TITLE_FONT_SIZE));
 		title.setUnderline(true);
-		getChildren().add(title);
+		VBox context = new VBox();
+		TitledPane organizer = new TitledPane(s, context);
+		getPanes().add(organizer);
+		return context;
 	}
 	
 	protected ListView<Node> createListView(ObservableList<Node> items, int height) {
@@ -73,9 +77,9 @@ public abstract class Sidebar extends VBox { //extend gridpane pls
 	}
 
 	private void setDimensionRestrictions() {
-		setPadding(new Insets(PADDING));
+		//setPadding(new Insets(PADDING));
 		//setSpacing(3);
-		setMaxWidth(Double.MAX_VALUE);
+	//	setMaxWidth(Double.MAX_VALUE);
 	}
 	
 	
