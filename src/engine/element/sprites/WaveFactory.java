@@ -51,7 +51,7 @@ public class WaveFactory {
      * @param guid String of GUID identifying the object
      * @return Wave object
      */
-    public Wave getProjectile (String guid) {
+    public Wave getWave (String guid) {
         if (!myWaves.containsKey(guid)) { throw new InvalidParameterException(guid +
                                                                               " is an undefined projectile"); }
         Wave obj = (Wave) Reflection.createInstance(MY_CLASS_NAME);

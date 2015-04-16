@@ -1,5 +1,6 @@
 package engine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,8 +131,9 @@ public class GameController {
     }
 
     public static void main (String[] args) throws InsufficientParametersException {
-        // GameController test =
-        // new GameController(
-        // "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile");
+        GameController test =
+                new GameController(
+                                   "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile",
+                                   new ArrayList<Node>());
     }
 }

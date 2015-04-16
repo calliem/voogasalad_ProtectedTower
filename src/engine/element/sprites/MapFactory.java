@@ -51,7 +51,7 @@ public class MapFactory {
      * @param guid String of GUID identifying the object
      * @return GameMap object
      */
-    public GameMap getProjectile (String guid) {
+    public GameMap getMap (String guid) {
         if (!myMaps.containsKey(guid)) { throw new InvalidParameterException(guid +
                                                                              " is an undefined projectile"); }
 
