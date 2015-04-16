@@ -15,7 +15,10 @@ import engine.UpdateAndReturnable;
  * @author Bojia Chen
  * @author Qian Wang
  */
-public class Level extends GameElement implements UpdateAndReturnable, Endable {
+public class Level extends GameElement implements UpdateAndReturnable, Endable, Comparable<Level> {
+
+    private static final String PARAMETER_NUMBER = "Number";
+
     private List<Round> myRounds;
     private double myHealth;
     private int myLives;
@@ -38,6 +41,13 @@ public class Level extends GameElement implements UpdateAndReturnable, Endable {
     public List<String> update (int counter) {
         // TODO Auto-generated method stub
         return myRounds.get(myCurrentRound).update(counter);
+    }
+
+    @Override
+    public int compareTo (Level o) {
+        int thisLevel = (int) this.getParameter(PARAMETER_NUMBER);
+        int otherLevel = (int) o.getParameter(PARAMETER_NUMBER);
+        return thisLevel - otherLevel;
     }
 
 }

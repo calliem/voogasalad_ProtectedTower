@@ -1,8 +1,5 @@
 package engine.element.sprites;
 
-import engine.InsufficientParametersException;
-
-
 /**
  * This class represents the projectiles shot out by certain Sprites, like towers.
  * 
@@ -11,9 +8,8 @@ import engine.InsufficientParametersException;
  */
 public class Projectile extends MoveableSprite {
 
-    public Projectile () throws InsufficientParametersException {
+    public Projectile () {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     @Override

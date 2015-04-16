@@ -1,5 +1,12 @@
 package authoringEnvironment.objects;
 
-public abstract class ProjectileView extends SpriteView {
+import authoringEnvironment.Controller;
+
+public class ProjectileView extends SpriteView {
+
+    public ProjectileView (Controller c, String name, String imageFile) {
+        super(c, name, imageFile);
+        // TODO Auto-generated constructor stub
+    }
 
 }

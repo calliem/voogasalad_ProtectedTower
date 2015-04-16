@@ -1,25 +1,32 @@
 package authoringEnvironment.editors;
 
-import javafx.geometry.Dimension2D;
+import java.util.List;
+
+import authoringEnvironment.Controller;
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.stage.Stage;
 
-public class ItemEditor extends PropertyEditor{
+public class ItemEditor extends SpriteEditor{
+	
+	private List<Node> myItems;
 
-	public ItemEditor (Dimension2D dim, Stage s){
-		super(dim);
+	public ItemEditor (Controller c, String name){
+		super(c, name);
 	}
+	
 
-	@Override
-	public Node configureUI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	protected Group configureUI() {
+//		// TODO Auto-generated method stub
+//	    return new Group();
+//	}
 
-	@Override
-	protected void update() {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void update() {
+//		// TODO Auto-generated method stub
+//		System.out.println("itemeditor updated");
+//		
+//	}
+
 	
 }

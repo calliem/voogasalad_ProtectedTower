@@ -1,7 +1,11 @@
 package engine.element;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import javafx.scene.Node;
+import util.reflection.Reflection;
 import engine.Bank;
 import engine.Updateable;
 import engine.conditions.Condition;
@@ -17,22 +21,26 @@ import engine.conditions.Condition;
  */
 public class Game extends GameElement implements Updateable {
 
+    private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
     private static final String PARAMETER_HEALTH = "HP";
-    
+
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
     private int myActiveLevel;
-    // public GameState myGameState;
     private Bank myBank;
     private int myPoints;
+    /**
+     * List of Javafx objects so that new nodes can be added for the player to display
+     */
+    private List<Node> myNodes;
 
-    public Game () {
+    public Game (List<Node> nodes) {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
-        myLayout = new Layout();
+        myNodes = nodes;
+        myLayout = new Layout(myNodes);
         myActiveLevel = 0;
-        // myGameState = new GameState();
         myBank = new Bank();
         myPoints = 0;
     }
@@ -48,11 +56,50 @@ public class Game extends GameElement implements Updateable {
         myLayout.update(counter);
     }
 
-    protected void addTower () {
-
+    /**
+     * Adds levels to the list of all levels, fills their parameter maps, and sorts levels by number
+     * 
+     * @param levels Map<String, Map<String, Object>> mapping GUID to parameters map for each level
+     */
+    public void addLevels (Map<String, Map<String, Object>> levels) {
+        levels.keySet().forEach(l -> {
+            Level tempLevel = (Level) Reflection.createInstance(PACKAGE_LOCATION_LEVEL);
+            tempLevel.setParameterMap(levels.get(l));
+            myLevels.add(tempLevel);
+        });
+        Collections.sort(myLevels);
     }
 
-    protected void addEnemy () {
+    // TODO refactor add methods below
+    public void addTowers (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeTowers(allObjects);
+    }
 
+    public void addEnemies (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeEnemies(allObjects);
+    }
+
+    public void addProjectiles (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeProjectiles(allObjects);
+    }
+
+    public void addGridCells (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeGridCells(allObjects);
+    }
+
+    public void addGameMaps (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeGameMaps(allObjects);
+    }
+
+    public void addRounds (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeRounds(allObjects);
+    }
+
+    public void addWaves (Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeWaves(allObjects);
+    }
+
+    public void addLayoutParameters (Map<String, Object> parameters) {
+        myLayout.setParameterMap(parameters);
     }
 }

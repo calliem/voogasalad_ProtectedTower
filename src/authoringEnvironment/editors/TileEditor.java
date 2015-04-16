@@ -1,26 +1,29 @@
 package authoringEnvironment.editors;
 
-import javafx.geometry.Dimension2D;
+import java.util.List;
+
+import authoringEnvironment.Controller;
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.stage.Stage;
 
-public class TileEditor extends PropertyEditor{
+public class TileEditor extends SpriteEditor{
 
-	public TileEditor(Dimension2D dim, Stage s) {
-		super(dim);
-		// TODO Auto-generated constructor stub
-	}
+    public TileEditor(Controller c, String name) {
+        super(c, name);
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public Node configureUI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//    @Override
+//    protected Group configureUI() {
+//        // TODO Auto-generated method stub
+//        return new Group();
+//    }
 
-	@Override
-	protected void update() {
-		// TODO Auto-generated method stub
-		
-	}
+//    @Override
+//    public void update() {
+//        // TODO Auto-generated method stub
+//
+//    }
+
 
 }

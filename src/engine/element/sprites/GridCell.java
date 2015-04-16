@@ -1,8 +1,7 @@
 package engine.element.sprites;
 
 import java.util.List;
-
-import engine.InsufficientParametersException;
+import javafx.geometry.Point2D;
 
 
 /**
@@ -15,13 +14,43 @@ import engine.InsufficientParametersException;
  */
 public class GridCell extends Sprite {
 
-	private List<String> tags;
-	
-    public GridCell () throws InsufficientParametersException {
-        super();
-        // TODO Auto-generated constructor stub
+    private List<String> myTags;
+    private Point2D centerLocation;
+
+    /**
+     * Sets the center of grid cell
+     * 
+     * @param location Point2D object representing (x, y) coordinates
+     */
+    public void setCenter (Point2D location) {
+        centerLocation = location;
     }
-    
+
+    /**
+     * Sets the center of grid cell
+     * 
+     * @param x double of x-coordinate
+     * @param y double of y-coordinate
+     */
+    public void setCenter (double x, double y) {
+        centerLocation = new Point2D(x, y);
+    }
+
+    /**
+     * @return Point2D representing coordinate location of center of cell
+     */
+    public Point2D getCenter () {
+        return new Point2D(centerLocation.getX(), centerLocation.getY());
+    }
+
+    public double getCenterX () {
+        return centerLocation.getX();
+    }
+
+    public double getCenterY () {
+        return centerLocation.getY();
+    }
+
     @Override
     public boolean isTargetableBy (String type) {
         // TODO Auto-generated method stub
@@ -34,8 +63,14 @@ public class GridCell extends Sprite {
         return false;
     }
 
-    public boolean isObstacle(String type){
+    public boolean isObstacle (String type) {
         // TODO Auto-generated method stub
-		return false;
+        return false;
+    }
+
+    @Override
+    public void collide (Sprite sprite) {
+        // TODO Auto-generated method stub
+
     }
 }

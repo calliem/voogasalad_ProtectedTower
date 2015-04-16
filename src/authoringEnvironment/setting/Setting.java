@@ -7,6 +7,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -18,26 +19,35 @@ import javafx.scene.text.Text;
  * @author Johnny
  *
  */
-public abstract class Setting extends HBox{
+public abstract class Setting extends VBox{
     private String label;
+    protected HBox basicLayout;
     protected ImageView error;
     protected String dataAsString;
     private TextField editableField;
     
+    private static final int FIELD_WIDTH = 125;
+    private static final int PADDING = 10;
+    private static final int MESSAGE_SIZE = 20;
+    
     public Setting(String label, String value){
         //TODO: remove magic number
-        super(10);
-        dataAsString = value;
+        super(PADDING);
         this.setAlignment(Pos.CENTER);
         
+        dataAsString = value;
+        basicLayout = new HBox(PADDING);
+        basicLayout.setAlignment(Pos.CENTER_RIGHT);
+        
         error = new ImageView(new Image(String.format("images/%s.png", "error")));
-        ScaleImage.scale(error, 20, 20);
+        ScaleImage.scale(error, MESSAGE_SIZE, MESSAGE_SIZE);
         
         this.label = label;
         Text parameter = new Text(String.format("%s:", label));
         parameter.setFill(Color.WHITE);
         
-        this.getChildren().add(parameter);
+        basicLayout.getChildren().add(parameter);
+        this.getChildren().add(basicLayout);
         setupInteractionLayout();
         parseField();
     }
@@ -48,11 +58,14 @@ public abstract class Setting extends HBox{
      * textfield)
      */
     
-    //this is the same for every setting object
-    //if not, we can have two setting subclasses, one for normal stuff, one for file selectors
     protected void setupInteractionLayout(){
         editableField = new TextField(dataAsString);
-        this.getChildren().add(editableField);
+        editableField.setMaxWidth(FIELD_WIDTH);
+        editableField.setMinWidth(FIELD_WIDTH);
+        editableField.setAlignment(Pos.CENTER);
+        
+        error.setVisible(false);
+        basicLayout.getChildren().addAll(editableField, error);
     }
     /**
      * Returns the name of the parameter represented
@@ -69,14 +82,29 @@ public abstract class Setting extends HBox{
      */
     public abstract Object getParameterValue();
     
-    public String getDataAsString(){
-    	return dataAsString;
+    public void setParameterValue(Object value){
+        dataAsString = (String) value;
+        editableField.setText((String) value);
     }
+
+    /**
+     * Displays the error alert for this parameter.
+     */
+    protected void displayErrorAlert(String message){
+        error.setVisible(true);
+        Tooltip tooltip = new Tooltip(message);
+        Tooltip.install(error, tooltip);
+    }
+    
     /**
      * Hides the error alert for this parameter.
      */
     protected void hideErrorAlert(){
-        this.getChildren().remove(error);
+        error.setVisible(false);
+    }
+
+    public String getDataAsString(){
+        return dataAsString;
     }
     
     protected TextField textBox(){
@@ -84,23 +112,16 @@ public abstract class Setting extends HBox{
     }
     
     /**
-     * Displays the error alert for this parameter.
-     */
-    protected void displayErrorAlert(String message){
-        if(this.getChildren().get(0) != error){
-            this.getChildren().add(0, error);
-        }
-        Tooltip tooltip = new Tooltip(message);
-        Tooltip.install(error, tooltip);
-    }
-    
-    /**
      * Parses the parameter field and displays an error if
      * the data in the field is not of the correct type.
-     * @return true if the user-entered data is correctly formatted
+     * @return true     if the user-entered data is correctly formatted
      */
     public abstract boolean parseField();
     
+    /**
+     * Processes the data and updates dataAsString and the textField.
+     * @return true     if user-entered data is correctly formatted
+     */
     public boolean processData(){
         boolean readable = parseField();
         if(readable){
@@ -109,7 +130,12 @@ public abstract class Setting extends HBox{
         return readable;
     }
     
+    /**
+     * Displays previously saved value of dataAsString. If user-entered
+     * data is incorrectly formatted, this is the last value of dataAsString
+     * (before the error).
+     */
     public void displaySavedValue(){
-        editableField.setText(""+dataAsString);
+        editableField.setText(dataAsString);
     }
 }

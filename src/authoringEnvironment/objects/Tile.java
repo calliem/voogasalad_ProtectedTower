@@ -16,32 +16,30 @@ public class Tile extends Rectangle {
 	// private ImageView myImage;
 	private boolean isPath;
 	private boolean isSelected;
-	private double myTileSize;
+	private double myTileSize; //TODO: this should be written in the map since the tile does not need to kno this 
 	private int myColNum;
 	private int myRowNum;
 	private ArrayList<String> myTags;
+	private Color myColor;
 
 	// will have the same image for a path?
 	// TODO: create a text box to set grid size and a slider to set tile size
 	// that would only allow numbers in correct increments that would fit
-
+	private static final Color DEFAULT_COLOR = Color.TRANSPARENT;
 	public Tile(double tileSize, int rowNum, int colNum) {
-		System.out.println("tileSize" + tileSize);
-		myTileSize = tileSize+5;
+		myTileSize = tileSize;
 		myColNum = colNum;
 		myRowNum = rowNum;
 		// setImage(new Image("/resources/white_square.png"));
 		// setFitWidth(tileSize);
 		// setFitHeight(tileSize);
-		setFill(Color.WHITE);
+		setFill(DEFAULT_COLOR);
+		setOpacity(0.4);
 		setWidth(tileSize);
 		setHeight(tileSize);
 
 		setTranslateX(colNum * tileSize);
 		setTranslateY(rowNum * tileSize);
-		System.out.println("col " + colNum*tileSize);
-		System.out.println("row " + rowNum*tileSize);
-
 		
 		isPath = false;
 		isSelected = false;
@@ -64,9 +62,7 @@ public class Tile extends Rectangle {
 	public void setTileSizeDynamically(double size) {
 		setTileSize(size);
 		setTranslateX(myColNum*size);
-		System.out.println("col " + myColNum*size);
 		setTranslateY(myRowNum*size);
-		System.out.println("row " + myRowNum*size);
 	}
 	// this may not be necessary if the 2D array will update itself
 	private void setTileSize(double size) {
@@ -107,6 +103,7 @@ public class Tile extends Rectangle {
 	public boolean isActivePath() {
 		return isPath;
 	}
+	
 
 
 }

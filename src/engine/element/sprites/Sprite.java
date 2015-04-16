@@ -1,8 +1,9 @@
 package engine.element.sprites;
 
+import java.util.Map;
 import javafx.geometry.Point2D;
+import javafx.scene.image.ImageView;
 import engine.Collidable;
-import engine.InsufficientParametersException;
 import engine.element.GameElement;
 
 
@@ -19,18 +20,24 @@ public abstract class Sprite extends GameElement implements Collidable {
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
 
+    private ImageView myImage;
     private Point2D myLocation;
     private String myType;
 
-    public Sprite () throws InsufficientParametersException {
+    public Sprite () {
 
     }
 
-    // public abstract List<String> getParameters ();
+    // TODO remove these once testing is over
+    @Deprecated
+    public ImageView getImageView () {
+        return myImage;
+    }
 
-    // public double getSize () {
-    // return 0;
-    // }
+    @Deprecated
+    protected void setImageView (ImageView image) {
+        myImage = image;
+    }
 
     // Setters and getters
 
@@ -39,7 +46,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      * 
      * @param location Point2D object representing (x, y) coordinates
      */
-    protected void setLocation (Point2D location) {
+    public void setLocation (Point2D location) {
         myLocation = location;
     }
 
@@ -49,7 +56,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @param x double of x-coordinate
      * @param y double of y-coordinate
      */
-    protected void setLocation (double x, double y) {
+    public void setLocation (double x, double y) {
         myLocation = new Point2D(x, y);
     }
 
@@ -75,6 +82,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      * 
      * @param type String of the type of object
      */
+    @Deprecated
     protected void setType (String type) {
         myType = type.toUpperCase();
     }
@@ -82,8 +90,13 @@ public abstract class Sprite extends GameElement implements Collidable {
     /**
      * @return uppercase String of the type of object this is
      */
+    @Deprecated
     protected String getType () {
         return myType;
+    }
+
+    public Map<String, Object> getAllParameters () {
+        return super.getAllParameters();
     }
 
     @Override
@@ -113,5 +126,14 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @return true if the given type can collide with this object's type
      */
     public abstract boolean isCollidableWith (String type);
+
+    /**
+     * This method is called when this object collides with another and should include the behavior
+     * of this object, such as stopping movement, or damaging the other object.
+     * 
+     * @param sprite Sprite object that this object collides with
+     * @return
+     */
+    public abstract void collide (Sprite sprite);
 
 }

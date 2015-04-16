@@ -1,27 +1,29 @@
-/*package authoringEnvironment.editors;
+package authoringEnvironment.editors;
 
 import java.awt.ScrollPane;
+import java.util.List;
 
-import javafx.geometry.Dimension2D;
+import authoringEnvironment.Controller;
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 public class RowEditor extends Editor {
 
-	public RowEditor(Dimension2D dim, Stage s) {
-		super(dim, s);
-		// TODO Auto-generated constructor stub
-	}
+    public RowEditor(Controller c, String name) {
+        super(c, name);
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public Node configureUI() {
-		ScrollPane foundation = new ScrollPane();
-		Rectangle background = new Rectangle(myDimensions.getWidth()*MAP_WIDTH_MULTIPLIER, 0.9 * myDimensions.getHeight(), Color.web("2A2A29"));
-		
-		// TODO Auto-generated method stub
-		return ;
-	}
+    @Override
+    public Group configureUI() {
+        ScrollPane foundation = new ScrollPane();
+        Rectangle background = new Rectangle();
 
-}*/
+        // TODO Auto-generated method stub
+        return new Group();
+    }
+
+
+
+}

@@ -71,25 +71,6 @@ public class GraphicFileChooser extends StackPane{
         }
     }
     
-//    public void setAdditionalOptions(boolean show){
-//        if(show){
-//            displayAdditionalOptions();
-//        }
-//    }
-//    
-//    public void displayAdditionalOptions(){
-//        selector.getChildren().remove(0);
-//
-//        ImageView more = new ImageView(new Image("images/more.png"));
-//        ScaleImage.scale(more, 20, 20);
-//
-//        HBox arrangement = new HBox(10);
-//        arrangement.getChildren().addAll(more, textDisplay);
-//        arrangement.setAlignment(Pos.CENTER);
-//        
-//        selector.getChildren().add(0, arrangement);
-//    }
-    
     protected Text getFileDisplay(){
         return fileDisplay;
     }
