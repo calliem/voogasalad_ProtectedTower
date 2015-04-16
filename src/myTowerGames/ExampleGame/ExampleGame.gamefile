@@ -1,4 +1,8 @@
 <string-array>
   <string>ExampleGame</string>
+<<<<<<< HEAD
   <string>/Users/callie/Projects/Compsci308/voogasalad_ProtectedTower/src/myTowerGames/ExampleGame</string>
+=======
+  <string>/Users/kevinhe/Documents/GitHub/voogasalad_ProtectedTower/src/myTowerGames/ExampleGame</string>
+>>>>>>> master
 </string-array>
