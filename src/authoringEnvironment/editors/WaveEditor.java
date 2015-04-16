@@ -30,7 +30,7 @@ import authoringEnvironment.objects.FlowView;
  */
 
 public class WaveEditor extends MainEditor {
-	private static final int PADDING_SIZE = 10;
+	private static final int paddingSize = 10;
 	private Map<String, ArrayList<FlowView>> myWaves;
 	private final String WAVE = "Wave";
 
@@ -60,8 +60,8 @@ public class WaveEditor extends MainEditor {
 	public Group configureUI() {
 		Group visuals = new Group();
 		StackPane editor = new StackPane();
-		HBox newWavePanel = new HBox(PADDING_SIZE);
-		VBox contents = new VBox(PADDING_SIZE);
+		HBox newWavePanel = new HBox(paddingSize);
+		VBox contents = new VBox(paddingSize);
 		ScrollPane contentScrollPane = new ScrollPane();
 		contentScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 		contentScrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
@@ -127,7 +127,7 @@ public class WaveEditor extends MainEditor {
 		// newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth());
 		newWave.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth());
 
-		HBox waveContent = new HBox(PADDING_SIZE);
+		HBox waveContent = new HBox(paddingSize);
 
 		Button addUnit = new Button("Add Unit");
 		addUnit.setOnAction(e -> addUnitToWave(waveContent, waveName));
@@ -135,7 +135,7 @@ public class WaveEditor extends MainEditor {
 		Button save = new Button("Save");
 		save.setOnAction(e -> saveWaveData(waveName));
 
-		VBox buttons = new VBox(PADDING_SIZE);
+		VBox buttons = new VBox(paddingSize);
 		buttons.getChildren().add(new Text("Wave: " + waveName));
 		buttons.getChildren().add(addUnit);
 		buttons.getChildren().add(save);
@@ -172,7 +172,7 @@ public class WaveEditor extends MainEditor {
 	}
 
 	private void addUnitToWave(HBox wave, String waveName) {
-		FlowView unit = new FlowView(100);
+		FlowView unit = new FlowView(100, myController);
 		wave.getChildren().add(unit);
 		myWaves.get(waveName).add(unit);
 	}
