@@ -29,7 +29,7 @@ public abstract class Editor extends Tab {
     protected String tabName;
     private Group contentRoot;
     protected Controller myController;
-    
+
     protected static final double CONTENT_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth();
     protected static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment
@@ -77,11 +77,9 @@ public abstract class Editor extends Tab {
         stage.show();
     }
 
-	protected void promptSpriteCreation() {
-		// TODO Auto-generated method stub
-		//this doesn't quite belong in this editor superclass. consider alternatives.
-		
-	}
+    protected void promptSpriteCreation() {
+        // TODO Auto-generated method stub
+        //this doesn't quite belong in this editor superclass. consider alternatives.
 
-
+    }
 }

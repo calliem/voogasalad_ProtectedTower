@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -21,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import authoringEnvironment.Controller;
@@ -64,17 +66,6 @@ public class FlowView extends HBox {
         partFileNames = new ArrayList<String>();
         delays = new ArrayList<Double>();
 
-//        VBox partSelector = new VBox(paddingSize);
-//        partSelector.setAlignment(Pos.CENTER);
-//
-//        // TODO remove duplication when figure out how to do the lambda thing
-//        Button selectUnitButton = new Button("Select Unit");
-//        selectUnitButton.setOnAction(e -> selectUnit());
-//        partSelector.getChildren().add(selectUnitButton);
-//
-//        Button selectWaveButton = new Button("Select Wave");
-//        selectWaveButton.setOnAction(e -> selectWave());
-//        partSelector.getChildren().add(selectWaveButton);
         selector = new VBox(0.5*PADDING);
         selector.setAlignment(Pos.CENTER);
         
@@ -82,7 +73,12 @@ public class FlowView extends HBox {
         options.add("Unit");
         options.add("Wave");
         ObservableList<String> optionsList = FXCollections.observableArrayList(options);
-        final ComboBox<String> partSelectorBox = new ComboBox<>(optionsList); 
+        final ComboBox<String> partSelectorBox = new ComboBox<>(optionsList);
+        Tooltip tooltip = new Tooltip("Select something to add!");
+        tooltip.setTextAlignment(TextAlignment.CENTER);
+        Tooltip.install(partSelectorBox, tooltip);
+        
+        //TODO: use lambda for selectUnit/selectWave method?
         partSelectorBox.setPromptText("...");
         partSelectorBox.valueProperty().addListener((obs, oldValue, newValue) -> {
             if(newValue.equals("Unit"))
@@ -94,7 +90,7 @@ public class FlowView extends HBox {
         selector.getChildren().add(partSelectorBox);
         this.getChildren().add(selector);
 
-        StackPane arrow = createArrowAndDelayVisuals();
+        VBox arrow = createArrowAndDelayVisuals();
         this.getChildren().add(arrow);
         this.setPrefHeight(myHeight);
     }
@@ -112,22 +108,21 @@ public class FlowView extends HBox {
         animation.play();
     }
 
-    private StackPane createArrowAndDelayVisuals() {
+    private VBox createArrowAndDelayVisuals() {
         ImageView arrowImage = new ImageView(new Image("images/arrow_icon.png"));
         ScaleImage.scaleByWidth(arrowImage, 120);
         delayTextField = new TextField();
         delayTextField.setPromptText("(sec)");
         delayTextField.setAlignment(Pos.CENTER);
-        delayTextField.setTranslateX(-0.5*PADDING);
         delayTextField.setMaxWidth(50);
-        StackPane arrow = new StackPane();
+        VBox arrow = new VBox(0.5*PADDING);
         
         HBox timeInput = new HBox(PADDING);
         timeInput.getChildren().add(delayTextField);
         timeInput.getChildren().add(new Text("s"));
         timeInput.setAlignment(Pos.CENTER);
         
-        arrow.getChildren().addAll(arrowImage, delayTextField);
+        arrow.getChildren().addAll(delayTextField, arrowImage);
         arrow.setAlignment(Pos.CENTER);
         
         showArrowAnimation(arrowImage, delayTextField);
