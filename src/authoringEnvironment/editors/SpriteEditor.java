@@ -4,6 +4,12 @@ import imageselectorTEMP.ImageSelector;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import util.reflection.Reflection;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
+import authoringEnvironment.objects.ProjectileView;
+import authoringEnvironment.objects.SpriteView;
+import authoringEnvironment.objects.TowerView;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -30,6 +36,7 @@ import authoringEnvironment.Scaler;
 import authoringEnvironment.objects.SpriteView;
 
 
+
 /**
  * General abstract class for editors that allow user interaction in
  * sprite/property creation and editing
@@ -46,12 +53,8 @@ public abstract class SpriteEditor extends Editor {
     private IntegerProperty numSprites;
     private Scaler myScaler;
 
-    private static final double CONTENT_WIDTH = AuthoringEnvironment
-            .getEnvironmentWidth();
-    private static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment
-            .getEnvironmentHeight();
-
     private static final int ROW_SIZE = 7;
+    private static final Color BACKGROUND_COLOR = Color.GRAY;
 
     /**
      * Creates a tower object.
@@ -79,8 +82,7 @@ public abstract class SpriteEditor extends Editor {
         spritesCreated = new ArrayList<>();
 
         // TODO remove magic number
-        Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT,
-                                             Color.GRAY);
+        Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, BACKGROUND_COLOR);
 
         VBox spriteDisplay = new VBox(20);
         spriteDisplay.setTranslateY(10);
@@ -322,8 +324,7 @@ public abstract class SpriteEditor extends Editor {
 
     private TranslateTransition transitionButton (Button add, double from,
                                                   double to) {
-        TranslateTransition moveButton = new TranslateTransition(
-                                                                 Duration.millis(100), add);
+        TranslateTransition moveButton = new TranslateTransition(Duration.millis(100), add);
         moveButton.setFromX(from);
         moveButton.setToX(to);
         moveButton.setCycleCount(1);
@@ -336,16 +337,4 @@ public abstract class SpriteEditor extends Editor {
         button.setMinWidth(100);
         button.setMaxWidth(100);
     }
-    //
-    // @Override
-    // public List<Node> getObjects() {
-    // // TODO Auto-generated method stub
-    // return spritesCreated;
-    // }
-
-    // @Override
-    // public void update() {
-    // // TODO Auto-generated method stub
-    //
-    // }
 }
