@@ -45,14 +45,11 @@ public class ImageSelector extends VBox {
         super(2*PADDING);
         setAlignment(Pos.CENTER);
 
-//        myResources = ResourceBundle.getBundle(SELECTOR_RESOURCES);
-        
         fileSelection = new GraphicFileChooser("Choose an image...", NOT_AVAILABLE);
 
         filePath = NOT_AVAILABLE;
         preview = new ImageView(new Image(filePath));
         
-//        Button loader = fileSelection.getButton();
         StringProperty file = new SimpleStringProperty();
         file.bind(fileSelection.getSelectedFileNameProperty());
         file.addListener((obs, oldValue, newValue) -> {
@@ -75,7 +72,7 @@ public class ImageSelector extends VBox {
     }
     
     public void addExtensionFilter(String extension){
-        fileSelection.addExtensionFilter(extension);
+        fileSelection.addExtensionFilter("Image");
     }
     
     /**

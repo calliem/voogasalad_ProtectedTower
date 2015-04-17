@@ -21,7 +21,7 @@ public class FileNameSetting extends Setting{
     @Override
     protected void setupInteractionLayout(){
         spriteFileChooser = new GraphicFileChooser("Select a File...", null);
-        spriteFileChooser.addExtensionFilter("xml");
+        spriteFileChooser.addExtensionFilter("Text");
         
         basicLayout.getChildren().add(spriteFileChooser);
     }

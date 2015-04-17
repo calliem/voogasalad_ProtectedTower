@@ -24,21 +24,28 @@ public class NamePrompt extends StackPane{
     private ImageSelector imgSelector;
     
     private int numUnnamed = 0;
+    private static final int PROMPT_WIDTH = 300;
+    private static final int PROMPT_HEIGHT = 200;
+    private static final int EXPANDED_HEIGHT = 400;
+    private static final double OPACITY = 0.8;
+    private static final int PREVIEW_WIDTH = 225;
+    private static final int PREVIEW_HEIGHT = 150;
+    private static final int PADDING = 20;
     
     public NamePrompt (String partName){
-        promptBackground = new Rectangle(300, 200);
-        promptBackground.setOpacity(0.8);
+        promptBackground = new Rectangle(PROMPT_WIDTH, PROMPT_HEIGHT);
+        promptBackground.setOpacity(OPACITY);
 
-        promptContent = new VBox(20);
+        promptContent = new VBox(PADDING);
         promptContent.setAlignment(Pos.CENTER);
         Text prompt = new Text("Creating a new " + partName + "...");
         prompt.setFill(Color.WHITE);
         
         promptField = new TextField();
-        promptField.setMaxWidth(225);
+        promptField.setMaxWidth(PREVIEW_WIDTH);
         promptField.setPromptText("Enter a name...");
 
-        HBox buttons = new HBox(10);
+        HBox buttons = new HBox(PADDING/2);
         create = new Button("Create");
         cancel = new Button("Cancel");
 
@@ -58,18 +65,16 @@ public class NamePrompt extends StackPane{
     public ScaleTransition hidePrompt(StackPane root){
         ScaleTransition hide = Scaler.scaleOverlay(1.0, 0.0, this);
         hide.setOnFinished(e -> root.getChildren().remove(this));
-        return Scaler.scaleOverlay(1.0, 0.0, this);
+        return hide;
     }
     
     public void setImageChooser(boolean show){
         if(show){
-            promptBackground.setHeight(400);
+            promptBackground.setHeight(EXPANDED_HEIGHT);
             
             imgSelector = new ImageSelector();
-            imgSelector.addExtensionFilter("png");
-            imgSelector.addExtensionFilter("jpg");
-            imgSelector.addExtensionFilter("gif");
-            imgSelector.setPreviewImageSize(225, 150);
+            imgSelector.addExtensionFilter("Image");
+            imgSelector.setPreviewImageSize(PREVIEW_WIDTH, PREVIEW_HEIGHT);
             
             promptContent.getChildren().add(2, imgSelector);
         }

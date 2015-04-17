@@ -227,8 +227,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         // TODO: this is duplicated from Kevin's class
         GraphicFileChooser imgSelector = new GraphicFileChooser("Select background");
-        imgSelector.addExtensionFilter("png");
-        imgSelector.addExtensionFilter("jpg");
+        imgSelector.addExtensionFilter("Image");
 
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener((obs, oldValue, newValue) -> {
