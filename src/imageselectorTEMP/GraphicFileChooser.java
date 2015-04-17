@@ -21,7 +21,7 @@ public class GraphicFileChooser extends StackPane{
     private static final int PADDING = 10;
     private static final int FILE_DISPLAY_WIDTH = 150;
     private static final int FILE_DISPLAY_HEIGHT = 24;
-    private static final int LOAD_BUTTON_WIDTH = 65;
+    private static final int LOAD_BUTTON_WIDTH = 75;
     
     private HBox selector;
     private Button loader;
