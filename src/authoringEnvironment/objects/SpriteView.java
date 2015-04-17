@@ -3,10 +3,6 @@ package authoringEnvironment.objects;
 import imageselectorTEMP.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
-import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.Controller;
-import authoringEnvironment.ProjectReader;
-import authoringEnvironment.setting.Setting;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
@@ -25,6 +21,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
+import authoringEnvironment.ProjectReader;
+import authoringEnvironment.setting.Setting;
 
 
 public abstract class SpriteView extends StackPane {
@@ -47,7 +47,7 @@ public abstract class SpriteView extends StackPane {
 
     private static final int NAME_INDEX = 0;
     private static final String DEFAULT_NAME = "Unnamed";
-    
+
     private Controller myController;
 
     /**
@@ -55,7 +55,7 @@ public abstract class SpriteView extends StackPane {
      * the user in the authoring environment.
      * 
      * @param c controller needed to obtain partKeys from other tabs
-     * @param name      name of this sprite, designated by user
+     * @param name name of this sprite, designated by user
      * @param imageFile the file path of this sprite's image
      */
     public SpriteView (Controller c, String name, String imageFile) {
@@ -146,7 +146,7 @@ public abstract class SpriteView extends StackPane {
                                              overlayErrorMessage, settingsObjects, buttons, saved);
     }
 
-    private void saveParameterFields (boolean save) {
+    public void saveParameterFields (boolean save) {
         boolean correctFormat = true;
         for (Setting s : parameterFields) {
             boolean correct = s.processData();
@@ -163,7 +163,7 @@ public abstract class SpriteView extends StackPane {
         if (correctFormat && save) {
             String key = myController.addPartToGame(getSpriteType(),
                                                     parameterFields);
-                                    myController.specifyPartImage(key, imageFile);
+            myController.specifyPartImage(key, imageFile);
             displaySavedMessage();
         }
     }
@@ -179,7 +179,7 @@ public abstract class SpriteView extends StackPane {
         spriteNameDisplay.setText(spriteName);
         overlaySpriteNameDisplay.setText(spriteName);
     }
-    
+
     /**
      * Revert to previous parameter values.
      */
@@ -218,7 +218,7 @@ public abstract class SpriteView extends StackPane {
         // removes the 'x' button.
         this.getChildren().remove(this.getChildren().size() - 1);
     }
-    
+
     private ScaleTransition playDeletionAnimation () {
         ScaleTransition delete = new ScaleTransition(Duration.millis(200), this);
         delete.setFromX(1.0);
@@ -238,7 +238,8 @@ public abstract class SpriteView extends StackPane {
     /**
      * Returns the sprite's parameter fields as an array of two strings, the parameter name
      * and the parameter field value.
-     * @return info     list of arrays containing parameter information for this sprite.
+     * 
+     * @return info list of arrays containing parameter information for this sprite.
      */
     public List<String[]> getSpriteInfo () {
         List<String[]> info = new ArrayList<>();
@@ -250,7 +251,8 @@ public abstract class SpriteView extends StackPane {
 
     /**
      * Setup the tooltip text for this sprite.
-     * @param info      this sprite's parameter information
+     * 
+     * @param info this sprite's parameter information
      */
     public void setupTooltipText (List<String[]> info) {
         String tooltipText = "";

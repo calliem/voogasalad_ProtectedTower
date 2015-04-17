@@ -15,12 +15,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
-
 
 /**
  * Creates the Wave Editor that allows the user to create and edit waves made
@@ -31,9 +32,22 @@ import authoringEnvironment.objects.FlowView;
  */
 
 public class WaveEditor extends MainEditor {
-    private static final int paddingSize = 10;
     private Map<String, ArrayList<FlowView>> myWaves;
     private final String WAVE = "Wave";
+    private static final int PADDING = 10; 
+    private static final String NO_WAVES = "No waves yet...";
+    private static final int BUTTON_HEIGHT = 24;
+    private static final int WAVE_PANEL_HEIGHT = 105;
+    private static final int INFO_PANEL_WIDTH = 170;
+    private Text empty;
+    private VBox editorLayout;
+    private ScrollPane contentScrollPane; 
+    
+    private int numWaves = 0;
+    private static final Color EDITOR_BACKGROUND_COLOR = Color.GRAY;
+    private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
+    private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
+    private static final Color WAVE_NAME_COLOR = Color.GOLDENROD;
 
     /**
      * WaveEditor constructor, calls MainEditor superclass and initializes a map
@@ -41,12 +55,12 @@ public class WaveEditor extends MainEditor {
      * store waves
      * 
      * @param c
-     *        Instance of the controller
+     *            Instance of the controller
      * @param name
-     *        Name of the tab
+     *            Name of the tab
      */
 
-    public WaveEditor (Controller c, String name) {
+    public WaveEditor(Controller c, String name) {
         super(c, name);
         myWaves = new HashMap<String, ArrayList<FlowView>>();
     }
@@ -58,37 +72,52 @@ public class WaveEditor extends MainEditor {
      * @return Group object that adds all visual elements
      */
     @Override
-    public Group configureUI () {
+    public Group configureUI() {
         Group visuals = new Group();
+        
         StackPane editor = new StackPane();
-        HBox newWavePanel = new HBox(paddingSize);
-        VBox contents = new VBox(paddingSize);
-        ScrollPane contentScrollPane = new ScrollPane();
+        Rectangle editorBackground = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
+        
+        editorLayout = new VBox(PADDING);
+        empty = new Text(NO_WAVES);
+        empty.setFont(new Font(30));
+        empty.setFill(Color.WHITE);
+        
+        StackPane wavesDisplay = new StackPane();
+        Rectangle wavesDisplayBackground = new Rectangle(CONTENT_WIDTH, WAVE_PANEL_HEIGHT+2*PADDING, DISPLAY_BACKGROUND_COLOR);
+        
+        VBox contents = new VBox(PADDING);
+        contents.setAlignment(Pos.CENTER_LEFT);
+        contentScrollPane = new ScrollPane();
         contentScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-        contentScrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-        contentScrollPane.setMaxHeight(AuthoringEnvironment
-                .getEnvironmentHeight());
-        contentScrollPane.setMaxWidth(AuthoringEnvironment
-                .getEnvironmentWidth());
+        contentScrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+        contentScrollPane.setMaxHeight(CONTENT_HEIGHT - (BUTTON_HEIGHT+2*PADDING));
+        contentScrollPane.setMaxWidth(CONTENT_WIDTH);
 
         Button makeNewWave = new Button("Create New Wave");
+        makeNewWave.setMaxHeight(BUTTON_HEIGHT);
         makeNewWave.setOnAction(e -> {
-            promptNewWaveName(editor, contents);
+            promptNewWaveName(editor, contents, wavesDisplayBackground).requestFocus();
         });
+        
+        wavesDisplay.getChildren().addAll(wavesDisplayBackground, contents);
+        contentScrollPane.setContent(wavesDisplay);
+        
+        editorLayout.getChildren().addAll(makeNewWave);
+        editorLayout.setAlignment(Pos.TOP_CENTER);
+        editorLayout.setTranslateY(PADDING);
+        StackPane.setAlignment(makeNewWave, Pos.TOP_RIGHT);
 
-        newWavePanel.getChildren().add(makeNewWave);
-        contents.getChildren().add(newWavePanel);
-        contentScrollPane.setContent(contents);
-
-        editor.getChildren().add(contentScrollPane);
+        editor.getChildren().addAll(editorBackground, editorLayout, empty);
+        
         visuals.getChildren().add(editor);
         return visuals;
     }
 
-    private void promptNewWaveName (StackPane editor, VBox contents) {
+    private TextField promptNewWaveName(StackPane editor, VBox contents, Rectangle background) {
         // TODO remove duplicated code from Kevin lol
         StackPane promptDisplay = new StackPane();
-        Rectangle promptBackground = new Rectangle(300, 400);
+        Rectangle promptBackground = new Rectangle(300, 200);
         promptBackground.setOpacity(0.8);
 
         VBox promptContent = new VBox(20);
@@ -101,14 +130,12 @@ public class WaveEditor extends MainEditor {
 
         HBox buttons = new HBox(10);
         Button create = new Button("Create");
-        create.setOnAction( (e) -> {
-            makeNewWave(contents, promptField.getText());
-            myWaves.put(promptField.getText(), new ArrayList<FlowView>());
-            editor.getChildren().remove(promptDisplay);
+        create.setOnAction((e) -> {
+            setupNewWave(editor, contents, background, promptDisplay, promptField);
         });
 
         Button cancel = new Button("Cancel");
-        cancel.setOnAction( (e) -> {
+        cancel.setOnAction((e) -> {
             editor.getChildren().remove(promptDisplay);
         });
 
@@ -119,35 +146,70 @@ public class WaveEditor extends MainEditor {
         promptDisplay.getChildren().addAll(promptBackground, promptContent);
 
         editor.getChildren().add(promptDisplay);
+        return promptField;
     }
 
-    private void makeNewWave (VBox contents, String waveName) {
+    private void setupNewWave (StackPane editor, VBox contents, Rectangle background,StackPane promptDisplay, TextField promptField) {
+        makeNewWave(contents, promptField.getText());
+        if(myWaves.size() == 0){
+            editor.getChildren().remove(empty);
+            editorLayout.getChildren().add(contentScrollPane);
+        }
+        myWaves.put(promptField.getText(), new ArrayList<FlowView>());
+        
+        numWaves++;
+        background.setHeight(numWaves * WAVE_PANEL_HEIGHT + (numWaves-1)*PADDING + 2*PADDING);
+        editor.getChildren().remove(promptDisplay);
+    }
+
+    private void makeNewWave(VBox contents, String waveName) {
         ScrollPane newWave = new ScrollPane();
-        newWave.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+        newWave.setHbarPolicy(ScrollBarPolicy.NEVER);
         newWave.setVbarPolicy(ScrollBarPolicy.NEVER);
+        newWave.setMinHeight(WAVE_PANEL_HEIGHT);
+        newWave.setMaxHeight(WAVE_PANEL_HEIGHT);
         // newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth());
-        newWave.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth());
+        newWave.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth() - (INFO_PANEL_WIDTH + 3*PADDING));
+        newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth() - (INFO_PANEL_WIDTH + 3*PADDING));
 
-        HBox waveContent = new HBox(paddingSize);
+        HBox waveDisplay = new HBox(PADDING);
+        waveDisplay.setAlignment(Pos.CENTER);
+        
+        HBox waveContent = new HBox(PADDING);
+        waveContent.setAlignment(Pos.CENTER_LEFT);
+        waveContent.setTranslateX(PADDING);
 
+        VBox info = new VBox(2*PADDING);
+        info.setAlignment(Pos.CENTER);
+        
         Button addUnit = new Button("Add Unit");
-        addUnit.setOnAction(e -> addUnitToWave(waveContent, waveName));
+        addUnit.setOnAction(e -> addUnitToWave(newWave, waveContent, waveName));
 
         Button save = new Button("Save");
         save.setOnAction(e -> saveWaveData(waveName));
 
-        VBox buttons = new VBox(paddingSize);
-        buttons.getChildren().add(new Text("Wave: " + waveName));
-        buttons.getChildren().add(addUnit);
-        buttons.getChildren().add(save);
+        HBox buttons = new HBox(PADDING);
+        buttons.setAlignment(Pos.CENTER);
+        
+        Text waveNameDisplay = new Text(waveName);
+        waveNameDisplay.setFill(WAVE_NAME_COLOR);
+        waveNameDisplay.setWrappingWidth(INFO_PANEL_WIDTH - 2*PADDING);
+        waveNameDisplay.setTextAlignment(TextAlignment.CENTER);
+        buttons.getChildren().addAll(addUnit, save);
+        info.getChildren().addAll(waveNameDisplay, buttons);
 
-        waveContent.getChildren().add(buttons);
+        StackPane buttonDisplay = new StackPane();
+        Rectangle buttonBackground = new Rectangle(INFO_PANEL_WIDTH, WAVE_PANEL_HEIGHT, INFO_BACKGROUND_COLOR);
+        
+        buttonDisplay.getChildren().addAll(buttonBackground, info);
+//        waveContent.getChildren().add(buttonDisplay);
         newWave.setContent(waveContent);
-
-        contents.getChildren().add(newWave);
+        
+        waveDisplay.getChildren().addAll(buttonDisplay, newWave);
+        contents.getChildren().add(waveDisplay);
     }
 
-    private void saveWaveData (String waveName) {
+    private void saveWaveData(String waveName) {
         List<String> partFileNames = new ArrayList<String>();
         List<Double> delays = new ArrayList<Double>();
         List<Double> times = new ArrayList<Double>();
@@ -172,10 +234,12 @@ public class WaveEditor extends MainEditor {
                                    ProjectReader.getParamsNoTypeOrName(WAVE), data);
     }
 
-    private void addUnitToWave (HBox wave, String waveName) {
+    private void addUnitToWave(ScrollPane displayPane, HBox wave, String waveName) {
         FlowView unit = new FlowView(100, myController);
         wave.getChildren().add(unit);
         myWaves.get(waveName).add(unit);
+        
+        displayPane.setHvalue(2.0);
     }
 
     /**
@@ -185,8 +249,7 @@ public class WaveEditor extends MainEditor {
      *         and the value is its corresponding information stored in an array
      *         list of FlowViews.
      */
-    public Map<String, ArrayList<FlowView>> getWaves () {
+    public Map<String, ArrayList<FlowView>> getWaves() {
         return myWaves;
     }
-
 }
