@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
  * specified dimensions.
  * 
  * @author Kevin He
+ * @author Bojia Chen
  *
  */
 public class ScaleImage {
