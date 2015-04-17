@@ -56,7 +56,7 @@ public class ImageSelector extends VBox {
         StringProperty file = new SimpleStringProperty();
         file.bind(fileSelection.getSelectedFileNameProperty());
         file.addListener((obs, oldValue, newValue) -> {
-            filePath = fileSelection.getSelectedFileName();
+            filePath = newValue;
             uploadImage();
             setPreviewImageSize(previewImageWidth, previewImageHeight);
         });
