@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -95,26 +96,7 @@ public abstract class SpriteEditor extends Editor {
 
         numSprites = new SimpleIntegerProperty(0);
         numSprites.addListener( (obs, oldValue, newValue) -> {
-            if ((int) newValue == 0) {
-                myContent.getChildren().add(empty);
-            }
-            else if ((int) newValue > 0
-                    && myContent.getChildren().contains(empty)) {
-                myContent.getChildren().remove(empty);
-            }
-
-            // if there's 2 on a row already
-            else if (currentRow.getChildren().size() == ROW_SIZE) {
-                HBox newRow = new HBox(20);
-                newRow.setAlignment(Pos.TOP_CENTER);
-                currentRow = newRow;
-                rows.add(newRow);
-                spriteDisplay.getChildren().add(newRow);
-            }
-
-            else if ((int) newValue < (int) oldValue) {
-                System.out.println("rows: " + rows.size());
-            }
+            handleSpritePlacement(spriteDisplay, rows, oldValue, newValue);
         });
 
         empty = new Text("No " + tabName.toLowerCase() + " yet...");
@@ -128,7 +110,40 @@ public abstract class SpriteEditor extends Editor {
         myContent.getChildren().addAll(background, spriteDisplay, empty);
         StackPane.setAlignment(spriteDisplay, Pos.TOP_CENTER);
         visuals.getChildren().add(myContent);
+        
         return visuals;
+    }
+
+    /**
+     * @param spriteDisplay
+     * @param rows
+     * @param oldValue
+     * @param newValue
+     */
+    private void handleSpritePlacement (VBox spriteDisplay,
+                                        ArrayList<HBox> rows,
+                                        Number oldValue,
+                                        Number newValue) {
+        if ((int) newValue == 0) {
+            myContent.getChildren().add(empty);
+        }
+        else if ((int) newValue > 0
+                && myContent.getChildren().contains(empty)) {
+            myContent.getChildren().remove(empty);
+        }
+
+        // if there's 2 on a row already
+        else if (currentRow.getChildren().size() == ROW_SIZE) {
+            HBox newRow = new HBox(20);
+            newRow.setAlignment(Pos.TOP_CENTER);
+            currentRow = newRow;
+            rows.add(newRow);
+            spriteDisplay.getChildren().add(newRow);
+        }
+
+        else if ((int) newValue < (int) oldValue) {
+            System.out.println("rows: " + rows.size());
+        }
     }
 
     private HBox setupEditControls () {
@@ -177,6 +192,7 @@ public abstract class SpriteEditor extends Editor {
         });
 
         prompt.showPrompt(myContent);
+        prompt.requestFieldFocus();
     }
 
     private void addSprite (String name, String imageFile, HBox row) throws NoImageFoundException{

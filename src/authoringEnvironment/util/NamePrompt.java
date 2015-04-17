@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -58,6 +59,12 @@ public class NamePrompt extends StackPane{
     
     public ScaleTransition showPrompt(StackPane root){
         promptField.setText("");
+        promptField.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ESCAPE){
+                hidePrompt(root);
+            }
+        });
+        imgSelector.clear();
         root.getChildren().add(this);
         return Scaler.scaleOverlay(0.0, 1.0, this);
     }

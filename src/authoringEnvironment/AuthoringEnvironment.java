@@ -40,7 +40,6 @@ public class AuthoringEnvironment {
     private GridPane myGridPane;
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
-    private Tab myCurrentTab;
     private Controller myController;
     
     public AuthoringEnvironment(Stage s, String gameName, String rootDir){
@@ -96,33 +95,6 @@ public class AuthoringEnvironment {
         grid.add(myTabPane,0,1);
     }
 
-
-    /**
-     * Populates the tab bar with 1 tab for every non-abstract class in editors package
-     */
-    /*
-    private void update(Tab selectedTab){
-        if (myCurrentTab != selectedTab){
-            Editor editor = (Editor) myCurrentTab.getContent();
-            Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the controller
-
-            myCurrentTab = selectedTab;
-            Editor editor2 = (Editor) myCurrentTab.getContent();
-            editor2.update();
-        }
-    }
-
-    protected void addTab(String tabName) {
-        Tab tab = new Tab();
-        tab.setText(tabName);
-        tab.setContent(newEditor);
-        if (main){
-            tab.setStyle("-fx-base: #3c3c3c;");
-        }
-        tab.setClosable(false);
-        myTabPane.getTabs().add(tab); 
-    }
-*/
     private MenuBar configureTopMenu() {
         Menu file = configureFileMenu();
         MenuBar menuBar = new MenuBar();

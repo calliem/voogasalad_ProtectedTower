@@ -30,7 +30,8 @@ public class ImageSelector extends VBox {
     private double previewImageWidth = 100;
     private static final int PADDING = 10;
     private static final String NOT_AVAILABLE = "imageselectorTEMP/img_not_available.png";
-    private static final String SELECTOR_RESOURCES = "imageselector/SelectorText.properties";
+//    private static final String SELECTOR_RESOURCES = "imageselector/SelectorText.properties";
+    private static final String IMAGE_PROMPT = "Choose an image...";
 
     /**
      * Creates an ImageSelector object.
@@ -42,12 +43,12 @@ public class ImageSelector extends VBox {
         super(2 * PADDING);
         setAlignment(Pos.CENTER);
         filePath = new SimpleStringProperty();
-        fileSelection = new GraphicFileChooser("Choose an image...", NOT_AVAILABLE);
+        fileSelection = new GraphicFileChooser(IMAGE_PROMPT, NOT_AVAILABLE);
 
         filePath.setValue(NOT_AVAILABLE);
         preview = new ImageView(new Image(filePath.getValue()));
 
-        filePath.bind(fileSelection.getSelectedFileNameProperty());
+        filePath.bindBidirectional(fileSelection.getSelectedFileNameProperty());
         filePath.addListener( (obs, oldValue, newValue) -> {
             uploadImage();
             setPreviewImageSize(previewImageWidth, previewImageHeight);
@@ -108,5 +109,10 @@ public class ImageSelector extends VBox {
      */
     public ImageView getSelectedImage () {
         return new ImageView(new Image(filePath.getValue()));
+    }
+    
+    public void clear(){
+        filePath.setValue(NOT_AVAILABLE);
+        fileSelection.getFileDisplay().setText(IMAGE_PROMPT);
     }
 }
