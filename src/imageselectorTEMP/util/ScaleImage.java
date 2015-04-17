@@ -21,8 +21,15 @@ public class ScaleImage {
     }
     
     public static void scale(ImageView image, double fitWidth, double fitHeight){
-        scaleByHeight(image, fitHeight);
-        scaleByWidth(image, fitWidth);
+        double originalHeight = image.getImage().getHeight();
+        double originalWidth = image.getImage().getWidth();
+        double scaleHeight = fitHeight/originalHeight;
+        double scaleWidth = fitWidth/originalWidth;
+        double scaleAll = Math.min(scaleHeight, scaleWidth);
+        image.setFitHeight(originalHeight*scaleAll);
+        image.setFitWidth(originalWidth*scaleAll);
+        //scaleByHeight(image, fitHeight);
+        //scaleByWidth(image, fitWidth);
     }
 
     private static void preserveImageRatio (ImageView image) {
