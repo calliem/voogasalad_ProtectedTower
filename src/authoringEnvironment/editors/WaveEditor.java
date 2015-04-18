@@ -52,8 +52,6 @@ public class WaveEditor extends MainEditor {
     private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
     private static final Color WAVE_NAME_COLOR = Color.GOLDENROD;
     
-    private Node activeOverlay;
-
     /**
      * WaveEditor constructor, calls MainEditor superclass and initializes a map
      * of string (wave name) to array list of FlowViews (wave information) to
@@ -138,7 +136,6 @@ public class WaveEditor extends MainEditor {
     private void showOverlay () {
         prompt.showPrompt(editor);
         isOverlayActive = true;
-        activeOverlay = prompt;
     }
     
     @Override

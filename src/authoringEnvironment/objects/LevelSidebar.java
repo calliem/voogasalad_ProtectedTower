@@ -1,8 +1,7 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -13,7 +12,6 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.map.MapWorkspace;
-import authoringEnvironment.objects.TileMap;
 
 /**
  * This class defines all the features of the sidebar for the level editor. The user can select options here that will allow him/her to place or updates objects on the map in level editor.

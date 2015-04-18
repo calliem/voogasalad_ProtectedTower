@@ -2,6 +2,7 @@ package authoringEnvironment.setting;
 
 import imageselectorTEMP.util.ScaleImage;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
@@ -14,83 +15,108 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import authoringEnvironment.Controller;
+
 
 public class SpriteSetting extends Setting {
+    private static final int DISPLAY_WIDTH = 200;
+    private static final int PADDING = 15;
+    private static final int IMAGE_SIZE = 50;
+    private static final int IMAGES_DISPLAYED = 3; // the amount of images displayed at once in the
+                                                   // scrollpane
 
-    public SpriteSetting (String label, String value) {
-        super(label, value);
+    private List<ImageView> images;
+    private List<String> filePaths;
+    private IntegerProperty selectedIndex;
+    private String spriteFile;
+    private HBox graphicLayout;
+    private static final Color BACKGROUND_COLOR = Color.PALEGOLDENROD;
+    private Rectangle graphicSelectorBackground;
+    private ScrollPane graphicSelectorPane;
+
+    public SpriteSetting (Controller controller, String part, String label, String value) {
+        super(controller, part, label, value);
+    }
+
+    @Override
+    protected void setupInteractionLayout () {
+        basicLayout.setAlignment(Pos.CENTER);
+
+        filePaths = new ArrayList<>();
+        images = new ArrayList<>();
+        selectedIndex = new SimpleIntegerProperty(0);
+        selectedIndex.addListener((obs, oldIndex, newIndex) -> {
+            makeSelection((int) newIndex);
+        });
+        
+        loadImages();
+        layoutSprites();
+
+        this.getChildren().add(graphicSelectorPane);
     }
     
-    @Override
-    protected void setupInteractionLayout(){
-        basicLayout.setAlignment(Pos.CENTER);
-        
-        StackPane spriteFileDisplay = new StackPane();
-        Rectangle displayBackground = new Rectangle(150, 24, Color.WHITE);
-        displayBackground.setArcWidth(5);
-        displayBackground.setArcHeight(5);
-        
-        ArrayList<String> imagePaths = new ArrayList<>();
-        imagePaths.add("images/redbullet.png");
-        imagePaths.add("images/greenbullet.png");
-        imagePaths.add("images/bluefire.png");
-        imagePaths.add("images/error.png");
-//        imagePaths.add("images/tower.png");
-        
-        ArrayList<ImageView> images = new ArrayList<>();
-        
-        Text spriteFile = new Text(imagePaths.get(0));
-        spriteFileDisplay.getChildren().addAll(displayBackground, spriteFile);
-        
-        ScrollPane graphicSelectorPane = new ScrollPane();
+    private void layoutSprites(){
+        graphicSelectorPane = new ScrollPane();
         StackPane graphicSelector = new StackPane();
-        Rectangle graphicSelectorBackground = new Rectangle(200, 50, Color.PALEGOLDENROD);
-        HBox graphicLayout = new HBox(15);
+        graphicSelectorBackground = new Rectangle(DISPLAY_WIDTH, IMAGE_SIZE, BACKGROUND_COLOR);
+        adjustBackground();
+        
+        graphicLayout = new HBox(PADDING);
         graphicLayout.setAlignment(Pos.CENTER);
         
-        if(imagePaths.size() > 3){
-            graphicSelectorBackground.setWidth(200 + (imagePaths.size()-3)*(50+15));
-        }
-        
-        IntegerProperty selectedIndex = new SimpleIntegerProperty(0);
-        
-        for(String path : imagePaths){
+        graphicLayout.getChildren().removeAll();
+        for (String path : filePaths) {
             ImageView image = new ImageView(new Image(path));
-            ScaleImage.scale(image, 50, 50);
-            image.setOnMousePressed((e) -> {
-                selectedIndex.setValue(imagePaths.indexOf(path));
+            ScaleImage.scale(image, IMAGE_SIZE, IMAGE_SIZE);
+            image.setOnMousePressed( (e) -> {
+                selectedIndex.setValue(filePaths.indexOf(path));
             });
             graphicLayout.getChildren().add(image);
             images.add(image);
         }
-        
-        makeSelection(selectedIndex.getValue(), images);
-        dataAsString = imagePaths.get(selectedIndex.getValue());
-        selectedIndex.addListener((obs, oldValue, newValue) -> {
-            makeSelection((int) newValue, images);
-            dataAsString = imagePaths.get((int) newValue);
-        });
+
+        makeSelection(0);
         
         graphicSelector.getChildren().addAll(graphicSelectorBackground, graphicLayout);
+        setupScrollPane(graphicSelector);
+    }
+
+    private void adjustBackground () {
+        if (filePaths.size() > 3) {
+            graphicSelectorBackground.setWidth(DISPLAY_WIDTH +
+                                (filePaths.size() - IMAGES_DISPLAYED) *
+                                (IMAGE_SIZE + PADDING));
+        }
+    }
+    
+    private void loadImages(){
+        filePaths.add("images/redbullet.png");
+        filePaths.add("images/greenbullet.png");
+        filePaths.add("images/bluefire.png");
+        filePaths.add("images/error.png");
         
-        graphicSelectorPane.setContent(graphicSelector);
+        spriteFile = filePaths.get(0);
+    }
+
+    private void setupScrollPane (StackPane content) {
+        graphicSelectorPane.setContent(content);
         graphicSelectorPane.setPannable(true);
         graphicSelectorPane.setMaxWidth(200);
         graphicSelectorPane.setMaxHeight(70);
         graphicSelectorPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-        
-        this.getChildren().add(graphicSelectorPane);
     }
-    
-    private void makeSelection(int selectedIndex, ArrayList<ImageView> images){
-        for(int i = 0; i < images.size(); i++){
+
+    private void makeSelection (int selectedIndex) {
+        for (int i = 0; i < images.size(); i++) {
             images.get(i).setOpacity(1);
-            if(i != selectedIndex){
+            if (i != selectedIndex) {
                 images.get(i).setOpacity(0.3);
             }
         }
+        dataAsString = filePaths.get(selectedIndex);
+        spriteFile = filePaths.get(selectedIndex);
     }
-    
+
     @Override
     public Object getParameterValue () {
         return dataAsString;
@@ -100,14 +126,14 @@ public class SpriteSetting extends Setting {
     public boolean parseField () {
         return true;
     }
-    
+
     @Override
-    public void displaySavedValue(){
-        
+    public void displaySavedValue () {
+
     }
-    
+
     @Override
-    public boolean processData(){
+    public boolean processData () {
         return parseField();
     }
 }

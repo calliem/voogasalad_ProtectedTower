@@ -1,9 +1,7 @@
 package authoringEnvironment.setting;
 
 import imageselectorTEMP.GraphicFileChooser;
-import java.io.File;
-
-import protectedtower.Main;
+import authoringEnvironment.Controller;
 
 /**
  * 
@@ -14,8 +12,8 @@ import protectedtower.Main;
 public class FileNameSetting extends Setting{
     private GraphicFileChooser spriteFileChooser;
     
-    public FileNameSetting(String paramName, String defaultVal){
-        super(paramName, defaultVal);
+    public FileNameSetting(Controller controller, String part, String paramName, String defaultVal){
+        super(controller, part, paramName, defaultVal);
     }
 
     @Override

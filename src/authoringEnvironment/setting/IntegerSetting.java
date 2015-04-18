@@ -1,10 +1,6 @@
 package authoringEnvironment.setting;
 
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import authoringEnvironment.Controller;
 
 /**
  * A Setting object for integer parameters.
@@ -16,8 +12,8 @@ import javafx.scene.text.TextAlignment;
 public class IntegerSetting extends Setting {
     private Integer dataAsInteger;
     
-    public IntegerSetting(String label, String defaultVal){
-        super(label, defaultVal);
+    public IntegerSetting(Controller controller, String part, String label, String defaultVal){
+        super(controller, part, label, defaultVal);
     }
     
     @Override

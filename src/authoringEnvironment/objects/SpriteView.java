@@ -94,7 +94,6 @@ public abstract class SpriteView extends StackPane {
         String path = this.getClass().toString();
         path = path.substring(path.indexOf(".") + 1, path.length());
         path = path.substring(path.indexOf(".") + 1, path.indexOf("View"));
-        System.out.println("path: " + path);
         return path;
     }
 
@@ -116,7 +115,7 @@ public abstract class SpriteView extends StackPane {
         VBox settingsObjects = new VBox(10);
         settingsObjects.setMaxWidth(150);
 
-        List<Setting> settings = ProjectReader.generateSettingsList(getSpriteType());
+        List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
         for (Setting s : settings) {
             parameterFields.add(s);
             settingsObjects.getChildren().add(s);

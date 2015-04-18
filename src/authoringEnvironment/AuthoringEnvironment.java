@@ -130,8 +130,10 @@ public class AuthoringEnvironment {
         quit.setOnAction(e -> Platform.exit());
         MenuItem mainMenu = new MenuItem(myResources.getString("Menu"));
         mainMenu.setOnAction(e -> returnToMenu());
-
-        file.getItems().addAll(mainMenu, quit);
+        MenuItem save = new MenuItem(myResources.getString("Save"));
+        MenuItem load = new MenuItem(myResources.getString("Load"));
+        
+        file.getItems().addAll(save, load, mainMenu, quit);
         return file;
     }
 

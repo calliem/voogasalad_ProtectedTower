@@ -1,7 +1,6 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.List;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -9,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import authoringEnvironment.objects.SpriteView;
 
 
 public class UpdatableDisplay extends VBox {

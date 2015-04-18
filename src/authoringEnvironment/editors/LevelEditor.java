@@ -5,12 +5,11 @@ package authoringEnvironment.editors;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import authoringEnvironment.Controller;
-import authoringEnvironment.LevelSidebar;
-import authoringEnvironment.Sidebar;
 import authoringEnvironment.map.MapSidebar;
+import authoringEnvironment.objects.LevelSidebar;
 import authoringEnvironment.objects.LevelView;
+import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

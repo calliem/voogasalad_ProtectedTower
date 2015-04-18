@@ -75,7 +75,7 @@ public abstract class SpriteEditor extends Editor {
         myContent = new StackPane();
         spritesCreated = new ArrayList<>();
         
-        prompt = new NamePrompt(tabName.toLowerCase().substring(0, tabName.length() - 1));
+        prompt = new NamePrompt(partNames.getString(editorType).toLowerCase());
         prompt.setImageChooser(true);
 
         // TODO remove magic number
@@ -100,8 +100,7 @@ public abstract class SpriteEditor extends Editor {
             handleSpritePlacement(spriteDisplay, rows, oldValue, newValue);
         });
 
-        empty = new Text("No " + tabName.toLowerCase() + " yet...");
-        // myResources.getString("NoTowersCreated"));
+        empty = new Text("No " + tabNames.getString(editorType).toLowerCase() + " yet...");
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
 
@@ -155,7 +154,7 @@ public abstract class SpriteEditor extends Editor {
         edit.setTranslateX(-10);
 
         Button add = new Button("+ "
-                + tabName.substring(0, tabName.length() - 1));
+                + partNames.getString(editorType));
         add.setTranslateX(-10);
         add.setPrefWidth(100);
         add.setOnMousePressed( (e) -> {
@@ -178,12 +177,16 @@ public abstract class SpriteEditor extends Editor {
     protected void promptSpriteCreation () {
         Button create = prompt.getCreateButton();
         create.setOnAction( (e) -> {
-            try{
-                addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(), currentRow);
-                hideOverlay();
-            }
-            catch(NoImageFoundException error){
-                error.printStackTrace();
+            if(myController.nameAlreadyExists(partNames.getString(editorType), prompt.getCurrentText()))
+                prompt.displayError("A " + partNames.getString(editorType).toLowerCase() + " with that name already exists!");
+            else{
+                try{
+                    addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(), currentRow);
+                    hideOverlay();
+                }
+                catch(NoImageFoundException error){
+                    error.printStackTrace();
+                }
             }
         });
 
@@ -200,7 +203,7 @@ public abstract class SpriteEditor extends Editor {
 
     private void addSprite (String name, String imageFile, HBox row) throws NoImageFoundException{
         String className = "authoringEnvironment.objects."
-                + tabName.substring(0, tabName.length() - 1) + "View";
+                + partNames.getString(editorType) + "View";
         SpriteView sprite = generateSpriteView(myController, name, imageFile, className);
         sprite.initiateEditableState();
         setupSpriteAction(sprite);

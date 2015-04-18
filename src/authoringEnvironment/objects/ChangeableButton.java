@@ -1,7 +1,6 @@
 //this class probably won't work. 
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
-import authoringEnvironment.objects.TowerView;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

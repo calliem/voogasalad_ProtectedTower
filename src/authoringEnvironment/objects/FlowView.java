@@ -125,7 +125,7 @@ public class FlowView extends HBox {
     }
 
     private void selectUnit() {
-        SpriteSetting chooseUnit = new SpriteSetting(ENEMIES, ENEMIES);
+        SpriteSetting chooseUnit = new SpriteSetting(myController, "Enemy", ENEMIES, ENEMIES);
         chooseUnit.getChildren().remove(0);
         chooseUnit.setTextColor(Color.BLACK);
         insertElement(chooseUnit);

@@ -3,6 +3,7 @@ package authoringEnvironment.editors;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import javafx.geometry.Pos;
@@ -26,30 +27,36 @@ import javafx.stage.Stage;
 
 public abstract class Editor extends Tab {
 
-    protected String tabName;
+    protected String editorType;
     private Group contentRoot;
     protected Controller myController;
     protected boolean isOverlayActive = false;
-
+    
+    private static final String englishSpecsFile = "resources/display/main_environment_english";
+    protected static final ResourceBundle tabNames = ResourceBundle
+            .getBundle(englishSpecsFile);
+    
+    private static final String englishPartsFile = "resources/display/part_names_english";
+    protected static final ResourceBundle partNames = ResourceBundle.getBundle(englishPartsFile);
+    
     protected static final double CONTENT_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth();
     protected static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment
             .getEnvironmentHeight();
 
-
     public Editor(Controller controller, String name) {
         myController = controller;
-        tabName = name;
+        editorType = name;
         contentRoot = configureUI();
         this.setContent(contentRoot);
-        this.setText(tabName);
+        this.setText(tabNames.getString(editorType));
         this.setClosable(false);
     }
 
     protected abstract Group configureUI();
 
     public String getName() {
-        return tabName;
+        return editorType;
     }
 
     // to be used by backend

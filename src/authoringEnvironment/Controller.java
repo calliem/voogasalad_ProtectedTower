@@ -148,11 +148,15 @@ public class Controller {
      */
     public boolean nameAlreadyExists(String partType, String nameToCheck) {
         List<String> keys = getKeysForPartType(partType);
+        if(keys == null)
+            return false;
+        
         for (String key : keys) {
             String nameThatExists = (String) getPartCopy(key).get(InstanceManager.nameKey);
             if (nameThatExists.equalsIgnoreCase(nameToCheck))
                 return true;
         }
+        
         return false;
     }
 

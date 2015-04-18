@@ -1,8 +1,7 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -13,9 +12,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.map.MapWorkspace;
-import authoringEnvironment.objects.PathView;
-import authoringEnvironment.objects.TileMap;
 
 /**
  * This class is the generic sidebar method that contains the resource file and general methods shared by all sidebars. Sidebars throughout the authoring environment will be of consistent proportional size and have consistency in how information (ie. titles and lists) are displayed.

@@ -7,8 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import authoringEnvironment.Controller;
-import authoringEnvironment.Sidebar;
 import authoringEnvironment.map.MapSidebar;
+import authoringEnvironment.objects.Sidebar;
 
 /**
  * Sets up the map editor that allows the user to create a map utilizing individual tiles, set paths along their map, and save these dynamically so that these components are updated on all other relevant tabs

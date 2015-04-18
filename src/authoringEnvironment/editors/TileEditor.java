@@ -29,24 +29,24 @@ public class TileEditor extends SpriteEditor{
         super(c, name);
         // TODO Auto-generated constructor stub
     }
-    
+
     @Override
     protected void promptSpriteCreation() {
-		StackPane promptDisplay = new StackPane();
-		Rectangle promptBackground = new Rectangle(300, 400);
-		promptBackground.setOpacity(0.8);
+        StackPane promptDisplay = new StackPane();
+        Rectangle promptBackground = new Rectangle(300, 400);
+        promptBackground.setOpacity(0.8);
 
-		VBox promptContent = new VBox(20);
-		promptContent.setAlignment(Pos.CENTER);
-		Text prompt = new Text("Creating a new "
-				+ tabName.toLowerCase().substring(0, tabName.length() - 1)
-				+ "...");
-		prompt.setFill(Color.WHITE);
-		TextField promptField = new TextField();
-		promptField.setMaxWidth(225);
-		promptField.setPromptText("Enter a name...");
+        VBox promptContent = new VBox(20);
+        promptContent.setAlignment(Pos.CENTER);
+        Text prompt = new Text("Creating a new "
+                + partNames.getString(editorType).toLowerCase()
+                + "...");
+        prompt.setFill(Color.WHITE);
+        TextField promptField = new TextField();
+        promptField.setMaxWidth(225);
+        promptField.setPromptText("Enter a name...");
 
-		/*ImageSelector imgSelector = new ImageSelector();
+        /*ImageSelector imgSelector = new ImageSelector();
 		imgSelector.addExtensionFilter("png");
 		imgSelector.addExtensionFilter("jpg");
 		imgSelector.addExtensionFilter("gif");
