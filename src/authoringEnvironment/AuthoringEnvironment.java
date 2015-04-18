@@ -63,6 +63,9 @@ public class AuthoringEnvironment {
         return myScene;
     }
 
+    /**
+     * Just for Bojia
+     */
     private void setupKeyPresses () {
         currentEditor = (Editor) myTabPane.getTabs().get(0);
         myTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
