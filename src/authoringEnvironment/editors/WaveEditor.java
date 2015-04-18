@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -43,6 +43,7 @@ public class WaveEditor extends MainEditor {
     private Text empty;
     private VBox editorLayout;
     private ScrollPane contentScrollPane; 
+    private StackPane editor;
     
     private int numWaves = 0;
     private NamePrompt prompt = new NamePrompt("wave");
@@ -50,6 +51,8 @@ public class WaveEditor extends MainEditor {
     private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
     private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
     private static final Color WAVE_NAME_COLOR = Color.GOLDENROD;
+    
+    private Node activeOverlay;
 
     /**
      * WaveEditor constructor, calls MainEditor superclass and initializes a map
@@ -77,7 +80,7 @@ public class WaveEditor extends MainEditor {
     public Group configureUI() {
         Group visuals = new Group();
         
-        StackPane editor = new StackPane();
+        editor = new StackPane();
         Rectangle editorBackground = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
         
         editorLayout = new VBox(PADDING);
@@ -99,7 +102,7 @@ public class WaveEditor extends MainEditor {
         Button makeNewWave = new Button("Create New Wave");
         makeNewWave.setMaxHeight(BUTTON_HEIGHT);
         makeNewWave.setOnAction(e -> {
-            promptNewWaveName(editor, contents, wavesDisplayBackground);
+            promptNewWaveName(contents, wavesDisplayBackground);
         });
         
         wavesDisplay.getChildren().addAll(wavesDisplayBackground, contents);
@@ -116,23 +119,39 @@ public class WaveEditor extends MainEditor {
         return visuals;
     }
 
-    private void promptNewWaveName(StackPane editor, VBox contents, Rectangle background) {
+    private void promptNewWaveName(VBox contents, Rectangle background) {
         Button create = prompt.getCreateButton();
         create.setOnAction((e) -> {
             String waveName = prompt.getEnteredName();
-            setupNewWave(editor, contents, background, waveName);
+            setupNewWave(contents, background, waveName);
         });
 
         Button cancel = prompt.getCancelButton();
         cancel.setOnAction((e) -> {
-            prompt.hidePrompt(editor);
+            hideOverlay();
         });
 
-        prompt.showPrompt(editor);
-        prompt.requestFieldFocus();
+        showOverlay();
     }
 
-    private void setupNewWave (StackPane editor, VBox contents, Rectangle background, String waveName) {
+    //TODO: duplicated code in sprite editor, lines 195-199
+    private void showOverlay () {
+        prompt.showPrompt(editor);
+        isOverlayActive = true;
+        activeOverlay = prompt;
+    }
+    
+    @Override
+    public void hideOverlay(){
+        if(isOverlayActive){
+            prompt.hidePrompt().setOnFinished(e -> {
+                isOverlayActive = false;
+                editor.getChildren().remove(prompt);
+            });
+        }
+    }
+    
+    private void setupNewWave (VBox contents, Rectangle background, String waveName) {
         makeNewWave(contents, waveName);
         if(myWaves.size() == 0){
             editor.getChildren().remove(empty);
@@ -143,7 +162,7 @@ public class WaveEditor extends MainEditor {
         numWaves++;
         background.setHeight(numWaves * WAVE_PANEL_HEIGHT + (numWaves-1)*PADDING + 2*PADDING);
         
-        prompt.hidePrompt(editor);
+        hideOverlay();
     }
 
     private void makeNewWave(VBox contents, String waveName) {

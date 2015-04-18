@@ -59,14 +59,17 @@ public class NamePrompt extends StackPane{
     
     public ScaleTransition showPrompt(StackPane root){
         promptField.setText("");
-        promptField.setOnKeyPressed(e -> {
-            if(e.getCode() == KeyCode.ESCAPE){
-                hidePrompt(root);
-            }
-        });
-        imgSelector.clear();
+        if(imgSelector!=null){
+            imgSelector.clear();
+        }
+        
         root.getChildren().add(this);
+        promptField.requestFocus();
         return Scaler.scaleOverlay(0.0, 1.0, this);
+    }
+    
+    public ScaleTransition hidePrompt(){
+        return Scaler.scaleOverlay(1.0, 0.0, this);
     }
     
     public ScaleTransition hidePrompt(StackPane root){

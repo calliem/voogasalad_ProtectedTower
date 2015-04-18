@@ -40,7 +40,6 @@ import authoringEnvironment.util.Scaler;
 public abstract class SpriteEditor extends Editor {
     private StackPane myContent;
     private HBox currentRow;
-    private boolean overlayActive = false;
     private boolean editing = false;
     private Text empty;
     private List<Node> spritesCreated;
@@ -49,6 +48,8 @@ public abstract class SpriteEditor extends Editor {
 
     private static final int ROW_SIZE = 7;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
+    
+    private Node activeOverlay;
 
     /**
      * Creates a tower object.
@@ -179,7 +180,7 @@ public abstract class SpriteEditor extends Editor {
         create.setOnAction( (e) -> {
             try{
                 addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(), currentRow);
-                prompt.hidePrompt(myContent);
+                hideOverlay();
             }
             catch(NoImageFoundException error){
                 error.printStackTrace();
@@ -188,11 +189,13 @@ public abstract class SpriteEditor extends Editor {
 
         Button cancel = prompt.getCancelButton();
         cancel.setOnAction( (e) -> {
-            prompt.hidePrompt(myContent);
+            hideOverlay();
         });
-
+        
+        //TODO DUPLICATED
         prompt.showPrompt(myContent);
-        prompt.requestFieldFocus();
+        isOverlayActive = true;
+        activeOverlay = prompt;
     }
 
     private void addSprite (String name, String imageFile, HBox row) throws NoImageFoundException{
@@ -248,30 +251,33 @@ public abstract class SpriteEditor extends Editor {
 
     private void setupSpriteAction (SpriteView sprite) {
         sprite.setOnMousePressed( (e) -> {
-            if (sprite.isExisting().getValue() && editing)
-                showEditScreen(sprite.getEditorOverlay());
+            if (sprite.isExisting().getValue() && editing){
+                showOverlay(sprite.getEditorOverlay());
+                activeOverlay = sprite.getEditorOverlay();
+            }
         });
         sprite.getCloseButton().setOnAction( (e) -> {
-            hideEditScreen(sprite.getEditorOverlay());
+            hideOverlay();
             sprite.discardUnsavedChanges();
             sprite.setupTooltipText(sprite.getSpriteInfo());
         });
     }
 
-    private void showEditScreen (StackPane overlay) {
-        if (!overlayActive) {
+    private void showOverlay (StackPane overlay) {
+        if (!isOverlayActive) {
             myContent.getChildren().add(overlay);
             Scaler.scaleOverlay(0.0, 1.0, overlay);
-            overlayActive = true;
+            isOverlayActive = true;
         }
     }
-
-    private void hideEditScreen (StackPane overlay) {
-        if (overlayActive) {
-            ScaleTransition scale = Scaler.scaleOverlay(1.0, 0.0, overlay);
-            scale.setOnFinished( (e) -> {
-                myContent.getChildren().remove(overlay);
-                overlayActive = false;
+    
+    @Override
+    public void hideOverlay(){
+        if(isOverlayActive){
+            ScaleTransition scale = Scaler.scaleOverlay(1.0, 0.0, activeOverlay);
+            scale.setOnFinished(e -> {
+                myContent.getChildren().remove(activeOverlay);
+                isOverlayActive = false;
             });
         }
     }

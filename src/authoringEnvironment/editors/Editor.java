@@ -29,6 +29,7 @@ public abstract class Editor extends Tab {
     protected String tabName;
     private Group contentRoot;
     protected Controller myController;
+    protected boolean isOverlayActive = false;
 
     protected static final double CONTENT_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth();
@@ -81,5 +82,13 @@ public abstract class Editor extends Tab {
         // TODO Auto-generated method stub
         //this doesn't quite belong in this editor superclass. consider alternatives.
 
+    }
+    
+    public void hideOverlay(){
+        
+    }
+    
+    public boolean isOverlayActive(){
+        return isOverlayActive;
     }
 }
