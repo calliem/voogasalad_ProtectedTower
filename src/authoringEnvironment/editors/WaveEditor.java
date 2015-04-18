@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -22,6 +22,7 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
+import authoringEnvironment.util.NamePrompt;
 
 /**
  * Creates the Wave Editor that allows the user to create and edit waves made
@@ -42,12 +43,16 @@ public class WaveEditor extends MainEditor {
     private Text empty;
     private VBox editorLayout;
     private ScrollPane contentScrollPane; 
+    private StackPane editor;
     
     private int numWaves = 0;
+    private NamePrompt prompt = new NamePrompt("wave");
     private static final Color EDITOR_BACKGROUND_COLOR = Color.GRAY;
     private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
     private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
     private static final Color WAVE_NAME_COLOR = Color.GOLDENROD;
+    
+    private Node activeOverlay;
 
     /**
      * WaveEditor constructor, calls MainEditor superclass and initializes a map
@@ -75,7 +80,7 @@ public class WaveEditor extends MainEditor {
     public Group configureUI() {
         Group visuals = new Group();
         
-        StackPane editor = new StackPane();
+        editor = new StackPane();
         Rectangle editorBackground = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
         
         editorLayout = new VBox(PADDING);
@@ -97,7 +102,7 @@ public class WaveEditor extends MainEditor {
         Button makeNewWave = new Button("Create New Wave");
         makeNewWave.setMaxHeight(BUTTON_HEIGHT);
         makeNewWave.setOnAction(e -> {
-            promptNewWaveName(editor, contents, wavesDisplayBackground).requestFocus();
+            promptNewWaveName(contents, wavesDisplayBackground);
         });
         
         wavesDisplay.getChildren().addAll(wavesDisplayBackground, contents);
@@ -114,63 +119,59 @@ public class WaveEditor extends MainEditor {
         return visuals;
     }
 
-    private TextField promptNewWaveName(StackPane editor, VBox contents, Rectangle background) {
-        // TODO remove duplicated code from Kevin lol
-        StackPane promptDisplay = new StackPane();
-        Rectangle promptBackground = new Rectangle(300, 200);
-        promptBackground.setOpacity(0.8);
-
-        VBox promptContent = new VBox(20);
-        promptContent.setAlignment(Pos.CENTER);
-        Text prompt = new Text("Creating a new wave...");
-        prompt.setFill(Color.WHITE);
-        TextField promptField = new TextField();
-        promptField.setMaxWidth(225);
-        promptField.setPromptText("Enter a name...");
-
-        HBox buttons = new HBox(10);
-        Button create = new Button("Create");
+    private void promptNewWaveName(VBox contents, Rectangle background) {
+        Button create = prompt.getCreateButton();
         create.setOnAction((e) -> {
-            setupNewWave(editor, contents, background, promptDisplay, promptField);
+            String waveName = prompt.getEnteredName();
+            setupNewWave(contents, background, waveName);
         });
 
-        Button cancel = new Button("Cancel");
+        Button cancel = prompt.getCancelButton();
         cancel.setOnAction((e) -> {
-            editor.getChildren().remove(promptDisplay);
+            hideOverlay();
         });
 
-        buttons.setAlignment(Pos.CENTER);
-        buttons.getChildren().addAll(create, cancel);
-        promptContent.getChildren().addAll(prompt, promptField, buttons);
-
-        promptDisplay.getChildren().addAll(promptBackground, promptContent);
-
-        editor.getChildren().add(promptDisplay);
-        return promptField;
+        showOverlay();
     }
 
-    private void setupNewWave (StackPane editor, VBox contents, Rectangle background,StackPane promptDisplay, TextField promptField) {
-        makeNewWave(contents, promptField.getText());
+    //TODO: duplicated code in sprite editor, lines 195-199
+    private void showOverlay () {
+        prompt.showPrompt(editor);
+        isOverlayActive = true;
+        activeOverlay = prompt;
+    }
+    
+    @Override
+    public void hideOverlay(){
+        if(isOverlayActive){
+            prompt.hidePrompt().setOnFinished(e -> {
+                isOverlayActive = false;
+                editor.getChildren().remove(prompt);
+            });
+        }
+    }
+    
+    private void setupNewWave (VBox contents, Rectangle background, String waveName) {
+        makeNewWave(contents, waveName);
         if(myWaves.size() == 0){
             editor.getChildren().remove(empty);
             editorLayout.getChildren().add(contentScrollPane);
         }
-        myWaves.put(promptField.getText(), new ArrayList<FlowView>());
+        myWaves.put(waveName, new ArrayList<FlowView>());
         
         numWaves++;
         background.setHeight(numWaves * WAVE_PANEL_HEIGHT + (numWaves-1)*PADDING + 2*PADDING);
-        editor.getChildren().remove(promptDisplay);
+        
+        hideOverlay();
     }
 
     private void makeNewWave(VBox contents, String waveName) {
         ScrollPane newWave = new ScrollPane();
         newWave.setHbarPolicy(ScrollBarPolicy.NEVER);
         newWave.setVbarPolicy(ScrollBarPolicy.NEVER);
-        newWave.setMinHeight(WAVE_PANEL_HEIGHT);
-        newWave.setMaxHeight(WAVE_PANEL_HEIGHT);
-        // newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth());
+        newWave.setPrefHeight(WAVE_PANEL_HEIGHT);
         newWave.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth() - (INFO_PANEL_WIDTH + 3*PADDING));
-        newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth() - (INFO_PANEL_WIDTH + 3*PADDING));
+//        newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth() - (INFO_PANEL_WIDTH + 3*PADDING));
 
         HBox waveDisplay = new HBox(PADDING);
         waveDisplay.setAlignment(Pos.CENTER);

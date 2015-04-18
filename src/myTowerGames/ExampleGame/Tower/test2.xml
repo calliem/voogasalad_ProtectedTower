@@ -1,11 +1,7 @@
 <map>
   <entry>
     <string>PartType</string>
-    <string>Projectile</string>
-  </entry>
-  <entry>
-    <string>Speed</string>
-    <double>1.0</double>
+    <string>Tower</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -16,16 +12,24 @@
     <string>Basic</string>
   </entry>
   <entry>
+    <string>AttackPriority</string>
+    <string>Close</string>
+  </entry>
+  <entry>
     <string>BoundingWidth</string>
     <double>10.0</double>
   </entry>
   <entry>
-    <string>PartKey</string>
-    <string>ExampleGame_asdf.Projectile</string>
+    <string>AttackRange</string>
+    <double>1.0</double>
   </entry>
   <entry>
-    <string>Damage</string>
-    <int>100</int>
+    <string>PartKey</string>
+    <string>ExampleGame_test2.Tower</string>
+  </entry>
+  <entry>
+    <string>AttackSpeed</string>
+    <double>1.0</double>
   </entry>
   <entry>
     <string>BoundingHeight</string>
@@ -33,6 +37,10 @@
   </entry>
   <entry>
     <string>Name</string>
-    <string>asdf</string>
+    <string>test2</string>
+  </entry>
+  <entry>
+    <string>Projectile</string>
+    <string>images/redbullet.png</string>
   </entry>
 </map>
