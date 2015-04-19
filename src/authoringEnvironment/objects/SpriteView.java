@@ -215,7 +215,7 @@ public abstract class SpriteView extends StackPane {
         close.setFitWidth(20);
         close.setPreserveRatio(true);
         close.setOnMousePressed( (e) -> {
-            Scaler.scaleEditScreen(1.0, 0.0, this);
+            Scaler.scaleOverlay(1.0, 0.0, this);
             exists.setValue(false);
         });
         this.getChildren().add(close);

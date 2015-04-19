@@ -1,7 +1,6 @@
 package authoringEnvironment.map;
 
 import imageselectorTEMP.GraphicFileChooser;
-import imageselectorTEMP.ImageSelector;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,32 +11,20 @@ import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Scaler;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.UpdatableDisplay;
-import authoringEnvironment.objects.PathView;
+import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
-import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 
 /**
@@ -83,7 +70,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private TextField tileSizeDisplay;
     private VBox mapSettings;
     private VBox pathSettings;
-    private Scaler myScaler;
     private TextField mapName;
     private Controller myController;
     private UpdatableDisplay mapDisplay;
@@ -92,7 +78,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                                                           // property file?
     public static final String TILEMAP_KEY = "TileMap";
 
-    public MapSidebar (ResourceBundle resources, ObservableList<Node> maps,
+    public MapSidebar (ResourceBundle resources, List<GameObject> maps,
                        MapWorkspace mapWorkspace, Controller c) { // active map may not yet be saved
                                                                   // and
         // thus we cannot simply pull it out
@@ -101,7 +87,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         // mySelectedMap = activeMap;
         myMapWorkspace = mapWorkspace;
         myLives = DEFAULT_LIVES;
-        myScaler = new Scaler(); // TODO: might be able to move this to superclass
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -125,7 +110,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void displayMaps () {
-        mapDisplay = new UpdatableDisplay(getMaps(), 3); //test
+        mapDisplay = new UpdatableDisplay(getMaps(), 3); // test
         mapSettings.getChildren().add(mapDisplay);
     }
 
@@ -287,7 +272,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         System.out.println("removing map from map sidebar");
         System.out.println("Maps before remove: " + getMaps());
 
-        ScaleTransition scale = myScaler.scaleEditScreen(1.0, 0.0, myMapWorkspace.getActiveMap());
+        ScaleTransition scale =
+                Scaler.scaleOverlay(1.0, 0.0, myMapWorkspace.getActiveMap().getRoot());
         scale.setOnFinished( (e) -> {
             getMaps().remove(myMapWorkspace.getActiveMap());
             getMapWorkspace().removeMap();
@@ -318,7 +304,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     protected void createMap () {
 
         TileMap newMap = getMapWorkspace().createDefaultMap();
-        ScaleTransition scale = myScaler.scaleEditScreen(0.0, 1.0, newMap);
+        ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
         scale.setOnFinished( (e) -> {
             getMaps().remove(myMapWorkspace.getActiveMap());
             // getMapWorkspace().getChildren().add(newMap);
@@ -377,9 +363,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         // part.get(MapEditor.TILE_MAP);
 
         System.out.println("your file has been saved");
-        
+
         mapDisplay.updateDisplay(getMaps());
-        
 
     }
 
@@ -415,8 +400,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          * // class knowing, the code is easy to break
          */
 
-        for (Node map : getMaps()) {
-            Map<String, Object> mapSettings = ((TileMap) map).saveToXML();
+        for (GameObject map : getMaps()) {
+            Map<String, Object> mapSettings = map.saveToXML();
             myController.addPartToGame(MAP_PART_NAME, mapSettings);
 
         }

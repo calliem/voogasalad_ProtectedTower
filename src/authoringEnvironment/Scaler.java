@@ -8,7 +8,7 @@ import javafx.util.Duration;
 
 public class Scaler {
 
-    public static ScaleTransition scaleEditScreen (double from, double to,
+    public static ScaleTransition scaleOverlay (double from, double to,
                                                    Node overlay) {
         ScaleTransition scale = new ScaleTransition(Duration.millis(200),
                                                     overlay);

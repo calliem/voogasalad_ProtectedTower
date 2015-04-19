@@ -61,7 +61,7 @@ public class MapWorkspace extends StackPane {
             getChildren().remove(myActiveMap);
         }
         myActiveMap = newMap;
-        getChildren().add(newMap);
+        getChildren().add(newMap.getRoot());
     }
 
 }

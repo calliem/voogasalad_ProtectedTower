@@ -35,8 +35,6 @@ import javafx.scene.text.Text;
  */
 public class TileEditor extends SpriteEditor {
 
-    private static final String COLOR = "Color";
-    private static final String TAGS = "Tag";
     private static final String TILE_PART_NAME = "Tile";
 
     private List<Tile> myTiles;
@@ -94,33 +92,30 @@ public class TileEditor extends SpriteEditor {
     public void saveToXML () {
 
         for (Tile tile : myTiles) {
-            Map<String, Object> mapSettings = new HashMap<String, Object>();
-            mapSettings.put(InstanceManager.nameKey, tile.getName());
-            mapSettings.put(TAGS, tile.getTags());
-            mapSettings.put(COLOR, tile.getColor().toString());
+            Map<String, Object> mapSettings = tile.saveToXML();
             String key = myController.addPartToGame(TILE_PART_NAME, mapSettings);
             tile.setKey(key);
+
+            /*
+             * List<String> partFileNames = new ArrayList<String>();
+             * List<Color> colors = new ArrayList<Color>();
+             * List<List<String>> tags = new ArrayList<List<String>>();
+             * 
+             * for (Tile tile: myTiles){
+             * // partFileNames.add(tile.getName());
+             * colors.add(tile.getColor());
+             * tags.add(tile.getTags());
+             * }
+             * 
+             * List<Object> data = new ArrayList<Object>();
+             * // data.add(partFileNames);
+             * data.add(colors);
+             * data.add(tags);
+             * myController.addPartToGame(TILE_PART_NAME, waveName,
+             * ProjectReader.getParamsNoTypeOrName(WAVE), data);
+             */
+
         }
 
-        /*
-         * List<String> partFileNames = new ArrayList<String>();
-         * List<Color> colors = new ArrayList<Color>();
-         * List<List<String>> tags = new ArrayList<List<String>>();
-         * 
-         * for (Tile tile: myTiles){
-         * // partFileNames.add(tile.getName());
-         * colors.add(tile.getColor());
-         * tags.add(tile.getTags());
-         * }
-         * 
-         * List<Object> data = new ArrayList<Object>();
-         * // data.add(partFileNames);
-         * data.add(colors);
-         * data.add(tags);
-         * myController.addPartToGame(TILE_PART_NAME, waveName,
-         * ProjectReader.getParamsNoTypeOrName(WAVE), data);
-         */
-
     }
-
 }

@@ -269,14 +269,14 @@ public abstract class SpriteEditor extends Editor {
     private void showEditScreen (StackPane overlay) {
         if (!overlayActive) {
             myContent.getChildren().add(overlay);
-            Scaler.scaleEditScreen(0.0, 1.0, overlay);
+            Scaler.scaleOverlay(0.0, 1.0, overlay);
             overlayActive = true;
         }
     }
 
     private void hideEditScreen (StackPane overlay) {
         if (overlayActive) {
-            ScaleTransition scale = Scaler.scaleEditScreen(1.0, 0.0, overlay);
+            ScaleTransition scale = Scaler.scaleOverlay(1.0, 0.0, overlay);
             scale.setOnFinished( (e) -> {
                 myContent.getChildren().remove(overlay);
                 overlayActive = false;

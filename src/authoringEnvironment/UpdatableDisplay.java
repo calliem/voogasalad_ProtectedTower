@@ -14,19 +14,20 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.SpriteView;
 
 
 public class UpdatableDisplay extends VBox {
 
-    private List<Node> myObjects;
+    private List<GameObject> myObjects;
     private HBox currentRow;
     private int numObjsPerRow;
 
     private static final int HBOX_SPACING = 10;
 
-    public UpdatableDisplay (List<Node> objects, int rowSize) {
-        myObjects = objects;
+    public UpdatableDisplay (List<GameObject> list, int rowSize) {
+        myObjects = list;
         displayValues();
         numObjsPerRow = rowSize;
     }
@@ -42,7 +43,7 @@ public class UpdatableDisplay extends VBox {
             Text isEmpty = new Text("This list is empty.");
             objectsDisplay.getChildren().add(isEmpty);
         }
-        for (Node object : myObjects) {
+        for (GameObject object : myObjects) {
             if (currentRow.getChildren().size() == numObjsPerRow) {
                 HBox newRow = new HBox(HBOX_SPACING);
                 newRow.setAlignment(Pos.TOP_CENTER);
@@ -55,13 +56,13 @@ public class UpdatableDisplay extends VBox {
             
             Rectangle objectBackground = new Rectangle(50, 50, Color.WHITE); //TODO: remove hard coded stuff
             
-            Node thumbnail = object.getThumbnail(); // may give rectangle or imageview
-            Text nameDisplay = new Text(object.getName());
-            nameDisplay.setFont(new Font(10));
-            nameDisplay.setTextAlignment(TextAlignment.CENTER);
-            nameDisplay.setWrappingWidth(90);
+//            Node thumbnail = object.getThumbnail(); // may give rectangle or imageview
+//            Text nameDisplay = new Text(object.getName());
+//            nameDisplay.setFont(new Font(10));
+//            nameDisplay.setTextAlignment(TextAlignment.CENTER);
+//            nameDisplay.setWrappingWidth(90);
 //TODO: set on hover
-            objectView.getChildren().addAll(objectBackground, thumbnail, nameDisplay);
+  //          objectView.getChildren().addAll(objectBackground, thumbnail, nameDisplay);
         
 
             Text mapName = new Text();
@@ -76,7 +77,7 @@ public class UpdatableDisplay extends VBox {
         getChildren().add(container);
     }
 
-    public void updateDisplay (List<Node> updatedObjects) {
+    public void updateDisplay (List<GameObject> updatedObjects) {
         if (!getChildren().isEmpty()) {
             getChildren().clear();
         }

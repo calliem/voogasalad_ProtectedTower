@@ -1,10 +1,11 @@
 package authoringEnvironment.objects;
 
+import java.util.Map;
 import javafx.scene.Node;
 
-public abstract class GameObject extends Node{
+public abstract class GameObject{
     
-    private int myKey;
+    private String myKey;
     private String myName;
     
     public String getName(){
@@ -15,14 +16,16 @@ public abstract class GameObject extends Node{
         myName = name;
     }    
     
-    public void setKey(int key){
+    public void setKey(String key){
         myKey = key;
     }
     
-    public int getKey(){
+    public String getKey(){
         return myKey;
     }
     
     public abstract Node getThumbnail();
+
+    public abstract Map<String, Object> saveToXML(); //TODO
 
 }

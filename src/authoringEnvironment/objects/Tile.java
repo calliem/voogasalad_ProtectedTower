@@ -1,6 +1,11 @@
 package authoringEnvironment.objects;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.InstanceManager;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -11,13 +16,17 @@ import javafx.scene.shape.Rectangle;
  * @author Callie Mao
  *
  */
-public class Tile extends Rectangle {
+public class Tile extends GameObject {
 
+    private Rectangle myTile;
     private ArrayList<String> myTags;
-    private String myName;
     private Color myColor;
     private boolean isSelected;
     private String myKey;
+    private String myName;
+
+    private static final String COLOR = "Color";
+    private static final String TAGS = "Tag";
 
     // will have the same image for a path?
     // TODO: create a text box to set grid size and a slider to set tile size
@@ -27,21 +36,28 @@ public class Tile extends Rectangle {
     public Tile () {
         // TODO: fix tile to make it more general and not have col nums and x/y generated here
         // TODO: store part keys in the xml file for tilemap
-        setFill(DEFAULT_COLOR);
-        setOpacity(0.4);
+        myTile = new Rectangle();
+        myTile.setFill(DEFAULT_COLOR);
+        myTile.setOpacity(0.4);
         isSelected = false;
         myName = null;
         myTags = new ArrayList<String>();
     }
 
+    public Rectangle getTile () {
+        return myTile;
+    }
+
     public void positionTile (int tileSize, int i, int j) {
-        setTranslateX(j * tileSize);
-        setTranslateY(i * tileSize);
+        myTile.setTranslateX(j * tileSize);
+        myTile.setTranslateY(i * tileSize);
+        System.out.print(" | " + i*tileSize + " ");
+        System.out.print(j*tileSize + " ");
     }
 
     public void setTileSize (int tileSize) {
-        setWidth(tileSize);
-        setHeight(tileSize);
+        myTile.setWidth(tileSize);
+        myTile.setHeight(tileSize);
     }
 
     public void addTag (String tag) {
@@ -58,20 +74,23 @@ public class Tile extends Rectangle {
      */
 
     public void setTileSize (double size, int rowNum, int colNum) {
-        setWidth(size);
-        setHeight(size);
-        setTranslateX(colNum * size);
-        setTranslateY(rowNum * size);
+        myTile.setWidth(size);
+        myTile.setHeight(size);
+        myTile.setTranslateX(colNum * size);
+        myTile.setTranslateY(rowNum * size);
+        
+        System.out.print(" | " + rowNum*size + " ");
+        System.out.print(colNum*size + " ");
     }
 
     // selection stuff is all for pathing. Need separate methods for updating the tile
     // active refers to if it is selected as part of a path
     public void select () {
         if (!isSelected) {
-            setOpacity(0.2); // change image entirely
+            myTile.setOpacity(0.2); // change image entirely
         }
         else {
-            setOpacity(1);
+            myTile.setOpacity(1);
         }
         isSelected = !isSelected;
     }
@@ -84,20 +103,25 @@ public class Tile extends Rectangle {
         return myTags;
     }
 
-    public String getName () {
-        return myName;
-    }
-
     public Color getColor () {
         return myColor;
     }
 
-    public void setKey (String key) {
-        myKey = key;
+    @Override
+    public Node getThumbnail () {
+        Rectangle thumbnail = myTile;
+        thumbnail.setWidth(AuthoringEnvironment.getEnvironmentWidth() * 0.05);
+        thumbnail.setHeight(AuthoringEnvironment.getEnvironmentHeight() * 0.05);
+        return null;
     }
 
-    public String getKey () {
-        return myKey;
+    @Override
+    public Map<String, Object> saveToXML () {
+        Map<String, Object> mapSettings = new HashMap<String, Object>();
+        mapSettings.put(InstanceManager.nameKey, myName);
+        mapSettings.put(TAGS, myTags);
+        mapSettings.put(COLOR, myColor);
+        return mapSettings;
     }
 
 }

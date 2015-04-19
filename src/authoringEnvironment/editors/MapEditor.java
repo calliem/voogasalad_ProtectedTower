@@ -1,6 +1,8 @@
 package authoringEnvironment.editors;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -10,6 +12,8 @@ import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.map.MapSidebar;
+import authoringEnvironment.objects.GameObject;
+
 
 
 /**
@@ -36,7 +40,7 @@ public class MapEditor extends MainEditor {
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
                                                                   "map_editor_english");
-    private ObservableList<Node> myMaps;
+    private List<GameObject> myMaps;
     private Sidebar mySidebar;  // TODO: maybe move this into the superclass?
 
     
@@ -46,7 +50,8 @@ public class MapEditor extends MainEditor {
     public MapEditor(Controller c, String name) {
         super(c, name);
         myMaps = FXCollections.observableArrayList(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
-        myMaps.add(getMapWorkspace().getActiveMap());
+        //myMaps.add(getMapWorkspace().getActiveMap());
+        myMaps = new ArrayList<GameObject>();
         mySidebar = new MapSidebar(myResources, myMaps, getMapWorkspace(), c); //now don't need to pass in so much stuff
         getPane().add(mySidebar,1,0);
     }
