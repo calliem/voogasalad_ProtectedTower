@@ -32,6 +32,11 @@ public class Level extends GameElement implements UpdateAndReturnable, Endable, 
         myActiveRound = myRounds.get(myActiveRoundIndex);
     }
 
+    /**
+     * Method called by Player when ready to start next Round
+     * @return True if able to start next round
+     */
+    
     public boolean startNextRound () {
         if (myActiveRound.hasEnded()) {
             myActiveRoundIndex++;
