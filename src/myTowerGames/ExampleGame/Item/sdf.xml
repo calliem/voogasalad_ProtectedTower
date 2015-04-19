@@ -1,0 +1,14 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Item</string>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>ExampleGame_sdf.Item</string>
+  </entry>
+  <entry>
+    <string>Name</string>
+    <string>sdf</string>
+  </entry>
+</map>

@@ -37,7 +37,8 @@ public class UpdatableDisplay extends VBox {
 
         VBox objectsDisplay = new VBox(20);
         objectsDisplay.setTranslateY(10);
-        currentRow = new HBox(HBOX_SPACING);
+        setCurrentRow();
+        //currentRow = new HBox(HBOX_SPACING);
 
         if (myObjects.isEmpty()) {
             Text isEmpty = new Text("This list is empty.");
@@ -45,11 +46,10 @@ public class UpdatableDisplay extends VBox {
         }
         for (GameObject object : myObjects) {
             if (currentRow.getChildren().size() == numObjsPerRow) {
-                HBox newRow = new HBox(HBOX_SPACING);
-                newRow.setAlignment(Pos.TOP_CENTER);
                 objectsDisplay.getChildren().add(currentRow);
-                currentRow = newRow;
-                objectsDisplay.getChildren().add(newRow);
+                setCurrentRow();
+                //currentRow = newRow;
+                //objectsDisplay.getChildren().add(newRow);
             }
 
             StackPane objectView = new StackPane();
@@ -69,12 +69,18 @@ public class UpdatableDisplay extends VBox {
             ImageView image = new ImageView();
             currentRow.getChildren().addAll(mapName, image);
         }
+        
         if (!objectsDisplay.getChildren().contains(currentRow)) {
             objectsDisplay.getChildren().add(currentRow);
         }
 
         container.setContent(objectsDisplay);
         getChildren().add(container);
+    }
+    
+    private void setCurrentRow(){
+        currentRow = new HBox(HBOX_SPACING);
+        currentRow.setAlignment(Pos.TOP_CENTER);
     }
 
     public void updateDisplay (List<GameObject> updatedObjects) {

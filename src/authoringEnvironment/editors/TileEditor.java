@@ -10,6 +10,7 @@ import authoringEnvironment.InstanceManager;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.Tile;
+import authoringEnvironment.util.NamePrompt;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -46,6 +47,8 @@ public class TileEditor extends SpriteEditor {
 
     @Override
     protected void promptSpriteCreation () {
+        getPrompt().setImageChooser(false);
+        
         myTiles = new ArrayList<Tile>();
         StackPane promptDisplay = new StackPane();
         Rectangle promptBackground = new Rectangle(300, 400);

@@ -116,6 +116,10 @@ public abstract class SpriteEditor extends Editor {
         
         return visuals;
     }
+    
+    protected NamePrompt getPrompt(){
+        return prompt;
+    }
 
     /**
      * @param spriteDisplay

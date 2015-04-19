@@ -70,7 +70,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private TextField tileSizeDisplay;
     private VBox mapSettings;
     private VBox pathSettings;
-    private TextField mapName;
+    private TextField mapNameTextField;
     private Controller myController;
     private UpdatableDisplay mapDisplay;
 
@@ -79,12 +79,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     public static final String TILEMAP_KEY = "TileMap";
 
     public MapSidebar (ResourceBundle resources, List<GameObject> maps,
-                       MapWorkspace mapWorkspace, Controller c) { // active map may not yet be saved
-                                                                  // and
-        // thus we cannot simply pull it out
-        // of the observable list
+                       MapWorkspace mapWorkspace, Controller c) { 
         super(resources, maps, mapWorkspace);
-        // mySelectedMap = activeMap;
         myMapWorkspace = mapWorkspace;
         myLives = DEFAULT_LIVES;
         /*
@@ -191,8 +187,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         HBox nameHBox = new HBox();
         Text name = new Text(getResources().getString("Name")); // Name
-        mapName = new TextField();
-        nameHBox.getChildren().addAll(name, mapName);
+        mapNameTextField = new TextField();
+        nameHBox.getChildren().addAll(name, mapNameTextField);
 
         HBox textFields = new HBox();
         Text mapDimensions = new Text(getResources().getString("MapDimensions"));
@@ -328,6 +324,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * @param activeMap
      */
     private void saveMap (TileMap activeMap) {
+        activeMap.setName(mapNameTextField.getText());
         if (!getMaps().contains(activeMap)) {
             getMaps().add(activeMap);
             System.out.println("Maps after save: " + getMaps());
