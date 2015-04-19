@@ -1,15 +1,8 @@
 package authoringEnvironment.editors;
 
-import imageselectorTEMP.ImageSelector;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import util.reflection.Reflection;
-import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.Controller;
-import authoringEnvironment.objects.ProjectileView;
-import authoringEnvironment.objects.SpriteView;
-import authoringEnvironment.objects.TowerView;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -21,7 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -30,10 +23,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
-import authoringEnvironment.Scaler;
+import authoringEnvironment.NoImageFoundException;
 import authoringEnvironment.objects.SpriteView;
+import authoringEnvironment.util.NamePrompt;
+import authoringEnvironment.util.Scaler;
 
 
 
@@ -46,15 +40,16 @@ import authoringEnvironment.objects.SpriteView;
 public abstract class SpriteEditor extends Editor {
     private StackPane myContent;
     private HBox currentRow;
-    private boolean overlayActive = false;
     private boolean editing = false;
     private Text empty;
     private List<Node> spritesCreated;
     private IntegerProperty numSprites;
-    private Scaler myScaler;
+    private NamePrompt prompt;
 
     private static final int ROW_SIZE = 7;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
+    
+    private Node activeOverlay;
 
     /**
      * Creates a tower object.
@@ -68,7 +63,6 @@ public abstract class SpriteEditor extends Editor {
      */
     public SpriteEditor (Controller c, String name) {
         super(c, name);
-        myScaler = new Scaler();
     }
 
     /**
@@ -80,6 +74,9 @@ public abstract class SpriteEditor extends Editor {
         Group visuals = new Group();
         myContent = new StackPane();
         spritesCreated = new ArrayList<>();
+        
+        prompt = new NamePrompt(tabName.toLowerCase().substring(0, tabName.length() - 1));
+        prompt.setImageChooser(true);
 
         // TODO remove magic number
         Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, BACKGROUND_COLOR);
@@ -100,27 +97,8 @@ public abstract class SpriteEditor extends Editor {
 
         numSprites = new SimpleIntegerProperty(0);
         numSprites.addListener( (obs, oldValue, newValue) -> {
-            if ((int) newValue == 0) {
-                myContent.getChildren().add(empty);
-            }
-                else if ((int) newValue > 0
-                         && myContent.getChildren().contains(empty)) {
-                    myContent.getChildren().remove(empty);
-                }
-
-                // if there's 2 on a row already
-                else if (currentRow.getChildren().size() == ROW_SIZE) {
-                    HBox newRow = new HBox(20);
-                    newRow.setAlignment(Pos.TOP_CENTER);
-                    currentRow = newRow;
-                    rows.add(newRow);
-                    spriteDisplay.getChildren().add(newRow);
-                }
-
-                else if ((int) newValue < (int) oldValue) {
-                    System.out.println("rows: " + rows.size());
-                }
-            });
+            handleSpritePlacement(spriteDisplay, rows, oldValue, newValue);
+        });
 
         empty = new Text("No " + tabName.toLowerCase() + " yet...");
         // myResources.getString("NoTowersCreated"));
@@ -133,20 +111,53 @@ public abstract class SpriteEditor extends Editor {
         myContent.getChildren().addAll(background, spriteDisplay, empty);
         StackPane.setAlignment(spriteDisplay, Pos.TOP_CENTER);
         visuals.getChildren().add(myContent);
+        
         return visuals;
+    }
+
+    /**
+     * @param spriteDisplay
+     * @param rows
+     * @param oldValue
+     * @param newValue
+     */
+    private void handleSpritePlacement (VBox spriteDisplay,
+                                        ArrayList<HBox> rows,
+                                        Number oldValue,
+                                        Number newValue) {
+        if ((int) newValue == 0) {
+            myContent.getChildren().add(empty);
+        }
+        else if ((int) newValue > 0
+                && myContent.getChildren().contains(empty)) {
+            myContent.getChildren().remove(empty);
+        }
+
+        // if there's 2 on a row already
+        else if (currentRow.getChildren().size() == ROW_SIZE) {
+            HBox newRow = new HBox(20);
+            newRow.setAlignment(Pos.TOP_CENTER);
+            currentRow = newRow;
+            rows.add(newRow);
+            spriteDisplay.getChildren().add(newRow);
+        }
+
+        else if ((int) newValue < (int) oldValue) {
+            System.out.println("rows: " + rows.size());
+        }
     }
 
     private HBox setupEditControls () {
         HBox editControls = new HBox(10);
         editControls.setAlignment(Pos.CENTER_RIGHT);
         Button edit = new Button("Edit");
-        fixButtonDimensions(edit);
+        edit.setPrefWidth(100);
         edit.setTranslateX(-10);
 
         Button add = new Button("+ "
-                                + tabName.substring(0, tabName.length() - 1));
+                + tabName.substring(0, tabName.length() - 1));
         add.setTranslateX(-10);
-        fixButtonDimensions(add);
+        add.setPrefWidth(100);
         add.setOnMousePressed( (e) -> {
             promptSpriteCreation();
         });
@@ -155,61 +166,41 @@ public abstract class SpriteEditor extends Editor {
             if (!editing) {
                 startEditing(editControls, edit, add);
             }
-                else {
-                    finishEditing(editControls, edit, add);
-                }
-                editing = !editing;
-            });
+            else {
+                finishEditing(editControls, edit, add);
+            }
+            editing = !editing;
+        });
         editControls.getChildren().add(edit);
         return editControls;
     }
 
     protected void promptSpriteCreation () {
-        StackPane promptDisplay = new StackPane();
-        Rectangle promptBackground = new Rectangle(300, 400);
-        promptBackground.setOpacity(0.8);
-
-        VBox promptContent = new VBox(20);
-        promptContent.setAlignment(Pos.CENTER);
-        Text prompt = new Text("Creating a new "
-                               + tabName.toLowerCase().substring(0, tabName.length() - 1)
-                               + "...");
-        prompt.setFill(Color.WHITE);
-        TextField promptField = new TextField();
-        promptField.setMaxWidth(225);
-        promptField.setPromptText("Enter a name...");
-
-        ImageSelector imgSelector = new ImageSelector();
-        imgSelector.addExtensionFilter("png");
-        imgSelector.addExtensionFilter("jpg");
-        imgSelector.addExtensionFilter("gif");
-        imgSelector.setPreviewImageSize(225, 150);
-
-        HBox buttons = new HBox(10);
-        Button create = new Button("Create");
+        Button create = prompt.getCreateButton();
         create.setOnAction( (e) -> {
-            addSprite(promptField.getText(),
-                      imgSelector.getSelectedImageFile(), currentRow);
-            hideEditScreen(promptDisplay);
+            try{
+                addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(), currentRow);
+                hideOverlay();
+            }
+            catch(NoImageFoundException error){
+                error.printStackTrace();
+            }
         });
 
-        Button cancel = new Button("Cancel");
+        Button cancel = prompt.getCancelButton();
         cancel.setOnAction( (e) -> {
-            hideEditScreen(promptDisplay);
+            hideOverlay();
         });
-
-        buttons.setAlignment(Pos.CENTER);
-        buttons.getChildren().addAll(create, cancel);
-        promptContent.getChildren().addAll(prompt, promptField, imgSelector,
-                                           buttons);
-
-        promptDisplay.getChildren().addAll(promptBackground, promptContent);
-        showEditScreen(promptDisplay);
+        
+        //TODO DUPLICATED
+        prompt.showPrompt(myContent);
+        isOverlayActive = true;
+        activeOverlay = prompt;
     }
 
-    private void addSprite (String name, String imageFile, HBox row) {
+    private void addSprite (String name, String imageFile, HBox row) throws NoImageFoundException{
         String className = "authoringEnvironment.objects."
-                           + tabName.substring(0, tabName.length() - 1) + "View";
+                + tabName.substring(0, tabName.length() - 1) + "View";
         SpriteView sprite = generateSpriteView(myController, name, imageFile, className);
         sprite.initiateEditableState();
         setupSpriteAction(sprite);
@@ -239,10 +230,10 @@ public abstract class SpriteEditor extends Editor {
                 | NoSuchMethodException | SecurityException
                 | ClassNotFoundException e1) {
             System.err
-                    .println("Class: "
-                             + className
-                             +
-                             "\nCouldn't be created with constructor (Controller, String, String)");
+            .println("Class: "
+                    + className
+                    +
+                    "\nCouldn't be created with constructor (Controller, String, String)");
             e1.printStackTrace();
         }
         return sprite;
@@ -260,49 +251,36 @@ public abstract class SpriteEditor extends Editor {
 
     private void setupSpriteAction (SpriteView sprite) {
         sprite.setOnMousePressed( (e) -> {
-            if (sprite.isExisting().getValue() && editing)
-                showEditScreen(sprite.getEditorOverlay());
+            if (sprite.isExisting().getValue() && editing){
+                showOverlay(sprite.getEditorOverlay());
+                activeOverlay = sprite.getEditorOverlay();
+            }
         });
         sprite.getCloseButton().setOnAction( (e) -> {
-            hideEditScreen(sprite.getEditorOverlay());
+            hideOverlay();
             sprite.discardUnsavedChanges();
             sprite.setupTooltipText(sprite.getSpriteInfo());
         });
     }
 
-    private void showEditScreen (StackPane overlay) {
-        if (!overlayActive) {
+    private void showOverlay (StackPane overlay) {
+        if (!isOverlayActive) {
             myContent.getChildren().add(overlay);
-            myScaler.scaleEditScreen(0.0, 1.0, overlay);
-            overlayActive = true;
+            Scaler.scaleOverlay(0.0, 1.0, overlay);
+            isOverlayActive = true;
         }
     }
-
-    private void hideEditScreen (StackPane overlay) {
-        if (overlayActive) {
-            ScaleTransition scale = myScaler.scaleEditScreen(1.0, 0.0, overlay);
-            scale.setOnFinished( (e) -> {
-                myContent.getChildren().remove(overlay);
-                overlayActive = false;
+    
+    @Override
+    public void hideOverlay(){
+        if(isOverlayActive){
+            ScaleTransition scale = Scaler.scaleOverlay(1.0, 0.0, activeOverlay);
+            scale.setOnFinished(e -> {
+                myContent.getChildren().remove(activeOverlay);
+                isOverlayActive = false;
             });
         }
     }
-
-    /*
-     * private ScaleTransition scaleEditScreen(double from, double to,
-     * StackPane overlay) {
-     * ScaleTransition scale = new ScaleTransition(Duration.millis(200),
-     * overlay);
-     * scale.setFromX(from);
-     * scale.setFromY(from);
-     * scale.setToX(to);
-     * scale.setToY(to);
-     * scale.setCycleCount(1);
-     * scale.play();
-     * 
-     * return scale;
-     * }
-     */
 
     private void finishEditing (HBox editControls, Button edit, Button add) {
         TranslateTransition move = transitionButton(add, -10, 90);
@@ -331,10 +309,5 @@ public abstract class SpriteEditor extends Editor {
         moveButton.play();
 
         return moveButton;
-    }
-
-    private void fixButtonDimensions (Button button) {
-        button.setMinWidth(100);
-        button.setMaxWidth(100);
     }
 }
