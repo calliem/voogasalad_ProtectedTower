@@ -59,6 +59,8 @@ public class TileMap extends GameObject {
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
+        setThumbnail(myBackground);
+
 
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
@@ -90,7 +92,7 @@ public class TileMap extends GameObject {
         myBackground = new ImageView(new Image(filepath));
         setImageDimensions(myBackground);
         myRoot.getChildren().add(0, myBackground);
-
+        setThumbnail(myBackground);
     }
 
     // TODO:duplicated tile listeners being added/deleted?
@@ -111,6 +113,7 @@ public class TileMap extends GameObject {
             tile.getTile().setFill(myActiveColor);
             System.out.println("I have been dragged!" + tile.getTile().getFill().toString());
         });
+        System.out.print("tile listener added");
     }
 
     public void changeTileSize (int tileSize) {
@@ -149,13 +152,13 @@ public class TileMap extends GameObject {
     }
 
     private void createMap () {
-        
         myTiles = new Tile[myMapRows][myMapCols];
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
                 myTiles[i][j] = new Tile();
                 myTiles[i][j].positionTile(myTileSize, i, j);
                 myRoot.getChildren().add(myTiles[i][j].getTile());
+                System.out.println("attach tile listener below: ");
                 attachTileListener(myTiles[i][j]);
             }
         }

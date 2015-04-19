@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
+import authoringEnvironment.NoImageFoundException;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.Tile;
@@ -48,6 +49,27 @@ public class TileEditor extends SpriteEditor {
     @Override
     protected void promptSpriteCreation () {
         getPrompt().setImageChooser(false);
+        
+    /*    Button create = getPrompt().getCreateButton();
+        create.setOnAction( (e) -> {
+            try{
+                addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(), currentRow);
+                hideOverlay();
+            }
+            catch(NoImageFoundException error){
+                error.printStackTrace();
+            }
+        });
+
+        Button cancel = prompt.getCancelButton();
+        cancel.setOnAction( (e) -> {
+            hideOverlay();
+        });
+        
+        //TODO DUPLICATED
+        prompt.showPrompt(myContent);
+        isOverlayActive = true;
+        activeOverlay = prompt;
         
         myTiles = new ArrayList<Tile>();
         StackPane promptDisplay = new StackPane();

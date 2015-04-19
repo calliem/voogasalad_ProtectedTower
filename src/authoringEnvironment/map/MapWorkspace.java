@@ -5,6 +5,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
 
 
@@ -55,17 +56,18 @@ public class MapWorkspace extends StackPane {
         if (myActiveMap == null)
             return;
         if (getChildren().contains(myActiveMap.getRoot())){
+            System.out.println("remove active map");
             getChildren().remove(myActiveMap.getRoot());
             myActiveMap = null;
         }
     }
 
-    public void updateWithNewMap (TileMap newMap) {
+    public void updateWithNewMap (GameObject object) {
         if (myActiveMap != null) {
             getChildren().remove(myActiveMap.getRoot());
         }
-        myActiveMap = newMap;
-        getChildren().add(newMap.getRoot());
+        myActiveMap = (TileMap) object;
+        getChildren().add(myActiveMap.getRoot());
     }
 
 }

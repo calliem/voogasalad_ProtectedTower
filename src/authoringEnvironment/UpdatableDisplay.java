@@ -18,10 +18,11 @@ import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.SpriteView;
 
 
-public class UpdatableDisplay extends VBox {
+public abstract class UpdatableDisplay extends VBox {
 
     private List<GameObject> myObjects;
     private HBox currentRow;
+    private VBox objectsDisplay;
     private int numObjsPerRow;
 
     private static final int HBOX_SPACING = 10;
@@ -35,7 +36,7 @@ public class UpdatableDisplay extends VBox {
     private void displayValues () {
         ScrollPane container = new ScrollPane();
 
-        VBox objectsDisplay = new VBox(20);
+        objectsDisplay = new VBox(20);
         objectsDisplay.setTranslateY(10);
         setCurrentRow();
         //currentRow = new HBox(HBOX_SPACING);
@@ -54,10 +55,10 @@ public class UpdatableDisplay extends VBox {
 
             StackPane objectView = new StackPane();
 
-            Rectangle objectBackground = new Rectangle(50, 50, Color.WHITE); // TODO: remove hard
+            Rectangle objectBackground = new Rectangle(10, 10, Color.WHITE); // TODO: remove hard
                                                                              // coded stuff
 
-            // Node thumbnail = object.getThumbnail(); // may give rectangle or imageview
+             Node thumbnail = object.getThumbnail(); // may give rectangle or imageview
             // Text nameDisplay = new Text(object.getName());
             // nameDisplay.setFont(new Font(10));
             // nameDisplay.setTextAlignment(TextAlignment.CENTER);
@@ -66,8 +67,9 @@ public class UpdatableDisplay extends VBox {
             // objectView.getChildren().addAll(objectBackground, thumbnail, nameDisplay);
 
             Text mapName = new Text(object.getName());
-            ImageView image = new ImageView();
-            currentRow.getChildren().addAll(mapName, image);
+            objectView.getChildren().addAll(objectBackground, mapName);
+            currentRow.getChildren().add(objectView);
+            objectView.setOnMouseClicked(e -> objectClicked(object));
         }
         
         if (!objectsDisplay.getChildren().contains(currentRow)) {
@@ -76,6 +78,10 @@ public class UpdatableDisplay extends VBox {
 
         container.setContent(objectsDisplay);
         getChildren().add(container);
+    }
+    
+    protected VBox getObjectsDisplay(){
+        return objectsDisplay;
     }
     
     private void setCurrentRow(){
@@ -90,4 +96,6 @@ public class UpdatableDisplay extends VBox {
         myObjects = updatedObjects;
         displayValues();
     }
+    
+    protected abstract void objectClicked(GameObject object);
 }

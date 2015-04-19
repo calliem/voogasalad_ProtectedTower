@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
+import authoringEnvironment.MapUpdatableDisplay;
 import authoringEnvironment.util.Scaler;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.UpdatableDisplay;
@@ -106,7 +107,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void displayMaps () {
-        mapDisplay = new UpdatableDisplay(getMaps(), 3); // test
+        mapDisplay = new MapUpdatableDisplay(getMaps(), 3, myMapWorkspace); // test
         mapSettings.getChildren().add(mapDisplay);
     }
 
@@ -218,9 +219,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         HBox selection = new HBox();
         selection.setSpacing(PADDING);
 
-        // Text text = new Text("Select Background Image");
-        // getResources().getString("Select Background Image")
-
         // TODO: this is duplicated from Kevin's class
         GraphicFileChooser imgSelector = new GraphicFileChooser("Select background");
         imgSelector.addExtensionFilter("gif");
@@ -279,18 +277,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             }
             getMapWorkspace().removeMap();
         });
-
-        // PauseTransition wait = new PauseTransition(Duration.millis(200));
-        // wait.setOnFinished((e) -> getMapWorkspace().removeMap());
-
-        // ScaleTransition scale = myScaler.scaleEditScreen(1.0, 0.0, overlay);
-        // scale.setOnFinished((e) -> {
-        // myContent.getChildren().remove(overlay);
-        // overlayActive = false;
-        // });
-
-        // wait.play();
-
         System.out.println("Maps after remove: " + getMaps());
 
     }
