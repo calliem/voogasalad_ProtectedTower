@@ -2,7 +2,6 @@ package authoringEnvironment;
 
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -13,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.map.MapWorkspace;
+import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
 
 /**
@@ -29,7 +29,7 @@ public class LevelSidebar extends Sidebar{
 	
 	private static final int LISTVIEW_HEIGHT = 200;
 	
-	public LevelSidebar(ResourceBundle resources, List<Node> maps, MapWorkspace mapWorkspace) {
+	public LevelSidebar(ResourceBundle resources, List<GameObject> maps, MapWorkspace mapWorkspace) {
 		super(resources, maps, mapWorkspace);
 		//myMapEditor = Controller.getEditor(Controller.MAPS);
 		createMapSettings();

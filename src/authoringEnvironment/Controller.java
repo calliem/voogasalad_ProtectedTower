@@ -139,22 +139,6 @@ public class Controller {
         currentGame.specifyPartImage(partKey, imageFilePath);
     }
 
-    /**
-     * Checks if a part with the given type and name already exists
-     * 
-     * @param partType The type of part
-     * @param nameToCheck The name for which you want to know if a part already exists
-     * @return True if the name is a duplicate, false if it's unique
-     */
-    public boolean nameAlreadyExists(String partType, String nameToCheck) {
-        List<String> keys = getKeysForPartType(partType);
-        for (String key : keys) {
-            String nameThatExists = (String) getPartCopy(key).get(InstanceManager.nameKey);
-            if (nameThatExists.equalsIgnoreCase(nameToCheck))
-                return true;
-        }
-        return false;
-    }
 
     public Map<String, Object> loadPart (String fullPartFilePath) {
         Map<String, Object> part = (Map<String, Object>) XMLWriter.fromXML(fullPartFilePath);
