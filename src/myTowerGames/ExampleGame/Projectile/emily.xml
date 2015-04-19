@@ -1,7 +1,11 @@
 <map>
   <entry>
     <string>PartType</string>
-    <string>Tower</string>
+    <string>Projectile</string>
+  </entry>
+  <entry>
+    <string>Speed</string>
+    <double>1.0</double>
   </entry>
   <entry>
     <string>Group</string>
@@ -12,24 +16,16 @@
     <string>Basic</string>
   </entry>
   <entry>
-    <string>AttackPriority</string>
-    <string>Close</string>
-  </entry>
-  <entry>
     <string>BoundingWidth</string>
     <double>10.0</double>
   </entry>
   <entry>
-    <string>AttackRange</string>
-    <double>1.0</double>
-  </entry>
-  <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Unnamed1.Tower</string>
+    <string>ExampleGame_emily.Projectile</string>
   </entry>
   <entry>
-    <string>AttackSpeed</string>
-    <double>1.0</double>
+    <string>Damage</string>
+    <int>100</int>
   </entry>
   <entry>
     <string>BoundingHeight</string>
@@ -37,10 +33,6 @@
   </entry>
   <entry>
     <string>Name</string>
-    <string>Unnamed1</string>
-  </entry>
-  <entry>
-    <string>Projectile</string>
-    <string>ExampleGame_Unnamed1.Projectile</string>
+    <string>emily</string>
   </entry>
 </map>

@@ -118,6 +118,7 @@ public abstract class SpriteView extends StackPane {
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
         for (Setting s : settings) {
             parameterFields.add(s);
+            System.out.println(s.getParameterName());
             settingsObjects.getChildren().add(s);
         }
 
@@ -163,6 +164,12 @@ public abstract class SpriteView extends StackPane {
             String key = myController.addPartToGame(getSpriteType(),
                                                     parameterFields);
             myController.specifyPartImage(key, imageFile);
+            try{
+                System.out.println("image stored for " + key + ": " + myController.getImageForKey(key));
+            }
+            catch(Exception e){
+                
+            }
             displaySavedMessage();
         }
     }

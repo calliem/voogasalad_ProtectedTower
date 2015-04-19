@@ -119,7 +119,7 @@ public class Controller {
         if (!partCopy.keySet().contains(InstanceManager.imageKey))
             throw new NoImageFoundException("No image is specified for part: "
                                             + key);
-        return (String) partCopy.get(key);
+        return (String) partCopy.get(InstanceManager.imageKey);
     }
 
     /**
@@ -137,6 +137,7 @@ public class Controller {
 
     public void specifyPartImage (String partKey, String imageFilePath) {
         currentGame.specifyPartImage(partKey, imageFilePath);
+        System.out.println("key: " + partKey + " image: " + imageFilePath);
     }
 
     /**

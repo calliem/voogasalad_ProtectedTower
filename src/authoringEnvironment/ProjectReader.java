@@ -117,6 +117,7 @@ public class ProjectReader {
                 | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {
             // display error message, don't let the null value be used
+
         }
 
         return s;
