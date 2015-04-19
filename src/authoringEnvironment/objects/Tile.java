@@ -13,14 +13,11 @@ import javafx.scene.shape.Rectangle;
  */
 public class Tile extends Rectangle {
 
-    // private ImageView myImage
-    // private double myTileSize; // TODO: this should be written in the map since the tile does not
-    // need to kno this
-    private int myColNum;
-    private int myRowNum;
     private ArrayList<String> myTags;
+    private String myName;
     private Color myColor;
     private boolean isSelected;
+    private String myKey;
 
     // will have the same image for a path?
     // TODO: create a text box to set grid size and a slider to set tile size
@@ -33,6 +30,8 @@ public class Tile extends Rectangle {
         setFill(DEFAULT_COLOR);
         setOpacity(0.4);
         isSelected = false;
+        myName = null;
+        myTags = new ArrayList<String>();
     }
 
     public void positionTile (int tileSize, int i, int j) {
@@ -58,11 +57,11 @@ public class Tile extends Rectangle {
      * public void setImage(ImageView image) { myImage = image; }
      */
 
-    public void setTileSize (double size) {
+    public void setTileSize (double size, int rowNum, int colNum) {
         setWidth(size);
         setHeight(size);
-        setTranslateX(myColNum * size);
-        setTranslateY(myRowNum * size);
+        setTranslateX(colNum * size);
+        setTranslateY(rowNum * size);
     }
 
     // selection stuff is all for pathing. Need separate methods for updating the tile
@@ -79,6 +78,26 @@ public class Tile extends Rectangle {
 
     public boolean isSelected () {
         return isSelected;
+    }
+
+    public ArrayList<String> getTags () {
+        return myTags;
+    }
+
+    public String getName () {
+        return myName;
+    }
+
+    public Color getColor () {
+        return myColor;
+    }
+
+    public void setKey (String key) {
+        myKey = key;
+    }
+
+    public String getKey () {
+        return myKey;
     }
 
 }

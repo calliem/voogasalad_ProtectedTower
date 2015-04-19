@@ -86,10 +86,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private Scaler myScaler;
     private TextField mapName;
     private Controller myController;
+    private UpdatableDisplay mapDisplay;
 
-    public static final String MAP_PART_NAME = "GameMap"; //TODO: get this perhaps from the property file?
-
-    // TODO: temporary data storage for maps
+    public static final String MAP_PART_NAME = "GameMap"; // TODO: get this perhaps from the
+                                                          // property file?
     public static final String TILEMAP_KEY = "TileMap";
 
     public MapSidebar (ResourceBundle resources, ObservableList<Node> maps,
@@ -125,7 +125,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void displayMaps () {
-        UpdatableDisplay mapDisplay = new UpdatableDisplay(getMaps());
+        mapDisplay = new UpdatableDisplay(getMaps(), 3); //test
         mapSettings.getChildren().add(mapDisplay);
     }
 
@@ -203,12 +203,12 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         HBox selection = new HBox();
         selection.setSpacing(PADDING);
         setImage();
-        
+
         HBox nameHBox = new HBox();
         Text name = new Text(getResources().getString("Name")); // Name
         mapName = new TextField();
         nameHBox.getChildren().addAll(name, mapName);
-        
+
         HBox textFields = new HBox();
         Text mapDimensions = new Text(getResources().getString("MapDimensions"));
         tileRowDisplay = new TextField(Integer.toString(myMapWorkspace.getActiveMap()
@@ -344,10 +344,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * @param activeMap
      */
     private void saveMap (TileMap activeMap) {
-        if (!getMaps().contains(activeMap)) { // the edited and stored
-                                              // activemaps technically should
-                                              // map to the same address
-                                              // right?
+        if (!getMaps().contains(activeMap)) {
             getMaps().add(activeMap);
             System.out.println("Maps after save: " + getMaps());
         }
@@ -357,28 +354,33 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             System.out.println("Maps after save: " + getMaps());
         }
 
+        // saves the map to a specific key
+        // checks to see if the current map already exists
         Map<String, Object> mapSettings = new HashMap<String, Object>();
-        if (mapSettings.containsValue(mapName.getText())){
-           //display error
-            System.out.println("That map name already exists"); //TODO: utilize same visual display as spriteeditor
+        if (mapSettings.containsValue(mapName.getText())) {
+            // display error
+            System.out.println("That map name already exists"); // TODO: utilize same visual display
+                                                                // as spriteeditor
         }
-        else{
+        else {
             mapSettings.put(InstanceManager.nameKey, mapName.getText());
             mapSettings.put(TILEMAP_KEY, activeMap);
             myController.addPartToGame(MAP_PART_NAME, mapSettings);
         }
+
+        List<String> keys = myController.getKeysForPartType(MAP_PART_NAME);
+        for (String key : keys) {
+            Map<String, Object> part = myController.getPartCopy(key);
+            System.out.println("key" + key);
+        }
+        // part.get(InstanceManager.nameKey);
+        // part.get(MapEditor.TILE_MAP);
+
+        System.out.println("your file has been saved");
         
-      List<String> keys = myController.getKeysForPartType(MAP_PART_NAME);
-      for (String key : keys){
-          Map<String, Object> part = myController.getPartCopy(key);
-          System.out.println("key" + key);
-      }
-      //part.get(InstanceManager.nameKey);
-      //part.get(MapEditor.TILE_MAP);
-      
-      System.out.println("your file has been saved");
+        mapDisplay.updateDisplay(getMaps());
         
-        
+
     }
 
     private void updateMapDim (String numRows, String numCols) {
@@ -386,7 +388,37 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                                                        Integer.parseInt(numCols));
     }
 
-    // Con: myMapWorkspace.getActiveMap(). instead of myActiveMap introduces a
-    // dependency on my workspace. if something is changed there without this
-    // class knowing, the code is easy to break
+    /**
+     * Saves the properties of all the tilemaps stored within the editor into XML. Because storing
+     * the entire TileMap object creates unreasonably large files, TileMaps are stored first by
+     * recognizing each tile's key, storing the tile's key, and mapping that to the specific row and
+     * column location within the map. Additional map parameters are saved accordingly (ie.
+     * tileSize, etc.). This method is not as applicable in the TileMap since the TileMap name is
+     * not updated dynamically as the user types it and needs to be retrieved from the textbox in
+     * the editor. TODO: make the name update dynamically with a change listener
+     */
+    private void saveToXML () {
+        /*
+         * for (Node map : getMaps()) {
+         * Map<String, Object> mapSettings = new HashMap<String, Object>();
+         * mapSettings.put(InstanceManager.nameKey, mapName.getText());
+         * mapSettings.put(TILEMAP_KEY, map);
+         * myController.addPartToGame(MAP_PART_NAME, mapSettings);
+         * }
+         * 
+         * }
+         * 
+         * 
+         * 
+         * // Con: myMapWorkspace.getActiveMap(). instead of myActiveMap introduces a
+         * // dependency on my workspace. if something is changed there without this
+         * // class knowing, the code is easy to break
+         */
+
+        for (Node map : getMaps()) {
+            Map<String, Object> mapSettings = ((TileMap) map).saveToXML();
+            myController.addPartToGame(MAP_PART_NAME, mapSettings);
+
+        }
+    }
 }

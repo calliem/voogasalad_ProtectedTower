@@ -31,6 +31,12 @@ public abstract class Editor extends Tab {
     protected String tabName;
     private Group contentRoot;
     protected Controller myController;
+    
+    //TODO: don't use protected
+    protected static final double CONTENT_WIDTH = AuthoringEnvironment
+            .getEnvironmentWidth();
+    protected static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment
+            .getEnvironmentHeight();
 
     public Editor (Controller controller, String name) {
         myController = controller;
@@ -53,7 +59,6 @@ public abstract class Editor extends Tab {
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         Text text = new Text(s);
-
         Button button = new Button("Ok");
         button.setOnMouseClicked(e -> stage.hide()); // this doesn't seem to
                                                      // work.... also hide()

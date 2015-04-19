@@ -60,7 +60,7 @@ public class UpdatableDisplay extends VBox {
             nameDisplay.setFont(new Font(10));
             nameDisplay.setTextAlignment(TextAlignment.CENTER);
             nameDisplay.setWrappingWidth(90);
-
+//TODO: set on hover
             objectView.getChildren().addAll(objectBackground, thumbnail, nameDisplay);
         
 

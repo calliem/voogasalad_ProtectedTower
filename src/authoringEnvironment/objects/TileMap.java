@@ -2,7 +2,11 @@ package authoringEnvironment.objects;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import authoringEnvironment.InstanceManager;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -19,14 +23,20 @@ import javafx.scene.text.Text;
  */
 
 public class TileMap extends Group {
-
-    // TODO: figure out why gridlines are so weird
+    
     private Tile[][] myTiles;
     private int myTileSize;
     private Color myActiveColor;
     private ImageView myBackground;
-    // private String myName;
+ //   private String myBackgroundPath;
+    private int myKey; // XML key
+    private String myName;
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
+    private static final String TILESIZE_SETTING = "TileSize";
+    private static final String BACKGROUND_SETTING = "Background";
+    private static final String COORDINATES = "Coordinates";
+    private static final String KEYS = "Keys";
+    private static final String MAP_PART_NAME = "GameMap";
 
     private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
                                              // tag
@@ -47,9 +57,12 @@ public class TileMap extends Group {
         myTileSize = tileSize;
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
+  //      myBackgroundPath = DEFAULT_BACKGROUND_PATH; //JavaFX does not allow getting the path from the image and the filepath needs to be stored for loading the game with the proper images in the future
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
+        
         setImageDimensions(myBackground);
         getChildren().add(myBackground);
+        myKey = (Integer) null;
         // TODO: sethover x, y coordinate, tile size, etc.
 
         createMap();
@@ -94,7 +107,7 @@ public class TileMap extends Group {
         tile.setOnMousePressed(e -> {
             tile.setFill(myActiveColor);
             System.out.println("I have been clicked!" + tile.getFill().toString());
-        });// myTiles[x][y].setFill(myActiveColor));
+        });
         tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); // TODO: fix dragging errors
     }
 
@@ -239,14 +252,46 @@ public class TileMap extends Group {
         createGridLines();
     }
 
-    public void addTileListeners () {
-        // TODO Auto-generated method stub
-
+    public Tile[][] getTiles () {
+        return myTiles;
     }
 
-    /*
-     * public String getName(){
-     * return myName;
-     * }
-     */
+    public Map<String, Object> saveToXML () {
+        /*
+         * List<String> partFileKeys = new ArrayList<String>();
+         * List<Color> colors = new ArrayList<Color>();
+         * List<List<String>> tags = new ArrayList<List<String>>();
+         * 
+         * for (Tile tile: myTiles){
+         * partFileNames.add(tile.getKey());
+         * colors.add(tile.getColor());
+         * tags.add(tile.getTags());
+         * }
+         * 
+         * List<Object> data = new ArrayList<Object>();
+         * // data.add(partFileNames);
+         * data.add(colors);
+         * data.add(tags);
+         * myController.addPartToGame(TILE_PART_NAME, waveName,
+         * ProjectReader.getParamsNoTypeOrName(WAVE), data);
+         */
+
+        Map<String, Object> mapSettings = new HashMap<String, Object>();
+        mapSettings.put(InstanceManager.nameKey, myName);
+        mapSettings.put(TILESIZE_SETTING, myTileSize);
+        mapSettings.put(BACKGROUND_SETTING, myBackground);
+        List<String> tileKeys = new ArrayList<String>();
+        List<Coordinate> rowColCoordinates = new ArrayList<Coordinate>();
+
+        for (int i = 0; i < myTiles.length; i++) {
+            for (int j = 0; j < myTiles[0].length; j++) {
+                tileKeys.add(myTiles[i][j].getKey());
+                rowColCoordinates.add(new Coordinate(i, j));
+            }
+        }
+
+        mapSettings.put(COORDINATES, rowColCoordinates);
+        mapSettings.put(KEYS, tileKeys);
+        return mapSettings;
+    }
 }

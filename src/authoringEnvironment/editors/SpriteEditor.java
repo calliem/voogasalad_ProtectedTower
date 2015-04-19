@@ -30,11 +30,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.Controller;
 import authoringEnvironment.Scaler;
-import authoringEnvironment.objects.SpriteView;
-
 
 
 /**
@@ -42,7 +38,9 @@ import authoringEnvironment.objects.SpriteView;
  * sprite/property creation and editing
  * 
  * @author Kevin He
+ * @author Callie Mao
  */
+
 public abstract class SpriteEditor extends Editor {
     private StackPane myContent;
     private HBox currentRow;
@@ -51,7 +49,6 @@ public abstract class SpriteEditor extends Editor {
     private Text empty;
     private List<Node> spritesCreated;
     private IntegerProperty numSprites;
-  
 
     private static final int ROW_SIZE = 7;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
@@ -286,22 +283,6 @@ public abstract class SpriteEditor extends Editor {
             });
         }
     }
-
-    /*
-     * private ScaleTransition scaleEditScreen(double from, double to,
-     * StackPane overlay) {
-     * ScaleTransition scale = new ScaleTransition(Duration.millis(200),
-     * overlay);
-     * scale.setFromX(from);
-     * scale.setFromY(from);
-     * scale.setToX(to);
-     * scale.setToY(to);
-     * scale.setCycleCount(1);
-     * scale.play();
-     * 
-     * return scale;
-     * }
-     */
 
     private void finishEditing (HBox editControls, Button edit, Button add) {
         TranslateTransition move = transitionButton(add, -10, 90);
