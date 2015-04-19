@@ -1,10 +1,13 @@
 package engine.element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Circle;
@@ -96,6 +99,27 @@ public class Layout extends GameElement implements Updateable {
         myQuadTree = new Quadtree(1, pBounds);
     }
 
+    /**
+     * Temporary method to hardcode a collision table for testing purposes
+     */
+    public void makeCollisionTable () {
+        List<Consumer<Sprite>> actionList = new ArrayList<Consumer<Sprite>>();
+        actionList.add(e -> e.collide(null));
+        String[] spritePair = { "Enemy", "Projectile" };
+
+        @SuppressWarnings("unchecked")
+        List<Integer>[] actionPair = (List<Integer>[]) new Object[2];
+
+        List<Integer> action1 = Arrays.asList(new Integer[] { 0 });
+        actionPair[0] = action1;
+        List<Integer> action2 = Arrays.asList(new Integer[] { 0 });
+        actionPair[1] = action2;
+        Map<String[], List<Integer>[]> collisionMap = new HashMap<String[], List<Integer>[]>();
+        collisionMap.put(spritePair, actionPair);
+        setCollisionTable(new CollisionManager(collisionMap, actionList));
+
+    }
+
     public void setCollisionTable (CollisionManager table) {
         myCollisionTable = table;
     }
@@ -136,9 +160,9 @@ public class Layout extends GameElement implements Updateable {
         for (Sprite s : getSprites()) {
             List<Sprite> sprites = getPossibleCollisions(s);
             for (Sprite t : sprites)
-                if (collides(createHitBox(s), createHitBox(t)) &&
-                    myCollisionTable.collisionCheck(s, t))
-                    s.collide(t);
+                if (collides(createHitBox(s), createHitBox(t))){
+                    myCollisionTable.applyCollisionAction(s, t);
+                }
         }
     }
 

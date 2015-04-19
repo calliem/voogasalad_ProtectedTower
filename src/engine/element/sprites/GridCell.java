@@ -70,7 +70,6 @@ public class GridCell extends Sprite {
 
     @Override
     public void collide (Sprite sprite) {
-        // TODO Auto-generated method stub
 
     }
 }

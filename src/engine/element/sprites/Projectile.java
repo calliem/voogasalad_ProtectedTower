@@ -8,6 +8,8 @@ package engine.element.sprites;
  */
 public class Projectile extends MoveableSprite {
 
+    private boolean hasCollided;
+    
     public Projectile () {
         super();
     }
@@ -20,8 +22,7 @@ public class Projectile extends MoveableSprite {
 
     @Override
     public void collide (Sprite sprite) {
-        // TODO Auto-generated method stub
-
+        hasCollided = true;
     }
 
     @Override

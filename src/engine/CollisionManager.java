@@ -22,7 +22,7 @@ import engine.element.sprites.*;
 
 public class CollisionManager {
     private Map<String[], Collection<Consumer<Sprite>>[]> decisionMap;
-    private static final String nameParameter = "name";
+    private static final String nameParameter = "PartType";
 
     /**
      * Constructor

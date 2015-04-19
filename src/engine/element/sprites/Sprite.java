@@ -125,6 +125,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      * 
      * @param type String
      * @return true if the given type can collide with this object's type
+     * @deprecated
      */
     public abstract boolean isCollidableWith (String type);
 

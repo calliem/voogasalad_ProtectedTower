@@ -27,6 +27,7 @@ public class Enemy extends MoveableSprite {
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
     private static final String PARAMETER_SPEED = "Speed";
+    private int myHealth;
 
     public Enemy () {
         super();
@@ -40,7 +41,7 @@ public class Enemy extends MoveableSprite {
 
     @Override
     public void collide (Sprite sprite) {
-        // TODO Auto-generated method stub
+        myHealth -= 5;
 
     }
 
