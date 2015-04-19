@@ -273,12 +273,14 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         System.out.println("removing map from map sidebar");
         System.out.println("Maps before remove: " + getMaps());
         System.out.println("activemap" + myMapWorkspace.getActiveMap().getRoot());
-        
+
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, myMapWorkspace.getActiveMap().getRoot());
         scale.setOnFinished( (e) -> {
-            if (getMaps().contains(myMapWorkspace.getActiveMap()))
-                    getMaps().remove(myMapWorkspace.getActiveMap());
+            if (getMaps().contains(myMapWorkspace.getActiveMap())) {
+                getMaps().remove(myMapWorkspace.getActiveMap());
+                mapDisplay.updateDisplay(getMaps());
+            }
             getMapWorkspace().removeMap();
         });
 
@@ -294,6 +296,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         // wait.play();
 
         System.out.println("Maps after remove: " + getMaps());
+
     }
 
     protected void createMap () {
@@ -301,8 +304,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         TileMap newMap = getMapWorkspace().createDefaultMap();
         ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
         scale.setOnFinished( (e) -> {
-            getMaps().remove(myMapWorkspace.getActiveMap());
-            // getMapWorkspace().getChildren().add(newMap);
+            // getMaps().remove(myMapWorkspace.getActiveMap());
+            getMapWorkspace().getChildren().add(newMap.getRoot());
             tileRowDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
                     .getNumRows()));
             tileColDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
@@ -337,25 +340,27 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         // saves the map to a specific key
         // checks to see if the current map already exists
-        Map<String, Object> mapSettings = new HashMap<String, Object>();
-        if (mapSettings.containsValue(mapName.getText())) {
-            // display error
-            System.out.println("That map name already exists"); // TODO: utilize same visual display
-                                                                // as spriteeditor
-        }
-        else {
-            mapSettings.put(InstanceManager.nameKey, mapName.getText());
-            mapSettings.put(TILEMAP_KEY, activeMap);
-            myController.addPartToGame(MAP_PART_NAME, mapSettings);
-        }
-
-        List<String> keys = myController.getKeysForPartType(MAP_PART_NAME);
-        for (String key : keys) {
-            Map<String, Object> part = myController.getPartCopy(key);
-            System.out.println("key" + key);
-        }
-        // part.get(InstanceManager.nameKey);
-        // part.get(MapEditor.TILE_MAP);
+        /*
+         * Map<String, Object> mapSettings = new HashMap<String, Object>();
+         * if (mapSettings.containsValue(mapName.getText())) {
+         * // display error
+         * System.out.println("That map name already exists"); // TODO: utilize same visual display
+         * // as spriteeditor
+         * }
+         * else {
+         * mapSettings.put(InstanceManager.nameKey, mapName.getText());
+         * mapSettings.put(TILEMAP_KEY, activeMap);
+         * myController.addPartToGame(MAP_PART_NAME, mapSettings);
+         * }
+         * 
+         * List<String> keys = myController.getKeysForPartType(MAP_PART_NAME);
+         * for (String key : keys) {
+         * Map<String, Object> part = myController.getPartCopy(key);
+         * System.out.println("key" + key);
+         * }
+         * // part.get(InstanceManager.nameKey);
+         * // part.get(MapEditor.TILE_MAP);
+         */
 
         System.out.println("your file has been saved");
 

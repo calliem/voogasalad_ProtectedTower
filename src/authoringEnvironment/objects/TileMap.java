@@ -205,7 +205,7 @@ public class TileMap extends GameObject {
     private void clearTiles () {
         for (int i = 0; i < myMapRows; i++) {
             for (int j = 0; j < myMapCols; j++) {
-                myRoot.getChildren().remove(myTiles[i][j]);
+                myRoot.getChildren().remove(myTiles[i][j].getTile());
             }
         }
         myRoot.getChildren().remove(myGridLines);

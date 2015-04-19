@@ -53,23 +53,23 @@ public class UpdatableDisplay extends VBox {
             }
 
             StackPane objectView = new StackPane();
-            
-            Rectangle objectBackground = new Rectangle(50, 50, Color.WHITE); //TODO: remove hard coded stuff
-            
-//            Node thumbnail = object.getThumbnail(); // may give rectangle or imageview
-//            Text nameDisplay = new Text(object.getName());
-//            nameDisplay.setFont(new Font(10));
-//            nameDisplay.setTextAlignment(TextAlignment.CENTER);
-//            nameDisplay.setWrappingWidth(90);
-//TODO: set on hover
-  //          objectView.getChildren().addAll(objectBackground, thumbnail, nameDisplay);
-        
 
-            Text mapName = new Text();
+            Rectangle objectBackground = new Rectangle(50, 50, Color.WHITE); // TODO: remove hard
+                                                                             // coded stuff
+
+            // Node thumbnail = object.getThumbnail(); // may give rectangle or imageview
+            // Text nameDisplay = new Text(object.getName());
+            // nameDisplay.setFont(new Font(10));
+            // nameDisplay.setTextAlignment(TextAlignment.CENTER);
+            // nameDisplay.setWrappingWidth(90);
+            // TODO: set on hover
+            // objectView.getChildren().addAll(objectBackground, thumbnail, nameDisplay);
+
+            Text mapName = new Text(object.getName());
             ImageView image = new ImageView();
             currentRow.getChildren().addAll(mapName, image);
         }
-        if (!objectsDisplay.getChildren().contains(currentRow)){
+        if (!objectsDisplay.getChildren().contains(currentRow)) {
             objectsDisplay.getChildren().add(currentRow);
         }
 
@@ -84,4 +84,4 @@ public class UpdatableDisplay extends VBox {
         myObjects = updatedObjects;
         displayValues();
     }
- }
+}

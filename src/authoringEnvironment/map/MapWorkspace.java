@@ -52,8 +52,12 @@ public class MapWorkspace extends StackPane {
     }
 
     public void removeMap () {
-        getChildren().remove(myActiveMap.getRoot());
-        myActiveMap = null;
+        if (myActiveMap == null)
+            return;
+        if (getChildren().contains(myActiveMap.getRoot())){
+            getChildren().remove(myActiveMap.getRoot());
+            myActiveMap = null;
+        }
     }
 
     public void updateWithNewMap (TileMap newMap) {

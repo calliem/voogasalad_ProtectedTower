@@ -14,7 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -28,10 +28,6 @@ import authoringEnvironment.NoImageFoundException;
 import authoringEnvironment.objects.SpriteView;
 import authoringEnvironment.util.NamePrompt;
 import authoringEnvironment.util.Scaler;
-
-
-import authoringEnvironment.util.Scaler;
-import authoringEnvironment.util.NamePrompt;
 
 
 /**
