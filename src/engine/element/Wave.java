@@ -19,9 +19,11 @@ public class Wave extends GameElement implements UpdateAndReturnable, Endable {
     private List<Enemy> myEnemies;
     private double mySendRate;
     private int myNumSent = 0;
+    private int timer;
 
     public Wave () {
         myEnemies = new ArrayList<>();
+        timer = 0;
     }
 
     @Override
@@ -34,8 +36,9 @@ public class Wave extends GameElement implements UpdateAndReturnable, Endable {
 
     @Override
     public List<String> update (int counter) {
-        if (counter % mySendRate == 0) {
+        if (timer++ == mySendRate) {
             myNumSent++;
+            timer = 0;
             // TODO return (list of) enemy GUIDs
         }
         return null; // No enemies to return
