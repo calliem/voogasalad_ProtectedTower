@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
 import engine.UpdateAndReturnable;
-import engine.element.sprites.Enemy;
 
 
 /**
@@ -16,30 +15,25 @@ import engine.element.sprites.Enemy;
  *
  */
 public class Wave extends GameElement implements UpdateAndReturnable, Endable {
-    private List<Enemy> myEnemies;
+    private List<List<String>> myEnemies;
     private double mySendRate;
-    private int myNumSent = 0;
-    private int timer;
+    private int myEnemyIndex = 0;
+    private int myTimer = 0;
 
     public Wave () {
         myEnemies = new ArrayList<>();
-        timer = 0;
     }
 
     @Override
     public boolean hasEnded () {
-        if (myNumSent >= myEnemies.size()) {
-            return true;
-        }
-        return false;
+        return myEnemyIndex == myEnemies.size();
     }
 
     @Override
     public List<String> update (int counter) {
-        if (timer++ == mySendRate) {
-            myNumSent++;
-            timer = 0;
-            // TODO return (list of) enemy GUIDs
+        if (++myTimer == mySendRate && !hasEnded()) {
+            myTimer = 0;
+            return myEnemies.get(++myEnemyIndex);
         }
         return null; // No enemies to return
     }

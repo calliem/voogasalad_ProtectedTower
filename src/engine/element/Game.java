@@ -7,6 +7,7 @@ import java.util.Map;
 import javafx.scene.Node;
 import util.reflection.Reflection;
 import engine.Bank;
+import engine.Endable;
 import engine.Updateable;
 import engine.conditions.Condition;
 
@@ -19,7 +20,7 @@ import engine.conditions.Condition;
  * @author Bojia Chen
  *
  */
-public class Game extends GameElement implements Updateable {
+public class Game extends GameElement implements Updateable, Endable{
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
     private static final String PARAMETER_HEALTH = "HP";
@@ -27,7 +28,7 @@ public class Game extends GameElement implements Updateable {
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
-    private int myActiveLevel;
+    private int myActiveLevelIndex;
     private Bank myBank;
     private int myPoints;
     /**
@@ -40,19 +41,19 @@ public class Game extends GameElement implements Updateable {
         myLevels = new ArrayList<>();
         myNodes = nodes;
         myLayout = new Layout(myNodes);
-        myActiveLevel = 0;
+        myActiveLevelIndex = 0;
         myBank = new Bank();
         myPoints = 0;
     }
 
-    public void endGame () {
-
+    public boolean hasEnded () {
+        return myActiveLevelIndex >= myLevels.size();
     }
 
     @Override
     public void update (int counter) {
         myConditions.forEach(c -> c.act((int) super.getParameter(PARAMETER_HEALTH)));
-        myLevels.get(myActiveLevel).update(counter);
+        myLevels.get(myActiveLevelIndex).update(counter);
         myLayout.update(counter);
     }
 

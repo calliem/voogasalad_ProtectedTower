@@ -22,25 +22,37 @@ public class Level extends GameElement implements UpdateAndReturnable, Endable, 
     private List<Round> myRounds;
     private double myHealth;
     private int myLives;
-    private int myCurrentRound;
+    private int myActiveRoundIndex = 0;
+    private Round myActiveRound;
 
     // TODO: Win/Lose Conditions
 
     public Level () {
         myRounds = new ArrayList<>();
-        myCurrentRound = 0;
+        myActiveRound = myRounds.get(myActiveRoundIndex);
+    }
+
+    public boolean startNextRound () {
+        if (myActiveRound.hasEnded()) {
+            myActiveRoundIndex++;
+        }
+        if (hasEnded()) {
+            return false;
+        }
+        else {
+            myActiveRound = myRounds.get(myActiveRoundIndex);
+            return true;
+        }
     }
 
     @Override
     public boolean hasEnded () {
-        // TODO Auto-generated method stub
-        return false;
+        return myActiveRoundIndex == myRounds.size();
     }
 
     @Override
     public List<String> update (int counter) {
-        // TODO Auto-generated method stub
-        return myRounds.get(myCurrentRound).update(counter);
+        return myActiveRound.update(counter);
     }
 
     @Override
