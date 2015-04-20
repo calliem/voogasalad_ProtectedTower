@@ -111,31 +111,11 @@ public abstract class Sprite extends GameElement implements Collidable {
     // Abstract methods
 
     /**
-     * Finds if a certain type of object can target this object
-     * 
-     * @param type String
-     * @return true if the given type can target this object's type
-     */
-    @Deprecated
-    public abstract boolean isTargetableBy (String type);
-
-    /**
-     * Finds if a certain type of object can collide with this object
-     * 
-     * @param type String
-     * @return true if the given type can collide with this object's type
-     */
-    @Deprecated
-    public abstract boolean isCollidableWith (String type);
-
-    /**
      * This method is called when this object collides with another and should include the behavior
      * of this object, such as stopping movement, or damaging the other object.
      * 
      * @param sprite Sprite object that this object collides with
-     * @return
      */
-    @Deprecated
-    public abstract void collide (Sprite sprite);
+    public abstract void onCollide (Sprite sprite);
 
 }

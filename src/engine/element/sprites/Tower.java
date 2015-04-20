@@ -30,7 +30,7 @@ public class Tower extends GameSprite {
     }
 
     @Override
-    public void collide (Sprite sprite) {
+    public void onCollide (Sprite sprite) {
         // TODO Auto-generated method stub
 
     }
@@ -46,18 +46,6 @@ public class Tower extends GameSprite {
     @Override
     public void move () {
         return;
-    }
-
-    @Override
-    public boolean isTargetableBy (String type) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean isCollidableWith (String type) {
-        // TODO Auto-generated method stub
-        return false;
     }
 
 }

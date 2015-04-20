@@ -159,7 +159,7 @@ public class Layout extends GameElement implements Updateable {
             for (Sprite t : sprites)
                 if (collides(createHitBox(s), createHitBox(t)) &&
                     myCollisionTable.collisionCheck(s, t))
-                    s.collide(t);
+                    s.onCollide(t);
         }
     }
 
