@@ -107,13 +107,21 @@ public class Layout extends GameElement implements Updateable {
         myQuadTree = new Quadtree(1, pBounds);
     }
 
-    public void placeTower (String tower, Point2D loc) {
+    /**
+     * Puts a new tower at a specified location on the map. This method is called by the Player to
+     * place a new tower during the running of the game.
+     * 
+     * @param towerID String ID of Tower object to place
+     * @param location Point2D representing location on the map
+     */
+    public void placeTower (String towerID, Point2D location) {
         // loc param can probably be removed because the tower can just hold its location to be
         // placed at
-        Tower temp = myTowerManager.getTower(tower);
-        temp.setLocation(loc);
-        if (canPlace(temp, loc))
+        Tower temp = myTowerManager.getTower(towerID);
+        temp.setLocation(location);
+        if (canPlace(temp, location)) {
             myTowerList.add(temp);
+        }
     }
 
     /**
@@ -121,17 +129,18 @@ public class Layout extends GameElement implements Updateable {
      * can be used by the Player to check if a tower placement is valid.
      * 
      * @param tower Tower object that is being tested for valid placement
-     * @param loc Point2D representing location on grid
+     * @param location Point2D representing location on grid
      * @return true if specified tower may be placed at the specified location
      */
-    public boolean canPlace (Sprite tower, Point2D loc) {
+    public boolean canPlace (Sprite tower, Point2D location) {
         // collision checking and tag checking
         Rectangle towerHitBox = createHitBox(tower);
         boolean collision = false;
         List<Sprite> collidable = getCollisions(tower, myTowerList);
         for (Sprite c : collidable) {
-            if (collides(towerHitBox, createHitBox(c)))
+            if (collides(towerHitBox, createHitBox(c))) {
                 collision = true;
+            }
         }
         // if there are any collisions with other towers, then collision stays true
         // if no collisions then the tower can be placed and collision is false
@@ -148,17 +157,50 @@ public class Layout extends GameElement implements Updateable {
         return place && !collision;
     }
 
-    public void spawnEnemy (List<String> enemy, Point2D loc) {
-        for (String s : enemy) {
-            Enemy e = myEnemyFactory.getEnemy(s);
-            e.setLocation(loc);
-            myEnemyList.add(e);
-        }
+    // TODO refactor and combine spawnEnemy and spawnProjectile methods
+
+    /**
+     * Creates one or multiple new Enemy object and adds it to the map at the specified location.
+     * 
+     * @param enemyIDs List<String> of IDs of Enemy objects to place
+     * @param location Point2D representing location on grid
+     */
+    public void spawnEnemy (List<String> enemyIDs, Point2D location) {
+        enemyIDs.forEach(i -> spawnEnemy(i, location));
     }
 
-    public void spawnProjectile (String projectile, Point2D loc) {
-        Projectile proj = myProjectileFactory.getProjectile(projectile);
-        proj.setLocation(loc);
+    /**
+     * Creates a new Projectile object and adds it to the map at the specified location
+     * 
+     * @param enemyID String ID of Enemy object to place
+     * @param location Point2D representing location on grid
+     */
+    public void spawnEnemy (String enemyID, Point2D location) {
+        Enemy e = myEnemyFactory.getEnemy(enemyID);
+        e.setLocation(location);
+        myEnemyList.add(e);
+    }
+
+    /**
+     * Creates one or multiple new Projectile object and adds it to the map at the specified
+     * location.
+     * 
+     * @param projectileIDs List<String> of IDs of Projectile objects to place
+     * @param location Point2D representing location on grid
+     */
+    public void spawnProjectile (List<String> projectileIDs, Point2D location) {
+        projectileIDs.forEach(i -> spawnProjectile(i, location));
+    }
+
+    /**
+     * Creates a new Projectile object and adds it to the map at the specified location
+     * 
+     * @param projectileID String ID of Projectile object to place
+     * @param location Point2D representing location on grid
+     */
+    public void spawnProjectile (String projectileID, Point2D location) {
+        Projectile proj = myProjectileFactory.getProjectile(projectileID);
+        proj.setLocation(location);
         myProjectileList.add(proj);
     }
 
