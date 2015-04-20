@@ -21,28 +21,29 @@ import engine.element.sprites.*;
  */
 
 public class CollisionManager {
-    private Map<String[], Collection<Consumer<Sprite>>[]> decisionMap;
-    private static final String nameParameter = "PartType";
+    private Map<String[], Collection<Consumer<Sprite>>[]> myDecisionMap;
+    private static final String PARAMETER_NAME = "PartType";
+    private static final int REQUIRED_KEY_LENGTH = 2;
 
     /**
      * Constructor
+     * 
      * @param interactionMap
      * @param actions
      */
     public CollisionManager (Map<String[], List<Integer>[]> interactionMap,
                              List<Consumer<Sprite>> actions) {
-        for(String[] key : interactionMap.keySet()){
-            if(key.length != 2 || interactionMap.get(key).length != 2){
-                throw new InvalidParameterException("InteractionMap is in invalid format");
-            }
+        for (String[] key : interactionMap.keySet()) {
+            if (key.length != REQUIRED_KEY_LENGTH ||
+                interactionMap.get(key).length != REQUIRED_KEY_LENGTH) { throw new InvalidParameterException(
+                                                                                                             "InteractionMap is in invalid format"); }
         }
-        decisionMap = new HashMap<String[], Collection<Consumer<Sprite>>[]>();
+        myDecisionMap = new HashMap<String[], Collection<Consumer<Sprite>>[]>();
         for (String[] pair : interactionMap.keySet()) {
-            @SuppressWarnings("unchecked")
             Collection<Consumer<Sprite>>[] actionArray =
                     (Collection<Consumer<Sprite>>[]) new Collection[2];
-            
-            //Fill collection of actions
+
+            // Fill collection of actions
             Collection<Consumer<Sprite>> pairActions = new ArrayList<Consumer<Sprite>>();
             for (int i : interactionMap.get(pair)[0]) {
                 pairActions.add(actions.get(i));
@@ -55,7 +56,7 @@ public class CollisionManager {
             }
             actionArray[1] = actionsTwo;
 
-            decisionMap.put(pair, actionArray);
+            myDecisionMap.put(pair, actionArray);
         }
     }
 
@@ -66,16 +67,15 @@ public class CollisionManager {
      * @param spriteOne first Sprite to collide
      * @param spriteTwo second Sprite to collide
      * 
-     * 
      */
     public void applyCollisionAction (Sprite spriteOne, Sprite spriteTwo) {
-        String[] spriteTagPair = getTagPair(spriteOne,spriteTwo);
-        if(decisionMap.containsKey(spriteTagPair)){
-            for(Consumer<Sprite> action : decisionMap.get(spriteTagPair)[0]){
+        String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
+        if (myDecisionMap.containsKey(spriteTagPair)) {
+            for (Consumer<Sprite> action : myDecisionMap.get(spriteTagPair)[0]) {
                 action.accept(spriteOne);
             }
-            
-            for(Consumer<Sprite> action : decisionMap.get(spriteTagPair)[1]){
+
+            for (Consumer<Sprite> action : myDecisionMap.get(spriteTagPair)[1]) {
                 action.accept(spriteTwo);
             }
         }
@@ -83,27 +83,28 @@ public class CollisionManager {
 
     /**
      * Returns boolean describing whether or not two sprites collided
+     * 
      * @param spriteOne
      * @param spriteTwo
      * @return
      */
-    public boolean collisionCheck(Sprite spriteOne, Sprite spriteTwo){
-        String[] spriteTagPair = getTagPair(spriteOne,spriteTwo);
-        return decisionMap.containsKey(spriteTagPair);
+    public boolean collisionCheck (Sprite spriteOne, Sprite spriteTwo) {
+        String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
+        return myDecisionMap.containsKey(spriteTagPair);
     }
-    
+
     /**
      * Helper function to get String[] for pair of sprite tags from two sprites
+     * 
      * @param spriteOne First sprite
      * @param spriteTwo Second sprite
      * @return Array containing tags of sprites
      */
-    private String[] getTagPair(Sprite spriteOne, Sprite spriteTwo){
+    private String[] getTagPair (Sprite spriteOne, Sprite spriteTwo) {
         String[] spriteTagPair = new String[2];
-        spriteTagPair[0] = (String) spriteOne.getParameter(nameParameter);
-        spriteTagPair[1] = (String) spriteTwo.getParameter(nameParameter);
+        spriteTagPair[0] = (String) spriteOne.getParameter(PARAMETER_NAME);
+        spriteTagPair[1] = (String) spriteTwo.getParameter(PARAMETER_NAME);
         return spriteTagPair;
     }
-
 
 }
