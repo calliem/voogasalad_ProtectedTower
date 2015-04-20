@@ -84,9 +84,9 @@ public class CollisionManager {
     /**
      * Returns boolean describing whether or not two sprites collided
      * 
-     * @param spriteOne
-     * @param spriteTwo
-     * @return
+     * @param spriteOne Sprite object
+     * @param spriteTwo Sprite object
+     * @return true if two specified sprites are colliding
      */
     public boolean collisionCheck (Sprite spriteOne, Sprite spriteTwo) {
         String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
