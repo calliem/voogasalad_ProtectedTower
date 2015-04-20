@@ -97,5 +97,14 @@ public abstract class UpdatableDisplay extends VBox {
         displayValues();
     }
     
+    /*public void updateDisplay (ObservableList<? extends GameObject> list) {
+        if (!getChildren().isEmpty()) {
+            getChildren().clear();
+        }
+        myObjects = (List<GameObject>) list;
+        displayValues();
+    }*/
+    //TODO: duplicated above 2 methods code
+    
     protected abstract void objectClicked(GameObject object);
 }

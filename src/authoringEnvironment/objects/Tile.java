@@ -43,18 +43,19 @@ public class Tile extends Rectangle {
         myTags = new ArrayList<String>();
     }
 
-
     public void positionTile (int tileSize, int i, int j) {
         setTranslateX(j * tileSize);
         setTranslateY(i * tileSize);
-        System.out.print(" | " + i*tileSize + " ");
-        System.out.print(j*tileSize + " ");
+        // System.out.print(" | " + i*tileSize + " ");
+        // System.out.print(j*tileSize + " ");
     }
 
-    /*public void setTileSize (int tileSize) {
-        myTile.setWidth(tileSize);
-        myTile.setHeight(tileSize);
-    }*/
+    /*
+     * public void setTileSize (int tileSize) {
+     * myTile.setWidth(tileSize);
+     * myTile.setHeight(tileSize);
+     * }
+     */
 
     public void addTag (String tag) {
         myTags.add(tag);
@@ -74,9 +75,9 @@ public class Tile extends Rectangle {
         setHeight(size);
         setTranslateX(colNum * size);
         setTranslateY(rowNum * size);
-        
-        System.out.print(" | " + rowNum*size + " ");
-        System.out.print(colNum*size + " ");
+
+        System.out.print(" | " + rowNum * size + " ");
+        System.out.print(colNum * size + " ");
     }
 
     // selection stuff is all for pathing. Need separate methods for updating the tile
@@ -103,12 +104,14 @@ public class Tile extends Rectangle {
         return myColor;
     }
 
-/*    public Node getThumbnail () {
-        Rectangle thumbnail = this;
-        thumbnail.setWidth(AuthoringEnvironment.getEnvironmentWidth() * 0.05);
-        thumbnail.setHeight(AuthoringEnvironment.getEnvironmentHeight() * 0.05);
-        return null;
-    }*/
+    /*
+     * public Node getThumbnail () {
+     * Rectangle thumbnail = this;
+     * thumbnail.setWidth(AuthoringEnvironment.getEnvironmentWidth() * 0.05);
+     * thumbnail.setHeight(AuthoringEnvironment.getEnvironmentHeight() * 0.05);
+     * return null;
+     * }
+     */
 
     public Map<String, Object> saveToXML () {
         Map<String, Object> mapSettings = new HashMap<String, Object>();

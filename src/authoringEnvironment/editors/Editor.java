@@ -3,9 +3,9 @@ package authoringEnvironment.editors;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.objects.GameObject;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -47,6 +47,7 @@ public abstract class Editor extends Tab {
         this.setContent(contentRoot);
         this.setText(tabName);
         this.setClosable(false);
+
     }
 
     protected abstract Group configureUI ();

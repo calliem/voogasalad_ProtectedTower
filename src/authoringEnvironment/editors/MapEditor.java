@@ -49,10 +49,9 @@ public class MapEditor extends MainEditor {
 	//TODO: remove the dimensions parameter because we apparently can ust get that form the main enviornment?
     public MapEditor(Controller c, String name) {
         super(c, name);
-        myMaps = FXCollections.observableArrayList(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
+        myMaps = new ArrayList<GameObject>(); //is that bad though since you could technically add a Rectangle by accident and then someone else's code is screwed up if they try to use a rectangle that they think is a tilemap
         //myMaps.add(getMapWorkspace().getActiveMap());
-        myMaps = new ArrayList<GameObject>();
-        mySidebar = new MapSidebar(myResources, myMaps, getMapWorkspace(), c); //now don't need to pass in so much stuff
+        mySidebar = new MapSidebar(myResources, getMaps(), getMapWorkspace(), c); //now don't need to pass in so much stuff
         getPane().add(mySidebar,1,0);
     }
 }

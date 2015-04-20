@@ -108,13 +108,13 @@ public class TileMap extends GameObject {
     private void attachTileListener (Tile tile) {
         tile.setOnMouseClicked(e -> {
             tile.setFill(myActiveColor);
-            System.out.println("I have been clicked!" + tile.getFill().toString());
+            // System.out.println("I have been clicked!" + tile.getFill().toString());
         });
         tile.setOnMouseDragEntered(e -> {
             tile.setFill(myActiveColor);
-            System.out.println("I have been dragged!" + tile.getFill().toString());
+            // System.out.println("I have been dragged!" + tile.getFill().toString());
         });
-        System.out.print("tile listener added");
+        // System.out.print("tile listener added");
     }
 
     public void changeTileSize (int tileSize) {
@@ -159,7 +159,6 @@ public class TileMap extends GameObject {
                 myTiles[i][j] = new Tile();
                 myTiles[i][j].positionTile(myTileSize, i, j);
                 myRoot.getChildren().add(myTiles[i][j]);
-                System.out.println("attach tile listener below: ");
                 attachTileListener(myTiles[i][j]);
             }
         }

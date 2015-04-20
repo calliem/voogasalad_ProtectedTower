@@ -1,13 +1,18 @@
 package authoringEnvironment.editors;
 
+import java.util.ArrayList;
+import java.util.List;
 import authoringEnvironment.Controller;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.map.MapWorkspace;
+import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
 import javafx.scene.Group;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 
 /**
@@ -22,6 +27,7 @@ public abstract class MainEditor extends Editor {
 
     private GridPane myPane;
     private MapWorkspace myMapWorkspace;
+    private ObservableList<GameObject> myMaps;
 
     public static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
     public static final double MAP_WIDTH_MULTIPLIER = .75; // THIS IS REPLICATED
@@ -37,6 +43,7 @@ public abstract class MainEditor extends Editor {
     public MainEditor (Controller c, String name) {
         super(c, name);
         this.setStyle("-fx-base: #3c3c3c;");
+        myMaps = FXCollections.observableArrayList();
     }
 
     /**
@@ -65,6 +72,10 @@ public abstract class MainEditor extends Editor {
 
     public TileMap getActiveMap () {
         return myMapWorkspace.getActiveMap();
+    }
+    
+    public ObservableList<GameObject> getMaps(){
+        return myMaps;
     }
 
     private void setGridPaneConstraints (GridPane pane) {

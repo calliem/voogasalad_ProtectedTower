@@ -30,7 +30,7 @@ import authoringEnvironment.objects.TileMap;
 public abstract class Sidebar extends Accordion { // extend gridpane pls
 
     private ResourceBundle myResources;
-    private List<GameObject> myMaps; // can't seem to use list with this
+    private ObservableList<GameObject> myMaps; // can't seem to use list with this
     private MapWorkspace myMapWorkspace; // TODO: or use more general StackPane?
 
     private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128; // maybe
@@ -42,7 +42,7 @@ public abstract class Sidebar extends Accordion { // extend gridpane pls
     private static final double LISTVIEW_HEIGHT = AuthoringEnvironment.getEnvironmentHeight() / 6;
     private static final double TITLE_FONT_SIZE = AuthoringEnvironment.getEnvironmentWidth() / 85;
 
-    public Sidebar (ResourceBundle resources, List<GameObject> dependency, MapWorkspace mapWorkspace) {
+    public Sidebar (ResourceBundle resources, ObservableList<GameObject> dependency, MapWorkspace mapWorkspace) {
 
         myResources = resources;
         myMaps = dependency;
@@ -60,7 +60,7 @@ public abstract class Sidebar extends Accordion { // extend gridpane pls
         return myResources;
     }
 
-    protected List<GameObject> getMaps () {
+    protected ObservableList<GameObject> getMaps () {
         return myMaps;
     }
 

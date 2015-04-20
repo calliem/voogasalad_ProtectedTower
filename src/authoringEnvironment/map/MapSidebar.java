@@ -79,8 +79,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                                                           // property file?
     public static final String TILEMAP_KEY = "TileMap";
 
-    public MapSidebar (ResourceBundle resources, List<GameObject> maps,
-                       MapWorkspace mapWorkspace, Controller c) { 
+    public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
+                       MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         myMapWorkspace = mapWorkspace;
         myLives = DEFAULT_LIVES;
@@ -168,7 +168,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     // TODO: remove duplicated code
     private void createGeneralSettings () {
-        HBox selection = new HBox();
+        VBox selection = new VBox();
         selection.setSpacing(PADDING);
         setImage();
 
@@ -176,6 +176,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         Text name = new Text(getResources().getString("Name")); // Name
         mapNameTextField = new TextField();
         nameHBox.getChildren().addAll(name, mapNameTextField);
+        
+       // selection.getChildren().addAll(nameHBox);
+
 
         HBox textFields = new HBox();
         Text mapDimensions = new Text(getResources().getString("MapDimensions"));
@@ -191,12 +194,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         Button setGridDimButton = new Button(getResources().getString("Update"));
         setGridDimButton.setOnMouseClicked(e -> updateMapDim(tileRowDisplay.getText(),
                                                              tileColDisplay.getText()));
-        selection.getChildren().addAll(nameHBox);
-
         setTileSize();
-
-        mapSettings.getChildren().addAll(selection, textFields, setGridDimButton);
-
+        
+        mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
         setEditMapButtons();
 
     }
@@ -213,7 +213,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener( (obs, oldValue, newValue) -> {
-            System.out.println(newValue);
+            // System.out.println(newValue);
             myMapWorkspace.getActiveMap().setBackground(newValue);
         });
 
@@ -280,7 +280,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             tileSizeDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
                     .getTileSize()));
             myMapWorkspace.getActiveMap().setActiveColor(myActiveColor);
-//TODO:            setTileSize();
+            // TODO: setTileSize();
         });
 
         // TODO: textField.setText to update it
