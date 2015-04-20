@@ -45,6 +45,7 @@ public class Layout extends GameElement implements Updateable {
     private static final String PARAMETER_RANGE = "Range";
     private static final String PARAMETER_BOUNDINGHEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDINGWIDTH = "BoundingWidth";
+    private static final int INITIAL_QUADTREE_REGIONS = 1;
 
     /**
      * List of Javafx objects so that new nodes can be added for the player to display
@@ -104,7 +105,7 @@ public class Layout extends GameElement implements Updateable {
         myGameMap = myGameMapFactory.getMap(mapName);
         Rectangle pBounds =
                 new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
-        myQuadTree = new Quadtree(1, pBounds);
+        myQuadTree = new Quadtree(INITIAL_QUADTREE_REGIONS, pBounds);
     }
 
     /**
