@@ -230,7 +230,7 @@ public class Layout extends GameElement implements Updateable {
         return enemies;
     }
 
-    private void createQuadTree (List<Sprite> inserts) {
+    private void createQuadTree (List<? extends Sprite> inserts) {
         myQuadTree.clear();
         for (Sprite e : inserts)
             myQuadTree.insert(e);
@@ -242,7 +242,7 @@ public class Layout extends GameElement implements Updateable {
         return collidable;
     }
 
-    private List<Sprite> getCollisions (Sprite target, List<Sprite> inserts) {
+    private List<Sprite> getCollisions (Sprite target, List<? extends Sprite> inserts) {
         createQuadTree(inserts);
         return getPossibleCollisions(target);
     }
@@ -297,6 +297,7 @@ public class Layout extends GameElement implements Updateable {
         return spritesList;
     }
 
+    // TODO refactor below methods
     public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
         myTowerManager.add(allTowers);
     }
