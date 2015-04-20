@@ -80,7 +80,6 @@ public class Layout extends GameElement implements Updateable {
 
     public Layout (List<Node> nodes) {
         myNodeList = nodes;
-        // TODO fix this dependency, get rid of TowerManager?
         myTowerManager = new TowerManager();
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
@@ -88,6 +87,10 @@ public class Layout extends GameElement implements Updateable {
         myGameMapFactory = new MapFactory();
         myRoundFactory = new RoundFactory();
         myWaveFactory = new WaveFactory();
+    }
+
+    public void setCollisionTable (CollisionTable table) {
+        myCollisionTable = table;
     }
 
     /**
@@ -104,10 +107,68 @@ public class Layout extends GameElement implements Updateable {
         myQuadTree = new Quadtree(1, pBounds);
     }
 
-    public void setCollisionTable (CollisionTable table) {
-        myCollisionTable = table;
+    public void placeTower (String tower, Point2D loc) {
+        // loc param can probably be removed because the tower can just hold its location to be
+        // placed at
+        Tower temp = myTowerManager.getTower(tower);
+        temp.setLocation(loc);
+        if (canPlace(temp, loc))
+            myTowerList.add(temp);
     }
 
+    /**
+     * Checks to see if a specific tower may be placed at a specific point on the map. This method
+     * can be used by the Player to check if a tower placement is valid.
+     * 
+     * @param tower Tower object that is being tested for valid placement
+     * @param loc Point2D representing location on grid
+     * @return true if specified tower may be placed at the specified location
+     */
+    public boolean canPlace (Sprite tower, Point2D loc) {
+        // collision checking and tag checking
+        Rectangle towerHitBox = createHitBox(tower);
+        boolean collision = false;
+        List<Sprite> collidable = getCollisions(tower, myTowerList);
+        for (Sprite c : collidable) {
+            if (collides(towerHitBox, createHitBox(c)))
+                collision = true;
+        }
+        // if there are any collisions with other towers, then collision stays true
+        // if no collisions then the tower can be placed and collision is false
+        boolean place = true;
+        /*
+         * tag checking for taking in terrain in consideration
+         * for (GridCell c: occupiedGridCells(tower))
+         * if(!tagsInCommon(c.getTags(),tower.getTags())) //if the cell has none of the tags of the
+         * tower then can't place so place is false{
+         * place = false;
+         * break;
+         * }
+         */
+        return place && !collision;
+    }
+
+    public void spawnEnemy (List<String> enemy, Point2D loc) {
+        for (String s : enemy) {
+            Enemy e = myEnemyFactory.getEnemy(s);
+            e.setLocation(loc);
+            myEnemyList.add(e);
+        }
+    }
+
+    public void spawnProjectile (String projectile, Point2D loc) {
+        Projectile proj = myProjectileFactory.getProjectile(projectile);
+        proj.setLocation(loc);
+        myProjectileList.add(proj);
+    }
+
+    // Update methods
+
+    /**
+     * Updates the sprite locations and checks for collisions/apply effects of collision.
+     * 
+     * @see Updateable#update(int)
+     */
     @Override
     public void update (int counter) {
         updateSpriteLocations();
@@ -117,7 +178,7 @@ public class Layout extends GameElement implements Updateable {
     /**
      * Updates the positions of all sprites.
      */
-    public void updateSpriteLocations () {
+    private void updateSpriteLocations () {
         // Move enemies
         myEnemyList.forEach(e -> e.move());
         // Move projectiles
@@ -152,6 +213,8 @@ public class Layout extends GameElement implements Updateable {
         }
     }
 
+    // Collision checking methods
+
     private void checkCollisions () {
         createQuadTree(getSprites());
         for (Sprite s : getSprites()) {
@@ -163,37 +226,15 @@ public class Layout extends GameElement implements Updateable {
         }
     }
 
-    public void placeTower (String tower, Point2D loc) {
-        // loc param can probably be removed because the tower can just hold its location to be
-        // placed at
-        Tower temp = myTowerManager.getTower(tower);
-        temp.setLocation(loc);
-        if (canPlace(temp, loc))
-            myTowerList.add(temp);
-    }
-
-    public boolean canPlace (Sprite tower, Point2D loc) {
-        // collision checking and tag checking
-        Rectangle towerHitBox = createHitBox(tower);
-        boolean collision = false;
-        List<Sprite> collidable = getCollisions(tower, myTowerList);
-        for (Sprite c : collidable) {
-            if (collides(towerHitBox, createHitBox(c)))
-                collision = true;
-        }
-        // if there are any collisions with other towers, then collision stays true
-        // if no collisions then the tower can be placed and collision is false
-        boolean place = true;
-        /*
-         * tag checking for taking in terrain in consideration
-         * for (GridCell c: occupiedGridCells(tower))
-         * if(!tagsInCommon(c.getTags(),tower.getTags())) //if the cell has none of the tags of the
-         * tower then can't place so place is false{
-         * place = false;
-         * break;
-         * }
-         */
-        return place && !collision;
+    /**
+     * @return List<Sprite> of all active sprites on the map
+     */
+    private List<Sprite> getSprites () {
+        List<Sprite> spritesList = new ArrayList<>();
+        spritesList.addAll(myTowerList);
+        spritesList.addAll(myEnemyList);
+        spritesList.addAll(myProjectileList);
+        return spritesList;
     }
 
     private Circle createRange (Sprite s) {
@@ -247,20 +288,6 @@ public class Layout extends GameElement implements Updateable {
         return getPossibleCollisions(target);
     }
 
-    public void spawnEnemy (List<String> enemy, Point2D loc) {
-        for (String s : enemy) {
-            Enemy e = myEnemyFactory.getEnemy(s);
-            e.setLocation(loc);
-            myEnemyList.add(e);
-        }
-    }
-
-    public void spawnProjectile (String projectile, Point2D loc) {
-        Projectile proj = myProjectileFactory.getProjectile(projectile);
-        proj.setLocation(loc);
-        myProjectileList.add(proj);
-    }
-
     private Set<GridCell> occupiedGridCells (Sprite sprite) {
         Set<GridCell> occupied = new HashSet<>();
         // radiate outwards from currentGridCell and check for collisions with GridCells
@@ -289,13 +316,7 @@ public class Layout extends GameElement implements Updateable {
         return null;
     }
 
-    public List<Sprite> getSprites () {
-        List<Sprite> spritesList = new ArrayList<>();
-        spritesList.addAll(myTowerList);
-        spritesList.addAll(myEnemyList);
-        spritesList.addAll(myProjectileList);
-        return spritesList;
-    }
+    // Loading game methods
 
     // TODO refactor below methods
     public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
