@@ -61,12 +61,12 @@ public class SpriteSetting extends Setting {
             makeSelection((int) newIndex);
         });
         
-        setupSelectionPane();
+        setupSelectionPane(0);
 
         filePaths.addListener(new ListChangeListener<String>() {
             @Override
             public void onChanged(ListChangeListener.Change change){
-                setupSelectionPane();
+                setupSelectionPane(filePaths.indexOf(dataAsString));
                 System.out.println("NEW LIST SIZE: " + filePaths.size());
                 System.out.println("list: " + filePaths);
                 System.out.println("change!");
@@ -75,8 +75,8 @@ public class SpriteSetting extends Setting {
         this.getChildren().add(graphicSelectorPane);
     }
     
-    private void setupSelectionPane(){
-        loadImages();
+    private void setupSelectionPane(int defaultValue){
+        loadImages(defaultValue);
         try {
             layoutSprites();
         }
@@ -93,7 +93,8 @@ public class SpriteSetting extends Setting {
      */
     private void layoutSprites () throws NoImageFoundException {
         graphicLayout.getChildren().removeAll(graphicLayout.getChildren());
-
+        
+        images = new ArrayList<>();
         for (String path : filePaths) {
             ImageView image = new ImageView(new Image(myController.getImageForKey(path)));
             ScaleImage.scale(image, IMAGE_SIZE, IMAGE_SIZE);
@@ -119,7 +120,7 @@ public class SpriteSetting extends Setting {
         }
     }
 
-    private void loadImages () {
+    private void loadImages (int defaultIndex) {
         filePaths = myController.getKeysForPartType(spriteNeeded
                                                       .getString(partType));
         System.out.println("file paths set: " + filePaths);

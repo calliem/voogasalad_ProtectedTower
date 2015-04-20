@@ -45,7 +45,8 @@ public abstract class SpriteView extends StackPane {
     private static final double CONTENT_WIDTH = AuthoringEnvironment.getEnvironmentWidth();
     private static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment.getEnvironmentHeight();
 
-    private static final int NAME_INDEX = 0;
+    private static final int NAME_INDEX = 1;
+    private static final int IMAGE_INDEX = 0;
     private static final String DEFAULT_NAME = "Unnamed";
 
     private Controller myController;
@@ -104,9 +105,9 @@ public abstract class SpriteView extends StackPane {
         overlaySpriteNameDisplay = new Text(spriteName);
         overlaySpriteNameDisplay.setFont(new Font(30));
         overlaySpriteNameDisplay.setFill(Color.WHITE);
-
-        ImageView spriteImage = new ImageView(new Image(imageFile));
-        ScaleImage.scaleByHeight(spriteImage, 150);
+//
+//        ImageView spriteImage = new ImageView(new Image(imageFile));
+//        ScaleImage.scaleByHeight(spriteImage, 150);
 
         overlayErrorMessage = new Text("Please check your parameters for errors.");
         overlayErrorMessage.setFill(Color.RED);
@@ -118,13 +119,13 @@ public abstract class SpriteView extends StackPane {
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
         for (Setting s : settings) {
             parameterFields.add(s);
-            System.out.println(s.getParameterName());
             settingsObjects.getChildren().add(s);
         }
 
         if (spriteName.length() >= 1) {
             parameterFields.get(NAME_INDEX).setParameterValue(spriteName);
         }
+        parameterFields.get(IMAGE_INDEX).setParameterValue(imageFile);
 
         HBox buttons = new HBox(10);
 
@@ -134,8 +135,9 @@ public abstract class SpriteView extends StackPane {
 
         Button save = new Button("Save");
         save.setOnAction( (e) -> {
-            saveParameterFields(true);
-            displaySavedMessage();
+            if(saveParameterFields(true)){
+                displaySavedMessage();
+            }
         });
 
         overlayCloseButton = new Button("Cancel");
@@ -143,11 +145,11 @@ public abstract class SpriteView extends StackPane {
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(save, overlayCloseButton);
 
-        editableContent.getChildren().addAll(overlaySpriteNameDisplay, spriteImage,
+        editableContent.getChildren().addAll(overlaySpriteNameDisplay,
                                              overlayErrorMessage, settingsObjects, buttons, saved);
     }
 
-    public void saveParameterFields (boolean save) {
+    public boolean saveParameterFields (boolean save) {
         boolean correctFormat = true;
         for (Setting s : parameterFields) {
             boolean correct = s.processData();
@@ -156,15 +158,15 @@ public abstract class SpriteView extends StackPane {
             }
         }
         overlayErrorMessage.setVisible(!correctFormat);
-        if (parameterFields.get(0).processData()) {
-            spriteName = parameterFields.get(0).getDataAsString();
+        if (parameterFields.get(NAME_INDEX).processData()) {
+            spriteName = parameterFields.get(NAME_INDEX).getDataAsString();
             updateSpriteName();
         }
 
         if (correctFormat && save) {
             String key = myController.addPartToGame(getSpriteType(),
                                                     parameterFields);
-            myController.specifyPartImage(key, imageFile);
+//            myController.specifyPartImage(key, imageFile);
             try{
                 System.out.println("image stored for " + key + ": " + myController.getImageForKey(key));
             }
@@ -172,6 +174,7 @@ public abstract class SpriteView extends StackPane {
                 
             }
         }
+        return correctFormat && save;
     }
 
     private void displaySavedMessage () {

@@ -24,6 +24,10 @@
     <string>ExampleGame_Unnamed2.Projectile</string>
   </entry>
   <entry>
+    <string>Image</string>
+    <string>images/bluefire.png</string>
+  </entry>
+  <entry>
     <string>Damage</string>
     <int>100</int>
   </entry>

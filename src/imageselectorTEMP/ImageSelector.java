@@ -68,7 +68,7 @@ public class ImageSelector extends VBox {
     }
 
     public void addExtensionFilter (String extension) {
-        fileSelection.addExtensionFilter("Image");
+        fileSelection.addExtensionFilter(extension);
     }
 
     /**
@@ -109,6 +109,15 @@ public class ImageSelector extends VBox {
      */
     public ImageView getSelectedImage () {
         return new ImageView(new Image(filePath.getValue()));
+    }
+    
+    public void setSelectedImageFile(String path){
+        if(path.equals(NOT_AVAILABLE)){
+            clear();
+        }
+        else{
+            filePath.setValue(path);
+        }
     }
     
     public void clear(){

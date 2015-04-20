@@ -24,6 +24,10 @@
     <string>ExampleGame_Unnamed3.Projectile</string>
   </entry>
   <entry>
+    <string>Image</string>
+    <string>images/redbullet.png</string>
+  </entry>
+  <entry>
     <string>Damage</string>
     <int>100</int>
   </entry>

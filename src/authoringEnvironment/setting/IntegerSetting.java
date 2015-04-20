@@ -20,8 +20,7 @@ public class IntegerSetting extends Setting {
     public Integer getParameterValue(){
     	return dataAsInteger;
     }
-  
-
+    
     @Override
     public boolean parseField () {
         try{

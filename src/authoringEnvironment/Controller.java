@@ -183,8 +183,6 @@ public class Controller {
             initializePartList(partType);
         }
         partTypeToKeyList.get(partType).add(key);
-        System.out.println("partTypeList: " + partTypeToKeyList.get(partType));
-//        observablePartTypeToKeyList.get(partType).add(key);
         return key;
     }
 
