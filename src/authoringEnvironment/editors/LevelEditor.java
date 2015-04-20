@@ -1,22 +1,9 @@
 package authoringEnvironment.editors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import authoringEnvironment.Controller;
 import authoringEnvironment.LevelSidebar;
-import authoringEnvironment.Sidebar;
 import authoringEnvironment.UpdatableDisplay;
-import authoringEnvironment.map.MapSidebar;
-import authoringEnvironment.objects.LevelView;
-import authoringEnvironment.objects.TileMap;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Dimension2D;
-import javafx.scene.Node;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 
 /**
@@ -31,7 +18,7 @@ import javafx.stage.Stage;
 
 public class LevelEditor extends MainEditor {
 
-    //private List<Node> myLevels;
+    // private List<Node> myLevels;
     private UpdatableDisplay mapDisplay;
     private LevelSidebar mySidebar; // LevelSidebar is used instead of Sidebar because there are
                                     // functionality in LevelSidebar not provided in Sidebar
@@ -46,7 +33,7 @@ public class LevelEditor extends MainEditor {
     public LevelEditor (Controller c, String name) {
         super(c, name);
         mySidebar = new LevelSidebar(myResources, getMaps(), getMapWorkspace());
-        getPane().add(mySidebar,1,0); //TODO: don't hardcode the Maps editor. Find a way to get
+        getPane().add(mySidebar, 1, 0); // TODO: don't hardcode the Maps editor. Find a way to get
         // it from teh existing one so that changing one thing in code won't require changes
         // everywhere
         // myLevels = new ArrayList<Node>();

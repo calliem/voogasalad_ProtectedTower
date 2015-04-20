@@ -3,11 +3,9 @@ package authoringEnvironment.objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.InstanceManager;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoringEnvironment.InstanceManager;
 
 
 /**

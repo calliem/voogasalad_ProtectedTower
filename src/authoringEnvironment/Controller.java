@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import authoringEnvironment.editors.MapEditor;
 import authoringEnvironment.editors.Editor;
+import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.setting.Setting;
 
@@ -24,6 +27,7 @@ import authoringEnvironment.setting.Setting;
  * projectile for his tower from the other projectiles he's created.
  * 
  * @author Johnny Kumpf
+ * @author Callie Mao
  *
  */
 
@@ -31,11 +35,13 @@ public class Controller {
 
     private InstanceManager currentGame;
     private Map<String, List<String>> partTypeToKeyList;
+    private ObservableList<GameObject> myMaps;
 
     protected Controller (InstanceManager IM) {
         currentGame = IM;
         partTypeToKeyList = new HashMap<String, List<String>>();
         populateKeyList();
+        myMaps = FXCollections.observableArrayList();
     }
 
     protected Controller (String gameName, String rootDir) {
@@ -160,4 +166,12 @@ public class Controller {
         for (String key : currentGame.getAllPartData().keySet())
             addKey(key);
     }
+
+    public ObservableList<GameObject> getMaps () {
+        return myMaps;
+    }
+    
+  /*  public void setMaps (ObservableList<GameObject> maps) {
+        myMaps = maps;
+    }*/
 }

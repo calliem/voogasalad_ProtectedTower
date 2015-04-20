@@ -5,22 +5,13 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.TileMap;
-import javafx.collections.ListChangeListener.Change; 
-
-
 
 
 /**
@@ -40,27 +31,34 @@ public class LevelSidebar extends Sidebar {
 
     private static final int LISTVIEW_HEIGHT = 200;
 
-    public LevelSidebar (ResourceBundle resources, ObservableList<GameObject> maps, MapWorkspace mapWorkspace) {
+    public LevelSidebar (ResourceBundle resources,
+                         ObservableList<GameObject> maps,
+                         MapWorkspace mapWorkspace) {
         super(resources, maps, mapWorkspace);
-        // myMapEditor = Controller.getEditor(Controller.MAPS);
-        myMapList = maps;
-        maps.addListener(new ListChangeListener<GameObject>(){
+        myMapList = FXCollections.observableList(maps);
+        maps.addListener(new ListChangeListener<GameObject>() {
             @Override
             public void onChanged (javafx.collections.ListChangeListener.Change<? extends GameObject> change) {
                 System.out.println("maplist changed!");
-                mapDisplay.updateDisplay((List<GameObject>)change.getList());
+                mapDisplay.updateDisplay((List<GameObject>) change.getList());
             }
         });
+
         System.out.println("MAP CHANGE LISTENER IS CREATED");
         createMapSettings();
 
-      //  setOnMouseClicked(e -> {System.out.println(myMapList);});
-                              
-                              //e -> updateMapDisplay());
-        
-        /*new ListChangeListener<Item>(){
-            
-        }*/
+        // setOnMouseClicked(e -> {System.out.println(myMapList);});
+        // setOnKeyPressed(e -> {if (keyEvent.getCode() == KeyCode.ENTER));
+
+        // e -> updateMapDisplay());
+
+        setOnKeyPressed(e -> handleKeyInput(e));
+
+        /*
+         * new ListChangeListener<Item>(){
+         * 
+         * }
+         */
     }
 
     @Override
@@ -68,7 +66,7 @@ public class LevelSidebar extends Sidebar {
         VBox selectMap = createTitleText(getResources().getString("SelectMap"));
         createTitleText(getResources().getString("PlaceWave"));
         Button createRound = new Button(getResources().getString("CreateRound"));
-        
+
         // Editor mapEditor = Controller.getEditor(Controller.MAPS);
 
         // ListView mapList = createListView(FXCollections.observableArrayList(myMapList),
@@ -88,7 +86,6 @@ public class LevelSidebar extends Sidebar {
 
         // getChildren().add(mapList);
 
-        
         mapDisplay = new MapUpdatableDisplay(myMapList, 3, getMapWorkspace());
         // temp.getChildren().add(mapDisplay);
         selectMap.getChildren().add(mapDisplay);
@@ -104,4 +101,10 @@ public class LevelSidebar extends Sidebar {
 
     }
 
+    private  void handleKeyInput (KeyEvent e) {
+        KeyCode keyCode = e.getCode();
+        if (keyCode == KeyCode.RIGHT) {
+            System.out.println(myMapList);
+        }
+}
 }

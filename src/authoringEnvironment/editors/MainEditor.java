@@ -1,18 +1,15 @@
 package authoringEnvironment.editors;
 
-import java.util.ArrayList;
-import java.util.List;
-import authoringEnvironment.Controller;
-import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.map.MapWorkspace;
-import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.TileMap;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
+import authoringEnvironment.map.MapWorkspace;
+import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.objects.TileMap;
 
 
 /**
@@ -43,7 +40,7 @@ public abstract class MainEditor extends Editor {
     public MainEditor (Controller c, String name) {
         super(c, name);
         this.setStyle("-fx-base: #3c3c3c;");
-        myMaps = FXCollections.observableArrayList();
+        myMaps = c.getMaps();
     }
 
     /**

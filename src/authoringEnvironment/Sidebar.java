@@ -1,21 +1,17 @@
 package authoringEnvironment;
 
-import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.PathView;
-import authoringEnvironment.objects.TileMap;
 
 
 /**
@@ -42,10 +38,12 @@ public abstract class Sidebar extends Accordion { // extend gridpane pls
     private static final double LISTVIEW_HEIGHT = AuthoringEnvironment.getEnvironmentHeight() / 6;
     private static final double TITLE_FONT_SIZE = AuthoringEnvironment.getEnvironmentWidth() / 85;
 
-    public Sidebar (ResourceBundle resources, ObservableList<GameObject> dependency, MapWorkspace mapWorkspace) {
+    public Sidebar (ResourceBundle resources,
+                    ObservableList<GameObject> dependency,
+                    MapWorkspace mapWorkspace) {
 
         myResources = resources;
-        myMaps = dependency;
+        myMaps = FXCollections.observableList(dependency);
         myMapWorkspace = mapWorkspace;
         setDimensionRestrictions();
         // setSpacing(10);

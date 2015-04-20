@@ -1,23 +1,11 @@
 package authoringEnvironment.map;
 
 import imageselectorTEMP.GraphicFileChooser;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.Controller;
-import authoringEnvironment.InstanceManager;
-import authoringEnvironment.MapUpdatableDisplay;
-import authoringEnvironment.util.Scaler;
-import authoringEnvironment.Sidebar;
-import authoringEnvironment.UpdatableDisplay;
-import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.TileMap;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
@@ -26,6 +14,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
+import authoringEnvironment.MapUpdatableDisplay;
+import authoringEnvironment.Sidebar;
+import authoringEnvironment.UpdatableDisplay;
+import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.util.Scaler;
 
 
 /**
@@ -102,7 +98,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void displayMaps () {
-        mapDisplay = new MapUpdatableDisplay(getMaps(), 3, myMapWorkspace); // test
+        mapDisplay = new MapUpdatableDisplay(super.getMaps(), 3, myMapWorkspace); // test
         mapSettings.getChildren().add(mapDisplay);
     }
 
@@ -176,9 +172,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         Text name = new Text(getResources().getString("Name")); // Name
         mapNameTextField = new TextField();
         nameHBox.getChildren().addAll(name, mapNameTextField);
-        
-       // selection.getChildren().addAll(nameHBox);
 
+        // selection.getChildren().addAll(nameHBox);
 
         HBox textFields = new HBox();
         Text mapDimensions = new Text(getResources().getString("MapDimensions"));
@@ -195,7 +190,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         setGridDimButton.setOnMouseClicked(e -> updateMapDim(tileRowDisplay.getText(),
                                                              tileColDisplay.getText()));
         setTileSize();
-        
+
         mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
         setEditMapButtons();
 
@@ -251,19 +246,19 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void removeMap () {
         System.out.println("removing map from map sidebar");
-        System.out.println("Maps before remove: " + getMaps());
+        System.out.println("Maps before remove: " + super.getMaps());
         System.out.println("activemap" + myMapWorkspace.getActiveMap().getRoot());
 
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, myMapWorkspace.getActiveMap().getRoot());
         scale.setOnFinished( (e) -> {
-            if (getMaps().contains(myMapWorkspace.getActiveMap())) {
-                getMaps().remove(myMapWorkspace.getActiveMap());
-                mapDisplay.updateDisplay(getMaps());
+            if (super.getMaps().contains(myMapWorkspace.getActiveMap())) {
+                super.getMaps().remove(myMapWorkspace.getActiveMap());
+                mapDisplay.updateDisplay(super.getMaps());
             }
             getMapWorkspace().removeMap();
         });
-        System.out.println("Maps after remove: " + getMaps());
+        System.out.println("Maps after remove: " + super.getMaps());
 
     }
 
@@ -297,14 +292,14 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      */
     private void saveMap (TileMap activeMap) {
         activeMap.setName(mapNameTextField.getText());
-        if (!getMaps().contains(activeMap)) {
-            getMaps().add(activeMap);
-            System.out.println("Maps after save: " + getMaps());
+        if (!super.getMaps().contains(activeMap)) {
+            super.getMaps().add(activeMap);
+            System.out.println("Maps after save: " + super.getMaps());
         }
         else {
-            getMaps().remove(activeMap);
-            getMaps().add(activeMap);
-            System.out.println("Maps after save: " + getMaps());
+            super.getMaps().remove(activeMap);
+            super.getMaps().add(activeMap);
+            System.out.println("Maps after save: " + super.getMaps());
         }
 
         // saves the map to a specific key
@@ -333,7 +328,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         System.out.println("your file has been saved");
 
-        mapDisplay.updateDisplay(getMaps());
+        mapDisplay.updateDisplay(super.getMaps());
 
     }
 
@@ -353,7 +348,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      */
     private void saveToXML () {
         /*
-         * for (Node map : getMaps()) {
+         * for (Node map : super.getMaps()) {
          * Map<String, Object> mapSettings = new HashMap<String, Object>();
          * mapSettings.put(InstanceManager.nameKey, mapName.getText());
          * mapSettings.put(TILEMAP_KEY, map);
@@ -369,7 +364,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          * // class knowing, the code is easy to break
          */
 
-        for (GameObject map : getMaps()) {
+        for (GameObject map : super.getMaps()) {
             Map<String, Object> mapSettings = map.saveToXML();
             myController.addPartToGame(MAP_PART_NAME, mapSettings);
 
