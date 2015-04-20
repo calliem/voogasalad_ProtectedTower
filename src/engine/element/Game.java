@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.reflection.Reflection;
 import engine.Bank;
@@ -20,21 +21,21 @@ import engine.conditions.Condition;
  * @author Bojia Chen
  *
  */
-public class Game extends GameElement implements Updateable, Endable{
+public class Game extends GameElement implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
     private static final String PARAMETER_HEALTH = "HP";
 
+    /**
+     * List of Javafx objects so that new nodes can be added for the player to display
+     */
+    private List<Node> myNodes;
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
     private int myActiveLevelIndex;
     private Bank myBank;
     private int myPoints;
-    /**
-     * List of Javafx objects so that new nodes can be added for the player to display
-     */
-    private List<Node> myNodes;
 
     public Game (List<Node> nodes) {
         myConditions = new ArrayList<Condition>();
@@ -46,19 +47,33 @@ public class Game extends GameElement implements Updateable, Endable{
         myPoints = 0;
     }
 
+    /**
+     * Checks if the user has played through all levels.
+     * 
+     * @return true if all levels have ended
+     */
     public boolean hasEnded () {
         return myActiveLevelIndex >= myLevels.size();
     }
 
+    /**
+     * Calls update methods on the current Level object and then the Layout object. Checks game
+     * conditions for win/lose.
+     * 
+     * @see Updateable#update(int)
+     */
     @Override
     public void update (int counter) {
         myConditions.forEach(c -> c.act((int) super.getParameter(PARAMETER_HEALTH)));
-        myLevels.get(myActiveLevelIndex).update(counter);
+        List<String> enemiesToSpawn = myLevels.get(myActiveLevelIndex).update(counter);
+        // TODO update spawn location to correct one
+        myLayout.spawnEnemy(enemiesToSpawn, new Point2D(0, 0));
         myLayout.update(counter);
     }
 
     /**
-     * Adds levels to the list of all levels, fills their parameter maps, and sorts levels by number
+     * Adds levels to the list of all levels, fills their parameter maps, and sorts levels by
+     * number. This method is called by the GameController to add levels when loading the game.
      * 
      * @param levels Map<String, Map<String, Object>> mapping GUID to parameters map for each level
      */
