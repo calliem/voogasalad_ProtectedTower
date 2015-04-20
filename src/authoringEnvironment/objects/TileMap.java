@@ -22,13 +22,12 @@ import javafx.scene.text.Text;
  *
  */
 
-public class TileMap extends Group implements GameObject {
+public class TileMap extends GameObject {
 
     private Tile[][] myTiles;
     private int myTileSize;
     private ImageView myBackground;
     private Color myActiveColor;
-    private String myName;
 
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
     private static final String TILESIZE_SETTING = "TileSize";
@@ -43,7 +42,7 @@ public class TileMap extends Group implements GameObject {
     // allowing both width and height gives greater flexibility in map creation
     private int myMapRows;
     private int myMapCols;
-     // need to include this instead of extending Group for additional
+    private Group myRoot; // need to include this instead of extending Group for additional
                           // extendibility and so that GameObject can be extended
 
     private Group myGridLines;
@@ -52,21 +51,22 @@ public class TileMap extends Group implements GameObject {
 
     // TODO: user specifies rectangle or square dimensions...allow this flexibility
     public TileMap (int mapRows, int mapCols, int tileSize) {
-        setOnDragDetected(e -> startFullDrag());
+        myRoot = new Group();
+        myRoot.setOnDragDetected(e -> myRoot.startFullDrag());
         myMapRows = mapRows;
         myMapCols = mapCols;
         myTileSize = tileSize;
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
-
-
+        setThumbnail(myBackground);
         setImageDimensions(myBackground);
-        getChildren().add(myBackground);
+        myRoot.getChildren().add(myBackground);
         // TODO: sethover x, y coordinate, tile size, etc.
 
         createMap();
         createGridLines();
+        changeTileSize(myTileSize);
     }
 
     private void setImageDimensions (ImageView image) {
@@ -74,23 +74,26 @@ public class TileMap extends Group implements GameObject {
         image.setFitHeight(myMapRows * myTileSize);
     }
 
-  /*  public int addTag (int x, int y, String tag) {
-        myTiles[x][y].addTag(tag);
-        int numTags = myTags.get(tag);
-        return ++numTags;
-    }
-
-    public int removeTag (int x, int y, String tag) {
-        myTiles[x][y].removeTag(tag);
-        int numTags = myTags.get(tag);
-        return --numTags;
-    }*/
+    /*
+     * public int addTag (int x, int y, String tag) {
+     * myTiles[x][y].addTag(tag);
+     * int numTags = myTags.get(tag);
+     * return ++numTags;
+     * }
+     * 
+     * public int removeTag (int x, int y, String tag) {
+     * myTiles[x][y].removeTag(tag);
+     * int numTags = myTags.get(tag);
+     * return --numTags;
+     * }
+     */
 
     public void setBackground (String filepath) {
-        getChildren().remove(myBackground);
+        myRoot.getChildren().remove(myBackground);
         myBackground = new ImageView(new Image(filepath));
         setImageDimensions(myBackground);
-        getChildren().add(0, myBackground);
+        myRoot.getChildren().add(0, myBackground);
+        setThumbnail(myBackground);
     }
 
     // TODO:duplicated tile listeners being added/deleted?
@@ -103,19 +106,19 @@ public class TileMap extends Group implements GameObject {
     }
 
     private void attachTileListener (Tile tile) {
-        tile.getTile().setOnMouseClicked(e -> {
-            tile.getTile().setFill(myActiveColor);
-            System.out.println("I have been clicked!" + tile.getTile().getFill().toString());
+        tile.setOnMouseClicked(e -> {
+            tile.setFill(myActiveColor);
+            System.out.println("I have been clicked!" + tile.getFill().toString());
         });
-        tile.getTile().setOnMouseDragEntered(e -> {
-            tile.getTile().setFill(myActiveColor);
-            System.out.println("I have been dragged!" + tile.getTile().getFill().toString());
+        tile.setOnMouseDragEntered(e -> {
+            tile.setFill(myActiveColor);
+            System.out.println("I have been dragged!" + tile.getFill().toString());
         });
         System.out.print("tile listener added");
     }
 
     public void changeTileSize (int tileSize) {
-        
+
         myTileSize = tileSize;
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
@@ -133,9 +136,9 @@ public class TileMap extends Group implements GameObject {
     public void removeTileListeners () {
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
-                myTiles[i][j].getTile().setOnMousePressed(e -> {
+                myTiles[i][j].setOnMousePressed(e -> {
                 });
-                myTiles[i][j].getTile().setOnMouseDragEntered(e -> {
+                myTiles[i][j].setOnMouseDragEntered(e -> {
                 });
             }
         }
@@ -155,12 +158,14 @@ public class TileMap extends Group implements GameObject {
             for (int j = 0; j < myTiles[0].length; j++) {
                 myTiles[i][j] = new Tile();
                 myTiles[i][j].positionTile(myTileSize, i, j);
-                getChildren().add(myTiles[i][j].getTile());
+                myRoot.getChildren().add(myTiles[i][j]);
                 System.out.println("attach tile listener below: ");
-           //     attachTileListener(myTiles[i][j]);
+                attachTileListener(myTiles[i][j]);
             }
         }
         setImageDimensions(myBackground);
+        changeTileSize(myTileSize);
+
     }
 
     /**
@@ -188,7 +193,7 @@ public class TileMap extends Group implements GameObject {
                     newTiles[i][j] = myTiles[i][j];
                 }
                 attachTileListener(newTiles[i][j]);
-                getChildren().add(newTiles[i][j].getTile());
+                myRoot.getChildren().add(newTiles[i][j]);
             }
         }
 
@@ -206,10 +211,10 @@ public class TileMap extends Group implements GameObject {
     private void clearTiles () {
         for (int i = 0; i < myMapRows; i++) {
             for (int j = 0; j < myMapCols; j++) {
-                getChildren().remove(myTiles[i][j].getTile());
+                myRoot.getChildren().remove(myTiles[i][j]);
             }
         }
-        getChildren().remove(myGridLines);
+        myRoot.getChildren().remove(myGridLines);
     }
 
     public int getNumRows () {
@@ -243,8 +248,8 @@ public class TileMap extends Group implements GameObject {
             myGridLines.getChildren().add(horizontalLine);
         }
 
-        if (!getChildren().contains(myGridLines))
-            getChildren().add(myGridLines);
+        if (!myRoot.getChildren().contains(myGridLines))
+            myRoot.getChildren().add(myGridLines);
     }
 
     private void removeGridLines () {
@@ -285,7 +290,7 @@ public class TileMap extends Group implements GameObject {
          */
 
         Map<String, Object> mapSettings = new HashMap<String, Object>();
-        mapSettings.put(InstanceManager.nameKey, myName);
+        mapSettings.put(InstanceManager.nameKey, getName());
         mapSettings.put(TILESIZE_SETTING, myTileSize);
         mapSettings.put(BACKGROUND_SETTING, myBackground);
         List<String> tileKeys = new ArrayList<String>();
@@ -293,7 +298,7 @@ public class TileMap extends Group implements GameObject {
 
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
-                //tileKeys.add(myTiles[i][j].getKey()); TODO: add key
+                // tileKeys.add(myTiles[i][j]); //TODO: mytiles get key from controller
                 rowColCoordinates.add(new Coordinate(i, j));
             }
         }
@@ -303,19 +308,13 @@ public class TileMap extends Group implements GameObject {
         return mapSettings;
     }
 
-    public void setName(String name){
-        myName = name;
-    }
-
     @Override
-    public String getName () {
+    public Node getThumbnail () {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public void setName () {
-        // TODO Auto-generated method stub
-        
+    public Group getRoot () {
+        return myRoot;
     }
 }

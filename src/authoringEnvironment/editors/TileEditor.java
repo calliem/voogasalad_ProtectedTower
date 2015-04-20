@@ -119,7 +119,7 @@ public class TileEditor extends SpriteEditor {
         for (Tile tile : myTiles) {
             Map<String, Object> mapSettings = tile.saveToXML();
             String key = myController.addPartToGame(TILE_PART_NAME, mapSettings);
-            tile.setKey(key);
+//            tile.setKey(key); TODO:
 
             /*
              * List<String> partFileNames = new ArrayList<String>();

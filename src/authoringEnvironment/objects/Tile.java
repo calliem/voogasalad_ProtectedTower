@@ -16,9 +16,8 @@ import javafx.scene.shape.Rectangle;
  * @author Callie Mao
  *
  */
-public class Tile extends GameObject {
+public class Tile extends Rectangle {
 
-    private Rectangle myTile;
     private ArrayList<String> myTags;
     private Color myColor;
     private boolean isSelected;
@@ -36,21 +35,18 @@ public class Tile extends GameObject {
     public Tile () {
         // TODO: fix tile to make it more general and not have col nums and x/y generated here
         // TODO: store part keys in the xml file for tilemap
-        myTile = new Rectangle();
-        myTile.setFill(DEFAULT_COLOR);
-        myTile.setOpacity(0.4);
+        new Rectangle();
+        setFill(DEFAULT_COLOR);
+        setOpacity(0.4);
         isSelected = false;
         myName = null;
         myTags = new ArrayList<String>();
     }
 
-    public Rectangle getTile () {
-        return myTile;
-    }
 
     public void positionTile (int tileSize, int i, int j) {
-        myTile.setTranslateX(j * tileSize);
-        myTile.setTranslateY(i * tileSize);
+        setTranslateX(j * tileSize);
+        setTranslateY(i * tileSize);
         System.out.print(" | " + i*tileSize + " ");
         System.out.print(j*tileSize + " ");
     }
@@ -74,10 +70,10 @@ public class Tile extends GameObject {
      */
 
     public void setTileSize (double size, int rowNum, int colNum) {
-        myTile.setWidth(size);
-        myTile.setHeight(size);
-        myTile.setTranslateX(colNum * size);
-        myTile.setTranslateY(rowNum * size);
+        setWidth(size);
+        setHeight(size);
+        setTranslateX(colNum * size);
+        setTranslateY(rowNum * size);
         
         System.out.print(" | " + rowNum*size + " ");
         System.out.print(colNum*size + " ");
@@ -87,10 +83,10 @@ public class Tile extends GameObject {
     // active refers to if it is selected as part of a path
     public void select () {
         if (!isSelected) {
-            myTile.setOpacity(0.2); // change image entirely
+            setOpacity(0.2); // change image entirely
         }
         else {
-            myTile.setOpacity(1);
+            setOpacity(1);
         }
         isSelected = !isSelected;
     }
@@ -107,15 +103,13 @@ public class Tile extends GameObject {
         return myColor;
     }
 
-    @Override
-    public Node getThumbnail () {
-        Rectangle thumbnail = myTile;
+/*    public Node getThumbnail () {
+        Rectangle thumbnail = this;
         thumbnail.setWidth(AuthoringEnvironment.getEnvironmentWidth() * 0.05);
         thumbnail.setHeight(AuthoringEnvironment.getEnvironmentHeight() * 0.05);
         return null;
-    }
+    }*/
 
-    @Override
     public Map<String, Object> saveToXML () {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.nameKey, myName);

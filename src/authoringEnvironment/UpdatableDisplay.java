@@ -89,11 +89,11 @@ public abstract class UpdatableDisplay extends VBox {
         currentRow.setAlignment(Pos.TOP_CENTER);
     }
 
-    public void updateDisplay (List<GameObject> updatedObjects) {
+    public void updateDisplay (List<GameObject> list) {
         if (!getChildren().isEmpty()) {
             getChildren().clear();
         }
-        myObjects = updatedObjects;
+        myObjects = list;
         displayValues();
     }
     

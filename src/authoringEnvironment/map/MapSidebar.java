@@ -94,15 +94,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     protected void createMapSettings () {
-        // TODO: make a main tab to display the stuff here
-        // createTitleText(getResources().getString("GameSettings"));
-        // setLives();
         mapSettings = createTitleText(getResources().getString("MapSettings"));
         pathSettings = createTitleText(getResources().getString("PathSettings"));
-        // createTitleText(getResources().getString("SetTiles"));
         selectTile();
         createGeneralSettings();
-
         displayMaps();
     }
 
@@ -117,17 +112,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         selection.setSpacing(PADDING);
         Text lives = new Text(getResources().getString("Lives"));
         TextField textField = new TextField(Integer.toString(myLives));
-
         Button button = new Button(getResources().getString("Update"));
-        button.setOnMouseClicked(e -> System.out.println(textField.getText())); // TODO:
-                                                                                // add
-                                                                                // to
-                                                                                // properties
-                                                                                // file
-                                                                                // to
-                                                                                // be
-                                                                                // saved
-
+        button.setOnMouseClicked(e -> System.out.println(textField.getText()));
         textField.setPrefWidth(TEXT_FIELD_WIDTH);
         selection.getChildren().addAll(lives, textField, button);
         mapSettings.getChildren().add(selection);
@@ -266,10 +252,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void removeMap () {
         System.out.println("removing map from map sidebar");
         System.out.println("Maps before remove: " + getMaps());
-        System.out.println("activemap" + myMapWorkspace.getActiveMap());
+        System.out.println("activemap" + myMapWorkspace.getActiveMap().getRoot());
 
         ScaleTransition scale =
-                Scaler.scaleOverlay(1.0, 0.0, myMapWorkspace.getActiveMap());
+                Scaler.scaleOverlay(1.0, 0.0, myMapWorkspace.getActiveMap().getRoot());
         scale.setOnFinished( (e) -> {
             if (getMaps().contains(myMapWorkspace.getActiveMap())) {
                 getMaps().remove(myMapWorkspace.getActiveMap());
@@ -284,10 +270,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     protected void createMap () {
         getMapWorkspace().removeMap();
         TileMap newMap = getMapWorkspace().createDefaultMap();
-        ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap);
+        ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
         scale.setOnFinished( (e) -> {
-            // getMaps().remove(myMapWorkspace.getActiveMap());
-            getMapWorkspace().getChildren().add(newMap);
+            getMapWorkspace().getChildren().add(newMap.getRoot());
             tileRowDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
                     .getNumRows()));
             tileColDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
@@ -295,6 +280,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             tileSizeDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
                     .getTileSize()));
             myMapWorkspace.getActiveMap().setActiveColor(myActiveColor);
+//TODO:            setTileSize();
         });
 
         // TODO: textField.setText to update it

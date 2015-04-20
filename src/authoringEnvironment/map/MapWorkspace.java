@@ -55,19 +55,21 @@ public class MapWorkspace extends StackPane {
     public void removeMap () {
         if (myActiveMap == null)
             return;
-        if (getChildren().contains(myActiveMap)){
+        if (getChildren().contains(myActiveMap.getRoot())) {
             System.out.println("remove active map");
-            getChildren().remove(myActiveMap);
+            getChildren().remove(myActiveMap.getRoot());
             myActiveMap = null;
         }
     }
 
-    public void updateWithNewMap (TileMap object) {
-        if (myActiveMap != null) {
-            getChildren().remove(myActiveMap);
+    public void updateWithNewMap (GameObject object) {
+        if (myActiveMap != null && myActiveMap.getRoot() != null) {
+            getChildren().remove(myActiveMap.getRoot());
         }
-        myActiveMap = object;
-        getChildren().add(myActiveMap);
+        myActiveMap = (TileMap) object;
+        // if (getChildren().contains(myActiveMap.getRoot())){
+        // System.out.println("active map already exists");
+        getChildren().add(myActiveMap.getRoot());
     }
 
 }

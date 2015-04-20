@@ -42,10 +42,10 @@ public abstract class Sidebar extends Accordion { // extend gridpane pls
     private static final double LISTVIEW_HEIGHT = AuthoringEnvironment.getEnvironmentHeight() / 6;
     private static final double TITLE_FONT_SIZE = AuthoringEnvironment.getEnvironmentWidth() / 85;
 
-    public Sidebar (ResourceBundle resources, List<GameObject> maps, MapWorkspace mapWorkspace) {
+    public Sidebar (ResourceBundle resources, List<GameObject> dependency, MapWorkspace mapWorkspace) {
 
         myResources = resources;
-        myMaps = maps;
+        myMaps = dependency;
         myMapWorkspace = mapWorkspace;
         setDimensionRestrictions();
         // setSpacing(10);
