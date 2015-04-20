@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
-import javafx.scene.paint.Color;
-import authoringEnvironment.editors.MapEditor;
-import authoringEnvironment.editors.Editor;
-import authoringEnvironment.objects.TileMap;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import authoringEnvironment.setting.Setting;
 
 
@@ -30,11 +27,11 @@ import authoringEnvironment.setting.Setting;
 public class Controller {
 
     private InstanceManager currentGame;
-    private Map<String, List<String>> partTypeToKeyList;
-
+    private Map<String, ObservableList<String>> partTypeToKeyList;
+    
     protected Controller (InstanceManager IM) {
         currentGame = IM;
-        partTypeToKeyList = new HashMap<String, List<String>>();
+        partTypeToKeyList = new HashMap<String, ObservableList<String>>();
         populateKeyList();
     }
 
@@ -100,8 +97,19 @@ public class Controller {
      * @return The list of keys of that type of part which currently exist in
      *         the editor.
      */
-    public List<String> getKeysForPartType (String partType) {
+    public ObservableList<String> getKeysForPartType (String partType) {
+        if (partTypeToKeyList.get(partType) == null) {
+            initializePartList(partType);
+        }
         return partTypeToKeyList.get(partType);
+    }
+
+    /**
+     * @param partType
+     */
+    private void initializePartList (String partType) {
+        ArrayList<String> newList = new ArrayList<>();
+        partTypeToKeyList.put(partType, FXCollections.observableList(newList));
     }
 
     /**
@@ -147,17 +155,17 @@ public class Controller {
      * @param nameToCheck The name for which you want to know if a part already exists
      * @return True if the name is a duplicate, false if it's unique
      */
-    public boolean nameAlreadyExists(String partType, String nameToCheck) {
+    public boolean nameAlreadyExists (String partType, String nameToCheck) {
         List<String> keys = getKeysForPartType(partType);
-        if(keys == null)
+        if (keys == null)
             return false;
-        
+
         for (String key : keys) {
             String nameThatExists = (String) getPartCopy(key).get(InstanceManager.nameKey);
             if (nameThatExists.equalsIgnoreCase(nameToCheck))
                 return true;
         }
-        
+
         return false;
     }
 
@@ -171,14 +179,18 @@ public class Controller {
 
     private String addKey (String key) {
         String partType = key.substring(key.indexOf(".") + 1, key.length());
-        if (!partTypeToKeyList.keySet().contains(partType))
-            partTypeToKeyList.put(partType, new ArrayList<String>());
+        if (!partTypeToKeyList.keySet().contains(partType)) {
+            initializePartList(partType);
+        }
         partTypeToKeyList.get(partType).add(key);
+        System.out.println("partTypeList: " + partTypeToKeyList.get(partType));
+//        observablePartTypeToKeyList.get(partType).add(key);
         return key;
     }
 
     private void populateKeyList () {
-        for (String key : currentGame.getAllPartData().keySet())
+        for (String key : currentGame.getAllPartData().keySet()) {
             addKey(key);
+        }
     }
 }

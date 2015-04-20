@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -24,10 +27,10 @@ public class SpriteSetting extends Setting {
     private static final int PADDING = 15;
     private static final int IMAGE_SIZE = 50;
     private static final int IMAGES_DISPLAYED = 3; // the amount of images displayed at once in the
-                                                   // scrollpane
+    // scrollpane
 
     private List<ImageView> images;
-    private List<String> filePaths;
+    private ObservableList<String> filePaths;
     private IntegerProperty selectedIndex;
     private String spriteFile;
     private HBox graphicLayout;
@@ -45,58 +48,69 @@ public class SpriteSetting extends Setting {
     @Override
     protected void setupInteractionLayout () {
         basicLayout.setAlignment(Pos.CENTER);
-
-        filePaths = new ArrayList<>();
+        
+        graphicLayout = new HBox(PADDING);
+        graphicLayout.setAlignment(Pos.CENTER);
+        
         images = new ArrayList<>();
+        filePaths = FXCollections.observableList(new ArrayList<String>());
+        setupScrollPane();
+        
         selectedIndex = new SimpleIntegerProperty(0);
         selectedIndex.addListener( (obs, oldIndex, newIndex) -> {
             makeSelection((int) newIndex);
         });
         
-        System.out.println("Tried :/");
+        setupSelectionPane();
+
+        filePaths.addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(ListChangeListener.Change change){
+                setupSelectionPane();
+                System.out.println("NEW LIST SIZE: " + filePaths.size());
+                System.out.println("list: " + filePaths);
+                System.out.println("change!");
+            }
+        });
+        this.getChildren().add(graphicSelectorPane);
+    }
+    
+    private void setupSelectionPane(){
         loadImages();
-        
         try {
             layoutSprites();
         }
         catch (NoImageFoundException e) {
             System.out.println("No image found???");
         }
-
-        this.getChildren().add(graphicSelectorPane);
     }
 
+    /**
+     * Creates images from key list "filePaths" and sets up MouseEvent
+     * listener to update spriteFile when pressed.
+     * 
+     * @throws NoImageFoundException
+     */
     private void layoutSprites () throws NoImageFoundException {
-        graphicSelectorPane = new ScrollPane();
-        StackPane graphicSelector = new StackPane();
-        graphicSelectorBackground = new Rectangle(DISPLAY_WIDTH, IMAGE_SIZE, BACKGROUND_COLOR);
-        adjustBackground();
+        graphicLayout.getChildren().removeAll(graphicLayout.getChildren());
 
-        graphicLayout = new HBox(PADDING);
-        graphicLayout.setAlignment(Pos.CENTER);
-
-//        graphicLayout.getChildren().removeAll();
-        
-        if (filePaths != null) {
-            System.out.println("uh");
-            for (String path : filePaths) {
-                System.out.println("WHAT? " + myController.getImageForKey(path));
-                ImageView image = new ImageView(new Image(myController.getImageForKey(path)));
-                ScaleImage.scale(image, IMAGE_SIZE, IMAGE_SIZE);
-                image.setOnMousePressed( (e) -> {
-                    selectedIndex.setValue(filePaths.indexOf(path));
-                });
-                graphicLayout.getChildren().add(image);
-                images.add(image);
-            }
-
-            makeSelection(0);
+        for (String path : filePaths) {
+            ImageView image = new ImageView(new Image(myController.getImageForKey(path)));
+            ScaleImage.scale(image, IMAGE_SIZE, IMAGE_SIZE);
+            image.setOnMousePressed( (e) -> {
+                selectedIndex.setValue(filePaths.indexOf(path));
+            });
+            graphicLayout.getChildren().add(image);
+            images.add(image);
         }
 
-        graphicSelector.getChildren().addAll(graphicSelectorBackground, graphicLayout);
-        setupScrollPane(graphicSelector);
+        makeSelection(filePaths.indexOf(dataAsString));
     }
 
+    /**
+     * Adjusts the background for the scrollpane when new sprites are added to it.
+     * 
+     */
     private void adjustBackground () {
         if (filePaths.size() > 3) {
             graphicSelectorBackground.setWidth(DISPLAY_WIDTH +
@@ -106,22 +120,23 @@ public class SpriteSetting extends Setting {
     }
 
     private void loadImages () {
-        // filePaths.add("images/redbullet.png");
-        // filePaths.add("images/greenbullet.png");
-        // filePaths.add("images/bluefire.png");
-        // filePaths.add("images/error.png");
-        filePaths =
-                (ArrayList<String>) myController.getKeysForPartType(spriteNeeded
-                        .getString(partType));
-        System.out.println("file paths: " + filePaths);
-
-        if (filePaths != null) {
-            spriteFile = filePaths.get(0);
+        filePaths = myController.getKeysForPartType(spriteNeeded
+                                                      .getString(partType));
+        System.out.println("file paths set: " + filePaths);
+        if (filePaths.size() != 0) {
+            dataAsString = filePaths.get(0);
         }
     }
 
-    private void setupScrollPane (StackPane content) {
-        graphicSelectorPane.setContent(content);
+    private void setupScrollPane () {
+        graphicSelectorPane = new ScrollPane();
+        StackPane graphicSelector = new StackPane();
+        graphicSelectorBackground = new Rectangle(DISPLAY_WIDTH, IMAGE_SIZE, BACKGROUND_COLOR);
+        adjustBackground();
+
+        graphicSelector.getChildren().addAll(graphicSelectorBackground, graphicLayout);
+        
+        graphicSelectorPane.setContent(graphicSelector);
         graphicSelectorPane.setPannable(true);
         graphicSelectorPane.setMaxWidth(200);
         graphicSelectorPane.setMaxHeight(70);
@@ -129,7 +144,7 @@ public class SpriteSetting extends Setting {
     }
 
     private void makeSelection (int selectedIndex) {
-        if (images != null) {
+        if (filePaths.size() != 0) {
             for (int i = 0; i < images.size(); i++) {
                 images.get(i).setOpacity(1);
                 if (i != selectedIndex) {
@@ -137,7 +152,7 @@ public class SpriteSetting extends Setting {
                 }
             }
             dataAsString = filePaths.get(selectedIndex);
-            spriteFile = filePaths.get(selectedIndex);
+//            spriteFile = filePaths.get(selectedIndex);
         }
     }
 

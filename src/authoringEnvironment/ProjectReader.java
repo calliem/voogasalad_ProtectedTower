@@ -117,7 +117,7 @@ public class ProjectReader {
                 | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {
             // display error message, don't let the null value be used
-
+            System.err.println("Setting object couldn't be created");
         }
 
         return s;

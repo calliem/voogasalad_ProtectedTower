@@ -135,6 +135,7 @@ public abstract class SpriteView extends StackPane {
         Button save = new Button("Save");
         save.setOnAction( (e) -> {
             saveParameterFields(true);
+            displaySavedMessage();
         });
 
         overlayCloseButton = new Button("Cancel");
@@ -170,7 +171,6 @@ public abstract class SpriteView extends StackPane {
             catch(Exception e){
                 
             }
-            displaySavedMessage();
         }
     }
 
