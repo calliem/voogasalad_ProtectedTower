@@ -8,7 +8,7 @@ package engine.element.sprites;
  */
 public class Projectile extends MoveableSprite {
 
-    private boolean hasCollided;
+    private static final String PARAMETER_SPEED = "Speed";
 
     public Projectile () {
         super();
@@ -23,13 +23,13 @@ public class Projectile extends MoveableSprite {
     @Override
     public void onCollide (Sprite sprite) {
         // TODO Auto-generated method stub
-        hasCollided = true;
     }
 
     @Override
     public void move () {
         // TODO Auto-generated method stub
-
+        super.setLocation(super.getLocation()
+                .add(super.getHeading().multiply((double) super.getParameter(PARAMETER_SPEED))));
     }
 
 }

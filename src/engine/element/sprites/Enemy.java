@@ -43,7 +43,7 @@ public class Enemy extends MoveableSprite {
     public void onCollide (Sprite sprite) {
         // TODO Check if this works in changing the variable in the parameters map
         int health = (int) super.getParameter(PARAMETER_HEALTH);
-        health = -(int) sprite.getParameter(PARAMETER_DAMAGE);
+        health -= (int) sprite.getParameter(PARAMETER_DAMAGE);
     }
 
     @Override

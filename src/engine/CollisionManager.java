@@ -26,18 +26,23 @@ public class CollisionManager {
     private static final int REQUIRED_KEY_LENGTH = 2;
 
     /**
-     * Constructor
+     * Load the map of interactions and actions into the table.
      * 
-     * @param interactionMap
-     * @param actions
+     * @param interactionMap Map<String[], List<Integer>[]> object that maps a 2-element String
+     *        array representing the two Sprites that have an interaction to a 2-element
+     *        List<Integer> array representing a list of integers that correspond to actions.
+     * @param actions List<Consumer<Sprite>> object of ordered actions that may be used to specify
+     *        what actions should be applied to which sprites.
      */
     public CollisionManager (Map<String[], List<Integer>[]> interactionMap,
                              List<Consumer<Sprite>> actions) {
+        // check that input is valid
         for (String[] key : interactionMap.keySet()) {
             if (key.length != REQUIRED_KEY_LENGTH ||
                 interactionMap.get(key).length != REQUIRED_KEY_LENGTH) { throw new InvalidParameterException(
                                                                                                              "InteractionMap is in invalid format"); }
         }
+        // declare and load the decision map
         myDecisionMap = new HashMap<String[], Collection<Consumer<Sprite>>[]>();
         for (String[] pair : interactionMap.keySet()) {
             Collection<Consumer<Sprite>>[] actionArray =
@@ -66,9 +71,9 @@ public class CollisionManager {
      *
      * @param spriteOne first Sprite to collide
      * @param spriteTwo second Sprite to collide
-     * 
+     * @return true if an interaction was made
      */
-    public void applyCollisionAction (Sprite spriteOne, Sprite spriteTwo) {
+    public boolean applyAction (Sprite spriteOne, Sprite spriteTwo) {
         String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
         if (myDecisionMap.containsKey(spriteTagPair)) {
             for (Consumer<Sprite> action : myDecisionMap.get(spriteTagPair)[0]) {
@@ -78,7 +83,9 @@ public class CollisionManager {
             for (Consumer<Sprite> action : myDecisionMap.get(spriteTagPair)[1]) {
                 action.accept(spriteTwo);
             }
+            return true;
         }
+        return false;
     }
 
     /**
@@ -88,7 +95,7 @@ public class CollisionManager {
      * @param spriteTwo Sprite object
      * @return true if two specified sprites are colliding
      */
-    public boolean collisionCheck (Sprite spriteOne, Sprite spriteTwo) {
+    public boolean containsActionFor (Sprite spriteOne, Sprite spriteTwo) {
         String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
         return myDecisionMap.containsKey(spriteTagPair);
     }

@@ -100,8 +100,6 @@ public class Layout extends GameElement implements Updateable {
         List<Consumer<Sprite>> actionList = new ArrayList<Consumer<Sprite>>();
         actionList.add(e -> e.onCollide(null));
         String[] spritePair = { "Enemy", "Projectile" };
-
-        @SuppressWarnings("unchecked")
         List<Integer>[] actionPair = (List<Integer>[]) new Object[2];
 
         List<Integer> action1 = Arrays.asList(new Integer[] { 0 });
@@ -257,25 +255,19 @@ public class Layout extends GameElement implements Updateable {
      */
     private void updateSpriteCollisions () {
         // Check if enemies collide into towers and need to change their path
-        for (Sprite enemy : myEnemyList) {
-            // check if dead or to be removed
-            // if ((int) enemy.getParameter(PARAMETER_HP) <= 0)
-            // myEnemyList.remove(enemy);
-            // else
-            // enemy.update();
-        }
         // Check if projectiles hit enemies and reduce health/remove from map
-        for (Sprite projectile : myProjectileList) {
-            // projectile.update();
-        }
         // Check if towers are within range of shooting enemies and shoot
-        for (Sprite tower : myTowerList) {
-            // give every tower the enemies within its range
-            // tower.enemiesInRange(getEnemiesInRange(tower));
-            // fire projectiles
-            // if (tower.getProjectile() != null) {
-            // spawnProjectile(tower.getProjectile(), tower.getLocation());
-            // }
+        for (Sprite sprite : this.getSprites()) {
+            // TODO create quad tree and get list of all potential Sprites where there is an
+            // interaction
+            List<Sprite> possibleInteractions = null;
+            for (Sprite other : possibleInteractions) {
+                myCollisionTable.applyAction(sprite, other);
+                // TODO determine how many interactions should be made to each sprite
+                // if (myCollisionTable.applyAction(sprite, other)) {
+                // break;
+                // }
+            }
         }
     }
 
@@ -287,7 +279,7 @@ public class Layout extends GameElement implements Updateable {
             List<Sprite> sprites = getPossibleCollisions(s);
             for (Sprite t : sprites) {
                 if (collides(createHitBox(s), createHitBox(t))) {
-                    myCollisionTable.applyCollisionAction(s, t);
+                    myCollisionTable.applyAction(s, t);
                 }
             }
         }
