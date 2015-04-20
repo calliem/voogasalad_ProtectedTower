@@ -1,23 +1,32 @@
 package authoringEnvironment.objects;
 
+import imageselectorTEMP.util.ScaleImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import authoringEnvironment.setting.IntegerSetting;
-import authoringEnvironment.setting.SpriteSetting;
-import imageselectorTEMP.util.ScaleImage;
+import java.util.Map;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
+import authoringEnvironment.Controller;
+import authoringEnvironment.setting.SpriteSetting;
 
 /**
  * Creates the visual selector for adding a unit/wave and the time delay. Stores
@@ -28,111 +37,147 @@ import javafx.stage.FileChooser;
  */
 
 public class FlowView extends HBox {
-	private TextField delayTextField;
-	private FileChooser fileChooser;
-	// private int myWidth;
-	private int myHeight;
-	private final static String WAVE = "Wave";
-	private final static String UNIT = "Unit";
-	private static final int PADDING_SIZE = 10;
-	private List<String> partFileNames;
-	private List<Double> delays;
+    private TextField delayTextField;
+    private FileChooser fileChooser;
+    private Controller myController;
+    private int myHeight;
+    private final static String ENEMIES = "Enemies";
+    private final static String TIMES = "Times";
+    private static final int PADDING = 10;
+    private List<String> partFileNames;
+    private List<Double> delays;
+    
+    private VBox selector;
 
-	/**
-	 * Creates the visual and input elements for the "timeline" in the
-	 * WaveEditor. Contains buttons to add a unit or wave and the delay time
-	 * between units/waves in a wave.
-	 * 
-	 * @param height
-	 *            Height of the hbox display
-	 */
-	public FlowView(int height) {
-		super(PADDING_SIZE);
-		// myWidth = width;
-		myHeight = height;
-		fileChooser = new FileChooser();
-		partFileNames = new ArrayList<String>();
-		delays = new ArrayList<Double>();
+    /**
+     * Creates the visual and input elements for the "timeline" in the
+     * WaveEditor. Contains buttons to add a unit or wave and the delay time
+     * between units/waves in a wave.
+     * 
+     * @param height
+     *            Height of the hbox display
+     */
+    public FlowView(int height, Controller c) {
+        super(PADDING);
+        this.setAlignment(Pos.CENTER);
+        c = myController;
+        myHeight = height;
+        fileChooser = new FileChooser();
+        partFileNames = new ArrayList<String>();
+        delays = new ArrayList<Double>();
 
-		VBox partSelector = new VBox(PADDING_SIZE);
+        selector = new VBox(0.5*PADDING);
+        selector.setAlignment(Pos.CENTER);
+        
+        ArrayList<String> options = new ArrayList<>();
+        options.add("Unit");
+        options.add("Wave");
+        ObservableList<String> optionsList = FXCollections.observableArrayList(options);
+        final ComboBox<String> partSelectorBox = new ComboBox<>(optionsList);
+        Tooltip tooltip = new Tooltip("Select something to add!");
+        tooltip.setTextAlignment(TextAlignment.CENTER);
+        Tooltip.install(partSelectorBox, tooltip);
+        
+        //TODO: use lambda for selectUnit/selectWave method?
+        partSelectorBox.setPromptText("...");
+        partSelectorBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if(newValue.equals("Unit"))
+                selectUnit();
+            else if(newValue.equals("Wave"))
+                selectWave();
+        });
 
-		// TODO remove duplication when figure out how to do the lambda thing
-		Button selectUnitButton = new Button("Select Unit");
-		selectUnitButton.setOnAction(e -> selectUnit());
-		partSelector.getChildren().add(selectUnitButton);
+        selector.getChildren().add(partSelectorBox);
+        this.getChildren().add(selector);
 
-		Button selectWaveButton = new Button("Select Wave");
-		selectWaveButton.setOnAction(e -> selectWave());
-		partSelector.getChildren().add(selectWaveButton);
+        VBox arrow = createArrowAndDelayVisuals();
+        this.getChildren().add(arrow);
+        this.setPrefHeight(myHeight);
+    }
+    
+    private void showArrowAnimation(ImageView arrow, TextField field){
+        ScaleTransition showArrow = new ScaleTransition(Duration.millis(500), arrow);
+        showArrow.setFromX(0.0);
+        showArrow.setToX(1.0);
+        
+        FadeTransition showField = new FadeTransition(Duration.millis(250), field);
+        showField.setFromValue(0.0);
+        showField.setToValue(1.0);
+        
+        SequentialTransition animation = new SequentialTransition(showArrow, showField);
+        animation.play();
+    }
 
-		this.getChildren().add(partSelector);
-		this.getChildren().add(new Rectangle());
+    private VBox createArrowAndDelayVisuals() {
+        ImageView arrowImage = new ImageView(new Image("images/arrow_icon.png"));
+        ScaleImage.scaleByWidth(arrowImage, 120);
+        delayTextField = new TextField();
+        delayTextField.setPromptText("(sec)");
+        delayTextField.setAlignment(Pos.CENTER);
+        delayTextField.setMaxWidth(50);
+        
+        VBox arrow = new VBox(0.5*PADDING);
+        arrow.getChildren().addAll(delayTextField, arrowImage);
+        arrow.setAlignment(Pos.CENTER);
+        
+        showArrowAnimation(arrowImage, delayTextField);
+        return arrow;
+    }
 
-		VBox arrow = createArrowAndDelayVisuals();
-		this.getChildren().add(arrow);
-		this.setPrefHeight(myHeight);
-	}
+    private void selectUnit() {
+        SpriteSetting chooseUnit = new SpriteSetting(ENEMIES, ENEMIES);
+        chooseUnit.getChildren().remove(0);
+        chooseUnit.setTextColor(Color.BLACK);
+        insertElement(chooseUnit);
 
-	private VBox createArrowAndDelayVisuals() {
-		ImageView arrowImage = new ImageView(new Image("images/arrow_icon.png"));
-		ScaleImage.scaleByWidth(arrowImage, 120);
-		delayTextField = new TextField();
-		delayTextField.setMaxWidth(50);
-		VBox arrow = new VBox(PADDING_SIZE);
-		HBox timeInput = new HBox(PADDING_SIZE);
-		timeInput.getChildren().add(delayTextField);
-		timeInput.getChildren().add(new Text("s"));
-		timeInput.setAlignment(Pos.CENTER);
-		arrow.getChildren().add(timeInput);
-		arrow.getChildren().add(arrowImage);
-		arrow.setAlignment(Pos.CENTER);
-		return arrow;
-	}
+        List<Double> unitDelay = new ArrayList<Double>();
+        List<String> fileNames = new ArrayList<String>();
+        try {
+            unitDelay.add(Double.parseDouble(delayTextField.getText()));
+            delays = unitDelay;
+        } catch (NumberFormatException e) {
 
-	private void selectUnit() {
-		SpriteSetting chooseUnit = new SpriteSetting(UNIT, UNIT);
-		insertElement(chooseUnit);
+        }
+    }
 
-		List<Double> unitDelay = new ArrayList<Double>();
-		List<String> fileNames = new ArrayList<String>();
-		try {
-			unitDelay.add(Double.parseDouble(delayTextField.getText()));
-			delays = unitDelay;
-		} catch (NumberFormatException e) {
+    private void selectWave() {
+        File file = fileChooser.showOpenDialog(null);
+        Text waveNameDisplay = new Text(file.getName());
+        insertElement(waveNameDisplay);
 
-		}
-	}
+        Map<String, Object> waveInfo = myController.loadPart(file
+                                                             .getAbsolutePath());
+        try {
+            delays = (List<Double>) waveInfo.get(TIMES);
+            partFileNames = (List<String>) waveInfo.get(ENEMIES);
+        } catch (NullPointerException e) {
 
-	private void selectWave() {
-		File file = fileChooser.showOpenDialog(null);
-		Text waveNameDisplay = new Text(file.getName());
-		insertElement(waveNameDisplay);
+        }
+    }
 
-		List<Double> unitDelay = new ArrayList<Double>();
+    private void insertElement(Node node) {
+        if(selector.getChildren().size() > 1){
+            selector.getChildren().remove(1);
+        }
+        selector.getChildren().add(1, node);
+    }
 
-	}
+    /**
+     * Gets the file names of units/other waves in the wave.
+     * 
+     * @return List<String> of file names
+     */
+    public List<String> getFileNames() {
+        return partFileNames;
+    }
 
-	private void insertElement(Node node) {
-		this.getChildren().remove(1);
-		this.getChildren().add(1, node);
-	}
-
-	/**
-	 * Gets the file names of units/other waves in the wave.
-	 * 
-	 * @return List<String> of file names
-	 */
-	public List<String> getFileNames() {
-		return partFileNames;
-	}
-
-	/**
-	 * Gets the doubles corresponding to delay times between units in the wave.
-	 * 
-	 * @return List<Double> of delay times between units in the wave
-	 */
-	public List<Double> getDelays() {
-		return delays;
-	}
+    /**
+     * Gets the doubles corresponding to delay times between units in the wave.
+     * 
+     * @return List<Double> of delay times between units in the wave
+     */
+    public List<Double> getDelays() {
+        return delays;
+    }
 
 }

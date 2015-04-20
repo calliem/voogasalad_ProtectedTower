@@ -15,7 +15,7 @@ import authoringEnvironment.AuthoringEnvironment;
 /**
  * Creates the view and runs the game engine
  * @author Callie Mao
- *
+ * @author Kevin He
  */
 
 public class Main extends Application {

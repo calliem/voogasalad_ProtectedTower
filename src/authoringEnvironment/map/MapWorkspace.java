@@ -26,10 +26,10 @@ public class MapWorkspace extends StackPane{
 		
 	}
 	
-	public void createDefaultMap() {
+	public TileMap createDefaultMap() {
         TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
         updateWithNewMap(defaultMap);
-        
+        return defaultMap;
     }
 	
 	public TileMap getActiveMap(){

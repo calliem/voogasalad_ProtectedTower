@@ -2,7 +2,6 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.PathTransition;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -40,9 +39,9 @@ public class Enemy extends MoveableSprite {
     }
 
     @Override
-    public void collide (Sprite sprite) {
+    public void onCollide (Sprite sprite) {
+        // TODO Auto-generated method stub
         myHealth -= 5;
-
     }
 
     @Override
@@ -58,18 +57,6 @@ public class Enemy extends MoveableSprite {
         pathTransition.setNode(super.getImageView());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.play();
-    }
-
-    @Override
-    public boolean isTargetableBy (String type) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean isCollidableWith (String type) {
-        // TODO Auto-generated method stub
-        return false;
     }
 
     /**

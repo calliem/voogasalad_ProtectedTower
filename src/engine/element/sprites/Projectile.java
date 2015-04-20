@@ -9,7 +9,7 @@ package engine.element.sprites;
 public class Projectile extends MoveableSprite {
 
     private boolean hasCollided;
-    
+
     public Projectile () {
         super();
     }
@@ -21,7 +21,8 @@ public class Projectile extends MoveableSprite {
     }
 
     @Override
-    public void collide (Sprite sprite) {
+    public void onCollide (Sprite sprite) {
+        // TODO Auto-generated method stub
         hasCollided = true;
     }
 
@@ -29,18 +30,6 @@ public class Projectile extends MoveableSprite {
     public void move () {
         // TODO Auto-generated method stub
 
-    }
-
-    @Override
-    public boolean isTargetableBy (String type) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean isCollidableWith (String type) {
-        // TODO Auto-generated method stub
-        return false;
     }
 
 }

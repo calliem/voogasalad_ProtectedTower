@@ -3,8 +3,7 @@ package engine.element;
 import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
-import engine.Updateable;
-import engine.element.sprites.Enemy;
+import engine.UpdateAndReturnable;
 
 
 /**
@@ -12,12 +11,14 @@ import engine.element.sprites.Enemy;
  * enemies may be sent all at once, randomly, or spaced evenly.
  * 
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
-public class Wave extends GameElement implements Updateable, Endable {
-    private List<Enemy> myEnemies;
+public class Wave extends GameElement implements UpdateAndReturnable, Endable {
+    private List<List<String>> myEnemies;
     private double mySendRate;
-    private int myNumSent = 0;
+    private int myEnemyIndex = 0;
+    private int myTimer = 0;
 
     public Wave () {
         myEnemies = new ArrayList<>();
@@ -25,16 +26,16 @@ public class Wave extends GameElement implements Updateable, Endable {
 
     @Override
     public boolean hasEnded () {
-        if (myNumSent >= myEnemies.size()) { return true; }
-        return false;
+        return myEnemyIndex == myEnemies.size();
     }
 
     @Override
-    public void update (int counter) {
-        if (counter % mySendRate == 0) {
-            // TODO send enemy
-            myNumSent++;
+    public List<String> update (int counter) {
+        if (++myTimer == mySendRate && !hasEnded()) {
+            myTimer = 0;
+            return myEnemies.get(myEnemyIndex++);
         }
+        return null; // No enemies to return
     }
 
 }
