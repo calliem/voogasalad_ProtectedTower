@@ -266,10 +266,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void removeMap () {
         System.out.println("removing map from map sidebar");
         System.out.println("Maps before remove: " + getMaps());
-        System.out.println("activemap" + myMapWorkspace.getActiveMap().getRoot());
+        System.out.println("activemap" + myMapWorkspace.getActiveMap());
 
         ScaleTransition scale =
-                Scaler.scaleOverlay(1.0, 0.0, myMapWorkspace.getActiveMap().getRoot());
+                Scaler.scaleOverlay(1.0, 0.0, myMapWorkspace.getActiveMap());
         scale.setOnFinished( (e) -> {
             if (getMaps().contains(myMapWorkspace.getActiveMap())) {
                 getMaps().remove(myMapWorkspace.getActiveMap());
@@ -284,10 +284,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     protected void createMap () {
         getMapWorkspace().removeMap();
         TileMap newMap = getMapWorkspace().createDefaultMap();
-        ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
+        ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap);
         scale.setOnFinished( (e) -> {
             // getMaps().remove(myMapWorkspace.getActiveMap());
-            getMapWorkspace().getChildren().add(newMap.getRoot());
+            getMapWorkspace().getChildren().add(newMap);
             tileRowDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
                     .getNumRows()));
             tileColDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
