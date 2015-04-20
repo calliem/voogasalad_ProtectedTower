@@ -42,7 +42,7 @@ public class Layout extends GameElement implements Updateable {
 
     private static final String PARAMETER_SIZE = "TileSize";
     private static final String PARAMETER_HP = "HP";
-    private static final String PARAMETER_RANGE = "range";
+    private static final String PARAMETER_RANGE = "Range";
     private static final String PARAMETER_BOUNDINGHEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDINGWIDTH = "BoundingWidth";
 
@@ -55,9 +55,9 @@ public class Layout extends GameElement implements Updateable {
      */
     private GameMap myGameMap;
     // Lists of game elements
-    private List<Sprite> towerList;
-    private List<Sprite> enemyList;
-    private List<Sprite> projectileList;
+    private List<Tower> myTowerList;
+    private List<Enemy> myEnemyList;
+    private List<Projectile> myProjectileList;
     // Factories to create game elements
     private TowerManager myTowerManager;
     private EnemyFactory myEnemyFactory;
@@ -90,6 +90,13 @@ public class Layout extends GameElement implements Updateable {
         myWaveFactory = new WaveFactory();
     }
 
+    /**
+     * Creates a specific map and updates the current game map object in the layout. The specified
+     * GUID of the map name is used to know which map to instantiate. An array of gridcells are made
+     * and added to a map object, which is then set as the current map.
+     * 
+     * @param mapName GUID of the map
+     */
     public void setMap (String mapName) {
         myGameMap = myGameMapFactory.getMap(mapName);
         Rectangle pBounds =
@@ -103,33 +110,46 @@ public class Layout extends GameElement implements Updateable {
 
     @Override
     public void update (int counter) {
-        for (int i = 0; i < counter; i++)
-            updateSprites();
+        updateSpriteLocations();
+        updateSpriteCollisions();
     }
 
-    public List<Sprite> updateSprites () {
-        checkCollisions();
-        for (Sprite s : projectileList) {
-            // s.update();
+    /**
+     * Updates the positions of all sprites.
+     */
+    public void updateSpriteLocations () {
+        // Move enemies
+        myEnemyList.forEach(e -> e.move());
+        // Move projectiles
+        myProjectileList.forEach(p -> p.move());
+    }
+
+    /**
+     * Checks for collisions between all objects and applies the effects of collision, such as
+     * changing velocity, or removing form the map.
+     */
+    private void updateSpriteCollisions () {
+        // Check if enemies collide into towers and need to change their path
+        for (Sprite enemy : myEnemyList) {
+            // check if dead or to be removed
+            // if ((int) enemy.getParameter(PARAMETER_HP) <= 0)
+            // myEnemyList.remove(enemy);
+            // else
+            // enemy.update();
         }
-        for (Sprite t : towerList) {
+        // Check if projectiles hit enemies and reduce health/remove from map
+        for (Sprite projectile : myProjectileList) {
+            // projectile.update();
+        }
+        // Check if towers are within range of shooting enemies and shoot
+        for (Sprite tower : myTowerList) {
             // give every tower the enemies within its range
-            // t.enemiesInRange(getEnemiesInRange(t));
+            // tower.enemiesInRange(getEnemiesInRange(tower));
             // fire projectiles
-            // if (t.getProjectile() != null){
-            // spawnProjectile(t.getProjectile(), t.getLocation());
+            // if (tower.getProjectile() != null) {
+            // spawnProjectile(tower.getProjectile(), tower.getLocation());
             // }
         }
-        for (Sprite s : enemyList) {
-            // check if dead or to be removed
-            if ((int) s.getParameter(PARAMETER_HP) <= 0)
-                enemyList.remove(s);
-            // else
-            // s.update();
-        }
-        // collision checking either before or after
-        // probably before so that update can handle removing sprites too
-        return getSprites();
     }
 
     private void checkCollisions () {
@@ -149,14 +169,14 @@ public class Layout extends GameElement implements Updateable {
         Tower temp = myTowerManager.getTower(tower);
         temp.setLocation(loc);
         if (canPlace(temp, loc))
-            towerList.add(temp);
+            myTowerList.add(temp);
     }
 
     public boolean canPlace (Sprite tower, Point2D loc) {
         // collision checking and tag checking
         Rectangle towerHitBox = createHitBox(tower);
         boolean collision = false;
-        List<Sprite> collidable = getCollisions(tower, towerList);
+        List<Sprite> collidable = getCollisions(tower, myTowerList);
         for (Sprite c : collidable) {
             if (collides(towerHitBox, createHitBox(c)))
                 collision = true;
@@ -202,7 +222,7 @@ public class Layout extends GameElement implements Updateable {
     private Set<Sprite> getEnemiesInRange (Sprite tower) {
         Set<Sprite> enemies = new HashSet<>();
         // find enemies in range (collision checking)
-        List<Sprite> collidable = getCollisions(tower, enemyList);
+        List<Sprite> collidable = getCollisions(tower, myEnemyList);
         for (Sprite c : collidable) {
             if (collides(createRange(tower), createHitBox(c)))
                 enemies.add(c);
@@ -231,14 +251,14 @@ public class Layout extends GameElement implements Updateable {
         for (String s : enemy) {
             Enemy e = myEnemyFactory.getEnemy(s);
             e.setLocation(loc);
-            enemyList.add(e);
+            myEnemyList.add(e);
         }
     }
 
     public void spawnProjectile (String projectile, Point2D loc) {
         Projectile proj = myProjectileFactory.getProjectile(projectile);
         proj.setLocation(loc);
-        projectileList.add(proj);
+        myProjectileList.add(proj);
     }
 
     private Set<GridCell> occupiedGridCells (Sprite sprite) {
@@ -271,9 +291,9 @@ public class Layout extends GameElement implements Updateable {
 
     public List<Sprite> getSprites () {
         List<Sprite> spritesList = new ArrayList<>();
-        spritesList.addAll(towerList);
-        spritesList.addAll(enemyList);
-        spritesList.addAll(projectileList);
+        spritesList.addAll(myTowerList);
+        spritesList.addAll(myEnemyList);
+        spritesList.addAll(myProjectileList);
         return spritesList;
     }
 

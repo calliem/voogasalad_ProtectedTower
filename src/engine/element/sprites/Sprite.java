@@ -16,7 +16,6 @@ import engine.element.GameElement;
  */
 public abstract class Sprite extends GameElement implements Collidable {
 
-    // TODO fill in with correct string
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
 
@@ -117,6 +116,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @param type String
      * @return true if the given type can target this object's type
      */
+    @Deprecated
     public abstract boolean isTargetableBy (String type);
 
     /**
@@ -125,6 +125,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @param type String
      * @return true if the given type can collide with this object's type
      */
+    @Deprecated
     public abstract boolean isCollidableWith (String type);
 
     /**
@@ -134,6 +135,7 @@ public abstract class Sprite extends GameElement implements Collidable {
      * @param sprite Sprite object that this object collides with
      * @return
      */
+    @Deprecated
     public abstract void collide (Sprite sprite);
 
 }
