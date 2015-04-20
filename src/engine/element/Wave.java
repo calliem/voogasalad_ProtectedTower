@@ -33,7 +33,7 @@ public class Wave extends GameElement implements UpdateAndReturnable, Endable {
     public List<String> update (int counter) {
         if (++myTimer == mySendRate && !hasEnded()) {
             myTimer = 0;
-            return myEnemies.get(++myEnemyIndex);
+            return myEnemies.get(myEnemyIndex++);
         }
         return null; // No enemies to return
     }
