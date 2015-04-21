@@ -25,7 +25,7 @@ public abstract class UpdatableDisplay extends VBox {
     private VBox objectsDisplay;
     private int numObjsPerRow;
 
-    private static final int HBOX_SPACING = 10;
+    private static final int SPACING = 15;
 
     public UpdatableDisplay (List<GameObject> list, int rowSize) {
         myObjects = list;
@@ -36,8 +36,8 @@ public abstract class UpdatableDisplay extends VBox {
     private void displayValues () {
         ScrollPane container = new ScrollPane();
 
-        objectsDisplay = new VBox(20);
-        objectsDisplay.setTranslateY(10);
+        objectsDisplay = new VBox(SPACING);
+        //objectsDisplay.setTranslateY(10);
         setCurrentRow();
         //currentRow = new HBox(HBOX_SPACING);
 
@@ -55,7 +55,7 @@ public abstract class UpdatableDisplay extends VBox {
 
             StackPane objectView = new StackPane();
 
-            Rectangle objectBackground = new Rectangle(10, 10, Color.WHITE); // TODO: remove hard
+            Rectangle objectBackground = new Rectangle(45, 45, Color.WHITE); // TODO: remove hard
                                                                              // coded stuff
 
              Node thumbnail = object.getThumbnail(); // may give rectangle or imageview
@@ -67,7 +67,7 @@ public abstract class UpdatableDisplay extends VBox {
             // objectView.getChildren().addAll(objectBackground, thumbnail, nameDisplay);
 
             Text mapName = new Text(object.getName());
-            objectView.getChildren().addAll(objectBackground, mapName);
+            objectView.getChildren().addAll(objectBackground, mapName, thumbnail);
             currentRow.getChildren().add(objectView);
             objectView.setOnMouseClicked(e -> objectClicked(object));
         }
@@ -85,7 +85,7 @@ public abstract class UpdatableDisplay extends VBox {
     }
     
     private void setCurrentRow(){
-        currentRow = new HBox(HBOX_SPACING);
+        currentRow = new HBox(SPACING);
         currentRow.setAlignment(Pos.TOP_CENTER);
     }
 

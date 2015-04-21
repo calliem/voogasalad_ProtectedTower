@@ -1,5 +1,4 @@
 package authoringEnvironment.editors;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.layout.ColumnConstraints;
@@ -26,12 +25,13 @@ public abstract class MainEditor extends Editor {
     private MapWorkspace myMapWorkspace;
     private ObservableList<GameObject> myMaps;
 
-    public static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
-    public static final double MAP_WIDTH_MULTIPLIER = .75; // THIS IS REPLICATED
+    private static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
+    private static final double MAP_WIDTH_MULTIPLIER = .75; // THIS IS REPLICATED
     // WITH THOSE
     // VARIABLES IN MAP
     // WORKSPACE
-    public static final double MAP_HEIGHT_PERCENT = 100; // THIS IS REPLICATED
+    private static final double MAP_HEIGHT_PERCENT = 100; // THIS IS REPLICATED
+    private static final String DARK_TAB_CSS = "-fx-base: #3c3c3c;";
 
     // WITH THOSE
     // VARIABLES IN MAP
@@ -39,7 +39,7 @@ public abstract class MainEditor extends Editor {
 
     public MainEditor (Controller c, String name) {
         super(c, name);
-        this.setStyle("-fx-base: #3c3c3c;");
+        this.setStyle(DARK_TAB_CSS);
         myMaps = c.getMaps();
     }
 
@@ -70,8 +70,8 @@ public abstract class MainEditor extends Editor {
     public TileMap getActiveMap () {
         return myMapWorkspace.getActiveMap();
     }
-    
-    public ObservableList<GameObject> getMaps(){
+
+    public ObservableList<GameObject> getMaps () {
         return myMaps;
     }
 

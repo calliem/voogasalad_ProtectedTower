@@ -13,7 +13,6 @@ public class MapUpdatableDisplay extends UpdatableDisplay {
         myMapWorkspace = mapWorkspace;
     }
 
-
     @Override
     protected void objectClicked (GameObject object) {
         myMapWorkspace.updateWithNewMap(object);

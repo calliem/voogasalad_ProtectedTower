@@ -37,6 +37,7 @@ public abstract class Sidebar extends Accordion { // extend gridpane pls
                                                                                             // instead
     private static final double LISTVIEW_HEIGHT = AuthoringEnvironment.getEnvironmentHeight() / 6;
     private static final double TITLE_FONT_SIZE = AuthoringEnvironment.getEnvironmentWidth() / 85;
+    protected static final int UPDATABLEDISPLAY_ELEMENTS = 5;
 
     public Sidebar (ResourceBundle resources,
                     ObservableList<GameObject> dependency,

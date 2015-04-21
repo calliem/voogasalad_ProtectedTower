@@ -1,19 +1,25 @@
 package authoringEnvironment;
 
 import java.util.List;
+import javafx.collections.ObservableList;
+import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
 
 public class LevelUpdatableDisplay extends UpdatableDisplay {
 
+    private MapWorkspace myMapWorkspace;
 
-    public LevelUpdatableDisplay (List<GameObject> list, int rowSize) {
+    public LevelUpdatableDisplay (List<GameObject> list, int rowSize, MapWorkspace mapWorkspace) {
         super(list, rowSize);
+        myMapWorkspace = mapWorkspace;
         // TODO Auto-generated constructor stub
     }
 
     @Override
     protected void objectClicked (GameObject object) {
-        // TODO Auto-generated method stub
+        myMapWorkspace.updateWithNewMap(object);
+        
+        
         
     }
 

@@ -126,10 +126,6 @@ public class TileMap extends GameObject {
         }
         updateGridLines();
         setImageDimensions(myBackground);
-        System.out.println("map rows " + myMapRows);
-        System.out.println("map cols " + myMapCols);
-        System.out.println("tile size " + myTileSize);
-        System.out.println("map size: " + myMapRows * myTileSize + " x " + myMapCols * myTileSize);
     }
 
     public void removeTileListeners () {
@@ -305,13 +301,6 @@ public class TileMap extends GameObject {
         mapSettings.put(KEYS, tileKeys);
         return mapSettings;
     }
-
-    @Override
-    public Node getThumbnail () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     public Group getRoot () {
         return myRoot;
     }

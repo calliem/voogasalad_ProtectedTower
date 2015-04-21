@@ -6,9 +6,13 @@ import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -67,6 +71,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private TextField tileSizeDisplay;
     private VBox mapSettings;
     private VBox pathSettings;
+    private VBox tileSettings;
     private TextField mapNameTextField;
     private Controller myController;
     private UpdatableDisplay mapDisplay;
@@ -91,29 +96,36 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     protected void createMapSettings () {
         mapSettings = createTitleText(getResources().getString("MapSettings"));
+        tileSettings = createTitleText(getResources().getString("TileSettings"));
         pathSettings = createTitleText(getResources().getString("PathSettings"));
-        selectTile();
+
         createGeneralSettings();
-        displayMaps();
+
+        selectTile();
+        setTileSize();
+
     }
 
-    private void displayMaps () {
-        mapDisplay = new MapUpdatableDisplay(super.getMaps(), 3, myMapWorkspace); // test
+ /*   private void displayMaps () {
+        mapDisplay =
+                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, myMapWorkspace); // test
         mapSettings.getChildren().add(mapDisplay);
-    }
+    }*/
 
     // Lots of duplication below
-    private void setLives () {
-        HBox selection = new HBox();
-        selection.setSpacing(PADDING);
-        Text lives = new Text(getResources().getString("Lives"));
-        TextField textField = new TextField(Integer.toString(myLives));
-        Button button = new Button(getResources().getString("Update"));
-        button.setOnMouseClicked(e -> System.out.println(textField.getText()));
-        textField.setPrefWidth(TEXT_FIELD_WIDTH);
-        selection.getChildren().addAll(lives, textField, button);
-        mapSettings.getChildren().add(selection);
-    }
+    /*
+     * private void setLives () {
+     * HBox selection = new HBox();
+     * selection.setSpacing(PADDING);
+     * Text lives = new Text(getResources().getString("Lives"));
+     * TextField textField = new TextField(Integer.toString(myLives));
+     * Button button = new Button(getResources().getString("Update"));
+     * button.setOnMouseClicked(e -> System.out.println(textField.getText()));
+     * textField.setPrefWidth(TEXT_FIELD_WIDTH);
+     * selection.getChildren().addAll(lives, textField, button);
+     * mapSettings.getChildren().add(selection);
+     * }
+     */
 
     private void setTileSize () {
         HBox selection = new HBox();
@@ -128,7 +140,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         tileSizeDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
         Text px = new Text(getResources().getString("PxSuffix"));
         selection.getChildren().addAll(lives, tileSizeDisplay, px, button);
-        mapSettings.getChildren().add(selection);
+        tileSettings.getChildren().add(selection);
 
     }
 
@@ -137,8 +149,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         selectTile.setSpacing(30); // remove hardcoding
 
         VBox selection = new VBox();
-        Text selectTileColor = new Text(getResources().getString("SelectTileColor")); // TODO:
-                                                                                      // fix
+        Text selectTileColor = new Text(getResources().getString("TileColor")); // TODO:
+                                                                                // fix
         ColorPicker picker = new ColorPicker();
         selection.getChildren().addAll(selectTileColor, picker);
 
@@ -152,7 +164,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         selectTile.getChildren().addAll(selection, rectangleDisplay);
 
-        mapSettings.getChildren().add(selectTile);
+        tileSettings.getChildren().add(selectTile);
         picker.setOnAction(e -> changeActiveTileColor(picker.getValue(), rectangleDisplay));
     }
 
@@ -164,39 +176,56 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     // TODO: remove duplicated code
     private void createGeneralSettings () {
-        VBox selection = new VBox();
-        selection.setSpacing(PADDING);
-        setImage();
+        GridPane container = new GridPane();
+        container.setVgap(5);
+        container.setHgap(20);
 
-        HBox nameHBox = new HBox();
-        Text name = new Text(getResources().getString("Name")); // Name
+        
+        container.add(setEditMapButtons(), 0, 0, 2, 1);
+        
+        
+        GraphicFileChooser fileChooser = setImage();
+        container.add(fileChooser, 0, 1, 2, 1);
+
+        Text name = new Text(getResources().getString("Name"));
+        container.add(name, 0, 2);
         mapNameTextField = new TextField();
-        nameHBox.getChildren().addAll(name, mapNameTextField);
+        container.add(mapNameTextField, 1, 2);
 
-        // selection.getChildren().addAll(nameHBox);
-
-        HBox textFields = new HBox();
         Text mapDimensions = new Text(getResources().getString("MapDimensions"));
+        container.add(mapDimensions, 0, 3);
+
+        HBox mapDimensionsInput = new HBox();
+        mapDimensionsInput.setSpacing(4); // TODO remove magic values
         tileRowDisplay = new TextField(Integer.toString(myMapWorkspace.getActiveMap()
                 .getNumRows()));
         tileRowDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
         Text xSeparator = new Text(getResources().getString("DimensionXSeparation"));
         tileColDisplay = new TextField(Integer.toString(myMapWorkspace.getActiveMap()
                 .getNumCols()));
-        textFields.getChildren().addAll(mapDimensions, tileRowDisplay, xSeparator, tileColDisplay);
-
         tileColDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
         Button setGridDimButton = new Button(getResources().getString("Update"));
         setGridDimButton.setOnMouseClicked(e -> updateMapDim(tileRowDisplay.getText(),
                                                              tileColDisplay.getText()));
-        setTileSize();
 
-        mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
-        setEditMapButtons();
+        mapDimensionsInput.getChildren().addAll(tileRowDisplay, xSeparator, tileColDisplay,
+                                                setGridDimButton);
+        container.add(mapDimensionsInput, 1, 3);
+
+        
+        
+        //display maps
+        mapDisplay =
+                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, myMapWorkspace); // test
+        container.add(mapDisplay, 0, 5, 2, 1);
+
+
+        // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
+        mapSettings.getChildren().add(container);
 
     }
 
-    private void setImage () {
+    private GraphicFileChooser setImage () {
         HBox selection = new HBox();
         selection.setSpacing(PADDING);
 
@@ -211,8 +240,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             // System.out.println(newValue);
             myMapWorkspace.getActiveMap().setBackground(newValue);
         });
-
-        mapSettings.getChildren().add(imgSelector);
+        return imgSelector;
     }
 
     // TODO: find a way to make this work
@@ -229,7 +257,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     // TODO: path view
 
-    private void setEditMapButtons () {
+    private HBox setEditMapButtons () {
         HBox mapButtons = new HBox();
         mapButtons.setSpacing(20);
         Button createMapButton = new Button(getResources().getString("CreateMap"));
@@ -241,7 +269,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         deleteMapButton.setStyle("-fx-background-color: #cd3333; -fx-text-fill: white;");
         deleteMapButton.setOnMouseClicked(e -> removeMap());
         mapButtons.getChildren().addAll(createMapButton, saveMapButton, deleteMapButton);
-        mapSettings.getChildren().add(mapButtons);
+        return mapButtons;
     }
 
     private void removeMap () {
@@ -292,15 +320,24 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      */
     private void saveMap (TileMap activeMap) {
         activeMap.setName(mapNameTextField.getText());
+        WritableImage snapImage = new WritableImage(50, 50); // TODO
+        snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
+        System.out.println("snapImage " + snapImage);
+        ImageView snapView = new ImageView();
+        snapView.setImage(snapImage);
+        System.out.println("snapview " + snapView);
+        activeMap.setThumbnail(snapView);
+        System.out.println("thumbnail " + activeMap.getThumbnail());
+
         if (!super.getMaps().contains(activeMap)) {
             super.getMaps().add(activeMap);
-            System.out.println("Maps after save: " + super.getMaps());
         }
         else {
+            int existingIndex = super.getMaps().indexOf(activeMap);
             super.getMaps().remove(activeMap);
-            super.getMaps().add(activeMap);
-            System.out.println("Maps after save: " + super.getMaps());
+            super.getMaps().add(existingIndex, activeMap);
         }
+        System.out.println("Maps after save: " + super.getMaps());
 
         // saves the map to a specific key
         // checks to see if the current map already exists

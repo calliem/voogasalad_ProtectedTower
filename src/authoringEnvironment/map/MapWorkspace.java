@@ -63,6 +63,13 @@ public class MapWorkspace extends StackPane {
     }
 
     public void updateWithNewMap (GameObject object) {
+        // TODO: reattach event handlers if none
+        // TODO: doing this is not actually that good because javaFX does not allow you to have
+        // multiple nodes, so you will require an update method which is doign exactly what you did
+        // before. Maybe reconstructing the object may be best here.
+        // updateWithInteractiveNewMap;
+        // updateWithNonInteractiveNewMap();
+
         if (myActiveMap != null && myActiveMap.getRoot() != null) {
             getChildren().remove(myActiveMap.getRoot());
         }
@@ -71,5 +78,7 @@ public class MapWorkspace extends StackPane {
         // System.out.println("active map already exists");
         getChildren().add(myActiveMap.getRoot());
     }
+
+  
 
 }
