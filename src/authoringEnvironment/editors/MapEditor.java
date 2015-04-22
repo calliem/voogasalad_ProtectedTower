@@ -41,6 +41,7 @@ public class MapEditor extends MainEditor {
         // add a Rectangle by accident and then someone else's code is screwed up if they try to use
         // a rectangle that they think is a tilemap
         // myMaps.add(getMapWorkspace().getActiveMap());
+        System.out.println("myMapWorkspace in mapeditor" + getMapWorkspace());
         mySidebar = new MapSidebar(myResources, getMaps(), getMapWorkspace(), c); // now don't need
                                                                                   // to pass in so
                                                                                   // much stuff

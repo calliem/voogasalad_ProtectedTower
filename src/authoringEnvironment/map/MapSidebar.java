@@ -61,7 +61,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
     private int myLives;
-    private MapWorkspace myMapWorkspace;
+  //  private MapWorkspace getMapWorkspace();
     private static final int DEFAULT_LIVES = 20; // TODO: how to get this number
                                                  // from Johnny
     private Color myActiveColor;
@@ -83,7 +83,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
-        myMapWorkspace = mapWorkspace;
+        System.out.println("mapsidebar initializer " + mapWorkspace);
+    //    getMapWorkspace() = mapWorkspace;
         myLives = DEFAULT_LIVES;
         /*
          * ObservableList<PathView> pathList =
@@ -95,22 +96,24 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     protected void createMapSettings () {
-        mapSettings = createTitleText(getResources().getString("MapSettings"));
-        tileSettings = createTitleText(getResources().getString("TileSettings"));
-        pathSettings = createTitleText(getResources().getString("PathSettings"));
+        // mapSettings = createAccordionTitleText(getResources().getString("MapSettings"));
+        tileSettings = createAccordionTitleText(getResources().getString("TileSettings"));
+        pathSettings = createAccordionTitleText(getResources().getString("PathSettings"));
 
-        createGeneralSettings();
+        //createGeneralSettings();
 
         selectTile();
         setTileSize();
 
     }
 
- /*   private void displayMaps () {
-        mapDisplay =
-                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, myMapWorkspace); // test
-        mapSettings.getChildren().add(mapDisplay);
-    }*/
+    /*
+     * private void displayMaps () {
+     * mapDisplay =
+     * new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace()); // test
+     * mapSettings.getChildren().add(mapDisplay);
+     * }
+     */
 
     // Lots of duplication below
     /*
@@ -131,10 +134,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         HBox selection = new HBox();
         selection.setSpacing(PADDING);
         Text lives = new Text(getResources().getString("TileSize"));
-        tileSizeDisplay = new TextField(Integer.toString(myMapWorkspace.getActiveMap()
+        tileSizeDisplay = new TextField(Integer.toString(getMapWorkspace().getActiveMap()
                 .getTileSize()));
         Button button = new Button(getResources().getString("Update"));
-        button.setOnMouseClicked(e -> myMapWorkspace.getActiveMap()
+        button.setOnMouseClicked(e -> getMapWorkspace().getActiveMap()
                 .changeTileSize(
                                 Integer.parseInt(tileSizeDisplay.getText())));
         tileSizeDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
@@ -171,58 +174,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void changeActiveTileColor (Color color, Rectangle display) {
         myActiveColor = color;
         display.setFill(color);
-        myMapWorkspace.getActiveMap().setActiveColor(color);
-    }
-
-    // TODO: remove duplicated code
-    private void createGeneralSettings () {
-        GridPane container = new GridPane();
-        container.setVgap(5);
-        container.setHgap(20);
-
-        
-        container.add(setEditMapButtons(), 0, 0, 2, 1);
-        
-        
-        GraphicFileChooser fileChooser = setImage();
-        container.add(fileChooser, 0, 1, 2, 1);
-
-        Text name = new Text(getResources().getString("Name"));
-        container.add(name, 0, 2);
-        mapNameTextField = new TextField();
-        container.add(mapNameTextField, 1, 2);
-
-        Text mapDimensions = new Text(getResources().getString("MapDimensions"));
-        container.add(mapDimensions, 0, 3);
-
-        HBox mapDimensionsInput = new HBox();
-        mapDimensionsInput.setSpacing(4); // TODO remove magic values
-        tileRowDisplay = new TextField(Integer.toString(myMapWorkspace.getActiveMap()
-                .getNumRows()));
-        tileRowDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
-        Text xSeparator = new Text(getResources().getString("DimensionXSeparation"));
-        tileColDisplay = new TextField(Integer.toString(myMapWorkspace.getActiveMap()
-                .getNumCols()));
-        tileColDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
-        Button setGridDimButton = new Button(getResources().getString("Update"));
-        setGridDimButton.setOnMouseClicked(e -> updateMapDim(tileRowDisplay.getText(),
-                                                             tileColDisplay.getText()));
-
-        mapDimensionsInput.getChildren().addAll(tileRowDisplay, xSeparator, tileColDisplay,
-                                                setGridDimButton);
-        container.add(mapDimensionsInput, 1, 3);
-
-        
-        
-        //display maps
-        mapDisplay =
-                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, myMapWorkspace); // test
-        container.add(mapDisplay, 0, 5, 2, 1);
-
-
-        // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
-        mapSettings.getChildren().add(container);
-
+        getMapWorkspace().getActiveMap().setActiveColor(color);
     }
 
     private GraphicFileChooser setImage () {
@@ -238,7 +190,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener( (obs, oldValue, newValue) -> {
             // System.out.println(newValue);
-            myMapWorkspace.getActiveMap().setBackground(newValue);
+            getMapWorkspace().getActiveMap().setBackground(newValue);
         });
         return imgSelector;
     }
@@ -264,7 +216,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         createMapButton.setOnMouseClicked(e -> createMap());
         Button saveMapButton = new Button(getResources().getString("SaveMap"));
         saveMapButton.setStyle("-fx-background-color: #6e8b3d; -fx-text-fill: white;");
-        saveMapButton.setOnMouseClicked(e -> saveMap(myMapWorkspace.getActiveMap()));
+        saveMapButton.setOnMouseClicked(e -> saveMap(getMapWorkspace().getActiveMap()));
         Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
         deleteMapButton.setStyle("-fx-background-color: #cd3333; -fx-text-fill: white;");
         deleteMapButton.setOnMouseClicked(e -> removeMap());
@@ -275,13 +227,13 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void removeMap () {
         System.out.println("removing map from map sidebar");
         System.out.println("Maps before remove: " + super.getMaps());
-        System.out.println("activemap" + myMapWorkspace.getActiveMap().getRoot());
+        System.out.println("activemap" + getMapWorkspace().getActiveMap().getRoot());
 
         ScaleTransition scale =
-                Scaler.scaleOverlay(1.0, 0.0, myMapWorkspace.getActiveMap().getRoot());
+                Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
         scale.setOnFinished( (e) -> {
-            if (super.getMaps().contains(myMapWorkspace.getActiveMap())) {
-                super.getMaps().remove(myMapWorkspace.getActiveMap());
+            if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
+                super.getMaps().remove(getMapWorkspace().getActiveMap());
                 mapDisplay.updateDisplay(super.getMaps());
             }
             getMapWorkspace().removeMap();
@@ -302,7 +254,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                     .getNumCols()));
             tileSizeDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
                     .getTileSize()));
-            myMapWorkspace.getActiveMap().setActiveColor(myActiveColor);
+            getMapWorkspace().getActiveMap().setActiveColor(myActiveColor);
             // TODO: setTileSize();
         });
 
@@ -370,7 +322,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void updateMapDim (String numRows, String numCols) {
-        myMapWorkspace.getActiveMap().setMapDimensions(Integer.parseInt(numRows),
+        getMapWorkspace().getActiveMap().setMapDimensions(Integer.parseInt(numRows),
                                                        Integer.parseInt(numCols));
     }
 
@@ -396,7 +348,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          * 
          * 
          * 
-         * // Con: myMapWorkspace.getActiveMap(). instead of myActiveMap introduces a
+         * // Con: getMapWorkspace().getActiveMap(). instead of myActiveMap introduces a
          * // dependency on my workspace. if something is changed there without this
          * // class knowing, the code is easy to break
          */
@@ -406,5 +358,52 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             myController.addPartToGame(MAP_PART_NAME, mapSettings);
 
         }
+    }
+
+    protected void setContent (GridPane container) {
+        // TODO: remove duplicated code
+        container.setVgap(5);
+        container.setHgap(20);
+
+        container.add(setEditMapButtons(), 0, 0, 2, 1);
+
+        GraphicFileChooser fileChooser = setImage();
+        container.add(fileChooser, 0, 1, 2, 1);
+
+        Text name = new Text(getResources().getString("Name"));
+        container.add(name, 0, 2);
+        mapNameTextField = new TextField();
+        container.add(mapNameTextField, 1, 2);
+
+        Text mapDimensions = new Text(getResources().getString("MapDimensions"));
+        container.add(mapDimensions, 0, 3);
+
+        HBox mapDimensionsInput = new HBox();
+        mapDimensionsInput.setSpacing(4); // TODO remove magic values
+        System.out.println("getMapWorkspace() in mapsidebar" + getMapWorkspace());
+        System.out.println("active map" + getMapWorkspace().getActiveMap());
+        tileRowDisplay = new TextField(Integer.toString(getMapWorkspace().getActiveMap()
+                .getNumRows()));
+        tileRowDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
+        Text xSeparator = new Text(getResources().getString("DimensionXSeparation"));
+        tileColDisplay = new TextField(Integer.toString(getMapWorkspace().getActiveMap()
+                .getNumCols()));
+        tileColDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
+        Button setGridDimButton = new Button(getResources().getString("Update"));
+        setGridDimButton.setOnMouseClicked(e -> updateMapDim(tileRowDisplay.getText(),
+                                                             tileColDisplay.getText()));
+
+        mapDimensionsInput.getChildren().addAll(tileRowDisplay, xSeparator, tileColDisplay,
+                                                setGridDimButton);
+        container.add(mapDimensionsInput, 1, 3);
+
+        // display maps
+        mapDisplay =
+                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace()); // test
+        container.add(mapDisplay, 0, 5, 2, 1);
+
+        // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
+      //  mapSettings.getChildren().add(container);
+
     }
 }

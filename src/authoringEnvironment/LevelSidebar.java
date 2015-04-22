@@ -6,7 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
@@ -49,8 +52,8 @@ public class LevelSidebar extends Sidebar {
 
     @Override
     protected void createMapSettings () {
-        VBox selectMap = createTitleText(getResources().getString("SelectMap"));
-        createTitleText(getResources().getString("PlaceWave"));
+        VBox selectMap = createAccordionTitleText(getResources().getString("SelectMap"));
+        createAccordionTitleText(getResources().getString("PlaceWave"));
         Button createRound = new Button(getResources().getString("CreateRound"));
 
         // Editor mapEditor = Controller.getEditor(Controller.MAPS);
@@ -77,7 +80,12 @@ public class LevelSidebar extends Sidebar {
         // temp.getChildren().add(mapDisplay);
         selectMap.getChildren().add(mapDisplay);
 
-        createTitleText(getResources().getString("RoundOrder"));
+        createAccordionTitleText(getResources().getString("RoundOrder"));
         // getChildren().add(createListView(myRounds, LISTVIEW_HEIGHT));
+    }
+
+    protected void setContent (GridPane container) {
+        container.getChildren().add(new Rectangle(20, 20, Color.WHITE));
+
     }
 }

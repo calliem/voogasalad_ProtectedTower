@@ -55,7 +55,7 @@ public abstract class UpdatableDisplay extends VBox {
 
             StackPane objectView = new StackPane();
 
-            Rectangle objectBackground = new Rectangle(45, 45, Color.WHITE); // TODO: remove hard
+    //        Rectangle objectBackground = new Rectangle(45, 45, Color.WHITE); // TODO: remove hard
                                                                              // coded stuff
 
              Node thumbnail = object.getThumbnail(); // may give rectangle or imageview
@@ -67,7 +67,7 @@ public abstract class UpdatableDisplay extends VBox {
             // objectView.getChildren().addAll(objectBackground, thumbnail, nameDisplay);
 
             Text mapName = new Text(object.getName());
-            objectView.getChildren().addAll(objectBackground, mapName, thumbnail);
+            objectView.getChildren().addAll(thumbnail, mapName);
             currentRow.getChildren().add(objectView);
             objectView.setOnMouseClicked(e -> objectClicked(object));
         }

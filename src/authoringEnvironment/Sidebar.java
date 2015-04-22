@@ -3,10 +3,12 @@ package authoringEnvironment;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -23,7 +25,7 @@ import authoringEnvironment.objects.GameObject;
  *
  */
 
-public abstract class Sidebar extends Accordion { // extend gridpane pls
+public abstract class Sidebar extends VBox { // extend gridpane pls
 
     private ResourceBundle myResources;
     private ObservableList<GameObject> myMaps; // can't seem to use list with this
@@ -39,6 +41,9 @@ public abstract class Sidebar extends Accordion { // extend gridpane pls
     private static final double TITLE_FONT_SIZE = AuthoringEnvironment.getEnvironmentWidth() / 85;
     protected static final int UPDATABLEDISPLAY_ELEMENTS = 5;
 
+    private GridPane topContext;
+    private Accordion accordionContext;
+
     public Sidebar (ResourceBundle resources,
                     ObservableList<GameObject> dependency,
                     MapWorkspace mapWorkspace) {
@@ -46,10 +51,22 @@ public abstract class Sidebar extends Accordion { // extend gridpane pls
         myResources = resources;
         myMaps = FXCollections.observableList(dependency);
         myMapWorkspace = mapWorkspace;
+
         setDimensionRestrictions();
+        topContext = new GridPane();
+        accordionContext = new Accordion();
+        this.getChildren().add(topContext);
+        this.getChildren().add(accordionContext);
+        setContent(topContext);
         // setSpacing(10);
         // createMapSettings();
     }
+
+    protected abstract void setContent (GridPane container);
+
+    // protected GridPane getTopContext(){
+    // return topContext;
+    // }
 
     protected MapWorkspace getMapWorkspace () {
         return myMapWorkspace;
@@ -65,13 +82,13 @@ public abstract class Sidebar extends Accordion { // extend gridpane pls
 
     protected abstract void createMapSettings ();
 
-    protected VBox createTitleText (String s) {
+    protected VBox createAccordionTitleText (String s) {
         Text title = new Text(s);
         title.setFont(new Font(TITLE_FONT_SIZE));
         title.setUnderline(true);
         VBox context = new VBox();
         TitledPane organizer = new TitledPane(s, context);
-        getPanes().add(organizer);
+        accordionContext.getPanes().add(organizer);
         return context;
     }
 
@@ -84,9 +101,9 @@ public abstract class Sidebar extends Accordion { // extend gridpane pls
     }
 
     private void setDimensionRestrictions () {
-        // setPadding(new Insets(PADDING));
-        // setSpacing(3);
-        // setMaxWidth(Double.MAX_VALUE);
+         setPadding(new Insets(PADDING));
+         setSpacing(3);
+         setMaxWidth(Double.MAX_VALUE);
     }
 
 }

@@ -16,6 +16,9 @@ import authoringEnvironment.InstanceManager;
  */
 public class Tile extends Rectangle {
 
+    
+    //TODO: maybe make this a game object?
+    
     private ArrayList<String> myTags;
     private Color myColor;
     private boolean isSelected;
@@ -73,9 +76,6 @@ public class Tile extends Rectangle {
         setHeight(size);
         setTranslateX(colNum * size);
         setTranslateY(rowNum * size);
-
-        System.out.print(" | " + rowNum * size + " ");
-        System.out.print(colNum * size + " ");
     }
 
     // selection stuff is all for pathing. Need separate methods for updating the tile
@@ -110,6 +110,10 @@ public class Tile extends Rectangle {
      * return null;
      * }
      */
+    
+    public String getKey(){
+        return myKey;
+    }
 
     public Map<String, Object> saveToXML () {
         Map<String, Object> mapSettings = new HashMap<String, Object>();

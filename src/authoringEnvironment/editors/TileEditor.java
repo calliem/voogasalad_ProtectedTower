@@ -143,4 +143,10 @@ public class TileEditor extends SpriteEditor {
         }
 
     }
+
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
+    }
 }
