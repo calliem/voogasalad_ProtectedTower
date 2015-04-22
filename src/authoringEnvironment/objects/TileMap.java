@@ -53,7 +53,7 @@ public class TileMap extends GameObject {
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
-        setThumbnail(DEFAULT_BACKGROUND_PATH);
+        setThumbnail(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
         // TODO: sethover x, y coordinate, tile size, etc.
@@ -92,10 +92,11 @@ public class TileMap extends GameObject {
 
     public void setBackground (String filepath) {
         myRoot.getChildren().remove(myBackground);
-        myBackground = new ImageView(new Image(filepath));
+        Image image = new Image(filepath);
+        myBackground = new ImageView(image);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(0, myBackground);
-        setThumbnail(filepath);
+        setThumbnail(myBackground);
     }
 
     // TODO:duplicated tile listeners being added/deleted?

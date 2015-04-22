@@ -70,12 +70,12 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private TextField tileRowDisplay;
     private TextField tileColDisplay;
     private TextField tileSizeDisplay;
-    private VBox mapSettings;
     private VBox pathSettings;
     private VBox tileSettings;
     private TextField mapNameTextField;
     private Controller myController;
     private UpdatableDisplay mapDisplay;
+    private static final int INPUT_HBOX_SPACING = 4;
 
     public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
                        MapWorkspace mapWorkspace, Controller c) {
@@ -92,18 +92,13 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         createMapSettings();
     }
 
-    /*
-     * public void setMapNameTextField(String s){
-     * mapNameTextField.setText(s);
-     * }
-     */
-
     public void changeMap (TileMap map) {
         getMapWorkspace().updateWithNewMap(map, myActiveColor);
         mapNameTextField.setText(map.getName());
         tileRowDisplay.setText(Integer.toString(map.getNumRows()));
         tileColDisplay.setText(Integer.toString(map.getNumCols()));
         tileSizeDisplay.setText(Integer.toString(map.getTileSize()));
+        //TODO: change graphic file choose text
         // paths
     }
 
@@ -219,6 +214,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void removeMap () {
+        // TODO: move this to map workspace
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
         scale.setOnFinished( (e) -> {
@@ -233,10 +229,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     protected void createMap () {
         getMapWorkspace().removeMap();
+        System.out.println("hi");
         TileMap newMap = getMapWorkspace().createDefaultMap(myActiveColor);
         ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
         scale.setOnFinished( (e) -> {
-            getMapWorkspace().getChildren().add(newMap.getRoot());
             tileRowDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
                     .getNumRows()));
             tileColDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
@@ -369,7 +365,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         container.add(mapDimensions, 0, 3);
 
         HBox mapDimensionsInput = new HBox();
-        mapDimensionsInput.setSpacing(4); // TODO remove magic values
+        mapDimensionsInput.setSpacing(INPUT_HBOX_SPACING); // TODO remove magic values
         tileRowDisplay = new TextField(Integer.toString(getMapWorkspace().getActiveMap()
                 .getNumRows()));
         tileRowDisplay.setPrefWidth(TEXT_FIELD_WIDTH);

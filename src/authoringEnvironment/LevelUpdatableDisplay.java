@@ -18,7 +18,8 @@ public class LevelUpdatableDisplay extends UpdatableDisplay {
 
     @Override
     protected void objectClicked (GameObject object) {
-        myMapWorkspace.updateWithNewMap(object);
+        //create a new map
+        myMapWorkspace.updateWithNewMap(object, null);
         
         
         
