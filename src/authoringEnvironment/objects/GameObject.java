@@ -4,15 +4,26 @@ import java.util.Map;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+
+/**
+ * General abstraction for all game objects that do not get their properties directly from parameter
+ * properties files (because they are not simply integer or string parameters that can be entered
+ * in). This class contains the basic properties and methods that each game object in the game
+ * should have. While game objects populated from sprite settings will also need similar methods,
+ * these are checked for from the properties files.
+ * 
+ * @author Callie Mao
+ *
+ */
 
 public abstract class GameObject {
 
     private String myKey;
     private String myName;
-    private Node myThumbnail;
-
-    // TODO: make all sets protected
+    private ImageView myThumbnail;
 
     public String getName () {
         return myName;
@@ -30,17 +41,59 @@ public abstract class GameObject {
         return myKey;
     }
 
-    public Node getThumbnail () {
+    public ImageView getThumbnail () {
         return myThumbnail;
     };
 
-    public void setThumbnail (Node node) {
-        myThumbnail = node;
-        myThumbnail.resize(AuthoringEnvironment.getEnvironmentWidth() * Variables.THUMBNAIL_SIZE_MULTIPLIER,
-                           AuthoringEnvironment.getEnvironmentHeight() * Variables.THUMBNAIL_SIZE_MULTIPLIER);
-        //TODO: make this save
+    // TODO: spriteviews do not have thumbnails....they simply have images. Create thumbnails for
+    // them or ensure that an if statement is added to updateable display to check if thumbnails are
+    // stored in the hasmap or not. if not then get the image
+    // TODO: jk they do need thumbnails. JavaFX won't let you have two of the same node (can't have
+    // both a small and a large one - you have to make the small one directly)
+    // TODO: use the stored imagepath in the hashmap for normal spriteviews and create one normal
+    // large image and also one normal small thumbnail
+
+    /**
+     * Creates a thumbnail from a filepath. This method is ideal for duplicating and resizing an
+     * already existing ImageView (as this
+     * allows for cloning an image which can sidestep JavaFX's node limitations)
+     * 
+     * @param imagePath
+     */
+    public void setThumbnail (String imagePath) {
+
+        ImageView thumbnail = new ImageView(new Image(imagePath));
+
+        thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
+                              Variables.THUMBNAIL_SIZE_MULTIPLIER);
+        thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
+                               Variables.THUMBNAIL_SIZE_MULTIPLIER);
+        myThumbnail = thumbnail;
+
+        // setting thm
+        /*
+         * myImage.resize(AuthoringEnvironment.getEnvironmentWidth() *
+         * Variables.THUMBNAIL_SIZE_MULTIPLIER,
+         * AuthoringEnvironment.getEnvironmentHeight() *
+         * Variables.THUMBNAIL_SIZE_MULTIPLIER);
+         */
     }
 
-    public abstract Map<String, Object> saveToXML (); 
+    /**
+     * Sets the thumbnail to be the image resized to the given standards. This can only be used on
+     * images that are not utilized/displayed elsewhere in the program, since JavaFX only allows for
+     * one node to exist at once
+     * 
+     * @param image
+     */
+    public void setThumbnail (ImageView image) {
+        image.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
+                              Variables.THUMBNAIL_SIZE_MULTIPLIER);
+        image.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
+                               Variables.THUMBNAIL_SIZE_MULTIPLIER);
+        myThumbnail = image;
+    }
+
+    public abstract Map<String, Object> saveToXML ();
 
 }

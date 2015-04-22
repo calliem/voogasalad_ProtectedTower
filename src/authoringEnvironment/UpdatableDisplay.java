@@ -55,10 +55,18 @@ public abstract class UpdatableDisplay extends VBox {
 
             StackPane objectView = new StackPane();
 
-    //        Rectangle objectBackground = new Rectangle(45, 45, Color.WHITE); // TODO: remove hard
+           // Rectangle objectBackground = new Rectangle(45, 45, Color.WHITE); // TODO: remove hard
                                                                              // coded stuff
 
-             Node thumbnail = object.getThumbnail(); // may give rectangle or imageview
+             ImageView thumbnail = object.getThumbnail(); // may give rectangle or imageview
+             //TODO; write if statment: if has thumbnail then get it, if not then get the image and resize it
+             thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
+                                   Variables.THUMBNAIL_SIZE_MULTIPLIER);
+             thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
+                                   Variables.THUMBNAIL_SIZE_MULTIPLIER);
+ 
+             
+             
             // Text nameDisplay = new Text(object.getName());
             // nameDisplay.setFont(new Font(10));
             // nameDisplay.setTextAlignment(TextAlignment.CENTER);

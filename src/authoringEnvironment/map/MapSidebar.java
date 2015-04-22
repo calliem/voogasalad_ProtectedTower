@@ -272,7 +272,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      */
     private void saveMap (TileMap activeMap) {
         activeMap.setName(mapNameTextField.getText());
-        WritableImage snapImage = new WritableImage(50, 50); // TODO
+        WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
         System.out.println("snapImage " + snapImage);
         ImageView snapView = new ImageView();

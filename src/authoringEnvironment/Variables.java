@@ -8,7 +8,7 @@ public class Variables {
     
     
     
-    public static final double THUMBNAIL_SIZE_MULTIPLIER = 0.005;
+    public static final double THUMBNAIL_SIZE_MULTIPLIER = 0.07;
     
     public static final String partsFileDir = "/AllPartData";
     public static final String partTypeKey = "PartType";
@@ -21,5 +21,8 @@ public class Variables {
     public static final String PARAMETER_DAMAGE = "Damage";
     public static final String PARAMETER_SPEED = "Speed";
     public static final String TOWER = "Tower";
+    public static final int FLOWVIEW_PADDING = 10;
+    public final static String ENEMIES = "Enemies";
+    public final static String TIMES = "Times";
             
 }
