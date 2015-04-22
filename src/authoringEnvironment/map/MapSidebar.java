@@ -357,7 +357,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             Map<String, Object> mapSettings = map.saveToXML();
             String key = myController.addPartToGame(MAP_PART_NAME, mapSettings);
             map.setKey(key);
-
         }
     }
 
