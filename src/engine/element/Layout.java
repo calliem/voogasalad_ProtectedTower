@@ -12,7 +12,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import engine.CollisionChecker;
-import engine.CollisionManager;
+import engine.ActionManager;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.EnemyFactory;
@@ -64,11 +64,14 @@ public class Layout extends GameElement implements Updateable {
     private MapFactory myGameMapFactory;
     private RoundFactory myRoundFactory;
     private WaveFactory myWaveFactory;
+    /**
+     * Class which handles checking for collisions
+     */
     private CollisionChecker myCollisionChecker;
     /**
      * Table which contains interactions between game elements
      */
-    private CollisionManager myCollisionTable;
+    private ActionManager myActionManager;
 
     public Layout (List<Node> nodes) {
         myNodeList = nodes;
@@ -89,7 +92,6 @@ public class Layout extends GameElement implements Updateable {
      *
      * 
      */
-
     // TODO:Poor design to have a method for every kind of sprite, need to think of a better way to
     // do this without repeating code
     public void removeProjectile (Sprite sprite) {
@@ -101,8 +103,8 @@ public class Layout extends GameElement implements Updateable {
      * Temporary method to hardcode a collision table for testing purposes
      */
     public void makeCollisionTable () {
-        List<BiConsumer<Sprite,Sprite>> actionList = new ArrayList<BiConsumer<Sprite,Sprite>>();
-        actionList.add((e,f) -> e.onCollide(f));
+        List<BiConsumer<Sprite, Sprite>> actionList = new ArrayList<BiConsumer<Sprite, Sprite>>();
+        actionList.add( (e, f) -> e.onCollide(f));
         String[] spritePair = { "Enemy", "Projectile" };
         List<Integer>[] actionPair = (List<Integer>[]) new Object[2];
 
@@ -112,11 +114,11 @@ public class Layout extends GameElement implements Updateable {
         actionPair[1] = action2;
         Map<String[], List<Integer>[]> collisionMap = new HashMap<String[], List<Integer>[]>();
         collisionMap.put(spritePair, actionPair);
-        setCollisionTable(new CollisionManager(collisionMap, actionList));
+        setCollisionTable(new ActionManager(collisionMap, actionList));
     }
 
-    public void setCollisionTable (CollisionManager table) {
-        myCollisionTable = table;
+    public void setCollisionTable (ActionManager table) {
+        myActionManager = table;
     }
 
     /**
@@ -268,7 +270,7 @@ public class Layout extends GameElement implements Updateable {
             Set<Sprite> possibleInteractions = myCollisionChecker.findCollisionsFor(sprite);
             for (Sprite other : possibleInteractions) {
                 // TODO determine how many interactions should be made to each sprite
-                myCollisionTable.applyAction(sprite, other);
+                myActionManager.applyAction(sprite, other);
             }
         }
     }
