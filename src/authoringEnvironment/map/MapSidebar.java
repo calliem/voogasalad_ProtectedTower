@@ -272,7 +272,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      */
     private void saveMap (TileMap activeMap) {
         activeMap.setName(mapNameTextField.getText());
-        WritableImage snapImage = new WritableImage(50, 50); // TODO
+        WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
         System.out.println("snapImage " + snapImage);
         ImageView snapView = new ImageView();
@@ -357,7 +357,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             Map<String, Object> mapSettings = map.saveToXML();
             String key = myController.addPartToGame(MAP_PART_NAME, mapSettings);
             map.setKey(key);
-
         }
     }
 
@@ -372,6 +371,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         container.add(fileChooser, 0, 1, 2, 1);
 
         Text name = new Text(getResources().getString("Name"));
+       // Setting name = new StringSetting("label", "hi");
         container.add(name, 0, 2);
         mapNameTextField = new TextField();
         container.add(mapNameTextField, 1, 2);

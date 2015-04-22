@@ -39,7 +39,7 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
                                                                                             // instead
     private static final double LISTVIEW_HEIGHT = AuthoringEnvironment.getEnvironmentHeight() / 6;
     private static final double TITLE_FONT_SIZE = AuthoringEnvironment.getEnvironmentWidth() / 85;
-    protected static final int UPDATABLEDISPLAY_ELEMENTS = 5;
+    protected static final int UPDATABLEDISPLAY_ELEMENTS = 3;
 
     private GridPane topContext;
     private Accordion accordionContext;

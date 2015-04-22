@@ -1,11 +1,8 @@
 package authoringEnvironment.objects;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -60,7 +57,7 @@ public class TileMap extends GameObject {
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
-        setThumbnail(myBackground);
+        setThumbnail(DEFAULT_BACKGROUND_PATH);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
         // TODO: sethover x, y coordinate, tile size, etc.
@@ -73,6 +70,14 @@ public class TileMap extends GameObject {
     private void setImageDimensions (ImageView image) {
         image.setFitWidth(myMapCols * myTileSize);
         image.setFitHeight(myMapRows * myTileSize);
+    }
+    
+    public int getWidth(){
+        return myTileSize * myMapCols;
+    }
+    
+    public int getHeight(){
+        return myTileSize * myMapRows;
     }
 
     /*
@@ -94,7 +99,7 @@ public class TileMap extends GameObject {
         myBackground = new ImageView(new Image(filepath));
         setImageDimensions(myBackground);
         myRoot.getChildren().add(0, myBackground);
-        setThumbnail(myBackground);
+        setThumbnail(filepath);
     }
 
     // TODO:duplicated tile listeners being added/deleted?
@@ -289,16 +294,17 @@ public class TileMap extends GameObject {
         mapSettings.put(InstanceManager.nameKey, getName());
         mapSettings.put(TILESIZE_SETTING, myTileSize);
         mapSettings.put(BACKGROUND_SETTING, myBackground);
-        
+
         String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
                 tileKeyArray[i][j] = myTiles[i][j].getKey();
             }
-        }       
+        }
         mapSettings.put(TILE_KEY_ARRAY, tileKeyArray);
         return mapSettings;
     }
+
     public Group getRoot () {
         return myRoot;
     }
