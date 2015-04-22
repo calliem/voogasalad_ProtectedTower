@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import authoringEnvironment.setting.Setting;
 import util.misc.SetHandler;
 import javafx.collections.ObservableList;
@@ -360,16 +359,16 @@ public class InstanceManager {
 				"TestingManagerGame", gameRootDirectory);
 		// hardcode in an example part to show how it works
 		List<String> params = new ArrayList<String>();
-		params.add("HP");
-		params.add("Range");
+		params.add(Variables.PARAMETER_HP);
+		params.add(Variables.PARAMETER_RANGE);
 		List<Object> data = new ArrayList<Object>();
 		data.add(new Integer(500));
 		data.add(new Double(1.5));
-		example.addPart("Tower", "MyFirstTower", params, data);
+		example.addPart(Variables.TOWER, "MyFirstTower", params, data);
 		List<String> params2 = new ArrayList<String>();
-		params2.add("HP");
-		params2.add("Speed");
-		params2.add("Damage");
+		params2.add(Variables.PARAMETER_HP);
+		params2.add(Variables.PARAMETER_SPEED);
+		params2.add(Variables.PARAMETER_DAMAGE);
 		List<Object> data2 = new ArrayList<Object>();
 		data2.add(new Integer(100));
 		data2.add(new Double(1.5));

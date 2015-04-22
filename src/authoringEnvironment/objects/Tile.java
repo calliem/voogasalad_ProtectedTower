@@ -58,18 +58,19 @@ public class Tile extends Rectangle {
      * }
      */
 
-    public void addTag (String tag) {
+  /*  public void addTag (String tag) {
         myTags.add(tag);
     }
 
     // should only be able to remove already existing tags
     public void removeTag (String tag) {
         myTags.remove(tag);
+    }*/
+    
+    public void setTags (String tag){
+        tag.split(", ");
+        tag.split("; ");
     }
-
-    /*
-     * public void setImage(ImageView image) { myImage = image; }
-     */
 
     public void setTileSize (double size, int rowNum, int colNum) {
         setWidth(size);
@@ -113,6 +114,10 @@ public class Tile extends Rectangle {
     
     public String getKey(){
         return myKey;
+    }
+    
+    public void setKey(String key){
+        myKey = key;
     }
 
     public Map<String, Object> saveToXML () {

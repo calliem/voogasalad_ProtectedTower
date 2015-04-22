@@ -2,6 +2,7 @@ package authoringEnvironment.objects;
 
 import java.util.Map;
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Variables;
 import javafx.scene.Node;
 
 
@@ -35,8 +36,8 @@ public abstract class GameObject {
 
     public void setThumbnail (Node node) {
         myThumbnail = node;
-        myThumbnail.resize(AuthoringEnvironment.getEnvironmentWidth() * .005,
-                           AuthoringEnvironment.getEnvironmentHeight() * .005);
+        myThumbnail.resize(AuthoringEnvironment.getEnvironmentWidth() * Variables.THUMBNAIL_SIZE_MULTIPLIER,
+                           AuthoringEnvironment.getEnvironmentHeight() * Variables.THUMBNAIL_SIZE_MULTIPLIER);
         //TODO: make this save
     }
 

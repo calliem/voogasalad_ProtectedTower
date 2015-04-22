@@ -34,7 +34,7 @@ public class TileMap extends GameObject {
     private static final String COORDINATES = "Coordinates";
     private static final String KEYS = "Keys";
     private static final String MAP_PART_NAME = "GameMap";
-    private static final String TILE_KEY_ARRAY = "TileArray";
+    private static final String TILE_KEY_ARRAY = "TileArrayKeys";
     private static final int LINE_START_COORDINATE = 0;
 
     private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
@@ -291,23 +291,12 @@ public class TileMap extends GameObject {
         mapSettings.put(BACKGROUND_SETTING, myBackground);
         
         String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
-        
-        
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
                 tileKeyArray[i][j] = myTiles[i][j].getKey();
             }
-        }
-        
+        }       
         mapSettings.put(TILE_KEY_ARRAY, tileKeyArray);
-        
-        List<String> tileKeys = new ArrayList<String>();
-        List<Coordinate> rowColCoordinates = new ArrayList<Coordinate>();
-
-        
-
-        mapSettings.put(COORDINATES, rowColCoordinates);
-        mapSettings.put(KEYS, tileKeys);
         return mapSettings;
     }
     public Group getRoot () {

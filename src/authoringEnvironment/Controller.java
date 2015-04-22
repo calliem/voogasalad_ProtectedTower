@@ -140,6 +140,8 @@ public class Controller {
     public Map<String, Object> getPartCopy (String partKey) {
         return currentGame.getAllPartData().get(partKey);
     }
+    
+
 
     public void specifyPartImage (String partKey, String imageFilePath) {
         currentGame.specifyPartImage(partKey, imageFilePath);
