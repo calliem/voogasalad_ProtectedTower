@@ -371,6 +371,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         container.add(fileChooser, 0, 1, 2, 1);
 
         Text name = new Text(getResources().getString("Name"));
+       // Setting name = new StringSetting("label", "hi");
         container.add(name, 0, 2);
         mapNameTextField = new TextField();
         container.add(mapNameTextField, 1, 2);

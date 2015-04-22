@@ -1,21 +1,16 @@
 package authoringEnvironment;
 
+import java.awt.BorderLayout;
 import java.util.List;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.SpriteView;
 
 
 public abstract class UpdatableDisplay extends VBox {
@@ -35,6 +30,12 @@ public abstract class UpdatableDisplay extends VBox {
 
     private void displayValues () {
         ScrollPane container = new ScrollPane();
+        
+        container.setHbarPolicy(ScrollBarPolicy.NEVER);
+    //    container.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+        container.setPrefHeight(AuthoringEnvironment.getEnvironmentHeight() *
+                                       Variables.THUMBNAIL_SIZE_MULTIPLIER*4);
+      //  contentScrollPane.setMaxWidth(CONTENT_WIDTH);
 
         objectsDisplay = new VBox(SPACING);
         //objectsDisplay.setTranslateY(10);
@@ -43,7 +44,9 @@ public abstract class UpdatableDisplay extends VBox {
 
         if (myObjects.isEmpty()) {
             Text isEmpty = new Text("This list is empty.");
+            //TODO: set text in center of scrollpane
             objectsDisplay.getChildren().add(isEmpty);
+            //add(isEmpty, BorderLayout.CENTER);
         }
         for (GameObject object : myObjects) {
             if (currentRow.getChildren().size() == numObjsPerRow) {
@@ -65,16 +68,10 @@ public abstract class UpdatableDisplay extends VBox {
              thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
                                    Variables.THUMBNAIL_SIZE_MULTIPLIER);
  
-             
-             
-            // Text nameDisplay = new Text(object.getName());
-            // nameDisplay.setFont(new Font(10));
-            // nameDisplay.setTextAlignment(TextAlignment.CENTER);
-            // nameDisplay.setWrappingWidth(90);
-            // TODO: set on hover
-            // objectView.getChildren().addAll(objectBackground, thumbnail, nameDisplay);
 
             Text mapName = new Text(object.getName());
+            
+            
             objectView.getChildren().addAll(thumbnail, mapName);
             currentRow.getChildren().add(objectView);
             objectView.setOnMouseClicked(e -> objectClicked(object));
