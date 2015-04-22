@@ -151,7 +151,7 @@ public class GameController {
         GameController test =
                 new GameController(
                                    "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile",
-                                   new ArrayList<Node>());
+                                   new ArrayList<Node>(), new ArrayList<Tower>());
     }
     public void addPlaceable (String id, double sceneX, double sceneY) {
         // TODO Auto-generated method stub

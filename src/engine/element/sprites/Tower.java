@@ -47,25 +47,9 @@ public class Tower extends GameSprite {
         return;
     }
 
-<<<<<<< HEAD
-    @Override
-    public boolean isTargetableBy (String type) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean isCollidableWith (String type) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
     @Override
     public void update (int counter) {
         // TODO Auto-generated method stub
         System.out.println("Tower updated");
     }
-
-=======
->>>>>>> 4838a7a1e3157787ba9a4c1ef41d3ed0e7dc7e14
 }
