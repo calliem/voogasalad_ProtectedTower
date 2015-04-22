@@ -67,9 +67,6 @@ public class SpriteSetting extends Setting {
             @Override
             public void onChanged(ListChangeListener.Change change){
                 setupSelectionPane(filePaths.indexOf(dataAsString));
-                System.out.println("NEW LIST SIZE: " + filePaths.size());
-                System.out.println("list: " + filePaths);
-                System.out.println("change!");
             }
         });
         this.getChildren().add(graphicSelectorPane);
@@ -78,7 +75,7 @@ public class SpriteSetting extends Setting {
     private void setupSelectionPane(int defaultValue){
         loadImages(defaultValue);
         try {
-            layoutSprites();
+            layoutSprites(defaultValue);
         }
         catch (NoImageFoundException e) {
             System.out.println("No image found???");
@@ -91,8 +88,9 @@ public class SpriteSetting extends Setting {
      * 
      * @throws NoImageFoundException
      */
-    private void layoutSprites () throws NoImageFoundException {
+    private void layoutSprites (int defaultValue) throws NoImageFoundException {
         graphicLayout.getChildren().removeAll(graphicLayout.getChildren());
+        adjustBackground();
         
         images = new ArrayList<>();
         for (String path : filePaths) {
@@ -105,7 +103,7 @@ public class SpriteSetting extends Setting {
             images.add(image);
         }
 
-        makeSelection(filePaths.indexOf(dataAsString));
+        makeSelection(defaultValue);
     }
 
     /**

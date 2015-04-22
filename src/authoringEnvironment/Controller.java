@@ -83,10 +83,25 @@ public class Controller {
      */
     public String addPartToGame (String partType, List<Setting> settings) {
         Map<String, Object> partToAdd = new HashMap<String, Object>();
-        for (Setting s : settings)
+        for (Setting s : settings){
             partToAdd.put(s.getParameterName(), s.getParameterValue());
+//            if(s.getParameterName().equals(InstanceManager.idKey)){
+//                
+//            }
+        }
         return addPartToGame(partType, partToAdd);
     }
+    
+//    /**
+//     * Removes a part from the game file.
+//     * 
+//     * @param partType  the type of part that is being removed
+//     * @param partName  the name of the part that is being removed
+//     * @return true     if the list of parts contained the specified part
+//     */
+//    public boolean removePartFromGame(String partType, String partName){
+//        return partTypeToKeyList.get(partType).remove(partName);
+//    }
 
     /**
      * Gets all the keys for parts of partType that are currently part of this
@@ -166,6 +181,15 @@ public class Controller {
                 return true;
         }
 
+        return false;
+    }
+    
+    public boolean partAlreadyExists(String partType, String id){
+        List<String> keys = getKeysForPartType(partType);
+        for(String key : keys){
+            if(getPartCopy(key).get(InstanceManager.idKey).equals(id))
+                return true;
+        }
         return false;
     }
 

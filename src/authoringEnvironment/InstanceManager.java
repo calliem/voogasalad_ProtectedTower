@@ -32,6 +32,7 @@ public class InstanceManager {
     public static final String partKeyKey = "PartKey";
     public static final String imageKey = "Image";
     public static final String savePathKey = "SavePath";
+    public static final String idKey = "GUID";
 
     // a map of all the parts the user has created
     // each part is represented by a map mapping the part's parameters to their

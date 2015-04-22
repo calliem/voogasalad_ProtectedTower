@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Unnamed3.Projectile</string>
+    <string>ExampleGame_callie.Projectile</string>
   </entry>
   <entry>
     <string>Image</string>
@@ -37,6 +37,6 @@
   </entry>
   <entry>
     <string>Name</string>
-    <string>Unnamed3</string>
+    <string>callie</string>
   </entry>
 </map>

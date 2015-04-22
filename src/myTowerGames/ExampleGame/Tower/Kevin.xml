@@ -25,11 +25,11 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Kevin.Tower</string>
+    <string>ExampleGame_kevin.Tower</string>
   </entry>
   <entry>
     <string>Image</string>
-    <string>images/leftarrow.png</string>
+    <string>images/tower.png</string>
   </entry>
   <entry>
     <string>AttackSpeed</string>
@@ -41,7 +41,7 @@
   </entry>
   <entry>
     <string>Name</string>
-    <string>Kevin</string>
+    <string>kevin</string>
   </entry>
   <entry>
     <string>Projectile</string>

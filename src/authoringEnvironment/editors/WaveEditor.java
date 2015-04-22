@@ -141,7 +141,7 @@ public class WaveEditor extends MainEditor {
     @Override
     public void hideOverlay(){
         if(isOverlayActive){
-            prompt.hidePrompt().setOnFinished(e -> {
+            prompt.playHidePromptAnimation().setOnFinished(e -> {
                 isOverlayActive = false;
                 editor.getChildren().remove(prompt);
             });

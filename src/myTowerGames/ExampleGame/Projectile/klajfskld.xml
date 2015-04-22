@@ -21,11 +21,11 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Unnamed3.Projectile</string>
+    <string>ExampleGame_klajfskld.Projectile</string>
   </entry>
   <entry>
     <string>Image</string>
-    <string>images/bluefire.png</string>
+    <string>images/redbullet.png</string>
   </entry>
   <entry>
     <string>Damage</string>
@@ -37,6 +37,6 @@
   </entry>
   <entry>
     <string>Name</string>
-    <string>Unnamed3</string>
+    <string>klajfskld</string>
   </entry>
 </map>

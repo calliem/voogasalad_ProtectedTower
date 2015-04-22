@@ -3,6 +3,8 @@ package authoringEnvironment.editors;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -14,7 +16,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -50,7 +51,10 @@ public abstract class SpriteEditor extends Editor {
     private static final Color BACKGROUND_COLOR = Color.GRAY;
     
     private Node activeOverlay;
-
+    
+    private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
+    private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
+    
     /**
      * Creates a tower object.
      * 
@@ -197,6 +201,16 @@ public abstract class SpriteEditor extends Editor {
         
         //TODO DUPLICATED
         prompt.showPrompt(myContent);
+        String type = partNames.getString(editorType);
+        try{
+            String needed = spriteNeeded.getString(type);
+            if(myController.getKeysForPartType(needed).size() == 0){
+                prompt.displayPermanentError(String.format("Please create %ss first!", needed.toLowerCase()));
+            }
+        }
+        catch (MissingResourceException e){
+        }
+        
         isOverlayActive = true;
         activeOverlay = prompt;
     }

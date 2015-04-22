@@ -88,18 +88,30 @@ public class NamePrompt extends StackPane{
         });
     }
     
+    public void displayPermanentError(String message){
+        errorMessage.setText(message);
+        errorMessage.setVisible(true);
+        create.setDisable(true);
+    }
+    
     public ScaleTransition showPrompt(StackPane root){
-        promptField.setText("");
-        if(imgSelector!=null){
-            imgSelector.clear();
-        }
+        reset();
         
         root.getChildren().add(this);
         promptField.requestFocus();
         return Scaler.scaleOverlay(0.0, 1.0, this);
     }
+
+    private void reset () {
+        promptField.setText("");
+        if(imgSelector!=null){
+            imgSelector.clear();
+        }
+        errorMessage.setVisible(false);
+        create.setDisable(false);
+    }
     
-    public ScaleTransition hidePrompt(){
+    public ScaleTransition playHidePromptAnimation(){
         return Scaler.scaleOverlay(1.0, 0.0, this);
     }
     
