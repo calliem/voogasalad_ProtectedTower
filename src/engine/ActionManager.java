@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import engine.element.sprites.*;
+import engine.element.sprites.Sprite;
 
 
 /**
@@ -21,7 +21,7 @@ import engine.element.sprites.*;
  */
 
 public class ActionManager {
-    private Map<String[], Collection<BiConsumer<Sprite,Sprite>>[]> myDecisionMap;
+    private Map<String[], Collection<BiConsumer<Sprite, Sprite>>[]> myDecisionMap;
     private static final String PARAMETER_NAME = "PartType";
     private static final int REQUIRED_KEY_LENGTH = 2;
 
@@ -31,11 +31,12 @@ public class ActionManager {
      * @param interactionMap Map<String[], List<Integer>[]> object that maps a 2-element String
      *        array representing the two Sprites that have an interaction to a 2-element
      *        List<Integer> array representing a list of integers that correspond to actions.
-     * @param actions List<BiConsumer<Sprite,Sprite>> object of ordered actions that may be used to specify
+     * @param actions List<BiConsumer<Sprite,Sprite>> object of ordered actions that may be used to
+     *        specify
      *        what actions should be applied to which sprites.
      */
     public ActionManager (Map<String[], List<Integer>[]> interactionMap,
-                             List<BiConsumer<Sprite,Sprite>> actions) {
+                          List<BiConsumer<Sprite, Sprite>> actions) {
         // check that input is valid
         for (String[] key : interactionMap.keySet()) {
             if (key.length != REQUIRED_KEY_LENGTH ||
@@ -43,20 +44,22 @@ public class ActionManager {
                                                                                                              "InteractionMap is in invalid format"); }
         }
         // declare and load the decision map
-        myDecisionMap = new HashMap<String[], Collection<BiConsumer<Sprite,Sprite>>[]>();
+        myDecisionMap = new HashMap<String[], Collection<BiConsumer<Sprite, Sprite>>[]>();
         for (String[] pair : interactionMap.keySet()) {
             @SuppressWarnings("unchecked")
-            Collection<BiConsumer<Sprite,Sprite>>[] actionArray =
-                    (Collection<BiConsumer<Sprite,Sprite>>[]) new Collection[2];
+            Collection<BiConsumer<Sprite, Sprite>>[] actionArray =
+                    (Collection<BiConsumer<Sprite, Sprite>>[]) new Collection[2];
 
             // Fill collection of actions
-            Collection<BiConsumer<Sprite,Sprite>> pairActions = new ArrayList<BiConsumer<Sprite,Sprite>>();
+            Collection<BiConsumer<Sprite, Sprite>> pairActions =
+                    new ArrayList<BiConsumer<Sprite, Sprite>>();
             for (int i : interactionMap.get(pair)[0]) {
                 pairActions.add(actions.get(i));
             }
             actionArray[0] = pairActions;
 
-            Collection<BiConsumer<Sprite,Sprite>> actionsTwo = new ArrayList<BiConsumer<Sprite,Sprite>>();
+            Collection<BiConsumer<Sprite, Sprite>> actionsTwo =
+                    new ArrayList<BiConsumer<Sprite, Sprite>>();
             for (int i : interactionMap.get(pair)[1]) {
                 actionsTwo.add(actions.get(i));
             }
@@ -77,12 +80,12 @@ public class ActionManager {
     public boolean applyAction (Sprite spriteOne, Sprite spriteTwo) {
         String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
         if (myDecisionMap.containsKey(spriteTagPair)) {
-            for (BiConsumer<Sprite,Sprite> action : myDecisionMap.get(spriteTagPair)[0]) {
-                action.accept(spriteOne,spriteTwo);
+            for (BiConsumer<Sprite, Sprite> action : myDecisionMap.get(spriteTagPair)[0]) {
+                action.accept(spriteOne, spriteTwo);
             }
 
-            for (BiConsumer<Sprite,Sprite> action : myDecisionMap.get(spriteTagPair)[1]) {
-                action.accept(spriteTwo,spriteOne);
+            for (BiConsumer<Sprite, Sprite> action : myDecisionMap.get(spriteTagPair)[1]) {
+                action.accept(spriteTwo, spriteOne);
             }
             return true;
         }
