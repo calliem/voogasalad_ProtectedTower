@@ -33,6 +33,7 @@ import authoringEnvironment.setting.SpriteSetting;
  * the information for the WaveEditor
  * 
  * @author Megan Gutter
+ * @author Callie Mao
  *
  */
 

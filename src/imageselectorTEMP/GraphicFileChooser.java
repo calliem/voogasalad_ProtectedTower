@@ -17,53 +17,54 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 
-public class GraphicFileChooser extends StackPane{
+
+public class GraphicFileChooser extends StackPane {
     private static final int PADDING = 10;
     private static final int FILE_DISPLAY_WIDTH = 150;
     private static final int FILE_DISPLAY_HEIGHT = 24;
     private static final int LOAD_BUTTON_WIDTH = 75;
-    
+
     private HBox selector;
     private Button loader;
     private FileChooser fileChooser;
     private Text fileDisplay;
     private StringProperty filePath;
     private StackPane textDisplay;
-    
+
     private Map<String, List<String>> fileExtensions;
-    
-    public GraphicFileChooser(String prompt, String defaultFile){
+
+    public GraphicFileChooser (String prompt, String defaultFile) {
         selector = new HBox(PADDING);
         textDisplay = new StackPane();
         fileExtensions = new HashMap<>();
         loadDefaultExtensions();
         filePath = new SimpleStringProperty(defaultFile);
-        
+
         fileDisplay = new Text(prompt);
         Rectangle textBox = new Rectangle(FILE_DISPLAY_WIDTH, FILE_DISPLAY_HEIGHT);
         textBox.setFill(Color.WHITE);
         textBox.setArcHeight(5);
         textBox.setArcWidth(5);
-        
+
         fileChooser = new FileChooser();
         loader = new Button("Browse");
-        loader.setOnMousePressed((e) -> selectFile());
+        loader.setOnMousePressed( (e) -> selectFile());
         loader.setMaxWidth(LOAD_BUTTON_WIDTH);
-       
+
         fileDisplay.setTextAlignment(TextAlignment.LEFT);
         textDisplay.getChildren().addAll(textBox, fileDisplay);
 
         selector.getChildren().addAll(textDisplay, loader);
         selector.setAlignment(Pos.CENTER);
-        
+
         getChildren().add(selector);
     }
-    
-    public GraphicFileChooser(String prompt){
+
+    public GraphicFileChooser (String prompt) {
         this(prompt, null);
     }
-    
-    private void selectFile(){
+
+    private void selectFile () {
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             String fileName = file.getName();
@@ -71,46 +72,47 @@ public class GraphicFileChooser extends StackPane{
             filePath.setValue(String.format("images/%s", fileName));
         }
     }
-    
-    protected Text getFileDisplay(){
+
+    protected Text getFileDisplay () {
         return fileDisplay;
     }
-    
-    public StringProperty getSelectedFileNameProperty(){
+
+    public StringProperty getSelectedFileNameProperty () {
         return filePath;
     }
-    
-    public String getSelectedFileName(){
+
+    public String getSelectedFileName () {
         return filePath.getValue();
     }
-    
-    protected Button getButton(){
+
+    protected Button getButton () {
         return loader;
     }
-    
-    protected FileChooser getFileChooser(){
+
+    protected FileChooser getFileChooser () {
         return fileChooser;
     }
-    
-    public void addExtensionCategory(String categoryName, List<String> fileTypes){
+
+    public void addExtensionCategory (String categoryName, List<String> fileTypes) {
         fileExtensions.put(categoryName, fileTypes);
     }
-    
-    private void loadDefaultExtensions(){
+
+    private void loadDefaultExtensions () {
         List<String> images = new ArrayList<>();
         images.add("*.png");
         images.add("*.jpg");
         images.add("*.gif");
-        
+
         List<String> text = new ArrayList<>();
         text.add("*.xml");
-        
+
         fileExtensions.put("Image", images);
         fileExtensions.put("Text", text);
     }
-    
+
     /**
      * Allows the user to add a valid image extension for the file chooser.
+     * 
      * @param extension the extension name (i.e. jpg or png)
      */
     public void addExtensionFilter (String type, String extension) {
@@ -120,9 +122,27 @@ public class GraphicFileChooser extends StackPane{
                                                 String.format("*.%s", extension.toLowerCase()));
         fileChooser.getExtensionFilters().add(extFilter);
     }
-    
-    public void addExtensionFilter(String type){
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(type, fileExtensions.get(type));
+
+    /*
+     * public void addExtensionFilter(String type){
+     * FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(type,
+     * fileExtensions.get(type));
+     * fileChooser.getExtensionFilters().add(extFilter);
+     * }
+     */
+
+    /**
+     * Allows the user to add a valid image extension for the file chooser.
+     * 
+     * @param extension the extension name (i.e. jpg or png)
+     */
+    public void addExtensionFilter (String extension) {
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter(String.format("%s Images (*.%s)",
+                                                              extension.toUpperCase(),
+                                                              extension.toLowerCase()),
+                                                String.format("*.%s", extension.toLowerCase()));
         fileChooser.getExtensionFilters().add(extFilter);
     }
+
 }

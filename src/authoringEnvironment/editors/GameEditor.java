@@ -47,8 +47,7 @@ public class GameEditor extends Editor {
 
 		Text totalLives = new Text("TotalLives");
 		TextField totalLivesEntry = new TextField();
-		totalLivesEntry
-				.setPromptText("Enter the number of lives the player will begin the game with");
+		totalLivesEntry.setPromptText("Enter the number of lives the player will begin the game with");
 
 		framework.add(gameName, 0, 0);
 		framework.add(gameNameEntry, 1, 0);
@@ -60,5 +59,11 @@ public class GameEditor extends Editor {
 		visuals.getChildren().add(framework);
 		return visuals;
 	}
+
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

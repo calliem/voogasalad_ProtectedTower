@@ -13,6 +13,12 @@ public class ItemEditor extends SpriteEditor{
 	public ItemEditor (Controller c, String name){
 		super(c, name);
 	}
+
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
+    }
 	
 
 //	@Override

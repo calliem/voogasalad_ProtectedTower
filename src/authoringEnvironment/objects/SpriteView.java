@@ -7,6 +7,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -24,8 +25,15 @@ import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.ProjectReader;
+import authoringEnvironment.util.Scaler;
 import authoringEnvironment.setting.Setting;
 
+/**
+ * Displays an editable sprite object instance along with overlay interactions upon click. 
+ * @author Kevin He
+ * @author Callie Mao
+ *
+ */
 
 public abstract class SpriteView extends StackPane {
     private VBox editableContent;
@@ -37,6 +45,8 @@ public abstract class SpriteView extends StackPane {
     private String spriteName;
     private String imageFile;
     private List<Setting> parameterFields;
+    
+    private String myKey;
 
     private Text spriteNameDisplay;
     private Text overlaySpriteNameDisplay;
@@ -59,6 +69,7 @@ public abstract class SpriteView extends StackPane {
      * @param imageFile the file path of this sprite's image
      */
     public SpriteView (Controller c, String name, String imageFile) {
+        myKey = null;
         myController = c;
         if (name.length() == 0) {
             spriteName = DEFAULT_NAME;
@@ -161,9 +172,9 @@ public abstract class SpriteView extends StackPane {
         }
 
         if (correctFormat && save) {
-            String key = myController.addPartToGame(getSpriteType(),
+            myKey = myController.addPartToGame(getSpriteType(),
                                                     parameterFields);
-            myController.specifyPartImage(key, imageFile);
+            myController.specifyPartImage(myKey, imageFile);
             displaySavedMessage();
         }
     }
@@ -207,7 +218,7 @@ public abstract class SpriteView extends StackPane {
         close.setFitWidth(20);
         close.setPreserveRatio(true);
         close.setOnMousePressed( (e) -> {
-            playDeletionAnimation();
+            Scaler.scaleOverlay(1.0, 0.0, this);
             exists.setValue(false);
         });
         this.getChildren().add(close);
@@ -219,21 +230,6 @@ public abstract class SpriteView extends StackPane {
         this.getChildren().remove(this.getChildren().size() - 1);
     }
 
-    private ScaleTransition playDeletionAnimation () {
-        ScaleTransition delete = new ScaleTransition(Duration.millis(200), this);
-        delete.setFromX(1.0);
-        delete.setFromY(1.0);
-        delete.setToX(0.0);
-        delete.setToY(0.0);
-        delete.setCycleCount(1);
-        delete.play();
-
-        return delete;
-    }
-
-    public BooleanProperty isExisting () {
-        return exists;
-    }
 
     /**
      * Returns the sprite's parameter fields as an array of two strings, the parameter name
@@ -279,5 +275,9 @@ public abstract class SpriteView extends StackPane {
 
     public Button getCloseButton () {
         return overlayCloseButton;
+    }
+
+    public BooleanProperty isExisting () {
+        return exists;
     }
 }
