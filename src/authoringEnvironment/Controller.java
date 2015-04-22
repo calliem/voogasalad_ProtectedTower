@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import authoringEnvironment.editors.MapEditor;
 import authoringEnvironment.editors.Editor;
+import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.setting.Setting;
 
@@ -24,6 +27,7 @@ import authoringEnvironment.setting.Setting;
  * projectile for his tower from the other projectiles he's created.
  * 
  * @author Johnny Kumpf
+ * @author Callie Mao
  *
  */
 
@@ -31,11 +35,13 @@ public class Controller {
 
     private InstanceManager currentGame;
     private Map<String, List<String>> partTypeToKeyList;
+    private ObservableList<GameObject> myMaps;
 
     protected Controller (InstanceManager IM) {
         currentGame = IM;
         partTypeToKeyList = new HashMap<String, List<String>>();
         populateKeyList();
+        myMaps = FXCollections.observableArrayList();
     }
 
     protected Controller (String gameName, String rootDir) {
@@ -134,27 +140,13 @@ public class Controller {
     public Map<String, Object> getPartCopy (String partKey) {
         return currentGame.getAllPartData().get(partKey);
     }
+    
+
 
     public void specifyPartImage (String partKey, String imageFilePath) {
         currentGame.specifyPartImage(partKey, imageFilePath);
     }
 
-    /**
-     * Checks if a part with the given type and name already exists
-     * 
-     * @param partType The type of part
-     * @param nameToCheck The name for which you want to know if a part already exists
-     * @return True if the name is a duplicate, false if it's unique
-     */
-    public boolean nameAlreadyExists(String partType, String nameToCheck) {
-        List<String> keys = getKeysForPartType(partType);
-        for (String key : keys) {
-            String nameThatExists = (String) getPartCopy(key).get(InstanceManager.nameKey);
-            if (nameThatExists.equalsIgnoreCase(nameToCheck))
-                return true;
-        }
-        return false;
-    }
 
     public Map<String, Object> loadPart (String fullPartFilePath) {
         Map<String, Object> part = (Map<String, Object>) XMLWriter.fromXML(fullPartFilePath);
@@ -176,4 +168,12 @@ public class Controller {
         for (String key : currentGame.getAllPartData().keySet())
             addKey(key);
     }
+
+    public ObservableList<GameObject> getMaps () {
+        return myMaps;
+    }
+    
+  /*  public void setMaps (ObservableList<GameObject> maps) {
+        myMaps = maps;
+    }*/
 }

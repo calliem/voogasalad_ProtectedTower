@@ -1,5 +1,8 @@
 package engine.element.sprites;
 
+import javafx.geometry.Point2D;
+
+
 /**
  * This class represents game elements that move around the game space. Required abstract methods
  * include those to control movement. A variable representing velocity can be used to move.
@@ -8,7 +11,9 @@ package engine.element.sprites;
  *
  */
 public abstract class MoveableSprite extends Sprite {
-    // private Point2D myVelocity;
+
+    private Point2D myHeading;
+
     // private double myRange;
 
     public MoveableSprite () {
@@ -19,13 +24,22 @@ public abstract class MoveableSprite extends Sprite {
     // Setters and getters
 
     /**
-     * Sets the velocity of the sprite to a normalized value
+     * Sets the heading of the sprite to a normalized value
      * 
-     * @param velocity Point2D object representing x and y components of velocity
+     * @param heading Point2D object representing x and y components of heading
      */
-    // protected void setLocation (Point2D velocity) {
-    // myVelocity = velocity.normalize();
-    // }
+    protected void setHeading (Point2D velocity) {
+        myHeading = velocity.normalize();
+    }
+
+    /**
+     * Gets the heading of the sprite, returns a normalized value
+     * 
+     * @return normalized Point2D representing the heading of the object
+     */
+    protected Point2D getHeading () {
+        return myHeading;
+    }
 
     /**
      * Sets the velocity of the sprite to a normalized value
