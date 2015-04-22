@@ -1,8 +1,5 @@
 package engine.element.sprites;
 
-import util.reflection.Reflection;
-
-
 /**
  * Factory for producing enemies
  * 
@@ -13,16 +10,18 @@ import util.reflection.Reflection;
 public class EnemyFactory extends SpriteFactory {
     private final static String MY_CLASS_NAME = "engine.sprites.Enemy";
 
-
     public EnemyFactory () {
         super(MY_CLASS_NAME);
     }
 
-    public Enemy getEnemy (String enemyID) {
-        super.checkID(enemyID);
+    /**
+     * Method for getting a new instance of a specific enemy
+     * 
+     * @param enemyID GUID of the template enemy
+     * @return New enemy object with the parameters of the template enemy
+     */
 
-        Enemy enemy = (Enemy) Reflection.createInstance(MY_CLASS_NAME);
-        enemy.setParameterMap(super.getParameters(enemyID));
-        return enemy;
+    public Enemy getEnemy (String enemyID) {
+        return (Enemy) super.getSprite(enemyID);
     }
 }
