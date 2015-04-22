@@ -1,5 +1,8 @@
 package engine.element.sprites;
 
+import javafx.scene.image.ImageView;
+
+
 /**
  * This class represents the tower object in the game, which usually does not move and is used to
  * defend a map from Enemy objects. The tower shoots projectiles which target enemies.
@@ -13,6 +16,11 @@ public class Tower extends GameSprite {
     public Tower () {
         super();
         // TODO Auto-generated constructor stub
+    }
+
+    // TODO remove once testing is over
+    public Tower (ImageView test) {
+        super.setImageView(test);
     }
 
     @Override
