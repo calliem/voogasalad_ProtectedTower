@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import authoringEnvironment.InstanceManager;
+import authoringEnvironment.Variables;
 
 
 /**
@@ -26,11 +27,6 @@ public class TileMap extends GameObject {
     private Color myActiveColor;
 
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
-    private static final String TILESIZE_SETTING = "TileSize";
-    private static final String BACKGROUND_SETTING = "Background";
-    private static final String COORDINATES = "Coordinates";
-    private static final String KEYS = "Keys";
-    private static final String MAP_PART_NAME = "GameMap";
     private static final String TILE_KEY_ARRAY = "TileArrayKeys";
     private static final int LINE_START_COORDINATE = 0;
 
@@ -193,7 +189,7 @@ public class TileMap extends GameObject {
                 else {
                     newTiles[i][j] = myTiles[i][j];
                 }
-                attachTileListener(newTiles[i][j]);
+                attachTileListener(newTiles[i][j]); //TODO figure out why not working
                 myRoot.getChildren().add(newTiles[i][j]);
             }
         }
@@ -202,6 +198,7 @@ public class TileMap extends GameObject {
         myMapRows = newMapRows;
         myTiles = newTiles;
         setImageDimensions(myBackground);
+        changeTileSize(myTileSize);
         updateGridLines();
     }
 
@@ -292,8 +289,8 @@ public class TileMap extends GameObject {
 
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.nameKey, getName());
-        mapSettings.put(TILESIZE_SETTING, myTileSize);
-        mapSettings.put(BACKGROUND_SETTING, myBackground);
+        mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
+        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
 
         String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
         for (int i = 0; i < myTiles.length; i++) {

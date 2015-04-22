@@ -12,8 +12,10 @@ import javafx.scene.image.ImageView;
  * General abstraction for all game objects that do not get their properties directly from parameter
  * properties files (because they are not simply integer or string parameters that can be entered
  * in). This class contains the basic properties and methods that each game object in the game
- * should have. While game objects populated from sprite settings will also need similar methods,
- * these are checked for from the properties files.
+ * should have. These objects are directly created by the user before being saved as opposed to
+ * being created after parameters are specified. While game objects populated from sprite settings
+ * will also need similar methods, those spriteviews have different functionalities and are created
+ * differently.
  * 
  * @author Callie Mao
  *
@@ -88,9 +90,9 @@ public abstract class GameObject {
      */
     public void setThumbnail (ImageView image) {
         image.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
-                              Variables.THUMBNAIL_SIZE_MULTIPLIER);
+                          Variables.THUMBNAIL_SIZE_MULTIPLIER);
         image.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
-                               Variables.THUMBNAIL_SIZE_MULTIPLIER);
+                           Variables.THUMBNAIL_SIZE_MULTIPLIER);
         myThumbnail = image;
     }
 

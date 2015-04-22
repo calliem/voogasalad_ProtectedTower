@@ -76,7 +76,7 @@ public class LevelSidebar extends Sidebar {
         // getChildren().add(mapList);
 
         mapDisplay =
-                new MapUpdatableDisplay(myMapList, UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace());
+                new LevelUpdatableDisplay(myMapList, UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace());
         // temp.getChildren().add(mapDisplay);
         selectMap.getChildren().add(mapDisplay);
 

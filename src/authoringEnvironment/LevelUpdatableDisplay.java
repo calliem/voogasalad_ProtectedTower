@@ -2,6 +2,7 @@ package authoringEnvironment;
 
 import java.util.List;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.GridPane;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
 

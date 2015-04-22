@@ -364,7 +364,7 @@ public class InstanceManager {
 		List<Object> data = new ArrayList<Object>();
 		data.add(new Integer(500));
 		data.add(new Double(1.5));
-		example.addPart(Variables.TOWER, "MyFirstTower", params, data);
+		example.addPart(Variables.PARTNAME_TOWER, "MyFirstTower", params, data);
 		List<String> params2 = new ArrayList<String>();
 		params2.add(Variables.PARAMETER_HP);
 		params2.add(Variables.PARAMETER_SPEED);

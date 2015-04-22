@@ -23,6 +23,7 @@ import authoringEnvironment.Controller;
 import authoringEnvironment.MapUpdatableDisplay;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.UpdatableDisplay;
+import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.util.Scaler;
@@ -61,7 +62,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
     private int myLives;
-  //  private MapWorkspace getMapWorkspace();
+    // private MapWorkspace getMapWorkspace();
     private static final int DEFAULT_LIVES = 20; // TODO: how to get this number
                                                  // from Johnny
     private Color myActiveColor;
@@ -76,15 +77,11 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private Controller myController;
     private UpdatableDisplay mapDisplay;
 
-    public static final String MAP_PART_NAME = "GameMap"; // TODO: get this perhaps from the
-                                                          // property file?
-    public static final String TILEMAP_KEY = "TileMap";
-
     public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         System.out.println("mapsidebar initializer " + mapWorkspace);
-    //    getMapWorkspace() = mapWorkspace;
+        // getMapWorkspace() = mapWorkspace;
         myLives = DEFAULT_LIVES;
         /*
          * ObservableList<PathView> pathList =
@@ -95,12 +92,27 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         createMapSettings();
     }
 
+    /*
+     * public void setMapNameTextField(String s){
+     * mapNameTextField.setText(s);
+     * }
+     */
+
+    public void changeMap (TileMap map) {
+        getMapWorkspace().updateWithNewMap(map, myActiveColor);
+        mapNameTextField.setText(map.getName());
+        tileRowDisplay.setText(Integer.toString(map.getNumRows()));
+        tileColDisplay.setText(Integer.toString(map.getNumCols()));
+        tileSizeDisplay.setText(Integer.toString(map.getTileSize()));
+        // paths
+    }
+
     protected void createMapSettings () {
         // mapSettings = createAccordionTitleText(getResources().getString("MapSettings"));
         tileSettings = createAccordionTitleText(getResources().getString("TileSettings"));
         pathSettings = createAccordionTitleText(getResources().getString("PathSettings"));
 
-        //createGeneralSettings();
+        // createGeneralSettings();
 
         selectTile();
         setTileSize();
@@ -110,7 +122,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     /*
      * private void displayMaps () {
      * mapDisplay =
-     * new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace()); // test
+     * new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace()); //
+     * test
      * mapSettings.getChildren().add(mapDisplay);
      * }
      */
@@ -159,12 +172,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         Rectangle rectangleDisplay =
                 new Rectangle(DEFAULT_TILE_DISPLAY_SIZE,
-                              DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_COLOR); // remove
-                                                                                      // hardcoded
-                                                                                      // including
-                                                                                      // the
-                                                                                      // color;
-
+                              DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_COLOR);
         selectTile.getChildren().addAll(selection, rectangleDisplay);
 
         tileSettings.getChildren().add(selectTile);
@@ -195,20 +203,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         return imgSelector;
     }
 
-    // TODO: find a way to make this work
-    /*
-     * private Button updateTextField(String s, int boxWidth){ HBox selection =
-     * new HBox(); selection.setSpacing(10); Text lives = new
-     * Text(getResources().getString(s)); TextField textField = new TextField();
-     * Button button = new Button(getResources().getString("Update"));
-     * textField.setPrefWidth(boxWidth); selection.getChildren().addAll(lives,
-     * textField, button); getChildren().add(selection);
-     * 
-     * }
-     */
-
-    // TODO: path view
-
     private HBox setEditMapButtons () {
         HBox mapButtons = new HBox();
         mapButtons.setSpacing(20);
@@ -225,10 +219,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void removeMap () {
-        System.out.println("removing map from map sidebar");
-        System.out.println("Maps before remove: " + super.getMaps());
-        System.out.println("activemap" + getMapWorkspace().getActiveMap().getRoot());
-
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
         scale.setOnFinished( (e) -> {
@@ -238,13 +228,12 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             }
             getMapWorkspace().removeMap();
         });
-        System.out.println("Maps after remove: " + super.getMaps());
 
     }
 
     protected void createMap () {
         getMapWorkspace().removeMap();
-        TileMap newMap = getMapWorkspace().createDefaultMap();
+        TileMap newMap = getMapWorkspace().createDefaultMap(myActiveColor);
         ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
         scale.setOnFinished( (e) -> {
             getMapWorkspace().getChildren().add(newMap.getRoot());
@@ -323,7 +312,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void updateMapDim (String numRows, String numCols) {
         getMapWorkspace().getActiveMap().setMapDimensions(Integer.parseInt(numRows),
-                                                       Integer.parseInt(numCols));
+                                                          Integer.parseInt(numCols));
     }
 
     /**
@@ -355,7 +344,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         for (GameObject map : super.getMaps()) {
             Map<String, Object> mapSettings = map.saveToXML();
-            String key = myController.addPartToGame(MAP_PART_NAME, mapSettings);
+            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
             map.setKey(key);
         }
     }
@@ -371,7 +360,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         container.add(fileChooser, 0, 1, 2, 1);
 
         Text name = new Text(getResources().getString("Name"));
-       // Setting name = new StringSetting("label", "hi");
+        // Setting name = new StringSetting("label", "hi");
         container.add(name, 0, 2);
         mapNameTextField = new TextField();
         container.add(mapNameTextField, 1, 2);
@@ -381,8 +370,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         HBox mapDimensionsInput = new HBox();
         mapDimensionsInput.setSpacing(4); // TODO remove magic values
-        System.out.println("getMapWorkspace() in mapsidebar" + getMapWorkspace());
-        System.out.println("active map" + getMapWorkspace().getActiveMap());
         tileRowDisplay = new TextField(Integer.toString(getMapWorkspace().getActiveMap()
                 .getNumRows()));
         tileRowDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
@@ -400,11 +387,11 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         // display maps
         mapDisplay =
-                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace()); // test
+                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
         container.add(mapDisplay, 0, 5, 2, 1);
 
         // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
-      //  mapSettings.getChildren().add(container);
+        // mapSettings.getChildren().add(container);
 
     }
 }

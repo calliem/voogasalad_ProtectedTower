@@ -5,6 +5,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
 
@@ -38,13 +39,13 @@ public class MapWorkspace extends StackPane {
                               0.9 * AuthoringEnvironment.getEnvironmentHeight(),
                               Color.web("2A2A29"));
         getChildren().add(background);
-        createDefaultMap();
+        createDefaultMap(Variables.DEFAULT_TILE_COLOR);
 
     }
 
-    public TileMap createDefaultMap () {
+    public TileMap createDefaultMap (Color currentActiveColor) {
         TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
-        updateWithNewMap(defaultMap);
+        updateWithNewMap(defaultMap, currentActiveColor);
         return defaultMap;
     }
 
@@ -62,7 +63,7 @@ public class MapWorkspace extends StackPane {
         }
     }
 
-    public void updateWithNewMap (GameObject object) {
+    public void updateWithNewMap (GameObject object, Color currentActiveColor) {
         // TODO: reattach event handlers if none
         // TODO: doing this is not actually that good because javaFX does not allow you to have
         // multiple nodes, so you will require an update method which is doign exactly what you did
@@ -77,6 +78,7 @@ public class MapWorkspace extends StackPane {
         // if (getChildren().contains(myActiveMap.getRoot())){
         // System.out.println("active map already exists");
         getChildren().add(myActiveMap.getRoot());
+        myActiveMap.setActiveColor(currentActiveColor);
     }
 
   
