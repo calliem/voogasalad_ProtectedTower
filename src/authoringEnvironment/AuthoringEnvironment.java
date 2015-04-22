@@ -2,24 +2,23 @@ package authoringEnvironment;
 
 import java.util.List;
 import java.util.ResourceBundle;
+<<<<<<< HEAD
 import protectedtower.Main;
+=======
+>>>>>>> 4838a7a1e3157787ba9a4c1ef41d3ed0e7dc7e14
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
+import protectedtower.Main;
 import authoringEnvironment.editors.Editor;
 
 
@@ -40,9 +39,16 @@ public class AuthoringEnvironment {
     private GridPane myGridPane;
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
+<<<<<<< HEAD
                                                                   "main_environment_english");
     private Tab myCurrentTab;
     private Controller myController;
+=======
+            "main_environment_english");
+    private Controller myController;
+    
+    private Editor currentEditor;
+>>>>>>> 4838a7a1e3157787ba9a4c1ef41d3ed0e7dc7e14
 
     public AuthoringEnvironment (Stage s, String gameName, String rootDir) {
         myStage = s;
@@ -62,9 +68,36 @@ public class AuthoringEnvironment {
         myGridPane.setGridLinesVisible(true);
         createEnvironment(myGridPane);
         myScene = new Scene(myGridPane, myDimensions.getWidth(), myDimensions.getHeight());
+        
+        setupKeyPresses();
         return myScene;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Just for Bojia
+     */
+    private void setupKeyPresses () {
+        currentEditor = (Editor) myTabPane.getTabs().get(0);
+        myTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+            updateCurrentEditor((Editor) newTab);
+        });
+        
+        myScene.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ESCAPE){
+                if(currentEditor.isOverlayActive()){
+                    currentEditor.hideOverlay();
+                }
+            }
+        });
+    }
+    
+    private void updateCurrentEditor(Editor current){
+        currentEditor = current;
+    }
+
+>>>>>>> 4838a7a1e3157787ba9a4c1ef41d3ed0e7dc7e14
     public static double getEnvironmentWidth () {
         return myDimensions.getWidth();
     }
@@ -97,6 +130,7 @@ public class AuthoringEnvironment {
         grid.add(myTabPane, 0, 1);
     }
 
+<<<<<<< HEAD
     /**
      * Populates the tab bar with 1 tab for every non-abstract class in editors package
      */
@@ -123,6 +157,8 @@ public class AuthoringEnvironment {
      * myTabPane.getTabs().add(tab);
      * }
      */
+=======
+>>>>>>> 4838a7a1e3157787ba9a4c1ef41d3ed0e7dc7e14
     private MenuBar configureTopMenu () {
         Menu file = configureFileMenu();
         MenuBar menuBar = new MenuBar();

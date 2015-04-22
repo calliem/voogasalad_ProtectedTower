@@ -29,7 +29,7 @@ public class Tower extends GameSprite {
     }
 
     @Override
-    public void collide (Sprite sprite) {
+    public void onCollide (Sprite sprite) {
         // TODO Auto-generated method stub
 
     }
@@ -47,6 +47,7 @@ public class Tower extends GameSprite {
         return;
     }
 
+<<<<<<< HEAD
     @Override
     public boolean isTargetableBy (String type) {
         // TODO Auto-generated method stub
@@ -65,4 +66,6 @@ public class Tower extends GameSprite {
         System.out.println("Tower updated");
     }
 
+=======
+>>>>>>> 4838a7a1e3157787ba9a4c1ef41d3ed0e7dc7e14
 }

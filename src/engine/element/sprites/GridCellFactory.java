@@ -15,7 +15,7 @@ import util.reflection.Reflection;
 public class GridCellFactory {
 
     private Map<String, Map<String, Object>> myGridCells;
-    private final static String MY_CLASS_NAME = "engine.sprites.GridCell";
+    private final static String MY_CLASS_NAME = "engine.element.sprites.GridCell";
 
     public GridCellFactory () {
         myGridCells = new HashMap<>();

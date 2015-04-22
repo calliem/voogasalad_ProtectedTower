@@ -3,7 +3,7 @@ package engine.element;
 import java.util.ArrayList;
 import java.util.List;
 import engine.Endable;
-import engine.Updateable;
+import engine.UpdateAndReturnable;
 
 
 /**
@@ -15,29 +15,49 @@ import engine.Updateable;
  * @author Bojia Chen
  * @author Qian Wang
  */
-public class Level extends GameElement implements Updateable, Endable, Comparable<Level> {
+public class Level extends GameElement implements UpdateAndReturnable, Endable, Comparable<Level> {
 
     private static final String PARAMETER_NUMBER = "Number";
 
     private List<Round> myRounds;
     private double myHealth;
     private int myLives;
+    private int myActiveRoundIndex = 0;
+    private Round myActiveRound;
 
     // TODO: Win/Lose Conditions
 
     public Level () {
         myRounds = new ArrayList<>();
+        myActiveRound = myRounds.get(myActiveRoundIndex);
+    }
+
+    /**
+     * Method called by Player when ready to start next Round
+     * @return True if able to start next round
+     */
+    
+    public boolean startNextRound () {
+        if (myActiveRound.hasEnded()) {
+            myActiveRoundIndex++;
+        }
+        if (hasEnded()) {
+            return false;
+        }
+        else {
+            myActiveRound = myRounds.get(myActiveRoundIndex);
+            return true;
+        }
     }
 
     @Override
     public boolean hasEnded () {
-        // TODO Auto-generated method stub
-        return false;
+        return myActiveRoundIndex == myRounds.size();
     }
 
     @Override
-    public void update (int counter) {
-        // TODO Auto-generated method stub
+    public List<String> update (int counter) {
+        return myActiveRound.update(counter);
     }
 
     @Override

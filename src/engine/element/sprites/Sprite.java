@@ -18,7 +18,6 @@ import engine.element.GameElement;
  */
 public abstract class Sprite extends GameElement implements Updateable,Collidable {
 
-    // TODO fill in with correct string
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
 
@@ -116,32 +115,15 @@ public abstract class Sprite extends GameElement implements Updateable,Collidabl
     // Abstract methods
 
     /**
-     * Finds if a certain type of object can target this object
-     * 
-     * @param type String
-     * @return true if the given type can target this object's type
-     */
-    public abstract boolean isTargetableBy (String type);
-
-    /**
-     * Finds if a certain type of object can collide with this object
-     * 
-     * @param type String
-     * @return true if the given type can collide with this object's type
-     */
-    public abstract boolean isCollidableWith (String type);
-
-    /**
      * This method is called when this object collides with another and should include the behavior
      * of this object, such as stopping movement, or damaging the other object.
      * 
      * @param sprite Sprite object that this object collides with
-     * @return
      */
     private void updateImageView(){
         myImage.setTranslateX(myLocation.getX());
         myImage.setTranslateY(myLocation.getY());
     }
-    public abstract void collide (Sprite sprite);
+    public abstract void onCollide (Sprite sprite);
 
 }

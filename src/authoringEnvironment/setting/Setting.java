@@ -25,6 +25,7 @@ public abstract class Setting extends VBox{
     protected ImageView error;
     protected String dataAsString;
     private TextField editableField;
+    private Text parameter;
     
     private static final int FIELD_WIDTH = 125;
     private static final int PADDING = 10;
@@ -43,13 +44,21 @@ public abstract class Setting extends VBox{
         ScaleImage.scale(error, MESSAGE_SIZE, MESSAGE_SIZE);
         
         this.label = label;
-        Text parameter = new Text(String.format("%s:", label));
+        parameter = new Text(String.format("%s:", label));
         parameter.setFill(Color.WHITE);
         
         basicLayout.getChildren().add(parameter);
         this.getChildren().add(basicLayout);
         setupInteractionLayout();
         parseField();
+    }
+    
+    /**
+     * Change the color of the label text
+     * @param textColor desired color of the label
+     */
+    public void setTextColor(Color textColor){
+        parameter.setFill(textColor);
     }
     
     /**

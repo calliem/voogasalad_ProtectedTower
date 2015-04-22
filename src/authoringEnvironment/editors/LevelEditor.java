@@ -38,12 +38,12 @@ public class LevelEditor extends MainEditor{
 	
     public LevelEditor(Controller c, String name) {
 		super(c, name);
-		//mySidebar = new LevelSidebar(myResources, Controller.getEditor("Maps").getObjects(), getMapWorkspace());
+		//mySidebar = new LevelSidebar(myResources, myMaps, getMapWorkspace());
 		//getPane().add(mySidebar,1,0); //TODO: don't hardcode the Maps editor. Find a way to get it from teh existing one so that changing one thing in code won't require changes everywhere
 	  //  myLevels = new ArrayList<Node>();
 	}
 
-
+    
 	
 	
 	/*

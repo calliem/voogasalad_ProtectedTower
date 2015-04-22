@@ -19,7 +19,7 @@ public class Projectile extends MoveableSprite {
     }
 
     @Override
-    public void collide (Sprite sprite) {
+    public void onCollide (Sprite sprite) {
         // TODO Auto-generated method stub
 
     }
@@ -31,21 +31,8 @@ public class Projectile extends MoveableSprite {
     }
 
     @Override
-    public boolean isTargetableBy (String type) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean isCollidableWith (String type) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
     public void update (int counter) {
         // TODO Auto-generated method stub
         
     }
-
 }

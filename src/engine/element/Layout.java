@@ -13,17 +13,19 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import engine.CollisionTable;
 import engine.Quadtree;
-import engine.TowerManager;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.EnemyFactory;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.GridCellFactory;
+import engine.element.sprites.MapFactory;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.ProjectileFactory;
+import engine.element.sprites.RoundFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
-import engine.element.sprites.TowerFactory;
+import engine.element.sprites.TowerManager;
+import engine.element.sprites.WaveFactory;
 
 
 /**
@@ -34,109 +36,119 @@ import engine.element.sprites.TowerFactory;
  * 
  * @author Michael Yang
  * @author Qian Wang
+ * @author Bojia Chen
  *
  */
 public class Layout extends GameElement implements Updateable {
 
     private static final String PARAMETER_SIZE = "TileSize";
-    private List<Sprite> towerList;
-    private List<Sprite> enemyList;
-    private List<Sprite> projectileList;
-    private GridCell[][] terrainMap;
-    // private List<List<GridCell>> spriteMap; not sure if necessary yet
-    // private List<Sprite> spritesList; not sure if necessary
-    private double gridSize;
+    private static final String PARAMETER_HP = "HP";
+    private static final String PARAMETER_RANGE = "Range";
+    private static final String PARAMETER_BOUNDINGHEIGHT = "BoundingHeight";
+    private static final String PARAMETER_BOUNDINGWIDTH = "BoundingWidth";
+    private static final int INITIAL_QUADTREE_REGIONS = 1;
+
+    /**
+     * List of Javafx objects so that new nodes can be added for the player to display
+     */
+    private List<Node> myNodeList;
+    /**
+     * Contains the map of the current game
+     */
+    private GameMap myGameMap;
+    // Lists of game elements
+    private List<Tower> myTowerList;
+    private List<Enemy> myEnemyList;
+    private List<Projectile> myProjectileList;
+    // Factories to create game elements
     private TowerManager myTowerManager;
-    private TowerFactory myTowerFactory;
     private EnemyFactory myEnemyFactory;
     private ProjectileFactory myProjectileFactory;
     private GridCellFactory myGridCellFactory;
-    private List<Node> myNodeList;
-    private Quadtree quadTree;
-    private CollisionTable collisionTable;
+    private MapFactory myGameMapFactory;
+    private RoundFactory myRoundFactory;
+    private WaveFactory myWaveFactory;
+    /**
+     * Quad tree object used for collision
+     */
+    private Quadtree myQuadTree = null;
+    /**
+     * Table which contains interactions between game elements
+     */
+    private CollisionTable myCollisionTable;
 
-    public Layout (List<Node> nodeList) {
-        myTowerFactory = new TowerFactory();
-        myTowerManager = new TowerManager(myTowerFactory);
-        myTowerFactory.addManager(myTowerManager);
-        myNodeList = nodeList;
+    // private List<List<GridCell>> spriteMap; not sure if necessary yet
+    // private List<Sprite> spritesList; not sure if necessary
+
+    public Layout (List<Node> nodes) {
+        myNodeList = nodes;
+        myTowerManager = new TowerManager();
         myEnemyFactory = new EnemyFactory();
         myProjectileFactory = new ProjectileFactory();
         myGridCellFactory = new GridCellFactory();
+        myGameMapFactory = new MapFactory();
+        myRoundFactory = new RoundFactory();
+        myWaveFactory = new WaveFactory();
     }
 
-    public void init (GridCell[][] map, CollisionTable table) {
-        terrainMap = map;
-        collisionTable = table;
-        gridSize = (double) map[0][0].getParameter(PARAMETER_SIZE);
-        Rectangle pBounds = new Rectangle(map.length * gridSize, map[0].length * gridSize);
-        quadTree = new Quadtree(1, pBounds);
-    }
 
-    @Override
-    public void update (int counter) {
-        updateSprites(counter);
-    }
-
-    public List<Sprite> updateSprites (int counter) {
-        checkCollisions();
-        for (Sprite s : projectileList) {
-            s.update(counter);
-        }
-        for (Sprite t : towerList) {
-            t.update(counter);
-            // give every tower the enemies within its range
-            // t.enemiesInRange(getEnemiesInRange(t));
-            // fire projectiles
-            // if (t.getProjectile() != null){
-            // spawnProjectile(t.getProjectile(), t.getLocation());
-            // }
-        }
-        for (Sprite s : enemyList) {
-            // check if dead or to be removed
-            if ((int) s.getParameter("HP") <= 0) {
-                enemyList.remove(s);
-                myNodeList.remove(s);
-            }
-            else
-                s.update(counter);
-        }
-        // collision checking either before or after
-        // probably before so that update can handle removing sprites too
-        return getSprites();
-    }
-
-    private void checkCollisions () {
-        createQuadTree(getSprites());
-        for (Sprite s : getSprites()) {
-            List<Sprite> sprites = getPossibleCollisions(s);
-            for (Sprite t : sprites)
-                if (collides(createHitBox(s), createHitBox(t)) &&
-                    collisionTable.collisionCheck(s, t))
-                    s.collide(t);
-        }
-    }
 
     public void addToScene (Sprite s) {
        // myNodeList.add(s.getImageView());
     }
 
-    public void placeTower (String tower, Point2D loc) {
-        // Tower temp = myTowerManager.getTower(tower);
-        Tower temp = new Tower(new ImageView(".\\images\\liltower.jpg"));
-        temp.setLocation(loc.getX() - Math.floor(temp.getImageView().getImage().getWidth() / 2),loc.getY() - Math.floor(temp.getImageView().getImage().getHeight() / 2));
-        if (canPlace(temp, loc))
-            myNodeList.add(temp.getImageView());
+    public void setCollisionTable (CollisionTable table) {
+        myCollisionTable = table;
     }
 
-    public boolean canPlace (Sprite tower, Point2D loc) {
+    /**
+     * Creates a specific map and updates the current game map object in the layout. The specified
+     * GUID of the map name is used to know which map to instantiate. An array of gridcells are made
+     * and added to a map object, which is then set as the current map.
+     * 
+     * @param mapName GUID of the map
+     */
+    public void setMap (String mapName) {
+        myGameMap = myGameMapFactory.getMap(mapName);
+        Rectangle pBounds =
+                new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
+        myQuadTree = new Quadtree(INITIAL_QUADTREE_REGIONS, pBounds);
+    }
+
+    /**
+     * Puts a new tower at a specified location on the map. This method is called by the Player to
+     * place a new tower during the running of the game.
+     * 
+     * @param towerID String ID of Tower object to place
+     * @param location Point2D representing location on the map
+     */
+    public void placeTower (String towerID, Point2D location) {
+        // loc param can probably be removed because the tower can just hold its location to be
+        // placed at
+        Tower temp = myTowerManager.getTower(towerID);
+        temp.setLocation(location);
+        if (canPlace(temp, location)) {
+            myTowerList.add(temp);
+        }
+    }
+
+    /**
+     * Checks to see if a specific tower may be placed at a specific point on the map. This method
+     * can be used by the Player to check if a tower placement is valid.
+     * 
+     * @param tower Tower object that is being tested for valid placement
+     * @param location Point2D representing location on grid
+     * @return true if specified tower may be placed at the specified location
+     */
+    public boolean canPlace (Sprite tower, Point2D location) {
         // collision checking and tag checking
         Rectangle towerHitBox = createHitBox(tower);
         boolean collision = false;
-        List<Sprite> collidable = getCollisions(tower, towerList);
+        List<Sprite> collidable = getCollisions(tower, myTowerList);
         for (Sprite c : collidable) {
-            if (collides(towerHitBox, createHitBox(c)))
+            if (collides(towerHitBox, createHitBox(c))) {
                 collision = true;
+            }
         }
         // if there are any collisions with other towers, then collision stays true
         // if no collisions then the tower can be placed and collision is false
@@ -153,15 +165,136 @@ public class Layout extends GameElement implements Updateable {
         return place && !collision;
     }
 
+    // TODO refactor and combine spawnEnemy and spawnProjectile methods
+
+    /**
+     * Creates one or multiple new Enemy object and adds it to the map at the specified location.
+     * 
+     * @param enemyIDs List<String> of IDs of Enemy objects to place
+     * @param location Point2D representing location on grid
+     */
+    public void spawnEnemy (List<String> enemyIDs, Point2D location) {
+        enemyIDs.forEach(i -> spawnEnemy(i, location));
+    }
+
+    /**
+     * Creates a new Projectile object and adds it to the map at the specified location
+     * 
+     * @param enemyID String ID of Enemy object to place
+     * @param location Point2D representing location on grid
+     */
+    public void spawnEnemy (String enemyID, Point2D location) {
+        Enemy e = myEnemyFactory.getEnemy(enemyID);
+        e.setLocation(location);
+        myEnemyList.add(e);
+    }
+
+    /**
+     * Creates one or multiple new Projectile object and adds it to the map at the specified
+     * location.
+     * 
+     * @param projectileIDs List<String> of IDs of Projectile objects to place
+     * @param location Point2D representing location on grid
+     */
+    public void spawnProjectile (List<String> projectileIDs, Point2D location) {
+        projectileIDs.forEach(i -> spawnProjectile(i, location));
+    }
+
+    /**
+     * Creates a new Projectile object and adds it to the map at the specified location
+     * 
+     * @param projectileID String ID of Projectile object to place
+     * @param location Point2D representing location on grid
+     */
+    public void spawnProjectile (String projectileID, Point2D location) {
+        Projectile proj = myProjectileFactory.getProjectile(projectileID);
+        proj.setLocation(location);
+        myProjectileList.add(proj);
+    }
+
+    // Update methods
+
+    /**
+     * Updates the sprite locations and checks for collisions/apply effects of collision.
+     * 
+     * @see Updateable#update(int)
+     */
+    @Override
+    public void update (int counter) {
+        updateSpriteLocations();
+        updateSpriteCollisions();
+    }
+
+    /**
+     * Updates the positions of all sprites.
+     */
+    private void updateSpriteLocations () {
+        // Move enemies
+        myEnemyList.forEach(e -> e.move());
+        // Move projectiles
+        myProjectileList.forEach(p -> p.move());
+    }
+    /**
+     * Checks for collisions between all objects and applies the effects of collision, such as
+     * changing velocity, or removing form the map.
+     */
+    private void updateSpriteCollisions () {
+        // Check if enemies collide into towers and need to change their path
+        for (Sprite enemy : myEnemyList) {
+            // check if dead or to be removed
+            // if ((int) enemy.getParameter(PARAMETER_HP) <= 0)
+            // myEnemyList.remove(enemy);
+            // else
+            // enemy.update();
+        }
+        // Check if projectiles hit enemies and reduce health/remove from map
+        for (Sprite projectile : myProjectileList) {
+            // projectile.update();
+        }
+        // Check if towers are within range of shooting enemies and shoot
+        for (Sprite tower : myTowerList) {
+            // give every tower the enemies within its range
+            // tower.enemiesInRange(getEnemiesInRange(tower));
+            // fire projectiles
+            // if (tower.getProjectile() != null) {
+            // spawnProjectile(tower.getProjectile(), tower.getLocation());
+            // }
+        }
+    }
+
+    // Collision checking methods
+
+    private void checkCollisions () {
+        createQuadTree(getSprites());
+        for (Sprite s : getSprites()) {
+            List<Sprite> sprites = getPossibleCollisions(s);
+            for (Sprite t : sprites)
+                if (collides(createHitBox(s), createHitBox(t)) &&
+                    myCollisionTable.collisionCheck(s, t))
+                    s.onCollide(t);
+        }
+    }
+
+    /**
+     * @return List<Sprite> of all active sprites on the map
+     */
+    private List<Sprite> getSprites () {
+        List<Sprite> spritesList = new ArrayList<>();
+        spritesList.addAll(myTowerList);
+        spritesList.addAll(myEnemyList);
+        spritesList.addAll(myProjectileList);
+        return spritesList;
+    }
+
     private Circle createRange (Sprite s) {
         return new Circle(s.getLocation().getX(), s.getLocation().getY(),
-                          (double) s.getParameter("range"));
+                          (double) s.getParameter(PARAMETER_RANGE));
     }
 
     private Rectangle createHitBox (Sprite s) {
         return new Rectangle(s.getLocation().getX(), s.getLocation().getY(),
-                             (double) s.getParameter("BoundingWidth"),
-                             (double) s.getParameter("BoundingHeight"));
+                             (double) s.getParameter(PARAMETER_BOUNDINGWIDTH),
+                             (double) s.getParameter(PARAMETER_BOUNDINGHEIGHT));
     }
 
     private boolean collides (Shape sprite1, Shape sprite2) {
@@ -179,7 +312,7 @@ public class Layout extends GameElement implements Updateable {
     private Set<Sprite> getEnemiesInRange (Sprite tower) {
         Set<Sprite> enemies = new HashSet<>();
         // find enemies in range (collision checking)
-        List<Sprite> collidable = getCollisions(tower, enemyList);
+        List<Sprite> collidable = getCollisions(tower, myEnemyList);
         for (Sprite c : collidable) {
             if (collides(createRange(tower), createHitBox(c)))
                 enemies.add(c);
@@ -187,35 +320,21 @@ public class Layout extends GameElement implements Updateable {
         return enemies;
     }
 
-    private void createQuadTree (List<Sprite> inserts) {
-        quadTree.clear();
+    private void createQuadTree (List<? extends Sprite> inserts) {
+        myQuadTree.clear();
         for (Sprite e : inserts)
-            quadTree.insert(e);
+            myQuadTree.insert(e);
     }
 
     private List<Sprite> getPossibleCollisions (Sprite target) {
         List<Sprite> collidable = new ArrayList<>();
-        quadTree.retrieve(collidable, target);
+        myQuadTree.retrieve(collidable, target);
         return collidable;
     }
 
-    private List<Sprite> getCollisions (Sprite target, List<Sprite> inserts) {
+    private List<Sprite> getCollisions (Sprite target, List<? extends Sprite> inserts) {
         createQuadTree(inserts);
         return getPossibleCollisions(target);
-    }
-
-    public void spawnEnemy (List<String> enemy, Point2D loc) {
-        for (String s : enemy) {
-            Enemy e = myEnemyFactory.getEnemy(s);
-            e.setLocation(loc);
-            enemyList.add(e);
-        }
-    }
-
-    public void spawnProjectile (String projectile, Point2D loc) {
-        Projectile proj = myProjectileFactory.getProjectile(projectile);
-        proj.setLocation(loc);
-        projectileList.add(proj);
     }
 
     private Set<GridCell> occupiedGridCells (Sprite sprite) {
@@ -246,17 +365,11 @@ public class Layout extends GameElement implements Updateable {
         return null;
     }
 
-    public List<Sprite> getSprites () {
-        List<Sprite> spritesList = new ArrayList<>();
-        spritesList.addAll(towerList);
-        spritesList.addAll(enemyList);
-        spritesList.addAll(projectileList);
-        return spritesList;
-    }
+    // Loading game methods
 
-    // TODO refactor next methods
-    public void initializeTowers (Map<String, Map<String, Object>> allObjects) {
-        myTowerFactory.add(allObjects);
+    // TODO refactor below methods
+    public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
+        myTowerManager.add(allTowers);
     }
 
     public void initializeEnemies (Map<String, Map<String, Object>> allObjects) {
@@ -269,5 +382,17 @@ public class Layout extends GameElement implements Updateable {
 
     public void initializeGridCells (Map<String, Map<String, Object>> allObjects) {
         myGridCellFactory.add(allObjects);
+    }
+
+    public void initializeGameMaps (Map<String, Map<String, Object>> allObjects) {
+        myGameMapFactory.add(allObjects);
+    }
+
+    public void initializeRounds (Map<String, Map<String, Object>> allObjects) {
+        myRoundFactory.add(allObjects);
+    }
+
+    public void initializeWaves (Map<String, Map<String, Object>> allObjects) {
+        myWaveFactory.add(allObjects);
     }
 }

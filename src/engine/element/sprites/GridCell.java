@@ -14,6 +14,7 @@ import javafx.geometry.Point2D;
  */
 public class GridCell extends Sprite {
 
+    // TODO replace these with calls to parameters map
     private List<String> myTags;
     private Point2D centerLocation;
 
@@ -51,25 +52,13 @@ public class GridCell extends Sprite {
         return centerLocation.getY();
     }
 
-    @Override
-    public boolean isTargetableBy (String type) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean isCollidableWith (String type) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
     public boolean isObstacle (String type) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public void collide (Sprite sprite) {
+    public void onCollide (Sprite sprite) {
         // TODO Auto-generated method stub
 
     }

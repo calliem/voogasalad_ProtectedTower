@@ -1,0 +1,14 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Item</string>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>ExampleGame_Unnamed1.Item</string>
+  </entry>
+  <entry>
+    <string>Name</string>
+    <string>Unnamed1</string>
+  </entry>
+</map>
