@@ -2,7 +2,6 @@ package player;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -29,7 +28,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -37,7 +35,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import engine.GameController;
 import engine.InsufficientParametersException;
-import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 
 
@@ -75,15 +72,14 @@ public class GamePlayer extends Application {
             }
         });
         ObservableList<Node> displayList = FXCollections.observableArrayList(new ArrayList<>());
-        try{
-         myGameController = new GameController(gameFile.getParent(),displayList, availableTowers);
+        try {
+            myGameController =
+                    new GameController(gameFile.getParent(), displayList, availableTowers);
         }
-        catch(InsufficientParametersException e){
-         return;
-         }
-        displayList.addListener(new ListChangeListener<Node>() {
-            @Override
-            public void onChanged (Change change) {
+        catch (InsufficientParametersException e) {
+            return;
+        }
+        displayList.addListener((ListChangeListener<Node>) change-> {
                 while (change.next()) {
                     for (Object obj : change.getAddedSubList()) {
                         Node placeSprite = (Node) obj;
@@ -94,14 +90,13 @@ public class GamePlayer extends Application {
                         mainArea.getChildren().remove(placeSprite);
                     }
                 }
-            }
         });
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
-         Image myImage = new Image(".\\images\\liltower.jpg");
-         ImageView test = new ImageView(myImage);
-         ImageView test1 = new ImageView(myImage);
-         ImageView test2 = new ImageView(myImage);
+        Image myImage = new Image(".\\images\\liltower.jpg");
+        ImageView test = new ImageView(myImage);
+        ImageView test1 = new ImageView(myImage);
+        ImageView test2 = new ImageView(myImage);
         // ImageView test3 = new ImageView(myImage);
         // ImageView test4 = new ImageView(myImage);
         // ImageView test5 = new ImageView(myImage);
@@ -267,16 +262,17 @@ public class GamePlayer extends Application {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
                 if (db.hasString()) {
-                    //ImageView place = new ImageView(db.getImage());
+                    // ImageView place = new ImageView(db.getImage());
                     System.out.println(db.getString());
-                    myGameController.addPlaceable(db.getString(), event.getSceneX(),event.getSceneY());
-                    //place.setTranslateX(event.getSceneX() -
-                    //                    Math.floor(db.getImage().getWidth() / 2));
-                    //place.setTranslateY(event.getSceneY() -
-                    //                    Math.floor(db.getImage().getHeight() / 2));
+                    myGameController.addPlaceable(db.getString(), event.getSceneX(),
+                                                  event.getSceneY());
+                    // place.setTranslateX(event.getSceneX() -
+                    // Math.floor(db.getImage().getWidth() / 2));
+                    // place.setTranslateY(event.getSceneY() -
+                    // Math.floor(db.getImage().getHeight() / 2));
                     // TODO: tell engine about this
                     // game.addTower(place,);
-                    //mainArea.getChildren().add(place);
+                    // mainArea.getChildren().add(place);
                     success = true;
                 }
                 /*
