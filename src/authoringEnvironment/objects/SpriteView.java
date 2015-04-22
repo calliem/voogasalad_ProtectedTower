@@ -45,6 +45,8 @@ public abstract class SpriteView extends StackPane {
     private String spriteName;
     private String imageFile;
     private List<Setting> parameterFields;
+    
+    private String myKey;
 
     private Text spriteNameDisplay;
     private Text overlaySpriteNameDisplay;
@@ -67,6 +69,7 @@ public abstract class SpriteView extends StackPane {
      * @param imageFile the file path of this sprite's image
      */
     public SpriteView (Controller c, String name, String imageFile) {
+        myKey = null;
         myController = c;
         if (name.length() == 0) {
             spriteName = DEFAULT_NAME;
@@ -169,9 +172,9 @@ public abstract class SpriteView extends StackPane {
         }
 
         if (correctFormat && save) {
-            String key = myController.addPartToGame(getSpriteType(),
+            myKey = myController.addPartToGame(getSpriteType(),
                                                     parameterFields);
-            myController.specifyPartImage(key, imageFile);
+            myController.specifyPartImage(myKey, imageFile);
             displaySavedMessage();
         }
     }
