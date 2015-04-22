@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
@@ -83,11 +83,26 @@ public class Layout extends GameElement implements Updateable {
     }
 
     /**
+     * Temporary method to remove a projectile from the game
+     * 
+     * @param Projectile to be removed
+     *
+     * 
+     */
+
+    // TODO:Poor design to have a method for every kind of sprite, need to think of a better way to
+    // do this without repeating code
+    public void removeProjectile (Sprite sprite) {
+        myProjectileList.remove(sprite);
+        myNodeList.remove(sprite.getImageView());
+    }
+
+    /**
      * Temporary method to hardcode a collision table for testing purposes
      */
     public void makeCollisionTable () {
-        List<Consumer<Sprite>> actionList = new ArrayList<Consumer<Sprite>>();
-        actionList.add(e -> e.onCollide(null));
+        List<BiConsumer<Sprite,Sprite>> actionList = new ArrayList<BiConsumer<Sprite,Sprite>>();
+        actionList.add((e,f) -> e.onCollide(f));
         String[] spritePair = { "Enemy", "Projectile" };
         List<Integer>[] actionPair = (List<Integer>[]) new Object[2];
 

@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import engine.element.sprites.*;
 
 
@@ -21,7 +21,7 @@ import engine.element.sprites.*;
  */
 
 public class CollisionManager {
-    private Map<String[], Collection<Consumer<Sprite>>[]> myDecisionMap;
+    private Map<String[], Collection<BiConsumer<Sprite,Sprite>>[]> myDecisionMap;
     private static final String PARAMETER_NAME = "PartType";
     private static final int REQUIRED_KEY_LENGTH = 2;
 
@@ -31,11 +31,11 @@ public class CollisionManager {
      * @param interactionMap Map<String[], List<Integer>[]> object that maps a 2-element String
      *        array representing the two Sprites that have an interaction to a 2-element
      *        List<Integer> array representing a list of integers that correspond to actions.
-     * @param actions List<Consumer<Sprite>> object of ordered actions that may be used to specify
+     * @param actions List<BiConsumer<Sprite,Sprite>> object of ordered actions that may be used to specify
      *        what actions should be applied to which sprites.
      */
     public CollisionManager (Map<String[], List<Integer>[]> interactionMap,
-                             List<Consumer<Sprite>> actions) {
+                             List<BiConsumer<Sprite,Sprite>> actions) {
         // check that input is valid
         for (String[] key : interactionMap.keySet()) {
             if (key.length != REQUIRED_KEY_LENGTH ||
@@ -43,19 +43,20 @@ public class CollisionManager {
                                                                                                              "InteractionMap is in invalid format"); }
         }
         // declare and load the decision map
-        myDecisionMap = new HashMap<String[], Collection<Consumer<Sprite>>[]>();
+        myDecisionMap = new HashMap<String[], Collection<BiConsumer<Sprite,Sprite>>[]>();
         for (String[] pair : interactionMap.keySet()) {
-            Collection<Consumer<Sprite>>[] actionArray =
-                    (Collection<Consumer<Sprite>>[]) new Collection[2];
+            @SuppressWarnings("unchecked")
+            Collection<BiConsumer<Sprite,Sprite>>[] actionArray =
+                    (Collection<BiConsumer<Sprite,Sprite>>[]) new Collection[2];
 
             // Fill collection of actions
-            Collection<Consumer<Sprite>> pairActions = new ArrayList<Consumer<Sprite>>();
+            Collection<BiConsumer<Sprite,Sprite>> pairActions = new ArrayList<BiConsumer<Sprite,Sprite>>();
             for (int i : interactionMap.get(pair)[0]) {
                 pairActions.add(actions.get(i));
             }
             actionArray[0] = pairActions;
 
-            Collection<Consumer<Sprite>> actionsTwo = new ArrayList<Consumer<Sprite>>();
+            Collection<BiConsumer<Sprite,Sprite>> actionsTwo = new ArrayList<BiConsumer<Sprite,Sprite>>();
             for (int i : interactionMap.get(pair)[1]) {
                 actionsTwo.add(actions.get(i));
             }
@@ -76,12 +77,12 @@ public class CollisionManager {
     public boolean applyAction (Sprite spriteOne, Sprite spriteTwo) {
         String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
         if (myDecisionMap.containsKey(spriteTagPair)) {
-            for (Consumer<Sprite> action : myDecisionMap.get(spriteTagPair)[0]) {
-                action.accept(spriteOne);
+            for (BiConsumer<Sprite,Sprite> action : myDecisionMap.get(spriteTagPair)[0]) {
+                action.accept(spriteOne,spriteTwo);
             }
 
-            for (Consumer<Sprite> action : myDecisionMap.get(spriteTagPair)[1]) {
-                action.accept(spriteTwo);
+            for (BiConsumer<Sprite,Sprite> action : myDecisionMap.get(spriteTagPair)[1]) {
+                action.accept(spriteTwo,spriteOne);
             }
             return true;
         }
