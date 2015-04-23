@@ -98,7 +98,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         tileRowDisplay.setText(Integer.toString(map.getNumRows()));
         tileColDisplay.setText(Integer.toString(map.getNumCols()));
         tileSizeDisplay.setText(Integer.toString(map.getTileSize()));
-        //TODO: change graphic file choose text
+        // TODO: change graphic file choose text
         // paths
     }
 
@@ -229,7 +229,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     protected void createMap () {
         getMapWorkspace().removeMap();
-        System.out.println("hi");
         TileMap newMap = getMapWorkspace().createDefaultMap(myActiveColor);
         ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
         scale.setOnFinished( (e) -> {
@@ -259,12 +258,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         activeMap.setName(mapNameTextField.getText());
         WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
-        System.out.println("snapImage " + snapImage);
         ImageView snapView = new ImageView();
         snapView.setImage(snapImage);
-        System.out.println("snapview " + snapView);
         activeMap.setThumbnail(snapView);
-        System.out.println("thumbnail " + activeMap.getThumbnail());
 
         if (!super.getMaps().contains(activeMap)) {
             super.getMaps().add(activeMap);
@@ -274,7 +270,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
         }
-        System.out.println("Maps after save: " + super.getMaps());
 
         // saves the map to a specific key
         // checks to see if the current map already exists
@@ -299,9 +294,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          * // part.get(InstanceManager.nameKey);
          * // part.get(MapEditor.TILE_MAP);
          */
-
-        System.out.println("your file has been saved");
-
         mapDisplay.updateDisplay(super.getMaps());
 
     }

@@ -41,7 +41,7 @@ public class TileMap extends GameObject {
 
     private Group myGridLines;
 
-    private static final Color DEFAULT_TILE_COLOR = Color.WHITE;
+    private static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
 
     // TODO: user specifies rectangle or square dimensions...allow this flexibility
     public TileMap (int mapRows, int mapCols, int tileSize) {
@@ -67,12 +67,12 @@ public class TileMap extends GameObject {
         image.setFitWidth(myMapCols * myTileSize);
         image.setFitHeight(myMapRows * myTileSize);
     }
-    
-    public int getWidth(){
+
+    public int getWidth () {
         return myTileSize * myMapCols;
     }
-    
-    public int getHeight(){
+
+    public int getHeight () {
         return myTileSize * myMapRows;
     }
 
@@ -109,14 +109,10 @@ public class TileMap extends GameObject {
     }
 
     private void attachTileListener (Tile tile) {
-        tile.setOnMouseClicked(e -> {
-            tile.setFill(myActiveColor);
-            // System.out.println("I have been clicked!" + tile.getFill().toString());
-        });
-        tile.setOnMouseDragEntered(e -> {
-            tile.setFill(myActiveColor);
-            // System.out.println("I have been dragged!" + tile.getFill().toString());
-        });
+        tile.setOnMouseClicked(e -> tileClicked(tile));
+      //this method is used instead of tileClicked to allow for easier "coloring" of large groups of tiles
+        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); 
+
         // System.out.print("tile listener added");
     }
 
@@ -130,6 +126,19 @@ public class TileMap extends GameObject {
         }
         updateGridLines();
         setImageDimensions(myBackground);
+    }
+
+    private void tileClicked (Tile tile) {
+
+        System.out.println(tile.getColor());
+        System.out.println(myActiveColor);
+        if (tile.getColor() == myActiveColor) {
+            System.out.println("colors are equal!");
+            tile.setFill(Color.TRANSPARENT);
+        }
+        else {
+            tile.setFill(myActiveColor);
+        }
     }
 
     public void removeTileListeners () {
@@ -190,7 +199,7 @@ public class TileMap extends GameObject {
                 else {
                     newTiles[i][j] = myTiles[i][j];
                 }
-                attachTileListener(newTiles[i][j]); //TODO figure out why not working
+                attachTileListener(newTiles[i][j]); // TODO figure out why not working
                 myRoot.getChildren().add(newTiles[i][j]);
             }
         }
