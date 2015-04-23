@@ -72,6 +72,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private TextField tileSizeDisplay;
     private VBox pathSettings;
     private VBox tileSettings;
+    private GraphicFileChooser fileChooser;
     private TextField mapNameTextField;
     private Controller myController;
     private UpdatableDisplay mapDisplay;
@@ -98,7 +99,15 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         tileRowDisplay.setText(Integer.toString(map.getNumRows()));
         tileColDisplay.setText(Integer.toString(map.getNumCols()));
         tileSizeDisplay.setText(Integer.toString(map.getTileSize()));
-        // TODO: change graphic file choose text
+        String detailedFilePath = map.getImgFilePath();
+        if (detailedFilePath != null){
+            String displayFilePath = detailedFilePath.substring(detailedFilePath.lastIndexOf("/") + 1);
+            fileChooser.getFileDisplay().setText(displayFilePath);
+        }
+        else{
+            fileChooser.getFileDisplay().setText("Select background"); //TODO: magic value. this is also used int he graphic file chooser
+        }
+       
         // paths
     }
 
@@ -344,7 +353,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         container.add(setEditMapButtons(), 0, 0, 2, 1);
 
-        GraphicFileChooser fileChooser = setImage();
+        fileChooser = setImage();
         container.add(fileChooser, 0, 1, 2, 1);
 
         Text name = new Text(getResources().getString("Name"));

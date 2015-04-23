@@ -25,6 +25,7 @@ public class TileMap extends GameObject {
     private int myTileSize;
     private ImageView myBackground;
     private Color myActiveColor;
+    private String imgFilePath;
 
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
     private static final String TILE_KEY_ARRAY = "TileArrayKeys";
@@ -52,6 +53,8 @@ public class TileMap extends GameObject {
         myTileSize = tileSize;
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
+       // imgFilePath = DEFAULT_BACKGROUND_PATH;
+        imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
         setThumbnail(myBackground);
         setImageDimensions(myBackground);
@@ -91,6 +94,7 @@ public class TileMap extends GameObject {
      */
 
     public void setBackground (String filepath) {
+        imgFilePath = filepath;
         myRoot.getChildren().remove(myBackground);
         Image image = new Image(filepath);
         myBackground = new ImageView(image);
@@ -315,4 +319,9 @@ public class TileMap extends GameObject {
     public Group getRoot () {
         return myRoot;
     }
+    
+    public String getImgFilePath(){
+        return imgFilePath;
+    }
+
 }
