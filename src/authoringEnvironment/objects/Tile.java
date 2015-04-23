@@ -128,7 +128,7 @@ public class Tile extends Rectangle {
 
     public Map<String, Object> saveToXML () {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
-        mapSettings.put(InstanceManager.nameKey, myName);
+        mapSettings.put(InstanceManager.KEY_NAME, myName);
         mapSettings.put(TAGS, myTags);
         mapSettings.put(COLOR, myColor);
         return mapSettings;

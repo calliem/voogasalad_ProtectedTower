@@ -51,8 +51,8 @@ public class ProjectReader {
         String[] params = getParamListForPart(partType);
         List<String> finalList = new ArrayList<String>();
         for (String param : params) {
-            if (!param.equals(InstanceManager.nameKey)
-                && !param.equals(InstanceManager.partTypeKey))
+            if (!param.equals(InstanceManager.KEY_NAME)
+                && !param.equals(InstanceManager.KEY_PART_TYPE))
                 finalList.add(param);
         }
         return finalList;

@@ -4,15 +4,7 @@ import javafx.scene.paint.Color;
 
 public class Variables {
 
-    public static final double THUMBNAIL_SIZE_MULTIPLIER = 0.07;
-
-    public static final String partsFileDir = "/AllPartData";
-    public static final String partTypeKey = "PartType";
-    public static final String nameKey = "Name";
-    public static final String partKeyKey = "PartKey";
-    public static final String imageKey = "Image";
-    public static final String savePathKey = "SavePath";
-    
+    public static final double THUMBNAIL_SIZE_MULTIPLIER = 0.065;
     
     //TODO: is there a way to get these from the resource files?
     
@@ -22,12 +14,12 @@ public class Variables {
     public static final String PARAMETER_SPEED = "Speed";
     
     public static final String PARTNAME_TOWER = "Tower";
-    public final static String PARTNAME_ENEMY = "Enemies"; //Don't think this is done right
+    public final static String PARTNAME_ENEMIES = "Enemies";
     public final static String PARAMETER_TIMES = "Times";
     public static final String PARAMETER_TILESIZE = "TileSize";
     public static final String PARAMETER_BACKGROUND = "Background";
     public static final String PARTNAME_MAP = "GameMap";
 
-    public static final Color DEFAULT_TILE_COLOR = Color.WHITE;
+    public static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
 
 }

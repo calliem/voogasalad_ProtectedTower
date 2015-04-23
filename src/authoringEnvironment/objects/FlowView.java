@@ -130,7 +130,7 @@ public class FlowView extends HBox {
     }
 
     private void selectUnit() {
-        SpriteSetting chooseUnit = new SpriteSetting(Variables.PARTNAME_ENEMY, Variables.PARTNAME_ENEMY);
+        SpriteSetting chooseUnit = new SpriteSetting(Variables.PARTNAME_ENEMIES, Variables.PARTNAME_ENEMIES);
         chooseUnit.getChildren().remove(0);
         chooseUnit.setTextColor(Color.BLACK);
         insertElement(chooseUnit);
@@ -154,7 +154,7 @@ public class FlowView extends HBox {
                                                              .getAbsolutePath());
         try {
             delays = (List<Double>) waveInfo.get(Variables.PARAMETER_TIMES);
-            partFileNames = (List<String>) waveInfo.get(Variables.PARTNAME_ENEMY);
+            partFileNames = (List<String>) waveInfo.get(Variables.PARTNAME_ENEMIES);
         } catch (NullPointerException e) {
 
         }

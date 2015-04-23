@@ -133,9 +133,6 @@ public class TileMap extends GameObject {
     }
 
     private void tileClicked (Tile tile) {
-
-        System.out.println(tile.getColor());
-        System.out.println(myActiveColor);
         if (tile.getColor() == myActiveColor) {
             System.out.println("colors are equal!");
             tile.setFill(Color.TRANSPARENT);
@@ -302,7 +299,7 @@ public class TileMap extends GameObject {
          */
 
         Map<String, Object> mapSettings = new HashMap<String, Object>();
-        mapSettings.put(InstanceManager.nameKey, getName());
+        mapSettings.put(InstanceManager.KEY_NAME, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
         mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
 

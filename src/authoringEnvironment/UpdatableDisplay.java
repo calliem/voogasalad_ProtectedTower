@@ -63,7 +63,7 @@ public abstract class UpdatableDisplay extends VBox {
             // Rectangle objectBackground = new Rectangle(45, 45, Color.WHITE); // TODO: remove hard
             // coded stuff
 
-            ImageView thumbnail = object.getThumbnail(); // may give rectangle or imageview
+            ImageView thumbnail = object.getUniqueThumbnail(); // may give rectangle or imageview
             // TODO; write if statement: if has thumbnail then get it, if not then get the image and
             // resize it
             thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
