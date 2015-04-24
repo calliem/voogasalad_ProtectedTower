@@ -178,7 +178,7 @@ public abstract class SpriteEditor extends Editor {
         return editControls;
     }
 
-    protected void promptSpriteCreation () {
+    private void promptSpriteCreation () {
         Button create = prompt.getCreateButton();
         create.setOnAction( (e) -> {
             if(myController.nameAlreadyExists(partNames.getString(editorType), prompt.getCurrentText()))
