@@ -134,11 +134,24 @@ public class AuthoringEnvironment {
         quit.setOnAction(e -> Platform.exit());
         MenuItem mainMenu = new MenuItem(myResources.getString("Menu"));
         mainMenu.setOnAction(e -> returnToMenu());
-
-        file.getItems().addAll(mainMenu, quit);
+        MenuItem save = new MenuItem(myResources.getString("Save"));
+        save.setOnAction(e -> saveGame());
+        MenuItem load = new MenuItem(myResources.getString("Load"));
+        load.setOnAction(e -> loadGame());
+        
+        file.getItems().addAll(save, load, mainMenu, quit);
         return file;
     }
-
+    
+   
+    private void saveGame(){
+        myController.saveGame();
+    }
+    
+    private void loadGame(){
+        
+    }
+    
     private void returnToMenu () {
         myStage.setScene(Main.getScenes()[0]);
         myStage.show();
