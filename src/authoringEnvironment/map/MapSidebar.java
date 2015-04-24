@@ -243,79 +243,27 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      */
     private void saveMap (TileMap activeMap) {
         
-        
-       
-        
-        //TODO:
-        //myController.delete(key);
-        
         activeMap.setName(mapNameTextField.getText());
         WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
         ImageView snapView = new ImageView();
         snapView.setImage(snapImage);
         activeMap.setThumbnail(snapView);
-
-        
-        //remove below
-        if (!super.getMaps().contains(activeMap)) {
-            super.getMaps().add(activeMap);
-        }
         
         //use this one
         List<String> mapKeys = myController.getKeysForPartType(Variables.PARTNAME_MAP);
-        if (mapKeys.contains(activeMap.getKey())){
-            Map<String, Object> mapSettings = activeMap.save();
-            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
-            activeMap.setKey(key);
-        }
-        
-        
-        //remove below        
-        else {
-            int existingIndex = super.getMaps().indexOf(activeMap);
-            super.getMaps().remove(activeMap);
-            super.getMaps().add(existingIndex, activeMap);
-        }
-        
-        
-        
+        Map<String, Object> mapSettings = activeMap.save();
+
+        String key;
+        if (!mapKeys.contains(activeMap.getKey())){
+            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
+        }  
         else{
-            int existingIndex = mapKeys.indexOf(activeMap.getKey());
-            myController.delete(activeMap.getKey());
-            
-            Map<String, Object> mapSettings = activeMap.save();
-            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
-            activeMap.setKey(key);
-            
-            mapKeys.add(existingIndex, activeMap.getKey());
+            key = myController.addPartToGame(activeMap.getKey(), Variables.PARTNAME_MAP, mapSettings);    
         }
-
-        // saves the map to a specific key
-        // checks to see if the current map already exists
-        /*
-         * Map<String, Object> mapSettings = new HashMap<String, Object>();
-         * if (mapSettings.containsValue(mapName.getText())) {
-         * // display error
-         * System.out.println("That map name already exists"); // TODO: utilize same visual display
-         * // as spriteeditor
-         * }
-         * else {
-         * mapSettings.put(InstanceManager.nameKey, mapName.getText());
-         * mapSettings.put(TILEMAP_KEY, activeMap);
-         * myController.addPartToGame(MAP_PART_NAME, mapSettings);
-         * }
-         * 
-         * List<String> keys = myController.getKeysForPartType(MAP_PART_NAME);
-         * for (String key : keys) {
-         * Map<String, Object> part = myController.getPartCopy(key);
-         * System.out.println("key" + key);
-         * }
-         * // part.get(InstanceManager.nameKey);
-         * // part.get(MapEditor.TILE_MAP);
-         */
-        mapDisplay.updateDisplay(super.getMaps());
-
+        activeMap.setKey(key);
+        
+        mapDisplay.updateDisplay(myController.getKeysForPartType(Variables.PARTNAME_MAP));
     }
 
     private void updateMapDim (String numRows, String numCols) {

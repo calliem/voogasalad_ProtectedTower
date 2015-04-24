@@ -23,17 +23,19 @@ public abstract class UpdatableDisplay extends VBox {
     private HBox currentRow;
     private VBox objectsDisplay;
     private int numObjsPerRow;
+    private Controller myController;
     
     private StackPane selectedView;
    // private GameObject selectedObject;
 
     private static final int SPACING = 15;
 
-    public UpdatableDisplay (List<GameObject> list, int rowSize) {
+    public UpdatableDisplay (Controller c, List<GameObject> list, int rowSize) {
         myObjects = list;
         displayValues();
         numObjsPerRow = rowSize;
         selectedView = null;
+        myController = c;
     }
 
     private void displayValues () {
@@ -136,7 +138,7 @@ public abstract class UpdatableDisplay extends VBox {
         currentRow.setAlignment(Pos.TOP_CENTER);
     }
 
-    public void updateDisplay (List<GameObject> list) {
+    public void updateDisplay (List<String> list) {
         if (!getChildren().isEmpty()) {
             getChildren().clear();
         }

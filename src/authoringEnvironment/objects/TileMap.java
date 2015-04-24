@@ -298,6 +298,7 @@ public class TileMap extends GameObject {
          * ProjectReader.getParamsNoTypeOrName(WAVE), data);
          */
 
+        
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.NAME_KEY, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);

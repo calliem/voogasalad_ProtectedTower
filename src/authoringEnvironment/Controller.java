@@ -68,6 +68,12 @@ public class Controller {
                                  List<String> params, List<Object> data) {
         return addKey(currentGame.addPart(partType, partName, params, data));
     }
+    
+    //TODO: overload to update a key
+    public String addPartToGame (String key, String partType, Map<String, Object> part) {
+        //update the parameters to that key
+        return key;
+    }
 
     /**
      * Adds a part to the game and adds the key to the controller's key map.
@@ -79,7 +85,7 @@ public class Controller {
      *        "Name" key.
      */
     public String addPartToGame (String partType, Map<String, Object> part) {
-        return addKey(currentGame.addPart(partType, part));
+        return  (currentGame.addPart(partType, part));
     }
 
     /**
@@ -126,6 +132,13 @@ public class Controller {
             throw new NoImageFoundException("No image is specified for part: "
                                             + key);
         return (String) partCopy.get(key);
+    }
+    
+    //TODO: delete the XML file associated with it 
+    public void delete(String partType, String key){
+        List<String> keys = partTypeToKeyList.get(partType);
+        int index = keys.indexOf(key);
+        keys.remove(index);
     }
 
     /**
