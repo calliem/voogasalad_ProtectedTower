@@ -19,7 +19,7 @@ import java.util.Set;
  *
  */
 
-public class TowerManager extends SpriteFactory {
+public class TowerManager extends GameElementFactory {
 
     private final static String PARAMETER_MY_CLASS_NAME = "engine.element.sprites.Tower";
     private final static String PARAMETER_NEXT_TOWER = "NextTower";
@@ -59,9 +59,8 @@ public class TowerManager extends SpriteFactory {
      * @param towerID GUID of the template tower
      * @return New tower object with the parameters of the template tower
      */
-
     public Tower getTower (String towerID) {
-        return (Tower) super.getSprite(towerID);
+        return (Tower) super.getGameElement(towerID);
     }
 
     /**
@@ -69,7 +68,6 @@ public class TowerManager extends SpriteFactory {
      * @param towerID GUID of the tower object from which to request nextTower information
      * @return List of GUIDs of towers immediately following the specified one
      */
-
     public Set<TowerNode> getNextTowers (String towerID) {
         TowerNode node = myTowerMap.get(towerID);
         return node.getNextNodes();

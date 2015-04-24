@@ -1,19 +1,12 @@
 package engine.element.sprites;
 
-import java.security.InvalidParameterException;
-import java.util.Map;
-import util.reflection.Reflection;
-
-
 /**
  * Factory for producing grid cells
  * 
  * @author Qian Wang
  *
  */
-public class GridCellFactory extends SpriteFactory {
-
-    private Map<String, Map<String, Object>> myGridCells;
+public class GridCellFactory extends GameElementFactory {
     private final static String MY_CLASS_NAME = "engine.element.sprites.GridCell";
 
     public GridCellFactory () {
@@ -28,13 +21,7 @@ public class GridCellFactory extends SpriteFactory {
      * @return GridCell object
      */
     public GridCell getGridCell (String guid) {
-        if (!myGridCells.containsKey(guid)) { throw new InvalidParameterException(guid +
-                                                                                  " is an undefined grid cell"); }
-
-        GridCell gridcell = (GridCell) Reflection.createInstance(MY_CLASS_NAME);
-        gridcell.setParameterMap(myGridCells.get(guid));
-
-        return gridcell;
+        return (GridCell) super.getGameElement(guid);
     }
 
 }

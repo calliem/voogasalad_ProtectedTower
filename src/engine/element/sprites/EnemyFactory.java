@@ -7,7 +7,7 @@ package engine.element.sprites;
  *
  */
 
-public class EnemyFactory extends SpriteFactory {
+public class EnemyFactory extends GameElementFactory {
     private final static String MY_CLASS_NAME = "engine.sprites.Enemy";
 
     public EnemyFactory () {
@@ -20,8 +20,7 @@ public class EnemyFactory extends SpriteFactory {
      * @param enemyID GUID of the template enemy
      * @return New enemy object with the parameters of the template enemy
      */
-
     public Enemy getEnemy (String enemyID) {
-        return (Enemy) super.getSprite(enemyID);
+        return (Enemy) super.getGameElement(enemyID);
     }
 }

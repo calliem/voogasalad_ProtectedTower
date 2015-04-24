@@ -7,7 +7,7 @@ package engine.element.sprites;
  *
  */
 
-public class ProjectileFactory extends SpriteFactory {
+public class ProjectileFactory extends GameElementFactory {
     private final static String MY_CLASS_NAME = "engine.sprites.Projectile";
 
     public ProjectileFactory () {
@@ -20,8 +20,7 @@ public class ProjectileFactory extends SpriteFactory {
      * @param projectileID GUID of the template tower
      * @return New projectile object with the parameters of the template projectile
      */
-
     public Projectile getProjectile (String projectileID) {
-        return (Projectile) super.getSprite(projectileID);
+        return (Projectile) super.getGameElement(projectileID);
     }
 }
