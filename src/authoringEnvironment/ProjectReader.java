@@ -5,22 +5,17 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import java.util.Set;
 import util.misc.SetHandler;
-import javafx.geometry.Dimension2D;
-import javafx.scene.control.TabPane;
-import javafx.stage.Stage;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.setting.Setting;
 
 
 /**
  * 
+ * @author Kevin He
  * @author Johnny Kumpf
  * @author Callie Mao
  */
@@ -28,7 +23,6 @@ public class ProjectReader {
 
     private static final String paramListFile = "resources/part_parameters";
     private static final String paramSpecsFile = "resources/parameter_datatype";
-    private static final String englishSpecsFile = "resources/display/main_environment_english";
     private static final ResourceBundle paramLists = ResourceBundle
             .getBundle(paramListFile);
     private static final String editorPackage = System.getProperty("user.dir")
@@ -40,8 +34,6 @@ public class ProjectReader {
                                            +
                                            "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
-    private static final ResourceBundle tabNames = ResourceBundle
-            .getBundle(englishSpecsFile);
 
     public static String[] getParamListForPart (String partType) {
         return paramLists.getString(partType).split("\\s+");
@@ -66,8 +58,8 @@ public class ProjectReader {
      *        The type of part we need a Settings list for, i.e. "Tower"
      * @return The corresponding Settings list
      */
-    public static List<Setting> generateSettingsList (String partType) {
-        System.out.println("genreate stginsgl list calle");
+    public static List<Setting> generateSettingsList (Controller controller, String partType) {
+//        System.out.println("genreate stginsgl list calle");
         List<Setting> settingsList = new ArrayList<Setting>();
         ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
 
@@ -83,7 +75,7 @@ public class ProjectReader {
             String dataType = typeAndDefault[0];
             String defaultVal = typeAndDefault[1];
 
-            settingsList.add(generateSetting(partType, param, defaultVal,
+            settingsList.add(generateSetting(controller, partType, param, defaultVal,
                                              dataType));
         }
 
@@ -104,7 +96,7 @@ public class ProjectReader {
      *        The type of the data, i.e. "Integer"
      * @return The Setting object corresponding to these parameters
      */
-    public static Setting generateSetting (String partType, String param,
+    public static Setting generateSetting (Controller controller, String partType, String param,
                                            String defaultVal, String dataType) {
         Class<?> c = String.class;
         Setting s = null;
@@ -118,13 +110,14 @@ public class ProjectReader {
         }
 
         try {
-            s = (Setting) c.getConstructor(String.class, String.class)
-                    .newInstance(param, defaultVal);
+            s = (Setting) c.getConstructor(Controller.class, String.class, String.class, String.class)
+                    .newInstance(controller, partType, param, defaultVal);
         }
         catch (InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {
             // display error message, don't let the null value be used
+            System.err.println("Setting object couldn't be created");
         }
 
         return s;
@@ -141,7 +134,7 @@ public class ProjectReader {
                     System.out.println("Being created: " + s);
                     editorToAdd = (Editor) Class.forName(toCreate)
                             .getConstructor(Controller.class, String.class)
-                            .newInstance(c, tabNames.getString(s));
+                            .newInstance(c, s);
                 }
                 catch (InstantiationException | IllegalArgumentException e1) {
                     System.err

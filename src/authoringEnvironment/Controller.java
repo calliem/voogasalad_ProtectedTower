@@ -34,12 +34,12 @@ import authoringEnvironment.setting.Setting;
 public class Controller {
 
     private InstanceManager currentGame;
-    private Map<String, List<String>> partTypeToKeyList;
+    private Map<String, ObservableList<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
 
     protected Controller (InstanceManager IM) {
         currentGame = IM;
-        partTypeToKeyList = new HashMap<String, List<String>>();
+        partTypeToKeyList = new HashMap<String, ObservableList<String>>();
         populateKeyList();
         myMaps = FXCollections.observableArrayList();
     }
@@ -92,10 +92,25 @@ public class Controller {
      */
     public String addPartToGame (String partType, List<Setting> settings) {
         Map<String, Object> partToAdd = new HashMap<String, Object>();
-        for (Setting s : settings)
+        for (Setting s : settings){
             partToAdd.put(s.getParameterName(), s.getParameterValue());
+//            if(s.getParameterName().equals(InstanceManager.idKey)){
+//                
+//            }
+        }
         return addPartToGame(partType, partToAdd);
     }
+    
+//    /**
+//     * Removes a part from the game file.
+//     * 
+//     * @param partType  the type of part that is being removed
+//     * @param partName  the name of the part that is being removed
+//     * @return true     if the list of parts contained the specified part
+//     */
+//    public boolean removePartFromGame(String partType, String partName){
+//        return partTypeToKeyList.get(partType).remove(partName);
+//    }
 
     /**
      * Gets all the keys for parts of partType that are currently part of this
@@ -106,8 +121,19 @@ public class Controller {
      * @return The list of keys of that type of part which currently exist in
      *         the editor.
      */
-    public List<String> getKeysForPartType (String partType) {
+    public ObservableList<String> getKeysForPartType (String partType) {
+        if (partTypeToKeyList.get(partType) == null) {
+            initializePartList(partType);
+        }
         return partTypeToKeyList.get(partType);
+    }
+
+    /**
+     * @param partType
+     */
+    private void initializePartList (String partType) {
+        ArrayList<String> newList = new ArrayList<>();
+        partTypeToKeyList.put(partType, FXCollections.observableList(newList));
     }
 
     /**
@@ -125,7 +151,7 @@ public class Controller {
         if (!partCopy.keySet().contains(InstanceManager.IMAGE_KEY))
             throw new NoImageFoundException("No image is specified for part: "
                                             + key);
-        return (String) partCopy.get(key);
+        return (String) partCopy.get(InstanceManager.IMAGE_KEY);
     }
 
     /**
@@ -145,8 +171,29 @@ public class Controller {
 
     public void specifyPartImage (String partKey, String imageFilePath) {
         currentGame.specifyPartImage(partKey, imageFilePath);
+        System.out.println("key: " + partKey + " image: " + imageFilePath);
     }
 
+    /**
+     * Checks if a part with the given type and name already exists
+     * 
+     * @param partType The type of part
+     * @param nameToCheck The name for which you want to know if a part already exists
+     * @return True if the name is a duplicate, false if it's unique
+     */
+    public boolean nameAlreadyExists (String partType, String nameToCheck) {
+        List<String> keys = getKeysForPartType(partType);
+        if (keys == null)
+            return false;
+
+        for (String key : keys) {
+            String nameThatExists = (String) getPartCopy(key).get(InstanceManager.NAME_KEY);
+            if (nameThatExists.equalsIgnoreCase(nameToCheck))
+                return true;
+        }
+
+        return false;
+    }
 
     public Map<String, Object> loadPart (String fullPartFilePath) {
         Map<String, Object> part = (Map<String, Object>) XMLWriter.fromXML(fullPartFilePath);
@@ -158,15 +205,17 @@ public class Controller {
 
     private String addKey (String key) {
         String partType = key.substring(key.indexOf(".") + 1, key.length());
-        if (!partTypeToKeyList.keySet().contains(partType))
-            partTypeToKeyList.put(partType, new ArrayList<String>());
+        if (!partTypeToKeyList.keySet().contains(partType)) {
+            initializePartList(partType);
+        }
         partTypeToKeyList.get(partType).add(key);
         return key;
     }
 
     private void populateKeyList () {
-        for (String key : currentGame.getAllPartData().keySet())
+        for (String key : currentGame.getAllPartData().keySet()) {
             addKey(key);
+        }
     }
     
     protected String saveGame(){

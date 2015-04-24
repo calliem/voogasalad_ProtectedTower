@@ -1,4 +1,4 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
 

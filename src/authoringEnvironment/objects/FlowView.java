@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
@@ -52,6 +53,8 @@ public class FlowView extends HBox {
     
     private static final double VBOX_PADDING_MULTIPLIER = 0.5;
     private static final int PADDING = 10;
+    private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
+    private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
 
 
     /**
@@ -65,7 +68,7 @@ public class FlowView extends HBox {
     public FlowView(int height, Controller c) {
         super(PADDING);
         this.setAlignment(Pos.CENTER);
-        c = myController;
+        myController = c;
         myHeight = height;
         fileChooser = new FileChooser();
         partFileNames = new ArrayList<String>();
@@ -130,7 +133,7 @@ public class FlowView extends HBox {
     }
 
     private void selectUnit() {
-        SpriteSetting chooseUnit = new SpriteSetting(Variables.PARTNAME_ENEMIES, Variables.PARTNAME_ENEMIES);
+        SpriteSetting chooseUnit = new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES, Variables.PARTNAME_ENEMIES);
         chooseUnit.getChildren().remove(0);
         chooseUnit.setTextColor(Color.BLACK);
         insertElement(chooseUnit);

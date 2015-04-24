@@ -249,18 +249,14 @@ public class GamePlayer extends Application {
         mainArea.setPrefWidth(screenWidth - screenWidth / 4);
         mainArea.setPrefHeight(screenHeight);
         mainArea.setStyle("-fx-background-color: #00dbc1");
-        mainArea.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle (DragEvent event) {
+        mainArea.setOnDragOver(event ->{
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
                     event.acceptTransferModes(TransferMode.ANY);
                 }
                 event.consume();
-            }
         });
-        mainArea.setOnDragDropped(new EventHandler<DragEvent>() {
-            public void handle (DragEvent event) {
+        mainArea.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
                 if (db.hasImage()) {
@@ -280,7 +276,6 @@ public class GamePlayer extends Application {
                  */
                 event.setDropCompleted(success);
                 event.consume();
-            }
         });
         return mainArea;
     }
