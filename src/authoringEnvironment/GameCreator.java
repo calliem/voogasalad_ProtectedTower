@@ -6,6 +6,10 @@ import java.util.Set;
 
 
 /**
+ * This class is used to create a new game. Methods are included to create a new InstanceManager,
+ * which is used in the creation of game elements for a game. The game can then be saved into xml
+ * files.
+ * 
  * @author Johnny Kumpf
  */
 public class GameCreator {
