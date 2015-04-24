@@ -46,7 +46,6 @@ public class GameCreator {
 		nameAndDirectory[0] = gameName;
 		nameAndDirectory[1] = gameDirectory;
 		createGameFolders(gameName, rootDirBeforeGameName);
-		System.out.println("Game root dir: " + userDataLocation);
 		XMLWriter.toXML(nameAndDirectory, gameName + gameExtension, gameDirectory);
 		return new InstanceManager(gameName, gameDirectory);
 	}
