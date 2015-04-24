@@ -28,7 +28,7 @@ import authoringEnvironment.objects.GameObject;
 public abstract class Sidebar extends VBox { // extend gridpane pls
 
     private ResourceBundle myResources;
-    private ObservableList<GameObject> myMaps; // can't seem to use list with this
+    private ObservableList<String> myMapKeys; // can't seem to use list with this
     private MapWorkspace myMapWorkspace; // TODO: or use more general StackPane?
 
     private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128; // maybe
@@ -45,11 +45,11 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
     private Accordion accordionContext;
 
     public Sidebar (ResourceBundle resources,
-                    ObservableList<GameObject> dependency,
+                    ObservableList<String> dependency,
                     MapWorkspace mapWorkspace) {
 
         myResources = resources;
-        myMaps = FXCollections.observableList(dependency);
+        myMapKeys = FXCollections.observableList(dependency);
         myMapWorkspace = mapWorkspace;
 
         setDimensionRestrictions();
@@ -76,8 +76,8 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         return myResources;
     }
 
-    protected ObservableList<GameObject> getMaps () {
-        return myMaps;
+    protected ObservableList<String> getMapKeys () {
+        return myMapKeys;
     }
 
     protected abstract void createMapSettings ();

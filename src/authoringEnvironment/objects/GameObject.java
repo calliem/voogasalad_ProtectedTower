@@ -12,17 +12,22 @@ import authoringEnvironment.Variables;
  * should have. These objects are directly created by the user before being saved as opposed to
  * being created after parameters are specified. While game objects populated from sprite settings
  * will also need similar methods, those spriteviews have different functionalities and are created
- * differently.
+ * differently. The properties of a GameObject are updated as the user interacts with the editors
+ * and thus are not initialized when the object is first created.
  * 
  * @author Callie Mao
  *
  */
 
-public abstract class GameObject {
+public class GameObject {
 
     private String myKey;
     private String myName;
     private ImageView myThumbnail;
+
+    public GameObject () {
+        // TODO Auto-generated constructor stub
+    }
 
     public String getName () {
         return myName;

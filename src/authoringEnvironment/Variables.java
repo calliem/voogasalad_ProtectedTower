@@ -12,6 +12,8 @@ public class Variables {
     public static final String PARAMETER_RANGE = "Range";
     public static final String PARAMETER_DAMAGE = "Damage";
     public static final String PARAMETER_SPEED = "Speed";
+    public static final String PARAMETER_THUMBNAIL = "Thumbnail";
+
     
     public static final String PARTNAME_TOWER = "Tower";
     public final static String PARTNAME_ENEMIES = "Enemies";
@@ -20,7 +22,6 @@ public class Variables {
     public static final String PARAMETER_BACKGROUND_FILEPATH = "BackgroundFilepath";
     
     public static final String PARTNAME_MAP = "GameMap";
-    public static final String PARTNAME_THUMBNAIL = "Thumbnail";
 
     public static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
 

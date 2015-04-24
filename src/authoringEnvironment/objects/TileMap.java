@@ -303,7 +303,7 @@ public class TileMap extends GameObject {
         mapSettings.put(InstanceManager.NAME_KEY, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
         mapSettings.put(Variables.PARAMETER_BACKGROUND_FILEPATH, imgFilePath);
-        mapSettings.put(Variables.PARTNAME_THUMBNAIL, getThumbnail()); //TODO: save as a 2D array of ints instead of a JavaFX object
+        mapSettings.put(Variables.PARAMETER_THUMBNAIL, getThumbnail()); //TODO: save as a 2D array of ints instead of a JavaFX object
 
         String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
         for (int i = 0; i < myTiles.length; i++) {

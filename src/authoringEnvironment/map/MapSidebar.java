@@ -21,13 +21,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
-import authoringEnvironment.MapUpdatableDisplay;
 import authoringEnvironment.Sidebar;
-import authoringEnvironment.UpdatableDisplay;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.PARTNAME_MAP;
+import authoringEnvironment.objects.MapUpdatableDisplay;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.util.Scaler;
 
 
@@ -80,7 +79,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private UpdatableDisplay mapDisplay;
     private static final int INPUT_HBOX_SPACING = 4;
 
-    public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
+    public MapSidebar (ResourceBundle resources, ObservableList<String> maps,
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         System.out.println("mapsidebar initializer " + mapWorkspace);
@@ -202,9 +201,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
         scale.setOnFinished( (e) -> {
-            if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
-                super.getMaps().remove(getMapWorkspace().getActiveMap());
-                mapDisplay.updateDisplay(super.getMaps());
+            if (super.getMapKeys().contains(getMapWorkspace().getActiveMap())) {
+                super.getMapKeys().remove(getMapWorkspace().getActiveMap());
+                mapDisplay.updateDisplay(super.getMapKeys());
             }
             getMapWorkspace().removeMap();
         });
@@ -226,7 +225,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             // TODO: setTileSize();
             changeMap(getMapWorkspace().getActiveMap());
             mapDisplay.setSelectedView(null);
-            mapDisplay.updateDisplay(super.getMaps());
+            mapDisplay.updateDisplay(super.getMapKeys());
 
         });
         // TODO: textField.setText to update it
@@ -243,6 +242,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      */
     private void saveMap (TileMap activeMap) {
         
+
         activeMap.setName(mapNameTextField.getText());
         WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
@@ -251,19 +251,18 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         activeMap.setThumbnail(snapView);
         
         //use this one
-        List<String> mapKeys = myController.getKeysForPartType(Variables.PARTNAME_MAP);
         Map<String, Object> mapSettings = activeMap.save();
 
         String key;
-        if (!mapKeys.contains(activeMap.getKey())){
-            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
+        if (!getMapKeys().contains(activeMap.getKey())){
+            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings); //TODO: get the partname from somewhere else
         }  
         else{
             key = myController.addPartToGame(activeMap.getKey(), Variables.PARTNAME_MAP, mapSettings);    
         }
         activeMap.setKey(key);
         
-        mapDisplay.updateDisplay(myController.getKeysForPartType(Variables.PARTNAME_MAP));
+        mapDisplay.updateDisplay(getMapKeys());
     }
 
     private void updateMapDim (String numRows, String numCols) {
@@ -345,7 +344,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         // display maps
         mapDisplay =
-                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
+                new MapUpdatableDisplay(getMapKeys(), UPDATABLEDISPLAY_ELEMENTS, this); // test
         container.add(mapDisplay, 0, 5, 2, 1);
     }
 }

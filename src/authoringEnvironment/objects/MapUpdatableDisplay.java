@@ -1,19 +1,18 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.List;
+import javafx.collections.ObservableList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.map.MapWorkspace;
-import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.TileMap;
 
 public class MapUpdatableDisplay extends UpdatableDisplay {
     
     private MapSidebar mySidebar;
     
-    public MapUpdatableDisplay (List<GameObject> list, int rowSize, MapSidebar sidebar) {
-        super(list, rowSize);
+    public MapUpdatableDisplay (Controller c, String partName, int rowSize, MapSidebar sidebar) {
+        super(c, partName, rowSize);
         mySidebar = sidebar;
     }
 
