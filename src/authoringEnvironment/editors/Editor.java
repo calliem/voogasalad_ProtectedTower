@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.objects.GameObject;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -15,6 +16,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 
 /**
  * This class builds the general editor structure for all individual editor tabs
@@ -39,48 +41,46 @@ public abstract class Editor extends Tab {
     private static final String englishPartsFile = "resources/display/part_names_english";
     protected static final ResourceBundle partNames = ResourceBundle.getBundle(englishPartsFile);
     
+    //TODO: don't use protected
+
     protected static final double CONTENT_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth();
     protected static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment
             .getEnvironmentHeight();
 
-    public Editor(Controller controller, String name) {
+    public Editor (Controller controller, String name) {
         myController = controller;
         editorType = name;
         contentRoot = configureUI();
         this.setContent(contentRoot);
         this.setText(tabNames.getString(editorType));
         this.setClosable(false);
+
     }
 
-    protected abstract Group configureUI();
+    protected abstract Group configureUI ();
 
     public String getName() {
         return editorType;
     }
 
     // to be used by backend
-    public void displayError(String s) {
+    public void displayError (String s) {
         Stage stage = new Stage();
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         Text text = new Text(s);
-
         Button button = new Button("Ok");
         button.setOnMouseClicked(e -> stage.hide()); // this doesn't seem to
-        // work.... also hide()
-        // doesn't actually
-        // close() it right..?
+                                                     // work.... also hide()
+                                                     // doesn't actually
+                                                     // close() it right..?
         root.getChildren().addAll(text, button);
 
         Scene scene = new Scene(root, 400, 200);// getWidth() / 4, getHeight() /
-        // 6);
+                                                // 6);
 
-        stage.setTitle("Error"); // TODO: how to use this parameter?
-        // myResources.getString("Error"). How to
-        // add to the mainenvironment resources
-        // without the parser freaking out?
-        // MainStageTitle=protected Tower()
+        stage.setTitle("Error");
         stage.setScene(scene);
         stage.show();
     }
@@ -92,4 +92,6 @@ public abstract class Editor extends Tab {
     public boolean isOverlayActive(){
         return isOverlayActive;
     }
+
+    public abstract void update();
 }

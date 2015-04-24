@@ -26,4 +26,10 @@ public class TileEditor extends Editor{
         Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT);
         return myRoot;
     }
+
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
+    }
 }

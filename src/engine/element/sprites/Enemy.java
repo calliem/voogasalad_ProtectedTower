@@ -26,6 +26,8 @@ public class Enemy extends MoveableSprite {
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
     private static final String PARAMETER_SPEED = "Speed";
+    private static final String PARAMETER_HEALTH = "HP";
+    private static final String PARAMETER_DAMAGE = "Damage";
 
     public Enemy () {
         super();
@@ -39,8 +41,9 @@ public class Enemy extends MoveableSprite {
 
     @Override
     public void onCollide (Sprite sprite) {
-        // TODO Auto-generated method stub
-
+        // TODO Check if this works in changing the variable in the parameters map
+        int health = (int) super.getParameter(PARAMETER_HEALTH);
+        health -= (int) sprite.getParameter(PARAMETER_DAMAGE);
     }
 
     @Override

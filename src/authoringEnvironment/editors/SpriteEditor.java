@@ -31,13 +31,14 @@ import authoringEnvironment.util.NamePrompt;
 import authoringEnvironment.util.Scaler;
 
 
-
 /**
  * General abstract class for editors that allow user interaction in
  * sprite/property creation and editing
  * 
  * @author Kevin He
+ * @author Callie Mao
  */
+
 public abstract class SpriteEditor extends Editor {
     private StackPane myContent;
     private HBox currentRow;
@@ -46,6 +47,7 @@ public abstract class SpriteEditor extends Editor {
     private List<Node> spritesCreated;
     private IntegerProperty numSprites;
     private NamePrompt prompt;
+
 
     private static final int ROW_SIZE = 7;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
@@ -116,6 +118,10 @@ public abstract class SpriteEditor extends Editor {
         visuals.getChildren().add(myContent);
         
         return visuals;
+    }
+    
+    protected NamePrompt getPrompt(){
+        return prompt;
     }
 
     /**

@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
+import authoringEnvironment.editors.MapEditor;
+import authoringEnvironment.editors.Editor;
+import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.setting.Setting;
 
 
@@ -21,6 +27,7 @@ import authoringEnvironment.setting.Setting;
  * projectile for his tower from the other projectiles he's created.
  * 
  * @author Johnny Kumpf
+ * @author Callie Mao
  *
  */
 
@@ -28,11 +35,13 @@ public class Controller {
 
     private InstanceManager currentGame;
     private Map<String, ObservableList<String>> partTypeToKeyList;
-    
+    private ObservableList<GameObject> myMaps;
+
     protected Controller (InstanceManager IM) {
         currentGame = IM;
         partTypeToKeyList = new HashMap<String, ObservableList<String>>();
         populateKeyList();
+        myMaps = FXCollections.observableArrayList();
     }
 
     protected Controller (String gameName, String rootDir) {
@@ -139,10 +148,10 @@ public class Controller {
      */
     public String getImageForKey (String key) throws NoImageFoundException {
         Map<String, Object> partCopy = getPartCopy(key);
-        if (!partCopy.keySet().contains(InstanceManager.imageKey))
+        if (!partCopy.keySet().contains(InstanceManager.IMAGE_KEY))
             throw new NoImageFoundException("No image is specified for part: "
                                             + key);
-        return (String) partCopy.get(InstanceManager.imageKey);
+        return (String) partCopy.get(InstanceManager.IMAGE_KEY);
     }
 
     /**
@@ -157,6 +166,8 @@ public class Controller {
     public Map<String, Object> getPartCopy (String partKey) {
         return currentGame.getAllPartData().get(partKey);
     }
+    
+
 
     public void specifyPartImage (String partKey, String imageFilePath) {
         currentGame.specifyPartImage(partKey, imageFilePath);
@@ -176,26 +187,17 @@ public class Controller {
             return false;
 
         for (String key : keys) {
-            String nameThatExists = (String) getPartCopy(key).get(InstanceManager.nameKey);
+            String nameThatExists = (String) getPartCopy(key).get(InstanceManager.NAME_KEY);
             if (nameThatExists.equalsIgnoreCase(nameToCheck))
                 return true;
         }
 
         return false;
     }
-    
-    public boolean partAlreadyExists(String partType, String id){
-        List<String> keys = getKeysForPartType(partType);
-        for(String key : keys){
-            if(getPartCopy(key).get(InstanceManager.idKey).equals(id))
-                return true;
-        }
-        return false;
-    }
 
     public Map<String, Object> loadPart (String fullPartFilePath) {
         Map<String, Object> part = (Map<String, Object>) XMLWriter.fromXML(fullPartFilePath);
-        String partKey = (String) part.get(InstanceManager.partKeyKey);
+        String partKey = (String) part.get(InstanceManager.PART_KEY_KEY);
         currentGame.addPart(partKey, part);
         addKey(partKey);
         return part;
@@ -215,4 +217,16 @@ public class Controller {
             addKey(key);
         }
     }
+    
+    protected String saveGame(){
+        return currentGame.saveGame();
+    }
+
+    public ObservableList<GameObject> getMaps () {
+        return myMaps;
+    }
+    
+  /*  public void setMaps (ObservableList<GameObject> maps) {
+        myMaps = maps;
+    }*/
 }
