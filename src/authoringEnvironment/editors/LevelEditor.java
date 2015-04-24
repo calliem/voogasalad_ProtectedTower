@@ -2,8 +2,8 @@ package authoringEnvironment.editors;
 
 import java.util.ResourceBundle;
 import authoringEnvironment.Controller;
-import authoringEnvironment.LevelSidebar;
-import authoringEnvironment.UpdatableDisplay;
+import authoringEnvironment.objects.LevelSidebar;
+import authoringEnvironment.objects.UpdatableDisplay;
 
 
 /**

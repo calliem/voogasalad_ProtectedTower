@@ -1,12 +1,10 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.List;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.map.MapWorkspace;
-import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.TileMap;
 
 public class MapUpdatableDisplay extends UpdatableDisplay {
     

@@ -3,6 +3,7 @@ package authoringEnvironment.editors;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.GameObject;
@@ -28,10 +29,17 @@ import javafx.stage.Stage;
 
 public abstract class Editor extends Tab {
 
-    protected String tabName;
+    protected String editorType;
     private Group contentRoot;
     protected Controller myController;
     protected boolean isOverlayActive = false;
+    
+    private static final String englishSpecsFile = "resources/display/main_environment_english";
+    protected static final ResourceBundle tabNames = ResourceBundle
+            .getBundle(englishSpecsFile);
+    
+    private static final String englishPartsFile = "resources/display/part_names_english";
+    protected static final ResourceBundle partNames = ResourceBundle.getBundle(englishPartsFile);
     
     //TODO: don't use protected
 
@@ -42,18 +50,18 @@ public abstract class Editor extends Tab {
 
     public Editor (Controller controller, String name) {
         myController = controller;
-        tabName = name;
+        editorType = name;
         contentRoot = configureUI();
         this.setContent(contentRoot);
-        this.setText(tabName);
+        this.setText(tabNames.getString(editorType));
         this.setClosable(false);
 
     }
 
     protected abstract Group configureUI ();
 
-    public String getName () {
-        return tabName;
+    public String getName() {
+        return editorType;
     }
 
     // to be used by backend
@@ -75,12 +83,6 @@ public abstract class Editor extends Tab {
         stage.setTitle("Error");
         stage.setScene(scene);
         stage.show();
-    }
-
-    protected void promptSpriteCreation () {
-        // TODO Auto-generated method stub
-        // this doesn't quite belong in this editor superclass. consider alternatives.
-
     }
     
     public void hideOverlay(){

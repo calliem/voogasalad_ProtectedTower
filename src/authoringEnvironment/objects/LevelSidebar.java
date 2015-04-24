@@ -1,4 +1,4 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -12,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.map.MapWorkspace;
-import authoringEnvironment.objects.GameObject;
 
 
 /**

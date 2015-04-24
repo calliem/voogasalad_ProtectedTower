@@ -1,20 +1,16 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
-import java.awt.BorderLayout;
 import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Variables;
 
 
 public abstract class UpdatableDisplay extends VBox {
