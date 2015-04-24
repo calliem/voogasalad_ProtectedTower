@@ -23,14 +23,15 @@ public class InstanceManager {
 			"user.dir").concat("/src/exampleUserData");
 	private static final String missingNameKey = "Map passed must contain a \"Name\" key. Key is case sensitive.";
 	private static final String listSizesDiffer = "Lists passed must contain same number of elements.";
-	private static final String partFileName = "GameParts.xml";
-	private static final String IMFileName = "GameManager.xml";
-	public static final String partsFileDir = "/AllPartData";
-	public static final String partTypeKey = "PartType";
-	public static final String nameKey = "Name";
-	public static final String partKeyKey = "PartKey";
-	public static final String imageKey = "Image";
-	public static final String savePathKey = "SavePath";
+	
+	private static final String PARTS_FILE_NAME = "GameParts.xml";
+	private static final String INSTANCE_MANAGER_FILE_NAME = "GameManager.xml";
+	public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
+	public static final String PART_TYPE_KEY = "PartType";
+	public static final String NAME_KEY = "Name";
+	public static final String PART_KEY_KEY = "PartKey";
+	public static final String IMAGE_KEY = "Image";
+	public static final String SAVE_PATH_KEY = "SavePath";
 
 	// a map of all the parts the user has created
 	// each part is represented by a map mapping the part's parameters to their
@@ -111,13 +112,13 @@ public class InstanceManager {
 		Map<String, Object> toAdd = new HashMap<String, Object>();
 		try {
 			toAdd = generatePartMap(params, data);
-			toAdd.put(nameKey, partName);
+			toAdd.put(NAME_KEY, partName);
 			addPart(partType, toAdd);
 		} catch (DataFormatException e) {
 			System.err
 					.println("Part could not be generated and was not added.");
 		}
-		return (String) toAdd.get(partKeyKey);
+		return (String) toAdd.get(PART_KEY_KEY);
 	}
 
 	private Map<String, Object> generatePartMap(List<String> params,
@@ -138,7 +139,7 @@ public class InstanceManager {
 	}
 
 	public void specifyPartImage(String partKey, String imageFilePath) {
-		userParts.get(partKey).put(imageKey, imageFilePath);
+		userParts.get(partKey).put(IMAGE_KEY, imageFilePath);
 	}
 
 	/**
@@ -155,10 +156,10 @@ public class InstanceManager {
 	 * @return
 	 */
 	public String addPart(String partType, Map<String, Object> part) {
-		part.put(partTypeKey, partType);
-		String partKey = gameName + "_" + (String) part.get(nameKey) + "."
+		part.put(PART_TYPE_KEY, partType);
+		String partKey = gameName + "_" + (String) part.get(NAME_KEY) + "."
 				+ partType;
-		part.put(partKeyKey, partKey);
+		part.put(PART_KEY_KEY, partKey);
 		try {
 			writePartToXML(addPartToUserParts(part, partKey));
 
@@ -186,8 +187,8 @@ public class InstanceManager {
 	 *            The part to write to XML
 	 */
 	private String writePartToXML(Map<String, Object> part) {
-		String partType = (String) part.get(partTypeKey);
-		String partFileName = (String) part.get(nameKey) + ".xml";
+		String partType = (String) part.get(PART_TYPE_KEY);
+		String partFileName = (String) part.get(NAME_KEY) + ".xml";
 		String directory = rootDirectory + "/" + partType;
 		return XMLWriter.toXML(part, partFileName, directory);
 	}
@@ -213,8 +214,8 @@ public class InstanceManager {
 		// XMLWriter.toXML(userParts, partFileName, rootDirectory +
 		// partsFileDir);
 		System.out.println("writing to xml manager");
-		XMLWriter.toXML(this, IMFileName, rootDirectory + partsFileDir);
-		return rootDirectory + partsFileDir;
+		XMLWriter.toXML(this, INSTANCE_MANAGER_FILE_NAME, rootDirectory + PARTS_FILE_DIRECTORY);
+		return rootDirectory + PARTS_FILE_DIRECTORY;
 	}
 
 	/**
@@ -233,8 +234,8 @@ public class InstanceManager {
 		String[] nameAndDirectory = (String[]) XMLWriter
 				.fromXML(pathToRootDirFile);
 		String rootDirectory = nameAndDirectory[1];
-		return (InstanceManager) XMLWriter.fromXML(rootDirectory + partsFileDir
-				+ "/" + IMFileName);
+		return (InstanceManager) XMLWriter.fromXML(rootDirectory + PARTS_FILE_DIRECTORY
+				+ "/" + INSTANCE_MANAGER_FILE_NAME);
 	}
 
 	/**
@@ -364,7 +365,7 @@ public class InstanceManager {
 		List<Object> data = new ArrayList<Object>();
 		data.add(new Integer(500));
 		data.add(new Double(1.5));
-		example.addPart(Variables.TOWER, "MyFirstTower", params, data);
+		example.addPart(Variables.PARTNAME_TOWER, "MyFirstTower", params, data);
 		List<String> params2 = new ArrayList<String>();
 		params2.add(Variables.PARAMETER_HP);
 		params2.add(Variables.PARAMETER_SPEED);

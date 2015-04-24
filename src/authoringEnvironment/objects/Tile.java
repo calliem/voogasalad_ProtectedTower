@@ -21,12 +21,13 @@ public class Tile extends Rectangle {
     
     private ArrayList<String> myTags;
     private Color myColor;
-    private boolean isSelected;
     private String myKey;
     private String myName;
 
     private static final String COLOR = "Color";
     private static final String TAGS = "Tag";
+    
+    //TODO: when have tag object, just store key and then make it work here 
 
     // will have the same image for a path?
     // TODO: create a text box to set grid size and a slider to set tile size
@@ -37,9 +38,9 @@ public class Tile extends Rectangle {
         // TODO: fix tile to make it more general and not have col nums and x/y generated here
         // TODO: store part keys in the xml file for tilemap
         new Rectangle();
+        myColor = DEFAULT_COLOR;
         setFill(DEFAULT_COLOR);
         setOpacity(0.4);
-        isSelected = false;
         myName = null;
         myTags = new ArrayList<String>();
     }
@@ -81,7 +82,7 @@ public class Tile extends Rectangle {
 
     // selection stuff is all for pathing. Need separate methods for updating the tile
     // active refers to if it is selected as part of a path
-    public void select () {
+   /* public void select () {
         if (!isSelected) {
             setOpacity(0.2); // change image entirely
         }
@@ -93,7 +94,7 @@ public class Tile extends Rectangle {
 
     public boolean isSelected () {
         return isSelected;
-    }
+    }*/
 
     public ArrayList<String> getTags () {
         return myTags;
@@ -102,7 +103,7 @@ public class Tile extends Rectangle {
     public Color getColor () {
         return myColor;
     }
-
+    
     /*
      * public Node getThumbnail () {
      * Rectangle thumbnail = this;
@@ -111,6 +112,11 @@ public class Tile extends Rectangle {
      * return null;
      * }
      */
+    
+    public void setFill(Color color){
+        super.setFill(color);
+        myColor = color;
+    }
     
     public String getKey(){
         return myKey;
@@ -122,7 +128,7 @@ public class Tile extends Rectangle {
 
     public Map<String, Object> saveToXML () {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
-        mapSettings.put(InstanceManager.nameKey, myName);
+        mapSettings.put(InstanceManager.NAME_KEY, myName);
         mapSettings.put(TAGS, myTags);
         mapSettings.put(COLOR, myColor);
         return mapSettings;

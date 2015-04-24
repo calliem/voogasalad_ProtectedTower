@@ -22,7 +22,7 @@ public class GameCreator {
 			.concat("/src/userData");
 	private static final String paramListFile = "resources/part_parameters";
 	private static final String paramSpecsFile = "resources/parameter_datatype";
-	private static final String partsFileDir = InstanceManager.partsFileDir;
+	private static final String partsFileDir = InstanceManager.PARTS_FILE_DIRECTORY;
 	public static final ResourceBundle paramLists = ResourceBundle
 			.getBundle(paramListFile);
 	private static final String partFileName = "GameParts.xml";

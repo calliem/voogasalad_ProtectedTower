@@ -26,6 +26,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import authoringEnvironment.Controller;
+import authoringEnvironment.Variables;
 import authoringEnvironment.setting.SpriteSetting;
 
 /**
@@ -42,13 +43,16 @@ public class FlowView extends HBox {
     private FileChooser fileChooser;
     private Controller myController;
     private int myHeight;
-    private final static String ENEMIES = "Enemies";
-    private final static String TIMES = "Times";
-    private static final int PADDING = 10;
     private List<String> partFileNames;
     private List<Double> delays;
     
     private VBox selector;
+    
+    //TODO: take back all the instance variables that belong in this class only
+    
+    private static final double VBOX_PADDING_MULTIPLIER = 0.5;
+    private static final int PADDING = 10;
+
 
     /**
      * Creates the visual and input elements for the "timeline" in the
@@ -67,7 +71,7 @@ public class FlowView extends HBox {
         partFileNames = new ArrayList<String>();
         delays = new ArrayList<Double>();
 
-        selector = new VBox(0.5*PADDING);
+        selector = new VBox(VBOX_PADDING_MULTIPLIER*PADDING);
         selector.setAlignment(Pos.CENTER);
         
         ArrayList<String> options = new ArrayList<>();
@@ -126,7 +130,7 @@ public class FlowView extends HBox {
     }
 
     private void selectUnit() {
-        SpriteSetting chooseUnit = new SpriteSetting(ENEMIES, ENEMIES);
+        SpriteSetting chooseUnit = new SpriteSetting(Variables.PARTNAME_ENEMIES, Variables.PARTNAME_ENEMIES);
         chooseUnit.getChildren().remove(0);
         chooseUnit.setTextColor(Color.BLACK);
         insertElement(chooseUnit);
@@ -149,8 +153,8 @@ public class FlowView extends HBox {
         Map<String, Object> waveInfo = myController.loadPart(file
                                                              .getAbsolutePath());
         try {
-            delays = (List<Double>) waveInfo.get(TIMES);
-            partFileNames = (List<String>) waveInfo.get(ENEMIES);
+            delays = (List<Double>) waveInfo.get(Variables.PARAMETER_TIMES);
+            partFileNames = (List<String>) waveInfo.get(Variables.PARTNAME_ENEMIES);
         } catch (NullPointerException e) {
 
         }

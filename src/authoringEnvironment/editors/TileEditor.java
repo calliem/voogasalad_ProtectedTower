@@ -1,28 +1,9 @@
 package authoringEnvironment.editors;
 
-import imageselectorTEMP.ImageSelector;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import authoringEnvironment.Controller;
-import authoringEnvironment.InstanceManager;
-import authoringEnvironment.NoImageFoundException;
-import authoringEnvironment.ProjectReader;
-import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.Tile;
-import authoringEnvironment.util.NamePrompt;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 
 /**
@@ -49,44 +30,45 @@ public class TileEditor extends SpriteEditor {
     @Override
     protected void promptSpriteCreation () {
         getPrompt().setImageChooser(false);
-        
-    /*    Button create = getPrompt().getCreateButton();
-        create.setOnAction( (e) -> {
-            try{
-                addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(), currentRow);
-                hideOverlay();
-            }
-            catch(NoImageFoundException error){
-                error.printStackTrace();
-            }
-        });
-
-        Button cancel = prompt.getCancelButton();
-        cancel.setOnAction( (e) -> {
-            hideOverlay();
-        });
-        
-        //TODO DUPLICATED
-        prompt.showPrompt(myContent);
-        isOverlayActive = true;
-        activeOverlay = prompt;
-        
-        myTiles = new ArrayList<Tile>();
-        StackPane promptDisplay = new StackPane();
-        Rectangle promptBackground = new Rectangle(300, 400);
-        promptBackground.setOpacity(0.8);
-
-        VBox promptContent = new VBox(20);
-        promptContent.setAlignment(Pos.CENTER);
-        Text prompt = new Text("Creating a new "
-                               + tabName.toLowerCase().substring(0, tabName.length() - 1)
-                               + "...");
-        prompt.setFill(Color.WHITE);
-        TextField promptField = new TextField();
-        promptField.setMaxWidth(225);
-        promptField.setPromptText("Enter a name...");
 
         /*
+         * Button create = getPrompt().getCreateButton();
+         * create.setOnAction( (e) -> {
+         * try{
+         * addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(), currentRow);
+         * hideOverlay();
+         * }
+         * catch(NoImageFoundException error){
+         * error.printStackTrace();
+         * }
+         * });
+         * 
+         * Button cancel = prompt.getCancelButton();
+         * cancel.setOnAction( (e) -> {
+         * hideOverlay();
+         * });
+         * 
+         * //TODO DUPLICATED
+         * prompt.showPrompt(myContent);
+         * isOverlayActive = true;
+         * activeOverlay = prompt;
+         * 
+         * myTiles = new ArrayList<Tile>();
+         * StackPane promptDisplay = new StackPane();
+         * Rectangle promptBackground = new Rectangle(300, 400);
+         * promptBackground.setOpacity(0.8);
+         * 
+         * VBox promptContent = new VBox(20);
+         * promptContent.setAlignment(Pos.CENTER);
+         * Text prompt = new Text("Creating a new "
+         * + tabName.toLowerCase().substring(0, tabName.length() - 1)
+         * + "...");
+         * prompt.setFill(Color.WHITE);
+         * TextField promptField = new TextField();
+         * promptField.setMaxWidth(225);
+         * promptField.setPromptText("Enter a name...");
+         * 
+         * /*
          * ImageSelector imgSelector = new ImageSelector();
          * imgSelector.addExtensionFilter("png");
          * imgSelector.addExtensionFilter("jpg");
@@ -119,7 +101,7 @@ public class TileEditor extends SpriteEditor {
         for (Tile tile : myTiles) {
             Map<String, Object> mapSettings = tile.saveToXML();
             String key = myController.addPartToGame(TILE_PART_NAME, mapSettings);
-//            tile.setKey(key); TODO:
+            // tile.setKey(key); TODO:
 
             /*
              * List<String> partFileNames = new ArrayList<String>();
@@ -147,6 +129,6 @@ public class TileEditor extends SpriteEditor {
     @Override
     public void update () {
         // TODO Auto-generated method stub
-        
+
     }
 }

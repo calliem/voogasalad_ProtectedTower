@@ -17,7 +17,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 
-
+/**
+ * @author Kevin He
+ * @author Callie Mao (edits to public methods for use from external classes)
+ *
+ */
 public class GraphicFileChooser extends StackPane {
     private static final int PADDING = 10;
     private static final int FILE_DISPLAY_WIDTH = 150;
@@ -73,7 +77,7 @@ public class GraphicFileChooser extends StackPane {
         }
     }
 
-    protected Text getFileDisplay () {
+    public Text getFileDisplay () {
         return fileDisplay;
     }
 
@@ -83,6 +87,10 @@ public class GraphicFileChooser extends StackPane {
 
     public String getSelectedFileName () {
         return filePath.getValue();
+    }
+    
+    public void setSelectedFileName(String s){
+        filePath.set(s);
     }
 
     protected Button getButton () {
