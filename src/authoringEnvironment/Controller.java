@@ -33,11 +33,8 @@ import authoringEnvironment.setting.Setting;
 
 public class Controller {
 
-    
     private static final String DIFFERENT_LIST_SIZE_MESSAGE =
             "Lists passed must contain same number of elements.";
-
-    
 
     private InstanceManager currentGame;
     private Map<String, List<String>> partTypeToKeyList;
@@ -53,26 +50,68 @@ public class Controller {
     protected Controller (String gameName, String rootDir) {
         this(new InstanceManager(gameName, rootDir));
     }
+    
+    //Adding parts
 
-    // base methods
-    public String addPartToGame (String key, Map<String, Object> fullPartMap) throws DataFormatException {
+    /**
+     * Adds a part to the game at a specified key. The part added is completely defined by the map
+     * parameter.
+     * 
+     * @param key The key at which to add this part.
+     * @param fullPartMap The map that specifies this part's parameters and their corresponding data
+     * @return The key where this part was added
+     * @throws MissingInformationException If the map to be added is missing critical information
+     */
+    public String addPartToGame (String key, Map<String, Object> fullPartMap)
+                                                                             throws MissingInformationException {
         return addKey(currentGame.addPart(key, fullPartMap));
     }
 
-    public String addPartToGame (Map<String, Object> partMapMinusKey) throws DataFormatException {
+    /**
+     * Generates a key for this part, then adds it to the game
+     * 
+     * @param partMapMinusKey The part map before the key is added to it, which will be added to the
+     *        game
+     * @return The key where this part was added
+     * @throws MissingInformationException If the map to be added is missing critical information
+     */
+    public String addPartToGame (Map<String, Object> partMapMinusKey)
+                                                                     throws MissingInformationException {
         return addKey(currentGame.addPart(partMapMinusKey));
     }
 
-    // adding with settings list
-    public String addPartToGame (String key, String partType, List<Setting> settings) throws DataFormatException {
+    /**
+     * Adds a part specified by a list of settings objects to the game at the given key
+     * 
+     * @param key The key at which to add the part
+     * @param partType The kind of part, i.e. "Tower"
+     * @param settings The settings objects that contain all this part's parameters and their data
+     * @return The key at which this part was added
+     * @throws MissingInformationException If the map to be added is missing critical information
+     */
+    public String addPartToGame (String key, String partType, List<Setting> settings)
+                                                                                     throws MissingInformationException {
         return addKey(currentGame.addPart(key, generateMapFromSettings(partType, settings)));
 
     }
 
-    public String addPartToGame (String partType, List<Setting> settings) throws DataFormatException {
-       return addKey(currentGame.addPart(generateMapFromSettings(partType, settings)));
+    /**
+     * Adds a part specified by a list of settings objects for which the key is auto-generated
+     * 
+     * @param partType The type of part, i.e. "Tower"
+     * @param settings The settings objects that contain all the part's parameters and their data
+     * @return The key at which this part was added
+     * @throws MissingInformationException If the map to be added is missing critical information
+     */
+    public String addPartToGame (String partType, List<Setting> settings)
+                                                                         throws MissingInformationException {
+        return addKey(currentGame.addPart(generateMapFromSettings(partType, settings)));
     }
 
+    /*
+     * Takes a list of settings and a part type and creates an appropriate Map<String, Object> from
+     * that.
+     */
     private Map<String, Object> generateMapFromSettings (String partType, List<Setting> settings) {
         Map<String, Object> partToAdd = new HashMap<String, Object>();
         for (Setting s : settings) {
@@ -82,25 +121,57 @@ public class Controller {
         return partToAdd;
     }
 
-    // adding with param list and data list with corresponding indeces
+    /**
+     * Adds a part to the game at the given key where the data is specified by lists of parameters
+     * and their data with corresponding indeces.
+     * 
+     * @param key The key at which this part will be added.
+     * @param partType The type of part, i.e. "Tower"
+     * @param partName The name of the part, given by user
+     * @param params The parameters this part has, i.e. "HP", "Damage", "Range"
+     * @param data The data corresponding to those parameters
+     * @return The key at which this part was added
+     * @throws MissingInformationException If the map to be added is missing critical information
+     * @throws DataFormatException If the lists passed are different sizes
+     */
     public String addPartToGame (String key,
                                  String partType,
                                  String partName,
                                  List<String> params,
-                                 List<Object> data) throws DataFormatException {
-        return addKey(currentGame.addPart(key, generateMapFromLists(partType, partName, params, data)));
+                                 List<Object> data) throws MissingInformationException,
+                                                   DataFormatException {
+        return addKey(currentGame.addPart(key,
+                                          generateMapFromLists(partType, partName, params, data)));
     }
 
+    /**
+     * Adds a part whose data is specified by lists of parameters and their data of corresponding
+     * indeces, for which the key will be auto-generated.
+     * 
+     * @param partType The type of part, i.e. "Tower"
+     * @param partName The name of the part, given by user
+     * @param params The parameters this part needs
+     * @param data The data corresponding to those parameters
+     * @return The key at which this part was added
+     * @throws MissingInformationException If the map to be added is missing critical information
+     * @throws DataFormatException If the lists passed are different sizes.
+     */
     public String addPartToGame (String partType,
                                  String partName,
                                  List<String> params,
-                                 List<Object> data) throws DataFormatException {
-        
+                                 List<Object> data) throws MissingInformationException,
+                                                   DataFormatException {
+
         return addKey(currentGame.addPart(generateMapFromLists(partType, partName, params, data)));
 
     }
 
-    private Map<String, Object> generateMapFromLists (String partType, String partName, List<String> params,
+    /*
+     * Generates the appropriate map from a type, name, and two lists of parameters and data.
+     */
+    private Map<String, Object> generateMapFromLists (String partType,
+                                                      String partName,
+                                                      List<String> params,
                                                       List<Object> data) throws DataFormatException {
         if (params.size() != data.size()) {
             throw new DataFormatException(
@@ -115,7 +186,9 @@ public class Controller {
         return toAdd;
     }
 
-    // adding keys
+    /*
+     * Adds a key to the Controller's map of part type to list of keys of that part type that exist in the game.
+     */
     private String addKey (String key) {
         String partType = key.substring(key.indexOf(".") + 1, key.length());
         if (!partTypeToKeyList.keySet().contains(partType))
@@ -124,8 +197,8 @@ public class Controller {
         return key;
     }
 
-    // the rest of the Controller, not adding parts
-    
+    //The rest of the Controller, not adding parts
+
     /**
      * Gets all the keys for parts of partType that are currently part of this
      * game.
@@ -173,7 +246,12 @@ public class Controller {
     public Map<String, Object> loadPart (String fullPartFilePath) {
         Map<String, Object> part = (Map<String, Object>) XMLWriter.fromXML(fullPartFilePath);
         String partKey = (String) part.get(InstanceManager.PART_KEY_KEY);
-        currentGame.addPart(partKey, part);
+        try {
+            currentGame.addPart(partKey, part);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         addKey(partKey);
         return part;
     }

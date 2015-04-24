@@ -21,11 +21,10 @@ public class InstanceManager {
             System.getProperty("user.dir").concat("/gamedata/myTowerGames");
     private static final String GAME_ROOT_DIRECTORY =
             System.getProperty("user.dir").concat("/gamedata/exampleUserData");
-    
 
     private static final String PARTS_FILE_NAME = "GameParts.xml";
     private static final String INSTANCE_MANAGER_FILE_NAME = "GameManager.xml";
-    
+
     /**
      * a map of all the parts the user has created each part is represented by a map mapping the
      * part's parameters to their data the fields look like:
@@ -35,17 +34,19 @@ public class InstanceManager {
     private String gameName;
     private String rootDirectory;
     private static int partID;
-    
+
     public static final String PART_KEY_KEY = "PartKey";
     private static final String MISSING_NAME_KEY_MESSAGE =
             "Map passed must contain a \"Name\" key. Key is case sensitive.";
-    
+
     public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
     public static final String PART_TYPE_KEY = "PartType";
     public static final String NAME_KEY = "Name";
- 
+
     public static final String IMAGE_KEY = "Image";
     public static final String SAVE_PATH_KEY = "SavePath";
+
+    private static final String NO_KEYS_MISSING = "no keys missing";
 
     /**
      * Generates an instance manager for a game. An InstanceManager has a name
@@ -89,15 +90,15 @@ public class InstanceManager {
         this(name, partData, DEFAULT_SAVE_LOCATION + "/" + name);
     }
 
-    public String addPart(Map<String, Object> fullPartMap) throws DataFormatException{
+    public String addPart (Map<String, Object> fullPartMap) throws MissingInformationException {
         String key = generateKey(fullPartMap);
         fullPartMap.put(PART_KEY_KEY, key);
         return addPart(key, fullPartMap);
     }
-    
-    public String addPart(String key, Map<String, Object> fullPartMap) throws DataFormatException{
-        if(!fullPartMap.keySet().contains(NAME_KEY))
-            throw new DataFormatException(MISSING_NAME_KEY_MESSAGE);
+
+    public String addPart (String key, Map<String, Object> fullPartMap) throws MissingInformationException {
+        if (!checkMissingInformation(fullPartMap).equals(NO_KEYS_MISSING))
+            throw new MissingInformationException(MISSING_NAME_KEY_MESSAGE);
         userParts.put(key, fullPartMap);
         return key;
     }
@@ -106,7 +107,18 @@ public class InstanceManager {
         return gameName + "_Part" + (partID++) + "." + part.get(NAME_KEY);
     }
 
-    
+    private String checkMissingInformation (Map<String, Object> partToCheck) {
+        String missingKey = NO_KEYS_MISSING;
+        List<String> necessaryKeys = new ArrayList<String>();
+        necessaryKeys.add(NAME_KEY);
+        necessaryKeys.add(PART_TYPE_KEY);
+        necessaryKeys.add(PART_KEY_KEY);
+        for (String key : necessaryKeys)
+            if (!partToCheck.keySet().contains(key))
+                missingKey = key;
+        return missingKey;
+    }
+
     /**
      * Writes the part, passed as a Map, into an XML file in:
      * rootDirectory/partType/partName.xml, for example:
@@ -282,43 +294,43 @@ public class InstanceManager {
      */
 
     public static void main (String[] args) {
-/*
-        // gameRootDirectory will be chosen by the user, but here we're just
-        // putting an an example
-        InstanceManager example =
-                GameCreator.createNewGame(
-                                          "TestingManagerGame", GAME_ROOT_DIRECTORY);
-
-        // hardcode in an example part to show how it works
-        List<String> params = new ArrayList<String>();
-        params.add(Variables.PARAMETER_HP);
-        params.add(Variables.PARAMETER_RANGE);
-        List<Object> data = new ArrayList<Object>();
-        data.add(new Integer(500));
-        data.add(new Double(1.5));
-        example.addPart(Variables.PARTNAME_TOWER, "MyFirstTower", params, data);
-        List<String> params2 = new ArrayList<String>();
-        params2.add(Variables.PARAMETER_HP);
-        params2.add(Variables.PARAMETER_SPEED);
-        params2.add(Variables.PARAMETER_DAMAGE);
-        List<Object> data2 = new ArrayList<Object>();
-        data2.add(new Integer(100));
-        data2.add(new Double(1.5));
-        data2.add(new Double(10));
-        example.addPart("Enemy", "MyFirstEnemy", params2, data2);
-        example.saveGame();
-        // this method is called with the path to the .game file, which will be
-        // received from the user
-        // TODO: Use this statement to load the example map
-        Map<String, Map<String, Object>> gamedata =
-                InstanceManager.loadGameData(GAME_ROOT_DIRECTORY +
-                                             "/TestingManagerGame/TestingManagerGame.gamefile");
-        InstanceManager loadedIn =
-                InstanceManager.loadGameManager(GAME_ROOT_DIRECTORY +
-                                                "/TestingManagerGame/TestingManagerGame.gamefile");
-        System.out.println("GAME DATA AS MAP: \n" + gamedata.toString());
-        System.out.println("GAME AS MANAGER: \n" + loadedIn.toString());
-        */
+        /*
+         * // gameRootDirectory will be chosen by the user, but here we're just
+         * // putting an an example
+         * InstanceManager example =
+         * GameCreator.createNewGame(
+         * "TestingManagerGame", GAME_ROOT_DIRECTORY);
+         * 
+         * // hardcode in an example part to show how it works
+         * List<String> params = new ArrayList<String>();
+         * params.add(Variables.PARAMETER_HP);
+         * params.add(Variables.PARAMETER_RANGE);
+         * List<Object> data = new ArrayList<Object>();
+         * data.add(new Integer(500));
+         * data.add(new Double(1.5));
+         * example.addPart(Variables.PARTNAME_TOWER, "MyFirstTower", params, data);
+         * List<String> params2 = new ArrayList<String>();
+         * params2.add(Variables.PARAMETER_HP);
+         * params2.add(Variables.PARAMETER_SPEED);
+         * params2.add(Variables.PARAMETER_DAMAGE);
+         * List<Object> data2 = new ArrayList<Object>();
+         * data2.add(new Integer(100));
+         * data2.add(new Double(1.5));
+         * data2.add(new Double(10));
+         * example.addPart("Enemy", "MyFirstEnemy", params2, data2);
+         * example.saveGame();
+         * // this method is called with the path to the .game file, which will be
+         * // received from the user
+         * // TODO: Use this statement to load the example map
+         * Map<String, Map<String, Object>> gamedata =
+         * InstanceManager.loadGameData(GAME_ROOT_DIRECTORY +
+         * "/TestingManagerGame/TestingManagerGame.gamefile");
+         * InstanceManager loadedIn =
+         * InstanceManager.loadGameManager(GAME_ROOT_DIRECTORY +
+         * "/TestingManagerGame/TestingManagerGame.gamefile");
+         * System.out.println("GAME DATA AS MAP: \n" + gamedata.toString());
+         * System.out.println("GAME AS MANAGER: \n" + loadedIn.toString());
+         */
 
         /*
          * InstanceManager gameManager = new InstanceManager("TestGame");

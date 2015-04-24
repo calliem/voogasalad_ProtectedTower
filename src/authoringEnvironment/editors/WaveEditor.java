@@ -20,6 +20,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.DataFormatException;
+import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.util.NamePrompt;
@@ -239,8 +241,14 @@ public class WaveEditor extends MainEditor {
         List<Object> data = new ArrayList<Object>();
         data.add(partFileNames);
         data.add(times);
-        myController.addPartToGame(WAVE, waveName,
-                                   ProjectReader.getParamsNoTypeOrName(WAVE), data);
+        try {
+            myController.addPartToGame(WAVE, waveName,
+                                       ProjectReader.getParamsNoTypeOrName(WAVE), data);
+        }
+        catch (MissingInformationException | DataFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private void addUnitToWave (ScrollPane displayPane, HBox wave, String waveName) {
