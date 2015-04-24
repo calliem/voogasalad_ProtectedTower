@@ -2,8 +2,11 @@ package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
+import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
+import engine.element.sprites.Projectile;
+import engine.element.sprites.Sprite;
 
 
 /**
@@ -15,10 +18,22 @@ import engine.UpdateAndReturnable;
  * @author Bojia Chen
  * @author Qian Wang
  */
+
 public class Level extends GameElement implements UpdateAndReturnable, Endable, Comparable<Level> {
 
     private static final String PARAMETER_NUMBER = "Number";
-
+    @parameter(settable=true,playerDisplay=true)
+    private Double HP = 100.0;
+    @parameter(settable=true,playerDisplay=true)
+    private List<String> rounds = null;
+    @parameter(settable=true,playerDisplay=true)
+    private List<String> quantities = null;
+    @parameter(settable=true,playerDisplay=true)
+    private Double sendRate = 1.0;
+    @parameter(settable=true,playerDisplay=true)
+    private List<String> conditions = null;
+    @parameter(settable=true,playerDisplay=true)
+    private Integer number = 0;
     private List<Round> myRounds;
     private double myHealth;
     private int myLives;

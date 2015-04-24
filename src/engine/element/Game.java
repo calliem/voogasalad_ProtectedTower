@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import annotations.parameter;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.reflection.Reflection;
@@ -33,6 +34,8 @@ public class Game extends GameElement implements Updateable, Endable {
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
+    @parameter(settable=true, playerDisplay=false)
+    private int HP =  100;
     private int myActiveLevelIndex;
     private Bank myBank;
     private int myPoints;

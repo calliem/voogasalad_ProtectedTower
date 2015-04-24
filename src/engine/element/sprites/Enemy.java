@@ -2,6 +2,7 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
+import annotations.parameter;
 import javafx.animation.PathTransition;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -21,8 +22,25 @@ import engine.InsufficientParametersException;
  * @author Qian Wang
  *
  */
+
 public class Enemy extends MoveableSprite {
 
+    @parameter(settable=true,playerDisplay=true)
+    private String name = "Unnamed";
+    @parameter(settable=true,playerDisplay=true)
+    private boolean CanHurtPlayer = false;
+    @parameter(settable=true,playerDisplay=true)
+    private int HP = 100;
+    @parameter(settable=true,playerDisplay=true)
+    private Double speed = 1.0;
+    @parameter(settable=true,playerDisplay=true)
+    private String type = "Basic";
+    @parameter(settable=true,playerDisplay=true)
+    private Double boundingHeight = 10.0;
+    @parameter(settable=true,playerDisplay=true)
+    private Double boundingWidth = 10.0;
+    @parameter(settable=true,playerDisplay=true)
+    private String group = null;
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
     private static final String PARAMETER_SPEED = "Speed";

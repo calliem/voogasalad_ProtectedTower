@@ -57,8 +57,11 @@ public abstract class SpriteView extends StackPane {
      * @param c controller needed to obtain partKeys from other tabs
      * @param name name of this sprite, designated by user
      * @param imageFile the file path of this sprite's image
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
+     * @throws ClassNotFoundException 
      */
-    public SpriteView (Controller c, String name, String imageFile) {
+    public SpriteView (Controller c, String name, String imageFile) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException {
         myController = c;
         if (name.length() == 0) {
             spriteName = DEFAULT_NAME;
@@ -98,7 +101,7 @@ public abstract class SpriteView extends StackPane {
         return path;
     }
 
-    private void setupEditableContent () {
+    private void setupEditableContent () throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException {
         editableContent = new VBox(10);
         editableContent.setAlignment(Pos.CENTER);
 
@@ -163,6 +166,7 @@ public abstract class SpriteView extends StackPane {
         if (correctFormat && save) {
             String key = myController.addPartToGame(getSpriteType(),
                                                     parameterFields);
+            System.out.println("Sprite is a " +getSpriteType());
             myController.specifyPartImage(key, imageFile);
             displaySavedMessage();
         }

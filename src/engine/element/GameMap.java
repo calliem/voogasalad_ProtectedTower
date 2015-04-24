@@ -1,14 +1,20 @@
 package engine.element;
 
 import java.util.Map;
+import annotations.parameter;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.GridCellFactory;
 
 
 public class GameMap extends GameElement {
-
+    @parameter(settable=true, playerDisplay=false)
     private GridCell[][] myMap;
-
+    @parameter(settable=true, playerDisplay=false)
+    private int rows = 10;
+    @parameter(settable=true, playerDisplay=false)
+    private int columns = 10;
+    @parameter(settable=true, playerDisplay=false)
+    private int tileSize =  5;
     public GameMap (Map<String, Object> params) {
         super.setParameterMap(params);
         loadMap();

@@ -5,15 +5,11 @@
 package authoringEnvironment;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import authoringEnvironment.setting.Setting;
-import util.misc.SetHandler;
-import javafx.collections.ObservableList;
 
 public class InstanceManager {
 	// public static final ResourceBundle paramLists =

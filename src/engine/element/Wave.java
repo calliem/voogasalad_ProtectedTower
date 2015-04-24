@@ -2,6 +2,7 @@ package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
+import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
 
@@ -15,7 +16,9 @@ import engine.UpdateAndReturnable;
  *
  */
 public class Wave extends GameElement implements UpdateAndReturnable, Endable {
+    @parameter(settable=true, playerDisplay=false)
     private List<List<String>> myEnemies;
+    @parameter(settable=true, playerDisplay=false)
     private double mySendRate;
     private int myEnemyIndex = 0;
     private int myTimer = 0;
