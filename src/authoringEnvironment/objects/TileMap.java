@@ -278,7 +278,7 @@ public class TileMap extends GameObject {
         return myTiles;
     }
 
-    public Map<String, Object> saveToXML () {
+    public Map<String, Object> save () {
         /*
          * List<String> partFileKeys = new ArrayList<String>();
          * List<Color> colors = new ArrayList<Color>();
@@ -301,7 +301,8 @@ public class TileMap extends GameObject {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.NAME_KEY, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
-        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
+        mapSettings.put(Variables.PARAMETER_BACKGROUND_FILEPATH, imgFilePath);
+        mapSettings.put(Variables.PARTNAME_THUMBNAIL, getThumbnail()); //TODO: save as a 2D array of ints instead of a JavaFX object
 
         String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
         for (int i = 0; i < myTiles.length; i++) {

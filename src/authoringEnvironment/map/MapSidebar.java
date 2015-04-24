@@ -1,6 +1,7 @@
 package authoringEnvironment.map;
 
 import imageselectorTEMP.GraphicFileChooser;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
@@ -25,6 +26,7 @@ import authoringEnvironment.Sidebar;
 import authoringEnvironment.UpdatableDisplay;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.objects.PARTNAME_MAP;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.util.Scaler;
 
@@ -82,13 +84,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         System.out.println("mapsidebar initializer " + mapWorkspace);
-        // getMapWorkspace() = mapWorkspace;
         myLives = DEFAULT_LIVES;
-        /*
-         * ObservableList<PathView> pathList =
-         * FXCollections.observableArrayList();
-         * getChildren().add(createListView(pathList, 300));
-         */
         myController = c;
         createMapSettings();
     }
@@ -100,14 +96,17 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         tileColDisplay.setText(Integer.toString(map.getNumCols()));
         tileSizeDisplay.setText(Integer.toString(map.getTileSize()));
         String detailedFilePath = map.getImgFilePath();
-        if (detailedFilePath != null){
-            String displayFilePath = detailedFilePath.substring(detailedFilePath.lastIndexOf("/") + 1);
+        if (detailedFilePath != null) {
+            String displayFilePath =
+                    detailedFilePath.substring(detailedFilePath.lastIndexOf("/") + 1);
             fileChooser.getFileDisplay().setText(displayFilePath);
         }
-        else{
-            fileChooser.getFileDisplay().setText("Select background"); //TODO: magic value. this is also used int he graphic file chooser
+        else {
+            fileChooser.getFileDisplay().setText("Select background"); // TODO: magic value. this is
+                                                                       // also used int he graphic
+                                                                       // file chooser
         }
-       
+
         // paths
     }
 
@@ -122,30 +121,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         setTileSize();
 
     }
-
-    /*
-     * private void displayMaps () {
-     * mapDisplay =
-     * new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace()); //
-     * test
-     * mapSettings.getChildren().add(mapDisplay);
-     * }
-     */
-
-    // Lots of duplication below
-    /*
-     * private void setLives () {
-     * HBox selection = new HBox();
-     * selection.setSpacing(PADDING);
-     * Text lives = new Text(getResources().getString("Lives"));
-     * TextField textField = new TextField(Integer.toString(myLives));
-     * Button button = new Button(getResources().getString("Update"));
-     * button.setOnMouseClicked(e -> System.out.println(textField.getText()));
-     * textField.setPrefWidth(TEXT_FIELD_WIDTH);
-     * selection.getChildren().addAll(lives, textField, button);
-     * mapSettings.getChildren().add(selection);
-     * }
-     */
 
     private void setTileSize () {
         HBox selection = new HBox();
@@ -249,9 +224,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                     .getTileSize()));
             getMapWorkspace().getActiveMap().setActiveColor(myActiveColor);
             // TODO: setTileSize();
-           changeMap(getMapWorkspace().getActiveMap());
-           mapDisplay.setSelectedView(null);
-           mapDisplay.updateDisplay(super.getMaps());
+            changeMap(getMapWorkspace().getActiveMap());
+            mapDisplay.setSelectedView(null);
+            mapDisplay.updateDisplay(super.getMaps());
 
         });
         // TODO: textField.setText to update it
@@ -267,6 +242,13 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * @param activeMap
      */
     private void saveMap (TileMap activeMap) {
+        
+        
+       
+        
+        //TODO:
+        //myController.delete(key);
+        
         activeMap.setName(mapNameTextField.getText());
         WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
@@ -274,13 +256,39 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         snapView.setImage(snapImage);
         activeMap.setThumbnail(snapView);
 
+        
+        //remove below
         if (!super.getMaps().contains(activeMap)) {
             super.getMaps().add(activeMap);
         }
+        
+        //use this one
+        List<String> mapKeys = myController.getKeysForPartType(Variables.PARTNAME_MAP);
+        if (mapKeys.contains(activeMap.getKey())){
+            Map<String, Object> mapSettings = activeMap.save();
+            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
+            activeMap.setKey(key);
+        }
+        
+        
+        //remove below        
         else {
             int existingIndex = super.getMaps().indexOf(activeMap);
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
+        }
+        
+        
+        
+        else{
+            int existingIndex = mapKeys.indexOf(activeMap.getKey());
+            myController.delete(activeMap.getKey());
+            
+            Map<String, Object> mapSettings = activeMap.save();
+            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
+            activeMap.setKey(key);
+            
+            mapKeys.add(existingIndex, activeMap.getKey());
         }
 
         // saves the map to a specific key
@@ -342,11 +350,13 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          * // class knowing, the code is easy to break
          */
 
-        for (GameObject map : super.getMaps()) {
-            Map<String, Object> mapSettings = map.saveToXML();
-            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
-            map.setKey(key);
-        }
+        /*
+         * for (GameObject map : super.getMaps()) {
+         * Map<String, Object> mapSettings = map.saveToXML();
+         * String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
+         * map.setKey(key);
+         * }
+         */
     }
 
     protected void setContent (GridPane container) {
@@ -389,9 +399,5 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         mapDisplay =
                 new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
         container.add(mapDisplay, 0, 5, 2, 1);
-
-        // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
-        // mapSettings.getChildren().add(container);
-
     }
 }
