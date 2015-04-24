@@ -1,7 +1,6 @@
 package authoringEnvironment.map;
 
 import imageselectorTEMP.GraphicFileChooser;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
@@ -23,7 +22,6 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.Sidebar;
 import authoringEnvironment.Variables;
-import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.MapUpdatableDisplay;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
@@ -62,7 +60,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     // dependency?
     private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
-    private int myLives;
     // private MapWorkspace getMapWorkspace();
     private static final int DEFAULT_LIVES = 20; // TODO: how to get this number
                                                  // from Johnny
@@ -83,7 +80,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         System.out.println("mapsidebar initializer " + mapWorkspace);
-        myLives = DEFAULT_LIVES;
         myController = c;
         createMapSettings();
     }
@@ -255,7 +251,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         String key;
         if (!getMapKeys().contains(activeMap.getKey())){
-            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings); //TODO: get the partname from somewhere else
+            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings); //TODO: get the partname from womehwere e
         }  
         else{
             key = myController.addPartToGame(activeMap.getKey(), Variables.PARTNAME_MAP, mapSettings);    
@@ -344,7 +340,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         // display maps
         mapDisplay =
-                new MapUpdatableDisplay(getMapKeys(), UPDATABLEDISPLAY_ELEMENTS, this); // test
+                new MapUpdatableDisplay(myController, Variables.PARTNAME_MAP, UPDATABLEDISPLAY_ELEMENTS, this); // test
         container.add(mapDisplay, 0, 5, 2, 1);
     }
 }

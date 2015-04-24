@@ -4,16 +4,17 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import authoringEnvironment.Controller;
+import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.map.MapWorkspace;
 
 public class LevelUpdatableDisplay extends UpdatableDisplay {
 
     private MapWorkspace myMapWorkspace;
 
-    public LevelUpdatableDisplay (List<GameObject> list, int rowSize, MapWorkspace mapWorkspace) {
-        super(list, rowSize);
-        myMapWorkspace = mapWorkspace;
-        // TODO Auto-generated constructor stub
+    public LevelUpdatableDisplay (Controller c, String partName, int rowSize, MapWorkspace workspace) {
+        super(c, partName, rowSize);
+        myMapWorkspace = workspace;
     }
 
     @Override
