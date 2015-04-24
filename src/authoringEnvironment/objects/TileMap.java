@@ -299,7 +299,7 @@ public class TileMap extends GameObject {
          */
 
         Map<String, Object> mapSettings = new HashMap<String, Object>();
-        mapSettings.put(InstanceManager.KEY_NAME, getName());
+        mapSettings.put(InstanceManager.NAME_KEY, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
         mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
 
