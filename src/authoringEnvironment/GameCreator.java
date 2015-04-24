@@ -19,10 +19,8 @@ public class GameCreator {
     private static final String partsFileDir = InstanceManager.PARTS_FILE_DIRECTORY;
     private static final String PART_FILE_NAME = "GameParts.xml";
     private static final String GAME_EXTENSION = ".gamefile";
-    public static final ResourceBundle PARAMETER_LIST = ResourceBundle
-            .getBundle(PARAMETER_LIST_FILE);
-
-    private static String userDataLocation = System.getProperty("user.dir").concat("/gamedata");
+    public static final ResourceBundle PARAMETER_LIST =
+            ResourceBundle.getBundle(PARAMETER_LIST_FILE);
 
     // private static InstanceManager currentGame = new InstanceManager();
 
@@ -42,18 +40,15 @@ public class GameCreator {
         nameAndDirectory[0] = gameName;
         nameAndDirectory[1] = gameDirectory;
         createGameFolders(gameName, rootDirBeforeGameName);
-        System.out.println("Game root dir: " + userDataLocation);
         XMLWriter.toXML(nameAndDirectory, gameName + GAME_EXTENSION, gameDirectory);
         return new InstanceManager(gameName, gameDirectory);
     }
 
     /**
-     * Creates subdirectories for each kind of part, i.e. "Tower", "Unit", etc.
-     * in a subdirectory of ... userData\gameName
+     * Creates subdirectories for each kind of part, i.e. "Tower", "Unit", etc. in a subdirectory of
+     * ... userdata\gameName
      * 
-     * @param gameName
-     *        The name of the new game we're going to create subdirectories
-     *        for
+     * @param gameName String of the name of the game
      */
     private static void createGameFolders (String gameName, String rootDir) {
         Set<String> name = new HashSet<String>();
@@ -72,10 +67,6 @@ public class GameCreator {
         Set<String> toAdd = PARAMETER_LIST.keySet();
         toAdd.add(partsFileDir);
         return toAdd;
-    }
-
-    public static void setUserDataLocation (String rootDir) {
-        userDataLocation = rootDir;
     }
 
     /*
