@@ -2,10 +2,8 @@ package engine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import authoringEnvironment.GameCreator;
@@ -45,6 +43,14 @@ public class GameController {
      */
     private Game myGame;
 
+    /**
+     * Creates a new instance of a game represented by the XML files at a given file location.
+     * 
+     * @param filepath String to the main directory holding the game
+     * @param nodes List<Node> reference to that used in the Player class to display the game
+     * @throws InsufficientParametersException when filepath does not point to a well defined game
+     *         file
+     */
     public GameController (String filepath, List<Node> nodes)
         throws InsufficientParametersException {
         myGame = this.loadGame(filepath, nodes);
@@ -82,6 +88,22 @@ public class GameController {
             System.out.println((String) obj.get(PARAMETER_GUID));
         }
 
+        return initializeGame(nodes, myObjects);
+    }
+
+    /**
+     * Creates a new Game object given a mapping of all possible objects that can exist in that
+     * game. Error checking is done to make sure only one game and layout are used.
+     * 
+     * @param nodes List<Node> list of javafx nodes that the game can update
+     * @param myObjects Map<String, Map<String, Map<String, Object>>> representing mapping of part
+     *        name to the specific objects of that type
+     * @return Game object which has been instantiated with given objects
+     * @throws InsufficientParametersException if inputted objects do not fulfill game requirements
+     */
+    private Game initializeGame (List<Node> nodes,
+                                 Map<String, Map<String, Map<String, Object>>> myObjects)
+                                                                                         throws InsufficientParametersException {
         // store game parameters
         Game myGame = new Game(nodes);
 
@@ -120,8 +142,7 @@ public class GameController {
     /**
      * Called by the player to tell engine about keypressed
      * 
-     * @param key
-     *        KeyEvent object
+     * @param key KeyEvent object
      */
     public void handleKeyInput (KeyEvent key) {
 
