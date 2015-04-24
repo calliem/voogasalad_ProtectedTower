@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import util.reflection.Reflection;
 
 
 /**
@@ -33,11 +32,6 @@ public class TowerManager extends SpriteFactory {
         myTowerMap = new HashMap<>();
     }
 
-    /*
-     * TODO: Update tower health on upgrade/downgrade. Downgrade health is
-     * MIN(Current_health,Max_Health)
-     */
-
     /**
      * Method for adding in individual towers to the local TowerMap
      * 
@@ -54,21 +48,20 @@ public class TowerManager extends SpriteFactory {
         }
     }
 
+    /*
+     * Full health is included in the cost of a tower upgrade. When downgrading, age and remaining
+     * health determine how much money the player gets back.
+     */
+
     /**
      * Method for getting a new instance of a specific tower
      * 
-     * @param towerID GUID of the desired tower
-     * @return New tower object with the parameters of the tower corresponding with the provided
-     *         GUID
+     * @param towerID GUID of the template tower
+     * @return New tower object with the parameters of the template tower
      */
 
     public Tower getTower (String towerID) {
-        super.checkID(towerID);
-
-        Tower tower = (Tower) Reflection.createInstance(PARAMETER_MY_CLASS_NAME);
-        tower.setParameterMap(super.getParameters(towerID));
-
-        return tower;
+        return (Tower) super.getSprite(towerID);
     }
 
     /**

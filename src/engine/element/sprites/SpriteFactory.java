@@ -3,6 +3,7 @@ package engine.element.sprites;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
+import util.reflection.Reflection;
 
 
 /**
@@ -15,10 +16,10 @@ import java.util.Map;
 public class SpriteFactory {
 
     private Map<String, Map<String, Object>> mySprites;
-    private String MY_CLASS_NAME;
+    private String PARAMETER_MY_CLASS_NAME;
 
     public SpriteFactory (String className) {
-        MY_CLASS_NAME = className;
+        PARAMETER_MY_CLASS_NAME = className;
         mySprites = new HashMap<>();
     }
 
@@ -43,9 +44,25 @@ public class SpriteFactory {
         mySprites.put(guid, spriteProperties);
     }
 
+    /**
+     * Should only be called on by the specific factories. Returns a new sprite given the GUID of
+     * the template sprite.
+     * 
+     * @param spriteID GUID of template sprite
+     * @return New instance of sprite with same parameters as template sprite
+     */
+
+    protected Sprite getSprite (String spriteID) {
+        checkID(spriteID);
+        Sprite sprite = (Sprite) Reflection.createInstance(PARAMETER_MY_CLASS_NAME);
+        sprite.setParameterMap(getParameters(spriteID));
+        return sprite;
+    }
+
     protected void checkID (String spriteID) {
         if (!mySprites.containsKey(spriteID))
-            throw new InvalidParameterException(spriteID + " is an undefined " + MY_CLASS_NAME);
+            throw new InvalidParameterException(spriteID + " is an undefined " +
+                                                PARAMETER_MY_CLASS_NAME);
     }
 
     protected Map<String, Object> getParameters (String spriteID) {
