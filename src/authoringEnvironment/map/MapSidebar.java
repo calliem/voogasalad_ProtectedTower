@@ -21,13 +21,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
-import authoringEnvironment.MapUpdatableDisplay;
 import authoringEnvironment.Sidebar;
-import authoringEnvironment.UpdatableDisplay;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.PARTNAME_MAP;
+import authoringEnvironment.objects.MapUpdatableDisplay;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.util.Scaler;
 
 
@@ -243,9 +242,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      */
     private void saveMap (TileMap activeMap) {
         
-        
-       
-        
         //TODO:
         //myController.delete(key);
         
@@ -262,13 +258,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             super.getMaps().add(activeMap);
         }
         
-        //use this one
-        List<String> mapKeys = myController.getKeysForPartType(Variables.PARTNAME_MAP);
-        if (mapKeys.contains(activeMap.getKey())){
-            Map<String, Object> mapSettings = activeMap.save();
-            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
-            activeMap.setKey(key);
-        }
         
         
         //remove below        
@@ -276,19 +265,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             int existingIndex = super.getMaps().indexOf(activeMap);
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
-        }
-        
-        
-        
-        else{
-            int existingIndex = mapKeys.indexOf(activeMap.getKey());
-            myController.delete(activeMap.getKey());
-            
-            Map<String, Object> mapSettings = activeMap.save();
-            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
-            activeMap.setKey(key);
-            
-            mapKeys.add(existingIndex, activeMap.getKey());
         }
 
         // saves the map to a specific key

@@ -1,11 +1,10 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import authoringEnvironment.map.MapWorkspace;
-import authoringEnvironment.objects.GameObject;
 
 public class LevelUpdatableDisplay extends UpdatableDisplay {
 

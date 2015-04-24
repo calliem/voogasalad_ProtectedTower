@@ -1,4 +1,4 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.awt.BorderLayout;
 import java.util.List;
@@ -14,7 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Variables;
 
 
 public abstract class UpdatableDisplay extends VBox {
