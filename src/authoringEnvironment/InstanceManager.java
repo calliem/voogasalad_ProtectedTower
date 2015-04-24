@@ -1,32 +1,29 @@
-/**
- * @author Johnny Kumpf
- */
-
 package authoringEnvironment;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import authoringEnvironment.setting.Setting;
-import util.misc.SetHandler;
-import javafx.collections.ObservableList;
 
 
+/**
+ * This class is a container which stores all the data in game creation. It acts as the backend for
+ * the authoring environment and keeps track of all parts of the game that the user creates.
+ * 
+ * @author Johnny Kumpf
+ */
 public class InstanceManager {
     // public static final ResourceBundle paramLists =
     // ResourceBundle.getBundle("resources/part_parameters");
-    private static final String defaultSaveLocation = System.getProperty(
-                                                                         "user.dir")
-            .concat("/src/myTowerGames");
-    private static final String gameRootDirectory = System.getProperty(
-                                                                       "user.dir")
-            .concat("/src/exampleUserData");
-    private static final String missingNameKey =
+    private static final String DEFAULT_SAVE_LOCATION =
+            System.getProperty("user.dir").concat("/gamedata/myTowerGames");
+    private static final String GAME_ROOT_DIRECTORY =
+            System.getProperty("user.dir").concat("/gamedata/exampleUserData");
+    private static final String MISSING_NAME_KEY_MESSAGE =
             "Map passed must contain a \"Name\" key. Key is case sensitive.";
-    private static final String listSizesDiffer =
+    private static final String DIFFERENT_LIST_SIZE_MESSAGE =
             "Lists passed must contain same number of elements.";
 
     private static final String PARTS_FILE_NAME = "GameParts.xml";
@@ -37,13 +34,11 @@ public class InstanceManager {
     public static final String PART_KEY_KEY = "PartKey";
     public static final String IMAGE_KEY = "Image";
     public static final String SAVE_PATH_KEY = "SavePath";
-
-    // a map of all the parts the user has created
-    // each part is represented by a map mapping the part's parameters to their
-    // data
-    // the fields look like: Map<partName, Map<parameterName, parameterData>>
-    // private Map<String, Map<String, Object>> userParts;
-
+    /**
+     * a map of all the parts the user has created each part is represented by a map mapping the
+     * part's parameters to their data the fields look like:
+     * Map<partName, Map<parameterName, parameterData>>
+     */
     private Map<String, Map<String, Object>> userParts;
     private String gameName;
     private String rootDirectory;
@@ -73,12 +68,13 @@ public class InstanceManager {
 
     public InstanceManager () {
         this("Unnamed_Game", new HashMap<String, Map<String, Object>>(),
-             defaultSaveLocation + "/Unnamed_Game");
+             DEFAULT_SAVE_LOCATION + "/Unnamed_Game");
+
     }
 
     public InstanceManager (String name) {
         this(name, new HashMap<String, Map<String, Object>>(),
-             defaultSaveLocation + "/" + name);
+             DEFAULT_SAVE_LOCATION + "/" + name);
     }
 
     public InstanceManager (String name, String rootDir) {
@@ -87,7 +83,7 @@ public class InstanceManager {
 
     public InstanceManager (String name,
                             Map<String, Map<String, Object>> partData) {
-        this(name, partData, defaultSaveLocation + "/" + name);
+        this(name, partData, DEFAULT_SAVE_LOCATION + "/" + name);
     }
 
     public String addPartWithKey (String key, Map<String, Object> part) {
@@ -123,26 +119,27 @@ public class InstanceManager {
             addPart(partType, toAdd);
         }
         catch (DataFormatException e) {
-            System.err
-                    .println("Part could not be generated and was not added.");
+            System.err.println("Part could not be generated and was not added.");
         }
         return (String) toAdd.get(PART_KEY_KEY);
     }
 
     private Map<String, Object> generatePartMap (List<String> params,
                                                  List<Object> data) throws DataFormatException {
-        if (params.size() != data.size())
-            throw new DataFormatException(listSizesDiffer);
+        if (params.size() != data.size()) { throw new DataFormatException(
+                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
         Map<String, Object> part = new HashMap<String, Object>();
-        for (int i = 0; i < params.size(); i++)
+        for (int i = 0; i < params.size(); i++) {
             part.put(params.get(i), data.get(i));
+        }
         return part;
     }
 
     public String addPart (String partType, List<Setting> settings) {
         Map<String, Object> partToAdd = new HashMap<String, Object>();
-        for (Setting s : settings)
+        for (Setting s : settings) {
             partToAdd.put(s.getParameterName(), s.getParameterValue());
+        }
         return addPart(partType, partToAdd);
     }
 
@@ -177,17 +174,18 @@ public class InstanceManager {
         return partKey;
     }
 
-    private String generateKey(String partType, Map<String, Object> part){
-        return gameName + "_Part" + partID++ + "." + partType;
+    private String generateKey (String partType, Map<String, Object> part) {
+        return gameName + "_Part" + (partID++) + "." + partType;
     }
-    
+
     private Map<String, Object> addPartToUserParts (Map<String, Object> part,
                                                     String partKey) throws DataFormatException {
         if (part.containsKey("Name")) {
             addPartWithKey(partKey, part);
             return part;
         }
-        throw new DataFormatException(missingNameKey);
+        throw new DataFormatException(MISSING_NAME_KEY_MESSAGE);
+
     }
 
     /**
@@ -370,7 +368,8 @@ public class InstanceManager {
         // putting an an example
         InstanceManager example =
                 GameCreator.createNewGame(
-                                          "TestingManagerGame", gameRootDirectory);
+                                          "TestingManagerGame", GAME_ROOT_DIRECTORY);
+
         // hardcode in an example part to show how it works
         List<String> params = new ArrayList<String>();
         params.add(Variables.PARAMETER_HP);
@@ -392,12 +391,12 @@ public class InstanceManager {
         // this method is called with the path to the .game file, which will be
         // received from the user
         // TODO: Use this statement to load the example map
-        Map<String, Map<String, Object>> gamedata = InstanceManager
-                .loadGameData(gameRootDirectory
-                              + "/TestingManagerGame/TestingManagerGame.gamefile");
-        InstanceManager loadedIn = InstanceManager
-                .loadGameManager(gameRootDirectory
-                                 + "/TestingManagerGame/TestingManagerGame.gamefile");
+        Map<String, Map<String, Object>> gamedata =
+                InstanceManager.loadGameData(GAME_ROOT_DIRECTORY +
+                                             "/TestingManagerGame/TestingManagerGame.gamefile");
+        InstanceManager loadedIn =
+                InstanceManager.loadGameManager(GAME_ROOT_DIRECTORY +
+                                                "/TestingManagerGame/TestingManagerGame.gamefile");
         System.out.println("GAME DATA AS MAP: \n" + gamedata.toString());
         System.out.println("GAME AS MANAGER: \n" + loadedIn.toString());
 
