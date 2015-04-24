@@ -17,7 +17,6 @@ public class ImageSetting extends Setting {
         basicLayout.getChildren().remove(0);
         
         selector = new ImageSelector();
-        selector.addExtensionFilter("Image");
         selector.setPreviewImageHeight(100);
         
         error.setVisible(false);

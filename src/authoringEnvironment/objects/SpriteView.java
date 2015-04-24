@@ -131,8 +131,6 @@ public abstract class SpriteView extends StackPane {
             parameterFields.add(s);
             settingsObjects.getChildren().add(s);
         }
-//        Setting GUID = createId();
-//        parameterFields.add(GUID);
         
         initializeSpriteInfo();
 

@@ -126,7 +126,6 @@ public class NamePrompt extends StackPane{
             promptBackground.setHeight(EXPANDED_HEIGHT);
             
             imgSelector = new ImageSelector();
-            imgSelector.addExtensionFilter("Image");
             imgSelector.setPreviewImageSize(PREVIEW_WIDTH, PREVIEW_HEIGHT);
             
             promptContent.getChildren().add(2, imgSelector);

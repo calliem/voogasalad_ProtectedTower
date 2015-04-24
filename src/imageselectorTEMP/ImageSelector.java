@@ -44,6 +44,7 @@ public class ImageSelector extends VBox {
         setAlignment(Pos.CENTER);
         filePath = new SimpleStringProperty();
         fileSelection = new GraphicFileChooser(IMAGE_PROMPT, NOT_AVAILABLE);
+        fileSelection.addExtensionFilterByType("Image");
 
         filePath.setValue(NOT_AVAILABLE);
         preview = new ImageView(new Image(filePath.getValue()));
@@ -56,6 +57,10 @@ public class ImageSelector extends VBox {
 
         getChildren().addAll(preview, fileSelection);
     }
+    
+    public void addExtensionFilter(String extension){
+        fileSelection.addExtensionFilter(extension);
+    }
 
     /**
      * This method opens the file chooser dialog window and updates the preview image.
@@ -65,10 +70,6 @@ public class ImageSelector extends VBox {
         preview = new ImageView(new Image(filePath.getValue()));
         this.getChildren().remove(0);
         this.getChildren().add(0, preview);
-    }
-
-    public void addExtensionFilter (String extension) {
-        fileSelection.addExtensionFilter(extension);
     }
 
     /**

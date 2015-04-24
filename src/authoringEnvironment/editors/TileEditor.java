@@ -1,9 +1,14 @@
 package authoringEnvironment.editors;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoringEnvironment.Controller;
+import authoringEnvironment.objects.Tag;
+import authoringEnvironment.objects.TagGroup;
+import authoringEnvironment.objects.TileView;
 
 
 /**
@@ -14,6 +19,7 @@ import authoringEnvironment.Controller;
 public class TileEditor extends Editor{
     private Group myRoot;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
+    private static final int PADDING = 10;
     
     public TileEditor(Controller c, String name) {
         super(c, name);
@@ -23,7 +29,23 @@ public class TileEditor extends Editor{
     protected Group configureUI () {
         // TODO Auto-generated method stub
         myRoot = new Group();
-        Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT);
+        HBox test = new HBox(PADDING);
+        test.setAlignment(Pos.CENTER);
+        Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, BACKGROUND_COLOR);
+        
+        TileView tile = new TileView(Color.BLUE);
+        
+        Tag tag = new Tag("POISON");
+        Tag tag2 = new Tag("GROUND");
+        Tag tag3 = new Tag("AIR");
+        
+        TagGroup group = new TagGroup();
+        group.addTag(tag2);
+        group.addTag(tag3);
+        
+        test.getChildren().addAll(tile, tag, group);
+        
+        myRoot.getChildren().addAll(background, test);
         return myRoot;
     }
 
