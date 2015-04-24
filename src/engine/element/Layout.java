@@ -88,11 +88,9 @@ public class Layout extends GameElement implements Updateable {
     /**
      * Temporary method to remove a projectile from the game
      * 
-     * @param Projectile to be removed
-     *
-     * 
+     * @param sprite Projectile to be removed
      */
-    // TODO:Poor design to have a method for every kind of sprite, need to think of a better way to
+    // TODO Poor design to have a method for every kind of sprite, need to think of a better way to
     // do this without repeating code
     public void removeProjectile (Sprite sprite) {
         myProjectileList.remove(sprite);
@@ -102,6 +100,7 @@ public class Layout extends GameElement implements Updateable {
     /**
      * Temporary method to hardcode a collision table for testing purposes
      */
+    // TODO remove later
     public void makeCollisionTable () {
         List<BiConsumer<Sprite, Sprite>> actionList = new ArrayList<BiConsumer<Sprite, Sprite>>();
         actionList.add( (e, f) -> e.onCollide(f));
@@ -114,10 +113,10 @@ public class Layout extends GameElement implements Updateable {
         actionPair[1] = action2;
         Map<String[], List<Integer>[]> collisionMap = new HashMap<String[], List<Integer>[]>();
         collisionMap.put(spritePair, actionPair);
-        setCollisionTable(new ActionManager(collisionMap, actionList));
+        setActionManager(new ActionManager(collisionMap, actionList));
     }
 
-    public void setCollisionTable (ActionManager table) {
+    public void setActionManager (ActionManager table) {
         myActionManager = table;
     }
 

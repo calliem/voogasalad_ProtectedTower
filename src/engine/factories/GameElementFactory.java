@@ -61,9 +61,9 @@ public class GameElementFactory {
     }
 
     protected void checkID (String guid) {
-        if (!myGameElements.containsKey(guid))
-            throw new InvalidParameterException(guid + " is an undefined " +
-                                                PARAMETER_MY_CLASS_NAME);
+        if (!myGameElements.containsKey(guid)) {
+            throw new InvalidParameterException(guid + " is an undefined " + PARAMETER_MY_CLASS_NAME);
+        }
     }
 
     protected Map<String, Object> getParameters (String guid) {
