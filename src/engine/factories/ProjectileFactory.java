@@ -1,4 +1,6 @@
-package engine.element.sprites;
+package engine.factories;
+
+import engine.element.sprites.Projectile;
 
 /**
  * Factory for producing projectiles

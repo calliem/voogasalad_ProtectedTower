@@ -27,12 +27,11 @@ public abstract class Sprite extends GameElement implements Collidable {
 
     }
 
-    // TODO remove these once testing is over
-    @Deprecated
     public ImageView getImageView () {
         return myImage;
     }
 
+    // TODO remove these once testing is over
     @Deprecated
     protected void setImageView (ImageView image) {
         myImage = image;

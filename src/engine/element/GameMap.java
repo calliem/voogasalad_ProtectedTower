@@ -2,7 +2,7 @@ package engine.element;
 
 import java.util.Map;
 import engine.element.sprites.GridCell;
-import engine.element.sprites.GridCellFactory;
+import engine.factories.GridCellFactory;
 
 
 public class GameMap extends GameElement {

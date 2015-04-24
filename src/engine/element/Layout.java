@@ -15,17 +15,17 @@ import engine.CollisionChecker;
 import engine.ActionManager;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
-import engine.element.sprites.EnemyFactory;
 import engine.element.sprites.GridCell;
-import engine.element.sprites.GridCellFactory;
-import engine.element.sprites.MapFactory;
 import engine.element.sprites.Projectile;
-import engine.element.sprites.ProjectileFactory;
-import engine.element.sprites.RoundFactory;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
-import engine.element.sprites.TowerManager;
-import engine.element.sprites.WaveFactory;
+import engine.factories.EnemyFactory;
+import engine.factories.GridCellFactory;
+import engine.factories.MapFactory;
+import engine.factories.ProjectileFactory;
+import engine.factories.RoundFactory;
+import engine.factories.TowerManager;
+import engine.factories.WaveFactory;
 
 
 /**
