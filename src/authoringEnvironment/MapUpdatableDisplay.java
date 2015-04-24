@@ -1,21 +1,28 @@
 package authoringEnvironment;
 
 import java.util.List;
+import javafx.scene.layout.GridPane;
+import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.objects.TileMap;
 
 public class MapUpdatableDisplay extends UpdatableDisplay {
     
-    private MapWorkspace myMapWorkspace;
+    private MapSidebar mySidebar;
     
-    public MapUpdatableDisplay (List<GameObject> list, int rowSize, MapWorkspace mapWorkspace) {
+    public MapUpdatableDisplay (List<GameObject> list, int rowSize, MapSidebar sidebar) {
         super(list, rowSize);
-        myMapWorkspace = mapWorkspace;
+        mySidebar = sidebar;
     }
 
     @Override
     protected void objectClicked (GameObject object) {
-        myMapWorkspace.updateWithNewMap(object);
+        mySidebar.changeMap((TileMap) object);
+        
+        //mySidebar.getMapWorkspace().updateWithNewMap(object);
+        //mySidebar.setMapNameTextField(object.getName());
+        //mySidebar.setPaths
     }
 
 }

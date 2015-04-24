@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import authoringEnvironment.InstanceManager;
+import authoringEnvironment.Variables;
 
 
 /**
@@ -24,13 +25,9 @@ public class TileMap extends GameObject {
     private int myTileSize;
     private ImageView myBackground;
     private Color myActiveColor;
+    private String imgFilePath;
 
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
-    private static final String TILESIZE_SETTING = "TileSize";
-    private static final String BACKGROUND_SETTING = "Background";
-    private static final String COORDINATES = "Coordinates";
-    private static final String KEYS = "Keys";
-    private static final String MAP_PART_NAME = "GameMap";
     private static final String TILE_KEY_ARRAY = "TileArrayKeys";
     private static final int LINE_START_COORDINATE = 0;
 
@@ -45,7 +42,7 @@ public class TileMap extends GameObject {
 
     private Group myGridLines;
 
-    private static final Color DEFAULT_TILE_COLOR = Color.WHITE;
+    private static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
 
     // TODO: user specifies rectangle or square dimensions...allow this flexibility
     public TileMap (int mapRows, int mapCols, int tileSize) {
@@ -56,8 +53,10 @@ public class TileMap extends GameObject {
         myTileSize = tileSize;
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
+       // imgFilePath = DEFAULT_BACKGROUND_PATH;
+        imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
-        setThumbnail(DEFAULT_BACKGROUND_PATH);
+        setThumbnail(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
         // TODO: sethover x, y coordinate, tile size, etc.
@@ -71,12 +70,12 @@ public class TileMap extends GameObject {
         image.setFitWidth(myMapCols * myTileSize);
         image.setFitHeight(myMapRows * myTileSize);
     }
-    
-    public int getWidth(){
+
+    public int getWidth () {
         return myTileSize * myMapCols;
     }
-    
-    public int getHeight(){
+
+    public int getHeight () {
         return myTileSize * myMapRows;
     }
 
@@ -95,11 +94,13 @@ public class TileMap extends GameObject {
      */
 
     public void setBackground (String filepath) {
+        imgFilePath = filepath;
         myRoot.getChildren().remove(myBackground);
-        myBackground = new ImageView(new Image(filepath));
+        Image image = new Image(filepath);
+        myBackground = new ImageView(image);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(0, myBackground);
-        setThumbnail(filepath);
+        setThumbnail(myBackground);
     }
 
     // TODO:duplicated tile listeners being added/deleted?
@@ -112,14 +113,10 @@ public class TileMap extends GameObject {
     }
 
     private void attachTileListener (Tile tile) {
-        tile.setOnMouseClicked(e -> {
-            tile.setFill(myActiveColor);
-            // System.out.println("I have been clicked!" + tile.getFill().toString());
-        });
-        tile.setOnMouseDragEntered(e -> {
-            tile.setFill(myActiveColor);
-            // System.out.println("I have been dragged!" + tile.getFill().toString());
-        });
+        tile.setOnMouseClicked(e -> tileClicked(tile));
+      //this method is used instead of tileClicked to allow for easier "coloring" of large groups of tiles
+        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); 
+
         // System.out.print("tile listener added");
     }
 
@@ -133,6 +130,16 @@ public class TileMap extends GameObject {
         }
         updateGridLines();
         setImageDimensions(myBackground);
+    }
+
+    private void tileClicked (Tile tile) {
+        if (tile.getColor() == myActiveColor) {
+            System.out.println("colors are equal!");
+            tile.setFill(Color.TRANSPARENT);
+        }
+        else {
+            tile.setFill(myActiveColor);
+        }
     }
 
     public void removeTileListeners () {
@@ -193,7 +200,7 @@ public class TileMap extends GameObject {
                 else {
                     newTiles[i][j] = myTiles[i][j];
                 }
-                attachTileListener(newTiles[i][j]);
+                attachTileListener(newTiles[i][j]); // TODO figure out why not working
                 myRoot.getChildren().add(newTiles[i][j]);
             }
         }
@@ -202,6 +209,7 @@ public class TileMap extends GameObject {
         myMapRows = newMapRows;
         myTiles = newTiles;
         setImageDimensions(myBackground);
+        changeTileSize(myTileSize);
         updateGridLines();
     }
 
@@ -291,9 +299,9 @@ public class TileMap extends GameObject {
          */
 
         Map<String, Object> mapSettings = new HashMap<String, Object>();
-        mapSettings.put(InstanceManager.nameKey, getName());
-        mapSettings.put(TILESIZE_SETTING, myTileSize);
-        mapSettings.put(BACKGROUND_SETTING, myBackground);
+        mapSettings.put(InstanceManager.KEY_NAME, getName());
+        mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
+        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
 
         String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
         for (int i = 0; i < myTiles.length; i++) {
@@ -308,4 +316,9 @@ public class TileMap extends GameObject {
     public Group getRoot () {
         return myRoot;
     }
+    
+    public String getImgFilePath(){
+        return imgFilePath;
+    }
+
 }

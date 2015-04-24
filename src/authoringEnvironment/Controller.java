@@ -122,7 +122,7 @@ public class Controller {
      */
     public String getImageForKey (String key) throws NoImageFoundException {
         Map<String, Object> partCopy = getPartCopy(key);
-        if (!partCopy.keySet().contains(InstanceManager.imageKey))
+        if (!partCopy.keySet().contains(InstanceManager.KEY_IMAGE))
             throw new NoImageFoundException("No image is specified for part: "
                                             + key);
         return (String) partCopy.get(key);
@@ -150,7 +150,7 @@ public class Controller {
 
     public Map<String, Object> loadPart (String fullPartFilePath) {
         Map<String, Object> part = (Map<String, Object>) XMLWriter.fromXML(fullPartFilePath);
-        String partKey = (String) part.get(InstanceManager.partKeyKey);
+        String partKey = (String) part.get(InstanceManager.KEY_PART_KEY);
         currentGame.addPart(partKey, part);
         addKey(partKey);
         return part;
