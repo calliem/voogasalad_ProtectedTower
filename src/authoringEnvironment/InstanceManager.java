@@ -47,7 +47,7 @@ public class InstanceManager {
     private Map<String, Map<String, Object>> userParts;
     private String gameName;
     private String rootDirectory;
-    private static int partID = 0;
+    private static int partID;
 
     /**
      * Generates an instance manager for a game. An InstanceManager has a name
@@ -68,6 +68,7 @@ public class InstanceManager {
         gameName = name;
         userParts = partData;
         rootDirectory = rootDir;
+        partID = 0;
     }
 
     public InstanceManager () {
@@ -164,8 +165,7 @@ public class InstanceManager {
      */
     public String addPart (String partType, Map<String, Object> part) {
         part.put(PART_TYPE_KEY, partType);
-        String partKey = gameName + "_" + (String) part.get(NAME_KEY) + "."
-                         + partType;
+        String partKey = generateKey(partType, part);
         part.put(PART_KEY_KEY, partKey);
         try {
             writePartToXML(addPartToUserParts(part, partKey));
@@ -177,9 +177,10 @@ public class InstanceManager {
         return partKey;
     }
 
-    private String generateKey(Map<String, Object> part, String partType){
+    private String generateKey(String partType, Map<String, Object> part){
         return gameName + "_Part" + partID++ + "." + partType;
     }
+    
     private Map<String, Object> addPartToUserParts (Map<String, Object> part,
                                                     String partKey) throws DataFormatException {
         if (part.containsKey("Name")) {
