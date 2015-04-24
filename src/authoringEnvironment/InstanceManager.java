@@ -96,11 +96,18 @@ public class InstanceManager {
         return addPart(key, fullPartMap);
     }
 
-    public String addPart (String key, Map<String, Object> fullPartMap) throws MissingInformationException {
-        if (!checkMissingInformation(fullPartMap).equals(NO_KEYS_MISSING))
-            throw new MissingInformationException(MISSING_NAME_KEY_MESSAGE);
+    public String addPart(String key, Map<String, Object> fullPartMap)
+                                                                       throws MissingInformationException {
+        String missingKey = checkMissingInformation(fullPartMap);
+        if (!missingKey.equals(NO_KEYS_MISSING))
+            throw new MissingInformationException(missingKeyErrorMessage(missingKey));
         userParts.put(key, fullPartMap);
+        writePartToXML(fullPartMap);
         return key;
+    }
+    
+    private String missingKeyErrorMessage(String missingKey){
+        return "Map must contain \"" + missingKey + "\" key.";
     }
 
     private String generateKey (Map<String, Object> part) {
@@ -126,6 +133,7 @@ public class InstanceManager {
      * 
      * @param part
      *        The part to write to XML
+     * @return the path to the file that was written
      */
     private String writePartToXML (Map<String, Object> part) {
         String partType = (String) part.get(PART_TYPE_KEY);
@@ -206,48 +214,9 @@ public class InstanceManager {
         return new HashMap<String, Map<String, Object>>(userParts);
     }
 
-    /**
-     * Gets the part type by looking at what comes before the first "_" in the
-     * name
-     * 
-     * @param partName
-     *        The name of the part
-     * @return The type of part, i.e. "Tower", "Projectile", "Unit", etc.
-     */
-    /*
-     * private static String partTypeFromName(String partName) { return
-     * partName.substring(0, partName.indexOf("_")); }
-     */
-
-    /*
-     * //if you're using a class like TowerEditor, get the word "Tower" from it
-     * //not sure if this method's useful yet, or in its best form public static
-     * String getPartType(Object o){ String className = o.getClass().toString();
-     * return className.substring(0, className.indexOf("Editor")); }
-     */
-
-    /*
-     * /**
-     * 
-     * @param partName The name of the part you want to update
-     * 
-     * @param param Which parameter of that part you want to update
-     * 
-     * @param newData The new value of that parameter's data, as a String
-     */
-    /*
-     * public void updatePart(String partName, String param, String newData) {
-     * Map<String, Object> partToBeUpdated = userParts.get(partName); Object
-     * data = "data incorrectly added"; try { data =
-     * partToBeUpdated.get(param).getClass().getConstructor(String.class)
-     * .newInstance(newData); } catch (InstantiationException |
-     * IllegalAccessException | IllegalArgumentException |
-     * InvocationTargetException | NoSuchMethodException | SecurityException e)
-     * { e.printStackTrace(); } partToBeUpdated.put(param, data); }
-     * 
-     * public void updatePart(String partName, String param, Object newData) {
-     * userParts.get(partName).put(param, newData); }
-     */
+    public void specifyPartImage (String partKey, String imageFilePath) {
+        userParts.get(partKey).put(IMAGE_KEY, imageFilePath);
+    }
 
     /**
      * 
@@ -276,88 +245,5 @@ public class InstanceManager {
 
     public String getName () {
         return gameName;
-    }
-
-    /**
-     * At the moment, this adds a default part, but this probably won't end up
-     * being used
-     * 
-     * @param partType
-     *        the kind of part to be added
-     * @return the part that was added
-     */
-    /*
-     * public Map<String, Object> addPart(String partType){ Map<String, Object>
-     * newPart = GameManager.createDefaultPart(partType); String partName =
-     * partType + "_" + "Part_" + new Integer(partsCreated++).toString();
-     * userParts.put(partName, newPart); return newPart; }
-     */
-
-    public static void main (String[] args) {
-        /*
-         * // gameRootDirectory will be chosen by the user, but here we're just
-         * // putting an an example
-         * InstanceManager example =
-         * GameCreator.createNewGame(
-         * "TestingManagerGame", GAME_ROOT_DIRECTORY);
-         * 
-         * // hardcode in an example part to show how it works
-         * List<String> params = new ArrayList<String>();
-         * params.add(Variables.PARAMETER_HP);
-         * params.add(Variables.PARAMETER_RANGE);
-         * List<Object> data = new ArrayList<Object>();
-         * data.add(new Integer(500));
-         * data.add(new Double(1.5));
-         * example.addPart(Variables.PARTNAME_TOWER, "MyFirstTower", params, data);
-         * List<String> params2 = new ArrayList<String>();
-         * params2.add(Variables.PARAMETER_HP);
-         * params2.add(Variables.PARAMETER_SPEED);
-         * params2.add(Variables.PARAMETER_DAMAGE);
-         * List<Object> data2 = new ArrayList<Object>();
-         * data2.add(new Integer(100));
-         * data2.add(new Double(1.5));
-         * data2.add(new Double(10));
-         * example.addPart("Enemy", "MyFirstEnemy", params2, data2);
-         * example.saveGame();
-         * // this method is called with the path to the .game file, which will be
-         * // received from the user
-         * // TODO: Use this statement to load the example map
-         * Map<String, Map<String, Object>> gamedata =
-         * InstanceManager.loadGameData(GAME_ROOT_DIRECTORY +
-         * "/TestingManagerGame/TestingManagerGame.gamefile");
-         * InstanceManager loadedIn =
-         * InstanceManager.loadGameManager(GAME_ROOT_DIRECTORY +
-         * "/TestingManagerGame/TestingManagerGame.gamefile");
-         * System.out.println("GAME DATA AS MAP: \n" + gamedata.toString());
-         * System.out.println("GAME AS MANAGER: \n" + loadedIn.toString());
-         */
-
-        /*
-         * InstanceManager gameManager = new InstanceManager("TestGame");
-         * GameManager.createGameFolders(gameManager.getName());
-         * gameManager.addPart(TOWER); gameManager.addPart(UNIT);
-         * gameManager.addPart(PROJECTILE); gameManager.addPart(PROJECTILE);
-         * gameManager.addPart(UNIT); gameManager.addPart(UNIT);
-         * gameManager.addPart(TOWER); System.out.println(gameManager);
-         * 
-         * // d "magic values" // Or if this is a test, then ignore this.
-         * gameManager.updatePart("Tower_Part_0", "HP", "5000");
-         * gameManager.updatePart("Tower_Part_0", "FireRate", "8");
-         * gameManager.updatePart("Unit_Part_4", "Speed", "3");
-         * System.out.println(gameManager);
-         * 
-         * gameManager.writeAllPartsToXML(); // example of overwriting a file //
-         * XMLWriter.toXML(new String("testing"), "Projectile_Part_2", //
-         * userDataPackage + "\\TestGame\\Projectile"); String stringyDir =
-         * XMLWriter.toXML(new String("String theory"), "stringy");
-         * XMLWriter.toXML(new String("hascode class test")); String
-         * stringyLoaded = (String) XMLWriter.fromXML(stringyDir);
-         * System.out.println("Stringy test: " + stringyLoaded); try {
-         * System.out.println("from xml: " +
-         * gameManager.getPartFromXML("Tower_Part_0")); } catch (IOException e)
-         * { // e.printStackTrace();
-         * 
-         * }
-         */
     }
 }

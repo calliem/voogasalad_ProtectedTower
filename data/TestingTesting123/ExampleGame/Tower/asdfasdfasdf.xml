@@ -25,15 +25,11 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.Tower</string>
-  </entry>
-  <entry>
-    <string>Image</string>
-    <string>imageselectorTEMP/img_not_available.png</string>
+    <string>ExampleGame_Part1.asdfasdfasdf</string>
   </entry>
   <entry>
     <string>AttackSpeed</string>
-    <double>1.0</double>
+    <double>500.0</double>
   </entry>
   <entry>
     <string>BoundingHeight</string>
@@ -41,7 +37,7 @@
   </entry>
   <entry>
     <string>Name</string>
-    <string>Test</string>
+    <string>asdfasdfasdf</string>
   </entry>
   <entry>
     <string>Projectile</string>

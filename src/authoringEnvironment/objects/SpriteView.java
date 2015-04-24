@@ -24,6 +24,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.util.Scaler;
 import authoringEnvironment.setting.Setting;
@@ -172,8 +173,14 @@ public abstract class SpriteView extends StackPane {
         }
 
         if (correctFormat && save) {
-            myKey = myController.addPartToGame(getSpriteType(),
-                                                    parameterFields);
+            try {
+                myKey = myController.addPartToGame(getSpriteType(),
+                                                        parameterFields);
+            }
+            catch (MissingInformationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             myController.specifyPartImage(myKey, imageFile);
             displaySavedMessage();
         }

@@ -229,6 +229,10 @@ public class Controller {
                                             + key);
         return (String) partCopy.get(key);
     }
+    
+    public void specifyPartImage (String partKey, String imageFilePath) {
+        currentGame.specifyPartImage(partKey, imageFilePath);
+    }
 
     /**
      * Gets a copy of the part of key partKey. All data is present, but
