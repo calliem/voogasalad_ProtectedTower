@@ -23,7 +23,7 @@ import engine.element.GameElement;
 public class GameElementFactory {
 
     private static final String MY_CLASS_LOCATION = "engine.element.GameElement";
-    
+
     /**
      * Holds all the possible parameters maps used to initialize all game elements. This is a
      * triple-layered map, with the innermost layer being a map of parameter name to parameter

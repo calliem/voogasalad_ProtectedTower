@@ -2,7 +2,6 @@ package engine.element;
 
 import java.util.Map;
 import engine.element.sprites.GridCell;
-import engine.factories.GridCellFactory;
 
 
 public class GameMap extends GameElement {
@@ -19,7 +18,7 @@ public class GameMap extends GameElement {
         Double tileSize = (Double) super.getParameter("TileSize");
 
         GridCell[][] map = new GridCell[mapLayout.length][mapLayout[0].length];
-        GridCellFactory factory = new GridCellFactory();
+
         // for (int[] key : mapLayout.keySet()) {
         // GridCell cell = factory.getGridCell(mapLayout.get(key));
         // int row = key[0];

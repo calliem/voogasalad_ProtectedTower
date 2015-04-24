@@ -11,21 +11,16 @@ import java.util.function.BiConsumer;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
-import engine.CollisionChecker;
 import engine.ActionManager;
+import engine.CollisionChecker;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
-import engine.factories.EnemyFactory;
-import engine.factories.GridCellFactory;
-import engine.factories.MapFactory;
-import engine.factories.ProjectileFactory;
-import engine.factories.RoundFactory;
+import engine.factories.GameElementFactory;
 import engine.factories.TowerManager;
-import engine.factories.WaveFactory;
 
 
 /**
@@ -41,9 +36,6 @@ import engine.factories.WaveFactory;
  */
 public class Layout extends GameElement implements Updateable {
 
-    private static final String PARAMETER_SIZE = "TileSize";
-    private static final String PARAMETER_HP = "HP";
-
     /**
      * List of Javafx objects so that new nodes can be added for the player to display
      */
@@ -57,13 +49,8 @@ public class Layout extends GameElement implements Updateable {
     private List<Enemy> myEnemyList;
     private List<Projectile> myProjectileList;
     // Factories to create game elements
+    private GameElementFactory myGameElementFactory;
     private TowerManager myTowerManager;
-    private EnemyFactory myEnemyFactory;
-    private ProjectileFactory myProjectileFactory;
-    private GridCellFactory myGridCellFactory;
-    private MapFactory myGameMapFactory;
-    private RoundFactory myRoundFactory;
-    private WaveFactory myWaveFactory;
     /**
      * Class which handles checking for collisions
      */
@@ -75,13 +62,8 @@ public class Layout extends GameElement implements Updateable {
 
     public Layout (List<Node> nodes) {
         myNodeList = nodes;
+        myGameElementFactory = new GameElementFactory();
         myTowerManager = new TowerManager();
-        myEnemyFactory = new EnemyFactory();
-        myProjectileFactory = new ProjectileFactory();
-        myGridCellFactory = new GridCellFactory();
-        myGameMapFactory = new MapFactory();
-        myRoundFactory = new RoundFactory();
-        myWaveFactory = new WaveFactory();
         myCollisionChecker = new CollisionChecker();
     }
 
@@ -125,10 +107,10 @@ public class Layout extends GameElement implements Updateable {
      * GUID of the map name is used to know which map to instantiate. An array of gridcells are made
      * and added to a map object, which is then set as the current map.
      * 
-     * @param mapName GUID of the map
+     * @param mapID GUID of the map
      */
-    public void setMap (String mapName) {
-        myGameMap = myGameMapFactory.getMap(mapName);
+    public void setMap (String mapID) {
+        myGameMap = (GameMap) myGameElementFactory.getGameElement("GameMap", mapID);
         Rectangle bounds =
                 new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
         myCollisionChecker.initializeQuadtree(bounds);
@@ -205,7 +187,7 @@ public class Layout extends GameElement implements Updateable {
      * @param location Point2D representing location on grid
      */
     public void spawnEnemy (String enemyID, Point2D location) {
-        Enemy e = myEnemyFactory.getEnemy(enemyID);
+        Enemy e = (Enemy) myGameElementFactory.getGameElement("Enemy", enemyID);
         e.setLocation(location);
         myEnemyList.add(e);
     }
@@ -228,7 +210,8 @@ public class Layout extends GameElement implements Updateable {
      * @param location Point2D representing location on grid
      */
     public void spawnProjectile (String projectileID, Point2D location) {
-        Projectile proj = myProjectileFactory.getProjectile(projectileID);
+        Projectile proj =
+                (Projectile) myGameElementFactory.getGameElement("Projectile", projectileID);
         proj.setLocation(location);
         myProjectileList.add(proj);
     }
@@ -331,32 +314,20 @@ public class Layout extends GameElement implements Updateable {
 
     // Loading game methods
 
-    // TODO refactor below methods
+    // TODO decide how to implement TowerManager with the new game element factory
     public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
-        myTowerManager.add(allTowers);
+        myTowerManager.add("Tower", allTowers);
     }
 
-    public void initializeEnemies (Map<String, Map<String, Object>> allObjects) {
-        myEnemyFactory.add(allObjects);
-    }
-
-    public void initializeProjectiles (Map<String, Map<String, Object>> allObjects) {
-        myProjectileFactory.add(allObjects);
-    }
-
-    public void initializeGridCells (Map<String, Map<String, Object>> allObjects) {
-        myGridCellFactory.add(allObjects);
-    }
-
-    public void initializeGameMaps (Map<String, Map<String, Object>> allObjects) {
-        myGameMapFactory.add(allObjects);
-    }
-
-    public void initializeRounds (Map<String, Map<String, Object>> allObjects) {
-        myRoundFactory.add(allObjects);
-    }
-
-    public void initializeWaves (Map<String, Map<String, Object>> allObjects) {
-        myWaveFactory.add(allObjects);
+    /**
+     * Method used to initialize the game element factory with what possible game elements this game
+     * can create.
+     * 
+     * @param className String of the class of the object, such as "Tower" or "Enemy"
+     * @param allObjects Map<String, Map<String, Object>> object representing mapping of GUID to
+     *        parameter map
+     */
+    public void initializeGameElement (String className, Map<String, Map<String, Object>> allObjects) {
+        myGameElementFactory.add(className, allObjects);
     }
 }

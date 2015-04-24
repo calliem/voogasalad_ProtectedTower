@@ -2,8 +2,10 @@ package engine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import authoringEnvironment.GameCreator;
@@ -26,32 +28,26 @@ public class GameController {
     private static final String PARAMETER_PARTTYPE = "PartType";
     private static final String PARAMETER_GUID = "PartKey";
     /**
+     * Holds a set of part names to load
+     */
+    private static final String[] PART_NAMES = new String[] { "Tower", "Enemy", "Projectile",
+                                                             "GridCell", "GameMap", "Round",
+                                                             "Wave", "Game", "Layout", "Level" };
+    /**
+     * Holds a subset of part names to give to the game element factory
+     */
+    private static final String[] FACTORY_PART_NAMES = new String[] { "Tower", "Enemy",
+                                                                     "Projectile", "GridCell",
+                                                                     "GameMap", "Round", "Wave" };
+
+    /**
      * Holds an instance of an entire game
      */
-    Game myGame;
-    /**
-     * Holds a map of a part name to the package to use to reflect
-     */
-    Map<String, String> myPartTypeToPackage = new HashMap<>();
+    private Game myGame;
 
     public GameController (String filepath, List<Node> nodes)
         throws InsufficientParametersException {
-        fillPackageMap();
         myGame = this.loadGame(filepath, nodes);
-    }
-
-    // TODO replace this with loading from data file
-    private void fillPackageMap () {
-        myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
-        myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
-        myPartTypeToPackage.put("Projectile", "engine.element.sprites.Projectile");
-        myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
-        myPartTypeToPackage.put("Game", "engine.element.Game");
-        myPartTypeToPackage.put("Level", "engine.element.Level");
-        myPartTypeToPackage.put("GameMap", "engine.element.GameMap");
-        myPartTypeToPackage.put("Round", "engine.element.Round");
-        myPartTypeToPackage.put("Wave", "engine.element.Wave");
-        myPartTypeToPackage.put("Layout", "engine.element.Layout");
     }
 
     /**
@@ -68,8 +64,8 @@ public class GameController {
     private Game loadGame (String filepath, List<Node> nodes)
                                                              throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
-        for (String s : myPartTypeToPackage.keySet()) {
-            myObjects.put(s, new HashMap<>());
+        for (String partName : PART_NAMES) {
+            myObjects.put(partName, new HashMap<>());
         }
 
         // Get list of parameters maps for all objects
@@ -90,32 +86,33 @@ public class GameController {
         Game myGame = new Game(nodes);
 
         // TODO test for errors for 0 data files, or too many
-        if (myObjects.get("Game").size() > 1) {
-            throw new InsufficientParametersException("Multiple game data files created");
+        if (myObjects.get("Game").size() != 1) {
+            throw new InsufficientParametersException("Zero or multiple game data files created");
         }
         else {
             for (Map<String, Object> map : myObjects.get("Game").values()) {
                 myGame.setParameterMap(map);
             }
         }
-        if (myObjects.get("Layout").size() > 1) {
-            throw new InsufficientParametersException("Multiple game layouts created");
+        if (myObjects.get("Layout").size() != 1) {
+            throw new InsufficientParametersException("Zero or multiple game layouts created");
         }
         else {
             for (Map<String, Object> map : myObjects.get("Layout").values()) {
                 myGame.addLayoutParameters(map);
             }
         }
+        if (myObjects.get("Level").size() < 1) {
+            throw new InsufficientParametersException("No game levels created");
+        }
+        else {
+            myGame.addLevels(myObjects.get("Level"));
+        }
 
         // Send right sets of objects to the right objects
-        myGame.addTowers(myObjects.get("Tower"));
-        myGame.addEnemies(myObjects.get("Enemy"));
-        myGame.addProjectiles(myObjects.get("Projectile"));
-        myGame.addGridCells(myObjects.get("GridCell"));
-        myGame.addLevels(myObjects.get("Level"));
-        myGame.addGameMaps(myObjects.get("GameMap"));
-        myGame.addRounds(myObjects.get("Round"));
-        myGame.addWaves(myObjects.get("Wave"));
+        for (String partName : FACTORY_PART_NAMES) {
+            myGame.addGameElement(partName, myObjects.get(partName));
+        }
 
         return myGame;
     }
