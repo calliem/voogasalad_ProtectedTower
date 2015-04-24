@@ -27,11 +27,11 @@ public class InstanceManager {
 	private static final String PARTS_FILE_NAME = "GameParts.xml";
 	private static final String INSTANCE_MANAGER_FILE_NAME = "GameManager.xml";
 	public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
-	public static final String KEY_PART_TYPE = "PartType";
-	public static final String KEY_NAME = "Name";
-	public static final String KEY_PART_KEY = "PartKey";
-	public static final String KEY_IMAGE = "Image";
-	public static final String KEY_SAVE_PATH = "SavePath";
+	public static final String PART_TYPE_KEY = "PartType";
+	public static final String NAME_KEY = "Name";
+	public static final String PART_KEY_KEY = "PartKey";
+	public static final String IMAGE_KEY = "Image";
+	public static final String SAVE_PATH_KEY = "SavePath";
 
 	// a map of all the parts the user has created
 	// each part is represented by a map mapping the part's parameters to their
@@ -112,13 +112,13 @@ public class InstanceManager {
 		Map<String, Object> toAdd = new HashMap<String, Object>();
 		try {
 			toAdd = generatePartMap(params, data);
-			toAdd.put(KEY_NAME, partName);
+			toAdd.put(NAME_KEY, partName);
 			addPart(partType, toAdd);
 		} catch (DataFormatException e) {
 			System.err
 					.println("Part could not be generated and was not added.");
 		}
-		return (String) toAdd.get(KEY_PART_KEY);
+		return (String) toAdd.get(PART_KEY_KEY);
 	}
 
 	private Map<String, Object> generatePartMap(List<String> params,
@@ -139,7 +139,7 @@ public class InstanceManager {
 	}
 
 	public void specifyPartImage(String partKey, String imageFilePath) {
-		userParts.get(partKey).put(KEY_IMAGE, imageFilePath);
+		userParts.get(partKey).put(IMAGE_KEY, imageFilePath);
 	}
 
 	/**
@@ -156,10 +156,10 @@ public class InstanceManager {
 	 * @return
 	 */
 	public String addPart(String partType, Map<String, Object> part) {
-		part.put(KEY_PART_TYPE, partType);
-		String partKey = gameName + "_" + (String) part.get(KEY_NAME) + "."
+		part.put(PART_TYPE_KEY, partType);
+		String partKey = gameName + "_" + (String) part.get(NAME_KEY) + "."
 				+ partType;
-		part.put(KEY_PART_KEY, partKey);
+		part.put(PART_KEY_KEY, partKey);
 		try {
 			writePartToXML(addPartToUserParts(part, partKey));
 
@@ -187,8 +187,8 @@ public class InstanceManager {
 	 *            The part to write to XML
 	 */
 	private String writePartToXML(Map<String, Object> part) {
-		String partType = (String) part.get(KEY_PART_TYPE);
-		String partFileName = (String) part.get(KEY_NAME) + ".xml";
+		String partType = (String) part.get(PART_TYPE_KEY);
+		String partFileName = (String) part.get(NAME_KEY) + ".xml";
 		String directory = rootDirectory + "/" + partType;
 		return XMLWriter.toXML(part, partFileName, directory);
 	}
