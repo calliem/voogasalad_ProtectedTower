@@ -42,6 +42,7 @@ public class InstanceManager {
     private Map<String, Map<String, Object>> userParts;
     private String gameName;
     private String rootDirectory;
+    private static int partID = 0;
 
     /**
      * Generates an instance manager for a game. An InstanceManager has a name
@@ -67,6 +68,7 @@ public class InstanceManager {
     public InstanceManager () {
         this("Unnamed_Game", new HashMap<String, Map<String, Object>>(),
              DEFAULT_SAVE_LOCATION + "/Unnamed_Game");
+
     }
 
     public InstanceManager (String name) {
@@ -116,26 +118,27 @@ public class InstanceManager {
             addPart(partType, toAdd);
         }
         catch (DataFormatException e) {
-            System.err
-                    .println("Part could not be generated and was not added.");
+            System.err.println("Part could not be generated and was not added.");
         }
         return (String) toAdd.get(PART_KEY_KEY);
     }
 
     private Map<String, Object> generatePartMap (List<String> params,
                                                  List<Object> data) throws DataFormatException {
-        if (params.size() != data.size())
-            throw new DataFormatException(DIFFERENT_LIST_SIZE_MESSAGE);
+        if (params.size() != data.size()) { throw new DataFormatException(
+                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
         Map<String, Object> part = new HashMap<String, Object>();
-        for (int i = 0; i < params.size(); i++)
+        for (int i = 0; i < params.size(); i++) {
             part.put(params.get(i), data.get(i));
+        }
         return part;
     }
 
     public String addPart (String partType, List<Setting> settings) {
         Map<String, Object> partToAdd = new HashMap<String, Object>();
-        for (Setting s : settings)
+        for (Setting s : settings) {
             partToAdd.put(s.getParameterName(), s.getParameterValue());
+        }
         return addPart(partType, partToAdd);
     }
 
@@ -171,6 +174,10 @@ public class InstanceManager {
         return partKey;
     }
 
+    private String generateKey (Map<String, Object> part, String partType) {
+        return gameName + "_Part" + (partID++) + "." + partType;
+    }
+
     private Map<String, Object> addPartToUserParts (Map<String, Object> part,
                                                     String partKey) throws DataFormatException {
         if (part.containsKey("Name")) {
@@ -178,6 +185,7 @@ public class InstanceManager {
             return part;
         }
         throw new DataFormatException(MISSING_NAME_KEY_MESSAGE);
+
     }
 
     /**
@@ -361,6 +369,7 @@ public class InstanceManager {
         InstanceManager example =
                 GameCreator.createNewGame(
                                           "TestingManagerGame", GAME_ROOT_DIRECTORY);
+
         // hardcode in an example part to show how it works
         List<String> params = new ArrayList<String>();
         params.add(Variables.PARAMETER_HP);
@@ -382,12 +391,12 @@ public class InstanceManager {
         // this method is called with the path to the .game file, which will be
         // received from the user
         // TODO: Use this statement to load the example map
-        Map<String, Map<String, Object>> gamedata = InstanceManager
-                .loadGameData(GAME_ROOT_DIRECTORY
-                              + "/TestingManagerGame/TestingManagerGame.gamefile");
-        InstanceManager loadedIn = InstanceManager
-                .loadGameManager(GAME_ROOT_DIRECTORY
-                                 + "/TestingManagerGame/TestingManagerGame.gamefile");
+        Map<String, Map<String, Object>> gamedata =
+                InstanceManager.loadGameData(GAME_ROOT_DIRECTORY +
+                                             "/TestingManagerGame/TestingManagerGame.gamefile");
+        InstanceManager loadedIn =
+                InstanceManager.loadGameManager(GAME_ROOT_DIRECTORY +
+                                                "/TestingManagerGame/TestingManagerGame.gamefile");
         System.out.println("GAME DATA AS MAP: \n" + gamedata.toString());
         System.out.println("GAME AS MANAGER: \n" + loadedIn.toString());
 
