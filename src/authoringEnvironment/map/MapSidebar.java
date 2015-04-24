@@ -98,7 +98,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         mapNameTextField.setText(map.getName());
         tileRowDisplay.setText(Integer.toString(map.getNumRows()));
         tileColDisplay.setText(Integer.toString(map.getNumCols()));
-        System.out.println("map.getTileSize()" + map.getTileSize());
         tileSizeDisplay.setText(Integer.toString(map.getTileSize()));
         String detailedFilePath = map.getImgFilePath();
         if (detailedFilePath != null){
@@ -251,6 +250,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             getMapWorkspace().getActiveMap().setActiveColor(myActiveColor);
             // TODO: setTileSize();
            changeMap(getMapWorkspace().getActiveMap());
+           mapDisplay.setSelectedView(null);
+           mapDisplay.updateDisplay(super.getMaps());
+
         });
         // TODO: textField.setText to update it
     }

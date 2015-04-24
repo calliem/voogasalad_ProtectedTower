@@ -2,6 +2,7 @@ package authoringEnvironment;
 
 import java.util.List;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
@@ -17,8 +18,10 @@ public class MapUpdatableDisplay extends UpdatableDisplay {
     }
 
     @Override
-    protected void objectClicked (GameObject object) {
+    protected void objectClicked (GameObject object, StackPane objectView) {
+        super.objectClicked(object, objectView);
         mySidebar.changeMap((TileMap) object);
+        System.out.println("change map");
         
         //mySidebar.getMapWorkspace().updateWithNewMap(object);
         //mySidebar.setMapNameTextField(object.getName());
