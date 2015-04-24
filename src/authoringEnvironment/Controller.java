@@ -33,6 +33,12 @@ import authoringEnvironment.setting.Setting;
 
 public class Controller {
 
+    
+    private static final String DIFFERENT_LIST_SIZE_MESSAGE =
+            "Lists passed must contain same number of elements.";
+
+    
+
     private InstanceManager currentGame;
     private Map<String, List<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
@@ -48,55 +54,78 @@ public class Controller {
         this(new InstanceManager(gameName, rootDir));
     }
 
-    /**
-     * This method adds a part to the current game. Information about that part
-     * is specified in the parameters. If the part already exists, it will be
-     * updated to have the data passed. Additionally, the part's key, used to
-     * get a copy of its data later, is added to the controller's map.
-     * 
-     * @param partType
-     *        The type of part, i.e. "Tower"
-     * @param partName
-     *        The name of the part, i.e. "MyFirstTower"
-     * @param params
-     *        A list of the strings representing the parameters this part
-     *        requires
-     * @param data
-     *        The data corresponding to those parameters.
-     */
-    public String addPartToGame (String partType, String partName,
-                                 List<String> params, List<Object> data) {
-        return addKey(currentGame.addPart(partType, partName, params, data));
+    // base methods
+    public String addPartToGame (String key, Map<String, Object> fullPartMap) throws DataFormatException {
+        return addKey(currentGame.addPart(key, fullPartMap));
     }
 
-    /**
-     * Adds a part to the game and adds the key to the controller's key map.
-     * 
-     * @param partType
-     *        The type of part to be added, i.e. "Tower"
-     * @param part
-     *        The map representing all the part's data. Must contain a
-     *        "Name" key.
-     */
-    public String addPartToGame (String partType, Map<String, Object> part) {
-        return addKey(currentGame.addPart(partType, part));
+    public String addPartToGame (Map<String, Object> partMapMinusKey) throws DataFormatException {
+        return addKey(currentGame.addPart(partMapMinusKey));
     }
 
-    /**
-     * Adds a part to the game and adds the key to the controller's key map.
-     * 
-     * @param partType
-     *        The type of part to be added, i.e. "Tower"
-     * @param settings
-     *        A list of Settings objects that hold all the parts data
-     */
-    public String addPartToGame (String partType, List<Setting> settings) {
+    // adding with settings list
+    public String addPartToGame (String key, String partType, List<Setting> settings) throws DataFormatException {
+        return addKey(currentGame.addPart(key, generateMapFromSettings(partType, settings)));
+
+    }
+
+    public String addPartToGame (String partType, List<Setting> settings) throws DataFormatException {
+       return addKey(currentGame.addPart(generateMapFromSettings(partType, settings)));
+    }
+
+    private Map<String, Object> generateMapFromSettings (String partType, List<Setting> settings) {
         Map<String, Object> partToAdd = new HashMap<String, Object>();
-        for (Setting s : settings)
+        for (Setting s : settings) {
             partToAdd.put(s.getParameterName(), s.getParameterValue());
-        return addPartToGame(partType, partToAdd);
+        }
+        partToAdd.put(InstanceManager.PART_TYPE_KEY, partType);
+        return partToAdd;
     }
 
+    // adding with param list and data list with corresponding indeces
+    public String addPartToGame (String key,
+                                 String partType,
+                                 String partName,
+                                 List<String> params,
+                                 List<Object> data) throws DataFormatException {
+        return addKey(currentGame.addPart(key, generateMapFromLists(partType, partName, params, data)));
+    }
+
+    public String addPartToGame (String partType,
+                                 String partName,
+                                 List<String> params,
+                                 List<Object> data) throws DataFormatException {
+        
+        return addKey(currentGame.addPart(generateMapFromLists(partType, partName, params, data)));
+
+    }
+
+    private Map<String, Object> generateMapFromLists (String partType, String partName, List<String> params,
+                                                      List<Object> data) throws DataFormatException {
+        if (params.size() != data.size()) {
+            throw new DataFormatException(
+                                          DIFFERENT_LIST_SIZE_MESSAGE);
+        }
+        Map<String, Object> toAdd = new HashMap<String, Object>();
+        for (int i = 0; i < params.size(); i++) {
+            toAdd.put(params.get(i), data.get(i));
+        }
+        toAdd.put(InstanceManager.NAME_KEY, partName);
+        toAdd.put(InstanceManager.PART_TYPE_KEY, partType);
+        return toAdd;
+    }
+
+    // adding keys
+    private String addKey (String key) {
+        String partType = key.substring(key.indexOf(".") + 1, key.length());
+        if (!partTypeToKeyList.keySet().contains(partType))
+            partTypeToKeyList.put(partType, new ArrayList<String>());
+        partTypeToKeyList.get(partType).add(key);
+        return key;
+    }
+
+    // the rest of the Controller, not adding parts
+    
     /**
      * Gets all the keys for parts of partType that are currently part of this
      * game.
@@ -140,13 +169,6 @@ public class Controller {
     public Map<String, Object> getPartCopy (String partKey) {
         return currentGame.getAllPartData().get(partKey);
     }
-    
-
-
-    public void specifyPartImage (String partKey, String imageFilePath) {
-        currentGame.specifyPartImage(partKey, imageFilePath);
-    }
-
 
     public Map<String, Object> loadPart (String fullPartFilePath) {
         Map<String, Object> part = (Map<String, Object>) XMLWriter.fromXML(fullPartFilePath);
@@ -156,28 +178,22 @@ public class Controller {
         return part;
     }
 
-    private String addKey (String key) {
-        String partType = key.substring(key.indexOf(".") + 1, key.length());
-        if (!partTypeToKeyList.keySet().contains(partType))
-            partTypeToKeyList.put(partType, new ArrayList<String>());
-        partTypeToKeyList.get(partType).add(key);
-        return key;
-    }
-
     private void populateKeyList () {
         for (String key : currentGame.getAllPartData().keySet())
             addKey(key);
     }
-    
-    protected String saveGame(){
+
+    protected String saveGame () {
         return currentGame.saveGame();
     }
 
     public ObservableList<GameObject> getMaps () {
         return myMaps;
     }
-    
-  /*  public void setMaps (ObservableList<GameObject> maps) {
-        myMaps = maps;
-    }*/
+
+    /*
+     * public void setMaps (ObservableList<GameObject> maps) {
+     * myMaps = maps;
+     * }
+     */
 }

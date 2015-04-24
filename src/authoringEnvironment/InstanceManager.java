@@ -21,19 +21,11 @@ public class InstanceManager {
             System.getProperty("user.dir").concat("/gamedata/myTowerGames");
     private static final String GAME_ROOT_DIRECTORY =
             System.getProperty("user.dir").concat("/gamedata/exampleUserData");
-    private static final String MISSING_NAME_KEY_MESSAGE =
-            "Map passed must contain a \"Name\" key. Key is case sensitive.";
-    private static final String DIFFERENT_LIST_SIZE_MESSAGE =
-            "Lists passed must contain same number of elements.";
+    
 
     private static final String PARTS_FILE_NAME = "GameParts.xml";
     private static final String INSTANCE_MANAGER_FILE_NAME = "GameManager.xml";
-    public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
-    public static final String PART_TYPE_KEY = "PartType";
-    public static final String NAME_KEY = "Name";
-    public static final String PART_KEY_KEY = "PartKey";
-    public static final String IMAGE_KEY = "Image";
-    public static final String SAVE_PATH_KEY = "SavePath";
+    
     /**
      * a map of all the parts the user has created each part is represented by a map mapping the
      * part's parameters to their data the fields look like:
@@ -43,6 +35,17 @@ public class InstanceManager {
     private String gameName;
     private String rootDirectory;
     private static int partID;
+    
+    public static final String PART_KEY_KEY = "PartKey";
+    private static final String MISSING_NAME_KEY_MESSAGE =
+            "Map passed must contain a \"Name\" key. Key is case sensitive.";
+    
+    public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
+    public static final String PART_TYPE_KEY = "PartType";
+    public static final String NAME_KEY = "Name";
+ 
+    public static final String IMAGE_KEY = "Image";
+    public static final String SAVE_PATH_KEY = "SavePath";
 
     /**
      * Generates an instance manager for a game. An InstanceManager has a name
@@ -86,108 +89,24 @@ public class InstanceManager {
         this(name, partData, DEFAULT_SAVE_LOCATION + "/" + name);
     }
 
-    public String addPartWithKey (String key, Map<String, Object> part) {
-        userParts.put(key, part);
+    public String addPart(Map<String, Object> fullPartMap) throws DataFormatException{
+        String key = generateKey(fullPartMap);
+        fullPartMap.put(PART_KEY_KEY, key);
+        return addPart(key, fullPartMap);
+    }
+    
+    public String addPart(String key, Map<String, Object> fullPartMap) throws DataFormatException{
+        if(!fullPartMap.keySet().contains(NAME_KEY))
+            throw new DataFormatException(MISSING_NAME_KEY_MESSAGE);
+        userParts.put(key, fullPartMap);
         return key;
     }
 
-    /**
-     * This is one way parts will be added from the Editor windows like
-     * TowerEditor If convenient, any editor can pass the addPart method two
-     * lists, one of parameter names and the other of data (with corresponding
-     * indeces). A name and partType parameter will be added to the Map before
-     * it's added to the list of parts.
-     * 
-     * @param partType
-     *        The type of part, i.e. "Tower"
-     * @param partName
-     *        The name of the part, i.e. "IceShooterTower"
-     * @param params
-     *        List of the parameters that this part needs, i.e. "HP",
-     *        "Range", "Projectile"
-     * @param data
-     *        List of corresponding data values for those params, i.e. 1,
-     *        1.0, "Projectile1.xml"
-     * @return The part that was created and added top user's parts
-     */
-    public String addPart (String partType, String partName,
-                           List<String> params, List<Object> data) {
-        Map<String, Object> toAdd = new HashMap<String, Object>();
-        try {
-            toAdd = generatePartMap(params, data);
-            toAdd.put(NAME_KEY, partName);
-            addPart(partType, toAdd);
-        }
-        catch (DataFormatException e) {
-            System.err.println("Part could not be generated and was not added.");
-        }
-        return (String) toAdd.get(PART_KEY_KEY);
+    private String generateKey (Map<String, Object> part) {
+        return gameName + "_Part" + (partID++) + "." + part.get(NAME_KEY);
     }
 
-    private Map<String, Object> generatePartMap (List<String> params,
-                                                 List<Object> data) throws DataFormatException {
-        if (params.size() != data.size()) { throw new DataFormatException(
-                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
-        Map<String, Object> part = new HashMap<String, Object>();
-        for (int i = 0; i < params.size(); i++) {
-            part.put(params.get(i), data.get(i));
-        }
-        return part;
-    }
-
-    public String addPart (String partType, List<Setting> settings) {
-        Map<String, Object> partToAdd = new HashMap<String, Object>();
-        for (Setting s : settings) {
-            partToAdd.put(s.getParameterName(), s.getParameterValue());
-        }
-        return addPart(partType, partToAdd);
-    }
-
-    public void specifyPartImage (String partKey, String imageFilePath) {
-        userParts.get(partKey).put(IMAGE_KEY, imageFilePath);
-    }
-
-    /**
-     * Takes the partType and a map of parameters to data and uses that data to
-     * add the appropriate part to the list of parts. The map must already
-     * contain the key "Name" with the corresponding String data, or else name
-     * will be missing from the final part added.
-     * 
-     * @param partType
-     *        The type of part to be added, e.g. "Tower"
-     * @param part
-     *        The map representing the parts parameters and data. Must
-     *        include "Name" key.
-     * @return
-     */
-    public String addPart (String partType, Map<String, Object> part) {
-        part.put(PART_TYPE_KEY, partType);
-        String partKey = generateKey(partType, part);
-        part.put(PART_KEY_KEY, partKey);
-        try {
-            writePartToXML(addPartToUserParts(part, partKey));
-
-        }
-        catch (DataFormatException e) {
-            System.err.println("Part was not added.");
-        }
-        return partKey;
-    }
-
-    private String generateKey (String partType, Map<String, Object> part) {
-        return gameName + "_Part" + (partID++) + "." + partType;
-    }
-
-    private Map<String, Object> addPartToUserParts (Map<String, Object> part,
-                                                    String partKey) throws DataFormatException {
-        if (part.containsKey("Name")) {
-            addPartWithKey(partKey, part);
-            return part;
-        }
-        throw new DataFormatException(MISSING_NAME_KEY_MESSAGE);
-
-    }
-
+    
     /**
      * Writes the part, passed as a Map, into an XML file in:
      * rootDirectory/partType/partName.xml, for example:
@@ -363,7 +282,7 @@ public class InstanceManager {
      */
 
     public static void main (String[] args) {
-
+/*
         // gameRootDirectory will be chosen by the user, but here we're just
         // putting an an example
         InstanceManager example =
@@ -399,6 +318,7 @@ public class InstanceManager {
                                                 "/TestingManagerGame/TestingManagerGame.gamefile");
         System.out.println("GAME DATA AS MAP: \n" + gamedata.toString());
         System.out.println("GAME AS MANAGER: \n" + loadedIn.toString());
+        */
 
         /*
          * InstanceManager gameManager = new InstanceManager("TestGame");
