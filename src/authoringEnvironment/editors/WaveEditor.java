@@ -58,6 +58,7 @@ public class WaveEditor extends MainEditor {
     private static final Color WAVE_NAME_COLOR = Color.GOLDENROD;
 
     private Node activeOverlay;
+
     /**
      * WaveEditor constructor, calls MainEditor superclass and initializes a map
      * of string (wave name) to array list of FlowViews (wave information) to
@@ -150,8 +151,8 @@ public class WaveEditor extends MainEditor {
     }
 
     @Override
-    public void hideOverlay(){
-        if(isOverlayActive){
+    public void hideOverlay () {
+        if (isOverlayActive) {
             prompt.playHidePromptAnimation().setOnFinished(e -> {
                 isOverlayActive = false;
                 editor.getChildren().remove(prompt);
@@ -247,9 +248,9 @@ public class WaveEditor extends MainEditor {
             if (myKey.equals(Controller.KEY_BEFORE_CREATION))
                 myKey = myController.addPartToGame(WAVE, waveName,
                                                    ProjectReader.getParamsNoTypeOrName(WAVE), data);
-            else
-                myKey = myController.addPartToGame(myKey, WAVE, waveName,
-                                                   ProjectReader.getParamsNoTypeOrName(WAVE), data);
+            else myKey =
+                    myController.addPartToGame(myKey, WAVE, waveName,
+                                               ProjectReader.getParamsNoTypeOrName(WAVE), data);
         }
         catch (MissingInformationException | DataFormatException e) {
             // TODO Auto-generated catch block

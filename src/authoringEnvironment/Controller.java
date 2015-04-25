@@ -4,14 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.paint.Color;
-import authoringEnvironment.editors.MapEditor;
-import authoringEnvironment.editors.Editor;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.setting.Setting;
 
 
@@ -32,6 +27,8 @@ import authoringEnvironment.setting.Setting;
  */
 
 public class Controller {
+
+    private static final int PARTTYPE_INDEX_IN_KEY = 1;
 
     private static final String DIFFERENT_LIST_SIZE_MESSAGE =
             "Lists passed must contain same number of elements.";
@@ -110,7 +107,7 @@ public class Controller {
         return addKey(currentGame.addPart(generateMapFromSettings(partType, settings)));
     }
 
-    /*
+    /**
      * Takes a list of settings and a part type and creates an appropriate Map<String, Object> from
      * that.
      */
@@ -126,7 +123,7 @@ public class Controller {
 
     /**
      * Adds a part to the game at the given key where the data is specified by lists of parameters
-     * and their data with corresponding indeces.
+     * and their data with corresponding indices.
      * 
      * @param key The key at which this part will be added.
      * @param partType The type of part, i.e. "Tower"
@@ -149,7 +146,7 @@ public class Controller {
 
     /**
      * Adds a part whose data is specified by lists of parameters and their data of corresponding
-     * indeces, for which the key will be auto-generated.
+     * indices, for which the key will be auto-generated.
      * 
      * @param partType The type of part, i.e. "Tower"
      * @param partName The name of the part, given by user
@@ -169,17 +166,15 @@ public class Controller {
 
     }
 
-    /*
+    /**
      * Generates the appropriate map from a type, name, and two lists of parameters and data.
      */
     private Map<String, Object> generateMapFromLists (String partType,
                                                       String partName,
                                                       List<String> params,
                                                       List<Object> data) throws DataFormatException {
-        if (params.size() != data.size()) {
-            throw new DataFormatException(
-                                          DIFFERENT_LIST_SIZE_MESSAGE);
-        }
+        if (params.size() != data.size()) { throw new DataFormatException(
+                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
         Map<String, Object> toAdd = new HashMap<String, Object>();
         for (int i = 0; i < params.size(); i++) {
             toAdd.put(params.get(i), data.get(i));
@@ -189,12 +184,12 @@ public class Controller {
         return toAdd;
     }
 
-    /*
+    /**
      * Adds a key to the Controller's map of part type to list of keys of that part type that exist
      * in the game.
      */
     private String addKey (String key) {
-        String partType = key.substring(key.indexOf(".") + 1, key.length());
+        String partType = key.split(".", 1)[PARTTYPE_INDEX_IN_KEY];
         if (!partTypeToKeyList.keySet().contains(partType))
             partTypeToKeyList.put(partType, FXCollections.observableList(new ArrayList<String>()));
         partTypeToKeyList.get(partType).add(key);

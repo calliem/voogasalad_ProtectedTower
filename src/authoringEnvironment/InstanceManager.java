@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import authoringEnvironment.setting.Setting;
 
 
 /**
@@ -96,7 +95,7 @@ public class InstanceManager {
         return addPart(key, fullPartMap);
     }
 
-    public String addPart(String key, Map<String, Object> fullPartMap)
+    public String addPart (String key, Map<String, Object> fullPartMap)
                                                                        throws MissingInformationException {
         fullPartMap.put(PART_KEY_KEY, key);
         String missingKey = checkMissingInformation(fullPartMap);
@@ -106,8 +105,8 @@ public class InstanceManager {
         writePartToXML(fullPartMap);
         return key;
     }
-    
-    private String missingKeyErrorMessage(String missingKey){
+
+    private String missingKeyErrorMessage (String missingKey) {
         return "Map must contain \"" + missingKey + "\" key.";
     }
 
@@ -164,7 +163,8 @@ public class InstanceManager {
         // XMLWriter.toXML(userParts, partFileName, rootDirectory +
         // partsFileDir);
         System.out.println("writing to xml manager");
-        return XMLWriter.toXML(this, INSTANCE_MANAGER_FILE_NAME, rootDirectory + PARTS_FILE_DIRECTORY); 
+        return XMLWriter.toXML(this, INSTANCE_MANAGER_FILE_NAME, rootDirectory +
+                                                                 PARTS_FILE_DIRECTORY);
     }
 
     /**
@@ -245,10 +245,12 @@ public class InstanceManager {
     public String getName () {
         return gameName;
     }
-    
-    public static void main(String[] args){   
-        Map<String, Map<String, Object>> data = InstanceManager
-                .loadGameData(System.getProperty("user.dir") + "/data/TestingTesting123/ExampleGame/ExampleGame.gamefile");
+
+    public static void main (String[] args) {
+        Map<String, Map<String, Object>> data =
+                InstanceManager
+                        .loadGameData(System.getProperty("user.dir") +
+                                      "/data/TestingTesting123/ExampleGame/ExampleGame.gamefile");
         System.out.println("data: " + data);
     }
 }

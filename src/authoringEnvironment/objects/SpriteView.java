@@ -3,12 +3,9 @@ package authoringEnvironment.objects;
 import imageselectorTEMP.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import javafx.animation.PauseTransition;
-import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -26,11 +23,9 @@ import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.MissingInformationException;
-import authoringEnvironment.InstanceManager;
 import authoringEnvironment.ProjectReader;
-import authoringEnvironment.util.Scaler;
 import authoringEnvironment.setting.Setting;
-import authoringEnvironment.setting.StringSetting;
+import authoringEnvironment.util.Scaler;
 
 
 /**
@@ -64,9 +59,7 @@ public abstract class SpriteView extends StackPane {
 
     private static final int IMAGE_INDEX = 0;
     private static final int NAME_INDEX = 1;
-//    private static final String DEFAULT_NAME = "Unnamed";
-
-    
+    // private static final String DEFAULT_NAME = "Unnamed";
 
     private Controller myController;
     private String id;
@@ -136,7 +129,7 @@ public abstract class SpriteView extends StackPane {
             parameterFields.add(s);
             settingsObjects.getChildren().add(s);
         }
-        
+
         initializeSpriteInfo();
 
         HBox buttons = new HBox(10);
@@ -147,7 +140,7 @@ public abstract class SpriteView extends StackPane {
 
         Button save = new Button("Save");
         save.setOnAction( (e) -> {
-            if(saveParameterFields(true)){
+            if (saveParameterFields(true)) {
                 displaySavedMessage();
             }
         });
@@ -180,8 +173,8 @@ public abstract class SpriteView extends StackPane {
         if (parameterFields.get(NAME_INDEX).processData()) {
             updateSpriteName();
         }
-        
-        if(parameterFields.get(IMAGE_INDEX).processData()) {
+
+        if (parameterFields.get(IMAGE_INDEX).processData()) {
             updateImageFile();
         }
 
@@ -190,8 +183,7 @@ public abstract class SpriteView extends StackPane {
                 if (myKey.equals(Controller.KEY_BEFORE_CREATION))
                     myKey = myController.addPartToGame(getSpriteType(),
                                                        parameterFields);
-                else
-                    myKey = myController.addPartToGame(myKey, getSpriteType(), parameterFields);
+                else myKey = myController.addPartToGame(myKey, getSpriteType(), parameterFields);
             }
             catch (MissingInformationException e) {
                 // TODO Auto-generated catch block
@@ -202,8 +194,8 @@ public abstract class SpriteView extends StackPane {
         }
         return correctFormat && save;
     }
-    
-    private void updateImageFile(){
+
+    private void updateImageFile () {
         imageFile = parameterFields.get(IMAGE_INDEX).getDataAsString();
         previewImage = new ImageView(new Image(imageFile));
         ScaleImage.scale(previewImage, 90, 70);
@@ -308,8 +300,8 @@ public abstract class SpriteView extends StackPane {
     public Button getCloseButton () {
         return overlayCloseButton;
     }
-    
-    public String getName(){
+
+    public String getName () {
         return spriteName;
     }
 
