@@ -72,6 +72,25 @@ public class Controller {
     //TODO: overload to update a key
     public String addPartToGame (String key, String partType, Map<String, Object> part) {
         //update the parameters to that key
+        
+        List<String> keys = partTypeToKeyList.get(partType);
+        //int index = keys.indexOf(key);
+        
+        //Map<String, Object> partCopy = getPartCopy(key);
+        
+        TODO: 
+        setPartCopy(part);
+        
+        
+        keys.set(index, part);
+       
+        //TODO:
+        //remove old XML
+        //add new XML without generating a new key
+        //currentGame.addPart(partType, part);
+
+       
+        
         return key;
     }
 
