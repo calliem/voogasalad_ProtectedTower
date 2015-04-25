@@ -2,8 +2,8 @@ package authoringEnvironment.editors;
 
 import java.util.ResourceBundle;
 import authoringEnvironment.Controller;
-import authoringEnvironment.Sidebar;
 import authoringEnvironment.map.MapSidebar;
+import authoringEnvironment.objects.Sidebar;
 
 
 /**

@@ -87,13 +87,13 @@ public class Gallery extends Group{
     }
     
     public SequentialTransition playEntryAnimation(){
-        ScaleTransition expandY = new ScaleTransition(Duration.millis(500), imageDisplay);
+        ScaleTransition expandY = new ScaleTransition(Duration.millis(300), imageDisplay);
         expandY.setFromY(0.0);
         expandY.setFromX(0.01);
         expandY.setToY(1.0);
         expandY.setToX(0.01);
         
-        ScaleTransition expandX = new ScaleTransition(Duration.millis(700), imageDisplay);
+        ScaleTransition expandX = new ScaleTransition(Duration.millis(600), imageDisplay);
         expandX.setFromX(0.01);
         expandX.setToX(1.0);
         expandX.setOnFinished(e -> {

@@ -1,7 +1,3 @@
-/**
- * @author Johnny Kumpf
- * @author Megan Gutter
- */
 package authoringEnvironment;
 
 import java.io.File;
@@ -12,6 +8,10 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
+/**
+ * @author Johnny Kumpf
+ * @author Megan Gutter
+ */
 public class XMLWriter {
 
     private static XStream stream = new XStream(new DomDriver());
@@ -109,7 +109,6 @@ public class XMLWriter {
         new File(filePath).delete();
     }
 
-    // maybe unnecessary
     public static Object fromXML (File f) {
         return stream.fromXML(f);
     }
