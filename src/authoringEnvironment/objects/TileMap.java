@@ -1,12 +1,15 @@
 package authoringEnvironment.objects;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.Group;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.TextAlignment;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
 
@@ -21,14 +24,18 @@ import authoringEnvironment.Variables;
 
 public class TileMap extends GameObject {
 
-    private Tile[][] myTiles;
+    //TODO: build tiles from keys! 
+    
+    protected Tile[][] myTiles; // TODO: keep as protected?
     private int myTileSize;
     private ImageView myBackground;
     private Color myActiveColor;
     private String imgFilePath;
 
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
-    protected static final String TILE_KEY_ARRAY = "TileArrayKeys"; //TODO; maybe move vars from variables class into protected vars here
+    protected static final String TILE_KEY_ARRAY = "TileArrayKeys"; // TODO; maybe move vars from
+                                                                    // variables class into
+                                                                    // protected vars here
     private static final int LINE_START_COORDINATE = 0;
 
     private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
@@ -114,18 +121,29 @@ public class TileMap extends GameObject {
     }
 
     private void attachTileListener (Tile tile) {
+        tile.setOnMouseClicked(e -> tileClicked(tile));
+        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor));
+        setupTooltip();
         // tile.setOnMouseEntered(e -> )
         // tile.setOnMouseExited(e ->)
-        tile.setOnMouseClicked(e -> tileClicked(tile));
-        // this method is used instead of tileClicked to allow for easier "coloring" of large groups
-        // of tiles
-        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor));
+    }
+    
+    protected void setupTooltip (Object object) {
+        String tooltipText = "";
+        /*tooltipText += "C"
+        
+        //TODO can use parameters with the controller but what about with the normal one 
+        for (String[] parameter : info) {
+            tooltipText += String.format("%s: %s\n", parameter[0], parameter[1]);
+        }
 
-        // System.out.print("tile listener added");
+        Tooltip tooltip = new Tooltip(tooltipText);
+        tooltip.setTextAlignment(TextAlignment.LEFT);
+        Tooltip.install(object, tooltip);*/
     }
 
-    public void changeTileSize (int tileSize) {
 
+    public void changeTileSize (int tileSize) {
         myTileSize = tileSize;
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
@@ -138,7 +156,6 @@ public class TileMap extends GameObject {
 
     private void tileClicked (Tile tile) {
         if (tile.getColor() == myActiveColor) {
-            System.out.println("colors are equal!");
             tile.setFill(Color.TRANSPARENT);
         }
         else {
@@ -186,8 +203,12 @@ public class TileMap extends GameObject {
     public int getTileSize () {
         return myTileSize;
     }
-    
-    protected void setTiles(Tile[][] tiles){
+
+    public void setTileSize (int tileSize) {
+        myTileSize = tileSize;
+    }
+
+    protected void setTiles (Tile[][] tiles) {
         myTiles = tiles;
     }
 

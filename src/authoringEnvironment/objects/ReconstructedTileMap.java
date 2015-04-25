@@ -17,8 +17,11 @@ public class ReconstructedTileMap extends TileMap {
         myController = c;
 
         Map<String, Object> params = myController.getPartCopy(key);
-        params.get(InstanceManager.NAME_KEY);
-        params.get(Variables.PARAMETER_TILESIZE);
+        String name = (String) params.get(InstanceManager.NAME_KEY);
+        setName(name);
+
+        int tileSize = (int) params.get(Variables.PARAMETER_TILESIZE);
+        setTileSize(tileSize);
 
         String filePath = (String) params.get(Variables.PARAMETER_BACKGROUND_FILEPATH);
         setBackground(new ImageView(new Image(filePath)));
@@ -30,15 +33,18 @@ public class ReconstructedTileMap extends TileMap {
 
         createMap(params);
         changeTileSize(getTileSize());
-        // createGridLines();
+        //createGridLines();
     }
 
     private void createMap (Map<String, Object> params) {
         String[][] tileArray = (String[][]) params.get(TILE_KEY_ARRAY);
-        myTiles = new Tile[tileArray[0].length][tileArray.length];
+        setTiles(new Tile[tileArray[0].length][tileArray.length]);
         for (int i = 0; i < tileArray[0].length; i++) {
             for (int j = 0; j < tileArray.length; j++) {
-                myTiles[i][j] = new TileView(myController, tileArray[i][j]);  // TODO: make tileview
+                myTiles[i][j] = new Tile(myController, tileArray[i][j]);  // TODO: make tileview
+                myTiles[i][j].positionTile(getTileSize(), i, j);
+                getRoot().getChildren().add(myTiles[i][j]);
+                setupTooltip(myTiles[i][j]);
             }
         }
     }

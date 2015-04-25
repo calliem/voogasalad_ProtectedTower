@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
+import authoringEnvironment.Variables;
 
 
 /**
@@ -35,14 +37,25 @@ public class Tile extends Rectangle {
     private static final Color DEFAULT_COLOR = Color.TRANSPARENT;
 
     public Tile () {
-        // TODO: fix tile to make it more general and not have col nums and x/y generated here
-        // TODO: store part keys in the xml file for tilemap
         new Rectangle();
         myColor = DEFAULT_COLOR;
         setFill(DEFAULT_COLOR);
         setOpacity(0.4);
         myName = null;
         myTags = new ArrayList<String>();
+    }
+    
+    /**
+     * Constructor for reconstructing a tile from one already saved into the controller.
+     * @param c The controller that holds all saved data
+     * @param key The tile's key that is mapped to parameters within the controller
+     */
+    public Tile(Controller c, String key){
+        Map<String, Object> params = c.getPartCopy(key);
+        myName = (String) params.get(InstanceManager.NAME_KEY);
+        myTags = (ArrayList<String>) params.get(Variables.PARAMETER_TAGS);
+        myColor = (Color) params.get(Variables.PARAMETER_COLOR);
+        setFill(myColor);
     }
 
     public void positionTile (int tileSize, int i, int j) {
@@ -78,7 +91,7 @@ public class Tile extends Rectangle {
         myKey = key;
     }
 
-    public Map<String, Object> saveToXML () {
+    public Map<String, Object> save () {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.NAME_KEY, myName);
         mapSettings.put(TAGS, myTags);
