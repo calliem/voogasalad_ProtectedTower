@@ -20,6 +20,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.DataFormatException;
+import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.util.NamePrompt;
@@ -43,8 +45,10 @@ public class WaveEditor extends MainEditor {
     private static final int INFO_PANEL_WIDTH = 170;
     private Text empty;
     private VBox editorLayout;
-    private ScrollPane contentScrollPane; 
+    private ScrollPane contentScrollPane;
     private StackPane editor;
+
+    private String myKey;
 
     private int numWaves = 0;
     private NamePrompt prompt = new NamePrompt("wave");
@@ -52,7 +56,9 @@ public class WaveEditor extends MainEditor {
     private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
     private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
     private static final Color WAVE_NAME_COLOR = Color.GOLDENROD;
-    
+
+    private Node activeOverlay;
+
     /**
      * WaveEditor constructor, calls MainEditor superclass and initializes a map
      * of string (wave name) to array list of FlowViews (wave information) to
@@ -66,6 +72,7 @@ public class WaveEditor extends MainEditor {
 
     public WaveEditor (Controller c, String name) {
         super(c, name);
+        myKey = Controller.KEY_BEFORE_CREATION;
         myWaves = new HashMap<String, ArrayList<FlowView>>();
     }
 
@@ -78,10 +85,10 @@ public class WaveEditor extends MainEditor {
     @Override
     public Group configureUI () {
         Group visuals = new Group();
-        
+
         editor = new StackPane();
-        Rectangle editorBackground = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
-        
+        Rectangle editorBackground =
+                new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
 
         editorLayout = new VBox(PADDING);
         empty = new Text(NO_WAVES);
@@ -121,16 +128,15 @@ public class WaveEditor extends MainEditor {
         return visuals;
     }
 
-
-    private void promptNewWaveName(VBox contents, Rectangle background) {
+    private void promptNewWaveName (VBox contents, Rectangle background) {
         Button create = prompt.getCreateButton();
-        create.setOnAction((e) -> {
+        create.setOnAction( (e) -> {
             String waveName = prompt.getEnteredName();
             setupNewWave(contents, background, waveName);
         });
 
         Button cancel = prompt.getCancelButton();
-        cancel.setOnAction((e) -> {
+        cancel.setOnAction( (e) -> {
             hideOverlay();
 
         });
@@ -138,33 +144,33 @@ public class WaveEditor extends MainEditor {
         showOverlay();
     }
 
-    //TODO: duplicated code in sprite editor, lines 195-199
+    // TODO: duplicated code in sprite editor, lines 195-199
     private void showOverlay () {
         prompt.showPrompt(editor);
         isOverlayActive = true;
     }
-    
+
     @Override
-    public void hideOverlay(){
-        if(isOverlayActive){
+    public void hideOverlay () {
+        if (isOverlayActive) {
             prompt.playHidePromptAnimation().setOnFinished(e -> {
                 isOverlayActive = false;
                 editor.getChildren().remove(prompt);
             });
         }
     }
-    
+
     private void setupNewWave (VBox contents, Rectangle background, String waveName) {
         makeNewWave(contents, waveName);
-        if(myWaves.size() == 0){
+        if (myWaves.size() == 0) {
             editor.getChildren().remove(empty);
             editorLayout.getChildren().add(contentScrollPane);
         }
         myWaves.put(waveName, new ArrayList<FlowView>());
-        
+
         numWaves++;
-        background.setHeight(numWaves * WAVE_PANEL_HEIGHT + (numWaves-1)*PADDING + 2*PADDING);
-        
+        background.setHeight(numWaves * WAVE_PANEL_HEIGHT + (numWaves - 1) * PADDING + 2 * PADDING);
+
         hideOverlay();
 
     }
@@ -174,8 +180,10 @@ public class WaveEditor extends MainEditor {
         newWave.setHbarPolicy(ScrollBarPolicy.NEVER);
         newWave.setVbarPolicy(ScrollBarPolicy.NEVER);
         newWave.setPrefHeight(WAVE_PANEL_HEIGHT);
-        newWave.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth() - (INFO_PANEL_WIDTH + 3*PADDING));
-//        newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth() - (INFO_PANEL_WIDTH + 3*PADDING));
+        newWave.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth() -
+                             (INFO_PANEL_WIDTH + 3 * PADDING));
+        // newWave.setMaxWidth(AuthoringEnvironment.getEnvironmentWidth() - (INFO_PANEL_WIDTH +
+        // 3*PADDING));
 
         HBox waveDisplay = new HBox(PADDING);
         waveDisplay.setAlignment(Pos.CENTER);
@@ -236,8 +244,18 @@ public class WaveEditor extends MainEditor {
         List<Object> data = new ArrayList<Object>();
         data.add(partFileNames);
         data.add(times);
-        myController.addPartToGame(WAVE, waveName,
-                                   ProjectReader.getParamsNoTypeOrName(WAVE), data);
+        try {
+            if (myKey.equals(Controller.KEY_BEFORE_CREATION))
+                myKey = myController.addPartToGame(WAVE, waveName,
+                                                   ProjectReader.getParamsNoTypeOrName(WAVE), data);
+            else myKey =
+                    myController.addPartToGame(myKey, WAVE, waveName,
+                                               ProjectReader.getParamsNoTypeOrName(WAVE), data);
+        }
+        catch (MissingInformationException | DataFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private void addUnitToWave (ScrollPane displayPane, HBox wave, String waveName) {

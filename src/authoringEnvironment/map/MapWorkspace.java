@@ -1,7 +1,5 @@
 package authoringEnvironment.map;
 
-import javafx.animation.ScaleTransition;
-import javafx.geometry.Dimension2D;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -9,7 +7,6 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
-import authoringEnvironment.util.Scaler;
 
 
 public class MapWorkspace extends StackPane {
@@ -79,19 +76,19 @@ public class MapWorkspace extends StackPane {
         myActiveMap = (TileMap) object;
         // if (getChildren().contains(myActiveMap.getRoot())){
         // System.out.println("active map already exists");
-        
-        //scaler....
-        
-        //TODO:
-     /*   ScaleTransition scale =
-                Scaler.scaleOverlay(0.0, 1.0, myActiveMap.getRoot());
-        scale.setOnFinished( (e) -> {*/
-            getChildren().add(myActiveMap.getRoot());
-        //});
-        
+
+        // scaler....
+
+        // TODO:
+        /*
+         * ScaleTransition scale =
+         * Scaler.scaleOverlay(0.0, 1.0, myActiveMap.getRoot());
+         * scale.setOnFinished( (e) -> {
+         */
+        getChildren().add(myActiveMap.getRoot());
+        // });
+
         myActiveMap.setActiveColor(currentActiveColor);
     }
-
-  
 
 }
