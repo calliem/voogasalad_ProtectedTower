@@ -181,7 +181,7 @@ public class InstanceManager {
      */
     protected static InstanceManager loadGameManager (String pathToRootDirFile) {
         String toTrimOff = (String) XMLWriter.fromXML(pathToRootDirFile);
-        String rootDirectory = pathToRootDirFile.substring(0, pathToRootDirFile.indexOf(toTrimOff) + 1);
+        String rootDirectory = pathToRootDirFile.substring(0, pathToRootDirFile.indexOf(toTrimOff));
         return (InstanceManager) XMLWriter.fromXML(rootDirectory + PARTS_FILE_DIRECTORY
                                                    + "/" + INSTANCE_MANAGER_FILE_NAME);
     }
@@ -244,5 +244,11 @@ public class InstanceManager {
 
     public String getName () {
         return gameName;
+    }
+    
+    public static void main(String[] args){   
+        Map<String, Map<String, Object>> data = InstanceManager
+                .loadGameData(System.getProperty("user.dir") + "/data/TestingTesting123/ExampleGame/ExampleGame.gamefile");
+        System.out.println("data: " + data);
     }
 }
