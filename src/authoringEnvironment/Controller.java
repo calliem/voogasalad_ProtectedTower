@@ -39,6 +39,8 @@ public class Controller {
     private InstanceManager currentGame;
     private Map<String, List<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
+    
+    public  static final String KEY_BEFORE_CREATION = "Key not intitialized yet";
 
     protected Controller (InstanceManager IM) {
         currentGame = IM;
@@ -118,6 +120,7 @@ public class Controller {
             partToAdd.put(s.getParameterName(), s.getParameterValue());
         }
         partToAdd.put(InstanceManager.PART_TYPE_KEY, partType);
+        System.out.println("toadd: " + partToAdd);
         return partToAdd;
     }
 

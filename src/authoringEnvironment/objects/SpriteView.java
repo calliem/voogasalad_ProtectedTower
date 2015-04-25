@@ -29,8 +29,10 @@ import authoringEnvironment.ProjectReader;
 import authoringEnvironment.util.Scaler;
 import authoringEnvironment.setting.Setting;
 
+
 /**
- * Displays an editable sprite object instance along with overlay interactions upon click. 
+ * Displays an editable sprite object instance along with overlay interactions upon click.
+ * 
  * @author Kevin He
  * @author Callie Mao
  *
@@ -46,7 +48,7 @@ public abstract class SpriteView extends StackPane {
     private String spriteName;
     private String imageFile;
     private List<Setting> parameterFields;
-    
+
     private String myKey;
 
     private Text spriteNameDisplay;
@@ -59,6 +61,8 @@ public abstract class SpriteView extends StackPane {
     private static final int NAME_INDEX = 0;
     private static final String DEFAULT_NAME = "Unnamed";
 
+    private static final String KEY_BEFORE_CREATION = "no key yet";
+
     private Controller myController;
 
     /**
@@ -70,7 +74,7 @@ public abstract class SpriteView extends StackPane {
      * @param imageFile the file path of this sprite's image
      */
     public SpriteView (Controller c, String name, String imageFile) {
-        myKey = null;
+        myKey = KEY_BEFORE_CREATION;
         myController = c;
         if (name.length() == 0) {
             spriteName = DEFAULT_NAME;
@@ -174,8 +178,11 @@ public abstract class SpriteView extends StackPane {
 
         if (correctFormat && save) {
             try {
-                myKey = myController.addPartToGame(getSpriteType(),
-                                                        parameterFields);
+                if (myKey.equals(KEY_BEFORE_CREATION))
+                    myKey = myController.addPartToGame(getSpriteType(),
+                                                       parameterFields);
+                else
+                    myKey = myController.addPartToGame(myKey, getSpriteType(), parameterFields);
             }
             catch (MissingInformationException e) {
                 // TODO Auto-generated catch block
@@ -236,7 +243,6 @@ public abstract class SpriteView extends StackPane {
         // removes the 'x' button.
         this.getChildren().remove(this.getChildren().size() - 1);
     }
-
 
     /**
      * Returns the sprite's parameter fields as an array of two strings, the parameter name

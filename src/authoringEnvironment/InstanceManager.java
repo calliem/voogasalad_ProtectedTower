@@ -98,6 +98,7 @@ public class InstanceManager {
 
     public String addPart(String key, Map<String, Object> fullPartMap)
                                                                        throws MissingInformationException {
+        fullPartMap.put(PART_KEY_KEY, key);
         String missingKey = checkMissingInformation(fullPartMap);
         if (!missingKey.equals(NO_KEYS_MISSING))
             throw new MissingInformationException(missingKeyErrorMessage(missingKey));
