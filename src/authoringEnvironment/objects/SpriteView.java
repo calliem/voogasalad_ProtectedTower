@@ -139,6 +139,7 @@ public abstract class SpriteView extends StackPane {
         saved = new Text(getSpriteType() + " saved!");
         saved.setFill(Color.YELLOW);
         saved.setVisible(false);
+        
 
         Button save = new Button("Save");
         save.setOnAction( (e) -> {

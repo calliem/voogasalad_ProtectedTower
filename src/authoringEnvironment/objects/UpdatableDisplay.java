@@ -1,6 +1,7 @@
 package authoringEnvironment.objects;
 
 import java.util.List;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -165,4 +166,5 @@ public abstract class UpdatableDisplay extends VBox {
     public void setSelectedView(StackPane view){
         selectedView = view;
     }
+
 }

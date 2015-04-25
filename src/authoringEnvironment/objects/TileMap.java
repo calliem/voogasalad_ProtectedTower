@@ -112,6 +112,7 @@ public class TileMap extends GameObject {
         }
     }
 
+
     private void attachTileListener (Tile tile) {
         tile.setOnMouseClicked(e -> tileClicked(tile));
       //this method is used instead of tileClicked to allow for easier "coloring" of large groups of tiles

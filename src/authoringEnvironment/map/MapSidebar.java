@@ -3,6 +3,7 @@ package authoringEnvironment.map;
 import imageselectorTEMP.GraphicFileChooser;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -17,7 +18,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.MapUpdatableDisplay;
@@ -120,32 +123,11 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         selectTile();
         setTileSize();
+        setPaths();
 
     }
 
-    /*
-     * private void displayMaps () {
-     * mapDisplay =
-     * new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace()); //
-     * test
-     * mapSettings.getChildren().add(mapDisplay);
-     * }
-     */
 
-    // Lots of duplication below
-    /*
-     * private void setLives () {
-     * HBox selection = new HBox();
-     * selection.setSpacing(PADDING);
-     * Text lives = new Text(getResources().getString("Lives"));
-     * TextField textField = new TextField(Integer.toString(myLives));
-     * Button button = new Button(getResources().getString("Update"));
-     * button.setOnMouseClicked(e -> System.out.println(textField.getText()));
-     * textField.setPrefWidth(TEXT_FIELD_WIDTH);
-     * selection.getChildren().addAll(lives, textField, button);
-     * mapSettings.getChildren().add(selection);
-     * }
-     */
 
     private void setTileSize () {
         HBox selection = new HBox();
@@ -207,18 +189,16 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         return imgSelector;
     }
 
-    private HBox setEditMapButtons () {
+
+
+    
+    private HBox setEditButtons (Button createButton, Button saveButton, Button deleteButton) {
         HBox mapButtons = new HBox();
         mapButtons.setSpacing(20);
-        Button createMapButton = new Button(getResources().getString("CreateMap"));
-        createMapButton.setOnMouseClicked(e -> createMap());
-        Button saveMapButton = new Button(getResources().getString("SaveMap"));
-        saveMapButton.setStyle("-fx-background-color: #6e8b3d; -fx-text-fill: white;");
-        saveMapButton.setOnMouseClicked(e -> saveMap(getMapWorkspace().getActiveMap()));
-        Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
-        deleteMapButton.setStyle("-fx-background-color: #cd3333; -fx-text-fill: white;");
-        deleteMapButton.setOnMouseClicked(e -> removeMap());
-        mapButtons.getChildren().addAll(createMapButton, saveMapButton, deleteMapButton);
+
+        saveButton.setStyle("-fx-background-color: #6e8b3d; -fx-text-fill: white;");
+        deleteButton.setStyle("-fx-background-color: #cd3333; -fx-text-fill: white;");
+        mapButtons.getChildren().addAll(createButton, saveButton, deleteButton);
         return mapButtons;
     }
 
@@ -282,6 +262,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
         }
+        
+        
+       displayWorkspaceMessage("Map Saved!");
 
         // saves the map to a specific key
         // checks to see if the current map already exists
@@ -308,6 +291,19 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          */
         mapDisplay.updateDisplay(super.getMaps());
 
+    }
+    
+    private void displayWorkspaceMessage(String text){
+        Text saved = new Text(text);
+        saved.setFill(Color.GREEN);
+        saved.setFont(new Font(30));
+        //saved.setVisible(false);
+        getMapWorkspace().getChildren().add(saved);
+        
+        //saved.setVisible(true);
+        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+        pause.play();
+        pause.setOnFinished(e ->getMapWorkspace().getChildren().remove(saved));
     }
 
     private void updateMapDim (String numRows, String numCols) {
@@ -354,7 +350,17 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         container.setVgap(5);
         container.setHgap(20);
 
-        container.add(setEditMapButtons(), 0, 0, 2, 1);
+        Button createMapButton = new Button(getResources().getString("CreateMap"));
+        createMapButton.setOnMouseClicked(e -> createMap());
+        
+        Button saveMapButton = new Button(getResources().getString("SaveMap"));
+        saveMapButton.setOnMouseClicked(e -> saveMap(getMapWorkspace().getActiveMap()));
+
+        Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
+        deleteMapButton.setOnMouseClicked(e -> removeMap());
+        
+        HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
+        container.add(editMapbuttons, 0, 0, 2, 1);
 
         fileChooser = setImage();
         container.add(fileChooser, 0, 1, 2, 1);
@@ -393,5 +399,57 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
         // mapSettings.getChildren().add(container);
 
+    }
+    
+    private void setPaths (){
+        Button createMapButton = new Button(getResources().getString("CreatePath"));
+        createMapButton.setOnMouseClicked(e -> createPath());
+        
+        Button saveMapButton = new Button(getResources().getString("SavePath"));
+        saveMapButton.setOnMouseClicked(e -> savePath());
+
+        Button deleteMapButton = new Button(getResources().getString("DeletePath"));
+        deleteMapButton.setOnMouseClicked(e -> deletePath());
+        
+        HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
+        pathSettings.getChildren().add(editMapbuttons);
+    }
+    
+    private void createPath(){
+        activatePathMode();
+    }
+    
+    private void savePath(){
+        //getMapWorkspace().getActiveMap()
+        deactivatePathMode();
+    }
+    
+    private void deletePath(){
+        /*        ScaleTransition scale =
+                Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
+        scale.setOnFinished( (e) -> {
+            if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
+                super.getMaps().remove(getMapWorkspace().getActiveMap());
+                mapDisplay.updateDisplay(super.getMaps());
+            }
+            getMapWorkspace().removeMap();
+        });*/
+        
+        deactivatePathMode();
+        
+        
+    }
+    
+    
+    
+    private void activatePathMode(){
+        getMapWorkspace().getActiveMap().removeTileListeners();
+        getMapWorkspace().getActiveMap().getRoot().setOpacity(0.5);
+    }
+    
+    private void deactivatePathMode(){
+        getMapWorkspace().getActiveMap().attachTileListeners();
+        getMapWorkspace().getActiveMap().getRoot().setOpacity(1);
+        
     }
 }
