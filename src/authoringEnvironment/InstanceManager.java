@@ -164,8 +164,7 @@ public class InstanceManager {
         // XMLWriter.toXML(userParts, partFileName, rootDirectory +
         // partsFileDir);
         System.out.println("writing to xml manager");
-        XMLWriter.toXML(this, INSTANCE_MANAGER_FILE_NAME, rootDirectory + PARTS_FILE_DIRECTORY);
-        return rootDirectory + PARTS_FILE_DIRECTORY;
+        return XMLWriter.toXML(this, INSTANCE_MANAGER_FILE_NAME, rootDirectory + PARTS_FILE_DIRECTORY); 
     }
 
     /**
