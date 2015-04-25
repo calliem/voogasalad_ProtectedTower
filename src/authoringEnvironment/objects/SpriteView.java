@@ -61,7 +61,7 @@ public abstract class SpriteView extends StackPane {
     private static final int NAME_INDEX = 0;
     private static final String DEFAULT_NAME = "Unnamed";
 
-    private static final String KEY_BEFORE_CREATION = "no key yet";
+    
 
     private Controller myController;
 
@@ -178,7 +178,7 @@ public abstract class SpriteView extends StackPane {
 
         if (correctFormat && save) {
             try {
-                if (myKey.equals(KEY_BEFORE_CREATION))
+                if (myKey.equals(Controller.KEY_BEFORE_CREATION))
                     myKey = myController.addPartToGame(getSpriteType(),
                                                        parameterFields);
                 else

@@ -40,7 +40,7 @@ public class Controller {
     private Map<String, List<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
     
-    public  static final String KEY_BEFORE_CREATION = "Key not intitialized yet";
+    public  static final String KEY_BEFORE_CREATION = "Key not initialized yet";
 
     protected Controller (InstanceManager IM) {
         currentGame = IM;
