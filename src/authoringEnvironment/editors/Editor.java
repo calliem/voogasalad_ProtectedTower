@@ -55,7 +55,6 @@ public abstract class Editor extends Tab {
         this.setContent(contentRoot);
         this.setText(tabNames.getString(editorType));
         this.setClosable(false);
-
     }
 
     protected abstract Group configureUI ();

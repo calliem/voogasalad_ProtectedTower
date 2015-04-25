@@ -151,5 +151,4 @@ public class GraphicFileChooser extends StackPane {
                                                 String.format("*.%s", extension.toLowerCase()));
         fileChooser.getExtensionFilters().add(extFilter);
     }
-
 }

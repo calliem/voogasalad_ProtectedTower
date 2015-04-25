@@ -6,6 +6,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -94,6 +95,12 @@ public class NamePrompt extends StackPane{
         create.setDisable(true);
     }
     
+    public ScaleTransition showPrompt(){
+        reset();
+        promptField.requestFocus();
+        return Scaler.scaleOverlay(0.0, 1.0, this);
+    }
+    
     public ScaleTransition showPrompt(StackPane root){
         reset();
         
@@ -116,6 +123,12 @@ public class NamePrompt extends StackPane{
     }
     
     public ScaleTransition hidePrompt(StackPane root){
+        ScaleTransition hide = Scaler.scaleOverlay(1.0, 0.0, this);
+        hide.setOnFinished(e -> root.getChildren().remove(this));
+        return hide;
+    }
+    
+    public ScaleTransition hidePrompt(Group root){
         ScaleTransition hide = Scaler.scaleOverlay(1.0, 0.0, this);
         hide.setOnFinished(e -> root.getChildren().remove(this));
         return hide;

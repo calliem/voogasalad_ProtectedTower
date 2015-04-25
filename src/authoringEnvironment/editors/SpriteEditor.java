@@ -40,6 +40,7 @@ import authoringEnvironment.util.Scaler;
  */
 
 public abstract class SpriteEditor extends Editor {
+    private Group visuals;
     private StackPane myContent;
     private HBox currentRow;
     private boolean editing = false;
@@ -77,7 +78,7 @@ public abstract class SpriteEditor extends Editor {
     @Override
     protected Group configureUI () {
         // TODO Auto-generated method stub
-        Group visuals = new Group();
+        visuals = new Group();
         myContent = new StackPane();
         spritesCreated = new ArrayList<>();
         
@@ -113,9 +114,14 @@ public abstract class SpriteEditor extends Editor {
         currentRow.setAlignment(Pos.TOP_CENTER);
         currentRow.setMaxHeight(100);
 
+        TagDisplay tags = new TagDisplay(myController);
+        StackPane.setAlignment(tags, Pos.CENTER_LEFT);
+        
         myContent.getChildren().addAll(background, spriteDisplay, empty);
         StackPane.setAlignment(spriteDisplay, Pos.TOP_CENTER);
-        visuals.getChildren().add(myContent);
+        
+        
+        visuals.getChildren().addAll(myContent, tags);
         
         return visuals;
     }
@@ -288,7 +294,7 @@ public abstract class SpriteEditor extends Editor {
 
     private void showOverlay (StackPane overlay) {
         if (!isOverlayActive) {
-            myContent.getChildren().add(overlay);
+            visuals.getChildren().add(overlay);
             Scaler.scaleOverlay(0.0, 1.0, overlay);
             isOverlayActive = true;
         }
@@ -299,7 +305,8 @@ public abstract class SpriteEditor extends Editor {
         if(isOverlayActive){
             ScaleTransition scale = Scaler.scaleOverlay(1.0, 0.0, activeOverlay);
             scale.setOnFinished(e -> {
-                myContent.getChildren().remove(activeOverlay);
+                visuals.getChildren().remove(activeOverlay);
+                myContent.getChildren().remove(activeOverlay); // in case I added overlay to the StackPane (prompt)
                 isOverlayActive = false;
             });
         }

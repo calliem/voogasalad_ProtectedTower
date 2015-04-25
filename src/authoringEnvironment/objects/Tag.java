@@ -25,18 +25,26 @@ public class Tag extends Group{
     private static final int TAG_HEIGHT = 20;
     private static final int TEXT_SIZE = 10;
     private static final int BUTTON_SIZE = 10;
-    private static final Color TAG_COLOR = Color.LIGHTGRAY;
+    private static final Color TAG_COLOR = Color.DARKGRAY;
+    
+    private double xCoordinate;
+    private double yCoordinate;
+    
+    private StackPane tagDisplay;
     
     public Tag(String tagName){
         tagLabel = tagName;
         
-        StackPane tagDisplay = new StackPane();
+        tagDisplay = new StackPane();
         closeButton = new ImageView(new Image("images/close.png"));
         ScaleImage.scale(closeButton, BUTTON_SIZE, BUTTON_SIZE);
-        closeButton.setTranslateX(TAG_WIDTH);
+        closeButton.setTranslateX(TAG_WIDTH - BUTTON_SIZE/2);
+        closeButton.setTranslateY(-BUTTON_SIZE/2);
 //        closeButton.setVisible(false);
         
         Rectangle tagBody = new Rectangle(TAG_WIDTH, TAG_HEIGHT, TAG_COLOR);
+        tagBody.setArcWidth(10);
+        tagBody.setArcHeight(10);
         
         Text label = new Text(tagLabel);
         label.setFont(new Font(TEXT_SIZE));
@@ -59,7 +67,9 @@ public class Tag extends Group{
         fade.setFromValue(1.0);
         fade.setToValue(0.0);
         
-        return new ParallelTransition(move, fade);
+        ParallelTransition delete = new ParallelTransition(move, fade);
+        delete.play();
+        return delete;
     }
     
     public void updateTooltip(){
@@ -82,5 +92,26 @@ public class Tag extends Group{
     
     public ImageView getButton(){
         return closeButton;
+    }
+    
+    public StackPane getTagBody(){
+        return tagDisplay;
+    }
+    
+    public void setLocation(double x, double y){
+        xCoordinate = x;
+        yCoordinate = y;
+    }
+    
+    public double getX(){
+        return xCoordinate;
+    }
+    
+    public double getY(){
+        return yCoordinate;
+    }
+    
+    public String toString(){
+        return tagLabel;
     }
 }

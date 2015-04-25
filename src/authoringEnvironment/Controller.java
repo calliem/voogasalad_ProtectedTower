@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.paint.Color;
-import authoringEnvironment.editors.MapEditor;
-import authoringEnvironment.editors.Editor;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.objects.Tag;
 import authoringEnvironment.setting.Setting;
 
 
@@ -36,12 +32,14 @@ public class Controller {
     private InstanceManager currentGame;
     private Map<String, ObservableList<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
+    private ObservableList<String> gameTags;
 
     protected Controller (InstanceManager IM) {
         currentGame = IM;
         partTypeToKeyList = new HashMap<String, ObservableList<String>>();
         populateKeyList();
         myMaps = FXCollections.observableArrayList();
+        gameTags = FXCollections.observableArrayList();
     }
 
     protected Controller (String gameName, String rootDir) {
@@ -111,6 +109,25 @@ public class Controller {
 //    public boolean removePartFromGame(String partType, String partName){
 //        return partTypeToKeyList.get(partType).remove(partName);
 //    }
+    
+    public boolean addNewTag(String tag){
+        if(!gameTags.contains(tag)){
+            return gameTags.add(tag);
+        }
+        return false;
+    }
+    
+    public boolean tagExists(String tag){
+        return gameTags.contains(tag); 
+    }
+    
+    public boolean removeTag(String tag){
+        return gameTags.remove(tag);
+    }
+    
+    public ObservableList<String> getTagsList(){
+        return gameTags;
+    }
 
     /**
      * Gets all the keys for parts of partType that are currently part of this
