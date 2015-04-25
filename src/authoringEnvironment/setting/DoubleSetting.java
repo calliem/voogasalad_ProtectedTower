@@ -1,5 +1,7 @@
 package authoringEnvironment.setting;
 
+import authoringEnvironment.Controller;
+
 /**
  * 
  * @author Johnny
@@ -9,8 +11,8 @@ public class DoubleSetting extends Setting{
 
     private Double dataAsDouble;
 
-    public DoubleSetting(String paramName, String defaultVal){
-        super(paramName, defaultVal);
+    public DoubleSetting(Controller controller, String part, String paramName, String defaultVal){
+        super(controller, part, paramName, defaultVal);
     }
 
     @Override

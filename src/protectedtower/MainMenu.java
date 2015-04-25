@@ -137,7 +137,7 @@ public class MainMenu {
      */
     private void entryAnimation (VBox container, Gallery content, StackPane go) {
         moving = true;
-        TranslateTransition moveButtons = new TranslateTransition(Duration.millis(800), container);
+        TranslateTransition moveButtons = new TranslateTransition(Duration.millis(700), container);
         moveButtons.setFromY(210); //TODO
         moveButtons.setToY(20); //TODO
         moveButtons.setOnFinished(ae -> {

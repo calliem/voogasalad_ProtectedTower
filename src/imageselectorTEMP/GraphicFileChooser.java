@@ -119,25 +119,24 @@ public class GraphicFileChooser extends StackPane {
     }
 
     /**
-     * Allows the user to add a valid image extension for the file chooser.
+     * Allows the user to add a valid extension for the file chooser.
      * 
      * @param extension the extension name (i.e. jpg or png)
      */
-    public void addExtensionFilter (String type, String extension) {
+    public void addExtensionFilterByType (String type) {
+        String preview = "";
+        for(String extension : fileExtensions.get(type)){
+            if(fileExtensions.get(type).indexOf(extension) != 0){
+                preview += ", ";
+            }
+            preview += extension;
+        }
+        
         FileChooser.ExtensionFilter extFilter =
-                new FileChooser.ExtensionFilter(String.format("%s %s Files",
-                                                              extension.toUpperCase(), type),
-                                                String.format("*.%s", extension.toLowerCase()));
+                new FileChooser.ExtensionFilter(String.format("%s Files (%s)",
+                                                              type, preview), fileExtensions.get(type));
         fileChooser.getExtensionFilters().add(extFilter);
     }
-
-    /*
-     * public void addExtensionFilter(String type){
-     * FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(type,
-     * fileExtensions.get(type));
-     * fileChooser.getExtensionFilters().add(extFilter);
-     * }
-     */
 
     /**
      * Allows the user to add a valid image extension for the file chooser.
@@ -146,7 +145,7 @@ public class GraphicFileChooser extends StackPane {
      */
     public void addExtensionFilter (String extension) {
         FileChooser.ExtensionFilter extFilter =
-                new FileChooser.ExtensionFilter(String.format("%s Images (*.%s)",
+                new FileChooser.ExtensionFilter(String.format("%s Files (*.%s)",
                                                               extension.toUpperCase(),
                                                               extension.toLowerCase()),
                                                 String.format("*.%s", extension.toLowerCase()));

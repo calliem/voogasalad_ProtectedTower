@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import authoringEnvironment.Controller;
 
 /**
  * Creates a Setting object that allows the user
@@ -21,6 +22,8 @@ import javafx.scene.text.Text;
  */
 public abstract class Setting extends VBox{
     private String label;
+    protected String partType;
+    protected Controller myController;
     protected HBox basicLayout;
     protected ImageView error;
     protected String dataAsString;
@@ -31,11 +34,13 @@ public abstract class Setting extends VBox{
     private static final int PADDING = 10;
     private static final int MESSAGE_SIZE = 20;
     
-    public Setting(String label, String value){
+    public Setting(Controller controller, String part, String label, String value){
         //TODO: remove magic number
         super(PADDING);
         this.setAlignment(Pos.CENTER);
         
+        myController = controller;
+        partType = part;
         dataAsString = value;
         basicLayout = new HBox(PADDING);
         basicLayout.setAlignment(Pos.CENTER_RIGHT);
