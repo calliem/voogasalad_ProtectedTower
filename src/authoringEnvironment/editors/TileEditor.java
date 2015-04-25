@@ -53,10 +53,4 @@ public class TileEditor extends Editor {
         myRoot.getChildren().addAll(background, test);
         return myRoot;
     }
-
-    @Override
-    public void update () {
-        // TODO Auto-generated method stub
-
-    }
 }
