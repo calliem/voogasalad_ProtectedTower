@@ -112,13 +112,10 @@ public class TileMap extends GameObject {
         }
     }
 
-
     private void attachTileListener (Tile tile) {
         tile.setOnMouseClicked(e -> tileClicked(tile));
       //this method is used instead of tileClicked to allow for easier "coloring" of large groups of tiles
         tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); 
-
-        // System.out.print("tile listener added");
     }
 
     public void changeTileSize (int tileSize) {
@@ -146,7 +143,7 @@ public class TileMap extends GameObject {
     public void removeTileListeners () {
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
-                myTiles[i][j].setOnMousePressed(e -> {
+                myTiles[i][j].setOnMouseClicked(e -> {
                 });
                 myTiles[i][j].setOnMouseDragEntered(e -> {
                 });

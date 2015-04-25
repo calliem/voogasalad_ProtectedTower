@@ -84,9 +84,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
-        System.out.println("mapsidebar initializer " + mapWorkspace);
-        // getMapWorkspace() = mapWorkspace;
-        myLives = DEFAULT_LIVES;
+             myLives = DEFAULT_LIVES;
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -108,7 +106,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             fileChooser.getFileDisplay().setText(displayFilePath);
         }
         else{
-            fileChooser.getFileDisplay().setText("Select background"); //TODO: magic value. this is also used int he graphic file chooser
+            fileChooser.getFileDisplay().setText(getResources().getString("SetBackground")); //TODO: magic value. this is also used int he graphic file chooser
         }
        
         // paths
@@ -264,7 +262,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         }
         
         
-       displayWorkspaceMessage("Map Saved!");
+       displayWorkspaceMessage("Map Saved!", Color.GREEN);
 
         // saves the map to a specific key
         // checks to see if the current map already exists
@@ -293,9 +291,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     }
     
-    private void displayWorkspaceMessage(String text){
+    private void displayWorkspaceMessage(String text, Color color){
         Text saved = new Text(text);
-        saved.setFill(Color.GREEN);
+        saved.setFill(color);
         saved.setFont(new Font(30));
         //saved.setVisible(false);
         getMapWorkspace().getChildren().add(saved);
@@ -417,11 +415,13 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     
     private void createPath(){
         activatePathMode();
+        
     }
     
     private void savePath(){
         //getMapWorkspace().getActiveMap()
         deactivatePathMode();
+        displayWorkspaceMessage("Path saved!", Color.GREEN);
     }
     
     private void deletePath(){
@@ -436,8 +436,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         });*/
         
         deactivatePathMode();
-        
-        
     }
     
     
