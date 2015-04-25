@@ -180,9 +180,8 @@ public class InstanceManager {
      *         specified by the argument
      */
     protected static InstanceManager loadGameManager (String pathToRootDirFile) {
-        String[] nameAndDirectory = (String[]) XMLWriter
-                .fromXML(pathToRootDirFile);
-        String rootDirectory = nameAndDirectory[1];
+        String toTrimOff = (String) XMLWriter.fromXML(pathToRootDirFile);
+        String rootDirectory = pathToRootDirFile.substring(0, pathToRootDirFile.indexOf(toTrimOff) + 1);
         return (InstanceManager) XMLWriter.fromXML(rootDirectory + PARTS_FILE_DIRECTORY
                                                    + "/" + INSTANCE_MANAGER_FILE_NAME);
     }

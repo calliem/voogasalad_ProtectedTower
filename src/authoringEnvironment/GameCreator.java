@@ -16,7 +16,6 @@ public class GameCreator {
 
     private static final String PARAMETER_LIST_FILE = "resources/part_parameters";
     private static final String PARAMETER_TYPE_FILE = "resources/parameter_datatype";
-    private static final String partsFileDir = InstanceManager.PARTS_FILE_DIRECTORY;
     private static final String PART_FILE_NAME = "GameParts.xml";
     private static final String GAME_EXTENSION = ".gamefile";
     public static final ResourceBundle PARAMETER_LIST =
@@ -36,11 +35,9 @@ public class GameCreator {
      */
     public static InstanceManager createNewGame (String gameName, String rootDirBeforeGameName) {
         String gameDirectory = rootDirBeforeGameName + "/" + gameName;
-        String[] nameAndDirectory = new String[2];
-        nameAndDirectory[0] = gameName;
-        nameAndDirectory[1] = gameDirectory;
+        String gameFileName = gameName + GAME_EXTENSION;
         createGameFolders(gameName, rootDirBeforeGameName);
-        XMLWriter.toXML(nameAndDirectory, gameName + GAME_EXTENSION, gameDirectory);
+        XMLWriter.toXML(gameFileName, gameFileName, gameDirectory);
         return new InstanceManager(gameName, gameDirectory);
     }
 
@@ -65,7 +62,7 @@ public class GameCreator {
      */
     private static Set<String> directoriesToCreate () {
         Set<String> toAdd = PARAMETER_LIST.keySet();
-        toAdd.add(partsFileDir);
+        toAdd.add(InstanceManager.PARTS_FILE_DIRECTORY);
         return toAdd;
     }
 
