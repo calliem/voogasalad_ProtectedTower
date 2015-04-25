@@ -1,6 +1,9 @@
 package authoringEnvironment.editors;
 
+import java.util.ResourceBundle;
 import authoringEnvironment.Controller;
+import authoringEnvironment.RoundSidebar;
+import authoringEnvironment.Sidebar;
 
 
 /**
@@ -10,9 +13,12 @@ import authoringEnvironment.Controller;
  * @author Megan Gutter
  */
 public class RoundEditor extends MainEditor {
+    private Sidebar mySidebar;
+    private ResourceBundle myResources;
 
     public RoundEditor (Controller c, String name) {
         super(c, name);
+        mySidebar = new RoundSidebar(myResources, getMaps(), getMapWorkspace());
     }
     
     
