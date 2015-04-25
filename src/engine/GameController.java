@@ -42,6 +42,7 @@ public class GameController {
      * Holds an instance of an entire game
      */
     private Game myGame;
+    private TowerManager myTowerManager;
 
     /**
      * Creates a new instance of a game represented by the XML files at a given file location.
@@ -54,6 +55,7 @@ public class GameController {
     public GameController (String filepath, List<Node> nodes)
         throws InsufficientParametersException {
         myGame = this.loadGame(filepath, nodes);
+        myTowerManager = new TowerManager();
     }
 
     /**
@@ -135,6 +137,8 @@ public class GameController {
         for (String partName : FACTORY_PART_NAMES) {
             myGame.addGameElement(partName, myObjects.get(partName));
         }
+        
+        myTowerManager.add(myObjects.get("Tower"));
 
         return myGame;
     }

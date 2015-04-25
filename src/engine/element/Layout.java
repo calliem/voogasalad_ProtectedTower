@@ -20,7 +20,6 @@ import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 import engine.factories.GameElementFactory;
-import engine.factories.TowerManager;
 
 
 /**
@@ -50,7 +49,6 @@ public class Layout extends GameElement implements Updateable {
     private List<Projectile> myProjectileList;
     // Factories to create game elements
     private GameElementFactory myGameElementFactory;
-    private TowerManager myTowerManager;
     /**
      * Class which handles checking for collisions
      */
@@ -63,7 +61,6 @@ public class Layout extends GameElement implements Updateable {
     public Layout (List<Node> nodes) {
         myNodeList = nodes;
         myGameElementFactory = new GameElementFactory();
-        myTowerManager = new TowerManager();
         myCollisionChecker = new CollisionChecker();
     }
 
@@ -126,7 +123,7 @@ public class Layout extends GameElement implements Updateable {
     public void placeTower (String towerID, Point2D location) {
         // loc param can probably be removed because the tower can just hold its location to be
         // placed at
-        Tower temp = myTowerManager.getTower(towerID);
+        Tower temp = (Tower) myGameElementFactory.getGameElement("Tower", towerID);
         temp.setLocation(location);
         if (canPlace(temp, location)) {
             myTowerList.add(temp);
@@ -313,11 +310,6 @@ public class Layout extends GameElement implements Updateable {
     }
 
     // Loading game methods
-
-    // TODO decide how to implement TowerManager with the new game element factory
-    public void initializeTowers (Map<String, Map<String, Object>> allTowers) {
-        myTowerManager.add("Tower", allTowers);
-    }
 
     /**
      * Method used to initialize the game element factory with what possible game elements this game
