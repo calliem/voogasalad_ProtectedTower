@@ -29,6 +29,7 @@ import authoringEnvironment.editors.Editor;
  */
 
 public class AuthoringEnvironment {
+    private static final int MAIN_MENU_SCENE_INDEX = 0;
     private static Dimension2D myDimensions;
     private Stage myStage; // is this necessary
     private Scene myScene;
@@ -143,16 +144,16 @@ public class AuthoringEnvironment {
         return file;
     }
     
-    private void saveGame() {
-        
+   
+    private void saveGame(){
+        myController.saveGame();
     }
     
-    private void loadGame() {
+    private void loadGame(){
         
     }
-
     private void returnToMenu () {
-        myStage.setScene(Main.getScenes()[0]);
+        myStage.setScene(Main.getScenes()[MAIN_MENU_SCENE_INDEX]);
         myStage.show();
     }
     

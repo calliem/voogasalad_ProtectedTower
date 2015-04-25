@@ -23,12 +23,13 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
-import authoringEnvironment.objects.MapUpdatableDisplay;
-import authoringEnvironment.objects.Sidebar;
-import authoringEnvironment.objects.UpdatableDisplay;
+import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.objects.MapUpdatableDisplay;
+import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.util.Scaler;
 
 
@@ -49,24 +50,22 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     // TODO: display sidebar with a gridpane not an HBox to keep everything
     // aligned and beautiful
 
-    private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128; // maybe
-                                                                                            // set
-                                                                                            // the
-                                                                                            // spacing
-                                                                                            // dynamically
-                                                                                            // instead
+    private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128;
 
+    private static final int MAP_OPACITY_DEACTIVATED = 1;
+    private static final double MAP_OPACITY_ACTIVATED = 0.5;
     private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
     // TODO: is importing the main environment bad design? is this an added
     // dependency?
-    private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment
-            .getEnvironmentWidth() / 32;
+    private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment.getEnvironmentWidth() / 32;
+    // TODO: how to get this number
+    // from Johnny
+    private static final int DEFAULT_LIVES = 20;
+
     private int myLives;
     // private MapWorkspace getMapWorkspace();
-    private static final int DEFAULT_LIVES = 20; // TODO: how to get this number
-                                                 // from Johnny
     private Color myActiveColor;
 
     private TextField tileRowDisplay;
@@ -85,7 +84,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
-             myLives = DEFAULT_LIVES;
+        myLives = DEFAULT_LIVES;
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -102,14 +101,16 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         tileColDisplay.setText(Integer.toString(map.getNumCols()));
         tileSizeDisplay.setText(Integer.toString(map.getTileSize()));
         String detailedFilePath = map.getImgFilePath();
-        if (detailedFilePath != null){
-            String displayFilePath = detailedFilePath.substring(detailedFilePath.lastIndexOf("/") + 1);
+        if (detailedFilePath != null) {
+            String displayFilePath =
+                    detailedFilePath.substring(detailedFilePath.lastIndexOf("/") + 1);
             fileChooser.getFileDisplay().setText(displayFilePath);
         }
-        else{
-            fileChooser.getFileDisplay().setText(getResources().getString("SetBackground")); //TODO: magic value. this is also used int he graphic file chooser
+        else {
+            // TODO magic value. this is also used in the graphic file chooser
+            fileChooser.getFileDisplay().setText(getResources().getString("SetBackground"));
         }
-       
+
         // paths
     }
 
@@ -125,8 +126,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         setPaths();
 
     }
-
-
 
     private void setTileSize () {
         HBox selection = new HBox();
@@ -188,9 +187,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         return imgSelector;
     }
 
-
-
-    
     private HBox setEditButtons (Button createButton, Button saveButton, Button deleteButton) {
         HBox mapButtons = new HBox();
         mapButtons.setSpacing(20);
@@ -228,9 +224,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                     .getTileSize()));
             getMapWorkspace().getActiveMap().setActiveColor(myActiveColor);
             // TODO: setTileSize();
-           changeMap(getMapWorkspace().getActiveMap());
-           mapDisplay.setSelectedView(null);
-           mapDisplay.updateDisplay(super.getMaps());
+            changeMap(getMapWorkspace().getActiveMap());
+            mapDisplay.setSelectedView(null);
+            mapDisplay.updateDisplay(super.getMaps());
 
         });
         // TODO: textField.setText to update it
@@ -260,9 +256,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             int existingIndex = super.getMaps().indexOf(activeMap);
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
-        }
-        
-        
+        }        
        displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
 
         // saves the map to a specific key
@@ -291,8 +285,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         mapDisplay.updateDisplay(super.getMaps());
 
     }
-    
-
 
     private void updateMapDim (String numRows, String numCols) {
         getMapWorkspace().getActiveMap().setMapDimensions(Integer.parseInt(numRows),
@@ -307,8 +299,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * tileSize, etc.). This method is not as applicable in the TileMap since the TileMap name is
      * not updated dynamically as the user types it and needs to be retrieved from the textbox in
      * the editor. TODO: make the name update dynamically with a change listener
+     * 
+     * @throws MissingInformationException
      */
-    private void saveToXML () {
+    private void saveToXML () throws MissingInformationException {
         /*
          * for (Node map : super.getMaps()) {
          * Map<String, Object> mapSettings = new HashMap<String, Object>();
@@ -334,19 +328,19 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     protected void setContent (GridPane container) {
-        // TODO: remove duplicated code
         container.setVgap(VGAP_PADDING);
         container.setHgap(HGAP_PADDING);
 
+
         Button createMapButton = new Button(getResources().getString("CreateMap"));
         createMapButton.setOnMouseClicked(e -> createMap());
-        
+
         Button saveMapButton = new Button(getResources().getString("SaveMap"));
         saveMapButton.setOnMouseClicked(e -> saveMap(getMapWorkspace().getActiveMap()));
 
         Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
         deleteMapButton.setOnMouseClicked(e -> removeMap());
-        
+
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
         container.add(editMapbuttons, 0, 0, 2, 1);
 
@@ -388,56 +382,55 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         // mapSettings.getChildren().add(container);
 
     }
-    
-    private void setPaths (){
+
+    private void setPaths () {
         Button createMapButton = new Button(getResources().getString("CreatePath"));
         createMapButton.setOnMouseClicked(e -> createPath());
-        
+
         Button saveMapButton = new Button(getResources().getString("SavePath"));
         saveMapButton.setOnMouseClicked(e -> savePath());
 
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton.setOnMouseClicked(e -> deletePath());
-        
+
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
         pathSettings.getChildren().add(editMapbuttons);
     }
-    
-    private void createPath(){
+
+    private void createPath () {
         activatePathMode();
-        
+
     }
-    
-    private void savePath(){
-        //getMapWorkspace().getActiveMap()
+
+    private void savePath () {
+        // getMapWorkspace().getActiveMap()
         deactivatePathMode();
         displayWorkspaceMessage(getResources().getString("PathSaved"), Color.GREEN);
     }
-    
-    private void deletePath(){
-        /*        ScaleTransition scale =
-                Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
-        scale.setOnFinished( (e) -> {
-            if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
-                super.getMaps().remove(getMapWorkspace().getActiveMap());
-                mapDisplay.updateDisplay(super.getMaps());
-            }
-            getMapWorkspace().removeMap();
-        });*/
-        
+
+    private void deletePath () {
+        /*
+         * ScaleTransition scale =
+         * Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
+         * scale.setOnFinished( (e) -> {
+         * if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
+         * super.getMaps().remove(getMapWorkspace().getActiveMap());
+         * mapDisplay.updateDisplay(super.getMaps());
+         * }
+         * getMapWorkspace().removeMap();
+         * });
+         */
+
         deactivatePathMode();
     }
-    
-    
-    
-    private void activatePathMode(){
+
+    private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
-        getMapWorkspace().getActiveMap().getRoot().setOpacity(0.5);
+        getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
     }
-    
-    private void deactivatePathMode(){
+
+    private void deactivatePathMode () {
         getMapWorkspace().getActiveMap().attachTileListeners();
-        getMapWorkspace().getActiveMap().getRoot().setOpacity(1);
-        
+        getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
     }
 }

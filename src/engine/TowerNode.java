@@ -1,4 +1,4 @@
-package engine.factories;
+package engine;
 
 import java.util.HashSet;
 import java.util.Map;
