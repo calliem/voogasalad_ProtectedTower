@@ -1,109 +1,137 @@
 package authoringEnvironment.objects;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoringEnvironment.InstanceManager;
 
 
 /**
  * Creates a visual tile object and its actions when selected or deselected
+ * 
  * @author Callie Mao
  *
  */
 public class Tile extends Rectangle {
 
-	// private ImageView myImage;
-	private boolean isPath;
-	private boolean isSelected;
-	private double myTileSize; //TODO: this should be written in the map since the tile does not need to kno this 
-	private int myColNum;
-	private int myRowNum;
-	private ArrayList<String> myTags;
-	private Color myColor;
+    
+    //TODO: maybe make this a game object?
+    
+    private ArrayList<String> myTags;
+    private Color myColor;
+    private String myKey;
+    private String myName;
 
-	// will have the same image for a path?
-	// TODO: create a text box to set grid size and a slider to set tile size
-	// that would only allow numbers in correct increments that would fit
-	private static final Color DEFAULT_COLOR = Color.TRANSPARENT;
-	public Tile(double tileSize, int rowNum, int colNum) {
-		myTileSize = tileSize;
-		myColNum = colNum;
-		myRowNum = rowNum;
-		// setImage(new Image("/resources/white_square.png"));
-		// setFitWidth(tileSize);
-		// setFitHeight(tileSize);
-		setFill(DEFAULT_COLOR);
-		setOpacity(0.4);
-		setWidth(tileSize);
-		setHeight(tileSize);
+    private static final String COLOR = "Color";
+    private static final String TAGS = "Tag";
+    
+    //TODO: when have tag object, just store key and then make it work here 
 
-		setTranslateX(colNum * tileSize);
-		setTranslateY(rowNum * tileSize);
-		
-		isPath = false;
-		isSelected = false;
-	}
-	
-	public void addTag(String tag){
-		myTags.add(tag);
-	}
-	
-	//should only be able to remove already existing tags
-	public void removeTag(String tag){
-		myTags.remove(tag);
-	}
+    // will have the same image for a path?
+    // TODO: create a text box to set grid size and a slider to set tile size
+    // that would only allow numbers in correct increments that would fit
+    private static final Color DEFAULT_COLOR = Color.TRANSPARENT;
 
-	/*
-	 * public void setImage(ImageView image) { myImage = image; }
-	 */
+    public Tile () {
+        // TODO: fix tile to make it more general and not have col nums and x/y generated here
+        // TODO: store part keys in the xml file for tilemap
+        new Rectangle();
+        myColor = DEFAULT_COLOR;
+        setFill(DEFAULT_COLOR);
+        setOpacity(0.4);
+        myName = null;
+        myTags = new ArrayList<String>();
+    }
 
-	
-	public void setTileSizeDynamically(double size) {
-		setTileSize(size);
-		setTranslateX(myColNum*size);
-		setTranslateY(myRowNum*size);
-	}
-	// this may not be necessary if the 2D array will update itself
-	private void setTileSize(double size) {
-		setWidth(size);
-		setHeight(size);
-		myTileSize = size;
-	}
+    public void positionTile (int tileSize, int i, int j) {
+        setTranslateX(j * tileSize);
+        setTranslateY(i * tileSize);
+        // System.out.print(" | " + i*tileSize + " ");
+        // System.out.print(j*tileSize + " ");
+    }
 
-	//selection stuff is all for pathing. Need separate methods for updating the tile
-	// active refers to if it is selected as part of a path
-	public void select() {
-		if (!isSelected){
-			setOpacity(0.2); // change image entirely
-		}
-		else{
-			setOpacity(1);
-		}
-		isSelected = !isSelected;
-	}
-	
-	//not sure if this below method belongs here
-	public void dragSelect(){
-		select();
-		//TODO: make this work
-	}
+    /*
+     * public void setTileSize (int tileSize) {
+     * myTile.setWidth(tileSize);
+     * myTile.setHeight(tileSize);
+     * }
+     */
 
-	/*public void setInactiveTile() {
-		// myImage.setOpacity(1);
-		setStyle(""); // will this properly remove all style elements
-		isPath = false;
-	}*/
-	
-	public boolean isSelected(){
-		return isSelected;
-	}
+  /*  public void addTag (String tag) {
+        myTags.add(tag);
+    }
 
-		//TODO: not sure if need below method
-	public boolean isActivePath() {
-		return isPath;
-	}
-	
+    // should only be able to remove already existing tags
+    public void removeTag (String tag) {
+        myTags.remove(tag);
+    }*/
+    
+    public void setTags (String tag){
+        tag.split(", ");
+        tag.split("; ");
+    }
 
+    public void setTileSize (double size, int rowNum, int colNum) {
+        setWidth(size);
+        setHeight(size);
+        setTranslateX(colNum * size);
+        setTranslateY(rowNum * size);
+    }
+
+    // selection stuff is all for pathing. Need separate methods for updating the tile
+    // active refers to if it is selected as part of a path
+   /* public void select () {
+        if (!isSelected) {
+            setOpacity(0.2); // change image entirely
+        }
+        else {
+            setOpacity(1);
+        }
+        isSelected = !isSelected;
+    }
+
+    public boolean isSelected () {
+        return isSelected;
+    }*/
+
+    public ArrayList<String> getTags () {
+        return myTags;
+    }
+
+    public Color getColor () {
+        return myColor;
+    }
+    
+    /*
+     * public Node getThumbnail () {
+     * Rectangle thumbnail = this;
+     * thumbnail.setWidth(AuthoringEnvironment.getEnvironmentWidth() * 0.05);
+     * thumbnail.setHeight(AuthoringEnvironment.getEnvironmentHeight() * 0.05);
+     * return null;
+     * }
+     */
+    
+    public void setFill(Color color){
+        super.setFill(color);
+        myColor = color;
+    }
+    
+    public String getKey(){
+        return myKey;
+    }
+    
+    public void setKey(String key){
+        myKey = key;
+    }
+
+    public Map<String, Object> saveToXML () {
+        Map<String, Object> mapSettings = new HashMap<String, Object>();
+        mapSettings.put(InstanceManager.NAME_KEY, myName);
+        mapSettings.put(TAGS, myTags);
+        mapSettings.put(COLOR, myColor);
+        return mapSettings;
+    }
 
 }

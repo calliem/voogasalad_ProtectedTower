@@ -3,6 +3,8 @@ package authoringEnvironment.editors;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -14,7 +16,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -30,13 +31,14 @@ import authoringEnvironment.util.NamePrompt;
 import authoringEnvironment.util.Scaler;
 
 
-
 /**
  * General abstract class for editors that allow user interaction in
  * sprite/property creation and editing
  * 
  * @author Kevin He
+ * @author Callie Mao
  */
+
 public abstract class SpriteEditor extends Editor {
     private StackPane myContent;
     private HBox currentRow;
@@ -48,8 +50,11 @@ public abstract class SpriteEditor extends Editor {
 
     private static final int ROW_SIZE = 7;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
-    
+
     private Node activeOverlay;
+
+    private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
+    private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
 
     /**
      * Creates a tower object.
@@ -74,8 +79,8 @@ public abstract class SpriteEditor extends Editor {
         Group visuals = new Group();
         myContent = new StackPane();
         spritesCreated = new ArrayList<>();
-        
-        prompt = new NamePrompt(tabName.toLowerCase().substring(0, tabName.length() - 1));
+
+        prompt = new NamePrompt(partNames.getString(editorType).toLowerCase());
         prompt.setImageChooser(true);
 
         // TODO remove magic number
@@ -100,8 +105,7 @@ public abstract class SpriteEditor extends Editor {
             handleSpritePlacement(spriteDisplay, rows, oldValue, newValue);
         });
 
-        empty = new Text("No " + tabName.toLowerCase() + " yet...");
-        // myResources.getString("NoTowersCreated"));
+        empty = new Text("No " + tabNames.getString(editorType).toLowerCase() + " yet...");
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
 
@@ -111,8 +115,12 @@ public abstract class SpriteEditor extends Editor {
         myContent.getChildren().addAll(background, spriteDisplay, empty);
         StackPane.setAlignment(spriteDisplay, Pos.TOP_CENTER);
         visuals.getChildren().add(myContent);
-        
+
         return visuals;
+    }
+
+    protected NamePrompt getPrompt () {
+        return prompt;
     }
 
     /**
@@ -129,7 +137,7 @@ public abstract class SpriteEditor extends Editor {
             myContent.getChildren().add(empty);
         }
         else if ((int) newValue > 0
-                && myContent.getChildren().contains(empty)) {
+                 && myContent.getChildren().contains(empty)) {
             myContent.getChildren().remove(empty);
         }
 
@@ -155,7 +163,7 @@ public abstract class SpriteEditor extends Editor {
         edit.setTranslateX(-10);
 
         Button add = new Button("+ "
-                + tabName.substring(0, tabName.length() - 1));
+                                + partNames.getString(editorType));
         add.setTranslateX(-10);
         add.setPrefWidth(100);
         add.setOnMousePressed( (e) -> {
@@ -166,41 +174,59 @@ public abstract class SpriteEditor extends Editor {
             if (!editing) {
                 startEditing(editControls, edit, add);
             }
-            else {
-                finishEditing(editControls, edit, add);
-            }
-            editing = !editing;
-        });
+                else {
+                    finishEditing(editControls, edit, add);
+                }
+                editing = !editing;
+            });
         editControls.getChildren().add(edit);
         return editControls;
     }
 
-    protected void promptSpriteCreation () {
+    private void promptSpriteCreation () {
         Button create = prompt.getCreateButton();
         create.setOnAction( (e) -> {
-            try{
-                addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(), currentRow);
-                hideOverlay();
-            }
-            catch(NoImageFoundException error){
-                error.printStackTrace();
-            }
-        });
+            if (myController.nameAlreadyExists(partNames.getString(editorType),
+                                               prompt.getCurrentText()))
+                prompt.displayError("A " + partNames.getString(editorType).toLowerCase() +
+                                    " with that name already exists!");
+                else {
+                    try {
+                        addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(),
+                                  currentRow);
+                        hideOverlay();
+                    }
+                    catch (NoImageFoundException error) {
+                        error.printStackTrace();
+                    }
+                }
+            });
 
         Button cancel = prompt.getCancelButton();
         cancel.setOnAction( (e) -> {
             hideOverlay();
         });
-        
-        //TODO DUPLICATED
+
+        // TODO DUPLICATED
         prompt.showPrompt(myContent);
+        String type = partNames.getString(editorType);
+        try {
+            String needed = spriteNeeded.getString(type);
+            if (myController.getKeysForPartType(needed).size() == 0) {
+                prompt.displayPermanentError(String.format("Please create %ss first!",
+                                                           needed.toLowerCase()));
+            }
+        }
+        catch (MissingResourceException e) {
+        }
+
         isOverlayActive = true;
         activeOverlay = prompt;
     }
 
-    private void addSprite (String name, String imageFile, HBox row) throws NoImageFoundException{
+    private void addSprite (String name, String imageFile, HBox row) throws NoImageFoundException {
         String className = "authoringEnvironment.objects."
-                + tabName.substring(0, tabName.length() - 1) + "View";
+                           + partNames.getString(editorType) + "View";
         SpriteView sprite = generateSpriteView(myController, name, imageFile, className);
         sprite.initiateEditableState();
         setupSpriteAction(sprite);
@@ -230,10 +256,10 @@ public abstract class SpriteEditor extends Editor {
                 | NoSuchMethodException | SecurityException
                 | ClassNotFoundException e1) {
             System.err
-            .println("Class: "
-                    + className
-                    +
-                    "\nCouldn't be created with constructor (Controller, String, String)");
+                    .println("Class: "
+                             + className
+                             +
+                             "\nCouldn't be created with constructor (Controller, String, String)");
             e1.printStackTrace();
         }
         return sprite;
@@ -251,7 +277,7 @@ public abstract class SpriteEditor extends Editor {
 
     private void setupSpriteAction (SpriteView sprite) {
         sprite.setOnMousePressed( (e) -> {
-            if (sprite.isExisting().getValue() && editing){
+            if (sprite.isExisting().getValue() && editing) {
                 showOverlay(sprite.getEditorOverlay());
                 activeOverlay = sprite.getEditorOverlay();
             }
@@ -270,10 +296,10 @@ public abstract class SpriteEditor extends Editor {
             isOverlayActive = true;
         }
     }
-    
+
     @Override
-    public void hideOverlay(){
-        if(isOverlayActive){
+    public void hideOverlay () {
+        if (isOverlayActive) {
             ScaleTransition scale = Scaler.scaleOverlay(1.0, 0.0, activeOverlay);
             scale.setOnFinished(e -> {
                 myContent.getChildren().remove(activeOverlay);
