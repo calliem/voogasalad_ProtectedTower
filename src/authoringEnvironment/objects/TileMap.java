@@ -28,7 +28,7 @@ public class TileMap extends GameObject {
     private String imgFilePath;
 
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
-    private static final String TILE_KEY_ARRAY = "TileArrayKeys";
+    protected static final String TILE_KEY_ARRAY = "TileArrayKeys"; //TODO; maybe move vars from variables class into protected vars here
     private static final int LINE_START_COORDINATE = 0;
 
     private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
@@ -44,6 +44,9 @@ public class TileMap extends GameObject {
 
     private static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
 
+    protected TileMap () {
+    }
+
     // TODO: user specifies rectangle or square dimensions...allow this flexibility
     public TileMap (int mapRows, int mapCols, int tileSize) {
         myRoot = new Group();
@@ -53,13 +56,11 @@ public class TileMap extends GameObject {
         myTileSize = tileSize;
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
-        // imgFilePath = DEFAULT_BACKGROUND_PATH;
         imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
         setThumbnail(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
-        // TODO: sethover x, y coordinate, tile size, etc.
 
         createMap();
         createGridLines();
@@ -104,7 +105,7 @@ public class TileMap extends GameObject {
     }
 
     // TODO:duplicated tile listeners being added/deleted?
-    public void attachTileListeners () {
+    private void attachTileListeners () {
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
                 attachTileListener(myTiles[i][j]);
@@ -113,6 +114,8 @@ public class TileMap extends GameObject {
     }
 
     private void attachTileListener (Tile tile) {
+        // tile.setOnMouseEntered(e -> )
+        // tile.setOnMouseExited(e ->)
         tile.setOnMouseClicked(e -> tileClicked(tile));
         // this method is used instead of tileClicked to allow for easier "coloring" of large groups
         // of tiles
@@ -180,6 +183,14 @@ public class TileMap extends GameObject {
 
     }
 
+    public int getTileSize () {
+        return myTileSize;
+    }
+    
+    protected void setTiles(Tile[][] tiles){
+        myTiles = tiles;
+    }
+
     /**
      * Sets dimensions of the map to the number of rows and columns specified in the parameter.
      * Directly sets the tile dimensions, while pixel adjustment is determined upon separate methods
@@ -235,8 +246,8 @@ public class TileMap extends GameObject {
         return myTiles[0].length;
     }
 
-    public int getTileSize () {
-        return myTileSize;
+    protected void setBackground (ImageView background) {
+        myBackground = background;
     }
 
     private void createGridLines () {
