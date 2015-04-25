@@ -1,21 +1,16 @@
 package authoringEnvironment.editors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.Controller;
-import authoringEnvironment.objects.GameObject;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
 
 
 /**
@@ -33,15 +28,15 @@ public abstract class Editor extends Tab {
     private Group contentRoot;
     protected Controller myController;
     protected boolean isOverlayActive = false;
-    
+
     private static final String englishSpecsFile = "resources/display/main_environment_english";
     protected static final ResourceBundle tabNames = ResourceBundle
             .getBundle(englishSpecsFile);
-    
+
     private static final String englishPartsFile = "resources/display/part_names_english";
     protected static final ResourceBundle partNames = ResourceBundle.getBundle(englishPartsFile);
-    
-    //TODO: don't use protected
+
+    // TODO: don't use protected
 
     protected static final double CONTENT_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth();
@@ -60,7 +55,7 @@ public abstract class Editor extends Tab {
 
     protected abstract Group configureUI ();
 
-    public String getName() {
+    public String getName () {
         return editorType;
     }
 
@@ -84,14 +79,14 @@ public abstract class Editor extends Tab {
         stage.setScene(scene);
         stage.show();
     }
-    
-    public void hideOverlay(){
-        
+
+    public void hideOverlay () {
+
     }
-    
-    public boolean isOverlayActive(){
+
+    public boolean isOverlayActive () {
         return isOverlayActive;
     }
 
-    public abstract void update();
+    public abstract void update ();
 }

@@ -1,11 +1,9 @@
 package authoringEnvironment.objects;
 
 import java.util.Map;
+import javafx.scene.image.ImageView;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 
 /**
@@ -98,9 +96,9 @@ public abstract class GameObject {
     public void setThumbnail (ImageView image) {
         ImageView thumbnail = new ImageView(image.getImage());
         thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
-                          Variables.THUMBNAIL_SIZE_MULTIPLIER);
+                              Variables.THUMBNAIL_SIZE_MULTIPLIER);
         thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
-                           Variables.THUMBNAIL_SIZE_MULTIPLIER);
+                               Variables.THUMBNAIL_SIZE_MULTIPLIER);
         myThumbnail = thumbnail;
     }
 

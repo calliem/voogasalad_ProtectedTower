@@ -1,15 +1,14 @@
 package authoringEnvironment.objects;
 
 import java.util.List;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import authoringEnvironment.map.MapSidebar;
-import authoringEnvironment.map.MapWorkspace;
+
 
 public class MapUpdatableDisplay extends UpdatableDisplay {
-    
+
     private MapSidebar mySidebar;
-    
+
     public MapUpdatableDisplay (List<GameObject> list, int rowSize, MapSidebar sidebar) {
         super(list, rowSize);
         mySidebar = sidebar;
@@ -20,10 +19,10 @@ public class MapUpdatableDisplay extends UpdatableDisplay {
         super.objectClicked(object, objectView);
         mySidebar.changeMap((TileMap) object);
         System.out.println("change map");
-        
-        //mySidebar.getMapWorkspace().updateWithNewMap(object);
-        //mySidebar.setMapNameTextField(object.getName());
-        //mySidebar.setPaths
+
+        // mySidebar.getMapWorkspace().updateWithNewMap(object);
+        // mySidebar.setMapNameTextField(object.getName());
+        // mySidebar.setPaths
     }
 
 }

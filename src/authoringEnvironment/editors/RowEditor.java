@@ -1,22 +1,20 @@
 package authoringEnvironment.editors;
 
 import java.awt.ScrollPane;
-import java.util.List;
-
-import authoringEnvironment.Controller;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
+import authoringEnvironment.Controller;
+
 
 public class RowEditor extends Editor {
 
-    public RowEditor(Controller c, String name) {
+    public RowEditor (Controller c, String name) {
         super(c, name);
         // TODO Auto-generated constructor stub
     }
 
     @Override
-    public Group configureUI() {
+    public Group configureUI () {
         ScrollPane foundation = new ScrollPane();
         Rectangle background = new Rectangle();
 
@@ -27,9 +25,7 @@ public class RowEditor extends Editor {
     @Override
     public void update () {
         // TODO Auto-generated method stub
-        
+
     }
-
-
 
 }
