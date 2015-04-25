@@ -2,8 +2,13 @@ package authoringEnvironment.setting;
 
 import imageselectorTEMP.util.ScaleImage;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -13,64 +18,121 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
+import authoringEnvironment.Controller;
+import authoringEnvironment.NoImageFoundException;
+
 
 public class SpriteSetting extends Setting {
+    private static final int DISPLAY_WIDTH = 200;
+    private static final int PADDING = 15;
+    private static final int IMAGE_SIZE = 50;
+    private static final int IMAGES_DISPLAYED = 3; // the amount of images displayed at once in the
+    // scrollpane
 
-    public SpriteSetting (String label, String value) {
-        super(label, value);
+    private List<ImageView> images;
+    private ObservableList<String> filePaths;
+    private IntegerProperty selectedIndex;
+    private String spriteFile;
+    private HBox graphicLayout;
+    private static final Color BACKGROUND_COLOR = Color.PALEGOLDENROD;
+    private Rectangle graphicSelectorBackground;
+    private ScrollPane graphicSelectorPane;
+
+    private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
+    private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
+
+    public SpriteSetting (Controller controller, String part, String label, String value) {
+        super(controller, part, label, value);
     }
-    
+
     @Override
-    protected void setupInteractionLayout(){
+    protected void setupInteractionLayout () {
         basicLayout.setAlignment(Pos.CENTER);
         
-        StackPane spriteFileDisplay = new StackPane();
-        Rectangle displayBackground = new Rectangle(150, 24, Color.WHITE);
-        displayBackground.setArcWidth(5);
-        displayBackground.setArcHeight(5);
-        
-        ArrayList<String> imagePaths = new ArrayList<>();
-        imagePaths.add("images/redbullet.png");
-        imagePaths.add("images/greenbullet.png");
-        imagePaths.add("images/bluefire.png");
-        imagePaths.add("images/error.png");
-//        imagePaths.add("images/tower.png");
-        
-        ArrayList<ImageView> images = new ArrayList<>();
-        
-        Text spriteFile = new Text(imagePaths.get(0));
-        spriteFileDisplay.getChildren().addAll(displayBackground, spriteFile);
-        
-        ScrollPane graphicSelectorPane = new ScrollPane();
-        StackPane graphicSelector = new StackPane();
-        Rectangle graphicSelectorBackground = new Rectangle(200, 50, Color.PALEGOLDENROD);
-        HBox graphicLayout = new HBox(15);
+        graphicLayout = new HBox(PADDING);
         graphicLayout.setAlignment(Pos.CENTER);
         
-        if(imagePaths.size() > 3){
-            graphicSelectorBackground.setWidth(200 + (imagePaths.size()-3)*(50+15));
+        images = new ArrayList<>();
+        filePaths = FXCollections.observableList(new ArrayList<String>());
+        setupScrollPane();
+        
+        selectedIndex = new SimpleIntegerProperty(0);
+        selectedIndex.addListener( (obs, oldIndex, newIndex) -> {
+            makeSelection((int) newIndex);
+        });
+        
+        setupSelectionPane(0);
+
+        filePaths.addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(ListChangeListener.Change change){
+                setupSelectionPane(filePaths.indexOf(dataAsString));
+            }
+        });
+        this.getChildren().add(graphicSelectorPane);
+    }
+    
+    private void setupSelectionPane(int defaultValue){
+        loadImages(defaultValue);
+        try {
+            layoutSprites(defaultValue);
         }
+        catch (NoImageFoundException e) {
+            System.out.println("No image found???");
+        }
+    }
+
+    /**
+     * Creates images from key list "filePaths" and sets up MouseEvent
+     * listener to update spriteFile when pressed.
+     * 
+     * @throws NoImageFoundException
+     */
+    private void layoutSprites (int defaultValue) throws NoImageFoundException {
+        graphicLayout.getChildren().removeAll(graphicLayout.getChildren());
+        adjustBackground();
         
-        IntegerProperty selectedIndex = new SimpleIntegerProperty(0);
-        
-        for(String path : imagePaths){
-            ImageView image = new ImageView(new Image(path));
-            ScaleImage.scale(image, 50, 50);
-            image.setOnMousePressed((e) -> {
-                selectedIndex.setValue(imagePaths.indexOf(path));
+        images = new ArrayList<>();
+        for (String path : filePaths) {
+            ImageView image = new ImageView(new Image(myController.getImageForKey(path)));
+            ScaleImage.scale(image, IMAGE_SIZE, IMAGE_SIZE);
+            image.setOnMousePressed( (e) -> {
+                selectedIndex.setValue(filePaths.indexOf(path));
             });
             graphicLayout.getChildren().add(image);
             images.add(image);
         }
-        
-        makeSelection(selectedIndex.getValue(), images);
-        dataAsString = imagePaths.get(selectedIndex.getValue());
-        selectedIndex.addListener((obs, oldValue, newValue) -> {
-            makeSelection((int) newValue, images);
-            dataAsString = imagePaths.get((int) newValue);
-        });
-        
+
+        makeSelection(defaultValue);
+    }
+
+    /**
+     * Adjusts the background for the scrollpane when new sprites are added to it.
+     * 
+     */
+    private void adjustBackground () {
+        if (filePaths.size() > 3) {
+            graphicSelectorBackground.setWidth(DISPLAY_WIDTH +
+                                               (filePaths.size() - IMAGES_DISPLAYED) *
+                                               (IMAGE_SIZE + PADDING));
+        }
+    }
+
+    private void loadImages (int defaultIndex) {
+        filePaths = myController.getKeysForPartType(spriteNeeded
+                                                      .getString(partType));
+        System.out.println("file paths set: " + filePaths);
+        if (filePaths.size() != 0) {
+            dataAsString = filePaths.get(0);
+        }
+    }
+
+    private void setupScrollPane () {
+        graphicSelectorPane = new ScrollPane();
+        StackPane graphicSelector = new StackPane();
+        graphicSelectorBackground = new Rectangle(DISPLAY_WIDTH, IMAGE_SIZE, BACKGROUND_COLOR);
+        adjustBackground();
+
         graphicSelector.getChildren().addAll(graphicSelectorBackground, graphicLayout);
         
         graphicSelectorPane.setContent(graphicSelector);
@@ -78,19 +140,21 @@ public class SpriteSetting extends Setting {
         graphicSelectorPane.setMaxWidth(200);
         graphicSelectorPane.setMaxHeight(70);
         graphicSelectorPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-        
-        this.getChildren().add(graphicSelectorPane);
     }
-    
-    private void makeSelection(int selectedIndex, ArrayList<ImageView> images){
-        for(int i = 0; i < images.size(); i++){
-            images.get(i).setOpacity(1);
-            if(i != selectedIndex){
-                images.get(i).setOpacity(0.3);
+
+    private void makeSelection (int selectedIndex) {
+        if (filePaths.size() != 0) {
+            for (int i = 0; i < images.size(); i++) {
+                images.get(i).setOpacity(1);
+                if (i != selectedIndex) {
+                    images.get(i).setOpacity(0.3);
+                }
             }
+            dataAsString = filePaths.get(selectedIndex);
+//            spriteFile = filePaths.get(selectedIndex);
         }
     }
-    
+
     @Override
     public Object getParameterValue () {
         return dataAsString;
@@ -100,14 +164,14 @@ public class SpriteSetting extends Setting {
     public boolean parseField () {
         return true;
     }
-    
+
     @Override
-    public void displaySavedValue(){
-        
+    public void displaySavedValue () {
+
     }
-    
+
     @Override
-    public boolean processData(){
+    public boolean processData () {
         return parseField();
     }
 }

@@ -60,10 +60,4 @@ public class GameEditor extends Editor {
 		return visuals;
 	}
 
-    @Override
-    public void update () {
-        // TODO Auto-generated method stub
-        
-    }
-
 }

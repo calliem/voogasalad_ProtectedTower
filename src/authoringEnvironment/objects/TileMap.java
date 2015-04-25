@@ -53,7 +53,7 @@ public class TileMap extends GameObject {
         myTileSize = tileSize;
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
-       // imgFilePath = DEFAULT_BACKGROUND_PATH;
+        // imgFilePath = DEFAULT_BACKGROUND_PATH;
         imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
         setThumbnail(myBackground);
@@ -114,8 +114,9 @@ public class TileMap extends GameObject {
 
     private void attachTileListener (Tile tile) {
         tile.setOnMouseClicked(e -> tileClicked(tile));
-      //this method is used instead of tileClicked to allow for easier "coloring" of large groups of tiles
-        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); 
+        // this method is used instead of tileClicked to allow for easier "coloring" of large groups
+        // of tiles
+        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor));
 
         // System.out.print("tile listener added");
     }
@@ -298,12 +299,19 @@ public class TileMap extends GameObject {
          * ProjectReader.getParamsNoTypeOrName(WAVE), data);
          */
 
-        
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.NAME_KEY, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
         mapSettings.put(Variables.PARAMETER_BACKGROUND_FILEPATH, imgFilePath);
-        mapSettings.put(Variables.PARAMETER_THUMBNAIL, getThumbnail()); //TODO: save as a 2D array of ints instead of a JavaFX object
+
+        int[][] savedImage =
+                ImageToInt2DArray.convertImageTo2DIntArray(getThumbnail().getImage(),
+                                                           getThumbnail().getImage().getWidth(),
+                                                           getThumbnail().getImage().getHeight());
+
+        mapSettings.put(Variables.PARAMETER_THUMBNAIL, savedImage); // TODO: save as a 2D array of
+                                                                    // ints instead of a JavaFX
+                                                                    // object
 
         String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
         for (int i = 0; i < myTiles.length; i++) {
@@ -318,8 +326,8 @@ public class TileMap extends GameObject {
     public Group getRoot () {
         return myRoot;
     }
-    
-    public String getImgFilePath(){
+
+    public String getImgFilePath () {
         return imgFilePath;
     }
 

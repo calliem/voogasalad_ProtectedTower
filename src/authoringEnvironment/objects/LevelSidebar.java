@@ -1,4 +1,4 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -10,11 +10,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoringEnvironment.Controller;
+import authoringEnvironment.Variables;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.LevelUpdatableDisplay;
 import authoringEnvironment.objects.UpdatableDisplay;
+
 
 
 /**
@@ -28,24 +31,24 @@ import authoringEnvironment.objects.UpdatableDisplay;
 public class LevelSidebar extends Sidebar {
 
     private Editor myMapEditor;
-    private ObservableList<GameObject> myMapList;
+    private ObservableList<String> myMapList;
     private UpdatableDisplay mapDisplay;
 
     // private ObservableList<Node> myRounds;
 
     private static final int LISTVIEW_HEIGHT = 200;
 
-    public LevelSidebar (ResourceBundle resources,
-                         ObservableList<GameObject> maps,
+    public LevelSidebar (Controller c, ResourceBundle resources,
+                         ObservableList<String> maps,
                          MapWorkspace mapWorkspace) {
-        super(resources, maps, mapWorkspace);
+        super(c, resources, maps, mapWorkspace);
         myMapList = FXCollections.observableList(maps);
-        mapDisplay = new LevelUpdatableDisplay(maps, 3, mapWorkspace); // remove default values TODO
+        mapDisplay = new LevelUpdatableDisplay(c, Variables.PARTNAME_MAP, UPDATABLEDISPLAY_ELEMENTS, mapWorkspace); // remove default values TODO
 
-        maps.addListener(new ListChangeListener<GameObject>() {
+        maps.addListener(new ListChangeListener<String>() {
             @Override
-            public void onChanged (javafx.collections.ListChangeListener.Change<? extends GameObject> change) {
-                mapDisplay.updateDisplay((List<GameObject>) change.getList());
+            public void onChanged (javafx.collections.ListChangeListener.Change<? extends String> change) {
+                mapDisplay.updateDisplay((List<String>) change.getList());
             }
         });
 
@@ -77,8 +80,8 @@ public class LevelSidebar extends Sidebar {
 
         // getChildren().add(mapList);
 
-        mapDisplay =
-                new LevelUpdatableDisplay(myMapList, UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace());
+     //   mapDisplay =
+       //         new LevelUpdatableDisplay(myMapList, UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace());
         // temp.getChildren().add(mapDisplay);
         selectMap.getChildren().add(mapDisplay);
 

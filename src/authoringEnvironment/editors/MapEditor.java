@@ -2,8 +2,8 @@ package authoringEnvironment.editors;
 
 import java.util.ResourceBundle;
 import authoringEnvironment.Controller;
-import authoringEnvironment.Sidebar;
 import authoringEnvironment.map.MapSidebar;
+import authoringEnvironment.objects.Sidebar;
 
 
 /**
@@ -42,7 +42,7 @@ public class MapEditor extends MainEditor {
         // a rectangle that they think is a tilemap
         // myMaps.add(getMapWorkspace().getActiveMap());
         System.out.println("myMapWorkspace in mapeditor" + getMapWorkspace());
-        mySidebar = new MapSidebar(myResources, getMaps(), getMapWorkspace(), c); // now don't need
+        mySidebar = new MapSidebar(c, myResources, getMaps(), getMapWorkspace()); // now don't need
                                                                                   // to pass in so
                                                                                   // much stuff
         getPane().add(mySidebar, 1, 0);

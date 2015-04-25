@@ -1,8 +1,5 @@
 package engine.element.sprites;
 
-import util.reflection.Reflection;
-
-
 /**
  * Factory for producing projectiles
  * 
@@ -18,18 +15,13 @@ public class ProjectileFactory extends SpriteFactory {
     }
 
     /**
-     * Given a GUID, returns the projectile object with a prefilled parameters map and values that
-     * it represents
+     * Method for getting a new instance of a specific projectile
      * 
-     * @param guid String of GUID identifying the object
-     * @return Projectile object
+     * @param projectileID GUID of the template tower
+     * @return New projectile object with the parameters of the template projectile
      */
+
     public Projectile getProjectile (String projectileID) {
-        super.checkID(projectileID);
-
-        Projectile projectile = (Projectile) Reflection.createInstance(MY_CLASS_NAME);
-        projectile.setParameterMap(super.getParameters(projectileID));
-
-        return projectile;
+        return (Projectile) super.getSprite(projectileID);
     }
 }

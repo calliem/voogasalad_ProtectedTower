@@ -3,6 +3,7 @@ package authoringEnvironment.editors;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.GameObject;
@@ -32,8 +33,9 @@ public abstract class Editor extends Tab {
     private Group contentRoot;
     protected Controller myController;
     protected boolean isOverlayActive = false;
-    
-    //TODO: don't use protected
+
+    private static final String englishPartsFile = "resources/display/part_names_english";
+    protected static final ResourceBundle partNames = ResourceBundle.getBundle(englishPartsFile);
 
     protected static final double CONTENT_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth();
@@ -47,7 +49,6 @@ public abstract class Editor extends Tab {
         this.setContent(contentRoot);
         this.setText(tabName);
         this.setClosable(false);
-
     }
 
     protected abstract Group configureUI ();
@@ -77,19 +78,11 @@ public abstract class Editor extends Tab {
         stage.show();
     }
 
-    protected void promptSpriteCreation () {
-        // TODO Auto-generated method stub
-        // this doesn't quite belong in this editor superclass. consider alternatives.
+    public void hideOverlay () {
 
     }
-    
-    public void hideOverlay(){
-        
-    }
-    
-    public boolean isOverlayActive(){
+
+    public boolean isOverlayActive () {
         return isOverlayActive;
     }
-
-    public abstract void update();
 }

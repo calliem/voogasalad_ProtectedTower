@@ -20,11 +20,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
-import authoringEnvironment.Sidebar;
-import authoringEnvironment.Variables;
 import authoringEnvironment.objects.MapUpdatableDisplay;
-import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.UpdatableDisplay;
+import authoringEnvironment.Variables;
+import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.util.Scaler;
 
 
@@ -76,11 +76,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private UpdatableDisplay mapDisplay;
     private static final int INPUT_HBOX_SPACING = 4;
 
-    public MapSidebar (ResourceBundle resources, ObservableList<String> maps,
-                       MapWorkspace mapWorkspace, Controller c) {
-        super(resources, maps, mapWorkspace);
-        System.out.println("mapsidebar initializer " + mapWorkspace);
-        myController = c;
+    public MapSidebar (Controller c, ResourceBundle resources, ObservableList<String> maps,
+                       MapWorkspace mapWorkspace) {
+        super(c, resources, maps, mapWorkspace);
         createMapSettings();
     }
 
@@ -237,7 +235,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * @param activeMap
      */
     private void saveMap (TileMap activeMap) {
-        
 
         activeMap.setName(mapNameTextField.getText());
         WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
@@ -245,19 +242,23 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         ImageView snapView = new ImageView();
         snapView.setImage(snapImage);
         activeMap.setThumbnail(snapView);
-        
-        //use this one
+
+        // use this one
         Map<String, Object> mapSettings = activeMap.save();
 
         String key;
-        if (!getMapKeys().contains(activeMap.getKey())){
-            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings); //TODO: get the partname from womehwere e
-        }  
-        else{
-            key = myController.addPartToGame(activeMap.getKey(), Variables.PARTNAME_MAP, mapSettings);    
+        if (!getMapKeys().contains(activeMap.getKey())) {
+            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings); // TODO: get the
+                                                                                   // partname from
+                                                                                   // womehwere e
+        }
+        else {
+            key =
+                    myController.addPartToGame(activeMap.getKey(), Variables.PARTNAME_MAP,
+                                               mapSettings);
         }
         activeMap.setKey(key);
-        
+
         mapDisplay.updateDisplay(getMapKeys());
     }
 
@@ -340,7 +341,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         // display maps
         mapDisplay =
-                new MapUpdatableDisplay(myController, Variables.PARTNAME_MAP, UPDATABLEDISPLAY_ELEMENTS, this); // test
+                new MapUpdatableDisplay(myController, Variables.PARTNAME_MAP,
+                                     UPDATABLEDISPLAY_ELEMENTS);
+                                     //e -> {this.changeMap((TileMap) object);}
+                //); // test
         container.add(mapDisplay, 0, 5, 2, 1);
     }
 }

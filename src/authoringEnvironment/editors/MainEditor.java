@@ -54,7 +54,6 @@ public abstract class MainEditor extends Editor {
         Group visuals = new Group();
         createGridPane();
         myMapWorkspace = new MapWorkspace();
-        System.out.println("MAP WORKSPACE CREATED");
         myPane.add(myMapWorkspace, 0, 0);
         visuals.getChildren().add(myPane);
         return visuals;

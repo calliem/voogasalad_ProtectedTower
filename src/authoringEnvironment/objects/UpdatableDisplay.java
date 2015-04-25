@@ -1,29 +1,26 @@
 package authoringEnvironment.objects;
 
-import authoringEnvironment.objects.GameObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javafx.collections.ObservableList;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
+import authoringEnvironment.editors.Editor;
 
 
-public abstract class UpdatableDisplay extends VBox {
+public class UpdatableDisplay extends VBox {
 
     private List<GameObject> myObjects;
     private HBox currentRow;
@@ -33,11 +30,15 @@ public abstract class UpdatableDisplay extends VBox {
 
     private StackPane selectedView;
     private GameObject selectedObject;
+    // private Consumer<UpdatableDisplay> myAction;
     // TODO: above stuff pretty much does the same thing
 
     private static final int SPACING = 15;
 
+    // public UpdatableDisplay (Controller c, String part, int rowSize, Consumer<UpdatableDisplay>
+    // action) {
     public UpdatableDisplay (Controller c, String part, int rowSize) {
+        // myAction = action;
         myController = c;
         numObjsPerRow = rowSize;
         selectedView = null;
@@ -47,12 +48,16 @@ public abstract class UpdatableDisplay extends VBox {
         displayValues();
     }
 
-    private List<GameObject> buildPreviewObjects(List<String> keys){
+    private List<GameObject> buildPreviewObjects (List<String> keys) {
         List<GameObject> objects = new ArrayList<GameObject>();
         for (String key : keys) {
             Map<String, Object> settings = myController.getPartCopy(key);
             String name = (String) settings.get(InstanceManager.NAME_KEY);
             ImageView thumbnail = (ImageView) settings.get(Variables.PARAMETER_THUMBNAIL);
+
+            // TODO: build the full object here maybe? and then attach listeners to it within the
+            // each specific thing
+
             PreviewObject object = new PreviewObject(key, name, thumbnail);
             objects.add(object);
         }
@@ -101,7 +106,7 @@ public abstract class UpdatableDisplay extends VBox {
 
             objectView.getChildren().addAll(thumbnail, mapName);
             currentRow.getChildren().add(objectView);
-            objectView.setOnMouseClicked(e -> objectClicked(object, objectView));
+            objectView.setOnMouseClicked(e -> objectClicked(object, objectView, myAction));
             objectView.setOnMouseEntered(e -> selectObject(objectView));
             objectView.setOnMouseExited(e -> deselectObject(objectView));
         }
@@ -140,18 +145,31 @@ public abstract class UpdatableDisplay extends VBox {
         displayValues();
     }
 
+    // protected void objectClicked (GameObject object, StackPane objectView,
+    // Consumer<UpdatableDisplay> action) {
     protected void objectClicked (GameObject object, StackPane objectView) {
         if (selectedView != null) {
             selectedView.setOpacity(1);
-            // deselectObject(selectedView);
         }
-        // objectView.setOpacity(1);
-
         selectObject(objectView);
         selectedView = objectView;
+
+        // action.accept(this); //UpdatableDisplay that this is called on is not applicable
+    }
+
+    private static void test (Consumer<Integer> action) {
+        action.accept(10);
+    }
+
+    private static void testMethod () {
+        System.out.println("hi");
     }
 
     public void setSelectedView (StackPane view) {
         selectedView = view;
+    }
+
+    public static void main (String[] args) {
+        test(e -> testMethod());
     }
 }

@@ -2,7 +2,7 @@ package authoringEnvironment.editors;
 
 import java.util.ResourceBundle;
 import authoringEnvironment.Controller;
-import authoringEnvironment.LevelSidebar;
+import authoringEnvironment.objects.LevelSidebar;
 import authoringEnvironment.objects.UpdatableDisplay;
 
 
@@ -32,7 +32,7 @@ public class LevelEditor extends MainEditor {
 
     public LevelEditor (Controller c, String name) {
         super(c, name);
-        mySidebar = new LevelSidebar(myResources, getMaps(), getMapWorkspace());
+        mySidebar = new LevelSidebar(c, myResources, getMaps(), getMapWorkspace());
         getPane().add(mySidebar, 1, 0); // TODO: don't hardcode the Maps editor. Find a way to get
         // it from teh existing one so that changing one thing in code won't require changes
         // everywhere

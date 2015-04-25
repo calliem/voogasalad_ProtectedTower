@@ -12,8 +12,8 @@ public class MapUpdatableDisplay extends UpdatableDisplay {
     
     private MapSidebar mySidebar;
     
-    public MapUpdatableDisplay (Controller c, String partName, int rowSize, MapSidebar sidebar) {
-        super(c, partName, rowSize);
+    public MapUpdatableDisplay (Controller c, int rowSize, MapSidebar sidebar) {
+        super(c, rowSize);
         mySidebar = sidebar;
     }
 

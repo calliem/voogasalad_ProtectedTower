@@ -1,4 +1,4 @@
-package authoringEnvironment;
+package authoringEnvironment.objects;
 
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -12,6 +12,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
 
@@ -43,11 +45,13 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
 
     private GridPane topContext;
     private Accordion accordionContext;
+    private Controller myController;
 
-    public Sidebar (ResourceBundle resources,
+    public Sidebar (Controller c, ResourceBundle resources,
                     ObservableList<String> dependency,
                     MapWorkspace mapWorkspace) {
 
+        myController = c;
         myResources = resources;
         myMapKeys = FXCollections.observableList(dependency);
         myMapWorkspace = mapWorkspace;
@@ -60,6 +64,10 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         setContent(topContext);
         // setSpacing(10);
         // createMapSettings();
+    }
+
+    protected Controller getController () {
+        return myController;
     }
 
     protected abstract void setContent (GridPane container);
@@ -101,9 +109,9 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
     }
 
     private void setDimensionRestrictions () {
-         setPadding(new Insets(PADDING));
-         setSpacing(3);
-         setMaxWidth(Double.MAX_VALUE);
+        setPadding(new Insets(PADDING));
+        setSpacing(3);
+        setMaxWidth(Double.MAX_VALUE);
     }
 
 }
