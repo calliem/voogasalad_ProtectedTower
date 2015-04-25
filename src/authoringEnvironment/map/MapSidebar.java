@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.objects.MapUpdatableDisplay;
 import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.UpdatableDisplay;
@@ -317,8 +318,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * tileSize, etc.). This method is not as applicable in the TileMap since the TileMap name is
      * not updated dynamically as the user types it and needs to be retrieved from the textbox in
      * the editor. TODO: make the name update dynamically with a change listener
+     * @throws MissingInformationException 
      */
-    private void saveToXML () {
+    private void saveToXML () throws MissingInformationException {
         /*
          * for (Node map : super.getMaps()) {
          * Map<String, Object> mapSettings = new HashMap<String, Object>();

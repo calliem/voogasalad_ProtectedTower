@@ -14,7 +14,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.map.MapWorkspace;
-import authoringEnvironment.objects.GameObject;
 
 
 /**
@@ -102,9 +101,9 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
     }
 
     private void setDimensionRestrictions () {
-         setPadding(new Insets(PADDING));
-         setSpacing(3);
-         setMaxWidth(Double.MAX_VALUE);
+        setPadding(new Insets(PADDING));
+        setSpacing(3);
+        setMaxWidth(Double.MAX_VALUE);
     }
 
 }

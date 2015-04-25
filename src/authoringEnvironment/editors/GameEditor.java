@@ -1,19 +1,17 @@
 package authoringEnvironment.editors;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import authoringEnvironment.Controller;
-import authoringEnvironment.InstanceManager;
-import authoringEnvironment.Variables;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import authoringEnvironment.Controller;
+import authoringEnvironment.InstanceManager;
+import authoringEnvironment.Variables;
 
 
 /**
@@ -33,7 +31,7 @@ public class GameEditor extends Editor {
     private TextField gameNameEntry;
     private TextArea gameDescriptionEntry;
     private TextField totalLivesEntry;
-    
+
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
                                                                   "game_editor_english");
@@ -75,6 +73,12 @@ public class GameEditor extends Editor {
 
         visuals.getChildren().add(framework);
         return visuals;
+    }
+
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+
     }
 
     private void save () {
