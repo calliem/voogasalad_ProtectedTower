@@ -29,7 +29,7 @@ public class GameElementFactory {
      * triple-layered map, with the innermost layer being a map of parameter name to parameter
      * value. This comprises the parameter map. The next layer maps a GUID to a specific parameter
      * map; this represent a specific object. The outermost layer maps the class name to the
-     * specific objects of that class, such as "Tower" to a map of all possible objects of type
+     * specific objects of that class, such as "Tower", to a map of all possible objects of type
      * Tower.
      */
     private Map<String, Map<String, Map<String, Object>>> myGameElements;
@@ -61,8 +61,8 @@ public class GameElementFactory {
     }
 
     /**
-     * Adds new game elements to the lost of all possible game elements. This method can be called
-     * with a map of GUId to parameter map, or with a single GUID and single parameter map.
+     * Adds new game elements to the list of all possible game elements. This method can be called
+     * with a map of GUID to parameter map, or with a single GUID and single parameter map.
      * 
      * @param className String of the class of the object, such as "Tower" or "Enemy"
      * @param allObjects Map<String, Map<String, Object>> object representing mapping of GUID to
