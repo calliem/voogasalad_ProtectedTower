@@ -112,7 +112,7 @@ public class InstanceManager {
     }
 
     private String generateKey (Map<String, Object> part) {
-        return gameName + "_Part" + (partID++) + "." + part.get(NAME_KEY);
+        return gameName + "_Part" + (partID++) + "." + part.get(PART_TYPE_KEY);
     }
 
     private String checkMissingInformation (Map<String, Object> partToCheck) {

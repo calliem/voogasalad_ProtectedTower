@@ -198,6 +198,7 @@ public class Controller {
         if (!partTypeToKeyList.keySet().contains(partType))
             partTypeToKeyList.put(partType, FXCollections.observableList(new ArrayList<String>()));
         partTypeToKeyList.get(partType).add(key);
+        System.out.println("key added: " + key);
         return key;
     }
 
@@ -224,18 +225,9 @@ public class Controller {
      *         the editor.
      */
     public ObservableList<String> getKeysForPartType (String partType) {
-        if (partTypeToKeyList.get(partType) == null) {
-            initializePartList(partType);
-        }
-        return partTypeToKeyList.get(partType);
-    }
-
-    /**
-     * @param partType
-     */
-    private void initializePartList (String partType) {
-        ArrayList<String> newList = new ArrayList<>();
-        partTypeToKeyList.put(partType, FXCollections.observableList(newList));
+        if (!partTypeToKeyList.keySet().contains(partType))
+            return FXCollections.observableArrayList(new ArrayList<String>());
+        return FXCollections.observableList(partTypeToKeyList.get(partType));
     }
 
     /**
