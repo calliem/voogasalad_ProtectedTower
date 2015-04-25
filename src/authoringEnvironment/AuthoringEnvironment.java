@@ -143,7 +143,6 @@ public class AuthoringEnvironment {
         return file;
     }
     
-<<<<<<< HEAD
    
     private void saveGame(){
         myController.saveGame();
@@ -152,17 +151,6 @@ public class AuthoringEnvironment {
     private void loadGame(){
         
     }
-    
-=======
-    private void saveGame() {
-        
-    }
-    
-    private void loadGame() {
-        
-    }
-
->>>>>>> 0be6660d711e0c8c5954737c00b40bbe9d5e7aef
     private void returnToMenu () {
         myStage.setScene(Main.getScenes()[0]);
         myStage.show();

@@ -25,11 +25,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
-<<<<<<< HEAD
 import authoringEnvironment.MissingInformationException;
-=======
 import authoringEnvironment.InstanceManager;
->>>>>>> 0be6660d711e0c8c5954737c00b40bbe9d5e7aef
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.util.Scaler;
 import authoringEnvironment.setting.Setting;
@@ -83,13 +80,8 @@ public abstract class SpriteView extends StackPane {
      * @param name name of this sprite, designated by user
      * @param image the file path of this sprite's image
      */
-<<<<<<< HEAD
-    public SpriteView (Controller c, String name, String imageFile) {
-        myKey = KEY_BEFORE_CREATION;
-=======
     public SpriteView (Controller c, String name, String image) {
-        myKey = null;
->>>>>>> 0be6660d711e0c8c5954737c00b40bbe9d5e7aef
+        myKey = Controller.KEY_BEFORE_CREATION;
         myController = c;
 
         spriteName = name;
@@ -194,7 +186,6 @@ public abstract class SpriteView extends StackPane {
         }
 
         if (correctFormat && save) {
-<<<<<<< HEAD
             try {
                 if (myKey.equals(Controller.KEY_BEFORE_CREATION))
                     myKey = myController.addPartToGame(getSpriteType(),
@@ -207,10 +198,6 @@ public abstract class SpriteView extends StackPane {
                 e.printStackTrace();
             }
             myController.specifyPartImage(myKey, imageFile);
-=======
-            myKey = myController.addPartToGame(getSpriteType(),
-                                                    parameterFields);
->>>>>>> 0be6660d711e0c8c5954737c00b40bbe9d5e7aef
             displaySavedMessage();
         }
         return correctFormat && save;

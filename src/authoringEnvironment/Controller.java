@@ -39,8 +39,8 @@ public class Controller {
     private InstanceManager currentGame;
     private Map<String, ObservableList<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
-    
-    public  static final String KEY_BEFORE_CREATION = "Key not initialized yet";
+
+    public static final String KEY_BEFORE_CREATION = "Key not initialized yet";
 
     protected Controller (InstanceManager IM) {
         currentGame = IM;
@@ -52,8 +52,8 @@ public class Controller {
     protected Controller (String gameName, String rootDir) {
         this(new InstanceManager(gameName, rootDir));
     }
-    
-    //Adding parts
+
+    // Adding parts
 
     /**
      * Adds a part to the game at a specified key. The part added is completely defined by the map
@@ -190,7 +190,8 @@ public class Controller {
     }
 
     /*
-     * Adds a key to the Controller's map of part type to list of keys of that part type that exist in the game.
+     * Adds a key to the Controller's map of part type to list of keys of that part type that exist
+     * in the game.
      */
     private String addKey (String key) {
         String partType = key.substring(key.indexOf(".") + 1, key.length());
@@ -199,19 +200,19 @@ public class Controller {
         partTypeToKeyList.get(partType).add(key);
         return key;
     }
-    
-//    /**
-//     * Removes a part from the game file.
-//     * 
-//     * @param partType  the type of part that is being removed
-//     * @param partName  the name of the part that is being removed
-//     * @return true     if the list of parts contained the specified part
-//     */
-//    public boolean removePartFromGame(String partType, String partName){
-//        return partTypeToKeyList.get(partType).remove(partName);
-//    }
 
-    //The rest of the Controller, not adding parts
+    // /**
+    // * Removes a part from the game file.
+    // *
+    // * @param partType the type of part that is being removed
+    // * @param partName the name of the part that is being removed
+    // * @return true if the list of parts contained the specified part
+    // */
+    // public boolean removePartFromGame(String partType, String partName){
+    // return partTypeToKeyList.get(partType).remove(partName);
+    // }
+
+    // The rest of the Controller, not adding parts
 
     /**
      * Gets all the keys for parts of partType that are currently part of this
@@ -254,7 +255,7 @@ public class Controller {
                                             + key);
         return (String) partCopy.get(InstanceManager.IMAGE_KEY);
     }
-    
+
     public void specifyPartImage (String partKey, String imageFilePath) {
         currentGame.specifyPartImage(partKey, imageFilePath);
     }
@@ -271,8 +272,6 @@ public class Controller {
     public Map<String, Object> getPartCopy (String partKey) {
         return currentGame.getAllPartData().get(partKey);
     }
-    
-
 
     /**
      * Checks if a part with the given type and name already exists

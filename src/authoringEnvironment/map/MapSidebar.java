@@ -20,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.objects.MapUpdatableDisplay;
 import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.UpdatableDisplay;
@@ -344,7 +345,14 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         for (GameObject map : super.getMaps()) {
             Map<String, Object> mapSettings = map.saveToXML();
-            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
+            String key;
+            try {
+                key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
+            }
+            catch (MissingInformationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             map.setKey(key);
         }
     }
