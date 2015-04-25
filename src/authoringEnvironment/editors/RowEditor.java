@@ -24,11 +24,6 @@ public class RowEditor extends Editor {
         return new Group();
     }
 
-    @Override
-    public void update () {
-        // TODO Auto-generated method stub
-        
-    }
 
 
 

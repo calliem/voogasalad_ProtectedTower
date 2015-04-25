@@ -49,9 +49,4 @@ public class TileEditor extends Editor{
         return myRoot;
     }
 
-    @Override
-    public void update () {
-        // TODO Auto-generated method stub
-        
-    }
 }

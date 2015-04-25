@@ -19,12 +19,6 @@ public class EnemyEditor extends SpriteEditor {
     }
 
 
-    @Override
-    public void update () {
-        // TODO Auto-generated method stub
-        
-    }
-
     // @Override
     // protected Group configureUI() {
     // // TODO Auto-generated method stub

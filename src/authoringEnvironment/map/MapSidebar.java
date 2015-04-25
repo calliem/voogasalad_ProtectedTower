@@ -56,7 +56,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                                                                                             // dynamically
                                                                                             // instead
 
-    private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
     private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
@@ -80,6 +79,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private Controller myController;
     private UpdatableDisplay mapDisplay;
     private static final int INPUT_HBOX_SPACING = 4;
+    private static final int VGAP_PADDING = 5;
+    private static final int HGAP_PADDING = 20;
 
     public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
                        MapWorkspace mapWorkspace, Controller c) {
@@ -262,7 +263,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         }
         
         
-       displayWorkspaceMessage("Map Saved!", Color.GREEN);
+       displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
 
         // saves the map to a specific key
         // checks to see if the current map already exists
@@ -291,18 +292,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     }
     
-    private void displayWorkspaceMessage(String text, Color color){
-        Text saved = new Text(text);
-        saved.setFill(color);
-        saved.setFont(new Font(30));
-        //saved.setVisible(false);
-        getMapWorkspace().getChildren().add(saved);
-        
-        //saved.setVisible(true);
-        PauseTransition pause = new PauseTransition(Duration.millis(1000));
-        pause.play();
-        pause.setOnFinished(e ->getMapWorkspace().getChildren().remove(saved));
-    }
+
 
     private void updateMapDim (String numRows, String numCols) {
         getMapWorkspace().getActiveMap().setMapDimensions(Integer.parseInt(numRows),
@@ -345,8 +335,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     protected void setContent (GridPane container) {
         // TODO: remove duplicated code
-        container.setVgap(5);
-        container.setHgap(20);
+        container.setVgap(VGAP_PADDING);
+        container.setHgap(HGAP_PADDING);
 
         Button createMapButton = new Button(getResources().getString("CreateMap"));
         createMapButton.setOnMouseClicked(e -> createMap());
@@ -421,7 +411,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void savePath(){
         //getMapWorkspace().getActiveMap()
         deactivatePathMode();
-        displayWorkspaceMessage("Path saved!", Color.GREEN);
+        displayWorkspaceMessage(getResources().getString("PathSaved"), Color.GREEN);
     }
     
     private void deletePath(){
