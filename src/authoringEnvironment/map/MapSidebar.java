@@ -84,7 +84,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private int myLives;
     // private MapWorkspace getMapWorkspace();
-   // private Color myActiveColor;
+    // private Color myActiveColor;
 
     private TextField tileRowDisplay;
     private TextField tileColDisplay;
@@ -103,10 +103,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         myLives = DEFAULT_LIVES;
-        myMapOverlay =
-                new Rectangle(getMapWorkspace().getActiveMap().getWidth(), getMapWorkspace()
-                        .getActiveMap().getHeight());
-        myMapOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
+       
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -183,14 +180,17 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         selectTile.getChildren().addAll(selection, rectangleDisplay);
 
         tileSettings.getChildren().add(selectTile);
-        picker.setOnAction(e -> getMapWorkspace().setActiveColor(picker.getValue()));//changeActiveTileColor(picker.getValue(), rectangleDisplay));
+        picker.setOnAction(e -> getMapWorkspace().setActiveColor(picker.getValue()));// changeActiveTileColor(picker.getValue(),
+                                                                                     // rectangleDisplay));
     }
 
-    /*private void changeActiveTileColor (Color color, Rectangle display) {
-        myActiveColor = color;
-  //      display.setFill(color);
-        getMapWorkspace().getActiveMap().setActiveColor(color);
-    }*/
+    /*
+     * private void changeActiveTileColor (Color color, Rectangle display) {
+     * myActiveColor = color;
+     * // display.setFill(color);
+     * getMapWorkspace().getActiveMap().setActiveColor(color);
+     * }
+     */
 
     private GraphicFileChooser setImage () {
         HBox selection = new HBox();
@@ -406,6 +406,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void setPaths () {
+        GridPane container = new GridPane();
+        container.setVgap(VGAP_PADDING);
+        container.setHgap(HGAP_PADDING);
         Button createMapButton = new Button(getResources().getString("CreatePath"));
         createMapButton.setOnMouseClicked(e -> createPath());
 
@@ -416,17 +419,37 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         deleteMapButton.setOnMouseClicked(e -> deletePath());
 
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
-        pathSettings.getChildren().add(editMapbuttons);
+        
+        container.add(editMapbuttons,0,0,2,1);
+        
+        Text name = new Text(getResources().getString("Name"));
+        // Setting name = new StringSetting("label", "hi");
+        container.add(name, 0, 1);
+        mapNameTextField = new TextField();
+        container.add(mapNameTextField, 1, 1);
+        
+        /*UpdatableDisplay pathDisplay =
+                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
+        container.add(pathDisplay, 0, 5, 2, 1);*/
+        
+        
+        pathSettings.getChildren().add(container);
     }
 
     private void createPath () {
-        activatePathMode();
+        getMapWorkspace().activatePathMode();
+        getMapWorkspace().createNewPath();
+
+       // PathView path = new PathView(getMapWorkspace().getActiveMap());
+
+        //getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path, e));*/
+        
 
     }
 
     private void savePath () {
         // getMapWorkspace().getActiveMap()
-        deactivatePathMode();
+        getMapWorkspace().deactivatePathMode();
         displayWorkspaceMessage(getResources().getString("PathSaved"), Color.GREEN); // TODO: make
                                                                                      // this a part
                                                                                      // of the
@@ -440,53 +463,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void deletePath () {
-        /*
-         * ScaleTransition scale =
-         * Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
-         * scale.setOnFinished( (e) -> {
-         * if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
-         * super.getMaps().remove(getMapWorkspace().getActiveMap());
-         * mapDisplay.updateDisplay(super.getMaps());
-         * }
-         * getMapWorkspace().removeMap();
-         * });
-         */
-
-        deactivatePathMode();
+        getMapWorkspace().deactivatePathMode();
     }
 
-    private void activatePathMode () {
-        getMapWorkspace().getActiveMap().removeTileListeners();
-        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
-        getMapWorkspace().getActiveMap().getRoot().getChildren().add(myMapOverlay);
-
-        // TODO: set this as the active path in the workspace so that it can be easily deleted
-        PathView path = new PathView(getMapWorkspace().getActiveMap());
-
-        getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path, e));
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseDragged(e -> {
-        });
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> {
-        });
-
-    }
-
-    private void setAnchorPoint (PathView path, MouseEvent e) {
-        if (!path.areAnchorsSelected())
-            path.addAnchor(e.getX(), e.getY());
-        /*
-         * if (path.getNumAnchors() == 0)
-         * path.createRootAnchor(e.getX(), e.getY());
-         * else
-         * path.addAnchor(e.get);
-         */
-
-    }
-
-    private void deactivatePathMode () {
-        getMapWorkspace().getActiveMap().attachTileListeners();
-        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
-        getMapWorkspace().getActiveMap().getRoot().getChildren().remove(myMapOverlay);
-        //getMapWorkspace().getActiveMap().getRoot().removeEventFilter(activePath);
-    }
+   
 }

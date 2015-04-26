@@ -28,7 +28,7 @@ import authoringEnvironment.pathing.Curve;
  *
  */
 
-public class PathView extends GameObject{
+public class PathView extends GameObject {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private static final int DEFAULT_STROKE_WIDTH = 4;
     private TileMap myParent;
@@ -51,8 +51,8 @@ public class PathView extends GameObject{
     public int getNumPoints () {
         return numPoints;
     }
-    
-    public Group getRoot(){
+
+    public Group getRoot () {
         return myRoot;
     }
 
@@ -72,7 +72,7 @@ public class PathView extends GameObject{
                 new Anchor(Color.PALEGREEN, startXProperty, startYProperty,
                            myParent.getWidth(), myParent.getHeight());
 
-        //myParent.getRoot().getChildren().add(anchor);
+        // myParent.getRoot().getChildren().add(anchor);
         myRoot.getChildren().add(anchor);
 
         if (numPoints > 0) {
@@ -84,7 +84,7 @@ public class PathView extends GameObject{
         Text num = new Text(Integer.toString(numPoints));
         num.xProperty().bind(anchor.centerXProperty());
         num.yProperty().bind(anchor.centerYProperty());
-        //myParent.getRoot().getChildren().add(num);
+        // myParent.getRoot().getChildren().add(num);
         myRoot.getChildren().add(num);
         mostRecentPoint = anchor;
         myAnchors.add(anchor);
@@ -130,11 +130,13 @@ public class PathView extends GameObject{
 
         myAnchors.add(control1);
         myAnchors.add(control2);
-       /* myRoot = new Group(controlLine1, controlLine2, curve, start, control1,
-                               control2, end);*/
-        myRoot.getChildren().addAll(controlLine1, controlLine2, curve, control1,
+        /*
+         * myRoot = new Group(controlLine1, controlLine2, curve, start, control1,
+         * control2, end);
+         */
+        myRoot.getChildren().addAll(controlLine1, controlLine2, control1,
                                     control2);
-        
+        myRoot.getChildren().add(0, curve);
     }
 
     private CubicCurve createStartingCurve (double startX, double startY, double endX, double endY) {

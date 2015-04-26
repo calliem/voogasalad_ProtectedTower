@@ -1,6 +1,7 @@
 package authoringEnvironment.map;
 
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -15,9 +16,11 @@ import authoringEnvironment.pathing.Curve;
 public class MapWorkspace extends StackPane {
 
     private TileMap myActiveMap;
-    private PathView myActivePath; 
+    private PathView myActivePath;
     private Color myActiveColor;
-    
+    private Rectangle myMapOverlay;
+
+    private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private static final int DEFAULT_MAP_ROWS =
             (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);
     private static final int DEFAULT_MAP_COLS =
@@ -30,14 +33,6 @@ public class MapWorkspace extends StackPane {
 
     // TODO: fix all of these constants so there are no more replicates
 
-    public Color getActiveColor(){
-        return myActiveColor;
-    }
-    
-    public void setActiveColor(Color color){
-        myActiveMap.setActiveColor(color);
-        myActiveColor = color;
-    }
     
     public MapWorkspace () { // Dimension2D pass this in?
         super();
@@ -47,6 +42,9 @@ public class MapWorkspace extends StackPane {
                               Color.web("2A2A29"));
         getChildren().add(background);
         createDefaultMap();
+        myMapOverlay =
+                new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
+        myMapOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
 
     }
 
@@ -60,34 +58,28 @@ public class MapWorkspace extends StackPane {
         return myActiveMap;
     }
 
+    public PathView getActivePath () {
+        return myActivePath;
+    }
+
     public void removeMap () {
         remove(myActiveMap.getRoot());
     }
-    
-    public void removePath() {
+
+    public void removePath () {
         remove(myActivePath.getRoot());
     }
-    
-    public void remove(Node node) {
+
+    public void remove (Node node) {
         if (node == null)
             return;
         if (getChildren().contains(node)) {
             getChildren().remove(node);
-            node = null; //this prob wil lnot work 
+            node = null; // this prob wil lnot work
         }
     }
-    
-    
-    //public PathView
 
     public void updateWithNewMap (GameObject object) {
-        // TODO: reattach event handlers if none
-        // TODO: doing this is not actually that good because javaFX does not allow you to have
-        // multiple nodes, so you will require an update method which is doign exactly what you did
-        // before. Maybe reconstructing the object may be best here.
-        // updateWithInteractiveNewMap;
-        // updateWithNonInteractiveNewMap();
-
         if (myActiveMap != null && myActiveMap.getRoot() != null) {
             getChildren().remove(myActiveMap.getRoot());
         }
@@ -109,8 +101,72 @@ public class MapWorkspace extends StackPane {
         myActiveMap.setActiveColor(myActiveColor);
     }
     
-  /*  public void displayMessage(String message){
-        
-    }*/
+    //TODO: duplicated
+    public void updateWithNewPath (GameObject object){
+        if (myActivePath != null && myActivePath.getRoot() != null) {
+            getChildren().remove(myActivePath.getRoot());
+        }
+        myActivePath = (PathView) object;
+        // if (getChildren().contains(myActiveMap.getRoot())){
+        // System.out.println("active map already exists");
+
+        // scaler....
+
+        // TODO:
+        /*
+         * ScaleTransition scale =
+         * Scaler.scaleOverlay(0.0, 1.0, myActiveMap.getRoot());
+         * scale.setOnFinished( (e) -> {
+         */
+        getChildren().add(myActiveMap.getRoot());
+        // });
+
+    }
+    
+    public void createNewPath(){
+        myActivePath = new PathView(myActiveMap);
+        myActiveMap.getRoot().setOnMousePressed(e -> setAnchorPoint(myActivePath, e));
+    }
+    
+
+    private void setAnchorPoint (PathView path, MouseEvent e) {
+        if (!path.areAnchorsSelected())
+            path.addAnchor(e.getX(), e.getY());
+        /*
+         * if (path.getNumAnchors() == 0)
+         * path.createRootAnchor(e.getX(), e.getY());
+         * else
+         * path.addAnchor(e.get);
+         */
+
+    }
+
+    /*
+     * public void displayMessage(String message){
+     * 
+     * }
+     */
+    
+    public void activatePathMode () {
+        myActiveMap.removeTileListeners();
+        myActiveMap.getRoot().getChildren().add(myMapOverlay);
+    }
+
+
+    public void deactivatePathMode () {
+        myActiveMap.attachTileListeners();
+        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
+        myActiveMap.getRoot().getChildren().remove(myMapOverlay);
+        // getMapWorkspace().getActiveMap().getRoot().removeEventFilter(activePath);
+    }
+
+    public Color getActiveColor () {
+        return myActiveColor;
+    }
+
+    public void setActiveColor (Color color) {
+        myActiveMap.setActiveColor(color);
+        myActiveColor = color;
+    }
 
 }
