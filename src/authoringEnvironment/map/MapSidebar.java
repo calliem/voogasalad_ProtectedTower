@@ -70,7 +70,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128;
 
     private static final int MAP_OPACITY_DEACTIVATED = 1;
-    private static final double MAP_OPACITY_ACTIVATED = 0.5;
+    private static final double MAP_OPACITY_ACTIVATED = 0.9;
     private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
@@ -451,6 +451,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
+        getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
         PathCreator creator = new PathCreator(getMapWorkspace().getActiveMap());
         double startX = 100;
         double startY = 100;

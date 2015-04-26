@@ -1,5 +1,6 @@
 package authoringEnvironment.pathing;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -21,6 +22,7 @@ public class PathCreator {
 
     public PathCreator (TileMap parent) {
         myParent = parent;
+        myPaths = new ArrayList<PathView>();
     }
 
     public void createCurve (double startX, double startY, double endX, double endY) {
@@ -56,6 +58,7 @@ public class PathCreator {
         
         PathView pathView = new PathView(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
         myPaths.add(pathView);
+        
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
         myParent.getRoot().getChildren().add(path);
