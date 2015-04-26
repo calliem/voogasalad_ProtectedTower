@@ -1,6 +1,7 @@
 package engine.element.sprites;
 
 import java.util.List;
+import java.util.Set;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
 
@@ -14,6 +15,7 @@ import annotations.parameter;
  *
  */
 public class Tower extends GameSprite {
+
     @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
     private Double attackSpeed;
     @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
@@ -27,13 +29,20 @@ public class Tower extends GameSprite {
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double buildTime;
 
-    public Tower () {
-        super();
-    }
+    private Set<Sprite> myTargets;
 
     // TODO remove once testing is over
     public Tower (ImageView test) {
         super.setImageView(test);
+    }
+
+    /**
+     * Adds new sprites for the tower to target
+     * 
+     * @param sprites Set<Sprite> object of sprites
+     */
+    public void addTargets (Set<Sprite> sprites) {
+        sprites.forEach(s -> myTargets.add(s));
     }
 
     @Override

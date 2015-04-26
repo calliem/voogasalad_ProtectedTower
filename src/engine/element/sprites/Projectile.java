@@ -12,11 +12,13 @@ import annotations.parameter;
 
 public class Projectile extends MoveableSprite {
 
-    @parameter(settable = true, playerDisplay = true)
-    private Double damage = 100.0;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "1")
+    private Integer damage;
 
-    public Projectile () {
-        super();
+    // Getters and setters
+
+    public Integer getDamage () {
+        return damage;
     }
 
     @Override
@@ -41,4 +43,5 @@ public class Projectile extends MoveableSprite {
         // TODO Auto-generated method stub
 
     }
+
 }

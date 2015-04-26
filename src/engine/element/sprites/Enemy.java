@@ -23,7 +23,7 @@ import engine.InsufficientParametersException;
  *
  */
 
-public class Enemy extends MoveableSprite {
+public class Enemy extends GameSprite {
 
     @parameter(settable = false, playerDisplay = true, defaultValue = "false")
     private Boolean CanHurtPlayer;
@@ -43,8 +43,8 @@ public class Enemy extends MoveableSprite {
 
     @Override
     public void onCollide (Sprite sprite) {
-        // TODO Check if this works in changing the variable in the parameters map
-        // HP -= sprite.getDamage;
+        // TODO write collide methods
+        // super.decreaseHealth(sprite.getDamage());
     }
 
     @Override

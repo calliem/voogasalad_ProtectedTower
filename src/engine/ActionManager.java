@@ -22,7 +22,6 @@ import engine.element.sprites.Sprite;
 
 public class ActionManager {
     private Map<String[], Collection<BiConsumer<Sprite, Sprite>>[]> myDecisionMap;
-    private static final String PARAMETER_NAME = "PartType";
     private static final int REQUIRED_KEY_LENGTH = 2;
 
     /**
@@ -113,8 +112,9 @@ public class ActionManager {
      */
     private String[] getTagPair (Sprite spriteOne, Sprite spriteTwo) {
         String[] spriteTagPair = new String[2];
-        spriteTagPair[0] = (String) spriteOne.getParameter(PARAMETER_NAME);
-        spriteTagPair[1] = (String) spriteTwo.getParameter(PARAMETER_NAME);
+        // TODO takes the first tag for now, make work for multiple tags
+        spriteTagPair[0] = (String) spriteOne.getTags().get(0);
+        spriteTagPair[1] = (String) spriteTwo.getTags().get(0);
         return spriteTagPair;
     }
 

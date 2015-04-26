@@ -181,9 +181,7 @@ public class Layout implements Updateable {
      * 
      * @return List<Sprite> all the gridCells in myGameMap
      */
-
     private List<Sprite> getGridCells () {
-        // TODO Auto-generated method stub
         GridCell[][] myMap = myGameMap.getMap();
         List<Sprite> gridCells = new ArrayList<>();
         for (int i = 0; i < myMap.length; i++)
@@ -255,18 +253,6 @@ public class Layout implements Updateable {
     }
 
     /**
-     * Updates the targeting of towers.
-     */
-
-    private void updateSpriteTargeting () {
-        // TODO Auto-generated method stub
-        myCollisionChecker.createQuadTree(this.getSprites());
-        for (Sprite sprite : myTowerList) {
-            sprite.getAllParameters().put("targets", myCollisionChecker.findTargetable(sprite));
-        }
-    }
-
-    /**
      * Updates the positions of all sprites.
      */
     private void updateSpriteLocations () {
@@ -291,6 +277,16 @@ public class Layout implements Updateable {
                 // TODO determine how many interactions should be made to each sprite
                 myActionManager.applyAction(sprite, other);
             }
+        }
+    }
+
+    /**
+     * Updates the targeting of towers.
+     */
+    private void updateSpriteTargeting () {
+        myCollisionChecker.createQuadTree(this.getSprites());
+        for (Tower tower : myTowerList) {
+            tower.addTargets(myCollisionChecker.findTargetable(tower));
         }
     }
 

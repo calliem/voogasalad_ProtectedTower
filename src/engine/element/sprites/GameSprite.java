@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import java.util.Collections;
 import java.util.Set;
 import annotations.parameter;
 
@@ -14,15 +15,28 @@ import annotations.parameter;
 public abstract class GameSprite extends MoveableSprite {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "100")
-    private Integer HP;
+    private Integer health;
     /**
      * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
      */
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
     private Set<String> nextSprites;
 
-    public GameSprite () {
-        super();
+    // Getters and setters
+
+    protected Integer getHealth () {
+        return health;
+    }
+
+    protected void decreaseHealth (Integer amount) {
+        health -= amount;
+    }
+
+    /**
+     * @return the nextSprites
+     */
+    public Set<String> getNextSprites () {
+        return Collections.unmodifiableSet(nextSprites);
     }
 
 }
