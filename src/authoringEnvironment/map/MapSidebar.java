@@ -70,7 +70,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128;
 
     private static final int MAP_OPACITY_DEACTIVATED = 1;
-    private static final double MAP_OPACITY_ACTIVATED = 0.9;
+    private Rectangle myMapOverlay;
+    private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
@@ -102,6 +103,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         myLives = DEFAULT_LIVES;
+        myMapOverlay = new Rectangle(getMapWorkspace().getActiveMap().getWidth(), getMapWorkspace().getActiveMap().getHeight());
+        myMapOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -113,6 +116,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     public void changeMap (TileMap map) {
         getMapWorkspace().updateWithNewMap(map, myActiveColor);
+        
         mapNameTextField.setText(map.getName());
         tileRowDisplay.setText(Integer.toString(map.getNumRows()));
         tileColDisplay.setText(Integer.toString(map.getNumCols()));
@@ -451,7 +455,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
-        getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
+       // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
+        getMapWorkspace().getActiveMap().getRoot().getChildren().add(myMapOverlay);
         PathView creator = new PathView(getMapWorkspace().getActiveMap());
 
         // TODO for testing:
@@ -465,6 +470,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void deactivatePathMode () {
         getMapWorkspace().getActiveMap().attachTileListeners();
-        getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
+      //  getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
+        getMapWorkspace().getActiveMap().getRoot().getChildren().remove(myMapOverlay);
     }
 }

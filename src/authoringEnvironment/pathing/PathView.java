@@ -136,7 +136,8 @@ public class PathView {
         curve.setStroke(Color.FORESTGREEN);
         curve.setStrokeWidth(4);
         curve.setStrokeLineCap(StrokeLineCap.ROUND);
-        curve.setFill(Color.CORNSILK.deriveColor(0, 1.2, 1, 0.6));
+        //curve.setFill(Color.CORNSILK.deriveColor(0, 1.2, 1, 0.6));
+        curve.setFill(Color.TRANSPARENT);
         return curve;
     }
 
