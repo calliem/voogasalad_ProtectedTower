@@ -1,4 +1,4 @@
-/*package authoringEnvironment.pathing;
+package authoringEnvironment.pathing;
 
 import java.util.ArrayList;
 import javafx.scene.Group;
@@ -13,14 +13,14 @@ import authoringEnvironment.objects.Coordinate;
  * its start coordinate, end coordinate, and the coordinates of the two control points.
  * 
  * @author Callie Mao
- *
+ */
  
 
 public class Curve extends Group {
 
-    private CurveCoordinates myCoordinates;
+    /*private CurveCoordinates myCoordinates;
 
-    /*
+    
      * public Curve (Coordinate start, Coordinate end, Coordinate ctrl1, Coordinate ctrl2) {
      * startCoordinate = start;
      * endCoordinate = end;
@@ -90,5 +90,5 @@ public class Curve extends Group {
 
     public CurveCoordinates getCurveCoordinates () {
         return myCoordinates;
-    }
-}*/
+    }*/
+}
