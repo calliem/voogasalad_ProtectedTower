@@ -1,6 +1,5 @@
 package engine.element.sprites;
 
-import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
@@ -48,11 +47,6 @@ public abstract class Sprite extends GameElement implements Updateable {
         updateImageView();
     }
 
-    @Deprecated
-    public Map<String, Object> getAllParameters () {
-        return null; // super.getAllParameters();
-    }
-
     /**
      * This method is called when this object collides with another and should include the behavior
      * of this object, such as stopping movement, or damaging the other object.
@@ -66,6 +60,7 @@ public abstract class Sprite extends GameElement implements Updateable {
 
     // Abstract methods
 
+    // TODO move this to Collidable interface?
     public abstract void onCollide (Sprite sprite);
 
 }

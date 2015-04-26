@@ -13,10 +13,10 @@ import javafx.geometry.Point2D;
  * @author Qian Wang
  *
  */
-public class GridCell extends Sprite {
+public class GridCell extends GameElement {
 
     // TODO replace these with calls to parameters map
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private String type = "Basic";
     private List<String> myTags;
     private Point2D centerLocation;
@@ -60,15 +60,4 @@ public class GridCell extends Sprite {
         return false;
     }
 
-    @Override
-    public void onCollide (Sprite sprite) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void update (int counter) {
-        // TODO Auto-generated method stub
-        
-    }
 }

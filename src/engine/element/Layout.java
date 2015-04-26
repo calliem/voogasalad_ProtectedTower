@@ -110,7 +110,7 @@ public class Layout implements Updateable {
      */
     public void setMap (String mapID) {
         myGameMap = (GameMap) myGameElementFactory.getGameElement("GameMap", mapID);
-//        myGameMap.loadMap(myGameElementFactory);
+        // myGameMap.loadMap(myGameElementFactory);
         Rectangle bounds =
                 new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
         myCollisionChecker.initializeQuadtree(bounds);
@@ -144,53 +144,55 @@ public class Layout implements Updateable {
     // TODO implement from map class
     public boolean canPlace (Sprite tower, Point2D location) {
         // collision checking and tag checking
-    	//collision checking
-    	boolean collisions = true;
-    	myCollisionChecker.createQuadTree(myTowerList);
-            Set<Sprite> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
-            if (possibleInteractions.size() == 0)
-            	collisions = false;
-    	//tag checking
+        // collision checking
+        boolean collisions = true;
+        myCollisionChecker.createQuadTree(myTowerList);
+        Set<Sprite> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
+        if (possibleInteractions.size() == 0)
+            collisions = false;
+        // tag checking
         boolean tags = true;
-    	myCollisionChecker.createQuadTree(this.getGridCells());
-    	Set<Sprite> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
-    	for (Sprite c: possibleGridCells){
-    		if (!tagsInCommon(c, tower))
-    			tags = false;
-    	}
-    	return !collisions && tags;
+        myCollisionChecker.createQuadTree(this.getGridCells());
+        Set<Sprite> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
+        for (Sprite c : possibleGridCells) {
+            if (!tagsInCommon(c, tower))
+                tags = false;
+        }
+        return !collisions && tags;
     }
-    
+
     /**
-     * Checks if the cell and the tower have a tag in common
+     * Checks if the cell and the tower have at least one tag in common
+     * 
      * @param cell GridCell object to check
      * @param tower Sprite object to check
      * @return true if the two have a tag in common
      */
-    
     private boolean tagsInCommon (Sprite cell, Sprite tower) {
-        for (String tag : (List<String>)tower.getParameter("tags"))
-            if (((List<String>)cell.getParameter("tags")).contains(tag))
-                return true;
+        List<String> cellTags = cell.getTags();
+        for (String tag : tower.getTags()) {
+            if (cellTags.contains(tag)) { return true; }
+        }
         return false;
     }
 
     /**
      * Returns a list of all the gridCells in myGameMap
+     * 
      * @return List<Sprite> all the gridCells in myGameMap
      */
-    
-    private List<Sprite> getGridCells() {
-		// TODO Auto-generated method stub
-		GridCell[][] myMap = myGameMap.getMap();
-		List<Sprite> gridCells = new ArrayList<>();
-		for(int i = 0; i<myMap.length; i++)
-			for (int j = 0; j<myMap[i].length; j++)
-				gridCells.add(myMap[i][j]);
-		return gridCells;
-	}
 
-	// TODO refactor and combine spawnEnemy and spawnProjectile methods
+    private List<Sprite> getGridCells () {
+        // TODO Auto-generated method stub
+        GridCell[][] myMap = myGameMap.getMap();
+        List<Sprite> gridCells = new ArrayList<>();
+        for (int i = 0; i < myMap.length; i++)
+            for (int j = 0; j < myMap[i].length; j++)
+                gridCells.add(myMap[i][j]);
+        return gridCells;
+    }
+
+    // TODO refactor and combine spawnEnemy and spawnProjectile methods
 
     /**
      * Creates one or multiple new Enemy object and adds it to the map at the specified location.
@@ -255,16 +257,16 @@ public class Layout implements Updateable {
     /**
      * Updates the targeting of towers.
      */
-    
-    private void updateSpriteTargeting() {
-		// TODO Auto-generated method stub
-		myCollisionChecker.createQuadTree(this.getSprites());
-		for (Sprite sprite : myTowerList) {
-			sprite.getAllParameters().put("targets", myCollisionChecker.findTargetable(sprite));
-		}
-	}
 
-	/**
+    private void updateSpriteTargeting () {
+        // TODO Auto-generated method stub
+        myCollisionChecker.createQuadTree(this.getSprites());
+        for (Sprite sprite : myTowerList) {
+            sprite.getAllParameters().put("targets", myCollisionChecker.findTargetable(sprite));
+        }
+    }
+
+    /**
      * Updates the positions of all sprites.
      */
     private void updateSpriteLocations () {

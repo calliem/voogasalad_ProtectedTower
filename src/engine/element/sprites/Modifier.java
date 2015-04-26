@@ -7,22 +7,10 @@ package engine.element.sprites;
  * @author Qian Wang
  *
  */
-public class Modifier extends Sprite {
+public class Modifier extends GameElement {
 
     public Modifier () {
         super();
-    }
-
-    @Override
-    public void onCollide (Sprite sprite) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void update (int counter) {
-        // TODO Auto-generated method stub
-        
     }
 
 }

@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import annotations.parameter;
 import javafx.geometry.Point2D;
 
 
@@ -12,14 +13,13 @@ import javafx.geometry.Point2D;
  */
 public abstract class MoveableSprite extends Sprite {
 
+    /**
+     * Holds the current heading of the sprite
+     */
+    @parameter(playerDisplay = false)
     private Point2D myHeading;
 
     // private double myRange;
-
-    public MoveableSprite () {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
     // Setters and getters
 

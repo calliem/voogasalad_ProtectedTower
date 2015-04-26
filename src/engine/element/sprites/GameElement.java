@@ -1,8 +1,10 @@
 package engine.element.sprites;
 
+import java.util.Collections;
+import java.util.List;
 import javafx.geometry.Point2D;
-import engine.Collidable;
 import annotations.parameter;
+import engine.Collidable;
 
 
 /**
@@ -17,7 +19,7 @@ public class GameElement implements Collidable {
     @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String name;
     @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
-    private String type;
+    private List<String> tags;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private double boundingHeight;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
@@ -27,6 +29,8 @@ public class GameElement implements Collidable {
      */
     @parameter(playerDisplay = true)
     private Point2D myLocation;
+
+    // Getters and setters
 
     /**
      * Sets the location of the sprite
@@ -54,6 +58,43 @@ public class GameElement implements Collidable {
         return new Point2D(myLocation.getX(), myLocation.getY());
     }
 
+    protected String getName () {
+        return name;
+    }
+
+    /**
+     * @return List<String> of the tags associated with a game element
+     */
+    public List<String> getTags () {
+        return Collections.unmodifiableList(tags);
+    }
+
+    /**
+     * @return String of all tags associated with an object separated by a space
+     */
+    public String getTagsToString () {
+        return this.getTagsToString(" ");
+    }
+
+    /**
+     * Returns a formatted list of tags
+     * 
+     * @param sep String separator to put in between tags
+     * @return String of all tags associated with an object separated by a given String
+     */
+    public String getTagsToString (String sep) {
+        if (tags.size() == 0) { return ""; }
+        StringBuilder str = new StringBuilder();
+        str.append(tags.get(0));
+        for (int i = 1; i < tags.size(); i++) {
+            str.append(sep);
+            str.append(tags.get(i));
+        }
+        return str.toString();
+    }
+
+    // Methods to implement Collidable interface
+
     @Override
     public double getBoundingHeight () {
         return boundingHeight;
@@ -72,16 +113,5 @@ public class GameElement implements Collidable {
     @Override
     public double getLocationY () {
         return myLocation.getY();
-    }
-
-    protected String getName () {
-        return name;
-    }
-
-    /**
-     * @return uppercase String of the type of object this is
-     */
-    protected String getType () {
-        return type.toUpperCase();
     }
 }
