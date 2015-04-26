@@ -1,4 +1,4 @@
-package authoringEnvironment.pathing;
+/*package authoringEnvironment.pathing;
 
 import java.util.ArrayList;
 import javafx.scene.Group;
@@ -14,7 +14,7 @@ import authoringEnvironment.objects.Coordinate;
  * 
  * @author Callie Mao
  *
- */
+ 
 
 public class Curve extends Group {
 
@@ -27,7 +27,7 @@ public class Curve extends Group {
      * control1Coordinate = ctrl1;
      * control2Coordinate = ctrl2;
      * }
-     */
+     
     
     public void createCurve (Anchor start, Anchor end) {
         CubicCurve curve =
@@ -91,4 +91,4 @@ public class Curve extends Group {
     public CurveCoordinates getCurveCoordinates () {
         return myCoordinates;
     }
-}
+}*/
