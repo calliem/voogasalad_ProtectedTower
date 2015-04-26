@@ -103,7 +103,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         myLives = DEFAULT_LIVES;
-        myMapOverlay = new Rectangle(getMapWorkspace().getActiveMap().getWidth(), getMapWorkspace().getActiveMap().getHeight());
+        myMapOverlay =
+                new Rectangle(getMapWorkspace().getActiveMap().getWidth(), getMapWorkspace()
+                        .getActiveMap().getHeight());
         myMapOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
         /*
          * ObservableList<PathView> pathList =
@@ -116,7 +118,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     public void changeMap (TileMap map) {
         getMapWorkspace().updateWithNewMap(map, myActiveColor);
-        
+
         mapNameTextField.setText(map.getName());
         tileRowDisplay.setText(Integer.toString(map.getNumRows()));
         tileColDisplay.setText(Integer.toString(map.getNumCols()));
@@ -455,9 +457,15 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
-       // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
+        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
         getMapWorkspace().getActiveMap().getRoot().getChildren().add(myMapOverlay);
-        PathView creator = new PathView(getMapWorkspace().getActiveMap());
+        
+        //TODO: set this as the active path in the workspace so that it can be easily deleted
+        PathView path = new PathView(getMapWorkspace(), getMapWorkspace().getActiveMap().getWidth(), getMapWorkspace().getActiveMap().getHeight());
+
+        getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path, e));
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseDragged(e -> {});
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> {});
 
         // TODO for testing:
         double startX = 100;
@@ -465,12 +473,21 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         double endX = 300;
         double endY = 300;
 
-        creator.createCurve(startX, startY, endX, endY);
+        path.createCurve(startX, startY, endX, endY);
+    }
+
+    private void setAnchorPoint (PathView path, MouseEvent e) {
+        path.addAnchor(e.getX(), e.getY());
+        /*if (path.getNumAnchors() == 0)
+            path.createRootAnchor(e.getX(), e.getY());
+        else
+            path.addAnchor(e.get);*/
+        
     }
 
     private void deactivatePathMode () {
         getMapWorkspace().getActiveMap().attachTileListeners();
-      //  getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
+        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
         getMapWorkspace().getActiveMap().getRoot().getChildren().remove(myMapOverlay);
     }
 }

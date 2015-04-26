@@ -6,8 +6,8 @@ import javafx.scene.shape.Rectangle;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.Curve;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.pathing.Curve;
 
 
 public class MapWorkspace extends StackPane {

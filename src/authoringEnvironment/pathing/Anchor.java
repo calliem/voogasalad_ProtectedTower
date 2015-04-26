@@ -38,6 +38,7 @@ public class Anchor extends Circle {
     }
 
     public Coordinate getCoordinates () {
+        //TODO: make sure to normalize this to the size of teh group/stackpane that it is on
         return new Coordinate(getCenterX(), getCenterY());
     }
 
