@@ -22,8 +22,6 @@ import engine.element.sprites.Sprite;
 public class CollisionChecker {
 
     private static final String PARAMETER_RANGE = "Range";
-    private static final String PARAMETER_BOUNDINGHEIGHT = "BoundingHeight";
-    private static final String PARAMETER_BOUNDINGWIDTH = "BoundingWidth";
     private static final int INITIAL_QUADTREE_REGIONS = 1;
 
     /**
@@ -106,8 +104,8 @@ public class CollisionChecker {
      */
     private Rectangle createHitBox (Sprite sprite) {
         return new Rectangle(sprite.getLocation().getX(), sprite.getLocation().getY(),
-                             (double) sprite.getParameter(PARAMETER_BOUNDINGWIDTH),
-                             (double) sprite.getParameter(PARAMETER_BOUNDINGHEIGHT));
+                             sprite.getBoundingWidth(),
+                             sprite.getBoundingHeight());
     }
 
     /**
@@ -115,7 +113,7 @@ public class CollisionChecker {
      * 
      * @param shape1 first Shape object to check
      * @param shape2 second Shape object to check
-     * @return true if the two inputted shapes intersect
+     * @return true if the two inputed shapes intersect
      */
     private boolean collides (Shape shape1, Shape shape2) {
         return shape1.getBoundsInParent().intersects(shape2.getBoundsInParent());

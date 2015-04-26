@@ -183,6 +183,6 @@ public class GameController {
         GameController test =
                 new GameController(
                                    "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile",
-                                   new ArrayList<Node>());
+                                   new ArrayList<Sprite>());
     }
 }

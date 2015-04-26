@@ -16,22 +16,17 @@ import engine.Updateable;
  *
  */
 
-public abstract class Sprite implements Updateable,Collidable {
-    
-    @parameter(settable=true,playerDisplay=false, defaultValue ="")
+public abstract class Sprite extends GameElement implements Updateable, Collidable {
+
+    @parameter(settable = true, playerDisplay = false, defaultValue = "")
     private ImageView myImage;
-    @parameter(settable=true,playerDisplay=true, defaultValue = "Unnamed")
+    @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String myName;
-    @parameter(settable=true,playerDisplay=true, defaultValue ="Basic")
+    @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
     private String myType;
-   
 
-    
-    private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
-    private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
-
-    
     private Point2D myLocation;
+
     public Sprite () {
 
     }
@@ -104,18 +99,9 @@ public abstract class Sprite implements Updateable,Collidable {
         return myType;
     }
 
+    @Deprecated
     public Map<String, Object> getAllParameters () {
-        return super.getAllParameters();
-    }
-
-    @Override
-    public double getBoundingHeight () {
-        return (double) super.getParameter(PARAMETER_BOUNDING_HEIGHT);
-    }
-
-    @Override
-    public double getBoundingWidth () {
-        return (double) super.getParameter(PARAMETER_BOUNDING_WIDTH);
+        return null; // super.getAllParameters();
     }
 
     // Abstract methods
