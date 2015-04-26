@@ -459,32 +459,29 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         getMapWorkspace().getActiveMap().removeTileListeners();
         // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
         getMapWorkspace().getActiveMap().getRoot().getChildren().add(myMapOverlay);
-        
-        //TODO: set this as the active path in the workspace so that it can be easily deleted
+
+        // TODO: set this as the active path in the workspace so that it can be easily deleted
         PathView path = new PathView(getMapWorkspace().getActiveMap());
 
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseClicked(e -> setAnchorPoint(path, e));
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseDragged(e -> {});
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> {});
+        getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path, e));
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseDragged(e -> {
+        });
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> {
+        });
 
-        // TODO for testing:
-        double startX = 100;
-        double startY = 100;
-        double endX = 300;
-        double endY = 300;
-
-        path.createCurve(startX, startY, endX, endY);
     }
 
     private void setAnchorPoint (PathView path, MouseEvent e) {
         System.out.println("path.areAnchorsSelected()" + path.areAnchorsSelected());
         if (!path.areAnchorsSelected())
             path.addAnchor(e.getX(), e.getY());
-        /*if (path.getNumAnchors() == 0)
-            path.createRootAnchor(e.getX(), e.getY());
-        else
-            path.addAnchor(e.get);*/
-        
+        /*
+         * if (path.getNumAnchors() == 0)
+         * path.createRootAnchor(e.getX(), e.getY());
+         * else
+         * path.addAnchor(e.get);
+         */
+
     }
 
     private void deactivatePathMode () {

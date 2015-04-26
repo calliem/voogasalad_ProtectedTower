@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.text.Text;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.Coordinate;
@@ -37,7 +38,7 @@ public class PathView {
         numPoints = 0;
     }
     
-    public int getNumAnchors(){
+    public int getNumPoints(){
         return numPoints;
     }
     
@@ -86,8 +87,9 @@ public class PathView {
     }
     
     public boolean areAnchorsSelected(){
-        System.out.println(myAnchors);
         for (Anchor anchor: myAnchors){
+            System.out.print(anchor);
+            System.out.println(" " + anchor.isSelected() + " " );
             if (anchor.isSelected()) 
                 return true;
         }
@@ -98,9 +100,12 @@ public class PathView {
         DoubleProperty startXProperty = new SimpleDoubleProperty(startX);
         DoubleProperty startYProperty = new SimpleDoubleProperty(startY);
         
+        System.out.println("ADDANCHOR");
+        
         Anchor anchor =
                 new Anchor(Color.PALEGREEN, startXProperty, startYProperty,
                            myParent.getWidth(), myParent.getHeight());
+        
         myParent.getRoot().getChildren().add(anchor);
         
         
@@ -109,10 +114,13 @@ public class PathView {
             createCurve(mostRecentPoint, anchor);
         }
         
+        Text num = new Text(anchor.getCenterX(), anchor.getCenterY(), Integer.toString(numPoints));
+        myParent.getRoot().getChildren().add(num);
         mostRecentPoint = anchor;
         myAnchors.add(anchor);
         
-        numPoints ++;
+        numPoints++;
+        
     }
 
     public void createCurve (Anchor start, Anchor end) {
@@ -142,6 +150,8 @@ public class PathView {
                 new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
         myPaths.add(pathView);*/
 
+        myAnchors.add(control1);
+        myAnchors.add(control2);
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
         myParent.getRoot().getChildren().add(path);

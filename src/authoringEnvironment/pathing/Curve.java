@@ -13,21 +13,21 @@ import authoringEnvironment.objects.Coordinate;
  * its start coordinate, end coordinate, and the coordinates of the two control points.
  * 
  * @author Callie Mao
- *
  */
+ 
 
 public class Curve extends Group {
 
-    private CurveCoordinates myCoordinates;
+    /*private CurveCoordinates myCoordinates;
 
-    /*
+    
      * public Curve (Coordinate start, Coordinate end, Coordinate ctrl1, Coordinate ctrl2) {
      * startCoordinate = start;
      * endCoordinate = end;
      * control1Coordinate = ctrl1;
      * control2Coordinate = ctrl2;
      * }
-     */
+     
     
     public void createCurve (Anchor start, Anchor end) {
         CubicCurve curve =
@@ -90,5 +90,5 @@ public class Curve extends Group {
 
     public CurveCoordinates getCurveCoordinates () {
         return myCoordinates;
-    }
+    }*/
 }
