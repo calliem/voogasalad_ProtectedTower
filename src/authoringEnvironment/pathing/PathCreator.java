@@ -9,8 +9,9 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import authoringEnvironment.pathing.BoundLine;
 
+
 public class PathCreator {
-    public PathCreator(Group parent){
+    public PathCreator (Group parent) {
         CubicCurve curve = createStartingCurve();
 
         Line controlLine1 =
@@ -29,22 +30,35 @@ public class PathCreator {
         Anchor2 end = new Anchor2(Color.TOMATO, curve.endXProperty(), curve.endYProperty());
 
         AnchorPane anchor = new AnchorPane();
-        
+
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
         parent.getChildren().add(path);
     }
-    
+
     private CubicCurve createStartingCurve () {
         CubicCurve curve = new CubicCurve();
-        curve.setStartX(100);
-        curve.setStartY(100);
-        curve.setControlX1(150);
-        curve.setControlY1(50);
-        curve.setControlX2(250);
-        curve.setControlY2(150);
-        curve.setEndX(300);
-        curve.setEndY(100);
+        double startX = 100;
+        double startY = 100;
+        double endX = 300;
+        double endY = 300;
+        double lineLength = Math.sqrt();
+        //double xDiff = endX-startX;
+        
+        try{
+        double slope = (endY-startY)/(endX-startX);
+        }
+        catch(ArithmeticException e){
+            slope = Integer.MAX_VALUE;
+        }
+        curve.setStartX(startX);
+        curve.setStartY(startY);
+        curve.setControlX1(startX-);
+        curve.setControlY1(startY*.5);
+        curve.setControlX2(startX*2.5);
+        curve.setControlY2(startY*1.5);
+        curve.setEndX(endX);
+        curve.setEndY(endY);
         curve.setStroke(Color.FORESTGREEN);
         curve.setStrokeWidth(4);
         curve.setStrokeLineCap(StrokeLineCap.ROUND);

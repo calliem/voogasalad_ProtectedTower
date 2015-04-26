@@ -451,23 +451,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
-        //getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
-        /*
-         * getMapWorkspace()
-         * .getActiveMap()
-         * .getRoot()
-         * .setOnMouseClicked(e -> {
-         * Anchor2 anchor =
-         * new Anchor2(Color.RED, new SimpleDoubleProperty(10),
-         * new SimpleDoubleProperty(10));
-         * anchor.setCenterX(e.getSceneX());
-         * anchor.setCenterY(e.getSceneY());
-         * getMapWorkspace().getChildren().add(anchor);
-         * });
-         */
-
-        // Stage stage = new Stage();
-        
         PathCreator creator = new PathCreator(getMapWorkspace().getActiveMap().getRoot());
     }
 
