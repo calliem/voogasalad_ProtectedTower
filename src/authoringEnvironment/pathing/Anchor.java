@@ -20,6 +20,7 @@ import javafx.scene.shape.StrokeType;
 
 public class Anchor extends Circle {
     private static final int RADIUS = 10;
+    private boolean isPressed;
 
     public Anchor (Color color,
                    DoubleProperty x,
@@ -31,7 +32,8 @@ public class Anchor extends Circle {
         setStroke(color);
         setStrokeWidth(2);
         setStrokeType(StrokeType.OUTSIDE);
-
+        isPressed = false;
+        //TODO: change back to false and then fix the true registers below
         x.bind(centerXProperty());
         y.bind(centerYProperty());
         enableDrag(parentWidth, parentHeight);
@@ -49,6 +51,7 @@ public class Anchor extends Circle {
             @Override
             public void handle (MouseEvent mouseEvent) {
                 // record a delta distance for the drag and drop operation.
+                isPressed = true;
                 dragDelta.x = getCenterX() - mouseEvent.getX();
                 dragDelta.y = getCenterY() - mouseEvent.getY();
                 getScene().setCursor(Cursor.MOVE);
@@ -58,12 +61,14 @@ public class Anchor extends Circle {
             @Override
             public void handle (MouseEvent mouseEvent) {
                 getScene().setCursor(Cursor.HAND);
+                isPressed = false;
                 // TODO: store coordinates and then get them from the superclass's methods
             }
         });
         setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
+                isPressed = true;
                 double newX = mouseEvent.getX() + dragDelta.x;
                 if (newX > 0 + RADIUS && newX < parentWidth - RADIUS) {
                     setCenterX(newX);
@@ -91,9 +96,15 @@ public class Anchor extends Circle {
             }
         });
     }
+    
+    public boolean isSelected(){
+        return isPressed;
+    }
 
     // records relative x and y co-ordinates.
     private class Delta {
         double x, y;
     }
+    
+
 }

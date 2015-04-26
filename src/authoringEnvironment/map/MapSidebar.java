@@ -461,9 +461,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         getMapWorkspace().getActiveMap().getRoot().getChildren().add(myMapOverlay);
         
         //TODO: set this as the active path in the workspace so that it can be easily deleted
-        PathView path = new PathView(getMapWorkspace(), getMapWorkspace().getActiveMap().getWidth(), getMapWorkspace().getActiveMap().getHeight());
+        PathView path = new PathView(getMapWorkspace().getActiveMap());
 
-        getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path, e));
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseClicked(e -> setAnchorPoint(path, e));
         getMapWorkspace().getActiveMap().getRoot().setOnMouseDragged(e -> {});
         getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> {});
 
@@ -477,7 +477,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void setAnchorPoint (PathView path, MouseEvent e) {
-        path.addAnchor(e.getX(), e.getY());
+        System.out.println("path.areAnchorsSelected()" + path.areAnchorsSelected());
+        if (!path.areAnchorsSelected())
+            path.addAnchor(e.getX(), e.getY());
         /*if (path.getNumAnchors() == 0)
             path.createRootAnchor(e.getX(), e.getY());
         else

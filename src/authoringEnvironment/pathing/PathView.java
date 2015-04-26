@@ -8,13 +8,10 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
@@ -26,34 +23,22 @@ import authoringEnvironment.pathing.BoundLine;
 public class PathView {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private static final int DEFAULT_STROKE_WIDTH = 4;
-    private Pane myParent;
+    private TileMap myParent;
     private List<Curve> myPaths;
     private String myName;
-    private int numAnchors;
-    private Anchor mostRecentAnchor;
-    
-    private Group myRoot;
-    
-    private int boundingWidth; 
-    private int boundingHeight;
+    private int numPoints;
+    private Anchor mostRecentPoint;
+    private List<Anchor> myAnchors; 
 
-    public PathView (Pane parent, int width, int height) {
+    public PathView (TileMap parent) {
+        myAnchors = new ArrayList<Anchor>();
         myParent = parent;
-        myRoot = new Group();
         myPaths = new ArrayList<Curve>();
-        numAnchors = 0;
-        boundingWidth = width;
-        boundingHeight = height;
-        myParent.getChildren().add(myRoot);
-        Rectangle myMapOverlay =
-                new Rectangle(width, height);
-        myMapOverlay.setOpacity(0.2);
-        myRoot.getChildren().add(myMapOverlay);
-
+        numPoints = 0;
     }
     
     public int getNumAnchors(){
-        return numAnchors;
+        return numPoints;
     }
     
     
@@ -71,16 +56,20 @@ public class PathView {
 
         Anchor start =
                 new Anchor(Color.PALEGREEN, curve.startXProperty(), curve.startYProperty(),
-                           boundingWidth, boundingHeight);
+                           myParent.getWidth(), myParent.getHeight());
         Anchor control1 =
                 new Anchor(Color.GOLD, curve.controlX1Property(), curve.controlY1Property(),
-                           boundingWidth, boundingHeight);
+                           myParent.getWidth(), myParent.getHeight());
         Anchor control2 =
                 new Anchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property(),
-                           boundingWidth, boundingHeight);
+                           myParent.getWidth(), myParent.getHeight());
         Anchor end =
                 new Anchor(Color.TOMATO, curve.endXProperty(), curve.endYProperty(),
-                           boundingWidth, boundingHeight);
+                           myParent.getWidth(), myParent.getHeight());
+        
+        myAnchors.add(control1);
+        myAnchors.add(control2);
+
 
        /* Coordinate startCoordinates = start.getCoordinates();
         Coordinate endCoordinates = end.getCoordinates();
@@ -93,7 +82,16 @@ public class PathView {
 
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
-        myRoot.getChildren().add(path);
+        myParent.getRoot().getChildren().add(path);
+    }
+    
+    public boolean areAnchorsSelected(){
+        System.out.println(myAnchors);
+        for (Anchor anchor: myAnchors){
+            if (anchor.isSelected()) 
+                return true;
+        }
+        return false;
     }
 
     public void addAnchor (double startX, double startY) {
@@ -102,14 +100,19 @@ public class PathView {
         
         Anchor anchor =
                 new Anchor(Color.PALEGREEN, startXProperty, startYProperty,
-                           boundingWidth, boundingHeight);
-        myRoot.getChildren().add(anchor);
+                           myParent.getWidth(), myParent.getHeight());
+        myParent.getRoot().getChildren().add(anchor);
         
-        if (numAnchors > 0)
-            createCurve(mostRecentAnchor, anchor);
         
-        mostRecentAnchor = anchor;
-        numAnchors ++;
+        if (numPoints > 0){
+            //Anchor mostRecentAnchor = myAnchorsandControls.get(myAnchorsandControls.size()-1);
+            createCurve(mostRecentPoint, anchor);
+        }
+        
+        mostRecentPoint = anchor;
+        myAnchors.add(anchor);
+        
+        numPoints ++;
     }
 
     public void createCurve (Anchor start, Anchor end) {
@@ -125,10 +128,10 @@ public class PathView {
                               curve.endXProperty(), curve.endYProperty());
         Anchor control1 =
                 new Anchor(Color.GOLD, curve.controlX1Property(), curve.controlY1Property(),
-                           boundingWidth, boundingHeight);
+                           myParent.getWidth(), myParent.getHeight());
         Anchor control2 =
                 new Anchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property(),
-                           boundingWidth, boundingHeight);
+                           myParent.getWidth(), myParent.getHeight());
 
      /*   Coordinate startCoordinates = start.getCoordinates();
         Coordinate endCoordinates = end.getCoordinates();
@@ -141,7 +144,7 @@ public class PathView {
 
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
-        myRoot.getChildren().add(path);
+        myParent.getRoot().getChildren().add(path);
     }
 
     private CubicCurve createStartingCurve (double startX, double startY, double endX, double endY) {
