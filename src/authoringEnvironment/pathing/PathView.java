@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -31,10 +33,8 @@ public class PathView {
     }
 
     public void createCurve (double startX, double startY, double endX, double endY) {
+        // TODO: remove this method
         CubicCurve curve = createStartingCurve(startX, startY, endX, endY);
-
-        // int parentWidth = parent.
-        // int parentHeight =
 
         Line controlLine1 =
                 new BoundLine(curve.controlX1Property(), curve.controlY1Property(),
@@ -55,15 +55,58 @@ public class PathView {
         Anchor end =
                 new Anchor(Color.TOMATO, curve.endXProperty(), curve.endYProperty(),
                            myParent.getWidth(), myParent.getHeight());
-        
+
         Coordinate startCoordinates = start.getCoordinates();
         Coordinate endCoordinates = end.getCoordinates();
         Coordinate ctrl1Coordinates = control1.getCoordinates();
         Coordinate ctrl2Coordinates = control2.getCoordinates();
-        
-        Curve pathView = new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
+
+        Curve pathView =
+                new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
         myPaths.add(pathView);
+
+        Group path = new Group(controlLine1, controlLine2, curve, start, control1,
+                               control2, end);
+        myParent.getRoot().getChildren().add(path);
+    }
+
+    public void createRootAnchor (double startX, double startY) {
+        DoubleProperty startXProperty = new SimpleDoubleProperty(startX);
+        DoubleProperty startYProperty = new SimpleDoubleProperty(startY);
         
+        Anchor start =
+                new Anchor(Color.PALEGREEN, startXProperty, startYProperty,
+                           myParent.getWidth(), myParent.getHeight());
+        myParent.getRoot().getChildren().add(start);
+    }
+
+    public void createCurve (Anchor start, Anchor end) {
+        CubicCurve curve =
+                createStartingCurve(start.getCenterX(), start.getCenterY(), end.getCenterX(),
+                                    end.getCenterY());
+
+        Line controlLine1 =
+                new BoundLine(curve.controlX1Property(), curve.controlY1Property(),
+                              curve.startXProperty(), curve.startYProperty());
+        Line controlLine2 =
+                new BoundLine(curve.controlX2Property(), curve.controlY2Property(),
+                              curve.endXProperty(), curve.endYProperty());
+        Anchor control1 =
+                new Anchor(Color.GOLD, curve.controlX1Property(), curve.controlY1Property(),
+                           myParent.getWidth(), myParent.getHeight());
+        Anchor control2 =
+                new Anchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property(),
+                           myParent.getWidth(), myParent.getHeight());
+
+        Coordinate startCoordinates = start.getCoordinates();
+        Coordinate endCoordinates = end.getCoordinates();
+        Coordinate ctrl1Coordinates = control1.getCoordinates();
+        Coordinate ctrl2Coordinates = control2.getCoordinates();
+
+        Curve pathView =
+                new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
+        myPaths.add(pathView);
+
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
         myParent.getRoot().getChildren().add(path);
@@ -82,7 +125,6 @@ public class PathView {
         double controlX2 = endX - xDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
         double controlY2 = endY - yDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
 
-
         curve.setStartX(startX);
         curve.setStartY(startY);
         curve.setControlX1(controlX1);
@@ -97,22 +139,17 @@ public class PathView {
         curve.setFill(Color.CORNSILK.deriveColor(0, 1.2, 1, 0.6));
         return curve;
     }
-    
-    
-    public void save(){
-        //TODO: getName
-        String name = "temporary"; //testing only TODO: remove
-        Map<String, Object> mapSettings = new HashMap<String, Object>();
-        mapSettings.put(InstanceManager.NAME_KEY, name);
-        mapSettings.put(Variables.PARAMETER_CURVES, myPaths);
 
-        String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
-        for (int i = 0; i < myTiles.length; i++) {
-            for (int j = 0; j < myTiles[0].length; j++) {
-                tileKeyArray[i][j] = myTiles[i][j].getKey();
-            }
-        }
-        mapSettings.put(TILE_KEY_ARRAY, tileKeyArray);
-        return mapSettings; 
+    public void setName (String name) {
+        myName = name;
+    }
+
+    public Map<String, Object> save () {
+        // TODO: getName
+        String name = "temporary"; // testing only TODO: remove
+        Map<String, Object> settings = new HashMap<String, Object>();
+        settings.put(InstanceManager.NAME_KEY, myName);
+        settings.put(Variables.PARAMETER_CURVES, myPaths);
+        return settings;
     }
 }
