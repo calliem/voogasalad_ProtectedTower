@@ -9,12 +9,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import engine.ActionManager;
 import engine.CollisionChecker;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
+import engine.element.sprites.GameElement;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
@@ -83,7 +83,8 @@ public class Layout implements Updateable {
      */
     // TODO remove later
     public void makeCollisionTable () {
-        List<BiConsumer<Sprite, Sprite>> actionList = new ArrayList<BiConsumer<Sprite, Sprite>>();
+        List<BiConsumer<GameElement, GameElement>> actionList =
+                new ArrayList<BiConsumer<GameElement, GameElement>>();
         actionList.add( (e, f) -> e.onCollide(f));
         String[] spritePair = { "Enemy", "Projectile" };
         List<Integer>[] actionPair = (List<Integer>[]) new Object[2];
@@ -142,19 +143,19 @@ public class Layout implements Updateable {
      * @return true if specified tower may be placed at the specified location
      */
     // TODO implement from map class
-    public boolean canPlace (Sprite tower, Point2D location) {
+    public boolean canPlace (GameElement tower, Point2D location) {
         // collision checking and tag checking
         // collision checking
         boolean collisions = true;
         myCollisionChecker.createQuadTree(myTowerList);
-        Set<Sprite> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
+        Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
         if (possibleInteractions.size() == 0)
             collisions = false;
         // tag checking
         boolean tags = true;
         myCollisionChecker.createQuadTree(this.getGridCells());
-        Set<Sprite> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
-        for (Sprite c : possibleGridCells) {
+        Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
+        for (GameElement c : possibleGridCells) {
             if (!tagsInCommon(c, tower))
                 tags = false;
         }
@@ -168,7 +169,7 @@ public class Layout implements Updateable {
      * @param tower Sprite object to check
      * @return true if the two have a tag in common
      */
-    private boolean tagsInCommon (Sprite cell, Sprite tower) {
+    private boolean tagsInCommon (GameElement cell, GameElement tower) {
         List<String> cellTags = cell.getTags();
         for (String tag : tower.getTags()) {
             if (cellTags.contains(tag)) { return true; }
@@ -179,14 +180,14 @@ public class Layout implements Updateable {
     /**
      * Returns a list of all the gridCells in myGameMap
      * 
-     * @return List<Sprite> all the gridCells in myGameMap
+     * @return List<GameElement> all the gridCells in myGameMap
      */
-    private List<Sprite> getGridCells () {
+    private List<GameElement> getGridCells () {
         GridCell[][] myMap = myGameMap.getMap();
-        List<Sprite> gridCells = new ArrayList<>();
+        List<GameElement> gridCells = new ArrayList<>();
         for (int i = 0; i < myMap.length; i++)
             for (int j = 0; j < myMap[i].length; j++)
-                gridCells.add(myMap[i][j]);
+                gridCells.add((GameElement) myMap[i][j]);
         return gridCells;
     }
 
@@ -272,8 +273,8 @@ public class Layout implements Updateable {
         // Check if towers are within range of shooting enemies and shoot
         myCollisionChecker.createQuadTree(this.getSprites());
         for (Sprite sprite : this.getSprites()) {
-            Set<Sprite> possibleInteractions = myCollisionChecker.findCollisionsFor(sprite);
-            for (Sprite other : possibleInteractions) {
+            Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(sprite);
+            for (GameElement other : possibleInteractions) {
                 // TODO determine how many interactions should be made to each sprite
                 myActionManager.applyAction(sprite, other);
             }

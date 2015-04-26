@@ -26,7 +26,7 @@ public class Game implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
 
-    @parameter(settable = true, playerDisplay = false, defaultValue = "20")
+    @parameter(settable = true, playerDisplay = true, defaultValue = "20")
     private Integer lives;
 
     /**

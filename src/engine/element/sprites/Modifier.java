@@ -14,4 +14,9 @@ public class Modifier extends GameElement {
         super();
     }
 
+    @Override
+    public void onCollide (GameElement element) {
+        
+    }
+
 }

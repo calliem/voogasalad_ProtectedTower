@@ -30,7 +30,7 @@ public class Tower extends GameSprite {
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double buildTime;
 
-    private Set<Sprite> myTargets;
+    private Set<GameElement> myTargets;
 
     // TODO remove once testing is over
     public Tower (ImageView test) {
@@ -40,9 +40,9 @@ public class Tower extends GameSprite {
     /**
      * Adds new sprites for the tower to target
      * 
-     * @param sprites Set<Sprite> object of sprites
+     * @param sprites Set<GameElement> object of sprites
      */
-    public void addTargets (Set<Sprite> sprites) {
+    public void addTargets (Set<GameElement> sprites) {
         sprites.forEach(s -> myTargets.add(s));
     }
 
@@ -53,7 +53,7 @@ public class Tower extends GameSprite {
     }
 
     @Override
-    public void onCollide (Sprite sprite) {
+    public void onCollide (GameElement element) {
         // TODO Auto-generated method stub
 
     }

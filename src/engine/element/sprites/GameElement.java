@@ -15,7 +15,7 @@ import engine.Collidable;
  * @author Greg McKeon
  *
  */
-public class GameElement implements Collidable {
+public abstract class GameElement implements Collidable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String name;

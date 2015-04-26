@@ -2,6 +2,7 @@ package engine.element;
 
 import annotations.parameter;
 import engine.element.sprites.GridCell;
+import engine.factories.GameElementFactory;
 
 
 /**
@@ -31,28 +32,34 @@ public class GameMap {
 
     }
 
-    // public void loadMap (GameElementFactory factory) {
-    // String[][] mapLayout = (String[][]) super.getParameter("MapLayout");
-    // Double tileSize = (Double) super.getParameter("TileSize");
-    //
-    // GridCell[][] map = new GridCell[mapLayout.length][mapLayout[0].length];
-    //
-    // for (int i = 0; i < mapLayout.length; i++) {
-    // for (int j = 0; j < mapLayout[0].length; j++) {
-    // map[i][j] = (GridCell) factory.getGameElement("GridCell", mapLayout[i][j]);
-    // }
-    // }
-    // myMap = map;
-    // }
+    /**
+     * Creates an instance of the map made of GridCells and stores it as an instance variable
+     * 
+     * @param factory GameElementFactory which can be used to generate the correct GridCell objects
+     */
+    public void loadMap (GameElementFactory factory) {
+        myMap = new GridCell[myTileNames.length][myTileNames[0].length];
+        for (int i = 0; i < myTileNames.length; i++) {
+            for (int j = 0; j < myTileNames[i].length; j++) {
+                myMap[i][j] = (GridCell) factory.getGameElement("GridCell", myTileNames[i][j]);
+            }
+        }
+    }
 
     public GridCell[][] getMap () {
         return myMap;
     }
 
+    /**
+     * @return total height of the map in pixels
+     */
     public double getCoordinateHeight () {
         return rows * tileSize;
     }
 
+    /**
+     * @return total width of the map in pixels
+     */
     public double getCoordinateWidth () {
         return columns * tileSize;
     }

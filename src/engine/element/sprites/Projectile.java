@@ -28,7 +28,7 @@ public class Projectile extends MoveableSprite {
     }
 
     @Override
-    public void onCollide (Sprite sprite) {
+    public void onCollide (GameElement element) {
         // TODO Auto-generated method stub
     }
 

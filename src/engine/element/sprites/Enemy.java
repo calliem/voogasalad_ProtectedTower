@@ -44,7 +44,7 @@ public class Enemy extends GameSprite {
     }
 
     @Override
-    public void onCollide (Sprite sprite) {
+    public void onCollide (GameElement element) {
         // TODO write collide methods
         // super.decreaseHealth(sprite.getDamage());
     }

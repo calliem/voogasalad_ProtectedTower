@@ -61,7 +61,4 @@ public abstract class Sprite extends GameElement implements Updateable {
 
     // Abstract methods
 
-    // TODO move this to Collidable interface?
-    public abstract void onCollide (Sprite sprite);
-
 }

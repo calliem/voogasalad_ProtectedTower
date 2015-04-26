@@ -54,4 +54,9 @@ public class GridCell extends GameElement {
         return false;
     }
 
+    @Override
+    public void onCollide (GameElement element) {
+
+    }
+
 }

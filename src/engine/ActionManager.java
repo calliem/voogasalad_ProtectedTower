@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import engine.element.sprites.GameElement;
 import engine.element.sprites.Sprite;
 
 
@@ -21,7 +22,7 @@ import engine.element.sprites.Sprite;
  */
 
 public class ActionManager {
-    private Map<String[], Collection<BiConsumer<Sprite, Sprite>>[]> myDecisionMap;
+    private Map<String[], Collection<BiConsumer<GameElement, GameElement>>[]> myDecisionMap;
     private static final int REQUIRED_KEY_LENGTH = 2;
 
     /**
@@ -35,7 +36,7 @@ public class ActionManager {
      *        what actions should be applied to which sprites.
      */
     public ActionManager (Map<String[], List<Integer>[]> interactionMap,
-                          List<BiConsumer<Sprite, Sprite>> actions) {
+                          List<BiConsumer<GameElement, GameElement>> actions) {
         // check that input is valid
         for (String[] key : interactionMap.keySet()) {
             if (key.length != REQUIRED_KEY_LENGTH ||
@@ -43,22 +44,21 @@ public class ActionManager {
                                                                                                              "InteractionMap is in invalid format"); }
         }
         // declare and load the decision map
-        myDecisionMap = new HashMap<String[], Collection<BiConsumer<Sprite, Sprite>>[]>();
+        myDecisionMap = new HashMap<String[], Collection<BiConsumer<GameElement, GameElement>>[]>();
         for (String[] pair : interactionMap.keySet()) {
-            @SuppressWarnings("unchecked")
-            Collection<BiConsumer<Sprite, Sprite>>[] actionArray =
-                    (Collection<BiConsumer<Sprite, Sprite>>[]) new Collection[2];
+            Collection<BiConsumer<GameElement, GameElement>>[] actionArray =
+                    (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[2];
 
             // Fill collection of actions
-            Collection<BiConsumer<Sprite, Sprite>> pairActions =
-                    new ArrayList<BiConsumer<Sprite, Sprite>>();
+            Collection<BiConsumer<GameElement, GameElement>> pairActions =
+                    new ArrayList<BiConsumer<GameElement, GameElement>>();
             for (int i : interactionMap.get(pair)[0]) {
                 pairActions.add(actions.get(i));
             }
             actionArray[0] = pairActions;
 
-            Collection<BiConsumer<Sprite, Sprite>> actionsTwo =
-                    new ArrayList<BiConsumer<Sprite, Sprite>>();
+            Collection<BiConsumer<GameElement, GameElement>> actionsTwo =
+                    new ArrayList<BiConsumer<GameElement, GameElement>>();
             for (int i : interactionMap.get(pair)[1]) {
                 actionsTwo.add(actions.get(i));
             }
@@ -76,14 +76,14 @@ public class ActionManager {
      * @param spriteTwo second Sprite to collide
      * @return true if an interaction was made
      */
-    public boolean applyAction (Sprite spriteOne, Sprite spriteTwo) {
+    public boolean applyAction (GameElement spriteOne, GameElement spriteTwo) {
         String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
         if (myDecisionMap.containsKey(spriteTagPair)) {
-            for (BiConsumer<Sprite, Sprite> action : myDecisionMap.get(spriteTagPair)[0]) {
+            for (BiConsumer<GameElement, GameElement> action : myDecisionMap.get(spriteTagPair)[0]) {
                 action.accept(spriteOne, spriteTwo);
             }
 
-            for (BiConsumer<Sprite, Sprite> action : myDecisionMap.get(spriteTagPair)[1]) {
+            for (BiConsumer<GameElement, GameElement> action : myDecisionMap.get(spriteTagPair)[1]) {
                 action.accept(spriteTwo, spriteOne);
             }
             return true;
@@ -110,7 +110,7 @@ public class ActionManager {
      * @param spriteTwo Second sprite
      * @return Array containing tags of sprites
      */
-    private String[] getTagPair (Sprite spriteOne, Sprite spriteTwo) {
+    private String[] getTagPair (GameElement spriteOne, GameElement spriteTwo) {
         String[] spriteTagPair = new String[2];
         // TODO takes the first tag for now, make work for multiple tags
         spriteTagPair[0] = (String) spriteOne.getTags().get(0);
