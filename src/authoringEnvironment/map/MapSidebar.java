@@ -261,7 +261,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             super.getMaps().add(existingIndex, activeMap);
         }        
        displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
-       boolean add = getMapWorkspace().getChildren().add(new Anchor(Color.RED, new SimpleDoubleProperty(10), new SimpleDoubleProperty(10)));
 
         // saves the map to a specific key
         // checks to see if the current map already exists
@@ -431,6 +430,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
         getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
+        boolean add = getMapWorkspace().getChildren().add(new Anchor(Color.RED, new SimpleDoubleProperty(10), new SimpleDoubleProperty(10)));
+
     }
 
     private void deactivatePathMode () {

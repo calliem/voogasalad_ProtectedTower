@@ -33,7 +33,7 @@ public class GameEditor extends Editor {
     private TextField totalLivesEntry;
 
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
-    private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
+    private static final ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
                                                                   "game_editor_english");
 
     public GameEditor (Controller controller, String name) {
