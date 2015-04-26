@@ -9,20 +9,19 @@ package authoringEnvironment.objects;
 
 public class Coordinate {
 
-    private int myX;
-    private int myY;
+    private double myX;
+    private double myY;
 
-    public Coordinate (int x, int y) {
+    public Coordinate (double x, double y) {
         myX = x;
         myY = y;
     }
 
-    private int getX () {
+    public double getX () {
         return myX;
     }
 
-    private int getY () {
+    public double getY () {
         return myY;
     }
-
 }

@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
-import authoringEnvironment.Variables;
 
 
 /**
@@ -37,6 +35,8 @@ public class Tile extends Rectangle {
     private static final Color DEFAULT_COLOR = Color.TRANSPARENT;
 
     public Tile () {
+        // TODO: fix tile to make it more general and not have col nums and x/y generated here
+        // TODO: store part keys in the xml file for tilemap
         new Rectangle();
         myColor = DEFAULT_COLOR;
         setFill(DEFAULT_COLOR);
@@ -44,23 +44,33 @@ public class Tile extends Rectangle {
         myName = null;
         myTags = new ArrayList<String>();
     }
-    
-    /**
-     * Constructor for reconstructing a tile from one already saved into the controller.
-     * @param c The controller that holds all saved data
-     * @param key The tile's key that is mapped to parameters within the controller
-     */
-    public Tile(Controller c, String key){
-        Map<String, Object> params = c.getPartCopy(key);
-        myName = (String) params.get(InstanceManager.NAME_KEY);
-        myTags = (ArrayList<String>) params.get(Variables.PARAMETER_TAGS);
-        myColor = (Color) params.get(Variables.PARAMETER_COLOR);
-        setFill(myColor);
-    }
 
     public void positionTile (int tileSize, int i, int j) {
         setTranslateX(j * tileSize);
         setTranslateY(i * tileSize);
+        // System.out.print(" | " + i*tileSize + " ");
+        // System.out.print(j*tileSize + " ");
+    }
+
+    /*
+     * public void setTileSize (int tileSize) {
+     * myTile.setWidth(tileSize);
+     * myTile.setHeight(tileSize);
+     * }
+     */
+
+  /*  public void addTag (String tag) {
+        myTags.add(tag);
+    }
+
+    // should only be able to remove already existing tags
+    public void removeTag (String tag) {
+        myTags.remove(tag);
+    }*/
+    
+    public void setTags (String tag){
+        tag.split(", ");
+        tag.split("; ");
     }
 
     public void setTileSize (double size, int rowNum, int colNum) {
@@ -70,6 +80,22 @@ public class Tile extends Rectangle {
         setTranslateY(rowNum * size);
     }
 
+    // selection stuff is all for pathing. Need separate methods for updating the tile
+    // active refers to if it is selected as part of a path
+   /* public void select () {
+        if (!isSelected) {
+            setOpacity(0.2); // change image entirely
+        }
+        else {
+            setOpacity(1);
+        }
+        isSelected = !isSelected;
+    }
+
+    public boolean isSelected () {
+        return isSelected;
+    }*/
+
     public ArrayList<String> getTags () {
         return myTags;
     }
@@ -77,6 +103,15 @@ public class Tile extends Rectangle {
     public Color getColor () {
         return myColor;
     }
+    
+    /*
+     * public Node getThumbnail () {
+     * Rectangle thumbnail = this;
+     * thumbnail.setWidth(AuthoringEnvironment.getEnvironmentWidth() * 0.05);
+     * thumbnail.setHeight(AuthoringEnvironment.getEnvironmentHeight() * 0.05);
+     * return null;
+     * }
+     */
     
     public void setFill(Color color){
         super.setFill(color);
@@ -91,7 +126,7 @@ public class Tile extends Rectangle {
         myKey = key;
     }
 
-    public Map<String, Object> save () {
+    public Map<String, Object> saveToXML () {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.NAME_KEY, myName);
         mapSettings.put(TAGS, myTags);

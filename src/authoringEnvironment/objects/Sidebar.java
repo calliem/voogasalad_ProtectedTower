@@ -16,7 +16,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.Controller;
 import authoringEnvironment.map.MapWorkspace;
 
 
@@ -32,7 +31,7 @@ import authoringEnvironment.map.MapWorkspace;
 public abstract class Sidebar extends VBox { // extend gridpane pls
 
     private ResourceBundle myResources;
-    private ObservableList<String> myMapKeys; // can't seem to use list with this
+    private ObservableList<GameObject> myMaps; // can't seem to use list with this
     private MapWorkspace myMapWorkspace; // TODO: or use more general StackPane?
 
     private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128; // maybe
@@ -47,15 +46,13 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
 
     private GridPane topContext;
     private Accordion accordionContext;
-    private Controller myController;
 
-    public Sidebar (Controller c, ResourceBundle resources,
-                    ObservableList<String> dependency,
+    public Sidebar (ResourceBundle resources,
+                    ObservableList<GameObject> dependency,
                     MapWorkspace mapWorkspace) {
 
-        myController = c;
         myResources = resources;
-        myMapKeys = FXCollections.observableList(dependency);
+        myMaps = FXCollections.observableList(dependency);
         myMapWorkspace = mapWorkspace;
 
         setDimensionRestrictions();
@@ -66,10 +63,6 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         setContent(topContext);
         // setSpacing(10);
         // createMapSettings();
-    }
-
-    protected Controller getController () {
-        return myController;
     }
 
     protected abstract void setContent (GridPane container);
@@ -86,8 +79,8 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         return myResources;
     }
 
-    protected ObservableList<String> getMapKeys () {
-        return myMapKeys;
+    protected ObservableList<GameObject> getMaps () {
+        return myMaps;
     }
 
     protected abstract void createMapSettings ();

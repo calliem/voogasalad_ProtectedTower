@@ -41,7 +41,6 @@ import authoringEnvironment.util.Scaler;
 
 public abstract class SpriteEditor extends Editor {
     private StackPane myContent;
-    protected String editorType;
     private HBox currentRow;
     private boolean editing = false;
     private Text empty;

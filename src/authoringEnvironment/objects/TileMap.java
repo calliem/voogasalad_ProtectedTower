@@ -1,16 +1,12 @@
 package authoringEnvironment.objects;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.TextAlignment;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
 
@@ -25,18 +21,14 @@ import authoringEnvironment.Variables;
 
 public class TileMap extends GameObject {
 
-    //TODO: build tiles from keys! 
-    
-    protected Tile[][] myTiles; // TODO: keep as protected?
+    private Tile[][] myTiles;
     private int myTileSize;
     private ImageView myBackground;
     private Color myActiveColor;
     private String imgFilePath;
 
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
-    protected static final String TILE_KEY_ARRAY = "TileArrayKeys"; // TODO; maybe move vars from
-                                                                    // variables class into
-                                                                    // protected vars here
+    private static final String TILE_KEY_ARRAY = "TileArrayKeys";
     private static final int LINE_START_COORDINATE = 0;
 
     private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
@@ -52,9 +44,6 @@ public class TileMap extends GameObject {
 
     private static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
 
-    protected TileMap () {
-    }
-
     // TODO: user specifies rectangle or square dimensions...allow this flexibility
     public TileMap (int mapRows, int mapCols, int tileSize) {
         myRoot = new Group();
@@ -64,11 +53,13 @@ public class TileMap extends GameObject {
         myTileSize = tileSize;
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
+       // imgFilePath = DEFAULT_BACKGROUND_PATH;
         imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
         setThumbnail(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
+        // TODO: sethover x, y coordinate, tile size, etc.
 
         createMap();
         createGridLines();
@@ -113,7 +104,7 @@ public class TileMap extends GameObject {
     }
 
     // TODO:duplicated tile listeners being added/deleted?
-    private void attachTileListeners () {
+    public void attachTileListeners () {
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
                 attachTileListener(myTiles[i][j]);
@@ -123,30 +114,12 @@ public class TileMap extends GameObject {
 
     private void attachTileListener (Tile tile) {
         tile.setOnMouseClicked(e -> tileClicked(tile));
-        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor));
-        setupTooltip(tile);
-        // tile.setOnMouseEntered(e -> )
-        // tile.setOnMouseExited(e ->)
-    }
-    
-    protected void setupTooltip (Node object) {
-        String tooltipText = "";
-        /*tooltipText += "C"
-        
-        //TODO can use parameters with the controller but what about with the normal one 
-        for (String[] parameter : info) {
-            tooltipText += String.format("%s: %s\n", parameter[0], parameter[1]);
-        }
-
-        Tooltip tooltip = new Tooltip(tooltipText);
-        tooltip.setTextAlignment(TextAlignment.LEFT);
-        Tooltip.install(object, tooltip);*/
       //this method is used instead of tileClicked to allow for easier "coloring" of large groups of tiles
-   //     object.setOnMouseDragEntered(e -> object.setFill(myActiveColor)); 
+        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); 
     }
-
 
     public void changeTileSize (int tileSize) {
+
         myTileSize = tileSize;
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
@@ -159,6 +132,7 @@ public class TileMap extends GameObject {
 
     private void tileClicked (Tile tile) {
         if (tile.getColor() == myActiveColor) {
+            System.out.println("colors are equal!");
             tile.setFill(Color.TRANSPARENT);
         }
         else {
@@ -201,18 +175,6 @@ public class TileMap extends GameObject {
         setImageDimensions(myBackground);
         changeTileSize(myTileSize);
 
-    }
-
-    public int getTileSize () {
-        return myTileSize;
-    }
-
-    public void setTileSize (int tileSize) {
-        myTileSize = tileSize;
-    }
-
-    protected void setTiles (Tile[][] tiles) {
-        myTiles = tiles;
     }
 
     /**
@@ -270,8 +232,8 @@ public class TileMap extends GameObject {
         return myTiles[0].length;
     }
 
-    protected void setBackground (ImageView background) {
-        myBackground = background;
+    public int getTileSize () {
+        return myTileSize;
     }
 
     private void createGridLines () {
@@ -314,7 +276,7 @@ public class TileMap extends GameObject {
         return myTiles;
     }
 
-    public Map<String, Object> save () {
+    public Map<String, Object> saveToXML () {
         /*
          * List<String> partFileKeys = new ArrayList<String>();
          * List<Color> colors = new ArrayList<Color>();
@@ -337,16 +299,7 @@ public class TileMap extends GameObject {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.NAME_KEY, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
-        mapSettings.put(Variables.PARAMETER_BACKGROUND_FILEPATH, imgFilePath);
-
-        int[][] savedImage =
-                ImageToInt2DArray.convertImageTo2DIntArray(getThumbnail().getImage(),
-                                                           getThumbnail().getImage().getWidth(),
-                                                           getThumbnail().getImage().getHeight());
-
-        mapSettings.put(Variables.PARAMETER_THUMBNAIL, savedImage); // TODO: save as a 2D array of
-                                                                    // ints instead of a JavaFX
-                                                                    // object
+        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
 
         String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
         for (int i = 0; i < myTiles.length; i++) {
@@ -361,8 +314,8 @@ public class TileMap extends GameObject {
     public Group getRoot () {
         return myRoot;
     }
-
-    public String getImgFilePath () {
+    
+    public String getImgFilePath(){
         return imgFilePath;
     }
 

@@ -24,7 +24,7 @@ public abstract class MainEditor extends Editor {
 
     private GridPane myPane;
     private MapWorkspace myMapWorkspace;
-    private ObservableList<String> myMaps;
+    private ObservableList<GameObject> myMaps;
 
     private static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
     private static final double MAP_WIDTH_MULTIPLIER = .75; // THIS IS REPLICATED
@@ -41,7 +41,7 @@ public abstract class MainEditor extends Editor {
     public MainEditor (Controller c, String name) {
         super(c, name);
         this.setStyle(DARK_TAB_CSS);
-        myMaps = (ObservableList<String>) c.getKeysForPartType(name);
+        myMaps = c.getMaps();
     }
 
     /**
@@ -54,6 +54,7 @@ public abstract class MainEditor extends Editor {
         Group visuals = new Group();
         createGridPane();
         myMapWorkspace = new MapWorkspace();
+        System.out.println("MAP WORKSPACE CREATED");
         myPane.add(myMapWorkspace, 0, 0);
         visuals.getChildren().add(myPane);
         return visuals;
@@ -72,7 +73,7 @@ public abstract class MainEditor extends Editor {
         return myMapWorkspace.getActiveMap();
     }
 
-    public ObservableList<String> getMaps () {
+    public ObservableList<GameObject> getMaps () {
         return myMaps;
     }
 
@@ -94,6 +95,7 @@ public abstract class MainEditor extends Editor {
         return myPane;
     }
 
+    public void update () {
         // update in level editor will update the maps and paths and other stuff
         // update in map editor will update the paths and tiles
         //
@@ -125,4 +127,4 @@ public abstract class MainEditor extends Editor {
      * if(!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap())){
      * getMapWorkspace().updateWithNewMap(mapEditor.getActiveMap()); } }
      */
-
+}

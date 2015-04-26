@@ -13,10 +13,6 @@ public class Variables {
     public static final String PARAMETER_RANGE = "Range";
     public static final String PARAMETER_DAMAGE = "Damage";
     public static final String PARAMETER_SPEED = "Speed";
-    public static final String PARAMETER_THUMBNAIL = "Thumbnail";
-    public static final String PARAMETER_TAGS = "Tags";
-    public static final String PARAMETER_COLOR = "Color";
-    
     public static final String DESCRIPTION = "Description";
     public static final String LIVES = "Lives";
 
@@ -24,8 +20,7 @@ public class Variables {
     public final static String PARTNAME_ENEMIES = "Enemies";
     public final static String PARAMETER_TIMES = "Times";
     public static final String PARAMETER_TILESIZE = "TileSize";
-    public static final String PARAMETER_BACKGROUND_FILEPATH = "BackgroundFilepath";
-    
+    public static final String PARAMETER_BACKGROUND = "Background";
     public static final String PARTNAME_MAP = "GameMap";
 
     public static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
