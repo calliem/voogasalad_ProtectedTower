@@ -225,9 +225,22 @@ public class Layout extends GameElement implements Updateable {
     public void update (int counter) {
         updateSpriteLocations();
         updateSpriteCollisions();
+        updateSpriteTargeting();
     }
 
     /**
+     * Updates the targeting of towers.
+     */
+    
+    private void updateSpriteTargeting() {
+		// TODO Auto-generated method stub
+		myCollisionChecker.createQuadTree(this.getSprites());
+		for (Sprite sprite : myTowerList) {
+			sprite.getAllParameters().put("targets", myCollisionChecker.findTargetable(sprite));
+		}
+	}
+
+	/**
      * Updates the positions of all sprites.
      */
     private void updateSpriteLocations () {

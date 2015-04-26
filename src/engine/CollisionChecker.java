@@ -67,7 +67,7 @@ public class CollisionChecker {
         Set<Sprite> collisions = new HashSet<>();
         List<Sprite> possibleSprites = getPossibleCollisions(target);
         for (Sprite other : possibleSprites) {
-            if (collides(createHitBox(target), createHitBox(other))) {
+            if (hitBoxCollide(target,other)) {
                 collisions.add(other);
             }
         }
@@ -120,4 +120,25 @@ public class CollisionChecker {
     private boolean collides (Shape shape1, Shape shape2) {
         return shape1.getBoundsInParent().intersects(shape2.getBoundsInParent());
     }
+    
+    private boolean hitBoxCollide(Sprite sprite1, Sprite sprite2){
+    	return collides(createHitBox(sprite1), createHitBox(sprite2));
+    }
+    
+    private boolean rangeCollide(Sprite sprite1, Sprite sprite2){
+    	return collides(createRange(sprite1), createHitBox(sprite2));
+    }
+
+    
+	public Set<Sprite> findTargetable(Sprite sprite) {
+		// TODO Auto-generated method stub
+		Set<Sprite> collisions = new HashSet<>();
+        List<Sprite> possibleSprites = getPossibleCollisions(sprite);
+        for (Sprite other : possibleSprites) {
+            if (rangeCollide(sprite,other)) {
+                collisions.add(other);
+            }
+        }
+        return collisions;
+	}
 }
