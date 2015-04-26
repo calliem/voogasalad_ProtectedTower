@@ -58,6 +58,7 @@ public class Anchor extends Circle {
                 dragDelta.x = getCenterX() - mouseEvent.getX();
                 dragDelta.y = getCenterY() - mouseEvent.getY();
                 getScene().setCursor(Cursor.MOVE);
+                System.out.println("end of anchor pressed method " + isPressed + this);
             }
         });
         setOnMouseReleased(new EventHandler<MouseEvent>() {
@@ -109,6 +110,7 @@ public class Anchor extends Circle {
     }
 
     public boolean isSelected () {
+        System.out.println("Get is selected " + isPressed);
         return isPressed;
     }
 

@@ -465,7 +465,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path, e));
         getMapWorkspace().getActiveMap().getRoot().setOnMouseDragged(e -> {});
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> setAnchorPoint(path, e));
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> {});
 
         // TODO for testing:
         double startX = 100;
