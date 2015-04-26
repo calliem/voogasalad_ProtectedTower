@@ -1,5 +1,6 @@
 package authoringEnvironment.pathing;
 
+import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -7,14 +8,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import authoringEnvironment.objects.Coordinate;
+import authoringEnvironment.objects.PathView;
+import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.pathing.BoundLine;
 
 
 public class PathCreator {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
-    
-    public PathCreator (Group parent) {
-        CubicCurve curve = createStartingCurve();
+    private TileMap myParent;
+    private List<PathView> myPaths;
+
+    public PathCreator (TileMap parent) {
+        myParent = parent;
+    }
+
+    public void createCurve (double startX, double startY, double endX, double endY) {
+        CubicCurve curve = createStartingCurve(startX, startY, endX, endY);
+
+        // int parentWidth = parent.
+        // int parentHeight =
 
         Line controlLine1 =
                 new BoundLine(curve.controlX1Property(), curve.controlY1Property(),
@@ -23,45 +36,45 @@ public class PathCreator {
                 new BoundLine(curve.controlX2Property(), curve.controlY2Property(),
                               curve.endXProperty(), curve.endYProperty());
 
-        Anchor2 start =
-                new Anchor2(Color.PALEGREEN, curve.startXProperty(), curve.startYProperty());
-        Anchor2 control1 =
-                new Anchor2(Color.GOLD, curve.controlX1Property(), curve.controlY1Property());
-        Anchor2 control2 =
-                new Anchor2(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property());
-        Anchor2 end = new Anchor2(Color.TOMATO, curve.endXProperty(), curve.endYProperty());
-
-        AnchorPane anchor = new AnchorPane();
-
+        Anchor start =
+                new Anchor(Color.PALEGREEN, curve.startXProperty(), curve.startYProperty(),
+                           myParent.getWidth(), myParent.getHeight());
+        Anchor control1 =
+                new Anchor(Color.GOLD, curve.controlX1Property(), curve.controlY1Property(),
+                           myParent.getWidth(), myParent.getHeight());
+        Anchor control2 =
+                new Anchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property(),
+                           myParent.getWidth(), myParent.getHeight());
+        Anchor end =
+                new Anchor(Color.TOMATO, curve.endXProperty(), curve.endYProperty(),
+                           myParent.getWidth(), myParent.getHeight());
+        
+        Coordinate startCoordinates = start.getCoordinates();
+        Coordinate endCoordinates = end.getCoordinates();
+        Coordinate ctrl1Coordinates = control1.getCoordinates();
+        Coordinate ctrl2Coordinates = control2.getCoordinates();
+        
+        PathView pathView = new PathView(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
+        myPaths.add(pathView);
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
-        parent.getChildren().add(path);
+        myParent.getRoot().getChildren().add(path);
     }
 
-    private CubicCurve createStartingCurve () {
+    private CubicCurve createStartingCurve (double startX, double startY, double endX, double endY) {
         CubicCurve curve = new CubicCurve();
-        double startX = 100;
-        double startY = 100;
-        double endX = 300;
-        double endY = 300;
-        //double lineLength = Math.sqrt(Math.pow(startX-endX, 2) + Math.pow(startY-endY, 2));
+
+        // double lineLength = Math.sqrt(Math.pow(startX-endX, 2) + Math.pow(startY-endY, 2));
         double xDiff = endX - startX;
         double yDiff = endY - startY;
-        
+
         double controlX1 = startX + xDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
         double controlY1 = startY + yDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
-        
+
         double controlX2 = endX - xDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
         double controlY2 = endY - yDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
-        
-        /*double slope;
-        try{
-        slope = (endY-startY)/(endX-startX);
-        }
-        catch(ArithmeticException e){
-            slope = Integer.MAX_VALUE;
-        }*/
-        
+
+
         curve.setStartX(startX);
         curve.setStartY(startY);
         curve.setControlX1(controlX1);
@@ -75,5 +88,9 @@ public class PathCreator {
         curve.setStrokeLineCap(StrokeLineCap.ROUND);
         curve.setFill(Color.CORNSILK.deriveColor(0, 1.2, 1, 0.6));
         return curve;
+    }
+    
+    public void save(){
+        //TODO: save 
     }
 }

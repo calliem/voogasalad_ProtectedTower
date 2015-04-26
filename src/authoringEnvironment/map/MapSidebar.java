@@ -45,7 +45,7 @@ import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.pathing.Anchor;
-import authoringEnvironment.pathing.Anchor2;
+import authoringEnvironment.pathing.Anchor;
 import authoringEnvironment.pathing.PathCreator;
 import authoringEnvironment.util.Scaler;
 
@@ -451,7 +451,12 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
-        PathCreator creator = new PathCreator(getMapWorkspace().getActiveMap().getRoot());
+        PathCreator creator = new PathCreator(getMapWorkspace().getActiveMap());
+        double startX = 100;
+        double startY = 100;
+        double endX = 300;
+        double endY = 300;
+        creator.createCurve(startX, startY, endX, endY);
     }
 
  
