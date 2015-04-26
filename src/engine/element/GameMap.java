@@ -3,6 +3,7 @@ package engine.element;
 import java.util.Map;
 import annotations.parameter;
 import engine.element.sprites.GridCell;
+import engine.factories.GameElementFactory;
 
 
 public class GameMap extends GameElement {
@@ -16,23 +17,19 @@ public class GameMap extends GameElement {
     private int tileSize =  5;
     public GameMap (Map<String, Object> params) {
         super.setParameterMap(params);
-        loadMap();
     }
 
-    private void loadMap () {
+    public void loadMap (GameElementFactory factory) {
         String[][] mapLayout = (String[][]) super.getParameter("MapLayout");
-        Double tileSize = (Double) super.getParameter("TileSize");
+        //Double tileSize = (Double) super.getParameter("TileSize");
 
         GridCell[][] map = new GridCell[mapLayout.length][mapLayout[0].length];
 
-        // for (int[] key : mapLayout.keySet()) {
-        // GridCell cell = factory.getGridCell(mapLayout.get(key));
-        // int row = key[0];
-        // int col = key[1];
-        // cell.setLocation(col * tileSize, row * tileSize);
-        // cell.setCenter((col + 1 / 2) * tileSize, (row + 1 / 2) * tileSize);
-        // map[row][col] = cell;
-        // }
+        for(int i = 0; i < mapLayout.length; i++){
+        	for(int j = 0; j < mapLayout[0].length; j++){
+                map[i][j] = (GridCell)factory.getGameElement("GridCell", mapLayout[i][j]);
+        	}
+        }
         myMap = map;
     }
 

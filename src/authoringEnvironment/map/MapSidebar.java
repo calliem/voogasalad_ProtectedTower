@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.SnapshotParameters;
@@ -30,6 +31,7 @@ import authoringEnvironment.objects.MapUpdatableDisplay;
 import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
+import authoringEnvironment.pathing.Anchor;
 import authoringEnvironment.util.Scaler;
 
 
@@ -248,6 +250,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         ImageView snapView = new ImageView();
         snapView.setImage(snapImage);
         activeMap.setThumbnail(snapView);
+       
 
         if (!super.getMaps().contains(activeMap)) {
             super.getMaps().add(activeMap);
@@ -427,6 +430,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
         getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
+        boolean add = getMapWorkspace().getChildren().add(new Anchor(Color.RED, new SimpleDoubleProperty(10), new SimpleDoubleProperty(10)));
+
     }
 
     private void deactivatePathMode () {
