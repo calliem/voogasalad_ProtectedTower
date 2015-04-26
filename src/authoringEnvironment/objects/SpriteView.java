@@ -72,8 +72,11 @@ public abstract class SpriteView extends StackPane {
      * @param c controller needed to obtain partKeys from other tabs
      * @param name name of this sprite, designated by user
      * @param image the file path of this sprite's image
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
+     * @throws ClassNotFoundException 
      */
-    public SpriteView (Controller c, String name, String image) {
+    public SpriteView (Controller c, String name, String image) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException {
         myKey = Controller.KEY_BEFORE_CREATION;
         myController = c;
 

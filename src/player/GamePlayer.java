@@ -74,7 +74,7 @@ public class GamePlayer extends Application {
         ObservableList<Node> displayList = FXCollections.observableArrayList(new ArrayList<>());
         try {
             myGameController =
-                    new GameController(gameFile.getParent(), displayList, availableTowers);
+                    new GameController(gameFile.getParent(), displayList);
         }
         catch (InsufficientParametersException e) {
             return;
@@ -108,7 +108,7 @@ public class GamePlayer extends Application {
         // availableTowers.add(new Tower(test3));
         // availableTowers.add(new Tower(test4));
         // displayList.add(new Tower(test5));
-        myGameController.startGame(60);
+        //myGameController.startGame(60);
     }
 
     public static void main (String[] args) {
