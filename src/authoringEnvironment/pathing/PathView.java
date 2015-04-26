@@ -1,7 +1,9 @@
 package authoringEnvironment.pathing;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -9,20 +11,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import authoringEnvironment.InstanceManager;
+import authoringEnvironment.Variables;
 import authoringEnvironment.objects.Coordinate;
-import authoringEnvironment.objects.PathView;
+import authoringEnvironment.objects.Curve;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.pathing.BoundLine;
 
 
-public class PathCreator {
+public class PathView {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private TileMap myParent;
-    private List<PathView> myPaths;
+    private List<Curve> myPaths;
+    private String myName;
 
-    public PathCreator (TileMap parent) {
+    public PathView (TileMap parent) {
         myParent = parent;
-        myPaths = new ArrayList<PathView>();
+        myPaths = new ArrayList<Curve>();
     }
 
     public void createCurve (double startX, double startY, double endX, double endY) {
@@ -56,7 +61,7 @@ public class PathCreator {
         Coordinate ctrl1Coordinates = control1.getCoordinates();
         Coordinate ctrl2Coordinates = control2.getCoordinates();
         
-        PathView pathView = new PathView(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
+        Curve pathView = new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
         myPaths.add(pathView);
         
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
@@ -93,7 +98,21 @@ public class PathCreator {
         return curve;
     }
     
+    
     public void save(){
-        //TODO: save 
+        //TODO: getName
+        String name = "temporary"; //testing only TODO: remove
+        Map<String, Object> mapSettings = new HashMap<String, Object>();
+        mapSettings.put(InstanceManager.NAME_KEY, name);
+        mapSettings.put(Variables.PARAMETER_CURVES, myPaths);
+
+        String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
+        for (int i = 0; i < myTiles.length; i++) {
+            for (int j = 0; j < myTiles[0].length; j++) {
+                tileKeyArray[i][j] = myTiles[i][j].getKey();
+            }
+        }
+        mapSettings.put(TILE_KEY_ARRAY, tileKeyArray);
+        return mapSettings; 
     }
 }

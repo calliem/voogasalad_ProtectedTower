@@ -6,14 +6,14 @@ import javafx.scene.shape.Rectangle;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.objects.PathView;
+import authoringEnvironment.objects.Curve;
 import authoringEnvironment.objects.TileMap;
 
 
 public class MapWorkspace extends StackPane {
 
     private TileMap myActiveMap;
-    private PathView myActivePath; 
+    private Curve myActivePath; 
     private static final int DEFAULT_MAP_ROWS =
             (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);
     private static final int DEFAULT_MAP_COLS =

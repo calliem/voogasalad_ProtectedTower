@@ -12,14 +12,14 @@ import authoringEnvironment.objects.Coordinate;
  *
  */
 
-public class PathView {
+public class Curve {
 
     private Coordinate startCoordinate;
     private Coordinate endCoordinate;
     private Coordinate control1Coordinate;
     private Coordinate control2Coordinate;
 
-    public PathView (Coordinate start, Coordinate end, Coordinate ctrl1, Coordinate ctrl2) {
+    public Curve (Coordinate start, Coordinate end, Coordinate ctrl1, Coordinate ctrl2) {
         startCoordinate = start;
         endCoordinate = end;
         control1Coordinate = ctrl1;
