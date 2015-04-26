@@ -100,7 +100,21 @@ public abstract class SpriteView extends StackPane {
         display.getChildren().addAll(previewImage, spriteNameDisplay);
         getChildren().addAll(spriteBackground, display);
 
-        setupEditableContent();
+        try {
+            setupEditableContent();
+        }
+        catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         setupOverlayContent();
         setupTooltipText(getSpriteInfo());
     }
@@ -112,7 +126,8 @@ public abstract class SpriteView extends StackPane {
         return path;
     }
 
-    private void setupEditableContent () throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException {
+    private void setupEditableContent () throws ClassNotFoundException, IllegalArgumentException,
+                                        IllegalAccessException {
         editableContent = new VBox(10);
         editableContent.setAlignment(Pos.CENTER);
 

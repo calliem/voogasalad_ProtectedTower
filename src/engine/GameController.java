@@ -62,6 +62,12 @@ public class GameController {
         myTowerManager = new TowerManager();
     }
 
+    public GameController (String filepath, List<Node> nodes, List<Tower> possibleTowers)
+        throws InsufficientParametersException {
+        this(filepath, nodes);
+        // TODO what to do with possibleTowers?
+    }
+
     /**
      * Given a location of a game file, the {@link GameCreator#loadGame(String)} method if called,
      * which generates a map of objects names to the
@@ -141,10 +147,20 @@ public class GameController {
         for (String partName : FACTORY_PART_NAMES) {
             myGame.addGameElement(partName, myObjects.get(partName));
         }
-        
+
         myTowerManager.add(myObjects.get("Tower"));
 
         return myGame;
+    }
+
+    public void startGame (long frameRate) {
+        Timeline gameTimeline = new Timeline();
+        KeyFrame game =
+                new KeyFrame(Duration.millis(1 / frameRate),
+                             e -> myGame.update((int) (Integer.parseInt(gameTimeline
+                                     .currentTimeProperty().toString()) / (1 / frameRate))));
+        gameTimeline.getKeyFrames().add(game);
+        gameTimeline.play();
     }
 
     /**
@@ -156,14 +172,15 @@ public class GameController {
 
     }
 
+    public void addPlaceable (String id, double sceneX, double sceneY) {
+        // TODO Auto-generated method stub
+        myGame.placeTower(id, sceneX, sceneY);
+    }
+
     public static void main (String[] args) throws InsufficientParametersException {
         GameController test =
                 new GameController(
                                    "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile",
                                    new ArrayList<Node>());
-    }
-    public void addPlaceable (String id, double sceneX, double sceneY) {
-        // TODO Auto-generated method stub
-        myGame.placeTower(id, sceneX, sceneY);
     }
 }
