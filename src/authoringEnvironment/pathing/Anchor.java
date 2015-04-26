@@ -3,6 +3,7 @@ package authoringEnvironment.pathing;
 import authoringEnvironment.objects.Coordinate;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -10,63 +11,74 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 
 
-public class Anchor extends Circle {
-    //private Coordinate dragDelta;
+/**
+ * This class codes for a draggable anchor point that is displayed to the user visually as a circle.
+ * 
+ * @author Callie Mao, jewelsea (StackOverflow)
+ *
+ */
 
-    public Anchor (Color color, DoubleProperty x, DoubleProperty y) {
-        super(x.get(), y.get(), 10);
+public class Anchor extends Circle {
+    private static final int RADIUS = 10;
+    private boolean isPressed;
+
+    public Anchor (Color color,
+                   DoubleProperty x,
+                   DoubleProperty y,
+                   int parentWidth,
+                   int parentHeight) {
+        super(x.get(), y.get(), RADIUS);
         setFill(color.deriveColor(1, 1, 1, 0.5));
         setStroke(color);
         setStrokeWidth(2);
         setStrokeType(StrokeType.OUTSIDE);
-
-        //x.bind(centerXProperty());
-        //y.bind(centerYProperty());
-        enableDrag();
-
+        isPressed = false;
+        //TODO: change back to false and then fix the true registers below
+        x.bind(centerXProperty());
+        y.bind(centerYProperty());
+        enableDrag(parentWidth, parentHeight);
     }
 
-    private void enableDrag () {
-        // final Coordinate dragDelta; // = new Coordinate(0,0);
-     /*   setOnMousePressed(new EventHandler<MouseEvent>() {
+    public Coordinate getCoordinates () {
+        //TODO: make sure to normalize this to the size of teh group/stackpane that it is on
+        return new Coordinate(getCenterX(), getCenterY());
+    }
+
+    // make a node movable by dragging it around with the mouse.
+    private void enableDrag (int parentWidth, int parentHeight) {
+        final Delta dragDelta = new Delta();
+        setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
                 // record a delta distance for the drag and drop operation.
-                // System.out.println("pressed");
-                // double x = getCenterX() - mouseEvent.getX();
-                // double y = getCenterY() - mouseEvent.getY();
-                // dragDelta = new Coordinate(x, y);
-                // getScene().setCursor(Cursor.MOVE);
+                isPressed = true;
+                dragDelta.x = getCenterX() - mouseEvent.getX();
+                dragDelta.y = getCenterY() - mouseEvent.getY();
+                getScene().setCursor(Cursor.MOVE);
             }
-        });*/
+        });
         setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
                 getScene().setCursor(Cursor.HAND);
+                isPressed = false;
+                // TODO: store coordinates and then get them from the superclass's methods
             }
         });
-        setOnMouseDragged(e -> handleDragInput(e)
-        /*
-         * new EventHandler<MouseEvent>() {
-         * 
-         * @Override
-         * public void handle (MouseEvent mouseEvent) {
-         * System.out.println("dragged");
-         * double newX = mouseEvent.getX() +
-         * dragDelta.getX();
-         * //if (newX > 0 && newX < getScene().getWidth())
-         * {
-         * setTranslateX(newX);
-         * //}
-         * double newY = mouseEvent.getY() +
-         * dragDelta.getY();
-         * //if (newY > 0 && newY <
-         * getScene().getHeight()) {
-         * setTranslateY(newY);
-         * //}
-         * }
-         * }
-         */);
+        setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle (MouseEvent mouseEvent) {
+                isPressed = true;
+                double newX = mouseEvent.getX() + dragDelta.x;
+                if (newX > 0 + RADIUS && newX < parentWidth - RADIUS) {
+                    setCenterX(newX);
+                }
+                double newY = mouseEvent.getY() + dragDelta.y;
+                if (newY > 0 + RADIUS && newY < parentHeight - RADIUS) {
+                    setCenterY(newY);
+                }
+            }
+        });
         setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
@@ -84,17 +96,15 @@ public class Anchor extends Circle {
             }
         });
     }
-
-    private void handleDragInput (MouseEvent e) {
-        double currentX = e.getX();
-        double currentY = e.getY();
-      //  if (currentX > 0 && currentX < getScene().getWidth()){ // TODO: make getscenegetwidth actually be the width of the map
-        System.out.println(currentX);
-        System.out.println(currentY);
-            setTranslateX(currentX);
-       // }
-        //if (currentY > 0 && currentY < getScene().getHeight()) { // TODO: see above TODO
-            setTranslateY(e.getY());
-        //}
+    
+    public boolean isSelected(){
+        return isPressed;
     }
+
+    // records relative x and y co-ordinates.
+    private class Delta {
+        double x, y;
+    }
+    
+
 }

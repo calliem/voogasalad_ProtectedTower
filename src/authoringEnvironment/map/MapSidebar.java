@@ -5,22 +5,35 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
@@ -32,6 +45,8 @@ import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.pathing.Anchor;
+import authoringEnvironment.pathing.Anchor;
+import authoringEnvironment.pathing.PathView;
 import authoringEnvironment.util.Scaler;
 
 
@@ -55,7 +70,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128;
 
     private static final int MAP_OPACITY_DEACTIVATED = 1;
-    private static final double MAP_OPACITY_ACTIVATED = 0.5;
+    private Rectangle myMapOverlay;
+    private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
@@ -87,6 +103,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         myLives = DEFAULT_LIVES;
+        myMapOverlay =
+                new Rectangle(getMapWorkspace().getActiveMap().getWidth(), getMapWorkspace()
+                        .getActiveMap().getHeight());
+        myMapOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -98,6 +118,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     public void changeMap (TileMap map) {
         getMapWorkspace().updateWithNewMap(map, myActiveColor);
+
         mapNameTextField.setText(map.getName());
         tileRowDisplay.setText(Integer.toString(map.getNumRows()));
         tileColDisplay.setText(Integer.toString(map.getNumCols()));
@@ -250,7 +271,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         ImageView snapView = new ImageView();
         snapView.setImage(snapImage);
         activeMap.setThumbnail(snapView);
-       
 
         if (!super.getMaps().contains(activeMap)) {
             super.getMaps().add(activeMap);
@@ -259,8 +279,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             int existingIndex = super.getMaps().indexOf(activeMap);
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
-        }        
-       displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
+        }
+        displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
 
         // saves the map to a specific key
         // checks to see if the current map already exists
@@ -333,7 +353,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     protected void setContent (GridPane container) {
         container.setVgap(VGAP_PADDING);
         container.setHgap(HGAP_PADDING);
-
 
         Button createMapButton = new Button(getResources().getString("CreateMap"));
         createMapButton.setOnMouseClicked(e -> createMap());
@@ -408,7 +427,16 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void savePath () {
         // getMapWorkspace().getActiveMap()
         deactivatePathMode();
-        displayWorkspaceMessage(getResources().getString("PathSaved"), Color.GREEN);
+        displayWorkspaceMessage(getResources().getString("PathSaved"), Color.GREEN); // TODO: make
+                                                                                     // this a part
+                                                                                     // of the
+                                                                                     // workspace
+                                                                                     // class so
+                                                                                     // that the
+                                                                                     // pathsettings
+                                                                                     // class can
+                                                                                     // access this
+                                                                                     // too
     }
 
     private void deletePath () {
@@ -429,13 +457,39 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
-        getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
-        boolean add = getMapWorkspace().getChildren().add(new Anchor(Color.RED, new SimpleDoubleProperty(10), new SimpleDoubleProperty(10)));
+        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
+        getMapWorkspace().getActiveMap().getRoot().getChildren().add(myMapOverlay);
+        
+        //TODO: set this as the active path in the workspace so that it can be easily deleted
+        PathView path = new PathView(getMapWorkspace().getActiveMap());
 
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseClicked(e -> setAnchorPoint(path, e));
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseDragged(e -> {});
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> {});
+
+        // TODO for testing:
+        double startX = 100;
+        double startY = 100;
+        double endX = 300;
+        double endY = 300;
+
+        path.createCurve(startX, startY, endX, endY);
+    }
+
+    private void setAnchorPoint (PathView path, MouseEvent e) {
+        System.out.println("path.areAnchorsSelected()" + path.areAnchorsSelected());
+        if (!path.areAnchorsSelected())
+            path.addAnchor(e.getX(), e.getY());
+        /*if (path.getNumAnchors() == 0)
+            path.createRootAnchor(e.getX(), e.getY());
+        else
+            path.addAnchor(e.get);*/
+        
     }
 
     private void deactivatePathMode () {
         getMapWorkspace().getActiveMap().attachTileListeners();
-        getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
+        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
+        getMapWorkspace().getActiveMap().getRoot().getChildren().remove(myMapOverlay);
     }
 }
