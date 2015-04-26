@@ -24,6 +24,7 @@ import authoringEnvironment.DataFormatException;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.objects.FlowView;
+import authoringEnvironment.objects.WaveFlowView;
 import authoringEnvironment.util.NamePrompt;
 
 
@@ -36,7 +37,7 @@ import authoringEnvironment.util.NamePrompt;
  */
 
 public class WaveEditor extends MainEditor {
-    private Map<String, ArrayList<FlowView>> myWaves;
+    private Map<String, ArrayList<WaveFlowView>> myWaves;
     private final String WAVE = "Wave";
     private static final int PADDING = 10;
     private static final String NO_WAVES = "No waves yet...";
@@ -73,7 +74,7 @@ public class WaveEditor extends MainEditor {
     public WaveEditor (Controller c, String name) {
         super(c, name);
         myKey = Controller.KEY_BEFORE_CREATION;
-        myWaves = new HashMap<String, ArrayList<FlowView>>();
+        myWaves = new HashMap<String, ArrayList<WaveFlowView>>();
     }
 
     /**
@@ -166,7 +167,7 @@ public class WaveEditor extends MainEditor {
             editor.getChildren().remove(empty);
             editorLayout.getChildren().add(contentScrollPane);
         }
-        myWaves.put(waveName, new ArrayList<FlowView>());
+        myWaves.put(waveName, new ArrayList<WaveFlowView>());
 
         numWaves++;
         background.setHeight(numWaves * WAVE_PANEL_HEIGHT + (numWaves - 1) * PADDING + 2 * PADDING);
@@ -229,7 +230,7 @@ public class WaveEditor extends MainEditor {
         List<Double> times = new ArrayList<Double>();
         times.add(0.0);
 
-        for (FlowView unit : myWaves.get(waveName)) {
+        for (WaveFlowView unit : myWaves.get(waveName)) {
             partFileNames.addAll(unit.getFileNames());
             delays.addAll(unit.getDelays());
         }
@@ -259,7 +260,7 @@ public class WaveEditor extends MainEditor {
     }
 
     private void addUnitToWave (ScrollPane displayPane, HBox wave, String waveName) {
-        FlowView unit = new FlowView(100, myController);
+        WaveFlowView unit = new WaveFlowView(100, myController);
         wave.getChildren().add(unit);
         myWaves.get(waveName).add(unit);
 
@@ -273,7 +274,7 @@ public class WaveEditor extends MainEditor {
      *         and the value is its corresponding information stored in an array
      *         list of FlowViews.
      */
-    public Map<String, ArrayList<FlowView>> getWaves () {
+    public Map<String, ArrayList<WaveFlowView>> getWaves () {
         return myWaves;
     }
 }

@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -35,17 +36,17 @@ import authoringEnvironment.setting.SpriteSetting;
  * the information for the WaveEditor
  * 
  * @author Megan Gutter
- * @author Callie Mao
+ * @author Kevin He
  *
  */
 
 public class FlowView extends HBox {
-    private TextField delayTextField;
+    protected TextField delayTextField;
     private FileChooser fileChooser;
-    private Controller myController;
+    protected Controller myController;
     private int myHeight;
     private List<String> partFileNames;
-    private List<Double> delays;
+    protected List<Double> delays;
 
     private VBox selector;
 
@@ -76,23 +77,7 @@ public class FlowView extends HBox {
         selector = new VBox(VBOX_PADDING_MULTIPLIER * PADDING);
         selector.setAlignment(Pos.CENTER);
 
-        ArrayList<String> options = new ArrayList<>();
-        options.add("Unit");
-        options.add("Wave");
-        ObservableList<String> optionsList = FXCollections.observableArrayList(options);
-        final ComboBox<String> partSelectorBox = new ComboBox<>(optionsList);
-        Tooltip tooltip = new Tooltip("Select something to add!");
-        tooltip.setTextAlignment(TextAlignment.CENTER);
-        Tooltip.install(partSelectorBox, tooltip);
-
-        // TODO: use lambda for selectUnit/selectWave method?
-        partSelectorBox.setPromptText("...");
-        partSelectorBox.valueProperty().addListener( (obs, oldValue, newValue) -> {
-            if (newValue.equals("Unit"))
-                selectUnit();
-                                                    else if (newValue.equals("Wave"))
-                                                        selectWave();
-                                                });
+        final Node partSelectorBox = createOptionSelector();
 
         selector.getChildren().add(partSelectorBox);
         this.getChildren().add(selector);
@@ -100,6 +85,33 @@ public class FlowView extends HBox {
         VBox arrow = createArrowAndDelayVisuals();
         this.getChildren().add(arrow);
         this.setPrefHeight(myHeight);
+    }
+
+//    protected ComboBox<String> createOptionSelector () {
+//        ArrayList<String> options = new ArrayList<>();
+//        options.add("Unit");
+//        options.add("Wave");
+//        ObservableList<String> optionsList = FXCollections.observableArrayList(options);
+//        final ComboBox<String> partSelectorBox = new ComboBox<>(optionsList);
+//        Tooltip tooltip = new Tooltip("Select something to add!");
+//        tooltip.setTextAlignment(TextAlignment.CENTER);
+//        Tooltip.install(partSelectorBox, tooltip);
+//
+//        // TODO: use lambda for selectUnit/selectWave method?
+//        partSelectorBox.setPromptText("...");
+//        partSelectorBox.valueProperty().addListener( (obs, oldValue, newValue) -> {
+//            if (newValue.equals("Unit"))
+//                selectUnit();
+//                                                    else if (newValue.equals("Wave"))
+//                                                        selectWave();
+//                                                });
+//        return partSelectorBox;
+//    }
+    
+    protected Node createOptionSelector() {
+        Button waveButton = new Button("Choose Wave");
+        waveButton.setOnAction(e -> selectWave());;
+        return waveButton;
     }
 
     private void showArrowAnimation (ImageView arrow, TextField field) {
@@ -150,7 +162,7 @@ public class FlowView extends HBox {
         }
     }
 
-    private void selectWave () {
+    protected void selectWave () {
         File file = fileChooser.showOpenDialog(null);
         Text waveNameDisplay = new Text(file.getName());
         insertElement(waveNameDisplay);
@@ -166,7 +178,7 @@ public class FlowView extends HBox {
         }
     }
 
-    private void insertElement (Node node) {
+    protected void insertElement (Node node) {
         if (selector.getChildren().size() > 1) {
             selector.getChildren().remove(1);
         }
