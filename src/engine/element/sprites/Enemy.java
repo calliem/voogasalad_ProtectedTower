@@ -20,6 +20,8 @@ import engine.InsufficientParametersException;
  * Some may also be able to attack towers.
  * 
  * @author Qian Wang
+ * @author Sean Scott
+ * @author Greg McKeon
  *
  */
 

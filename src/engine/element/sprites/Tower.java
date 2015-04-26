@@ -12,6 +12,7 @@ import annotations.parameter;
  * 
  * @author Qian Wang
  * @author Bojia Chen
+ * @author Greg McKeon
  *
  */
 public class Tower extends GameSprite {

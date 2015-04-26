@@ -9,6 +9,7 @@ import javafx.geometry.Point2D;
  * include those to control movement. A variable representing velocity can be used to move.
  * 
  * @author Qian Wang
+ * @author Greg McKeon
  *
  */
 public abstract class MoveableSprite extends Sprite {

@@ -12,6 +12,7 @@ import engine.Collidable;
  * used to determine collisions.
  * 
  * @author Qian Wang
+ * @author Greg McKeon
  *
  */
 public class GameElement implements Collidable {

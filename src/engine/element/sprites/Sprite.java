@@ -11,6 +11,7 @@ import engine.Updateable;
  * return a boolean indicating if another type is able to target or collide with it.
  * 
  * @author Qian Wang
+ * @author Greg McKeon
  *
  */
 

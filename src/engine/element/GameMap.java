@@ -4,15 +4,28 @@ import annotations.parameter;
 import engine.element.sprites.GridCell;
 
 
+/**
+ * This class represents the map for a game, containing cells which specify certain tags to
+ * determine if towers can be placed on them, if enemies can travel over, etc.
+ * 
+ * @author Qian Wang
+ *
+ */
 public class GameMap {
-    @parameter(settable = true, playerDisplay = false)
+
+    @parameter(settable = true, playerDisplay = false, defaultValue = "20")
+    private String[][] myTileNames;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "20")
+    private Integer rows;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "30")
+    private Integer columns;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "5")
+    private Integer tileSize;
+
+    /**
+     * Holds the actual grid of cells, showing which cells have which tags
+     */
     private GridCell[][] myMap;
-    @parameter(settable = true, playerDisplay = false)
-    private int rows = 10;
-    @parameter(settable = true, playerDisplay = false)
-    private int columns = 10;
-    @parameter(settable = true, playerDisplay = false)
-    private int tileSize = 5;
 
     public GameMap () {
 

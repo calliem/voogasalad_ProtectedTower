@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import annotations.parameter;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import util.reflection.Reflection;
+import annotations.parameter;
 import engine.Bank;
 import engine.Endable;
 import engine.Updateable;
@@ -27,8 +26,8 @@ public class Game implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
 
-    @parameter(settable = true, playerDisplay = false)
-    private Integer HP = 100;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "20")
+    private Integer lives;
 
     /**
      * List of Javafx objects so that new nodes can be added for the player to display
@@ -69,7 +68,7 @@ public class Game implements Updateable, Endable {
     @Override
     public void update (int counter) {
         System.out.println("Beginning cycle " + counter);
-        myConditions.forEach(c -> c.act(HP));
+        myConditions.forEach(c -> c.act(lives));
         List<String> enemiesToSpawn = myLevels.get(myActiveLevelIndex).update(counter);
         // TODO update spawn location to correct one
         myLayout.spawnEnemy(enemiesToSpawn, new Point2D(0, 0));

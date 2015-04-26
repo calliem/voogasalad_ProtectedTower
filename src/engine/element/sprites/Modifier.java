@@ -5,6 +5,7 @@ package engine.element.sprites;
  * as a status effect.
  * 
  * @author Qian Wang
+ * @author Greg McKeon
  *
  */
 public class Modifier extends GameElement {
