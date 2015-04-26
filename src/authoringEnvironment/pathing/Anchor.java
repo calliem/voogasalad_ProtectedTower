@@ -89,8 +89,8 @@ public class Anchor extends Circle {
         double currentX = e.getX();
         double currentY = e.getY();
       //  if (currentX > 0 && currentX < getScene().getWidth()){ // TODO: make getscenegetwidth actually be the width of the map
-        System.out.println(currentX);
-        System.out.println(currentY);
+        System.out.println("X: " + currentX + "Y: " + currentY);
+        //System.out.println(currentY);
             setTranslateX(currentX);
        // }
         //if (currentY > 0 && currentY < getScene().getHeight()) { // TODO: see above TODO
