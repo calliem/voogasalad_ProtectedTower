@@ -90,33 +90,15 @@ public class Game extends GameElement implements Updateable, Endable {
         Collections.sort(myLevels);
     }
 
-    // TODO refactor add methods below
-    public void addTowers (Map<String, Map<String, Object>> allObjects) {
-        myLayout.initializeTowers(allObjects);
-    }
-
-    public void addEnemies (Map<String, Map<String, Object>> allObjects) {
-        myLayout.initializeEnemies(allObjects);
-    }
-
-    public void addProjectiles (Map<String, Map<String, Object>> allObjects) {
-        myLayout.initializeProjectiles(allObjects);
-    }
-
-    public void addGridCells (Map<String, Map<String, Object>> allObjects) {
-        myLayout.initializeGridCells(allObjects);
-    }
-
-    public void addGameMaps (Map<String, Map<String, Object>> allObjects) {
-        myLayout.initializeGameMaps(allObjects);
-    }
-
-    public void addRounds (Map<String, Map<String, Object>> allObjects) {
-        myLayout.initializeRounds(allObjects);
-    }
-
-    public void addWaves (Map<String, Map<String, Object>> allObjects) {
-        myLayout.initializeWaves(allObjects);
+    /**
+     * Used to tell the Layout what possible objects there are to instantiate
+     * 
+     * @param className String of the class of the object, such as "Tower" or "Enemy"
+     * @param allObjects Map<String, Map<String, Object>> object representing mapping of GUID to
+     *        parameter map
+     */
+    public void addGameElement (String className, Map<String, Map<String, Object>> allObjects) {
+        myLayout.initializeGameElement(className, allObjects);
     }
 
     public void addLayoutParameters (Map<String, Object> parameters) {

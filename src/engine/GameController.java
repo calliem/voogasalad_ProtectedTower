@@ -30,45 +30,42 @@ public class GameController {
     private static final String PARAMETER_PARTTYPE = "PartType";
     private static final String PARAMETER_GUID = "PartKey";
     /**
+     * Holds a set of part names to load
+     */
+    private static final String[] PART_NAMES = new String[] { "Tower", "Enemy", "Projectile",
+                                                             "GridCell", "GameMap", "Round",
+                                                             "Wave", "Game", "Layout", "Level" };
+    /**
+     * Holds a subset of part names to give to the game element factory
+     */
+    private static final String[] FACTORY_PART_NAMES = new String[] { "Tower", "Enemy",
+                                                                     "Projectile", "GridCell",
+                                                                     "GameMap", "Round", "Wave" };
+
+    /**
      * Holds an instance of an entire game
      */
-    Game myGame;
+    private Game myGame;
+    private TowerManager myTowerManager;
+
     /**
-     * Holds a map of a part name to the package to use to reflect
+     * Creates a new instance of a game represented by the XML files at a given file location.
+     * 
+     * @param filepath String to the main directory holding the game
+     * @param nodes List<Node> reference to that used in the Player class to display the game
+     * @throws InsufficientParametersException when filepath does not point to a well defined game
+     *         file
      */
-    Map<String, String> myPartTypeToPackage = new HashMap<>();
-    
-    /**
-     * List of Javafx objects so that new nodes can be added for the player to
-     * display
-     */
-    private List<Node> myNodes;
+    public GameController (String filepath, List<Node> nodes)
+        throws InsufficientParametersException {
+        myGame = this.loadGame(filepath, nodes);
+        myTowerManager = new TowerManager();
+    }
+
     public GameController (String filepath, List<Node> nodes, List<Tower> possibleTowers)
         throws InsufficientParametersException {
-       // fillPackageMap();
-        myNodes = nodes;
-        //myGame = this.loadGame(filepath);
-        myGame = new Game(myNodes);
-    }
-    public void startGame(long frameRate){
-        Timeline gameTimeline = new Timeline();
-        KeyFrame game = new KeyFrame(Duration.millis(1/frameRate),
-                        e -> myGame.update((int)(Integer.parseInt(gameTimeline.currentTimeProperty().toString())/(1/frameRate))));
-        gameTimeline.getKeyFrames().add(game);
-        gameTimeline.play();
-    }
-    // TODO replace this with loading from data file
-    private void fillPackageMap () {
-        myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
-        myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
-        myPartTypeToPackage.put("Projectile", "engine.element.sprites.Projectile");
-        myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
-        myPartTypeToPackage.put("Game", "engine.element.Game");
-        myPartTypeToPackage.put("Level", "engine.element.Level");
-        myPartTypeToPackage.put("GameMap", "engine.element.GameMap");
-        myPartTypeToPackage.put("Round", "engine.element.Round");
-        myPartTypeToPackage.put("Wave", "engine.element.Wave");
-        myPartTypeToPackage.put("Layout", "engine.element.Layout");
+        this(filepath, nodes);
+        // TODO what to do with possibleTowers?
     }
 
     /**
@@ -85,8 +82,8 @@ public class GameController {
     private Game loadGame (String filepath, List<Node> nodes)
                                                              throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
-        for (String s : myPartTypeToPackage.keySet()) {
-            myObjects.put(s, new HashMap<>());
+        for (String partName : PART_NAMES) {
+            myObjects.put(partName, new HashMap<>());
         }
 
         // Get list of parameters maps for all objects
@@ -103,48 +100,81 @@ public class GameController {
             System.out.println((String) obj.get(PARAMETER_GUID));
         }
 
+        return initializeGame(nodes, myObjects);
+    }
+
+    /**
+     * Creates a new Game object given a mapping of all possible objects that can exist in that
+     * game. Error checking is done to make sure only one game and layout are used.
+     * 
+     * @param nodes List<Node> list of javafx nodes that the game can update
+     * @param myObjects Map<String, Map<String, Map<String, Object>>> representing mapping of part
+     *        name to the specific objects of that type
+     * @return Game object which has been instantiated with given objects
+     * @throws InsufficientParametersException if inputted objects do not fulfill game requirements
+     */
+    private Game initializeGame (List<Node> nodes,
+                                 Map<String, Map<String, Map<String, Object>>> myObjects)
+                                                                                         throws InsufficientParametersException {
         // store game parameters
         Game myGame = new Game(nodes);
 
         // TODO test for errors for 0 data files, or too many
-        if (myObjects.get("Game").size() > 1) {
-            throw new InsufficientParametersException("Multiple game data files created");
+        if (myObjects.get("Game").size() != 1) {
+            throw new InsufficientParametersException("Zero or multiple game data files created");
         }
         else {
             for (Map<String, Object> map : myObjects.get("Game").values()) {
                 myGame.setParameterMap(map);
             }
         }
-        if (myObjects.get("Layout").size() > 1) {
-            throw new InsufficientParametersException("Multiple game layouts created");
+        if (myObjects.get("Layout").size() != 1) {
+            throw new InsufficientParametersException("Zero or multiple game layouts created");
         }
         else {
             for (Map<String, Object> map : myObjects.get("Layout").values()) {
                 myGame.addLayoutParameters(map);
             }
         }
+        if (myObjects.get("Level").size() < 1) {
+            throw new InsufficientParametersException("No game levels created");
+        }
+        else {
+            myGame.addLevels(myObjects.get("Level"));
+        }
 
         // Send right sets of objects to the right objects
-        myGame.addTowers(myObjects.get("Tower"));
-        myGame.addEnemies(myObjects.get("Enemy"));
-        myGame.addProjectiles(myObjects.get("Projectile"));
-        myGame.addGridCells(myObjects.get("GridCell"));
-        myGame.addLevels(myObjects.get("Level"));
-        myGame.addGameMaps(myObjects.get("GameMap"));
-        myGame.addRounds(myObjects.get("Round"));
-        myGame.addWaves(myObjects.get("Wave"));
+        for (String partName : FACTORY_PART_NAMES) {
+            myGame.addGameElement(partName, myObjects.get(partName));
+        }
+
+        myTowerManager.add(myObjects.get("Tower"));
 
         return myGame;
+    }
+
+    public void startGame (long frameRate) {
+        Timeline gameTimeline = new Timeline();
+        KeyFrame game =
+                new KeyFrame(Duration.millis(1 / frameRate),
+                             e -> myGame.update((int) (Integer.parseInt(gameTimeline
+                                     .currentTimeProperty().toString()) / (1 / frameRate))));
+        gameTimeline.getKeyFrames().add(game);
+        gameTimeline.play();
     }
 
     /**
      * Called by the player to tell engine about keypressed
      * 
-     * @param key
-     *        KeyEvent object
+     * @param key KeyEvent object
      */
     public void handleKeyInput (KeyEvent key) {
 
+    }
+
+    public void addPlaceable (String id, double sceneX, double sceneY) {
+        // TODO Auto-generated method stub
+        myGame.placeTower(id, sceneX, sceneY);
     }
 
     public static void main (String[] args) throws InsufficientParametersException {
@@ -152,9 +182,5 @@ public class GameController {
                 new GameController(
                                    "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile",
                                    new ArrayList<Node>(), new ArrayList<Tower>());
-    }
-    public void addPlaceable (String id, double sceneX, double sceneY) {
-        // TODO Auto-generated method stub
-        myGame.placeTower(id, sceneX, sceneY);
     }
 }

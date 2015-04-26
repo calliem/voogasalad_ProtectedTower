@@ -1,13 +1,15 @@
 package authoringEnvironment.editors;
 
-import authoringEnvironment.Controller;
-import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.map.MapWorkspace;
-import authoringEnvironment.objects.TileMap;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
+import authoringEnvironment.map.MapWorkspace;
+import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.objects.TileMap;
 
 
 /**
@@ -22,13 +24,15 @@ public abstract class MainEditor extends Editor {
 
     private GridPane myPane;
     private MapWorkspace myMapWorkspace;
+    private ObservableList<GameObject> myMaps;
 
-    public static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
-    public static final double MAP_WIDTH_MULTIPLIER = .75; // THIS IS REPLICATED
+    private static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
+    private static final double MAP_WIDTH_MULTIPLIER = .75; // THIS IS REPLICATED
     // WITH THOSE
     // VARIABLES IN MAP
     // WORKSPACE
-    public static final double MAP_HEIGHT_PERCENT = 100; // THIS IS REPLICATED
+    private static final double MAP_HEIGHT_PERCENT = 100; // THIS IS REPLICATED
+    private static final String DARK_TAB_CSS = "-fx-base: #3c3c3c;";
 
     // WITH THOSE
     // VARIABLES IN MAP
@@ -36,7 +40,8 @@ public abstract class MainEditor extends Editor {
 
     public MainEditor (Controller c, String name) {
         super(c, name);
-        this.setStyle("-fx-base: #3c3c3c;");
+        this.setStyle(DARK_TAB_CSS);
+        myMaps = c.getMaps();
     }
 
     /**
@@ -49,6 +54,7 @@ public abstract class MainEditor extends Editor {
         Group visuals = new Group();
         createGridPane();
         myMapWorkspace = new MapWorkspace();
+        System.out.println("MAP WORKSPACE CREATED");
         myPane.add(myMapWorkspace, 0, 0);
         visuals.getChildren().add(myPane);
         return visuals;
@@ -67,6 +73,10 @@ public abstract class MainEditor extends Editor {
         return myMapWorkspace.getActiveMap();
     }
 
+    public ObservableList<GameObject> getMaps () {
+        return myMaps;
+    }
+
     private void setGridPaneConstraints (GridPane pane) {
         RowConstraints row0 = new RowConstraints();
         row0.setPercentHeight(MAP_HEIGHT_PERCENT);
@@ -83,6 +93,33 @@ public abstract class MainEditor extends Editor {
 
     protected GridPane getPane () {
         return myPane;
+    }
+
+    public void update () {
+        // update in level editor will update the maps and paths and other stuff
+        // update in map editor will update the paths and tiles
+        //
+
+        /*
+         * System.out.println("====================leveleditor update method called================="
+         * );
+         * MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps"); //test
+         * if (!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap().getMap())) {
+         * System.out.println("stored Maps map workspace: ");
+         * mapEditor.getMapWorkspace();
+         * // .getChildren().remove(mapEditor.getActiveMap().getMap());
+         * System.out.println("this specific map workspace: ");
+         * getMapWorkspace();
+         * System.out.println("--");
+         * // .getChildren().add(mapEditor.getActiveMap().getMap());
+         * Text text = new Text("test");
+         * getMapWorkspace().getChildren().add(text);
+         * 
+         * // mapEditor.getMapWorkspace().getChildren().remove(mapEditor.getActiveMap().getMap());
+         * getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());
+         * }
+         */
+
     }
     /*
      * public void update(){ MapEditor mapEditor = (MapEditor)

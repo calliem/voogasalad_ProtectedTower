@@ -17,6 +17,13 @@ public abstract class GameElement {
      */
     private Map<String, Object> myParameters;
 
+    /**
+     * Default constructor for use with reflection
+     */
+    public GameElement () {
+
+    }
+
     // getters and setters
 
     /**
