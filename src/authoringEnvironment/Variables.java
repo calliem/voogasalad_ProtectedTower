@@ -17,7 +17,6 @@ public class Variables {
     public static final String PARAMETER_TAGS = "Tags";
     public static final String PARAMETER_COLOR = "Color";
     
-    
     public static final String DESCRIPTION = "Description";
     public static final String LIVES = "Lives";
 
