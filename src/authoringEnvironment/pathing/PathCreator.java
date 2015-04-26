@@ -11,6 +11,8 @@ import authoringEnvironment.pathing.BoundLine;
 
 
 public class PathCreator {
+    private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
+    
     public PathCreator (Group parent) {
         CubicCurve curve = createStartingCurve();
 
@@ -42,21 +44,30 @@ public class PathCreator {
         double startY = 100;
         double endX = 300;
         double endY = 300;
-        double lineLength = Math.sqrt();
-        //double xDiff = endX-startX;
+        //double lineLength = Math.sqrt(Math.pow(startX-endX, 2) + Math.pow(startY-endY, 2));
+        double xDiff = endX - startX;
+        double yDiff = endY - startY;
         
+        double controlX1 = startX + xDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
+        double controlY1 = startY + yDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
+        
+        double controlX2 = endX - xDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
+        double controlY2 = endY - yDiff * CONTROL_POINT_LOCATION_MULTIPLIER;
+        
+        /*double slope;
         try{
-        double slope = (endY-startY)/(endX-startX);
+        slope = (endY-startY)/(endX-startX);
         }
         catch(ArithmeticException e){
             slope = Integer.MAX_VALUE;
-        }
+        }*/
+        
         curve.setStartX(startX);
         curve.setStartY(startY);
-        curve.setControlX1(startX-);
-        curve.setControlY1(startY*.5);
-        curve.setControlX2(startX*2.5);
-        curve.setControlY2(startY*1.5);
+        curve.setControlX1(controlX1);
+        curve.setControlY1(controlY1);
+        curve.setControlX2(controlX2);
+        curve.setControlY2(controlY2);
         curve.setEndX(endX);
         curve.setEndY(endY);
         curve.setStroke(Color.FORESTGREEN);
