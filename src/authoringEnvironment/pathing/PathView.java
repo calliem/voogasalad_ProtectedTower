@@ -7,8 +7,6 @@ import java.util.Map;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
@@ -16,9 +14,7 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
-import authoringEnvironment.objects.Coordinate;
 import authoringEnvironment.objects.TileMap;
-import authoringEnvironment.pathing.BoundLine;
 
 
 public class PathView {
@@ -114,7 +110,9 @@ public class PathView {
             createCurve(mostRecentPoint, anchor);
         }
         
-        Text num = new Text(anchor.getCenterX(), anchor.getCenterY(), Integer.toString(numPoints));
+        Text num = new Text(Integer.toString(numPoints));
+        num.xProperty().bind(anchor.centerXProperty());
+        num.yProperty().bind(anchor.centerYProperty());
         myParent.getRoot().getChildren().add(num);
         mostRecentPoint = anchor;
         myAnchors.add(anchor);
@@ -140,6 +138,12 @@ public class PathView {
         Anchor control2 =
                 new Anchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property(),
                            myParent.getWidth(), myParent.getHeight());
+        
+        curve.startXProperty().bind(start.centerXProperty());
+        curve.endXProperty().bind(end.centerXProperty());
+        
+        curve.startYProperty().bind(start.centerYProperty());
+        curve.endYProperty().bind(end.centerYProperty());
 
      /*   Coordinate startCoordinates = start.getCoordinates();
         Coordinate endCoordinates = end.getCoordinates();
@@ -172,6 +176,7 @@ public class PathView {
 
         curve.setStartX(startX);
         curve.setStartY(startY);
+        
         curve.setControlX1(controlX1);
         curve.setControlY1(controlY1);
         curve.setControlX2(controlX2);
