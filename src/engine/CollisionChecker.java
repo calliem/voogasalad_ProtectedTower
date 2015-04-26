@@ -121,14 +121,34 @@ public class CollisionChecker {
         return shape1.getBoundsInParent().intersects(shape2.getBoundsInParent());
     }
     
+    /**
+     * Checks if two sprite hitboxes collide
+     * @param sprite1 first Sprite to check
+     * @param sprite2 second Sprite to check
+     * @return true if the two hitboxes collide
+     */
+    
     private boolean hitBoxCollide(Sprite sprite1, Sprite sprite2){
     	return collides(createHitBox(sprite1), createHitBox(sprite2));
     }
+    
+    /**
+     * Checks if the second sprite is within the range of the first sprite through collisions
+     * @param sprite1 Sprite with range
+     * @param sprite2 Sprite to check if in the first sprite's range
+     * @return true if the second sprite is in the range of the first one
+     */
     
     private boolean rangeCollide(Sprite sprite1, Sprite sprite2){
     	return collides(createRange(sprite1), createHitBox(sprite2));
     }
 
+    
+    /**
+     * Finds all sprites that are within the range of a sprite
+     * @param sprite The sprite that is targeting
+     * @return Set<Sprite> that contains all sprites that are within the range of sprite
+     */
     
 	public Set<Sprite> findTargetable(Sprite sprite) {
 		// TODO Auto-generated method stub
