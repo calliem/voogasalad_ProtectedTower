@@ -40,9 +40,9 @@ public class InstanceManager {
 
     public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
     public static final String PART_TYPE_KEY = "PartType";
-    public static final String NAME_KEY = "Name";
+    public static final String NAME_KEY = "name";
 
-    public static final String IMAGE_KEY = "Image";
+    public static final String IMAGE_KEY = "imagePath";
     public static final String SAVE_PATH_KEY = "SavePath";
 
     private static final String NO_KEYS_MISSING = "no keys missing";

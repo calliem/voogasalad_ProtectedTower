@@ -12,6 +12,8 @@ import annotations.parameter;
 
 public class Projectile extends MoveableSprite {
     @parameter(settable = true, playerDisplay = true)
+    private String imagePath = "";
+    @parameter(settable = true, playerDisplay = true)
     private String name = "Unnamed";
     @parameter(settable = true, playerDisplay = true)
     private String type = "Basic";
