@@ -16,10 +16,12 @@ import engine.UpdateAndReturnable;
  *
  */
 public class Wave implements UpdateAndReturnable, Endable {
-    @parameter(settable = true, playerDisplay = false)
+
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
     private List<List<String>> myEnemies;
-    @parameter(settable = true, playerDisplay = false)
+    @parameter(settable = true, playerDisplay = false, defaultValue = "1.0")
     private double mySendRate;
+
     private int myEnemyIndex = 0;
     private int myTimer = 0;
 

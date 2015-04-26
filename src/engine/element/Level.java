@@ -5,8 +5,6 @@ import java.util.List;
 import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
-import engine.element.sprites.Projectile;
-import engine.element.sprites.Sprite;
 
 
 /**
@@ -21,22 +19,20 @@ import engine.element.sprites.Sprite;
 
 public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
 
-    private static final String PARAMETER_NUMBER = "Number";
-    @parameter(settable = true, playerDisplay = true)
-    private Double HP = 100.0;
-    @parameter(settable = true, playerDisplay = true)
-    private List<String> rounds = null;
-    @parameter(settable = true, playerDisplay = true)
-    private List<String> quantities = null;
-    @parameter(settable = true, playerDisplay = true)
-    private Double sendRate = 1.0;
-    @parameter(settable = true, playerDisplay = true)
-    private List<String> conditions = null;
-    @parameter(settable = true, playerDisplay = true)
-    private Integer number = 0;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "20")
+    private Integer lives;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    private List<String> rounds;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    private List<String> quantities;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
+    private Double sendRate;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    private List<String> conditions;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "0")
+    private Integer number;
+
     private List<Round> myRounds;
-    private double myHealth;
-    private int myLives;
     private int myActiveRoundIndex = 0;
     private Round myActiveRound;
 
