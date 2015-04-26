@@ -1,5 +1,6 @@
 package authoringEnvironment.objects;
 
+import java.util.Map;
 import javafx.scene.image.ImageView;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;

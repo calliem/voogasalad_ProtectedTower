@@ -3,12 +3,9 @@ package authoringEnvironment.objects;
 import imageselectorTEMP.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import javafx.animation.PauseTransition;
-import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -25,14 +22,15 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
-import authoringEnvironment.InstanceManager;
+import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
-import authoringEnvironment.util.Scaler;
 import authoringEnvironment.setting.Setting;
-import authoringEnvironment.setting.StringSetting;
+import authoringEnvironment.util.Scaler;
+
 
 /**
- * Displays an editable sprite object instance along with overlay interactions upon click. 
+ * Displays an editable sprite object instance along with overlay interactions upon click.
+ * 
  * @author Kevin He
  * @author Callie Mao
  *
@@ -49,7 +47,7 @@ public abstract class SpriteView extends StackPane {
     private String spriteName;
     private String imageFile;
     private List<Setting> parameterFields;
-    
+
     private String myKey;
 
     private Text spriteNameDisplay;
@@ -61,7 +59,7 @@ public abstract class SpriteView extends StackPane {
 
     private static final int IMAGE_INDEX = 0;
     private static final int NAME_INDEX = 1;
-//    private static final String DEFAULT_NAME = "Unnamed";
+    // private static final String DEFAULT_NAME = "Unnamed";
 
     private Controller myController;
     private String id;
@@ -76,7 +74,7 @@ public abstract class SpriteView extends StackPane {
      * @param image the file path of this sprite's image
      */
     public SpriteView (Controller c, String name, String image) {
-        myKey = null;
+        myKey = Controller.KEY_BEFORE_CREATION;
         myController = c;
 
         spriteName = name;
@@ -131,7 +129,7 @@ public abstract class SpriteView extends StackPane {
             parameterFields.add(s);
             settingsObjects.getChildren().add(s);
         }
-        
+
         initializeSpriteInfo();
 
         HBox buttons = new HBox(10);
@@ -139,10 +137,11 @@ public abstract class SpriteView extends StackPane {
         saved = new Text(getSpriteType() + " saved!");
         saved.setFill(Color.YELLOW);
         saved.setVisible(false);
+        
 
         Button save = new Button("Save");
         save.setOnAction( (e) -> {
-            if(saveParameterFields(true)){
+            if (saveParameterFields(true)) {
                 displaySavedMessage();
             }
         });
@@ -175,20 +174,29 @@ public abstract class SpriteView extends StackPane {
         if (parameterFields.get(NAME_INDEX).processData()) {
             updateSpriteName();
         }
-        
-        if(parameterFields.get(IMAGE_INDEX).processData()) {
+
+        if (parameterFields.get(IMAGE_INDEX).processData()) {
             updateImageFile();
         }
 
         if (correctFormat && save) {
-            myKey = myController.addPartToGame(getSpriteType(),
-                                                    parameterFields);
+            try {
+                if (myKey.equals(Controller.KEY_BEFORE_CREATION))
+                    myKey = myController.addPartToGame(getSpriteType(),
+                                                       parameterFields);
+                else myKey = myController.addPartToGame(myKey, getSpriteType(), parameterFields);
+            }
+            catch (MissingInformationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            myController.specifyPartImage(myKey, imageFile);
             displaySavedMessage();
         }
         return correctFormat && save;
     }
-    
-    private void updateImageFile(){
+
+    private void updateImageFile () {
         imageFile = parameterFields.get(IMAGE_INDEX).getDataAsString();
         previewImage = new ImageView(new Image(imageFile));
         ScaleImage.scale(previewImage, 90, 70);
@@ -248,7 +256,6 @@ public abstract class SpriteView extends StackPane {
         this.getChildren().remove(this.getChildren().size() - 1);
     }
 
-
     /**
      * Returns the sprite's parameter fields as an array of two strings, the parameter name
      * and the parameter field value.
@@ -294,8 +301,8 @@ public abstract class SpriteView extends StackPane {
     public Button getCloseButton () {
         return overlayCloseButton;
     }
-    
-    public String getName(){
+
+    public String getName () {
         return spriteName;
     }
 

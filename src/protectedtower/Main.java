@@ -25,7 +25,7 @@ public class Main extends Application {
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
     private static final String defaultSaveLocation = System.getProperty(
-			"user.dir").concat("/src/myTowerGames");
+			"user.dir").concat("/data/TestingTesting123");
     
     @Override
     public void start(Stage stage) throws Exception {

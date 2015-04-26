@@ -1,5 +1,6 @@
 package authoringEnvironment.objects;
 
+import java.util.List;
 import javafx.scene.layout.StackPane;
 import authoringEnvironment.Controller;
 import authoringEnvironment.map.MapWorkspace;

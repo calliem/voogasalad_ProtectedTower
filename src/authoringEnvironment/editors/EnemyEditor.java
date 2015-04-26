@@ -1,8 +1,6 @@
 package authoringEnvironment.editors;
 
-import java.util.ArrayList;
 import authoringEnvironment.Controller;
-import authoringEnvironment.objects.EnemyView;
 
 
 /**
@@ -17,4 +15,5 @@ public class EnemyEditor extends SpriteEditor {
         super(c, name);
         // TODO Auto-generated constructor stub
     }
+
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -123,12 +124,12 @@ public class TileMap extends GameObject {
     private void attachTileListener (Tile tile) {
         tile.setOnMouseClicked(e -> tileClicked(tile));
         tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor));
-        setupTooltip();
+        setupTooltip(tile);
         // tile.setOnMouseEntered(e -> )
         // tile.setOnMouseExited(e ->)
     }
     
-    protected void setupTooltip (Object object) {
+    protected void setupTooltip (Node object) {
         String tooltipText = "";
         /*tooltipText += "C"
         
@@ -140,6 +141,8 @@ public class TileMap extends GameObject {
         Tooltip tooltip = new Tooltip(tooltipText);
         tooltip.setTextAlignment(TextAlignment.LEFT);
         Tooltip.install(object, tooltip);*/
+      //this method is used instead of tileClicked to allow for easier "coloring" of large groups of tiles
+   //     object.setOnMouseDragEntered(e -> object.setFill(myActiveColor)); 
     }
 
 
@@ -166,7 +169,7 @@ public class TileMap extends GameObject {
     public void removeTileListeners () {
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
-                myTiles[i][j].setOnMousePressed(e -> {
+                myTiles[i][j].setOnMouseClicked(e -> {
                 });
                 myTiles[i][j].setOnMouseDragEntered(e -> {
                 });

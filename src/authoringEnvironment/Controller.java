@@ -32,7 +32,6 @@ public class Controller {
 
     private static final String DIFFERENT_LIST_SIZE_MESSAGE =
             "Lists passed must contain same number of elements.";
-
     private InstanceManager currentGame;
     private Map<String, ObservableList<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
@@ -173,8 +172,10 @@ public class Controller {
                                                       String partName,
                                                       List<String> params,
                                                       List<Object> data) throws DataFormatException {
-        if (params.size() != data.size()) { throw new DataFormatException(
-                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
+        if (params.size() != data.size()) {
+            throw new DataFormatException(
+                                          DIFFERENT_LIST_SIZE_MESSAGE);
+        }
         Map<String, Object> toAdd = new HashMap<String, Object>();
         for (int i = 0; i < params.size(); i++) {
             toAdd.put(params.get(i), data.get(i));

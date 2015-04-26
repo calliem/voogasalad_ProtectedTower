@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -106,7 +107,8 @@ public class UpdatableDisplay extends VBox {
 
             objectView.getChildren().addAll(thumbnail, mapName);
             currentRow.getChildren().add(objectView);
-            objectView.setOnMouseClicked(e -> objectClicked(object, objectView, myAction));
+            objectView.setOnMouseClicked(e -> objectClicked(object, objectView));
+                                                            //, myAction));
             objectView.setOnMouseEntered(e -> selectObject(objectView));
             objectView.setOnMouseExited(e -> deselectObject(objectView));
         }
@@ -167,9 +169,5 @@ public class UpdatableDisplay extends VBox {
 
     public void setSelectedView (StackPane view) {
         selectedView = view;
-    }
-
-    public static void main (String[] args) {
-        test(e -> testMethod());
     }
 }
