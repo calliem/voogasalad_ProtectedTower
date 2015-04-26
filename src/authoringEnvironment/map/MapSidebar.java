@@ -463,9 +463,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         //TODO: set this as the active path in the workspace so that it can be easily deleted
         PathView path = new PathView(getMapWorkspace().getActiveMap());
 
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseClicked(e -> setAnchorPoint(path, e));
+        getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path, e));
         getMapWorkspace().getActiveMap().getRoot().setOnMouseDragged(e -> {});
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> {});
+        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> setAnchorPoint(path, e));
 
         // TODO for testing:
         double startX = 100;
