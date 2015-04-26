@@ -25,27 +25,24 @@ import engine.InsufficientParametersException;
 
 public class Enemy extends MoveableSprite {
 
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private String name = "Unnamed";
-    @parameter(settable=false,playerDisplay=true)
+    @parameter(settable = false, playerDisplay = true)
     private Boolean CanHurtPlayer = false;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Integer HP = 100;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Double speed = 1.0;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private String type = "Basic";
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Double boundingHeight = 10.0;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Double boundingWidth = 10.0;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private String group = null;
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
-    private static final String PARAMETER_SPEED = "Speed";
-    private static final String PARAMETER_HEALTH = "HP";
-    private static final String PARAMETER_DAMAGE = "Damage";
 
     public Enemy () {
         super();
@@ -60,13 +57,11 @@ public class Enemy extends MoveableSprite {
     @Override
     public void onCollide (Sprite sprite) {
         // TODO Check if this works in changing the variable in the parameters map
-        int health = (int) super.getParameter(PARAMETER_HEALTH);
-        health -= (int) sprite.getParameter(PARAMETER_DAMAGE);
+//        HP -= sprite.getDamage;
     }
 
     @Override
     public void move () {
-        int speed = (int) super.getParameter(PARAMETER_SPEED);
         Path path = new Path();
         for (GridCell cell : myPath) {
             path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));

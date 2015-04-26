@@ -28,7 +28,6 @@ public class Projectile extends MoveableSprite {
     private Double boundingWidth = 10.0;
     @parameter(settable = true, playerDisplay = true)
     private String group = null;
-    private static final String PARAMETER_SPEED = "Speed";
 
     public Projectile () {
         super();
@@ -49,7 +48,7 @@ public class Projectile extends MoveableSprite {
     public void move () {
         // TODO Change this to use annotated variables
         super.setLocation(super.getLocation()
-                .add(super.getHeading().multiply((double) super.getParameter(PARAMETER_SPEED))));
+                .add(super.getHeading().multiply(speed)));
     }
 
     @Override

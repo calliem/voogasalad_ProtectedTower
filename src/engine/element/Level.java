@@ -19,20 +19,20 @@ import engine.element.sprites.Sprite;
  * @author Qian Wang
  */
 
-public class Level extends GameElement implements UpdateAndReturnable, Endable, Comparable<Level> {
+public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
 
     private static final String PARAMETER_NUMBER = "Number";
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Double HP = 100.0;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private List<String> rounds = null;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private List<String> quantities = null;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Double sendRate = 1.0;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private List<String> conditions = null;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Integer number = 0;
     private List<Round> myRounds;
     private double myHealth;
@@ -49,9 +49,10 @@ public class Level extends GameElement implements UpdateAndReturnable, Endable, 
 
     /**
      * Method called by Player when ready to start next Round
+     * 
      * @return True if able to start next round
      */
-    
+
     public boolean startNextRound () {
         if (myActiveRound.hasEnded()) {
             myActiveRoundIndex++;
@@ -76,9 +77,9 @@ public class Level extends GameElement implements UpdateAndReturnable, Endable, 
     }
 
     @Override
-    public int compareTo (Level o) {
-        int thisLevel = (int) this.getParameter(PARAMETER_NUMBER);
-        int otherLevel = (int) o.getParameter(PARAMETER_NUMBER);
+    public int compareTo (Level other) {
+        int thisLevel = this.number;
+        int otherLevel = other.number;
         return thisLevel - otherLevel;
     }
 

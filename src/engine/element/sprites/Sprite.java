@@ -1,14 +1,11 @@
 package engine.element.sprites;
 
 import java.util.Map;
-import annotations.parameter;
-import sun.net.www.content.audio.x_aiff;
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import annotations.parameter;
 import engine.Collidable;
 import engine.Updateable;
-import engine.element.GameElement;
 
 
 /**
@@ -18,7 +15,8 @@ import engine.element.GameElement;
  * @author Qian Wang
  *
  */
-public abstract class Sprite extends GameElement implements Updateable,Collidable {
+
+public abstract class Sprite implements Updateable,Collidable {
     
     @parameter(settable=true,playerDisplay=false, defaultValue ="")
     private ImageView myImage;
@@ -128,10 +126,11 @@ public abstract class Sprite extends GameElement implements Updateable,Collidabl
      * 
      * @param sprite Sprite object that this object collides with
      */
-    private void updateImageView(){
+    private void updateImageView () {
         myImage.setTranslateX(myLocation.getX());
         myImage.setTranslateY(myLocation.getY());
     }
+
     public abstract void onCollide (Sprite sprite);
 
 }

@@ -23,10 +23,12 @@ import engine.element.sprites.Sprite;
  * @author Bojia Chen
  *
  */
-public class Game extends GameElement implements Updateable, Endable {
+public class Game implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
-    private static final String PARAMETER_HEALTH = "HP";
+
+    @parameter(settable = true, playerDisplay = false)
+    private Integer HP = 100;
 
     /**
      * List of Javafx objects so that new nodes can be added for the player to display
@@ -35,8 +37,6 @@ public class Game extends GameElement implements Updateable, Endable {
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
-    @parameter(settable=true, playerDisplay=false)
-    private int HP =  100;
     private int myActiveLevelIndex;
     private Bank myBank;
     private int myPoints;
@@ -69,7 +69,7 @@ public class Game extends GameElement implements Updateable, Endable {
     @Override
     public void update (int counter) {
         System.out.println("Beginning cycle " + counter);
-        myConditions.forEach(c -> c.act((int) super.getParameter(PARAMETER_HEALTH)));
+        myConditions.forEach(c -> c.act(HP));
         List<String> enemiesToSpawn = myLevels.get(myActiveLevelIndex).update(counter);
         // TODO update spawn location to correct one
         myLayout.spawnEnemy(enemiesToSpawn, new Point2D(0, 0));
@@ -85,7 +85,7 @@ public class Game extends GameElement implements Updateable, Endable {
     public void addLevels (Map<String, Map<String, Object>> levels) {
         levels.keySet().forEach(l -> {
             Level tempLevel = (Level) Reflection.createInstance(PACKAGE_LOCATION_LEVEL);
-            tempLevel.setParameterMap(levels.get(l));
+            // TODO maybe need to add levels factory
             myLevels.add(tempLevel);
         });
         Collections.sort(myLevels);
@@ -100,10 +100,6 @@ public class Game extends GameElement implements Updateable, Endable {
      */
     public void addGameElement (String className, Map<String, Map<String, Object>> allObjects) {
         myLayout.initializeGameElement(className, allObjects);
-    }
-
-    public void addLayoutParameters (Map<String, Object> parameters) {
-        myLayout.setParameterMap(parameters);
     }
 
     public void placeTower (String id, double sceneX, double sceneY) {
