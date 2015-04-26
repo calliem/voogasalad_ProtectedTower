@@ -87,30 +87,9 @@ public class FlowView extends HBox {
         this.setPrefHeight(myHeight);
     }
 
-//    protected ComboBox<String> createOptionSelector () {
-//        ArrayList<String> options = new ArrayList<>();
-//        options.add("Unit");
-//        options.add("Wave");
-//        ObservableList<String> optionsList = FXCollections.observableArrayList(options);
-//        final ComboBox<String> partSelectorBox = new ComboBox<>(optionsList);
-//        Tooltip tooltip = new Tooltip("Select something to add!");
-//        tooltip.setTextAlignment(TextAlignment.CENTER);
-//        Tooltip.install(partSelectorBox, tooltip);
-//
-//        // TODO: use lambda for selectUnit/selectWave method?
-//        partSelectorBox.setPromptText("...");
-//        partSelectorBox.valueProperty().addListener( (obs, oldValue, newValue) -> {
-//            if (newValue.equals("Unit"))
-//                selectUnit();
-//                                                    else if (newValue.equals("Wave"))
-//                                                        selectWave();
-//                                                });
-//        return partSelectorBox;
-//    }
-    
-    protected Node createOptionSelector() {
+    protected Node createOptionSelector () {
         Button waveButton = new Button("Choose Wave");
-        waveButton.setOnAction(e -> selectWave());;
+        waveButton.setOnAction(e -> selectWave());
         return waveButton;
     }
 

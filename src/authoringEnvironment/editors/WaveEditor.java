@@ -23,7 +23,6 @@ import authoringEnvironment.Controller;
 import authoringEnvironment.DataFormatException;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
-import authoringEnvironment.objects.FlowView;
 import authoringEnvironment.objects.WaveFlowView;
 import authoringEnvironment.util.NamePrompt;
 

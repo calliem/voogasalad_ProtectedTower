@@ -1,6 +1,7 @@
 package authoringEnvironment.editors;
 
 import java.util.ResourceBundle;
+import javafx.scene.Group;
 import authoringEnvironment.Controller;
 import authoringEnvironment.RoundSidebar;
 
@@ -12,12 +13,14 @@ import authoringEnvironment.RoundSidebar;
  * @author Megan Gutter
  */
 public class RoundEditor extends MainEditor {
-    private ResourceBundle myResources;
 
     public RoundEditor (Controller c, String name) {
         super(c, name);
     }
     
-    
+//    @Override
+//    public Group configureUI() {
+//        Group visuals = new Group();
+//    }
 
 }
