@@ -62,13 +62,14 @@ public class MapWorkspace extends StackPane {
         return myActivePath;
     }
 
+    //TODO: just use the generic one
     public void removeMap () {
         remove(myActiveMap.getRoot());
     }
 
-    public void removePath () {
+   /* public void removePath () {
         remove(myActivePath.getRoot());
-    }
+    }*/
 
     public void remove (Node node) {
         if (node == null)
@@ -132,14 +133,8 @@ public class MapWorkspace extends StackPane {
     private void setAnchorPoint (PathView path, MouseEvent e) {
         if (!path.areAnchorsSelected())
             path.addAnchor(e.getX(), e.getY());
-        /*
-         * if (path.getNumAnchors() == 0)
-         * path.createRootAnchor(e.getX(), e.getY());
-         * else
-         * path.addAnchor(e.get);
-         */
-
     }
+    //    TODO:
 
     /*
      * public void displayMessage(String message){

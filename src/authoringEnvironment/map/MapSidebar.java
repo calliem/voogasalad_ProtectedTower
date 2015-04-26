@@ -81,6 +81,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     // TODO: how to get this number
     // from Johnny
     private static final int DEFAULT_LIVES = 20;
+    private ObservableList<GameObject> myPaths;
 
     private int myLives;
     // private MapWorkspace getMapWorkspace();
@@ -103,7 +104,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
         myLives = DEFAULT_LIVES;
-       
+
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -234,6 +235,18 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     }
 
+    private void remove (GameObject object, UpdatableDisplay updateDisplay, ObservableList<GameObject> updateList) {
+        ScaleTransition scale =
+                Scaler.scaleOverlay(1.0, 0.0, object.getRoot());
+        scale.setOnFinished( (e) -> {
+            if (super.getMaps().contains(object)) {
+                super.getMaps().remove(object);
+                updateDisplay.updateDisplay(updateList);
+            }
+            getMapWorkspace().remove(object.getRoot());
+        });
+    }
+
     protected void createMap () {
         if (getMapWorkspace().getActiveMap() != null)
             getMapWorkspace().removeMap();
@@ -361,7 +374,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         saveMapButton.setOnMouseClicked(e -> saveMap(getMapWorkspace().getActiveMap()));
 
         Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
-        deleteMapButton.setOnMouseClicked(e -> removeMap());
+        deleteMapButton.setOnMouseClicked(e -> remove(getMapWorkspace().getActiveMap(), mapDisplay,
+                                                      super.getMaps()));
 
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
         container.add(editMapbuttons, 0, 0, 2, 1);
@@ -416,23 +430,24 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         saveMapButton.setOnMouseClicked(e -> savePath());
 
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
-        deleteMapButton.setOnMouseClicked(e -> deletePath());
+        deleteMapButton.setOnMouseClicked(e -> remove(getMapWorkspace().getActivePath(), null, null));
 
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
-        
-        container.add(editMapbuttons,0,0,2,1);
-        
+
+        container.add(editMapbuttons, 0, 0, 2, 1);
+
         Text name = new Text(getResources().getString("Name"));
         // Setting name = new StringSetting("label", "hi");
         container.add(name, 0, 1);
         mapNameTextField = new TextField();
         container.add(mapNameTextField, 1, 1);
-        
-        /*UpdatableDisplay pathDisplay =
-                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
-        container.add(pathDisplay, 0, 5, 2, 1);*/
-        
-        
+
+        /*
+         * UpdatableDisplay pathDisplay =
+         * new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
+         * container.add(pathDisplay, 0, 5, 2, 1);
+         */
+
         pathSettings.getChildren().add(container);
     }
 
@@ -440,10 +455,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         getMapWorkspace().activatePathMode();
         getMapWorkspace().createNewPath();
 
-       // PathView path = new PathView(getMapWorkspace().getActiveMap());
+        // PathView path = new PathView(getMapWorkspace().getActiveMap());
 
-        //getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path, e));*/
-        
+        // getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path,
+        // e));*/
 
     }
 
@@ -462,9 +477,4 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                                                                                      // too
     }
 
-    private void deletePath () {
-        getMapWorkspace().deactivatePathMode();
-    }
-
-   
 }
