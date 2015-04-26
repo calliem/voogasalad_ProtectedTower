@@ -5,22 +5,35 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
@@ -32,6 +45,7 @@ import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.pathing.Anchor;
+import authoringEnvironment.pathing.Anchor2;
 import authoringEnvironment.util.Scaler;
 
 
@@ -250,7 +264,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         ImageView snapView = new ImageView();
         snapView.setImage(snapImage);
         activeMap.setThumbnail(snapView);
-       
 
         if (!super.getMaps().contains(activeMap)) {
             super.getMaps().add(activeMap);
@@ -259,8 +272,8 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             int existingIndex = super.getMaps().indexOf(activeMap);
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
-        }        
-       displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
+        }
+        displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
 
         // saves the map to a specific key
         // checks to see if the current map already exists
@@ -333,7 +346,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     protected void setContent (GridPane container) {
         container.setVgap(VGAP_PADDING);
         container.setHgap(HGAP_PADDING);
-
 
         Button createMapButton = new Button(getResources().getString("CreateMap"));
         createMapButton.setOnMouseClicked(e -> createMap());
@@ -408,7 +420,16 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void savePath () {
         // getMapWorkspace().getActiveMap()
         deactivatePathMode();
-        displayWorkspaceMessage(getResources().getString("PathSaved"), Color.GREEN);
+        displayWorkspaceMessage(getResources().getString("PathSaved"), Color.GREEN); // TODO: make
+                                                                                     // this a part
+                                                                                     // of the
+                                                                                     // workspace
+                                                                                     // class so
+                                                                                     // that the
+                                                                                     // pathsettings
+                                                                                     // class can
+                                                                                     // access this
+                                                                                     // too
     }
 
     private void deletePath () {
@@ -429,9 +450,81 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private void activatePathMode () {
         getMapWorkspace().getActiveMap().removeTileListeners();
-        getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
-        boolean add = getMapWorkspace().getChildren().add(new Anchor(Color.RED, new SimpleDoubleProperty(10), new SimpleDoubleProperty(10)));
+        //getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
+        /*
+         * getMapWorkspace()
+         * .getActiveMap()
+         * .getRoot()
+         * .setOnMouseClicked(e -> {
+         * Anchor2 anchor =
+         * new Anchor2(Color.RED, new SimpleDoubleProperty(10),
+         * new SimpleDoubleProperty(10));
+         * anchor.setCenterX(e.getSceneX());
+         * anchor.setCenterY(e.getSceneY());
+         * getMapWorkspace().getChildren().add(anchor);
+         * });
+         */
 
+        // Stage stage = new Stage();
+        CubicCurve curve = createStartingCurve();
+
+        Line controlLine1 =
+                new BoundLine(curve.controlX1Property(), curve.controlY1Property(),
+                              curve.startXProperty(), curve.startYProperty());
+        Line controlLine2 =
+                new BoundLine(curve.controlX2Property(), curve.controlY2Property(),
+                              curve.endXProperty(), curve.endYProperty());
+
+        Anchor2 start =
+                new Anchor2(Color.PALEGREEN, curve.startXProperty(), curve.startYProperty());
+        Anchor2 control1 =
+                new Anchor2(Color.GOLD, curve.controlX1Property(), curve.controlY1Property());
+        Anchor2 control2 =
+                new Anchor2(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property());
+        Anchor2 end = new Anchor2(Color.TOMATO, curve.endXProperty(), curve.endYProperty());
+
+        // stage.setTitle("Cubic Curve Manipulation Sample");
+        // stage.setScene(new Scene(new Group(controlLine1, controlLine2, curve, start, control1,
+        // control2, end), 400, 400, Color.ALICEBLUE));
+        // stage.show();
+        AnchorPane anchor = new AnchorPane();
+        
+        Group path = new Group(controlLine1, controlLine2, curve, start, control1,
+                               control2, end);
+        getMapWorkspace().getActiveMap().getRoot().getChildren().add(path);
+    }
+
+    private CubicCurve createStartingCurve () {
+        CubicCurve curve = new CubicCurve();
+        curve.setStartX(100);
+        curve.setStartY(100);
+        curve.setControlX1(150);
+        curve.setControlY1(50);
+        curve.setControlX2(250);
+        curve.setControlY2(150);
+        curve.setEndX(300);
+        curve.setEndY(100);
+        curve.setStroke(Color.FORESTGREEN);
+        curve.setStrokeWidth(4);
+        curve.setStrokeLineCap(StrokeLineCap.ROUND);
+        curve.setFill(Color.CORNSILK.deriveColor(0, 1.2, 1, 0.6));
+        return curve;
+    }
+
+    class BoundLine extends Line {
+        BoundLine (DoubleProperty startX,
+                   DoubleProperty startY,
+                   DoubleProperty endX,
+                   DoubleProperty endY) {
+            startXProperty().bind(startX);
+            startYProperty().bind(startY);
+            endXProperty().bind(endX);
+            endYProperty().bind(endY);
+            setStrokeWidth(2);
+            setStroke(Color.GRAY.deriveColor(0, 1, 1, 0.5));
+            setStrokeLineCap(StrokeLineCap.BUTT);
+            getStrokeDashArray().setAll(10.0, 5.0);
+        }
     }
 
     private void deactivatePathMode () {

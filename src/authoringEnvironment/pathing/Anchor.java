@@ -22,7 +22,7 @@ public class Anchor extends Circle {
 
         //x.bind(centerXProperty());
         //y.bind(centerYProperty());
-        enableDrag();
+       // enableDrag();
 
     }
 

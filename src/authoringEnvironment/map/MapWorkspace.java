@@ -90,5 +90,9 @@ public class MapWorkspace extends StackPane {
 
         myActiveMap.setActiveColor(currentActiveColor);
     }
+    
+  /*  public void displayMessage(String message){
+        
+    }*/
 
 }
