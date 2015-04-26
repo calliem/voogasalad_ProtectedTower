@@ -108,7 +108,7 @@ public class Layout implements Updateable {
      */
     public void setMap (String mapID) {
         myGameMap = (GameMap) myGameElementFactory.getGameElement("GameMap", mapID);
-        myGameMap.loadMap(myGameElementFactory);
+//        myGameMap.loadMap(myGameElementFactory);
         Rectangle bounds =
                 new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
         myCollisionChecker.initializeQuadtree(bounds);

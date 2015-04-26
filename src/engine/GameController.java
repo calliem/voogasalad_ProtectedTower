@@ -34,7 +34,8 @@ public class GameController {
      */
     private static final String[] PART_NAMES = new String[] { "Tower", "Enemy", "Projectile",
                                                              "GridCell", "GameMap", "Round",
-                                                             "Wave", "Game", "Layout", "Level" };
+                                                             "Wave", "Game", "Level" };
+    // TODO do we pull in a Layout object map?
     /**
      * Holds a subset of part names to give to the game element factory
      */
@@ -125,17 +126,17 @@ public class GameController {
         }
         else {
             for (Map<String, Object> map : myObjects.get("Game").values()) {
-                myGame.setParameterMap(map);
+                // TODO need game factory or something to initialize it
             }
         }
-        if (myObjects.get("Layout").size() != 1) {
-            throw new InsufficientParametersException("Zero or multiple game layouts created");
-        }
-        else {
-            for (Map<String, Object> map : myObjects.get("Layout").values()) {
-                myGame.addLayoutParameters(map);
-            }
-        }
+//        if (myObjects.get("Layout").size() != 1) {
+//            throw new InsufficientParametersException("Zero or multiple game layouts created");
+//        }
+//        else {
+//            for (Map<String, Object> map : myObjects.get("Layout").values()) {
+//                myGame.addLayoutParameters(map);
+//            }
+//        }
         if (myObjects.get("Level").size() < 1) {
             throw new InsufficientParametersException("No game levels created");
         }

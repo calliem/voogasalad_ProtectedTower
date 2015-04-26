@@ -77,9 +77,9 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
     }
 
     @Override
-    public int compareTo (Level o) {
-        int thisLevel = (int) this.getParameter(PARAMETER_NUMBER);
-        int otherLevel = (int) o.getParameter(PARAMETER_NUMBER);
+    public int compareTo (Level other) {
+        int thisLevel = this.number;
+        int otherLevel = other.number;
         return thisLevel - otherLevel;
     }
 
