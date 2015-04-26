@@ -65,14 +65,16 @@ public class Layout extends GameElement implements Updateable {
     }
 
     /**
-     * Temporary method to remove a projectile from the game
+     * Temporary method to remove a sprite from the game
      * 
-     * @param sprite Projectile to be removed
+     * @param sprite Sprite to be removed
      */
     // TODO Poor design to have a method for every kind of sprite, need to think of a better way to
     // do this without repeating code
-    public void removeProjectile (Sprite sprite) {
+    public void removeSprite (Sprite sprite) {
         myProjectileList.remove(sprite);
+        myEnemyList.remove(sprite);
+        myTowerList.remove(sprite);
         myNodeList.remove(sprite.getImageView());
     }
 
