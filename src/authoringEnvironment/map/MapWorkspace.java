@@ -1,10 +1,15 @@
 package authoringEnvironment.map;
 
+import javafx.animation.PauseTransition;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
@@ -28,17 +33,17 @@ public class MapWorkspace extends StackPane {
     private static final int DEFAULT_TILE_SIZE = 30; // based on height since monitor height < width
                                                      // and that is usually the limiting factor
 
-    public static final double MAP_WIDTH_MULTIPLIER = .75;
-    public static final double MAP_HEIGHT_PERCENT = 100;
+    public static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
+    public static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
 
     // TODO: fix all of these constants so there are no more replicates
 
     
-    public MapWorkspace () { // Dimension2D pass this in?
+    public MapWorkspace () { 
         super();
         Rectangle background =
-                new Rectangle(AuthoringEnvironment.getEnvironmentWidth() * MAP_WIDTH_MULTIPLIER,
-                              0.9 * AuthoringEnvironment.getEnvironmentHeight(),
+                new Rectangle(AuthoringEnvironment.getEnvironmentWidth() * WORKSPACE_WIDTH_MULTIPLIER,
+                              WORKSPACE_HEIGHT_MULTIPLIER * AuthoringEnvironment.getEnvironmentHeight(),
                               Color.web("2A2A29"));
         getChildren().add(background);
         createDefaultMap();
@@ -61,15 +66,6 @@ public class MapWorkspace extends StackPane {
     public PathView getActivePath () {
         return myActivePath;
     }
-
-    //TODO: just use the generic one
-    public void removeMap () {
-        remove(myActiveMap.getRoot());
-    }
-
-   /* public void removePath () {
-        remove(myActivePath.getRoot());
-    }*/
 
     public void remove (Node node) {
         if (node == null)
@@ -100,6 +96,7 @@ public class MapWorkspace extends StackPane {
         // });
 
         myActiveMap.setActiveColor(myActiveColor);
+
     }
     
     //TODO: duplicated
@@ -141,6 +138,20 @@ public class MapWorkspace extends StackPane {
      * 
      * }
      */
+    
+    protected void displayMessage(String text, Color color){
+        Text saved = new Text(text);
+        saved.setFill(color);
+        saved.setFont(new Font(20));
+        StackPane.setAlignment(saved, Pos.BOTTOM_CENTER);
+        //saved.setVisible(false);
+        getChildren().add(saved);
+        
+        //saved.setVisible(true);
+        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+        pause.play();
+        pause.setOnFinished(e ->getChildren().remove(saved));
+    }
     
     public void activatePathMode () {
         myActiveMap.removeTileListeners();

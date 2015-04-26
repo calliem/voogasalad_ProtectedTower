@@ -60,30 +60,16 @@ import authoringEnvironment.util.Scaler;
  */
 
 // TODO: abstract further
-public class MapSidebar extends Sidebar { // add a gridpane later on. but a
-                                          // gridpane is hard to edit to set
-                                          // things in between other things...
-
-    // TODO: display sidebar with a gridpane not an HBox to keep everything
-    // aligned and beautiful
+public class MapSidebar extends Sidebar {
 
     private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128;
-
-    private static final int MAP_OPACITY_DEACTIVATED = 1;
-    private Rectangle myMapOverlay;
-    private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
-    // TODO: is importing the main environment bad design? is this an added
-    // dependency?
     private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment.getEnvironmentWidth() / 32;
-    // TODO: how to get this number
-    // from Johnny
-    private static final int DEFAULT_LIVES = 20;
+
     private ObservableList<GameObject> myPaths;
 
-    private int myLives;
     // private MapWorkspace getMapWorkspace();
     // private Color myActiveColor;
 
@@ -103,8 +89,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, maps, mapWorkspace);
-        myLives = DEFAULT_LIVES;
-
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -221,21 +205,25 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         return mapButtons;
     }
 
-    private void removeMap () {
-        // TODO: move this to map workspace
-        ScaleTransition scale =
-                Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
-        scale.setOnFinished( (e) -> {
-            if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
-                super.getMaps().remove(getMapWorkspace().getActiveMap());
-                mapDisplay.updateDisplay(super.getMaps());
-            }
-            getMapWorkspace().removeMap();
-        });
+    /*
+     * private void removeMap () {
+     * // TODO: move this to map workspace
+     * ScaleTransition scale =
+     * Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
+     * scale.setOnFinished( (e) -> {
+     * if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
+     * super.getMaps().remove(getMapWorkspace().getActiveMap());
+     * mapDisplay.updateDisplay(super.getMaps());
+     * }
+     * getMapWorkspace().removeMap();
+     * });
+     * 
+     * }
+     */
 
-    }
-
-    private void remove (GameObject object, UpdatableDisplay updateDisplay, ObservableList<GameObject> updateList) {
+    private void remove (GameObject object,
+                         UpdatableDisplay updateDisplay,
+                         ObservableList<GameObject> updateList) {
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, object.getRoot());
         scale.setOnFinished( (e) -> {
@@ -248,8 +236,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     protected void createMap () {
-        if (getMapWorkspace().getActiveMap() != null)
-            getMapWorkspace().removeMap();
+        if (getMapWorkspace().getActiveMap() != null) {
+            Group activeMapGroup = getMapWorkspace().getActiveMap().getRoot();
+            getMapWorkspace().remove(activeMapGroup);
+        }
         TileMap newMap = getMapWorkspace().createDefaultMap();
         ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
         scale.setOnFinished( (e) -> {
@@ -293,7 +283,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
         }
-        displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
+        getMapWorkspace().displayMessage(getResources().getString("MapSaved"), Color.GREEN);
 
         // saves the map to a specific key
         // checks to see if the current map already exists
@@ -430,7 +420,11 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         saveMapButton.setOnMouseClicked(e -> savePath());
 
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
-        deleteMapButton.setOnMouseClicked(e -> remove(getMapWorkspace().getActivePath(), null, null));
+        deleteMapButton
+                .setOnMouseClicked(e -> {
+                    remove(getMapWorkspace().getActivePath(), null, null);
+                    getMapWorkspace().deactivatePathMode();
+                });
 
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
 
@@ -454,27 +448,13 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     private void createPath () {
         getMapWorkspace().activatePathMode();
         getMapWorkspace().createNewPath();
-
-        // PathView path = new PathView(getMapWorkspace().getActiveMap());
-
-        // getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path,
-        // e));*/
-
     }
 
     private void savePath () {
         // getMapWorkspace().getActiveMap()
         getMapWorkspace().deactivatePathMode();
-        displayWorkspaceMessage(getResources().getString("PathSaved"), Color.GREEN); // TODO: make
-                                                                                     // this a part
-                                                                                     // of the
-                                                                                     // workspace
-                                                                                     // class so
-                                                                                     // that the
-                                                                                     // pathsettings
-                                                                                     // class can
-                                                                                     // access this
-                                                                                     // too
+        getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
+                                                  Color.GREEN);
     }
 
 }
