@@ -4,7 +4,6 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import util.reflection.Reflection;
-import engine.element.GameElement;
 
 
 /**
@@ -91,10 +90,10 @@ public class GameElementFactory {
      * @param guid String of the GUID of the game element
      * @return New instance of sprite with same parameters as template sprite
      */
-    public GameElement getGameElement (String className, String guid) {
+    public Object getGameElement (String className, String guid) {
         if (myGameElements.get(className).containsKey(guid)) {
-            GameElement element = (GameElement) Reflection.createInstance(MY_CLASS_LOCATION);
-            element.setParameterMap(getParameters(className, guid));
+            Object element = Reflection.createInstance(MY_CLASS_LOCATION);
+            // TODO set up instance variables with reflection
             return element;
         }
         else {

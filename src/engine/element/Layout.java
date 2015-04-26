@@ -33,7 +33,7 @@ import engine.factories.GameElementFactory;
  * @author Bojia Chen
  *
  */
-public class Layout extends GameElement implements Updateable {
+public class Layout implements Updateable {
 
     /**
      * List of Javafx objects so that new nodes can be added for the player to display

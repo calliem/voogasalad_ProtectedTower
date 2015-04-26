@@ -15,7 +15,7 @@ import engine.UpdateAndReturnable;
  * @author Bojia Chen
  *
  */
-public class Round extends GameElement implements UpdateAndReturnable, Endable {
+public class Round implements UpdateAndReturnable, Endable {
     @parameter(settable = true, playerDisplay = true)
     private List<String> waves = null;
     @parameter(settable = true, playerDisplay = true)

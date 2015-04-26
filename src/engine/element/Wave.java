@@ -15,10 +15,10 @@ import engine.UpdateAndReturnable;
  * @author Bojia Chen
  *
  */
-public class Wave extends GameElement implements UpdateAndReturnable, Endable {
-    @parameter(settable=true, playerDisplay=false)
+public class Wave implements UpdateAndReturnable, Endable {
+    @parameter(settable = true, playerDisplay = false)
     private List<List<String>> myEnemies;
-    @parameter(settable=true, playerDisplay=false)
+    @parameter(settable = true, playerDisplay = false)
     private double mySendRate;
     private int myEnemyIndex = 0;
     private int myTimer = 0;

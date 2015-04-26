@@ -22,7 +22,7 @@ import engine.conditions.Condition;
  * @author Bojia Chen
  *
  */
-public class Game extends GameElement implements Updateable, Endable {
+public class Game implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
     private static final String PARAMETER_HEALTH = "HP";
@@ -34,8 +34,8 @@ public class Game extends GameElement implements Updateable, Endable {
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
-    @parameter(settable=true, playerDisplay=false)
-    private int HP =  100;
+    @parameter(settable = true, playerDisplay = false)
+    private int HP = 100;
     private int myActiveLevelIndex;
     private Bank myBank;
     private int myPoints;

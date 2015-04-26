@@ -25,21 +25,21 @@ import engine.InsufficientParametersException;
 
 public class Enemy extends MoveableSprite {
 
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private String name = "Unnamed";
-    @parameter(settable=false,playerDisplay=true)
+    @parameter(settable = false, playerDisplay = true)
     private Boolean CanHurtPlayer = false;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Integer HP = 100;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Double speed = 1.0;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private String type = "Basic";
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Double boundingHeight = 10.0;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private Double boundingWidth = 10.0;
-    @parameter(settable=true,playerDisplay=true)
+    @parameter(settable = true, playerDisplay = true)
     private String group = null;
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
