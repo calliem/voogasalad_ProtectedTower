@@ -3,6 +3,7 @@ package engine.element.sprites;
 import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
+import annotations.parameter;
 import engine.Collidable;
 import engine.Updateable;
 
@@ -14,15 +15,23 @@ import engine.Updateable;
  * @author Qian Wang
  *
  */
-public abstract class Sprite implements Updateable, Collidable {
 
+public abstract class Sprite implements Updateable,Collidable {
+    
+    @parameter(settable=true,playerDisplay=false, defaultValue ="")
+    private ImageView myImage;
+    @parameter(settable=true,playerDisplay=true, defaultValue = "Unnamed")
+    private String myName;
+    @parameter(settable=true,playerDisplay=true, defaultValue ="Basic")
+    private String myType;
+   
+
+    
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
 
-    private ImageView myImage;
+    
     private Point2D myLocation;
-    private String myType;
-
     public Sprite () {
 
     }

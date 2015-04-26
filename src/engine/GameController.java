@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import authoringEnvironment.GameCreator;
 import authoringEnvironment.InstanceManager;
 import engine.element.Game;
+import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 
 
@@ -53,17 +54,17 @@ public class GameController {
      * Creates a new instance of a game represented by the XML files at a given file location.
      * 
      * @param filepath String to the main directory holding the game
-     * @param nodes List<Node> reference to that used in the Player class to display the game
+     * @param nodes List<Sprite> reference to that used in the Player class to display the game
      * @throws InsufficientParametersException when filepath does not point to a well defined game
      *         file
      */
-    public GameController (String filepath, List<Node> nodes)
+    public GameController (String filepath, List<Sprite> nodes)
         throws InsufficientParametersException {
         myGame = this.loadGame(filepath, nodes);
         myTowerManager = new TowerManager();
     }
 
-    public GameController (String filepath, List<Node> nodes, List<Tower> possibleTowers)
+    public GameController (String filepath, List<Sprite> nodes, List<Tower> possibleTowers)
         throws InsufficientParametersException {
         this(filepath, nodes);
         // TODO what to do with possibleTowers?
@@ -76,11 +77,11 @@ public class GameController {
      * instantiated and their parameter lists are set.
      * 
      * @param filepath String of location of the game file
-     * @param nodes List<Node> list of javafx nodes that the game can update
+     * @param nodes List<Sprite> list of sprites that the game can update
      * @throws InsufficientParametersException when multiple games/layouts are created, or when no
      *         game elements are specified
      */
-    private Game loadGame (String filepath, List<Node> nodes)
+    private Game loadGame (String filepath, List<Sprite> nodes)
                                                              throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String partName : PART_NAMES) {
@@ -114,7 +115,7 @@ public class GameController {
      * @return Game object which has been instantiated with given objects
      * @throws InsufficientParametersException if inputted objects do not fulfill game requirements
      */
-    private Game initializeGame (List<Node> nodes,
+    private Game initializeGame (List<Sprite> nodes,
                                  Map<String, Map<String, Map<String, Object>>> myObjects)
                                                                                          throws InsufficientParametersException {
         // store game parameters

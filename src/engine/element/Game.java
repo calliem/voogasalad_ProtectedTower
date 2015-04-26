@@ -12,6 +12,7 @@ import engine.Bank;
 import engine.Endable;
 import engine.Updateable;
 import engine.conditions.Condition;
+import engine.element.sprites.Sprite;
 
 
 /**
@@ -32,7 +33,7 @@ public class Game implements Updateable, Endable {
     /**
      * List of Javafx objects so that new nodes can be added for the player to display
      */
-    private List<Node> myNodes;
+    private List<Sprite> myNodes;
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
@@ -40,7 +41,7 @@ public class Game implements Updateable, Endable {
     private Bank myBank;
     private int myPoints;
 
-    public Game (List<Node> nodes) {
+    public Game (List<Sprite> nodes) {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
         myNodes = nodes;
