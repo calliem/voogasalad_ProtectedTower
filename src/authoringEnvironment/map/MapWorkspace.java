@@ -7,20 +7,15 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.pathing.Curve;
 
 
 public class MapWorkspace extends StackPane {
 
     private TileMap myActiveMap;
+    private Curve myActivePath; 
     private static final int DEFAULT_MAP_ROWS =
-            (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);// getWidth()*.8; //TODO:
-                                                                         // get the .8 from above
-                                                                         // class. also getWidth()
-                                                                         // is not static and so it
-                                                                         // cannot be used. maybe
-                                                                         // make it static or just
-                                                                         // mathis this a final
-                                                                         // variale?
+            (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);
     private static final int DEFAULT_MAP_COLS =
             (int) (AuthoringEnvironment.getEnvironmentHeight() * .9 / 25); // getHeight();
     private static final int DEFAULT_TILE_SIZE = 30; // based on height since monitor height < width
@@ -90,5 +85,9 @@ public class MapWorkspace extends StackPane {
 
         myActiveMap.setActiveColor(currentActiveColor);
     }
+    
+  /*  public void displayMessage(String message){
+        
+    }*/
 
 }
