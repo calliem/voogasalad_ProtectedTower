@@ -4,7 +4,6 @@ import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
-import engine.Collidable;
 import engine.Updateable;
 
 
@@ -16,7 +15,7 @@ import engine.Updateable;
  *
  */
 
-public abstract class Sprite extends GameElement implements Updateable, Collidable {
+public abstract class Sprite extends GameElement implements Updateable {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "")
     private ImageView myImage;
@@ -24,8 +23,6 @@ public abstract class Sprite extends GameElement implements Updateable, Collidab
     private String myName;
     @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
     private String myType;
-
-    private Point2D myLocation;
 
     public Sprite () {
 
@@ -43,42 +40,16 @@ public abstract class Sprite extends GameElement implements Updateable, Collidab
 
     // Setters and getters
 
-    /**
-     * Sets the location of the sprite
-     * 
-     * @param location Point2D object representing (x, y) coordinates
-     */
+    @Override
     public void setLocation (Point2D location) {
-        myLocation = location;
+        super.setLocation(location);
         updateImageView();
     }
 
-    /**
-     * Sets the location of the sprite
-     * 
-     * @param x double of x-coordinate
-     * @param y double of y-coordinate
-     */
+    @Override
     public void setLocation (double x, double y) {
-        myLocation = new Point2D(x, y);
+        super.setLocation(x, y);
         updateImageView();
-    }
-
-    /**
-     * @return Point2D representing coordinate location of object
-     */
-    public Point2D getLocation () {
-        return new Point2D(myLocation.getX(), myLocation.getY());
-    }
-
-    @Override
-    public double getLocationX () {
-        return myLocation.getX();
-    }
-
-    @Override
-    public double getLocationY () {
-        return myLocation.getY();
     }
 
     /**
@@ -113,8 +84,8 @@ public abstract class Sprite extends GameElement implements Updateable, Collidab
      * @param sprite Sprite object that this object collides with
      */
     private void updateImageView () {
-        myImage.setTranslateX(myLocation.getX());
-        myImage.setTranslateY(myLocation.getY());
+        myImage.setTranslateX(super.getLocationX());
+        myImage.setTranslateY(super.getLocationY());
     }
 
     public abstract void onCollide (Sprite sprite);
