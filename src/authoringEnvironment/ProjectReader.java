@@ -27,9 +27,6 @@ public class ProjectReader {
     private static final String englishSpecsFile = "resources/display/main_environment_english";
     private static final ResourceBundle classLists = ResourceBundle.getBundle(classListFile);
     private static final String paramListFile = "resources/part_parameters";
-    private static final String paramSpecsFile = "resources/parameter_datatype";
-    private static final ResourceBundle paramLists = ResourceBundle
-            .getBundle(paramListFile);
 
     private static final String editorPackage = System.getProperty("user.dir")
             .concat("/src/authoringEnvironment/editors");

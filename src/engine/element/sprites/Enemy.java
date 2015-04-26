@@ -27,10 +27,10 @@ public class Enemy extends MoveableSprite {
 
     @parameter(settable=true,playerDisplay=true)
     private String name = "Unnamed";
+    @parameter(settable=false,playerDisplay=true)
+    private Boolean CanHurtPlayer = false;
     @parameter(settable=true,playerDisplay=true)
-    private boolean CanHurtPlayer = false;
-    @parameter(settable=true,playerDisplay=true)
-    private int HP = 100;
+    private Integer HP = 100;
     @parameter(settable=true,playerDisplay=true)
     private Double speed = 1.0;
     @parameter(settable=true,playerDisplay=true)
