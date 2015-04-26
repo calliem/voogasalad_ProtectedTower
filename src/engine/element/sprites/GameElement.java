@@ -14,30 +14,19 @@ import annotations.parameter;
  */
 public class GameElement implements Collidable {
 
+    @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
+    private String name;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
+    private String type;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private double boundingHeight;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private double boundingWidth;
-
+    /**
+     * Holds the current location of the object
+     */
+    @parameter(playerDisplay = true)
     private Point2D myLocation;
-
-    @Override
-    public double getBoundingHeight () {
-        return boundingHeight;
-    }
-
-    // protected void setBoundingHeight (double boundingHeight) {
-    // this.boundingHeight = boundingHeight;
-    // }
-
-    @Override
-    public double getBoundingWidth () {
-        return boundingWidth;
-    }
-
-    // protected void setBoundingWidth (double boundingWidth) {
-    // this.boundingWidth = boundingWidth;
-    // }
 
     /**
      * Sets the location of the sprite
@@ -66,6 +55,16 @@ public class GameElement implements Collidable {
     }
 
     @Override
+    public double getBoundingHeight () {
+        return boundingHeight;
+    }
+
+    @Override
+    public double getBoundingWidth () {
+        return boundingWidth;
+    }
+
+    @Override
     public double getLocationX () {
         return myLocation.getX();
     }
@@ -73,5 +72,16 @@ public class GameElement implements Collidable {
     @Override
     public double getLocationY () {
         return myLocation.getY();
+    }
+
+    protected String getName () {
+        return name;
+    }
+
+    /**
+     * @return uppercase String of the type of object this is
+     */
+    protected String getType () {
+        return type.toUpperCase();
     }
 }

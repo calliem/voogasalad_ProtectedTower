@@ -19,10 +19,6 @@ public abstract class Sprite extends GameElement implements Updateable {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "")
     private ImageView myImage;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
-    private String myName;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
-    private String myType;
 
     public Sprite () {
 
@@ -52,30 +48,10 @@ public abstract class Sprite extends GameElement implements Updateable {
         updateImageView();
     }
 
-    /**
-     * Sets the type of object this is as an uppercase string
-     * 
-     * @param type String of the type of object
-     */
-    @Deprecated
-    protected void setType (String type) {
-        myType = type.toUpperCase();
-    }
-
-    /**
-     * @return uppercase String of the type of object this is
-     */
-    @Deprecated
-    protected String getType () {
-        return myType;
-    }
-
     @Deprecated
     public Map<String, Object> getAllParameters () {
         return null; // super.getAllParameters();
     }
-
-    // Abstract methods
 
     /**
      * This method is called when this object collides with another and should include the behavior
@@ -87,6 +63,8 @@ public abstract class Sprite extends GameElement implements Updateable {
         myImage.setTranslateX(super.getLocationX());
         myImage.setTranslateY(super.getLocationY());
     }
+
+    // Abstract methods
 
     public abstract void onCollide (Sprite sprite);
 
