@@ -102,6 +102,6 @@ public abstract class GameObject {
         myThumbnail = thumbnail;
     }
 
-    public abstract Map<String, Object> saveToXML ();
+    public abstract Map<String, Object> save ();
 
 }

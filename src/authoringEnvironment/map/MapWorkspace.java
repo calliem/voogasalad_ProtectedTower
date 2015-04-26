@@ -1,11 +1,13 @@
 package authoringEnvironment.map;
 
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.pathing.Curve;
 
@@ -13,7 +15,9 @@ import authoringEnvironment.pathing.Curve;
 public class MapWorkspace extends StackPane {
 
     private TileMap myActiveMap;
-    private Curve myActivePath; 
+    private PathView myActivePath; 
+    private Color myActiveColor;
+    
     private static final int DEFAULT_MAP_ROWS =
             (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);
     private static final int DEFAULT_MAP_COLS =
@@ -26,6 +30,15 @@ public class MapWorkspace extends StackPane {
 
     // TODO: fix all of these constants so there are no more replicates
 
+    public Color getActiveColor(){
+        return myActiveColor;
+    }
+    
+    public void setActiveColor(Color color){
+        myActiveMap.setActiveColor(color);
+        myActiveColor = color;
+    }
+    
     public MapWorkspace () { // Dimension2D pass this in?
         super();
         Rectangle background =
@@ -33,13 +46,13 @@ public class MapWorkspace extends StackPane {
                               0.9 * AuthoringEnvironment.getEnvironmentHeight(),
                               Color.web("2A2A29"));
         getChildren().add(background);
-        createDefaultMap(Variables.DEFAULT_TILE_COLOR);
+        createDefaultMap();
 
     }
 
-    public TileMap createDefaultMap (Color currentActiveColor) {
+    public TileMap createDefaultMap () {
         TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
-        updateWithNewMap(defaultMap, currentActiveColor);
+        updateWithNewMap(defaultMap);
         return defaultMap;
     }
 
@@ -48,16 +61,26 @@ public class MapWorkspace extends StackPane {
     }
 
     public void removeMap () {
-        if (myActiveMap == null)
+        remove(myActiveMap.getRoot());
+    }
+    
+    public void removePath() {
+        remove(myActivePath.getRoot());
+    }
+    
+    public void remove(Node node) {
+        if (node == null)
             return;
-        if (getChildren().contains(myActiveMap.getRoot())) {
-            System.out.println("remove active map");
-            getChildren().remove(myActiveMap.getRoot());
-            myActiveMap = null;
+        if (getChildren().contains(node)) {
+            getChildren().remove(node);
+            node = null; //this prob wil lnot work 
         }
     }
+    
+    
+    //public PathView
 
-    public void updateWithNewMap (GameObject object, Color currentActiveColor) {
+    public void updateWithNewMap (GameObject object) {
         // TODO: reattach event handlers if none
         // TODO: doing this is not actually that good because javaFX does not allow you to have
         // multiple nodes, so you will require an update method which is doign exactly what you did
@@ -83,7 +106,7 @@ public class MapWorkspace extends StackPane {
         getChildren().add(myActiveMap.getRoot());
         // });
 
-        myActiveMap.setActiveColor(currentActiveColor);
+        myActiveMap.setActiveColor(myActiveColor);
     }
     
   /*  public void displayMessage(String message){

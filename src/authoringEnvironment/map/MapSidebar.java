@@ -41,12 +41,12 @@ import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.MapUpdatableDisplay;
+import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.pathing.Anchor;
 import authoringEnvironment.pathing.Anchor;
-import authoringEnvironment.pathing.PathView;
 import authoringEnvironment.util.Scaler;
 
 
@@ -84,7 +84,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
     private int myLives;
     // private MapWorkspace getMapWorkspace();
-    private Color myActiveColor;
+   // private Color myActiveColor;
 
     private TextField tileRowDisplay;
     private TextField tileColDisplay;
@@ -117,7 +117,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     public void changeMap (TileMap map) {
-        getMapWorkspace().updateWithNewMap(map, myActiveColor);
+        getMapWorkspace().updateWithNewMap(map);
 
         mapNameTextField.setText(map.getName());
         tileRowDisplay.setText(Integer.toString(map.getNumRows()));
@@ -183,14 +183,14 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         selectTile.getChildren().addAll(selection, rectangleDisplay);
 
         tileSettings.getChildren().add(selectTile);
-        picker.setOnAction(e -> changeActiveTileColor(picker.getValue(), rectangleDisplay));
+        picker.setOnAction(e -> getMapWorkspace().setActiveColor(picker.getValue()));//changeActiveTileColor(picker.getValue(), rectangleDisplay));
     }
 
-    private void changeActiveTileColor (Color color, Rectangle display) {
+    /*private void changeActiveTileColor (Color color, Rectangle display) {
         myActiveColor = color;
-        display.setFill(color);
+  //      display.setFill(color);
         getMapWorkspace().getActiveMap().setActiveColor(color);
-    }
+    }*/
 
     private GraphicFileChooser setImage () {
         HBox selection = new HBox();
@@ -235,8 +235,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     protected void createMap () {
-        getMapWorkspace().removeMap();
-        TileMap newMap = getMapWorkspace().createDefaultMap(myActiveColor);
+        if (getMapWorkspace().getActiveMap() != null)
+            getMapWorkspace().removeMap();
+        TileMap newMap = getMapWorkspace().createDefaultMap();
         ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
         scale.setOnFinished( (e) -> {
             tileRowDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
@@ -245,7 +246,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                     .getNumCols()));
             tileSizeDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
                     .getTileSize()));
-            getMapWorkspace().getActiveMap().setActiveColor(myActiveColor);
             // TODO: setTileSize();
             changeMap(getMapWorkspace().getActiveMap());
             mapDisplay.setSelectedView(null);
@@ -344,7 +344,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          */
 
         for (GameObject map : super.getMaps()) {
-            Map<String, Object> mapSettings = map.saveToXML();
+            Map<String, Object> mapSettings = map.save();
             String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
             map.setKey(key);
         }
@@ -472,7 +472,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void setAnchorPoint (PathView path, MouseEvent e) {
-        System.out.println("path.areAnchorsSelected()" + path.areAnchorsSelected());
         if (!path.areAnchorsSelected())
             path.addAnchor(e.getX(), e.getY());
         /*
@@ -488,5 +487,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         getMapWorkspace().getActiveMap().attachTileListeners();
         // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
         getMapWorkspace().getActiveMap().getRoot().getChildren().remove(myMapOverlay);
+        //getMapWorkspace().getActiveMap().getRoot().removeEventFilter(activePath);
     }
 }
