@@ -21,9 +21,9 @@ public class GameElement implements Collidable {
     @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
     private List<String> tags;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
-    private double boundingHeight;
+    private Double boundingHeight;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
-    private double boundingWidth;
+    private Double boundingWidth;
     /**
      * Holds the current location of the object
      */

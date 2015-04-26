@@ -1,7 +1,8 @@
 package engine.element.sprites;
 
-import annotations.parameter;
+import java.util.List;
 import javafx.scene.image.ImageView;
+import annotations.parameter;
 
 
 /**
@@ -12,22 +13,20 @@ import javafx.scene.image.ImageView;
  * @author Bojia Chen
  *
  */
-//TODO: update default values
 public class Tower extends GameSprite {
-    @parameter(settable=true,playerDisplay=true, defaultValue = "1.0")
+    @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
     private Double attackSpeed;
-    @parameter(settable=true,playerDisplay=true, defaultValue = "1.0")
+    @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
     private Double attackRange;
-    @parameter(settable=true,playerDisplay=true)
-    private String projectile = null;
-    @parameter(settable=true,playerDisplay=true,  defaultValue = "Close")
+    @parameter(settable = true, playerDisplay = true, defaultValue = "Close")
     private String attackPriority;
-    @parameter(settable=true,playerDisplay=true, defaultValue = "10.0")
-    private Double boundingHeight = 10.0;
-    @parameter(settable=true,playerDisplay=true, defaultValue = "10.0")
-    private Double boundingWidth = 10.0;
-    @parameter(settable=true,playerDisplay=true)
-    private String group = null;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    private List<String> projectiles;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
+    private Double cost;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
+    private Double buildTime;
+
     public Tower () {
         super();
     }
@@ -47,11 +46,6 @@ public class Tower extends GameSprite {
     public void onCollide (Sprite sprite) {
         // TODO Auto-generated method stub
 
-    }
-
-    @Override
-    public Tower clone () {
-        return null;
     }
 
     /**

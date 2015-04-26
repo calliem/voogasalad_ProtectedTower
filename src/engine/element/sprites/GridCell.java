@@ -1,7 +1,5 @@
 package engine.element.sprites;
 
-import java.util.List;
-import annotations.parameter;
 import javafx.geometry.Point2D;
 
 
@@ -15,10 +13,6 @@ import javafx.geometry.Point2D;
  */
 public class GridCell extends GameElement {
 
-    // TODO replace these with calls to parameters map
-    @parameter(settable = true, playerDisplay = true)
-    private String type = "Basic";
-    private List<String> myTags;
     private Point2D centerLocation;
 
     /**

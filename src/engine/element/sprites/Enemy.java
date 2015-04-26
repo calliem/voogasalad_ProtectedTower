@@ -25,22 +25,9 @@ import engine.InsufficientParametersException;
 
 public class Enemy extends MoveableSprite {
 
-    @parameter(settable = true, playerDisplay = true)
-    private String name = "Unnamed";
-    @parameter(settable = false, playerDisplay = true)
-    private Boolean CanHurtPlayer = false;
-    @parameter(settable = true, playerDisplay = true)
-    private Integer HP = 100;
-    @parameter(settable = true, playerDisplay = true)
-    private Double speed = 1.0;
-    @parameter(settable = true, playerDisplay = true)
-    private String type = "Basic";
-    @parameter(settable = true, playerDisplay = true)
-    private Double boundingHeight = 10.0;
-    @parameter(settable = true, playerDisplay = true)
-    private Double boundingWidth = 10.0;
-    @parameter(settable = true, playerDisplay = true)
-    private String group = null;
+    @parameter(settable = false, playerDisplay = true, defaultValue = "false")
+    private Boolean CanHurtPlayer;
+
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
 
@@ -57,7 +44,7 @@ public class Enemy extends MoveableSprite {
     @Override
     public void onCollide (Sprite sprite) {
         // TODO Check if this works in changing the variable in the parameters map
-//        HP -= sprite.getDamage;
+        // HP -= sprite.getDamage;
     }
 
     @Override
@@ -67,7 +54,8 @@ public class Enemy extends MoveableSprite {
             path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));
         }
         PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) / speed));
+        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) /
+                                                   super.getSpeed()));
         pathTransition.setPath(path);
         pathTransition.setNode(super.getImageView());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
