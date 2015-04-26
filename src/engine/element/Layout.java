@@ -65,14 +65,16 @@ public class Layout extends GameElement implements Updateable {
     }
 
     /**
-     * Temporary method to remove a projectile from the game
+     * Temporary method to remove a sprite from the game
      * 
-     * @param sprite Projectile to be removed
+     * @param sprite Sprite to be removed
      */
     // TODO Poor design to have a method for every kind of sprite, need to think of a better way to
     // do this without repeating code
-    public void removeProjectile (Sprite sprite) {
+    public void removeSprite (Sprite sprite) {
         myProjectileList.remove(sprite);
+        myEnemyList.remove(sprite);
+        myTowerList.remove(sprite);
         myNodeList.remove(sprite.getImageView());
     }
 
@@ -108,6 +110,7 @@ public class Layout extends GameElement implements Updateable {
      */
     public void setMap (String mapID) {
         myGameMap = (GameMap) myGameElementFactory.getGameElement("GameMap", mapID);
+        myGameMap.loadMap(myGameElementFactory);
         Rectangle bounds =
                 new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
         myCollisionChecker.initializeQuadtree(bounds);
@@ -141,31 +144,53 @@ public class Layout extends GameElement implements Updateable {
     // TODO implement from map class
     public boolean canPlace (Sprite tower, Point2D location) {
         // collision checking and tag checking
-        // Rectangle towerHitBox = createHitBox(tower);
-        // boolean collision = false;
-        // List<Sprite> collidable = getCollisions(tower, myTowerList);
-        // for (Sprite c : collidable) {
-        // if (collides(towerHitBox, createHitBox(c))) {
-        // collision = true;
-        // }
-        // }
-        // if there are any collisions with other towers, then collision stays true
-        // if no collisions then the tower can be placed and collision is false
-        // boolean place = true;
-        /*
-         * tag checking for taking in terrain in consideration
-         * for (GridCell c: occupiedGridCells(tower))
-         * if(!tagsInCommon(c.getTags(),tower.getTags())) //if the cell has none of the tags of the
-         * tower then can't place so place is false{
-         * place = false;
-         * break;
-         * }
-         */
-        // return place && !collision;
-        return true;
+    	//collision checking
+    	boolean collisions = true;
+    	myCollisionChecker.createQuadTree(myTowerList);
+            Set<Sprite> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
+            if (possibleInteractions.size() == 0)
+            	collisions = false;
+    	//tag checking
+        boolean tags = true;
+    	myCollisionChecker.createQuadTree(this.getGridCells());
+    	Set<Sprite> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
+    	for (Sprite c: possibleGridCells){
+    		if (!tagsInCommon(c, tower))
+    			tags = false;
+    	}
+    	return !collisions && tags;
+    }
+    
+    /**
+     * Checks if the cell and the tower have a tag in common
+     * @param cell GridCell object to check
+     * @param tower Sprite object to check
+     * @return true if the two have a tag in common
+     */
+    
+    private boolean tagsInCommon (Sprite cell, Sprite tower) {
+        for (String tag : (List<String>)tower.getParameter("tags"))
+            if (((List<String>)cell.getParameter("tags")).contains(tag))
+                return true;
+        return false;
     }
 
-    // TODO refactor and combine spawnEnemy and spawnProjectile methods
+    /**
+     * Returns a list of all the gridCells in myGameMap
+     * @return List<Sprite> all the gridCells in myGameMap
+     */
+    
+    private List<Sprite> getGridCells() {
+		// TODO Auto-generated method stub
+		GridCell[][] myMap = myGameMap.getMap();
+		List<Sprite> gridCells = new ArrayList<>();
+		for(int i = 0; i<myMap.length; i++)
+			for (int j = 0; j<myMap[i].length; j++)
+				gridCells.add(myMap[i][j]);
+		return gridCells;
+	}
+
+	// TODO refactor and combine spawnEnemy and spawnProjectile methods
 
     /**
      * Creates one or multiple new Enemy object and adds it to the map at the specified location.
@@ -224,9 +249,22 @@ public class Layout extends GameElement implements Updateable {
     public void update (int counter) {
         updateSpriteLocations();
         updateSpriteCollisions();
+        updateSpriteTargeting();
     }
 
     /**
+     * Updates the targeting of towers.
+     */
+    
+    private void updateSpriteTargeting() {
+		// TODO Auto-generated method stub
+		myCollisionChecker.createQuadTree(this.getSprites());
+		for (Sprite sprite : myTowerList) {
+			sprite.getAllParameters().put("targets", myCollisionChecker.findTargetable(sprite));
+		}
+	}
+
+	/**
      * Updates the positions of all sprites.
      */
     private void updateSpriteLocations () {
@@ -267,15 +305,6 @@ public class Layout extends GameElement implements Updateable {
         spritesList.addAll(myEnemyList);
         spritesList.addAll(myProjectileList);
         return spritesList;
-    }
-
-    @Deprecated
-    private boolean tagsInCommon (List<String> cellTags, List<String> towerTags) {
-        boolean common = false;
-        for (String tag : towerTags)
-            if (cellTags.contains(tag))
-                return true;
-        return common;
     }
 
     @Deprecated
