@@ -14,10 +14,6 @@ import javafx.scene.image.ImageView;
  */
 //TODO: update default values
 public class Tower extends GameSprite {
-    @parameter(settable=true,playerDisplay=true, defaultValue = "Unnamed")
-    private String name;
-    @parameter(settable=true,playerDisplay=true, defaultValue ="Basic")
-    private String type;
     @parameter(settable=true,playerDisplay=true, defaultValue = "1.0")
     private Double attackSpeed;
     @parameter(settable=true,playerDisplay=true, defaultValue = "1.0")

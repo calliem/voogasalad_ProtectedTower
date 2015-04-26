@@ -12,11 +12,11 @@ import annotations.parameter;
  */
 
 public class Projectile extends MoveableSprite {
-    @parameter(settable = true, playerDisplay = true)
+    @parameter(settable = true, playerDisplay = false)
     private Image imagePath;
-    @parameter(settable = true, playerDisplay = true)
+    @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String name = "Unnamed";
-    @parameter(settable = true, playerDisplay = true)
+    @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
     private String type = "Basic";
     @parameter(settable = true, playerDisplay = true)
     private Double damage = 100.0;

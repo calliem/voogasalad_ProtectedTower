@@ -38,18 +38,18 @@ public class ProjectReader {
                                            "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
 
-
-     public static String[] getParamListForPart(String partType) throws ClassNotFoundException{
-     Class<?> currentClass = Class.forName(partType);
-     Field[] myFields = currentClass.getDeclaredFields();
-     List<Field> neededFields = new ArrayList<>();
-     for(Field field: myFields){
-     if(field.getAnnotation(parameter.class).settable()){
-     neededFields.add(field);
-     }
-     }
-     return null;
-     }
+//
+//     public static String[] getParamListForPart(String partType) throws ClassNotFoundException{
+//     Class<?> currentClass = Class.forName(partType);
+//     Field[] myFields = currentClass.getDeclaredFields();
+//     List<Field> neededFields = new ArrayList<>();
+//     for(Field field: myFields){
+//     if(field.getAnnotation(parameter.class).settable()){
+//     neededFields.add(field);
+//     }
+//     }
+//     return null;
+//     }
     // public static List<String> getParamsNoTypeOrName (String partType) {
     // String[] params = getParamListForPart(partType);
     // List<String> finalList = new ArrayList<String>();

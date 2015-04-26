@@ -38,7 +38,7 @@ public class Layout extends GameElement implements Updateable {
     /**
      * List of Javafx objects so that new nodes can be added for the player to display
      */
-    private List<Node> myNodeList;
+    private List<Sprite> myNodeList;
     /**
      * Contains the map of the current game
      */
@@ -58,8 +58,8 @@ public class Layout extends GameElement implements Updateable {
      */
     private ActionManager myActionManager;
 
-    public Layout (List<Node> nodes) {
-        myNodeList = nodes;
+    public Layout (List<Sprite> myNodes) {
+        myNodeList = myNodes;
         myGameElementFactory = new GameElementFactory();
         myCollisionChecker = new CollisionChecker();
     }
@@ -73,7 +73,7 @@ public class Layout extends GameElement implements Updateable {
     // do this without repeating code
     public void removeProjectile (Sprite sprite) {
         myProjectileList.remove(sprite);
-        myNodeList.remove(sprite.getImageView());
+        myNodeList.remove(sprite);
     }
 
     /**
@@ -326,6 +326,6 @@ public class Layout extends GameElement implements Updateable {
 
     // TODO implement this
     public void addToScene (Sprite s) {
-        // myNodeList.add(s.getImageView());
+        myNodeList.add(s);
     }
 }

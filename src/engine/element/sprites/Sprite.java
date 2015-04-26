@@ -1,8 +1,10 @@
 package engine.element.sprites;
 
 import java.util.Map;
+import annotations.parameter;
 import sun.net.www.content.audio.x_aiff;
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import engine.Collidable;
 import engine.Updateable;
@@ -17,14 +19,21 @@ import engine.element.GameElement;
  *
  */
 public abstract class Sprite extends GameElement implements Updateable,Collidable {
+    
+    @parameter(settable=true,playerDisplay=false, defaultValue ="")
+    private ImageView myImage;
+    @parameter(settable=true,playerDisplay=true, defaultValue = "Unnamed")
+    private String myName;
+    @parameter(settable=true,playerDisplay=true, defaultValue ="Basic")
+    private String myType;
+   
 
+    
     private static final String PARAMETER_BOUNDING_HEIGHT = "BoundingHeight";
     private static final String PARAMETER_BOUNDING_WIDTH = "BoundingWidth";
 
-    private ImageView myImage;
+    
     private Point2D myLocation;
-    private String myType;
-
     public Sprite () {
 
     }
