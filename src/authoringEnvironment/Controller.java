@@ -223,7 +223,7 @@ public class Controller {
      * in the game.
      */
     private String addKey (String key) {
-        String partType = key.split(".", 1)[PARTTYPE_INDEX_IN_KEY];
+        String partType = key.substring(key.indexOf('.'));
         if (!partTypeToKeyList.keySet().contains(partType))
             partTypeToKeyList.put(partType, FXCollections.observableList(new ArrayList<String>()));
         partTypeToKeyList.get(partType).add(key);
