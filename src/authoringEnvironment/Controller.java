@@ -223,7 +223,7 @@ public class Controller {
      * in the game.
      */
     private String addKey (String key) {
-        String partType = key.substring(key.indexOf('.'));
+        String partType = key.substring(key.indexOf('.')+1);
         if (!partTypeToKeyList.keySet().contains(partType))
             partTypeToKeyList.put(partType, FXCollections.observableList(new ArrayList<String>()));
         partTypeToKeyList.get(partType).add(key);
@@ -254,6 +254,7 @@ public class Controller {
      *         the editor.
      */
     public ObservableList<String> getKeysForPartType (String partType) {
+        System.out.println(partTypeToKeyList);
         if (!partTypeToKeyList.keySet().contains(partType))
             return FXCollections.observableArrayList(new ArrayList<String>());
         return FXCollections.observableList(partTypeToKeyList.get(partType));
