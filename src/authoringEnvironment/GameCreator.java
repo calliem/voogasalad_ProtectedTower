@@ -14,12 +14,10 @@ import java.util.Set;
  */
 public class GameCreator {
 
-    private static final String PARAMETER_LIST_FILE = "resources/part_parameters";
-    private static final String PARAMETER_TYPE_FILE = "resources/parameter_datatype";
-    private static final String PART_FILE_NAME = "GameParts.xml";
+    private static final String CLASS_LIST_FILE = "resources/class_list";
     private static final String GAME_EXTENSION = ".gamefile";
-    public static final ResourceBundle PARAMETER_LIST =
-            ResourceBundle.getBundle(PARAMETER_LIST_FILE);
+    public static final ResourceBundle CLASS_LIST =
+            ResourceBundle.getBundle(CLASS_LIST_FILE);
 
     // private static InstanceManager currentGame = new InstanceManager();
 
@@ -61,7 +59,7 @@ public class GameCreator {
      * @return
      */
     private static Set<String> directoriesToCreate () {
-        Set<String> toAdd = PARAMETER_LIST.keySet();
+        Set<String> toAdd = CLASS_LIST.keySet();
         toAdd.add(InstanceManager.PARTS_FILE_DIRECTORY);
         return toAdd;
     }

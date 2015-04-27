@@ -1,6 +1,5 @@
 package engine.element.sprites;
 
-import java.util.List;
 import javafx.geometry.Point2D;
 
 
@@ -12,10 +11,8 @@ import javafx.geometry.Point2D;
  * @author Qian Wang
  *
  */
-public class GridCell extends Sprite {
+public class GridCell extends GameElement {
 
-    // TODO replace these with calls to parameters map
-    private List<String> myTags;
     private Point2D centerLocation;
 
     /**
@@ -58,8 +55,8 @@ public class GridCell extends Sprite {
     }
 
     @Override
-    public void onCollide (Sprite sprite) {
-        // TODO Auto-generated method stub
+    public void onCollide (GameElement element) {
 
     }
+
 }

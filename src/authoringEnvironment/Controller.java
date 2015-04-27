@@ -244,6 +244,7 @@ public class Controller {
     }
 
     public void specifyPartImage (String partKey, String imageFilePath) {
+        System.out.println("partkey " + partKey + " space " + imageFilePath);
         currentGame.specifyPartImage(partKey, imageFilePath);
     }
 

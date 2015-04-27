@@ -2,6 +2,7 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
+import annotations.parameter;
 import javafx.animation.PathTransition;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -19,15 +20,18 @@ import engine.InsufficientParametersException;
  * Some may also be able to attack towers.
  * 
  * @author Qian Wang
+ * @author Sean Scott
+ * @author Greg McKeon
  *
  */
-public class Enemy extends MoveableSprite {
+
+public class Enemy extends GameSprite {
+
+    @parameter(settable = false, playerDisplay = true, defaultValue = "false")
+    private Boolean CanHurtPlayer;
 
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
-    private static final String PARAMETER_SPEED = "Speed";
-    private static final String PARAMETER_HEALTH = "HP";
-    private static final String PARAMETER_DAMAGE = "Damage";
 
     public Enemy () {
         super();
@@ -40,21 +44,20 @@ public class Enemy extends MoveableSprite {
     }
 
     @Override
-    public void onCollide (Sprite sprite) {
-        // TODO Check if this works in changing the variable in the parameters map
-        int health = (int) super.getParameter(PARAMETER_HEALTH);
-        health -= (int) sprite.getParameter(PARAMETER_DAMAGE);
+    public void onCollide (GameElement element) {
+        // TODO write collide methods
+        // super.decreaseHealth(sprite.getDamage());
     }
 
     @Override
     public void move () {
-        int speed = (int) super.getParameter(PARAMETER_SPEED);
         Path path = new Path();
         for (GridCell cell : myPath) {
             path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));
         }
         PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) / speed));
+        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) /
+                                                   super.getSpeed()));
         pathTransition.setPath(path);
         pathTransition.setNode(super.getImageView());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -69,7 +72,6 @@ public class Enemy extends MoveableSprite {
      * @throws InsufficientParametersException
      */
     public void updatePath (GridCell[][] grid,
-                            String type,
                             int startRow,
                             int startCol,
                             int goalRow,
@@ -88,6 +90,10 @@ public class Enemy extends MoveableSprite {
             gridPath.add(grid[coord.getRow()][coord.getCol()]);
         }
         myPath = gridPath;
+    }
+
+    @Override
+    public void update (int counter) {
     }
 
 }

@@ -25,6 +25,7 @@ import authoringEnvironment.Controller;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.Setting;
+import authoringEnvironment.setting.StringSetting;
 import authoringEnvironment.util.Scaler;
 
 
@@ -72,8 +73,12 @@ public abstract class SpriteView extends StackPane {
      * @param c controller needed to obtain partKeys from other tabs
      * @param name name of this sprite, designated by user
      * @param image the file path of this sprite's image
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws ClassNotFoundException
      */
-    public SpriteView (Controller c, String name, String image) {
+    public SpriteView (Controller c, String name, String image) throws ClassNotFoundException,
+        IllegalArgumentException, IllegalAccessException {
         myKey = Controller.KEY_BEFORE_CREATION;
         myController = c;
 
@@ -97,7 +102,21 @@ public abstract class SpriteView extends StackPane {
         display.getChildren().addAll(previewImage, spriteNameDisplay);
         getChildren().addAll(spriteBackground, display);
 
-        setupEditableContent();
+        try {
+            setupEditableContent();
+        }
+        catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         setupOverlayContent();
         setupTooltipText(getSpriteInfo());
     }
@@ -109,7 +128,8 @@ public abstract class SpriteView extends StackPane {
         return path;
     }
 
-    private void setupEditableContent () {
+    private void setupEditableContent () throws ClassNotFoundException, IllegalArgumentException,
+                                        IllegalAccessException {
         editableContent = new VBox(10);
         editableContent.setAlignment(Pos.CENTER);
 
@@ -125,6 +145,7 @@ public abstract class SpriteView extends StackPane {
         settingsObjects.setMaxWidth(150);
 
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
+
         for (Setting s : settings) {
             parameterFields.add(s);
             settingsObjects.getChildren().add(s);
@@ -137,7 +158,6 @@ public abstract class SpriteView extends StackPane {
         saved = new Text(getSpriteType() + " saved!");
         saved.setFill(Color.YELLOW);
         saved.setVisible(false);
-        
 
         Button save = new Button("Save");
         save.setOnAction( (e) -> {
@@ -184,7 +204,8 @@ public abstract class SpriteView extends StackPane {
                 if (myKey.equals(Controller.KEY_BEFORE_CREATION))
                     myKey = myController.addPartToGame(getSpriteType(),
                                                        parameterFields);
-                else myKey = myController.addPartToGame(myKey, getSpriteType(), parameterFields);
+                else
+                    myKey = myController.addPartToGame(myKey, getSpriteType(), parameterFields);
             }
             catch (MissingInformationException e) {
                 // TODO Auto-generated catch block
