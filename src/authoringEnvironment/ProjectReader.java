@@ -2,13 +2,18 @@ package authoringEnvironment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import util.misc.SetHandler;
+import util.player.ReflectionUtil;
+import annotations.parameter;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.setting.Setting;
 
@@ -21,10 +26,11 @@ import authoringEnvironment.setting.Setting;
  */
 public class ProjectReader {
 
+    private static final String classListFile = "resources/class_list";
+    private static final String englishSpecsFile = "resources/display/main_environment_english";
+    private static final ResourceBundle classLists = ResourceBundle.getBundle(classListFile);
     private static final String paramListFile = "resources/part_parameters";
-    private static final String paramSpecsFile = "resources/parameter_datatype";
-    private static final ResourceBundle paramLists = ResourceBundle
-            .getBundle(paramListFile);
+
     private static final String editorPackage = System.getProperty("user.dir")
             .concat("/src/authoringEnvironment/editors");
     private static final List<String> abstractEditors = SetHandler
@@ -35,20 +41,29 @@ public class ProjectReader {
                                            "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
 
-    public static String[] getParamListForPart (String partType) {
-        return paramLists.getString(partType).split("\\s+");
-    }
 
-    public static List<String> getParamsNoTypeOrName (String partType) {
-        String[] params = getParamListForPart(partType);
-        List<String> finalList = new ArrayList<String>();
-        for (String param : params) {
-            if (!param.equals(InstanceManager.NAME_KEY)
-                && !param.equals(InstanceManager.PART_TYPE_KEY))
-                finalList.add(param);
-        }
-        return finalList;
-    }
+    //
+    // public static String[] getParamListForPart(String partType) throws ClassNotFoundException{
+    // Class<?> currentClass = Class.forName(partType);
+    // Field[] myFields = currentClass.getDeclaredFields();
+    // List<Field> neededFields = new ArrayList<>();
+    // for(Field field: myFields){
+    // if(field.getAnnotation(parameter.class).settable()){
+    // neededFields.add(field);
+    // }
+    // }
+    // return null;
+    // }
+    // public static List<String> getParamsNoTypeOrName (String partType) {
+    // String[] params = getParamListForPart(partType);
+    // List<String> finalList = new ArrayList<String>();
+    // for (String param : params) {
+    // if (!param.equals(InstanceManager.nameKey)
+    // && !param.equals(InstanceManager.partTypeKey))
+    // finalList.add(param);
+    // }
+    // return finalList;
+    // }
 
     /**
      * Generates the Settings objects the Overlay UI needs to allow the user to
@@ -57,30 +72,79 @@ public class ProjectReader {
      * @param partType
      *        The type of part we need a Settings list for, i.e. "Tower"
      * @return The corresponding Settings list
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
      */
-    public static List<Setting> generateSettingsList (Controller controller, String partType) {
-        // System.out.println("genreate stginsgl list calle");
+
+    public static List<Setting> generateSettingsList (Controller controller, String partType)
+                                                                                             throws ClassNotFoundException,
+                                                                                             IllegalArgumentException,
+                                                                                             IllegalAccessException {
+        System.out.println("genreate stginsgl list calle " + classLists.getString(partType));
+        Class<?> currentClass = Class.forName(classLists.getString(partType));
+        List<Class<?>> classesWithFields = ReflectionUtil.getPackageParentList(currentClass);
         List<Setting> settingsList = new ArrayList<Setting>();
-        ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-
-        String[] params = getParamListForPart(partType);
-        System.out.println("params for " + partType + ": "
-                           + SetHandler.listFromArray(params));
-        List<String> paramsList = SetHandler.listFromArray(params);
-        Collections.sort(paramsList);
-        System.out.println("sorted? param list: " + paramsList);
-        paramsList = SetHandler.trimBeforeDot(paramsList);
-        for (String param : paramsList) {
-            String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
-            String dataType = typeAndDefault[0];
-            String defaultVal = typeAndDefault[1];
-
-            settingsList.add(generateSetting(controller, partType, param, defaultVal,
-                                             dataType));
+        for (Class<?> myClass : classesWithFields) {
+            Field[] myFields = myClass.getDeclaredFields();
+            for (Field field : myFields) {
+                String paramName = null;
+                System.out.println("field" + field);
+                if (field.getAnnotation(parameter.class) != null &&
+                    field.getAnnotation(parameter.class).settable()) {
+                    Type type = field.getGenericType();
+                    if (type instanceof ParameterizedType) {
+                        ParameterizedType pt = (ParameterizedType) type;
+                        Type paramType = pt.getActualTypeArguments()[0];
+                        paramName = paramType.getTypeName();
+                        int lastClassindex = paramName.lastIndexOf(".")+1;
+                        paramName = paramName.substring(lastClassindex);
+                    }
+                    settingsList.add(generateSetting(controller, partType, field.getName(), paramName, field
+                            .getAnnotation(parameter.class).defaultValue(),
+                                                     field.getType().getSimpleName()));
+                }
+            }
         }
-
         return settingsList;
     }
+
+    // public static List<Setting> generateSettingsList (Controller controller, String partType)
+    // {
+    // // System.out.println("genreate stginsgl list calle");
+    // List<Setting> settingsList = new ArrayList<Setting>();
+    // ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
+    //
+    // String[] params = getParamListForPart(partType);
+    // System.out.println("params for " + partType + ": "
+    // + SetHandler.listFromArray(params));
+    // List<String> paramsList = SetHandler.listFromArray(params);
+    // Collections.sort(paramsList);
+    // System.out.println("sorted? param list: " + paramsList);
+    // paramsList = SetHandler.trimBeforeDot(paramsList);
+    // for (String param : paramsList) {
+    // String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
+    // String dataType = typeAndDefault[0];
+    // String defaultVal = typeAndDefault[1];
+    //
+    // settingsList.add(generateSetting(controller, partType, param, defaultVal,
+    // dataType));
+    //
+    // }
+
+    // ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
+    // String[] params = getParamListForPart(partType);
+    // System.out.println("params for " + partType + ": "
+    // + SetHandler.listFromArray(params));
+    // List<String> paramsList = SetHandler.listFromArray(params);
+    // Collections.sort(paramsList);
+    // System.out.println("sorted? param list: " + paramsList);
+    // paramsList = SetHandler.trimBeforeDot(paramsList);
+    // for (String param : paramsList) {
+    // String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
+    // String dataType = typeAndDefault[0];
+    // String defaultVal = typeAndDefault[1];
+    // }
 
     /**
      * Generates one setting object from the 4 parameters given
@@ -90,6 +154,7 @@ public class ProjectReader {
      * @param param
      *        The name of the parameter the Setting is being generated for,
      *        i.e. "HP"
+     * @param parameterClass 
      * @param defaultVal
      *        The default value of the Setting, i.e. "0"
      * @param dataType
@@ -97,7 +162,7 @@ public class ProjectReader {
      * @return The Setting object corresponding to these parameters
      */
     public static Setting generateSetting (Controller controller, String partType, String param,
-                                           String defaultVal, String dataType) {
+                                           String paramName, String defaultVal, String dataType) {
         Class<?> c = String.class;
         Setting s = null;
         String settingToGet = settingsPackage + dataType + "Setting";
@@ -111,9 +176,9 @@ public class ProjectReader {
 
         try {
             s =
-                    (Setting) c.getConstructor(Controller.class, String.class, String.class,
+                    (Setting) c.getConstructor(Controller.class, String.class, String.class, String.class,
                                                String.class)
-                            .newInstance(controller, partType, param, defaultVal);
+                            .newInstance(controller, partType, param, paramName, defaultVal);
         }
         catch (InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException

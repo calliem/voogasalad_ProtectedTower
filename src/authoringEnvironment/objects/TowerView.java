@@ -12,7 +12,7 @@ import authoringEnvironment.Controller;
  */
 public class TowerView extends SpriteView{
     
-    public TowerView(Controller c, String name, String imageFile){
+    public TowerView(Controller c, String name, String imageFile) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException{
         super(c, name, imageFile);
     }
 }

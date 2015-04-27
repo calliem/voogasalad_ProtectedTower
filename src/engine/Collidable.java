@@ -1,5 +1,8 @@
 package engine;
 
+import engine.element.sprites.GameElement;
+
+
 /**
  * This interface includes methods to get a bounding box for collisions
  * 
@@ -35,4 +38,11 @@ public interface Collidable {
      * @return double of y-coordinate
      */
     public double getLocationY ();
+
+    /**
+     * Provides a default action to occur when a collision occurs with a certain game element
+     * 
+     * @param element GameElement object which this object collides with
+     */
+    public abstract void onCollide (GameElement element);
 }

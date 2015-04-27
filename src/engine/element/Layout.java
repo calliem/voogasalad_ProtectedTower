@@ -9,12 +9,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import engine.ActionManager;
 import engine.CollisionChecker;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
+import engine.element.sprites.GameElement;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
@@ -33,12 +33,12 @@ import engine.factories.GameElementFactory;
  * @author Bojia Chen
  *
  */
-public class Layout extends GameElement implements Updateable {
+public class Layout implements Updateable {
 
     /**
      * List of Javafx objects so that new nodes can be added for the player to display
      */
-    private List<Node> myNodeList;
+    private List<Sprite> myNodeList;
     /**
      * Contains the map of the current game
      */
@@ -58,8 +58,8 @@ public class Layout extends GameElement implements Updateable {
      */
     private ActionManager myActionManager;
 
-    public Layout (List<Node> nodes) {
-        myNodeList = nodes;
+    public Layout (List<Sprite> myNodes) {
+        myNodeList = myNodes;
         myGameElementFactory = new GameElementFactory();
         myCollisionChecker = new CollisionChecker();
     }
@@ -75,7 +75,7 @@ public class Layout extends GameElement implements Updateable {
         myProjectileList.remove(sprite);
         myEnemyList.remove(sprite);
         myTowerList.remove(sprite);
-        myNodeList.remove(sprite.getImageView());
+        myNodeList.remove(sprite);
     }
 
     /**
@@ -83,7 +83,8 @@ public class Layout extends GameElement implements Updateable {
      */
     // TODO remove later
     public void makeCollisionTable () {
-        List<BiConsumer<Sprite, Sprite>> actionList = new ArrayList<BiConsumer<Sprite, Sprite>>();
+        List<BiConsumer<GameElement, GameElement>> actionList =
+                new ArrayList<BiConsumer<GameElement, GameElement>>();
         actionList.add( (e, f) -> e.onCollide(f));
         String[] spritePair = { "Enemy", "Projectile" };
         List<Integer>[] actionPair = (List<Integer>[]) new Object[2];
@@ -110,7 +111,7 @@ public class Layout extends GameElement implements Updateable {
      */
     public void setMap (String mapID) {
         myGameMap = (GameMap) myGameElementFactory.getGameElement("GameMap", mapID);
-        myGameMap.loadMap(myGameElementFactory);
+        // myGameMap.loadMap(myGameElementFactory);
         Rectangle bounds =
                 new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
         myCollisionChecker.initializeQuadtree(bounds);
@@ -142,55 +143,55 @@ public class Layout extends GameElement implements Updateable {
      * @return true if specified tower may be placed at the specified location
      */
     // TODO implement from map class
-    public boolean canPlace (Sprite tower, Point2D location) {
+    public boolean canPlace (GameElement tower, Point2D location) {
         // collision checking and tag checking
-    	//collision checking
-    	boolean collisions = true;
-    	myCollisionChecker.createQuadTree(myTowerList);
-            Set<Sprite> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
-            if (possibleInteractions.size() == 0)
-            	collisions = false;
-    	//tag checking
+        // collision checking
+        boolean collisions = true;
+        myCollisionChecker.createQuadTree(myTowerList);
+        Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
+        if (possibleInteractions.size() == 0)
+            collisions = false;
+        // tag checking
         boolean tags = true;
-    	myCollisionChecker.createQuadTree(this.getGridCells());
-    	Set<Sprite> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
-    	for (Sprite c: possibleGridCells){
-    		if (!tagsInCommon(c, tower))
-    			tags = false;
-    	}
-    	return !collisions && tags;
+        myCollisionChecker.createQuadTree(this.getGridCells());
+        Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
+        for (GameElement c : possibleGridCells) {
+            if (!tagsInCommon(c, tower))
+                tags = false;
+        }
+        return !collisions && tags;
     }
-    
+
     /**
-     * Checks if the cell and the tower have a tag in common
+     * Checks if the cell and the tower have at least one tag in common
+     * 
      * @param cell GridCell object to check
      * @param tower Sprite object to check
      * @return true if the two have a tag in common
      */
-    
-    private boolean tagsInCommon (Sprite cell, Sprite tower) {
-        for (String tag : (List<String>)tower.getParameter("tags"))
-            if (((List<String>)cell.getParameter("tags")).contains(tag))
-                return true;
+    private boolean tagsInCommon (GameElement cell, GameElement tower) {
+        List<String> cellTags = cell.getTags();
+        for (String tag : tower.getTags()) {
+            if (cellTags.contains(tag)) { return true; }
+        }
         return false;
     }
 
     /**
      * Returns a list of all the gridCells in myGameMap
-     * @return List<Sprite> all the gridCells in myGameMap
+     * 
+     * @return List<GameElement> all the gridCells in myGameMap
      */
-    
-    private List<Sprite> getGridCells() {
-		// TODO Auto-generated method stub
-		GridCell[][] myMap = myGameMap.getMap();
-		List<Sprite> gridCells = new ArrayList<>();
-		for(int i = 0; i<myMap.length; i++)
-			for (int j = 0; j<myMap[i].length; j++)
-				gridCells.add(myMap[i][j]);
-		return gridCells;
-	}
+    private List<GameElement> getGridCells () {
+        GridCell[][] myMap = myGameMap.getMap();
+        List<GameElement> gridCells = new ArrayList<>();
+        for (int i = 0; i < myMap.length; i++)
+            for (int j = 0; j < myMap[i].length; j++)
+                gridCells.add((GameElement) myMap[i][j]);
+        return gridCells;
+    }
 
-	// TODO refactor and combine spawnEnemy and spawnProjectile methods
+    // TODO refactor and combine spawnEnemy and spawnProjectile methods
 
     /**
      * Creates one or multiple new Enemy object and adds it to the map at the specified location.
@@ -253,18 +254,6 @@ public class Layout extends GameElement implements Updateable {
     }
 
     /**
-     * Updates the targeting of towers.
-     */
-    
-    private void updateSpriteTargeting() {
-		// TODO Auto-generated method stub
-		myCollisionChecker.createQuadTree(this.getSprites());
-		for (Sprite sprite : myTowerList) {
-			sprite.getAllParameters().put("targets", myCollisionChecker.findTargetable(sprite));
-		}
-	}
-
-	/**
      * Updates the positions of all sprites.
      */
     private void updateSpriteLocations () {
@@ -284,11 +273,21 @@ public class Layout extends GameElement implements Updateable {
         // Check if towers are within range of shooting enemies and shoot
         myCollisionChecker.createQuadTree(this.getSprites());
         for (Sprite sprite : this.getSprites()) {
-            Set<Sprite> possibleInteractions = myCollisionChecker.findCollisionsFor(sprite);
-            for (Sprite other : possibleInteractions) {
+            Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(sprite);
+            for (GameElement other : possibleInteractions) {
                 // TODO determine how many interactions should be made to each sprite
                 myActionManager.applyAction(sprite, other);
             }
+        }
+    }
+
+    /**
+     * Updates the targeting of towers.
+     */
+    private void updateSpriteTargeting () {
+        myCollisionChecker.createQuadTree(this.getSprites());
+        for (Tower tower : myTowerList) {
+            tower.addTargets(myCollisionChecker.findTargetable(tower));
         }
     }
 
@@ -350,5 +349,10 @@ public class Layout extends GameElement implements Updateable {
      */
     public void initializeGameElement (String className, Map<String, Map<String, Object>> allObjects) {
         myGameElementFactory.add(className, allObjects);
+    }
+
+    // TODO implement this
+    public void addToScene (Sprite s) {
+        myNodeList.add(s);
     }
 }
