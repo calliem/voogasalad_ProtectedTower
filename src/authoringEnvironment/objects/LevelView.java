@@ -17,14 +17,14 @@ public class LevelView {
 
     // The myWaves holds a map of all the waves mapped to their spawn point. This allows reusibility
     // since there can be multiple of the same wave at different spawn points.
-    private List<RoundView> myRounds; // contains units, spawn point, and time in between each unit
+    private List<RoundFlowView> myRounds; // contains units, spawn point, and time in between each unit
     // waves contains time between each unit,
     // round stores waves and rounds
     // levels contains time betweeen waves
     private List<Coordinate> myCoordinates;
 
     public LevelView () {
-        myRounds = new ArrayList<RoundView>();
+        myRounds = new ArrayList<RoundFlowView>();
     }
 
 }

@@ -41,8 +41,8 @@ public class GameEditor extends Editor {
     private static final ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
                                                                   "game_editor_english");
 
-    public GameEditor (Controller controller, String name) {
-        super(controller, name);
+    public GameEditor (Controller controller, String name, String nameWithoutEditor) {
+        super(controller, name, nameWithoutEditor);
     }
 
     @Override

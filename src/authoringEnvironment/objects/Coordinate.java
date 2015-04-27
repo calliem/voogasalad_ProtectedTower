@@ -6,7 +6,6 @@ package authoringEnvironment.objects;
  * @author Callie Mao
  *
  */
-
 public class Coordinate {
 
     private double myX;
