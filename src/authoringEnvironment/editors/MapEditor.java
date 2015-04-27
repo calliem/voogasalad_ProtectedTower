@@ -13,7 +13,6 @@ import authoringEnvironment.objects.Sidebar;
  * 
  * @author Callie Mao
  */
-
 public class MapEditor extends MainEditor {
 
     // TODO: store tags within map editor or within each individual map? different maps can have
@@ -28,8 +27,9 @@ public class MapEditor extends MainEditor {
     private static final int DEFAULT_TILE_SIZE = 50; // based on height since monitor height < width
                                                      // and that is usually the limiting factor
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
-    private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
-                                                                  "map_editor_english");
+    private static final ResourceBundle myResources = ResourceBundle
+            .getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
+    
     // private List<GameObject> myMaps;
     private Sidebar mySidebar;  // TODO: maybe move this into the superclass?
 
