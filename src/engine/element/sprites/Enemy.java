@@ -2,8 +2,11 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import annotations.parameter;
+import authoringEnvironment.pathing.CurveCoordinates;
 import javafx.animation.PathTransition;
+import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -51,17 +54,35 @@ public class Enemy extends GameSprite {
 
     @Override
     public void move () {
-        Path path = new Path();
-        for (GridCell cell : myPath) {
-            path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));
-        }
+    	Path path = pathPlanned();
         PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) /
-                                                   super.getSpeed()));
+        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) / super.getSpeed()));
         pathTransition.setPath(path);
         pathTransition.setNode(super.getImageView());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.play();
+    }
+    
+    public Path pathBezier (List<CurveCoordinates> curves){
+    	Path path = new Path();
+        for (CurveCoordinates curve : curves) {
+        	double Control1X = curve.getControl1Coordinate().getX();
+        	double Control1Y = curve.getControl1Coordinate().getY();
+        	double Control2X = curve.getControl2Coordinate().getX();
+        	double Control2Y = curve.getControl2Coordinate().getY();
+        	double EndX = curve.getEndCoordinate().getX();
+        	double EndY = curve.getEndCoordinate().getY();
+            path.getElements().add(new CubicCurveTo(Control1X, Control1Y, Control2X, Control2Y, EndX, EndY));
+        }
+        return path;
+    }
+    
+    public Path pathPlanned(){
+    	Path path = new Path();
+        for (GridCell cell : myPath) {
+            path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));
+        }
+        return path;
     }
 
     /**
