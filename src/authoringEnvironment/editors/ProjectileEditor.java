@@ -10,8 +10,8 @@ import authoringEnvironment.Controller;
 
 
 public class ProjectileEditor extends SpriteEditor {
-    public ProjectileEditor (Controller c, String name) {
-        super(c, name);
+    public ProjectileEditor (Controller c, String name, String nameWithoutEditor) {
+        super(c, name, nameWithoutEditor);
         // TODO Auto-generated constructor stub
     }
 

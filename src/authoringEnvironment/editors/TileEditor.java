@@ -26,8 +26,8 @@ public class TileEditor extends Editor {
     private static final Color BACKGROUND_COLOR = Color.GRAY;
     private static final int PADDING = 10;
 
-    public TileEditor (Controller c, String name) {
-        super(c, name);
+    public TileEditor (Controller c, String name, String nameWithoutEditor) {
+        super(c, name, nameWithoutEditor);
     }
 
     @Override

@@ -2,6 +2,7 @@ package authoringEnvironment.editors;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -20,19 +21,25 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.FlowStrip;
 import authoringEnvironment.objects.FlowView;
+import authoringEnvironment.objects.WaveFlowView;
 import authoringEnvironment.util.NamePrompt;
 
 
+/**
+ * Superclass for WaveEditor and RoundEditor, sets up a row editing configuration
+ * that consists of FlowStrips
+ * 
+ * @author Megan Gutter
+ *
+ */
 public abstract class FlowEditor extends Editor {
 
     private Map<String, ArrayList<FlowView>> myComponents;
-    // private final String WAVE = "Wave";
     private static final int PADDING = 10;
-    // private static final String NO_WAVES = "No waves yet...";
-    private final String NOTHING_CREATED = "No " + editorType.toLowerCase() + "s yet...";
+    private String NOTHING_CREATED;
+
     private static final int BUTTON_HEIGHT = 24;
-    private static final int WAVE_PANEL_HEIGHT = 105;
-    private static final int INFO_PANEL_WIDTH = 170;
+    private static final int STRIP_PANEL_HEIGHT = 105;
     private Text empty;
     private VBox editorLayout;
     private ScrollPane contentScrollPane;
@@ -41,25 +48,30 @@ public abstract class FlowEditor extends Editor {
     private String myKey;
 
     private int rows = 0;
-    private NamePrompt prompt = new NamePrompt(editorType.toLowerCase());
+    private NamePrompt prompt = new NamePrompt(editorName.toLowerCase());
     private static final Color EDITOR_BACKGROUND_COLOR = Color.GRAY;
     private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
-    private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
-    private static final Color WAVE_NAME_COLOR = Color.GOLDENROD;
     public static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
 
-    public FlowEditor (Controller controller, String name) {
-        super(controller, name);
+    public FlowEditor (Controller controller, String name, String nameWithoutEditor) {
+        super(controller, name, nameWithoutEditor);
         this.setStyle(MainEditor.DARK_TAB_CSS);
+        myComponents = new HashMap<String, ArrayList<FlowView>>();
     }
 
     protected abstract String returnEditorTypeName ();
 
+    /**
+     * Overrides the configureUI() method in Editor. Sets up visual content and data storage for
+     * any class that extends FlowEditor
+     * 
+     * @return Group object that adds all visual elements
+     */
     @Override
     public Group configureUI () {
 
         Group visuals = new Group();
-
+        NOTHING_CREATED = "No " + editorName.toLowerCase() + "s yet...";
         editor = new StackPane();
         Rectangle editorBackground =
                 new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
@@ -71,7 +83,7 @@ public abstract class FlowEditor extends Editor {
 
         StackPane wavesDisplay = new StackPane();
         Rectangle wavesDisplayBackground =
-                new Rectangle(CONTENT_WIDTH, WAVE_PANEL_HEIGHT + 2 * PADDING,
+                new Rectangle(CONTENT_WIDTH, STRIP_PANEL_HEIGHT + 2 * PADDING,
                               DISPLAY_BACKGROUND_COLOR);
 
         VBox contents = new VBox(PADDING);
@@ -81,8 +93,10 @@ public abstract class FlowEditor extends Editor {
         contentScrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
         contentScrollPane.setMaxHeight(CONTENT_HEIGHT - (BUTTON_HEIGHT + 2 * PADDING));
         contentScrollPane.setMaxWidth(CONTENT_WIDTH);
-
-        Button makeNewRow = new Button("Create New " + editorType);
+        
+        
+        //System.out.println("Editor Name = " + editorName);
+        Button makeNewRow = new Button("Create New " + editorName);
         makeNewRow.setMaxHeight(BUTTON_HEIGHT);
         makeNewRow.setOnAction(e -> {
             promptName(contents, wavesDisplayBackground);
@@ -112,33 +126,32 @@ public abstract class FlowEditor extends Editor {
         Button cancel = prompt.getCancelButton();
         cancel.setOnAction( (e) -> {
             hideOverlay();
-
         });
 
         showOverlay();
     }
 
-    private void setupNewWave (VBox contents, Rectangle background, String waveName) {
-        makeNewRow(contents, waveName);
+    private void setupNewWave (VBox contents, Rectangle background, String componentName) {
+        makeNewRow(contents, componentName);
         if (myComponents.size() == 0) {
             editor.getChildren().remove(empty);
             editorLayout.getChildren().add(contentScrollPane);
         }
-        myComponents.put(waveName, new ArrayList<FlowView>());
+        myComponents.put(componentName, new ArrayList<FlowView>());
 
         rows++;
-        background.setHeight(rows * WAVE_PANEL_HEIGHT + (rows - 1) * PADDING + 2 * PADDING);
+        background.setHeight(rows * STRIP_PANEL_HEIGHT + (rows - 1) * PADDING + 2 * PADDING);
 
         hideOverlay();
     }
 
     private void makeNewRow (VBox contents, String componentName) {
-        String toCreate = AUTHORING_OBJECTS_PACKAGE + editorType + "Strip";
+        String toCreate = AUTHORING_OBJECTS_PACKAGE + editorName + "Strip";
         FlowStrip display = null;
         try {
             display = (FlowStrip) Class.forName(toCreate)
-            .getConstructor(String.class, String.class, Controller.class)
-            .newInstance(editorType, componentName, myController);
+                    .getConstructor(String.class, String.class, Controller.class)
+                    .newInstance(editorName, componentName, myController);
         }
         catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException | NoSuchMethodException | SecurityException
@@ -152,6 +165,16 @@ public abstract class FlowEditor extends Editor {
     private void showOverlay () {
         prompt.showPrompt(editor);
         isOverlayActive = true;
+    }
+    
+    @Override
+    public void hideOverlay () {
+        if (isOverlayActive) {
+            prompt.playHidePromptAnimation().setOnFinished(e -> {
+                isOverlayActive = false;
+                editor.getChildren().remove(prompt);
+            });
+        }
     }
 
 }

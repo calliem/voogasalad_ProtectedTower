@@ -1,6 +1,7 @@
 package authoringEnvironment.objects;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
@@ -16,26 +17,34 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * Superclass component of FlowEditors, handles all the data for one round/wave
+ * 
+ * @author Megan Gutter
+ * @author Johnny Kumpf
+ *
+ */
 public abstract class FlowStrip extends HBox {
     private Controller myController;
-    private String myKey;
+    protected String myKey;
     private static final int PADDING = 10;
     private static final int STRIP_PANEL_HEIGHT = 105;
     private static final int INFO_PANEL_WIDTH = 170;
     private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
     private static final Color STRIP_NAME_COLOR = Color.GOLDENROD;
     private static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
-    private List<FlowView> myComponents;
+    protected List<FlowView> myComponents;
     private String editorType;
-    
-    public FlowStrip(String type, String componentName, Controller c) {
+
+    public FlowStrip (String type, String componentName, Controller c) {
         super(PADDING);
         myController = c;
+        myComponents = new ArrayList<FlowView>();
         editorType = type;
         myKey = Controller.KEY_BEFORE_CREATION;
         setUpStrip(componentName);
     }
-    
+
     private void setUpStrip (String componentName) {
         ScrollPane newRow = new ScrollPane();
         newRow.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -80,17 +89,19 @@ public abstract class FlowStrip extends HBox {
         addAtLeftOfRow();
         getChildren().addAll(buttonDisplay, newRow);
     }
-    
-    protected abstract void addAtLeftOfRow();
-    
-    protected abstract void saveData(String componentName);
-    
+
+    protected abstract void addAtLeftOfRow ();
+
+    protected abstract void saveData (String componentName);
+
     private void addComponentToRow (ScrollPane displayPane, HBox content, String name) {
         String toCreate = AUTHORING_OBJECTS_PACKAGE + editorType + "FlowView";
         FlowView flow = null;
         try {
-            flow = (FlowView) Class.forName(toCreate).getConstructor(Integer.class, Controller.class)
-                    .newInstance(100, myController);
+            flow =
+                    (FlowView) Class.forName(toCreate)
+                            .getConstructor(int.class, Controller.class)
+                            .newInstance(100, myController);
         }
         catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException | NoSuchMethodException | SecurityException

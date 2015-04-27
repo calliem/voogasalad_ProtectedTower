@@ -33,7 +33,7 @@ import authoringEnvironment.setting.SpriteSetting;
 
 /**
  * Creates the visual selector for adding a unit/wave and the time delay. Stores
- * the information for the WaveEditor
+ * the information for a FlowEditor
  * 
  * @author Megan Gutter
  * @author Kevin He
@@ -77,9 +77,9 @@ public class FlowView extends HBox {
         selector = new VBox(VBOX_PADDING_MULTIPLIER * PADDING);
         selector.setAlignment(Pos.CENTER);
 
-        final Node partSelectorBox = createOptionSelector();
+        final List<Node> partSelectorBox = createOptionSelector();
 
-        selector.getChildren().add(partSelectorBox);
+        selector.getChildren().addAll(partSelectorBox);
         this.getChildren().add(selector);
 
         VBox arrow = createArrowAndDelayVisuals();
@@ -87,10 +87,12 @@ public class FlowView extends HBox {
         this.setPrefHeight(myHeight);
     }
 
-    protected Node createOptionSelector () {
+    protected List<Node> createOptionSelector () {
+        List<Node> options = new ArrayList<Node>();
         Button waveButton = new Button("Choose Wave");
         waveButton.setOnAction(e -> selectWave());
-        return waveButton;
+        options.add(waveButton);
+        return options;
     }
 
     private void showArrowAnimation (ImageView arrow, TextField field) {
@@ -120,25 +122,6 @@ public class FlowView extends HBox {
 
         showArrowAnimation(arrowImage, delayTextField);
         return arrow;
-    }
-
-    private void selectUnit () {
-        SpriteSetting chooseUnit =
-                new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES,
-                                  Variables.PARTNAME_ENEMIES);
-        chooseUnit.getChildren().remove(0);
-        chooseUnit.setTextColor(Color.BLACK);
-        insertElement(chooseUnit);
-
-        List<Double> unitDelay = new ArrayList<Double>();
-        List<String> fileNames = new ArrayList<String>();
-        try {
-            unitDelay.add(Double.parseDouble(delayTextField.getText()));
-            delays = unitDelay;
-        }
-        catch (NumberFormatException e) {
-
-        }
     }
 
     protected void selectWave () {
