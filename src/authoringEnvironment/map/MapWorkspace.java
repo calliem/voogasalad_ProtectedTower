@@ -40,6 +40,7 @@ public class MapWorkspace extends StackPane {
     private static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
     private static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
     private static final double MESSAGE_DISPLAY_DURATION = 1000;
+    private static final int MESSAGE_FONT_SIZE = 20;
 
     private TileMap myActiveMap;
     private PathView myActivePath;
@@ -62,7 +63,7 @@ public class MapWorkspace extends StackPane {
         createDefaultMap();
         pathModeOverlay =
                 //new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS, myActiveMap.getHeight()+2*Anchor.RADIUS);
-                new Rectangle(5, 5);
+                new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
         pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
         StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
 
@@ -156,7 +157,7 @@ public class MapWorkspace extends StackPane {
     protected void displayMessage (String text, Color color) {
         Text saved = new Text(text);
         saved.setFill(color);
-        saved.setFont(new Font(20));
+        saved.setFont(new Font(MESSAGE_FONT_SIZE));
         StackPane.setAlignment(saved, Pos.BOTTOM_CENTER);
         getChildren().add(saved);
         PauseTransition pause = new PauseTransition(Duration.millis(MESSAGE_DISPLAY_DURATION));
