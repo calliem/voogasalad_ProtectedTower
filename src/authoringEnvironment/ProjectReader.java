@@ -4,15 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import util.misc.SetHandler;
-import util.player.ReflectionUtil;
 import annotations.parameter;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.setting.Setting;
@@ -41,19 +38,18 @@ public class ProjectReader {
                                            "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
 
-
-    //
-    // public static String[] getParamListForPart(String partType) throws ClassNotFoundException{
-    // Class<?> currentClass = Class.forName(partType);
-    // Field[] myFields = currentClass.getDeclaredFields();
-    // List<Field> neededFields = new ArrayList<>();
-    // for(Field field: myFields){
-    // if(field.getAnnotation(parameter.class).settable()){
-    // neededFields.add(field);
-    // }
-    // }
-    // return null;
-    // }
+//
+//     public static String[] getParamListForPart(String partType) throws ClassNotFoundException{
+//     Class<?> currentClass = Class.forName(partType);
+//     Field[] myFields = currentClass.getDeclaredFields();
+//     List<Field> neededFields = new ArrayList<>();
+//     for(Field field: myFields){
+//     if(field.getAnnotation(parameter.class).settable()){
+//     neededFields.add(field);
+//     }
+//     }
+//     return null;
+//     }
     // public static List<String> getParamsNoTypeOrName (String partType) {
     // String[] params = getParamListForPart(partType);
     // List<String> finalList = new ArrayList<String>();
@@ -83,27 +79,13 @@ public class ProjectReader {
                                                                                              IllegalAccessException {
         System.out.println("genreate stginsgl list calle " + classLists.getString(partType));
         Class<?> currentClass = Class.forName(classLists.getString(partType));
-        List<Class<?>> classesWithFields = ReflectionUtil.getPackageParentList(currentClass);
+        Field[] myFields = currentClass.getDeclaredFields();
         List<Setting> settingsList = new ArrayList<Setting>();
-        for (Class<?> myClass : classesWithFields) {
-            Field[] myFields = myClass.getDeclaredFields();
-            for (Field field : myFields) {
-                String paramName = null;
-                System.out.println("field" + field);
-                if (field.getAnnotation(parameter.class) != null &&
-                    field.getAnnotation(parameter.class).settable()) {
-                    Type type = field.getGenericType();
-                    if (type instanceof ParameterizedType) {
-                        ParameterizedType pt = (ParameterizedType) type;
-                        Type paramType = pt.getActualTypeArguments()[0];
-                        paramName = paramType.getTypeName();
-                        int lastClassindex = paramName.lastIndexOf(".")+1;
-                        paramName = paramName.substring(lastClassindex);
-                    }
-                    settingsList.add(generateSetting(controller, partType, field.getName(), paramName, field
-                            .getAnnotation(parameter.class).defaultValue(),
-                                                     field.getType().getSimpleName()));
-                }
+        for (Field field : myFields) {
+            System.out.println("field" + field);
+            if (field.getAnnotation(parameter.class)!=null&&field.getAnnotation(parameter.class).settable()) {
+                settingsList.add(generateSetting(controller, partType, field.getName(), field.getAnnotation(parameter.class).defaultValue(),
+                                                 field.getType().getSimpleName()));
             }
         }
         return settingsList;
@@ -145,7 +127,7 @@ public class ProjectReader {
     // String dataType = typeAndDefault[0];
     // String defaultVal = typeAndDefault[1];
     // }
-
+    
     /**
      * Generates one setting object from the 4 parameters given
      * 
@@ -154,7 +136,6 @@ public class ProjectReader {
      * @param param
      *        The name of the parameter the Setting is being generated for,
      *        i.e. "HP"
-     * @param parameterClass 
      * @param defaultVal
      *        The default value of the Setting, i.e. "0"
      * @param dataType
@@ -162,7 +143,7 @@ public class ProjectReader {
      * @return The Setting object corresponding to these parameters
      */
     public static Setting generateSetting (Controller controller, String partType, String param,
-                                           String paramName, String defaultVal, String dataType) {
+                                           String defaultVal, String dataType) {
         Class<?> c = String.class;
         Setting s = null;
         String settingToGet = settingsPackage + dataType + "Setting";
@@ -176,9 +157,9 @@ public class ProjectReader {
 
         try {
             s =
-                    (Setting) c.getConstructor(Controller.class, String.class, String.class, String.class,
+                    (Setting) c.getConstructor(Controller.class, String.class, String.class,
                                                String.class)
-                            .newInstance(controller, partType, param, paramName, defaultVal);
+                            .newInstance(controller, partType, param, defaultVal);
         }
         catch (InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException
