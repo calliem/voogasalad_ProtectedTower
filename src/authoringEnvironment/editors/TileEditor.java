@@ -51,7 +51,7 @@ public class TileEditor extends Editor{
         
         Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, BACKGROUND_COLOR);
         
-        TileView tile = new TileView(Color.BLUE);
+        TileView tile = new TileView(myController, Color.BLUE);
         tileList.add(tile);
         
         tile.getTagsDisplay().setOnMousePressed(e -> {
@@ -61,29 +61,14 @@ public class TileEditor extends Editor{
         
         tagGroupsList.add(tile.getTagsDisplay());
         
-        Tag tag = new Tag("POISON");
-        Tag tag2 = new Tag("GROUND");
-        Tag tag3 = new Tag("AIR");
-        Tag tag4 = new Tag("QIAN");
-        Tag tag5 = new Tag("BOJIA");
-        Tag tag6 = new Tag("Callie sucks");
+        test.getChildren().addAll(tile);
         
-        TagGroup group = new TagGroup();
-        group.addTags(tag2, tag3, tag4, tag5);
-        group.setOnMousePressed(e -> {
-            Scaler.scaleOverlay(0.0, 1.0, group.getOverlay());
-            myContent.getChildren().add(group.getOverlay());
-        });
-        group.addTag(tag6);
-        
-        test.getChildren().addAll(tile, tag, group);
-        
-        tags = new TagDisplay(myController);
+        tags = new TagDisplay(myController, tagGroupsList, tileList);
         ObservableList<Tag> list = tags.getTagsList();
         list.addListener(new ListChangeListener<Tag>() {
             @Override
             public void onChanged(ListChangeListener.Change change){
-                tags.setupDraggableTags(visuals, tagGroupsList, tileList);
+                tags.setupDraggableTags(visuals);
             }
         });
         

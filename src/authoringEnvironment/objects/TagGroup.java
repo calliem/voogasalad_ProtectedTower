@@ -16,27 +16,34 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+import authoringEnvironment.Controller;
 
 public class TagGroup extends Group{
     private VBox tagListDisplay;
-    private List<Tag> tagList;
+    private List<String> tagList;
+    private List<Tag> tagObjects;
     private int tagCount = 0;
     private Text tagCountDisplay;
     private StackPane countDisplay;
     
     private ScrollPane overlayView;
     private Rectangle overlayBackground;
+    private StackPane closeButton;
+    private Controller myController;
     
     private static final int PADDING = 5;
     private static final int TAG_WIDTH = 75;
     private static final int TAG_HEIGHT = 20;
     private static final int OVERLAY_HEIGHT = 200;
+    private static final int OVERLAY_WIDTH = 100;
     
-    public TagGroup(){
+    public TagGroup(Controller controller){
         tagListDisplay = new VBox(PADDING);
         tagListDisplay.setTranslateY(PADDING);
         tagListDisplay.setAlignment(Pos.TOP_CENTER);
         tagList = new ArrayList<>();
+        tagObjects = new ArrayList<>();
+        myController = controller;
         
         countDisplay = new StackPane();
         Rectangle countDisplayBody = new Rectangle(TAG_WIDTH, TAG_HEIGHT, Color.DARKGRAY);
@@ -56,23 +63,71 @@ public class TagGroup extends Group{
         overlayView = new ScrollPane();
         
         StackPane overlayContent = new StackPane();
-        overlayBackground = new Rectangle(TAG_WIDTH+2*PADDING, OVERLAY_HEIGHT);
+        overlayBackground = new Rectangle(OVERLAY_WIDTH, OVERLAY_HEIGHT);
         overlayBackground.setOpacity(0.8);
+        
+        closeButton = new StackPane();
+        Rectangle button = new Rectangle(75, 20, Color.RED);
+        button.setArcWidth(20);
+        button.setArcHeight(20);
+        Text close = new Text("Close");
+        close.setFont(new Font(10));
+        close.setFill(Color.WHITE);
+        closeButton.getChildren().addAll(button, close);
+        closeButton.setOnMouseEntered(e -> button.setFill(Color.DARKRED));
+        closeButton.setOnMouseExited(e -> button.setFill(Color.RED));
+        
+        tagListDisplay.getChildren().add(closeButton);
+        
         overlayContent.getChildren().addAll(overlayBackground, tagListDisplay);
         
         overlayView.setContent(overlayContent);
         overlayView.setVbarPolicy(ScrollBarPolicy.NEVER);
         overlayView.setHbarPolicy(ScrollBarPolicy.NEVER);
-        overlayView.setMaxWidth(TAG_WIDTH+2*PADDING);
+        overlayView.setPrefWidth(100);
         overlayView.setMaxHeight(OVERLAY_HEIGHT);
         
         this.getChildren().add(countDisplay);
     }
     
+    public StackPane getCloseButton(){
+        return closeButton;
+    }
+    
+    public void update(){
+        for(Tag tag : tagObjects){
+            if(!myController.tagExists(tag.getLabel())){
+                tagListDisplay.getChildren().remove(tag);
+                tagList.remove(tag.getLabel());
+                tagObjects.remove(tag);
+                
+                tagCount--;
+                tagCountDisplay.setText(tagCount+"");
+                animateCountChange();
+                
+                return;
+            }
+        }
+    }
+    
     public void addTag(Tag tag){
-        tagCount++;
-        tagCountDisplay.setText(tagCount+"");
-        
+        if(!tagList.contains(tag.getLabel())){
+            tagCount++;
+            tagCountDisplay.setText(tagCount+"");
+
+            animateCountChange();
+
+            Tag tagToAdd = new Tag(tag.getLabel());
+            tagList.add(tagToAdd.getLabel());
+            tagObjects.add(tagToAdd);
+//            tagToAdd.hideButton();
+
+            adjustBackground();
+            tagListDisplay.getChildren().add(tagToAdd);
+        }
+    }
+    
+    private void animateCountChange(){
         ScaleTransition scale = new ScaleTransition(Duration.millis(100), tagCountDisplay);
         scale.setFromX(1.0);
         scale.setFromY(1.0);
@@ -81,17 +136,6 @@ public class TagGroup extends Group{
         scale.setAutoReverse(true);
         scale.setCycleCount(2);
         scale.play();
-        
-        tagList.add(tag);
-        tag.hideButton();
-//        
-//        this.getChildren().remove(countDisplay);
-//        this.getChildren().add(tagListDisplay);
-        
-        System.out.println(tagList);
-        adjustBackground();
-        tagListDisplay.getChildren().add(tag);
-        System.out.println(tagListDisplay.getChildren());
     }
     
     private void adjustBackground(){

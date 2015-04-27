@@ -12,10 +12,13 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -27,6 +30,8 @@ import javafx.util.Duration;
 import authoringEnvironment.Controller;
 import authoringEnvironment.NoImageFoundException;
 import authoringEnvironment.objects.SpriteView;
+import authoringEnvironment.objects.Tag;
+import authoringEnvironment.objects.TagGroup;
 import authoringEnvironment.util.NamePrompt;
 import authoringEnvironment.util.Scaler;
 
@@ -46,6 +51,7 @@ public abstract class SpriteEditor extends Editor {
     private boolean editing = false;
     private Text empty;
     private List<Node> spritesCreated;
+    private List<TagGroup> tagGroupsList;
     private IntegerProperty numSprites;
     private NamePrompt prompt;
 
@@ -113,13 +119,27 @@ public abstract class SpriteEditor extends Editor {
 
         currentRow.setAlignment(Pos.TOP_CENTER);
         currentRow.setMaxHeight(100);
+        
+        tagGroupsList = new ArrayList<>();
 
-        TagDisplay tags = new TagDisplay(myController);
+        TagDisplay tags = new TagDisplay(myController, tagGroupsList, spritesCreated);
+        ObservableList<Tag> list = tags.getTagsList();
+        list.addListener(new ListChangeListener<Tag>() {
+            @Override
+            public void onChanged(ListChangeListener.Change change){
+                tags.setupDraggableTags(visuals);
+                for(TagGroup group : tagGroupsList){
+                    group.update();
+                }
+            }
+        });
         StackPane.setAlignment(tags, Pos.CENTER_LEFT);
         
         myContent.getChildren().addAll(background, spriteDisplay, empty);
         StackPane.setAlignment(spriteDisplay, Pos.TOP_CENTER);
         
+        ScrollPane spriteDisplayPane = new ScrollPane();
+        Rectangle paneBackground = new Rectangle ();
         
         visuals.getChildren().addAll(myContent, tags);
         
@@ -130,12 +150,6 @@ public abstract class SpriteEditor extends Editor {
         return prompt;
     }
 
-    /**
-     * @param spriteDisplay
-     * @param rows
-     * @param oldValue
-     * @param newValue
-     */
     private void handleSpritePlacement (VBox spriteDisplay,
                                         ArrayList<HBox> rows,
                                         Number oldValue,
@@ -241,6 +255,7 @@ public abstract class SpriteEditor extends Editor {
 
         row.getChildren().add(sprite);
         spritesCreated.add(sprite);
+        tagGroupsList.add(sprite.getTagGroup());
         sprite.saveParameterFields(true);
 
         numSprites.setValue(spritesCreated.size());
@@ -274,17 +289,19 @@ public abstract class SpriteEditor extends Editor {
             wait.setOnFinished( (e) -> row.getChildren().remove(sprite));
             wait.play();
             spritesCreated.remove(sprite);
+            tagGroupsList.remove(sprite.getTagGroup());
             numSprites.setValue(spritesCreated.size());
         }
     }
 
     private void setupSpriteAction (SpriteView sprite) {
-        sprite.setOnMousePressed( (e) -> {
+        sprite.getSpriteBody().setOnMousePressed( (e) -> {
             if (sprite.isExisting().getValue() && editing){
                 showOverlay(sprite.getEditorOverlay());
                 activeOverlay = sprite.getEditorOverlay();
             }
         });
+        
         sprite.getCloseButton().setOnAction( (e) -> {
             hideOverlay();
             sprite.discardUnsavedChanges();

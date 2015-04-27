@@ -43,6 +43,7 @@ public abstract class SpriteView extends StackPane {
     private VBox editableContent;
     private StackPane overlayContent;
     private Button overlayCloseButton;
+    private ImageView deleteButton;
     private Text overlayErrorMessage;
     private BooleanProperty exists;
 
@@ -66,6 +67,8 @@ public abstract class SpriteView extends StackPane {
     private Controller myController;
     private String id;
     private ImageView previewImage;
+    private TagGroup tagGroup;
+    private StackPane displayPane;
 
     /**
      * Creates visual representation of a sprite created by
@@ -87,6 +90,9 @@ public abstract class SpriteView extends StackPane {
         parameterFields = new ArrayList<>();
         exists = new SimpleBooleanProperty(true);
 
+        VBox spriteLayout = new VBox(5);
+        spriteLayout.setAlignment(Pos.CENTER);
+        displayPane = new StackPane();
         display = new VBox(5);
         display.setAlignment(Pos.CENTER);
 
@@ -95,13 +101,34 @@ public abstract class SpriteView extends StackPane {
         spriteNameDisplay.setFont(new Font(10));
         spriteNameDisplay.setTextAlignment(TextAlignment.CENTER);
         spriteNameDisplay.setWrappingWidth(90);
+        
+        tagGroup = new TagGroup(myController);
+        tagGroup.setOnMousePressed(e -> {
+            Scaler.scaleOverlay(0.0, 1.0, tagGroup.getOverlay());
+            this.getChildren().add(tagGroup.getOverlay());
+        });
+        
+        tagGroup.getCloseButton().setOnMousePressed(e -> {
+            Scaler.scaleOverlay(1.0, 0.0, tagGroup.getOverlay());
+            this.getChildren().remove(tagGroup.getOverlay());
+        });
 
         display.getChildren().addAll(previewImage, spriteNameDisplay);
-        getChildren().addAll(spriteBackground, display);
+        displayPane.getChildren().addAll(spriteBackground, display);
+        spriteLayout.getChildren().addAll(displayPane, tagGroup);
+        getChildren().add(spriteLayout);
 
         setupEditableContent();
         setupOverlayContent();
         setupTooltipText(getSpriteInfo());
+    }
+    
+    public TagGroup getTagGroup(){
+        return tagGroup;
+    }
+    
+    public StackPane getSpriteBody(){
+        return displayPane;
     }
 
     private String getSpriteType () {
@@ -230,22 +257,22 @@ public abstract class SpriteView extends StackPane {
      * Make this sprite editable (i.e. allow the user to delete it)
      */
     public void initiateEditableState () {
-        ImageView close = new ImageView(new Image("images/close.png"));
-        close.setTranslateX(10);
-        close.setTranslateY(-10);
-        close.setFitWidth(20);
-        close.setPreserveRatio(true);
-        close.setOnMousePressed( (e) -> {
-            Scaler.scaleOverlay(1.0, 0.0, this);
+        deleteButton = new ImageView(new Image("images/close.png"));
+        deleteButton.setTranslateX(10);
+        deleteButton.setTranslateY(-10);
+        deleteButton.setFitWidth(20);
+        deleteButton.setPreserveRatio(true);
+        deleteButton.setOnMousePressed( (e) -> {
+//            Scaler.scaleOverlay(1.0, 0.0, this);
             exists.setValue(false);
         });
-        this.getChildren().add(close);
-        StackPane.setAlignment(close, Pos.TOP_RIGHT);
+        this.getChildren().add(deleteButton);
+        StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
     }
 
     public void exitEditableState () {
         // removes the 'x' button.
-        this.getChildren().remove(this.getChildren().size() - 1);
+        this.getChildren().remove(deleteButton);
     }
 
 

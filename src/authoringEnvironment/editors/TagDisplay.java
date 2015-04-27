@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
@@ -38,12 +39,16 @@ public class TagDisplay extends HBox{
     private StackPane myPrompt;
     private boolean promptActive = false;
     private ObservableList<Tag> tagsList;
+    private List<TagGroup> tagGroupsList;
+    private List<Node> nodesList;
     
-    public TagDisplay(Controller controller){
+    public TagDisplay(Controller controller, List<TagGroup> tagGroups, List<Node> nodes){
         super(2*PADDING);
         this.setAlignment(Pos.TOP_LEFT);
         
         myController = controller;
+        tagGroupsList = tagGroups;
+        nodesList = nodes;
         myContent = new StackPane();
         myPrompt = new StackPane();
         createPrompt();
@@ -98,6 +103,9 @@ public class TagDisplay extends HBox{
             @Override
             public void onChanged(ListChangeListener.Change change){
                 refresh();
+                for(TagGroup group : tagGroupsList){
+                    group.update();
+                }
             }
         });
         
@@ -119,33 +127,46 @@ public class TagDisplay extends HBox{
         name.setMaxWidth(180);
         
         Text error = new Text();
+        error.setWrappingWidth(180);
+        error.setTextAlignment(TextAlignment.CENTER);
         error.setFill(Color.RED);
         
         Button create = new Button("Create");
         create.setOnAction(e -> {
             String newTagName = name.getText();
-            if(!myController.tagExists(newTagName)){
+            if(!myController.tagExists(newTagName) && newTagName.length() != 0){
                 addTag(new Tag(newTagName));
                 myController.addNewTag(newTagName);
 
-                name.setText("");
-                hideTagPrompt();
+                hideTagPrompt(name);
+            }
+            else if(newTagName.length() == 0){
+                displayError(error, "Enter a name for your tag!");
             }
             else {
                 displayError(error, "That tag already exists!");
             }
         });
         
+        Button cancel = new Button("Cancel");
+        cancel.setOnAction(e -> {
+            hideTagPrompt(name);
+        });
+        
+        HBox buttons = new HBox(2*PADDING);
+        buttons.setAlignment(Pos.CENTER);
+        buttons.getChildren().addAll(create, cancel);
+        
         content.setAlignment(Pos.TOP_CENTER);
         content.setTranslateY(PADDING*2);
-        content.getChildren().addAll(message, name, error, create);
+        content.getChildren().addAll(message, name, error, buttons);
         
         myPrompt.getChildren().addAll(promptBackground, content);
         StackPane.setAlignment(promptBackground, Pos.TOP_CENTER);
         myPrompt.setTranslateY(2*PADDING);
     }
 
-    public void setupDraggableTags(Group visuals, List<TagGroup> groups, List<Node> nodes){
+    public void setupDraggableTags(Group visuals){
         for(Tag tag : tagsList){
             Tag newTag = new Tag(tag.getLabel());
             newTag.hideButton();
@@ -153,7 +174,7 @@ public class TagDisplay extends HBox{
             double adjustY = 70;
             
             tag.getTagBody().setOnMousePressed(e -> {
-                newTag.setLocation(e.getSceneX(), e.getSceneY());
+//                newTag.setLocation(e.getSceneX(), e.getSceneY());
                 newTag.setTranslateX(e.getSceneX());
                 newTag.setTranslateY(e.getSceneY()-adjustY);
                 visuals.getChildren().add(newTag);
@@ -171,17 +192,17 @@ public class TagDisplay extends HBox{
             
             tag.getTagBody().setOnMouseReleased(e -> {
                 visuals.getChildren().remove(newTag);
-                checkCollisions(newTag, groups, nodes);
+                checkCollisions(newTag);
             });
         }
     }
     
-    private void checkCollisions(Tag tag, List<TagGroup> groups, List<Node> nodes){
-        for(Node node: nodes){
-            if(tag.getBoundsInParent().intersects(node.getBoundsInParent())){
+    private void checkCollisions(Tag tag){
+        for(Node node: nodesList){
+            if(tag.getBoundsInParent().intersects(node.getBoundsInParent()) ){
                 tag.setTranslateX(0);
                 tag.setTranslateY(0);
-                groups.get(nodes.indexOf(node)).addTag(tag);
+                tagGroupsList.get(nodesList.indexOf(node)).addTag(tag);
             }
         }
     }
@@ -194,12 +215,13 @@ public class TagDisplay extends HBox{
         this.getChildren().add(myPrompt);
     }
     
-    private void hideTagPrompt(){
+    private void hideTagPrompt(TextField field){
         FadeTransition scale = new FadeTransition(Duration.millis(500), myPrompt);
         scale.setFromValue(1.0);
         scale.setToValue(0);
         scale.play();
         promptActive = false;
+        field.setText("");
         this.getChildren().remove(myPrompt);
     }
     
