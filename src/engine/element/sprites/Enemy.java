@@ -2,7 +2,8 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import annotations.parameter;
 import authoringEnvironment.pathing.CurveCoordinates;
 import javafx.animation.PathTransition;
@@ -30,6 +31,8 @@ import engine.InsufficientParametersException;
 
 public class Enemy extends GameSprite {
 
+    private static final int MOVE_DELAY = 1000;
+
     @parameter(settable = false, playerDisplay = true, defaultValue = "false")
     private Boolean CanHurtPlayer;
 
@@ -52,33 +55,56 @@ public class Enemy extends GameSprite {
         // super.decreaseHealth(sprite.getDamage());
     }
 
+    /**
+     * Adds a poison modifier to the enemy so it loses health for a set duration
+     * 
+     * @param damage the amount of damage the enemy should lose
+     * @param duration the amount of time damage should be lost
+     */
+    public void poison (int damage, int duration) {
+        Timer timer = new Timer();
+        TimerTask poison = new TimerTask() {
+            @Override
+            public void run () {
+                decreaseHealth(damage);
+            }
+        };
+        timer.schedule(poison, MOVE_DELAY, (long) (MOVE_DURATION * duration));
+    }
+
+    protected void decreaseHealth (Integer amount) {
+        super.decreaseHealth(amount);
+    }
+
     @Override
     public void move () {
-    	Path path = pathPlanned();
+        Path path = pathPlanned();
         PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) / super.getSpeed()));
+        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) /
+                                                   super.getSpeed()));
         pathTransition.setPath(path);
         pathTransition.setNode(super.getImageView());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.play();
     }
-    
-    public Path pathBezier (List<CurveCoordinates> curves){
-    	Path path = new Path();
+
+    public Path pathBezier (List<CurveCoordinates> curves) {
+        Path path = new Path();
         for (CurveCoordinates curve : curves) {
-        	double Control1X = curve.getControl1Coordinate().getX();
-        	double Control1Y = curve.getControl1Coordinate().getY();
-        	double Control2X = curve.getControl2Coordinate().getX();
-        	double Control2Y = curve.getControl2Coordinate().getY();
-        	double EndX = curve.getEndCoordinate().getX();
-        	double EndY = curve.getEndCoordinate().getY();
-            path.getElements().add(new CubicCurveTo(Control1X, Control1Y, Control2X, Control2Y, EndX, EndY));
+            double Control1X = curve.getControl1Coordinate().getX();
+            double Control1Y = curve.getControl1Coordinate().getY();
+            double Control2X = curve.getControl2Coordinate().getX();
+            double Control2Y = curve.getControl2Coordinate().getY();
+            double EndX = curve.getEndCoordinate().getX();
+            double EndY = curve.getEndCoordinate().getY();
+            path.getElements().add(new CubicCurveTo(Control1X, Control1Y, Control2X, Control2Y,
+                                                    EndX, EndY));
         }
         return path;
     }
-    
-    public Path pathPlanned(){
-    	Path path = new Path();
+
+    public Path pathPlanned () {
+        Path path = new Path();
         for (GridCell cell : myPath) {
             path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));
         }
