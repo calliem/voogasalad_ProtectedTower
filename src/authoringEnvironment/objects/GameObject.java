@@ -1,6 +1,7 @@
 package authoringEnvironment.objects;
 
 import java.util.Map;
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
@@ -102,6 +103,8 @@ public abstract class GameObject {
         myThumbnail = thumbnail;
     }
 
-    public abstract Map<String, Object> saveToXML ();
+    public abstract Map<String, Object> save ();
+    
+    public abstract Group getRoot();
 
 }
