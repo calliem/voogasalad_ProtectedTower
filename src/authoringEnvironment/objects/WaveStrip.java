@@ -59,10 +59,11 @@ public class WaveStrip extends FlowStrip {
                         myController.addPartToGame(myKey, WAVE, componentName,
                                                    ProjectReader.getParamsNoTypeOrName(WAVE), data);
         }
-        catch (MissingInformationException | DataFormatException e) {
+        catch (MissingInformationException | DataFormatException | ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }        
+        }
+       
     }
 
 }
