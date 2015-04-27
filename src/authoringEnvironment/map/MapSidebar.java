@@ -225,9 +225,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * the most recently used active map from other methods/classes.
      * 
      * @param activeMap
-     * @throws MissingInformationException 
+     * @throws MissingInformationException
      */
-    private void saveMap (TileMap activeMap) throws MissingInformationException {
+    private void saveMap (TileMap activeMap) {
 
         activeMap.setName(mapNameTextField.getText());
         WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
@@ -239,28 +239,36 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         // use this one
         Map<String, Object> mapSettings = activeMap.save();
 
-        String key;
+        String key = null;
         if (!getMapKeys().contains(activeMap.getKey())) {
-            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings); 
+            try {
+                key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
+            }
+            catch (MissingInformationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         else {
             key = "KEY";
-            /*key =
-                    myController.addPartToGame(activeMap.getKey(), Variables.PARTNAME_MAP,
-                                               mapSettings);*/ 
-            //TODO: replace a key that already exists
+            /*
+             * key =
+             * myController.addPartToGame(activeMap.getKey(), Variables.PARTNAME_MAP,
+             * mapSettings);
+             */
+            // TODO: replace a key that already exists
             System.out.println("key already exists. Write something to replace it");
         }
         activeMap.setKey(key);
         displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
         mapDisplay.updateDisplay(getMapKeys());
 
-        /*int existingIndex = super.getMaps().indexOf(activeMap);
-            super.getMaps().remove(activeMap);
-            super.getMaps().add(existingIndex, activeMap);*/
-    }        
-
-        
+        /*
+         * int existingIndex = super.getMaps().indexOf(activeMap);
+         * super.getMaps().remove(activeMap);
+         * super.getMaps().add(existingIndex, activeMap);
+         */
+    }
 
     private void updateMapDim (String numRows, String numCols) {
         getMapWorkspace().getActiveMap().setMapDimensions(Integer.parseInt(numRows),
@@ -305,17 +313,15 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          */
     }
 
-    protected void setContent (GridPane container) throws MissingInformationException {
+    protected void setContent (GridPane container) {
         container.setVgap(VGAP_PADDING);
         container.setHgap(HGAP_PADDING);
-
 
         Button createMapButton = new Button(getResources().getString("CreateMap"));
         createMapButton.setOnMouseClicked(e -> createMap());
 
         Button saveMapButton = new Button(getResources().getString("SaveMap"));
         saveMapButton.setOnMouseClicked(e -> saveMap(getMapWorkspace().getActiveMap()));
-
         Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
         deleteMapButton.setOnMouseClicked(e -> removeMap());
 
@@ -354,9 +360,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         // display maps
         mapDisplay =
                 new MapUpdatableDisplay(myController, Variables.PARTNAME_MAP,
-                                     UPDATABLEDISPLAY_ELEMENTS, this);
-                                     //e -> {this.changeMap((TileMap) object);}
-                //); // test
+                                        UPDATABLEDISPLAY_ELEMENTS, this);
+        // e -> {this.changeMap((TileMap) object);}
+        // ); // test
         container.add(mapDisplay, 0, 5, 2, 1);
     }
 
