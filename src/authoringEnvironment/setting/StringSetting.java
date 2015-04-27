@@ -4,8 +4,8 @@ import authoringEnvironment.Controller;
 
 public class StringSetting extends Setting{
 
-    public StringSetting (Controller controller, String part, String label, String value) {
-        super(controller, part, label, value);
+    public StringSetting (Controller controller, String part, String label, String parameterName, String value) {
+        super(controller, part, label, parameterName, value);
     }
 
     @Override
