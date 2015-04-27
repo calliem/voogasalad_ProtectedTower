@@ -16,7 +16,7 @@ import engine.element.sprites.Sprite;
  * are within some range. Methods in this class can be called to add members to the Quadtree and
  * then find colliding members.
  * 
- * @author Qian Wang
+ * @author Qian Wang, Michael Yang
  *
  */
 public class CollisionChecker {
@@ -151,7 +151,6 @@ public class CollisionChecker {
      */
     
 	public Set<Sprite> findTargetable(Sprite sprite) {
-		// TODO Auto-generated method stub
 		Set<Sprite> collisions = new HashSet<>();
         List<Sprite> possibleSprites = getPossibleCollisions(sprite);
         for (Sprite other : possibleSprites) {
