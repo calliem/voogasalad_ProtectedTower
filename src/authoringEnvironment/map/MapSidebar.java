@@ -48,6 +48,11 @@ public class MapSidebar extends Sidebar {
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
     private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment.getEnvironmentWidth() / 32;
+    
+    
+    private static final int NAME_COL = 0;
+    private static final int NAME_ROW = 1;
+    //TODO: ^ similar magic values in the gridpane (is this necessary)?
 
     private ObservableList<GameObject> myPaths;
 
@@ -131,6 +136,7 @@ public class MapSidebar extends Sidebar {
     }
 
     private void selectTile () {
+        Text text = new Text(getResources().getString("SelectTile"));
         HBox selectTile = new HBox();
         selectTile.setSpacing(30); // remove hardcoding
 
@@ -170,7 +176,6 @@ public class MapSidebar extends Sidebar {
 
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener( (obs, oldValue, newValue) -> {
-            // System.out.println(newValue);
             getMapWorkspace().getActiveMap().setBackground(newValue);
         });
         return imgSelector;
@@ -185,22 +190,6 @@ public class MapSidebar extends Sidebar {
         mapButtons.getChildren().addAll(createButton, saveButton, deleteButton);
         return mapButtons;
     }
-
-    /*
-     * private void removeMap () {
-     * // TODO: move this to map workspace
-     * ScaleTransition scale =
-     * Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
-     * scale.setOnFinished( (e) -> {
-     * if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
-     * super.getMaps().remove(getMapWorkspace().getActiveMap());
-     * mapDisplay.updateDisplay(super.getMaps());
-     * }
-     * getMapWorkspace().removeMap();
-     * });
-     * 
-     * }
-     */
 
     private void remove (GameObject object,
                          UpdatableDisplay updateDisplay,
@@ -248,7 +237,8 @@ public class MapSidebar extends Sidebar {
      * 
      * @param activeMap
      */
-    private void saveMap (TileMap activeMap) {
+    private TileMap saveMap (TileMap activeMap) {
+        System.out.println("textfield: " + mapNameTextField.getText());
         activeMap.setName(mapNameTextField.getText());
         WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
@@ -290,7 +280,7 @@ public class MapSidebar extends Sidebar {
          * // part.get(MapEditor.TILE_MAP);
          */
         mapDisplay.updateDisplay(super.getMaps());
-
+        return activeMap;
     }
 
     private void updateMapDim (String numRows, String numCols) {
@@ -413,9 +403,9 @@ public class MapSidebar extends Sidebar {
 
         Text name = new Text(getResources().getString("Name"));
         // Setting name = new StringSetting("label", "hi");
-        container.add(name, 0, 1);
-        mapNameTextField = new TextField();
-        container.add(mapNameTextField, 1, 1);
+        container.add(name, NAME_COL, NAME_ROW);
+        TextField pathNameTextField = new TextField();
+        container.add(pathNameTextField, 1, 1);
 
         /*
          * UpdatableDisplay pathDisplay =

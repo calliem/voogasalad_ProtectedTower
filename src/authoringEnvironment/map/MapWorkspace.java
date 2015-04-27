@@ -2,6 +2,7 @@ package authoringEnvironment.map;
 
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -14,8 +15,17 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.pathing.Anchor;
 
 
+/**
+ * Houses the stackpane that holds the currently active tilemap, paths, messages, etc. that may be
+ * displayed on it. Updates the currently active objects accordingly based upon changes called from
+ * other classes.
+ * 
+ * @author callie
+ *
+ */
 public class MapWorkspace extends StackPane {
 
     private static final Color MAP_BACKGROUND_COLOR = Color.web("2A2A29");
@@ -27,13 +37,15 @@ public class MapWorkspace extends StackPane {
             (int) (AuthoringEnvironment.getEnvironmentHeight() * .9 / 25); // getHeight();
     private static final int DEFAULT_TILE_SIZE = 30; // based on height since monitor height < width
                                                      // and that is usually the limiting factor
-    public static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
-    public static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
+    private static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
+    private static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
+    private static final double MESSAGE_DISPLAY_DURATION = 1000;
+    private static final int MESSAGE_FONT_SIZE = 20;
 
     private TileMap myActiveMap;
     private PathView myActivePath;
     private Color myActiveColor;
-    private Rectangle myMapOverlay;
+    private Rectangle pathModeOverlay;
 
     // TODO: fix all of these constants so there are no more replicates
 
@@ -46,10 +58,16 @@ public class MapWorkspace extends StackPane {
                                       AuthoringEnvironment.getEnvironmentHeight(),
                               MAP_BACKGROUND_COLOR);
         getChildren().add(background);
+        StackPane.setAlignment(background, Pos.CENTER);
+
         createDefaultMap();
-        myMapOverlay =
+        pathModeOverlay =
+                //new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS, myActiveMap.getHeight()+2*Anchor.RADIUS);
                 new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
-        myMapOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
+        pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
+        StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
+
+        
 
     }
 
@@ -76,10 +94,17 @@ public class MapWorkspace extends StackPane {
         }
     }
 
-    public void updateWithNewMap (GameObject object) {
+    private void update (GameObject object) {
         if (myActiveMap != null && myActiveMap.getRoot() != null) {
             getChildren().remove(myActiveMap.getRoot());
         }
+        StackPane.setAlignment(object.getRoot(), Pos.CENTER);
+        getChildren().add(object.getRoot());
+    }
+
+    public void updateWithNewMap (GameObject object) {
+        update(object);
+
         myActiveMap = (TileMap) object;
         // if (getChildren().contains(myActiveMap.getRoot())){
         // System.out.println("active map already exists");
@@ -92,7 +117,6 @@ public class MapWorkspace extends StackPane {
          * Scaler.scaleOverlay(0.0, 1.0, myActiveMap.getRoot());
          * scale.setOnFinished( (e) -> {
          */
-        getChildren().add(myActiveMap.getRoot());
         // });
 
         myActiveMap.setActiveColor(myActiveColor);
@@ -101,9 +125,8 @@ public class MapWorkspace extends StackPane {
 
     // TODO: duplicated
     public void updateWithNewPath (GameObject object) {
-        if (myActivePath != null && myActivePath.getRoot() != null) {
-            getChildren().remove(myActivePath.getRoot());
-        }
+        update(object);
+
         myActivePath = (PathView) object;
         // if (getChildren().contains(myActiveMap.getRoot())){
         // System.out.println("active map already exists");
@@ -116,7 +139,6 @@ public class MapWorkspace extends StackPane {
          * Scaler.scaleOverlay(0.0, 1.0, myActiveMap.getRoot());
          * scale.setOnFinished( (e) -> {
          */
-        getChildren().add(myActiveMap.getRoot());
         // });
 
     }
@@ -131,38 +153,27 @@ public class MapWorkspace extends StackPane {
             path.addAnchor(e.getX(), e.getY());
     }
 
-    // TODO:
-
-    /*
-     * public void displayMessage(String message){
-     * 
-     * }
-     */
 
     protected void displayMessage (String text, Color color) {
         Text saved = new Text(text);
         saved.setFill(color);
-        saved.setFont(new Font(20));
+        saved.setFont(new Font(MESSAGE_FONT_SIZE));
         StackPane.setAlignment(saved, Pos.BOTTOM_CENTER);
-        // saved.setVisible(false);
         getChildren().add(saved);
-
-        // saved.setVisible(true);
-        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+        PauseTransition pause = new PauseTransition(Duration.millis(MESSAGE_DISPLAY_DURATION));
         pause.play();
         pause.setOnFinished(e -> getChildren().remove(saved));
     }
 
     public void activatePathMode () {
         myActiveMap.removeTileListeners();
-        myActiveMap.getRoot().getChildren().add(myMapOverlay);
+        
+        myActiveMap.getRoot().getChildren().add(pathModeOverlay);
     }
 
     public void deactivatePathMode () {
         myActiveMap.attachTileListeners();
-        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
-        myActiveMap.getRoot().getChildren().remove(myMapOverlay);
-        // getMapWorkspace().getActiveMap().getRoot().removeEventFilter(activePath);
+        myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
     }
 
     public Color getActiveColor () {

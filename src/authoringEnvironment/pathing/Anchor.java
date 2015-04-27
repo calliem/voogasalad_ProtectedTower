@@ -19,7 +19,7 @@ import authoringEnvironment.objects.Coordinate;
  */
 
 public class Anchor extends Circle {
-    private static final int RADIUS = 10;
+    public static final int RADIUS = 10;
     private boolean isPressed;
 
     public Anchor (Color color,

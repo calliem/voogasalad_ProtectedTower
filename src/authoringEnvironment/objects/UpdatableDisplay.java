@@ -72,7 +72,6 @@ public abstract class UpdatableDisplay extends VBox {
             thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
                                    Variables.THUMBNAIL_SIZE_MULTIPLIER);
             if (objectView == selectedView){ //TODO: this doesn't work since we're making a new objectview each time. have to check something else
-                System.out.println(objectView + "I'M THE SELECTED ONE");
                 selectObject(objectView);
             }
 
