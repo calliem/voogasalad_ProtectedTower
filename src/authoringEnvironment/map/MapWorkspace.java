@@ -11,19 +11,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
-import authoringEnvironment.pathing.Curve;
 
 
 public class MapWorkspace extends StackPane {
 
-    private TileMap myActiveMap;
-    private PathView myActivePath;
-    private Color myActiveColor;
-    private Rectangle myMapOverlay;
+    private static final Color MAP_BACKGROUND_COLOR = Color.web("2A2A29");
 
     private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private static final int DEFAULT_MAP_ROWS =
@@ -32,19 +27,24 @@ public class MapWorkspace extends StackPane {
             (int) (AuthoringEnvironment.getEnvironmentHeight() * .9 / 25); // getHeight();
     private static final int DEFAULT_TILE_SIZE = 30; // based on height since monitor height < width
                                                      // and that is usually the limiting factor
-
     public static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
     public static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
 
+    private TileMap myActiveMap;
+    private PathView myActivePath;
+    private Color myActiveColor;
+    private Rectangle myMapOverlay;
+
     // TODO: fix all of these constants so there are no more replicates
 
-    
-    public MapWorkspace () { 
+    public MapWorkspace () {
         super();
         Rectangle background =
-                new Rectangle(AuthoringEnvironment.getEnvironmentWidth() * WORKSPACE_WIDTH_MULTIPLIER,
-                              WORKSPACE_HEIGHT_MULTIPLIER * AuthoringEnvironment.getEnvironmentHeight(),
-                              Color.web("2A2A29"));
+                new Rectangle(AuthoringEnvironment.getEnvironmentWidth() *
+                              WORKSPACE_WIDTH_MULTIPLIER,
+                              WORKSPACE_HEIGHT_MULTIPLIER *
+                                      AuthoringEnvironment.getEnvironmentHeight(),
+                              MAP_BACKGROUND_COLOR);
         getChildren().add(background);
         createDefaultMap();
         myMapOverlay =
@@ -98,9 +98,9 @@ public class MapWorkspace extends StackPane {
         myActiveMap.setActiveColor(myActiveColor);
 
     }
-    
-    //TODO: duplicated
-    public void updateWithNewPath (GameObject object){
+
+    // TODO: duplicated
+    public void updateWithNewPath (GameObject object) {
         if (myActivePath != null && myActivePath.getRoot() != null) {
             getChildren().remove(myActivePath.getRoot());
         }
@@ -120,44 +120,43 @@ public class MapWorkspace extends StackPane {
         // });
 
     }
-    
-    public void createNewPath(){
+
+    public void createNewPath () {
         myActivePath = new PathView(myActiveMap);
         myActiveMap.getRoot().setOnMousePressed(e -> setAnchorPoint(myActivePath, e));
     }
-    
 
     private void setAnchorPoint (PathView path, MouseEvent e) {
         if (!path.areAnchorsSelected())
             path.addAnchor(e.getX(), e.getY());
     }
-    //    TODO:
+
+    // TODO:
 
     /*
      * public void displayMessage(String message){
      * 
      * }
      */
-    
-    protected void displayMessage(String text, Color color){
+
+    protected void displayMessage (String text, Color color) {
         Text saved = new Text(text);
         saved.setFill(color);
         saved.setFont(new Font(20));
         StackPane.setAlignment(saved, Pos.BOTTOM_CENTER);
-        //saved.setVisible(false);
+        // saved.setVisible(false);
         getChildren().add(saved);
-        
-        //saved.setVisible(true);
+
+        // saved.setVisible(true);
         PauseTransition pause = new PauseTransition(Duration.millis(1000));
         pause.play();
-        pause.setOnFinished(e ->getChildren().remove(saved));
+        pause.setOnFinished(e -> getChildren().remove(saved));
     }
-    
+
     public void activatePathMode () {
         myActiveMap.removeTileListeners();
         myActiveMap.getRoot().getChildren().add(myMapOverlay);
     }
-
 
     public void deactivatePathMode () {
         myActiveMap.attachTileListeners();
