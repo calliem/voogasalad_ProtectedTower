@@ -48,6 +48,11 @@ public class MapSidebar extends Sidebar {
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
     private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment.getEnvironmentWidth() / 32;
+    
+    
+    private static final int NAME_COL = 0;
+    private static final int NAME_ROW = 1;
+    //TODO: ^ similar magic values in the gridpane (is this necessary)?
 
     private ObservableList<GameObject> myPaths;
 
@@ -398,7 +403,7 @@ public class MapSidebar extends Sidebar {
 
         Text name = new Text(getResources().getString("Name"));
         // Setting name = new StringSetting("label", "hi");
-        container.add(name, 0, 1);
+        container.add(name, NAME_COL, NAME_ROW);
         TextField pathNameTextField = new TextField();
         container.add(pathNameTextField, 1, 1);
 

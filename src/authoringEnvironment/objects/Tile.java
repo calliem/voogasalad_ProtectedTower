@@ -35,6 +35,7 @@ public class Tile extends Rectangle {
     // TODO: create a text box to set grid size and a slider to set tile size
     // that would only allow numbers in correct increments that would fit
     private static final Color DEFAULT_COLOR = Color.TRANSPARENT;
+    private static final double DEFAULT_OPACITY = 0.4;
 
     public Tile () {
         // TODO: fix tile to make it more general and not have col nums and x/y generated here
@@ -42,7 +43,7 @@ public class Tile extends Rectangle {
         //new Rectangle();
         myColor = DEFAULT_COLOR;
         setFill(DEFAULT_COLOR);
-        setOpacity(0.4);
+        setOpacity(DEFAULT_OPACITY);
         myName = null;
         myTags = new ArrayList<String>();
         Tooltip t = new Tooltip(getToolTipInfo());
