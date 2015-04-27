@@ -21,6 +21,7 @@ public class Variables {
     public final static String PARTNAME_ENEMIES = "Enemies";
     public final static String PARAMETER_TIMES = "Times";
     public static final String PARAMETER_TILESIZE = "TileSize";
+    public static final String PARAMETER_THUMBNAIL = "Thumbnail";
     public static final String PARAMETER_BACKGROUND = "Background";
     public static final String PARTNAME_MAP = "GameMap";
 

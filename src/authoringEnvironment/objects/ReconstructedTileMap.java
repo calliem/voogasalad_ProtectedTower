@@ -1,7 +1,7 @@
 package authoringEnvironment.objects;
 
 import java.util.Map;
-import voogasalad.util.IntArray2DToImageConverter.src.IntArray2DToImageConverter;
+import util.IntArray2DToImageConverter.src.IntArray2DToImageConverter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoringEnvironment.Controller;
@@ -22,10 +22,10 @@ public class ReconstructedTileMap extends TileMap {
         setName(name);
 
         int tileSize = (int) params.get(Variables.PARAMETER_TILESIZE);
-        setTileSize(tileSize);
+        changeTileSize(tileSize);
 
-        String filePath = (String) params.get(Variables.PARAMETER_BACKGROUND_FILEPATH);
-        setBackground(new ImageView(new Image(filePath)));
+        String filePath = (String) params.get(Variables.PARAMETER_BACKGROUND);
+        setBackground(filePath);
 
         int[][] thumbnailArray = (int[][]) params.get(Variables.PARAMETER_THUMBNAIL);
         Image thumbnail = IntArray2DToImageConverter.convert2DIntArrayToImage(thumbnailArray, 1);

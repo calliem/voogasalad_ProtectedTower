@@ -35,11 +35,15 @@ public class TileMap extends GameObject {
     // tag
 
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
-    private static final String TILE_KEY_ARRAY = "TileArrayKeys";
+    protected static final String TILE_KEY_ARRAY = "TileKeys";
     private static final int LINE_START_COORDINATE = 0;
     private static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
 
     // TODO: user specifies rectangle or square dimensions...allow this flexibility
+    protected TileMap(){
+        
+    }
+    
     public TileMap (int mapRows, int mapCols, int tileSize) {
         myRoot = new Group();
         myRoot.setOnDragDetected(e -> myRoot.startFullDrag());
@@ -59,6 +63,10 @@ public class TileMap extends GameObject {
         createMap();
         createGridLines();
         changeTileSize(myTileSize);
+    }
+    
+    public void setTiles(Tile[][] tiles){
+        myTiles = tiles;
     }
 
     private void setImageDimensions (ImageView image) {
