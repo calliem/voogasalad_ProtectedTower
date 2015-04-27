@@ -28,8 +28,6 @@ public class LevelSidebar extends Sidebar {
     private ObservableList<GameObject> myMapList;
     private UpdatableDisplay mapDisplay;
 
-    // private ObservableList<Node> myRounds;
-
     private static final int LISTVIEW_HEIGHT = 200;
 
     public LevelSidebar (ResourceBundle resources,

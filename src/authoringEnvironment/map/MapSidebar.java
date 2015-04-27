@@ -189,7 +189,6 @@ public class MapSidebar extends Sidebar {
 
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener( (obs, oldValue, newValue) -> {
-            // System.out.println(newValue);
             getMapWorkspace().getActiveMap().setBackground(newValue);
         });
         return imgSelector;
@@ -204,22 +203,6 @@ public class MapSidebar extends Sidebar {
         mapButtons.getChildren().addAll(createButton, saveButton, deleteButton);
         return mapButtons;
     }
-
-    /*
-     * private void removeMap () {
-     * // TODO: move this to map workspace
-     * ScaleTransition scale =
-     * Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
-     * scale.setOnFinished( (e) -> {
-     * if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
-     * super.getMaps().remove(getMapWorkspace().getActiveMap());
-     * mapDisplay.updateDisplay(super.getMaps());
-     * }
-     * getMapWorkspace().removeMap();
-     * });
-     * 
-     * }
-     */
 
     private void remove (GameObject object,
                          UpdatableDisplay updateDisplay,
