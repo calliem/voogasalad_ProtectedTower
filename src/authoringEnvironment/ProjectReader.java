@@ -38,28 +38,28 @@ public class ProjectReader {
                                            "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
 
-//
-//     public static String[] getParamListForPart(String partType) throws ClassNotFoundException{
-//     Class<?> currentClass = Class.forName(partType);
-//     Field[] myFields = currentClass.getDeclaredFields();
-//     List<Field> neededFields = new ArrayList<>();
-//     for(Field field: myFields){
-//     if(field.getAnnotation(parameter.class).settable()){
-//     neededFields.add(field);
-//     }
-//     }
-//     return null;
-//     }
-    // public static List<String> getParamsNoTypeOrName (String partType) {
-    // String[] params = getParamListForPart(partType);
-    // List<String> finalList = new ArrayList<String>();
-    // for (String param : params) {
-    // if (!param.equals(InstanceManager.nameKey)
-    // && !param.equals(InstanceManager.partTypeKey))
-    // finalList.add(param);
-    // }
-    // return finalList;
-    // }
+    public static String[] getParamListForPart (String partType) throws ClassNotFoundException {
+        Class<?> currentClass = Class.forName(partType);
+        Field[] myFields = currentClass.getDeclaredFields();
+        List<Field> neededFields = new ArrayList<>();
+        for (Field field : myFields) {
+            if (field.getAnnotation(parameter.class).settable()) {
+                neededFields.add(field);
+            }
+        }
+        return null;
+    }
+
+    public static List<String> getParamsNoTypeOrName (String partType) throws ClassNotFoundException {
+        String[] params = getParamListForPart(partType);
+        List<String> finalList = new ArrayList<String>();
+        for (String param : params) {
+            if (!param.equals(InstanceManager.NAME_KEY)
+                && !param.equals(InstanceManager.PART_TYPE_KEY))
+                finalList.add(param);
+        }
+        return finalList;
+    }
 
     /**
      * Generates the Settings objects the Overlay UI needs to allow the user to
@@ -83,8 +83,10 @@ public class ProjectReader {
         List<Setting> settingsList = new ArrayList<Setting>();
         for (Field field : myFields) {
             System.out.println("field" + field);
-            if (field.getAnnotation(parameter.class)!=null&&field.getAnnotation(parameter.class).settable()) {
-                settingsList.add(generateSetting(controller, partType, field.getName(), field.getAnnotation(parameter.class).defaultValue(),
+            if (field.getAnnotation(parameter.class) != null &&
+                field.getAnnotation(parameter.class).settable()) {
+                settingsList.add(generateSetting(controller, partType, field.getName(), field
+                        .getAnnotation(parameter.class).defaultValue(),
                                                  field.getType().getSimpleName()));
             }
         }
@@ -127,7 +129,7 @@ public class ProjectReader {
     // String dataType = typeAndDefault[0];
     // String defaultVal = typeAndDefault[1];
     // }
-    
+
     /**
      * Generates one setting object from the 4 parameters given
      * 
@@ -182,7 +184,8 @@ public class ProjectReader {
                     System.out.println("Being created: " + s);
                     editorToAdd = (Editor) Class.forName(toCreate)
                             .getConstructor(Controller.class, String.class, String.class)
-                            .newInstance(c, s, s.substring(0, s.length()-6)); //TODO: change last input later
+                            .newInstance(c, s, s.substring(0, s.length() - 6)); // TODO: change last
+                                                                                // input later
                 }
                 catch (InstantiationException | IllegalArgumentException e1) {
                     System.err
