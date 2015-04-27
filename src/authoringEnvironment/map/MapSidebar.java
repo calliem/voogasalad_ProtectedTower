@@ -3,7 +3,6 @@ package authoringEnvironment.map;
 import imageselectorTEMP.GraphicFileChooser;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -18,19 +17,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.Variables;
-<<<<<<< HEAD
-=======
-import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.MapUpdatableDisplay;
 import authoringEnvironment.objects.Sidebar;
->>>>>>> 77455b51abdd30d3425ec3719856c5cb0b9055ff
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.util.Scaler;
@@ -232,8 +225,9 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * the most recently used active map from other methods/classes.
      * 
      * @param activeMap
+     * @throws MissingInformationException 
      */
-    private void saveMap (TileMap activeMap) {
+    private void saveMap (TileMap activeMap) throws MissingInformationException {
 
         activeMap.setName(mapNameTextField.getText());
         WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
@@ -247,26 +241,26 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         String key;
         if (!getMapKeys().contains(activeMap.getKey())) {
-            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings); // TODO: get the
-                                                                                   // partname from
-                                                                                   // womehwere e
+            key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings); 
         }
         else {
-
-            key =
+            key = "KEY";
+            /*key =
                     myController.addPartToGame(activeMap.getKey(), Variables.PARTNAME_MAP,
-                                               mapSettings);
+                                               mapSettings);*/ 
+            //TODO: replace a key that already exists
+            System.out.println("key already exists. Write something to replace it");
         }
         activeMap.setKey(key);
-
-            int existingIndex = super.getMaps().indexOf(activeMap);
-            super.getMaps().remove(activeMap);
-            super.getMaps().add(existingIndex, activeMap);
-        }        
-       displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
-
+        displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
         mapDisplay.updateDisplay(getMapKeys());
-    }
+
+        /*int existingIndex = super.getMaps().indexOf(activeMap);
+            super.getMaps().remove(activeMap);
+            super.getMaps().add(existingIndex, activeMap);*/
+    }        
+
+        
 
     private void updateMapDim (String numRows, String numCols) {
         getMapWorkspace().getActiveMap().setMapDimensions(Integer.parseInt(numRows),
@@ -284,7 +278,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * 
      * @throws MissingInformationException
      */
-    private void saveToXML () throws MissingInformationException {
+    private void saveToXML () {
         /*
          * for (Node map : super.getMaps()) {
          * Map<String, Object> mapSettings = new HashMap<String, Object>();
@@ -311,7 +305,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          */
     }
 
-    protected void setContent (GridPane container) {
+    protected void setContent (GridPane container) throws MissingInformationException {
         container.setVgap(VGAP_PADDING);
         container.setHgap(HGAP_PADDING);
 

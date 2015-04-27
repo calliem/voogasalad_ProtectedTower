@@ -1,6 +1,7 @@
 package authoringEnvironment.objects;
 
 import java.util.Map;
+import voogasalad.util.IntArray2DToImageConverter.src.IntArray2DToImageConverter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import authoringEnvironment.Controller;

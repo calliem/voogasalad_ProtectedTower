@@ -3,6 +3,7 @@ package authoringEnvironment.objects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import voogasalad.util.IntArray2DToImageConverter.src.ImageToInt2DArray;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
@@ -113,7 +114,7 @@ public class TileMap extends GameObject {
     }
 
     // TODO:duplicated tile listeners being added/deleted?
-    private void attachTileListeners () {
+    public void attachTileListeners () {
         for (int i = 0; i < myTiles.length; i++) {
             for (int j = 0; j < myTiles[0].length; j++) {
                 attachTileListener(myTiles[i][j]);
@@ -341,8 +342,8 @@ public class TileMap extends GameObject {
 
         int[][] savedImage =
                 ImageToInt2DArray.convertImageTo2DIntArray(getThumbnail().getImage(),
-                                                           getThumbnail().getImage().getWidth(),
-                                                           getThumbnail().getImage().getHeight());
+                                                           (int)getThumbnail().getImage().getWidth(),
+                                                           (int)getThumbnail().getImage().getHeight());
 
         mapSettings.put(Variables.PARAMETER_THUMBNAIL, savedImage); // TODO: save as a 2D array of
                                                                     // ints instead of a JavaFX

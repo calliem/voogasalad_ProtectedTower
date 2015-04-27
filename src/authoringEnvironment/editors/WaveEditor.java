@@ -72,8 +72,8 @@ public class WaveEditor extends MainEditor {
 
     public WaveEditor (Controller c, String name) {
         super(c, name);
-        myKey = Controller.KEY_BEFORE_CREATION;
-        myWaves = new HashMap<String, ArrayList<FlowView>>();
+       // myKey = Controller.KEY_BEFORE_CREATION;
+        //myWaves = new HashMap<String, ArrayList<FlowView>>();
     }
 
     /**
@@ -82,8 +82,7 @@ public class WaveEditor extends MainEditor {
      * 
      * @return Group object that adds all visual elements
      */
-    @Override
-    public Group configureUI () {
+    /*public Group configureUI () {
         Group visuals = new Group();
 
         editor = new StackPane();
@@ -272,8 +271,8 @@ public class WaveEditor extends MainEditor {
      * @return Map of wave information, where the name of the wave is the key
      *         and the value is its corresponding information stored in an array
      *         list of FlowViews.
-     */
+     *
     public Map<String, ArrayList<FlowView>> getWaves () {
         return myWaves;
-    }
+    }*/
 }

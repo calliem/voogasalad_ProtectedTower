@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.map.MapWorkspace;
 
 
@@ -63,7 +64,13 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         accordionContext = new Accordion();
         this.getChildren().add(topContext);
         this.getChildren().add(accordionContext);
-        setContent(topContext);
+        try {
+            setContent(topContext);
+        }
+        catch (MissingInformationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         // setSpacing(10);
         // createMapSettings();
     }
@@ -72,7 +79,7 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         return myController;
     }
 
-    protected abstract void setContent (GridPane container);
+    protected abstract void setContent (GridPane container) throws MissingInformationException;
 
     // protected GridPane getTopContext(){
     // return topContext;
