@@ -26,10 +26,7 @@ import authoringEnvironment.objects.TileMap;
  */
 public class MapWorkspace extends StackPane {
 
-    private TileMap myActiveMap;
-    private PathView myActivePath;
-    private Color myActiveColor;
-    private Rectangle myMapOverlay;
+    private static final Color MAP_BACKGROUND_COLOR = Color.web("2A2A29");
 
     private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private static final int DEFAULT_MAP_ROWS =
@@ -38,10 +35,14 @@ public class MapWorkspace extends StackPane {
             (int) (AuthoringEnvironment.getEnvironmentHeight() * .9 / 25); // getHeight();
     private static final int DEFAULT_TILE_SIZE = 30; // based on height since monitor height < width
                                                      // and that is usually the limiting factor
-
     private static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
     private static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
     private static final double MESSAGE_DISPLAY_DURATION = 1000;
+
+    private TileMap myActiveMap;
+    private PathView myActivePath;
+    private Color myActiveColor;
+    private Rectangle myMapOverlay;
 
     // TODO: fix all of these constants so there are no more replicates
 
@@ -52,7 +53,7 @@ public class MapWorkspace extends StackPane {
                               WORKSPACE_WIDTH_MULTIPLIER,
                               WORKSPACE_HEIGHT_MULTIPLIER *
                                       AuthoringEnvironment.getEnvironmentHeight(),
-                              Color.web("2A2A29"));
+                              MAP_BACKGROUND_COLOR);
         getChildren().add(background);
         createDefaultMap();
         myMapOverlay =
@@ -141,6 +142,7 @@ public class MapWorkspace extends StackPane {
         if (!path.areAnchorsSelected())
             path.addAnchor(e.getX(), e.getY());
     }
+
 
     protected void displayMessage (String text, Color color) {
         Text saved = new Text(text);

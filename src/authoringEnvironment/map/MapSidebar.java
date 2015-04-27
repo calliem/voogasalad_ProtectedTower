@@ -3,50 +3,31 @@ package authoringEnvironment.map;
 import imageselectorTEMP.GraphicFileChooser;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.CubicCurve;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeType;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.MapUpdatableDisplay;
-import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
-import authoringEnvironment.pathing.Anchor;
-import authoringEnvironment.pathing.Anchor;
 import authoringEnvironment.util.Scaler;
 
 
@@ -438,7 +419,7 @@ public class MapSidebar extends Sidebar {
         // getMapWorkspace().getActiveMap()
         getMapWorkspace().deactivatePathMode();
         getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
-                                                  Color.GREEN);
+                                         Color.GREEN);
     }
 
 }
