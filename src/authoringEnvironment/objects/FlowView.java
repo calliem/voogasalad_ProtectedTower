@@ -133,7 +133,7 @@ public class FlowView extends HBox {
 
     private void selectUnit () {
         SpriteSetting chooseUnit =
-                new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES,
+                new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES, null,
                                   Variables.PARTNAME_ENEMIES);
         chooseUnit.getChildren().remove(0);
         chooseUnit.setTextColor(Color.BLACK);
