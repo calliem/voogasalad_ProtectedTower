@@ -72,7 +72,6 @@ public class Enemy extends GameSprite {
      * @throws InsufficientParametersException
      */
     public void updatePath (GridCell[][] grid,
-                            String type,
                             int startRow,
                             int startCol,
                             int goalRow,
