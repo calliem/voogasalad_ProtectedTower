@@ -181,4 +181,10 @@ public class PathView extends GameObject {
         return settings;
     }
 
+    @Override
+    protected String getToolTipInfo () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

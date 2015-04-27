@@ -150,6 +150,7 @@ public class MapSidebar extends Sidebar {
     }
 
     private void selectTile () {
+        Text text = new Text(getResources().getString("SelectTile"));
         HBox selectTile = new HBox();
         selectTile.setSpacing(30); // remove hardcoding
 

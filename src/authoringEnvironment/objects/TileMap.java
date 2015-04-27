@@ -315,4 +315,13 @@ public class TileMap extends GameObject {
         return imgFilePath;
     }
 
+    @Override
+    protected String getToolTipInfo () {
+        String info = "";
+        info += "Name: " + getName();
+        info += "\nNumber of Tiles: " + myMapRows + " x " + myMapCols;
+        info += "\nTile Size: " + myTileSize;
+        return info;
+    }
+
 }

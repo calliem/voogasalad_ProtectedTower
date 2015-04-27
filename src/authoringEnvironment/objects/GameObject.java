@@ -2,7 +2,9 @@ package authoringEnvironment.objects;
 
 import java.util.Map;
 import javafx.scene.Group;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.TextAlignment;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Variables;
 
@@ -48,6 +50,11 @@ public abstract class GameObject {
 
     public ImageView getUniqueThumbnail () {
         ImageView uniqueNode = new ImageView(myThumbnail.getImage());
+
+        Tooltip t = new Tooltip(getToolTipInfo());
+        t.setTextAlignment(TextAlignment.LEFT);
+        Tooltip.install(uniqueNode, t);
+        
         return uniqueNode;
     }
 
@@ -64,11 +71,15 @@ public abstract class GameObject {
                               Variables.THUMBNAIL_SIZE_MULTIPLIER);
         thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
                                Variables.THUMBNAIL_SIZE_MULTIPLIER);
+        
+        
         myThumbnail = thumbnail;
     }
 
     public abstract Map<String, Object> save ();
     
     public abstract Group getRoot();
+    
+    protected abstract String getToolTipInfo();
 
 }
