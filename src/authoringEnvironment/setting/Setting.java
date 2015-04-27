@@ -34,7 +34,7 @@ public abstract class Setting extends VBox{
     private static final int PADDING = 10;
     private static final int MESSAGE_SIZE = 20;
     
-    public Setting(Controller controller, String part, String label, String parameterName, String value){
+    public Setting(Controller controller, String part, String label, String value){
         //TODO: remove magic number
         super(PADDING);
         this.setAlignment(Pos.CENTER);

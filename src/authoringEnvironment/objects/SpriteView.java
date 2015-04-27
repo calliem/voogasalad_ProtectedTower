@@ -24,7 +24,6 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
-import authoringEnvironment.setting.ImageViewSetting;
 import authoringEnvironment.setting.Setting;
 import authoringEnvironment.setting.StringSetting;
 import authoringEnvironment.util.Scaler;
@@ -146,27 +145,10 @@ public abstract class SpriteView extends StackPane {
         settingsObjects.setMaxWidth(150);
 
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
-        // move the image to be first in the settings list
-        // and the name to be second
-        for (int i = 0; i < settings.size(); i++) {
-            if (settings.get(i) instanceof ImageViewSetting) {
-                parameterFields.add(0, settings.get(i));
-                settingsObjects.getChildren().add(0, settings.get(i));
-                break;
-            }
-        }
-        for (int i = 0; i < settings.size(); i++) {
-            if (settings.get(i) instanceof ImageViewSetting) {
-                continue;
-            }
-            if (settings.get(i) instanceof StringSetting &&
-                settings.get(i).getParameterName().equals("name")) {
-                parameterFields.add(1, settings.get(i));
-                settingsObjects.getChildren().add(1, settings.get(i));
-                continue;
-            }
-            parameterFields.add(settings.get(i));
-            settingsObjects.getChildren().add(settings.get(i));
+
+        for (Setting s : settings) {
+            parameterFields.add(s);
+            settingsObjects.getChildren().add(s);
         }
 
         initializeSpriteInfo();

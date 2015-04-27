@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
+
+import util.pathsearch.pathalgorithms.NoPathExistsException;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
 import engine.ActionManager;
@@ -43,6 +45,7 @@ public class Layout implements Updateable {
      * Contains the map of the current game
      */
     private GameMap myGameMap;
+    private double[] myGoalCoordinates;
     // Lists of game elements
     private List<Tower> myTowerList;
     private List<Enemy> myEnemyList;
@@ -57,6 +60,9 @@ public class Layout implements Updateable {
      * Table which contains interactions between game elements
      */
     private ActionManager myActionManager;
+    
+    private final int ROW_INDEX = 0;
+    private final int COLUMN_INDEX = 1;
 
     public Layout (List<Sprite> myNodes) {
         myNodeList = myNodes;
@@ -86,16 +92,33 @@ public class Layout implements Updateable {
         List<BiConsumer<GameElement, GameElement>> actionList =
                 new ArrayList<BiConsumer<GameElement, GameElement>>();
         actionList.add( (e, f) -> e.onCollide(f));
+        actionList.add( (e, f) -> updatePathTest(e));
         String[] spritePair = { "Enemy", "Projectile" };
+        String[] spritePairPath = { "Enemy", "Tower" }; 
         List<Integer>[] actionPair = (List<Integer>[]) new Object[2];
-
         List<Integer> action1 = Arrays.asList(new Integer[] { 0 });
         actionPair[0] = action1;
         List<Integer> action2 = Arrays.asList(new Integer[] { 0 });
         actionPair[1] = action2;
+        List<Integer>[] actionPairPath = (List<Integer>[]) new Object[2];
+        action1 = Arrays.asList(new Integer[] { 1 });
+        actionPairPath[0] = action1;
         Map<String[], List<Integer>[]> collisionMap = new HashMap<String[], List<Integer>[]>();
         collisionMap.put(spritePair, actionPair);
+        collisionMap.put(spritePairPath, actionPairPath);
         setActionManager(new ActionManager(collisionMap, actionList));
+    }
+    
+    private void updatePathTest(GameElement e){
+    	Enemy enemy = (Enemy) e;
+    	GridCell[][] grid = myGameMap.getMap();
+    	int[] startIndices = myGameMap.getRowColAtCoordinates(enemy.getLocationX(), enemy.getLocationY());
+    	int[] endIndices = myGameMap.getRowColAtCoordinates(myGoalCoordinates[COLUMN_INDEX], myGoalCoordinates[ROW_INDEX]);
+    	try {
+			enemy.updatePath(grid, startIndices[ROW_INDEX], startIndices[COLUMN_INDEX], endIndices[ROW_INDEX], endIndices[COLUMN_INDEX]);
+		} catch (NoPathExistsException e1) {
+			e1.printStackTrace();
+		}
     }
 
     public void setActionManager (ActionManager table) {
@@ -204,7 +227,7 @@ public class Layout implements Updateable {
     }
 
     /**
-     * Creates a new Projectile object and adds it to the map at the specified location
+     * Creates a new Enemy object and adds it to the map at the specified location
      * 
      * @param enemyID String ID of Enemy object to place
      * @param location Point2D representing location on grid
@@ -258,7 +281,7 @@ public class Layout implements Updateable {
      */
     private void updateSpriteLocations () {
         // Move enemies
-        myEnemyList.forEach(e -> e.move());
+        //myEnemyList.forEach(e -> e.move());
         // Move projectiles
         myProjectileList.forEach(p -> p.move());
     }

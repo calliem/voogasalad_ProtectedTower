@@ -63,4 +63,9 @@ public class GameMap {
     public double getCoordinateWidth () {
         return columns * tileSize;
     }
+    
+    public int[] getRowColAtCoordinates(double x, double y){    	
+    	int[] rowCol = { (int) (rows*y/getCoordinateHeight()), (int) (columns*x/getCoordinateWidth()) };
+    	return rowCol;
+    }
 }
