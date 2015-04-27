@@ -59,7 +59,7 @@ public class ProjectReader {
      * @return The corresponding Settings list
      */
     public static List<Setting> generateSettingsList (Controller controller, String partType) {
-//        System.out.println("genreate stginsgl list calle");
+        // System.out.println("genreate stginsgl list calle");
         List<Setting> settingsList = new ArrayList<Setting>();
         ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
 
@@ -110,8 +110,10 @@ public class ProjectReader {
         }
 
         try {
-            s = (Setting) c.getConstructor(Controller.class, String.class, String.class, String.class)
-                    .newInstance(controller, partType, param, defaultVal);
+            s =
+                    (Setting) c.getConstructor(Controller.class, String.class, String.class,
+                                               String.class)
+                            .newInstance(controller, partType, param, defaultVal);
         }
         catch (InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException

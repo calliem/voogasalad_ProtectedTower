@@ -55,15 +55,14 @@ public abstract class SpriteEditor extends Editor {
     private IntegerProperty numSprites;
     private NamePrompt prompt;
 
-
     private static final int ROW_SIZE = 7;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
-    
+
     private Node activeOverlay;
-    
+
     private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
-    
+
     /**
      * Creates a tower object.
      * 
@@ -87,7 +86,7 @@ public abstract class SpriteEditor extends Editor {
         visuals = new Group();
         myContent = new StackPane();
         spritesCreated = new ArrayList<>();
-        
+
         prompt = new NamePrompt(partNames.getString(editorType).toLowerCase());
         prompt.setImageChooser(true);
 
@@ -134,19 +133,15 @@ public abstract class SpriteEditor extends Editor {
             }
         });
         StackPane.setAlignment(tags, Pos.CENTER_LEFT);
-        
+
         myContent.getChildren().addAll(background, spriteDisplay, empty);
         StackPane.setAlignment(spriteDisplay, Pos.TOP_CENTER);
-        
-        ScrollPane spriteDisplayPane = new ScrollPane();
-        Rectangle paneBackground = new Rectangle ();
-        
         visuals.getChildren().addAll(myContent, tags);
-        
+
         return visuals;
     }
-    
-    protected NamePrompt getPrompt(){
+
+    protected NamePrompt getPrompt () {
         return prompt;
     }
 
@@ -158,7 +153,7 @@ public abstract class SpriteEditor extends Editor {
             myContent.getChildren().add(empty);
         }
         else if ((int) newValue > 0
-                && myContent.getChildren().contains(empty)) {
+                 && myContent.getChildren().contains(empty)) {
             myContent.getChildren().remove(empty);
         }
 
@@ -184,7 +179,7 @@ public abstract class SpriteEditor extends Editor {
         edit.setTranslateX(-10);
 
         Button add = new Button("+ "
-                + partNames.getString(editorType));
+                                + partNames.getString(editorType));
         add.setTranslateX(-10);
         add.setPrefWidth(100);
         add.setOnMousePressed( (e) -> {
@@ -195,11 +190,11 @@ public abstract class SpriteEditor extends Editor {
             if (!editing) {
                 startEditing(editControls, edit, add);
             }
-            else {
-                finishEditing(editControls, edit, add);
-            }
-            editing = !editing;
-        });
+                else {
+                    finishEditing(editControls, edit, add);
+                }
+                editing = !editing;
+            });
         editControls.getChildren().add(edit);
         return editControls;
     }
@@ -207,43 +202,47 @@ public abstract class SpriteEditor extends Editor {
     private void promptSpriteCreation () {
         Button create = prompt.getCreateButton();
         create.setOnAction( (e) -> {
-            if(myController.nameAlreadyExists(partNames.getString(editorType), prompt.getCurrentText()))
-                prompt.displayError("A " + partNames.getString(editorType).toLowerCase() + " with that name already exists!");
-            else{
-                try{
-                    addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(), currentRow);
-                    hideOverlay();
+            if (myController.nameAlreadyExists(partNames.getString(editorType),
+                                               prompt.getCurrentText()))
+                prompt.displayError("A " + partNames.getString(editorType).toLowerCase() +
+                                    " with that name already exists!");
+                else {
+                    try {
+                        addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile(),
+                                  currentRow);
+                        hideOverlay();
+                    }
+                    catch (NoImageFoundException error) {
+                        error.printStackTrace();
+                    }
                 }
-                catch(NoImageFoundException error){
-                    error.printStackTrace();
-                }
-            }
-        });
+            });
 
         Button cancel = prompt.getCancelButton();
         cancel.setOnAction( (e) -> {
             hideOverlay();
         });
-        
-        //TODO DUPLICATED
+
+        // TODO DUPLICATED
         prompt.showPrompt(myContent);
         String type = partNames.getString(editorType);
-        try{
+        try {
             String needed = spriteNeeded.getString(type);
-            if(myController.getKeysForPartType(needed).size() == 0){
-                prompt.displayPermanentError(String.format("Please create %ss first!", needed.toLowerCase()));
+            if (myController.getKeysForPartType(needed).size() == 0) {
+                prompt.displayPermanentError(String.format("Please create %ss first!",
+                                                           needed.toLowerCase()));
             }
         }
-        catch (MissingResourceException e){
+        catch (MissingResourceException e) {
         }
-        
+
         isOverlayActive = true;
         activeOverlay = prompt;
     }
 
-    private void addSprite (String name, String imageFile, HBox row) throws NoImageFoundException{
+    private void addSprite (String name, String imageFile, HBox row) throws NoImageFoundException {
         String className = "authoringEnvironment.objects."
-                + partNames.getString(editorType) + "View";
+                           + partNames.getString(editorType) + "View";
         SpriteView sprite = generateSpriteView(myController, name, imageFile, className);
         sprite.initiateEditableState();
         setupSpriteAction(sprite);
@@ -274,10 +273,10 @@ public abstract class SpriteEditor extends Editor {
                 | NoSuchMethodException | SecurityException
                 | ClassNotFoundException e1) {
             System.err
-            .println("Class: "
-                    + className
-                    +
-                    "\nCouldn't be created with constructor (Controller, String, String)");
+                    .println("Class: "
+                             + className
+                             +
+                             "\nCouldn't be created with constructor (Controller, String, String)");
             e1.printStackTrace();
         }
         return sprite;
@@ -316,14 +315,15 @@ public abstract class SpriteEditor extends Editor {
             isOverlayActive = true;
         }
     }
-    
+
     @Override
-    public void hideOverlay(){
-        if(isOverlayActive){
+    public void hideOverlay () {
+        if (isOverlayActive) {
             ScaleTransition scale = Scaler.scaleOverlay(1.0, 0.0, activeOverlay);
             scale.setOnFinished(e -> {
                 visuals.getChildren().remove(activeOverlay);
-                myContent.getChildren().remove(activeOverlay); // in case I added overlay to the StackPane (prompt)
+                myContent.getChildren().remove(activeOverlay); // in case I added overlay to the
+                                                               // StackPane (prompt)
                 isOverlayActive = false;
             });
         }
