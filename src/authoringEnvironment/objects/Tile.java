@@ -84,11 +84,6 @@ public class Tile extends Rectangle {
         return info;
     }
 
-    public void setTags (String tag) {
-        tag.split(", ");
-        tag.split("; ");
-    }
-
     public void setTileSize (double size, int rowNum, int colNum) {
         setWidth(size);
         setHeight(size);

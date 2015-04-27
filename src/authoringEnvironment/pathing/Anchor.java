@@ -19,7 +19,7 @@ import authoringEnvironment.objects.Coordinate;
  */
 
 public class Anchor extends Circle {
-    private static final int RADIUS = 10;
+    public static final int ANCHOR_RADIUS = 10;
     private boolean isPressed;
 
     public Anchor (Color color,
@@ -27,7 +27,7 @@ public class Anchor extends Circle {
                    DoubleProperty y,
                    int parentWidth,
                    int parentHeight) {
-        super(x.get(), y.get(), RADIUS);
+        super(x.get(), y.get(), ANCHOR_RADIUS);
         setFill(color.deriveColor(1, 1, 1, 0.5));
         setStroke(color);
         setStrokeWidth(2);
@@ -80,11 +80,11 @@ public class Anchor extends Circle {
 
                 isPressed = true;
                 double newX = mouseEvent.getX() + dragDelta.x;
-                if (newX > 0 + RADIUS && newX < parentWidth - RADIUS) {
+                if (newX > 0 + ANCHOR_RADIUS && newX < parentWidth - ANCHOR_RADIUS) {
                     setCenterX(newX);
                 }
                 double newY = mouseEvent.getY() + dragDelta.y;
-                if (newY > 0 + RADIUS && newY < parentHeight - RADIUS) {
+                if (newY > 0 + ANCHOR_RADIUS && newY < parentHeight - ANCHOR_RADIUS) {
                     setCenterY(newY);
                 }
             }

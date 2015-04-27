@@ -15,6 +15,7 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.pathing.Anchor;
 
 
 /**
@@ -43,7 +44,7 @@ public class MapWorkspace extends StackPane {
     private TileMap myActiveMap;
     private PathView myActivePath;
     private Color myActiveColor;
-    private Rectangle myMapOverlay;
+    private Rectangle pathModeOverlay;
 
     // TODO: fix all of these constants so there are no more replicates
 
@@ -56,10 +57,16 @@ public class MapWorkspace extends StackPane {
                                       AuthoringEnvironment.getEnvironmentHeight(),
                               MAP_BACKGROUND_COLOR);
         getChildren().add(background);
+        StackPane.setAlignment(background, Pos.CENTER);
+
         createDefaultMap();
-        myMapOverlay =
-                new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
-        myMapOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
+        pathModeOverlay =
+                //new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS, myActiveMap.getHeight()+2*Anchor.RADIUS);
+                new Rectangle(5, 5);
+        pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
+        StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
+
+        
 
     }
 
@@ -88,9 +95,9 @@ public class MapWorkspace extends StackPane {
 
     private void update (GameObject object) {
         if (myActiveMap != null && myActiveMap.getRoot() != null) {
-            System.out.println("REMOVE");
             getChildren().remove(myActiveMap.getRoot());
         }
+        StackPane.setAlignment(object.getRoot(), Pos.CENTER);
         getChildren().add(object.getRoot());
     }
 
@@ -159,12 +166,13 @@ public class MapWorkspace extends StackPane {
 
     public void activatePathMode () {
         myActiveMap.removeTileListeners();
-        myActiveMap.getRoot().getChildren().add(myMapOverlay);
+        
+        myActiveMap.getRoot().getChildren().add(pathModeOverlay);
     }
 
     public void deactivatePathMode () {
         myActiveMap.attachTileListeners();
-        myActiveMap.getRoot().getChildren().remove(myMapOverlay);
+        myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
     }
 
     public Color getActiveColor () {
