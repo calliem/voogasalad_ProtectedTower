@@ -33,6 +33,7 @@ public abstract class GameObject {
     }
 
     public void setName (String name) {
+        System.out.println(name);
         myName = name;
     }
 

@@ -2,6 +2,7 @@ package authoringEnvironment.map;
 
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -86,8 +87,9 @@ public class MapWorkspace extends StackPane {
     }
 
     private void update (GameObject object) {
-        if (object != null && object.getRoot() != null) {
-            getChildren().remove(object.getRoot());
+        if (myActiveMap != null && myActiveMap.getRoot() != null) {
+            System.out.println("REMOVE");
+            getChildren().remove(myActiveMap.getRoot());
         }
         getChildren().add(object.getRoot());
     }

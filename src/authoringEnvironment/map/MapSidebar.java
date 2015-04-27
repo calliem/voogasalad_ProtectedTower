@@ -232,7 +232,8 @@ public class MapSidebar extends Sidebar {
      * 
      * @param activeMap
      */
-    private void saveMap (TileMap activeMap) {
+    private TileMap saveMap (TileMap activeMap) {
+        System.out.println("textfield: " + mapNameTextField.getText());
         activeMap.setName(mapNameTextField.getText());
         WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
@@ -274,7 +275,7 @@ public class MapSidebar extends Sidebar {
          * // part.get(MapEditor.TILE_MAP);
          */
         mapDisplay.updateDisplay(super.getMaps());
-
+        return activeMap;
     }
 
     private void updateMapDim (String numRows, String numCols) {
@@ -398,8 +399,8 @@ public class MapSidebar extends Sidebar {
         Text name = new Text(getResources().getString("Name"));
         // Setting name = new StringSetting("label", "hi");
         container.add(name, 0, 1);
-        mapNameTextField = new TextField();
-        container.add(mapNameTextField, 1, 1);
+        TextField pathNameTextField = new TextField();
+        container.add(pathNameTextField, 1, 1);
 
         /*
          * UpdatableDisplay pathDisplay =
