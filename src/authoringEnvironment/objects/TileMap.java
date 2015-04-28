@@ -276,7 +276,7 @@ public class TileMap extends GameObject {
         return myTiles;
     }
 
-    public Map<String, Object> saveToXML () {
+    public Map<String, Object> save () {
         /*
          * List<String> partFileKeys = new ArrayList<String>();
          * List<Color> colors = new ArrayList<Color>();

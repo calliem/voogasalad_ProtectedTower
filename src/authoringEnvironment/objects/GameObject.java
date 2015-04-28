@@ -1,11 +1,8 @@
 package authoringEnvironment.objects;
 
 import java.util.Map;
-<<<<<<< HEAD
 import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
-=======
->>>>>>> parent of 50d57e5... magic number fix
 import javafx.scene.image.ImageView;
 import javafx.scene.text.TextAlignment;
 import authoringEnvironment.AuthoringEnvironment;
@@ -80,14 +77,10 @@ public abstract class GameObject {
         myThumbnail = thumbnail;
     }
 
-<<<<<<< HEAD
     public abstract Map<String, Object> save ();
     
     public abstract Group getRoot();
     
     protected abstract String getToolTipInfo();
-=======
-    public abstract Map<String, Object> saveToXML ();
->>>>>>> parent of 50d57e5... magic number fix
 
 }

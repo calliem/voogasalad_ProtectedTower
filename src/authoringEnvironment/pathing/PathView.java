@@ -203,14 +203,10 @@ public class PathView {
         settings.put(Variables.PARAMETER_CURVES, myPaths);
         return settings;
     }
-<<<<<<< HEAD:src/authoringEnvironment/objects/PathView.java
 
-    @Override
     protected String getToolTipInfo () {
         // TODO Auto-generated method stub
         return null;
     }
 
-=======
->>>>>>> parent of 50d57e5... magic number fix:src/authoringEnvironment/pathing/PathView.java
 }
