@@ -39,14 +39,19 @@ public class ReconstructedTileMap extends TileMap {
 
     private void createMap (Map<String, Object> params) {
         String[][] tileArray = (String[][]) params.get(TILE_KEY_ARRAY);
-        setTiles(new Tile[tileArray[0].length][tileArray.length]);
+        
+        
+        Tile[][] newMap = new Tile[tileArray[0].length][tileArray.length];
         for (int i = 0; i < tileArray[0].length; i++) {
             for (int j = 0; j < tileArray.length; j++) {
-                myTiles[i][j] = new Tile(myController, tileArray[i][j]);  // TODO: make tileview
-                myTiles[i][j].positionTile(getTileSize(), i, j);
-                getRoot().getChildren().add(myTiles[i][j]);
-                setupTooltip(myTiles[i][j]);
+                
+                newMap[i][j] =  (Tile) myController.getPartCopy(getKey());  // TODO: make tileview
+                
+                newMap[i][j].positionTile(getTileSize(), i, j);
+                getRoot().getChildren().add(newMap[i][j]);
+                //setupTooltip(newMap[i][j]);
             }
         }
+        setTiles(newMap);
     }
 }

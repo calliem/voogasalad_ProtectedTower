@@ -21,7 +21,7 @@ import authoringEnvironment.Variables;
 
 public class TileMap extends GameObject {
 
-    private Tile[][] myTiles;
+    private Tile[][] newMap;
     private int myTileSize;
     private ImageView myBackground;
     private Color myActiveColor;
@@ -66,7 +66,7 @@ public class TileMap extends GameObject {
     }
     
     public void setTiles(Tile[][] tiles){
-        myTiles = tiles;
+        newMap = tiles;
     }
 
     private void setImageDimensions (ImageView image) {
@@ -108,9 +108,9 @@ public class TileMap extends GameObject {
 
     // TODO:duplicated tile listeners being added/deleted?
     public void attachTileListeners () {
-        for (int i = 0; i < myTiles.length; i++) {
-            for (int j = 0; j < myTiles[0].length; j++) {
-                attachTileListener(myTiles[i][j]);
+        for (int i = 0; i < newMap.length; i++) {
+            for (int j = 0; j < newMap[0].length; j++) {
+                attachTileListener(newMap[i][j]);
             }
         }
     }
@@ -125,9 +125,9 @@ public class TileMap extends GameObject {
     public void changeTileSize (int tileSize) {
 
         myTileSize = tileSize;
-        for (int i = 0; i < myTiles.length; i++) {
-            for (int j = 0; j < myTiles[0].length; j++) {
-                myTiles[i][j].setTileSize(tileSize, i, j);
+        for (int i = 0; i < newMap.length; i++) {
+            for (int j = 0; j < newMap[0].length; j++) {
+                newMap[i][j].setTileSize(tileSize, i, j);
             }
         }
         updateGridLines();
@@ -145,18 +145,18 @@ public class TileMap extends GameObject {
     }
 
     public void removeTileListeners () {
-        for (int i = 0; i < myTiles.length; i++) {
-            for (int j = 0; j < myTiles[0].length; j++) {
-                myTiles[i][j].setOnMouseClicked(e -> {
+        for (int i = 0; i < newMap.length; i++) {
+            for (int j = 0; j < newMap[0].length; j++) {
+                newMap[i][j].setOnMouseClicked(e -> {
                 });
-                myTiles[i][j].setOnMouseDragEntered(e -> {
+                newMap[i][j].setOnMouseDragEntered(e -> {
                 });
             }
         }
     }
 
     public Tile getTile (int x, int y) {
-        return myTiles[x][y];
+        return newMap[x][y];
     }
 
     public void setActiveColor (Color color) {
@@ -167,13 +167,13 @@ public class TileMap extends GameObject {
      * Creates a new TileMap through positioning of tiles, setting images, and default tile sizes.
      */
     private void createMap () {
-        myTiles = new Tile[myMapRows][myMapCols];
-        for (int i = 0; i < myTiles.length; i++) {
-            for (int j = 0; j < myTiles[0].length; j++) {
-                myTiles[i][j] = new Tile();
-                myTiles[i][j].positionTile(myTileSize, i, j);
-                myRoot.getChildren().add(myTiles[i][j]);
-                attachTileListener(myTiles[i][j]);
+        newMap = new Tile[myMapRows][myMapCols];
+        for (int i = 0; i < newMap.length; i++) {
+            for (int j = 0; j < newMap[0].length; j++) {
+                newMap[i][j] = new Tile();
+                newMap[i][j].positionTile(myTileSize, i, j);
+                myRoot.getChildren().add(newMap[i][j]);
+                attachTileListener(newMap[i][j]);
             }
         }
         setImageDimensions(myBackground);
@@ -200,7 +200,7 @@ public class TileMap extends GameObject {
                     newTiles[i][j].positionTile(myTileSize, i, j);
                 }
                 else {
-                    newTiles[i][j] = myTiles[i][j];
+                    newTiles[i][j] = newMap[i][j];
                 }
                 attachTileListener(newTiles[i][j]); // TODO figure out why not working
                 myRoot.getChildren().add(newTiles[i][j]);
@@ -209,7 +209,7 @@ public class TileMap extends GameObject {
 
         myMapCols = newMapCols;
         myMapRows = newMapRows;
-        myTiles = newTiles;
+        newMap = newTiles;
         setImageDimensions(myBackground);
         changeTileSize(myTileSize);
         updateGridLines();
@@ -222,18 +222,18 @@ public class TileMap extends GameObject {
     private void clearTiles () {
         for (int i = 0; i < myMapRows; i++) {
             for (int j = 0; j < myMapCols; j++) {
-                myRoot.getChildren().remove(myTiles[i][j]);
+                myRoot.getChildren().remove(newMap[i][j]);
             }
         }
         myRoot.getChildren().remove(myGridLines);
     }
 
     public int getNumRows () {
-        return myTiles.length;
+        return newMap.length;
     }
 
     public int getNumCols () {
-        return myTiles[0].length;
+        return newMap[0].length;
     }
 
     public int getTileSize () {
@@ -277,7 +277,7 @@ public class TileMap extends GameObject {
     }
 
     public Tile[][] getTiles () {
-        return myTiles;
+        return newMap;
     }
 
     public Map<String, Object> save () {
@@ -305,10 +305,10 @@ public class TileMap extends GameObject {
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
         mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
 
-        String[][] tileKeyArray = new String[myTiles.length][myTiles[0].length];
-        for (int i = 0; i < myTiles.length; i++) {
-            for (int j = 0; j < myTiles[0].length; j++) {
-                tileKeyArray[i][j] = myTiles[i][j].getKey();
+        String[][] tileKeyArray = new String[newMap.length][newMap[0].length];
+        for (int i = 0; i < newMap.length; i++) {
+            for (int j = 0; j < newMap[0].length; j++) {
+                tileKeyArray[i][j] = newMap[i][j].getKey();
             }
         }
         mapSettings.put(TILE_KEY_ARRAY, tileKeyArray);

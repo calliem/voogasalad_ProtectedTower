@@ -11,6 +11,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
+import authoringEnvironment.NoImageFoundException;
 import authoringEnvironment.Variables;
 
 
@@ -20,9 +22,9 @@ public abstract class UpdatableDisplay extends VBox {
     private HBox currentRow;
     private VBox objectsDisplay;
     private int numObjsPerRow;
-    
+
     private StackPane selectedView;
-   // private GameObject selectedObject;
+    // private GameObject selectedObject;
 
     private static final int SPACING = 15;
 
@@ -31,6 +33,21 @@ public abstract class UpdatableDisplay extends VBox {
         displayValues();
         numObjsPerRow = rowSize;
         selectedView = null;
+    }
+    
+    public UpdatableDisplay (Controller c, String partType, int rowSize){
+        ObservableList<String> keys = c.getKeysForPartType(partType);
+        myObjects = new ArrayList<GameObject>();
+        for (String key : keys){
+            try {
+                String imgFilePath = c.getImageForKey(key);
+                //get thumbnail or something
+            }
+            catch (NoImageFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
     private void displayValues () {
@@ -60,10 +77,7 @@ public abstract class UpdatableDisplay extends VBox {
             }
 
             StackPane objectView = new StackPane();
-            
-            // Rectangle objectBackground = new Rectangle(45, 45, Color.WHITE); // TODO: remove hard
-            // coded stuff
-            
+
             ImageView thumbnail = object.getUniqueThumbnail(); // may give rectangle or imageview
             // TODO; write if statement: if has thumbnail then get it, if not then get the image and
             // resize it
@@ -71,7 +85,8 @@ public abstract class UpdatableDisplay extends VBox {
                                   Variables.THUMBNAIL_SIZE_MULTIPLIER);
             thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
                                    Variables.THUMBNAIL_SIZE_MULTIPLIER);
-            if (objectView == selectedView){ //TODO: this doesn't work since we're making a new objectview each time. have to check something else
+            if (objectView == selectedView) { // TODO: this doesn't work since we're making a new
+                                              // objectview each time. have to check something else
                 selectObject(objectView);
             }
 
@@ -105,18 +120,20 @@ public abstract class UpdatableDisplay extends VBox {
         container.setContent(objectsDisplay);
         getChildren().add(container);
     }
-    
-    private void selectObject(StackPane objectDisplay){
-        /*selectionRect = new Rectangle(AuthoringEnvironment.getEnvironmentWidth() *
-                                  Variables.THUMBNAIL_SIZE_MULTIPLIER, AuthoringEnvironment.getEnvironmentHeight() *
-                                  Variables.THUMBNAIL_SIZE_MULTIPLIER * 1.1, Color.RED);*/
-        //selectionRect.setOpacity(0.2);
-        //objectDisplay.getChildren().add(selectionRect);
+
+    private void selectObject (StackPane objectDisplay) {
+        /*
+         * selectionRect = new Rectangle(AuthoringEnvironment.getEnvironmentWidth() *
+         * Variables.THUMBNAIL_SIZE_MULTIPLIER, AuthoringEnvironment.getEnvironmentHeight() *
+         * Variables.THUMBNAIL_SIZE_MULTIPLIER * 1.1, Color.RED);
+         */
+        // selectionRect.setOpacity(0.2);
+        // objectDisplay.getChildren().add(selectionRect);
         objectDisplay.setOpacity(0.2);
     }
-    
-    private void deselectObject(StackPane objectDisplay){
-        //objectDisplay.getChildren().remove(selectionRect);  
+
+    private void deselectObject (StackPane objectDisplay) {
+        // objectDisplay.getChildren().remove(selectionRect);
         System.out.println(objectDisplay);
         System.out.println(selectedView);
         if (objectDisplay != selectedView)
@@ -151,18 +168,18 @@ public abstract class UpdatableDisplay extends VBox {
      */
     // TODO: duplicated above 2 methods code
 
-    protected void objectClicked (GameObject object, StackPane objectView){
-        if (selectedView != null){
+    protected void objectClicked (GameObject object, StackPane objectView) {
+        if (selectedView != null) {
             selectedView.setOpacity(1);
-            //deselectObject(selectedView);
+            // deselectObject(selectedView);
         }
-           // objectView.setOpacity(1);
+        // objectView.setOpacity(1);
 
         selectObject(objectView);
         selectedView = objectView;
     }
-    
-    public void setSelectedView(StackPane view){
+
+    public void setSelectedView (StackPane view) {
         selectedView = view;
     }
 

@@ -8,6 +8,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
+import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 
 
@@ -50,6 +51,8 @@ public class Tile extends Rectangle {
         t.setTextAlignment(TextAlignment.LEFT);
         Tooltip.install(this, t);
     }
+    
+
 
     public void positionTile (int tileSize, int i, int j) {
         setTranslateX(j * tileSize);
