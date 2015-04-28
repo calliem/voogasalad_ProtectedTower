@@ -38,33 +38,6 @@ public class ProjectReader {
                                            "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
 
-<<<<<<< HEAD
-    public static String[] getParamListForPart (String partType) throws ClassNotFoundException {
-        Class<?> currentClass = Class.forName(partType);
-        Field[] myFields = currentClass.getDeclaredFields();
-        List<Field> neededFields = new ArrayList<>();
-        for (Field field : myFields) {
-            if (field.getAnnotation(parameter.class).settable()) {
-                neededFields.add(field);
-            }
-        }
-        return null;
-    }
-
-    public static List<String> getParamsNoTypeOrName (String partType)
-                                                                      throws ClassNotFoundException {
-        String[] params = getParamListForPart(partType);
-        List<String> finalList = new ArrayList<String>();
-        for (String param : params) {
-            if (!param.equals(InstanceManager.NAME_KEY)
-                && !param.equals(InstanceManager.PART_TYPE_KEY)) {
-                finalList.add(param);
-            }
-        }
-        return finalList;
-    }
-=======
-
     //
     // public static String[] getParamListForPart(String partType) throws ClassNotFoundException{
     // Class<?> currentClass = Class.forName(partType);
@@ -87,7 +60,6 @@ public class ProjectReader {
     // }
     // return finalList;
     // }
->>>>>>> parent of 67735d4... magic number refactor
 
     /**
      * Generates the Settings objects the Overlay UI needs to allow the user to
@@ -108,15 +80,6 @@ public class ProjectReader {
         Class<?> currentClass = Class.forName(classLists.getString(partType));
         List<Class<?>> classesWithFields = ReflectionUtil.getPackageParentList(currentClass);
         List<Setting> settingsList = new ArrayList<Setting>();
-<<<<<<< HEAD
-        for (Field field : myFields) {
-            System.out.println("field" + field);
-            if (field.getAnnotation(parameter.class) != null &&
-                field.getAnnotation(parameter.class).settable()) {
-                settingsList.add(generateSetting(controller, partType, field.getName(), field
-                        .getAnnotation(parameter.class).defaultValue(),
-                                                 field.getType().getSimpleName()));
-=======
         for (Class<?> myClass : classesWithFields) {
             Field[] myFields = myClass.getDeclaredFields();
             for (Field field : myFields) {
@@ -136,7 +99,6 @@ public class ProjectReader {
                             .getAnnotation(parameter.class).defaultValue(),
                                                      field.getType().getSimpleName()));
                 }
->>>>>>> parent of 67735d4... magic number refactor
             }
         }
         return settingsList;
@@ -209,15 +171,9 @@ public class ProjectReader {
 
         try {
             s =
-<<<<<<< HEAD
-                    (Setting) c.getConstructor(Controller.class, String.class, String.class,
-                                               String.class).newInstance(controller, partType,
-                                                                         param, defaultVal);
-=======
                     (Setting) c.getConstructor(Controller.class, String.class, String.class, String.class,
                                                String.class)
                             .newInstance(controller, partType, param, paramName, defaultVal);
->>>>>>> parent of 67735d4... magic number refactor
         }
         catch (InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException
