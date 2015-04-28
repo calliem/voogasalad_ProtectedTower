@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
-
-import util.pathsearch.pathalgorithms.NoPathExistsException;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
+import util.pathsearch.pathalgorithms.NoPathExistsException;
 import engine.ActionManager;
 import engine.CollisionChecker;
 import engine.Updateable;
@@ -61,6 +60,9 @@ public class Layout implements Updateable {
      */
     private ActionManager myActionManager;
 
+    private final int ROW_INDEX = 0;
+    private final int COLUMN_INDEX = 1;
+
     public Layout (List<Sprite> myNodes) {
         myNodeList = myNodes;
         myGameElementFactory = new GameElementFactory();
@@ -91,7 +93,7 @@ public class Layout implements Updateable {
         actionList.add( (e, f) -> e.onCollide(f));
         actionList.add( (e, f) -> updatePathTest(e));
         String[] spritePair = { "Enemy", "Projectile" };
-        String[] spritePairPath = { "Enemy", "Tower" }; 
+        String[] spritePairPath = { "Enemy", "Tower" };
         List<Integer>[] actionPair = (List<Integer>[]) new Object[2];
         List<Integer> action1 = Arrays.asList(new Integer[] { 0 });
         actionPair[0] = action1;
@@ -105,17 +107,20 @@ public class Layout implements Updateable {
         collisionMap.put(spritePairPath, actionPairPath);
         setActionManager(new ActionManager(collisionMap, actionList));
     }
-    
-    private void updatePathTest(GameElement e){
-    	Enemy enemy = (Enemy) e;
-    	GridCell[][] grid = myGameMap.getMap();
-    	int[] startIndices = myGameMap.getRowColAtCoordinates(enemy.getLocationX(), enemy.getLocationY());
-    	int[] endIndices = myGameMap.getRowColAtCoordinates(myGoalCoordinates[1], myGoalCoordinates[0]);
-    	try {
-			enemy.updatePath(grid, startIndices[0], startIndices[1], endIndices[0], endIndices[1]);
-		} catch (NoPathExistsException e1) {
-			e1.printStackTrace();
-		}
+
+    private void updatePathTest (GameElement e) {
+        Enemy enemy = (Enemy) e;
+        GridCell[][] grid = myGameMap.getMap();
+        int[] startIndices =
+                myGameMap.getRowColAtCoordinates(enemy.getLocationX(), enemy.getLocationY());
+        int[] endIndices =
+                myGameMap.getRowColAtCoordinates(myGoalCoordinates[1], myGoalCoordinates[0]);
+        try {
+            enemy.updatePath(grid, startIndices[0], startIndices[1], endIndices[0], endIndices[1]);
+        }
+        catch (NoPathExistsException e1) {
+            e1.printStackTrace();
+        }
     }
 
     public void setActionManager (ActionManager table) {
@@ -278,7 +283,7 @@ public class Layout implements Updateable {
      */
     private void updateSpriteLocations () {
         // Move enemies
-        //myEnemyList.forEach(e -> e.move());
+        // myEnemyList.forEach(e -> e.move());
         // Move projectiles
         myProjectileList.forEach(p -> p.move());
     }
