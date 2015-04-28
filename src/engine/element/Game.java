@@ -69,9 +69,10 @@ public class Game implements Updateable, Endable {
     public void update (int counter) {
         System.out.println("Beginning cycle " + counter);
         myConditions.forEach(c -> c.act(lives));
-        List<String> enemiesToSpawn = myLevels.get(myActiveLevelIndex).update(counter);
-        // TODO update spawn location to correct one
-        myLayout.spawnEnemy(enemiesToSpawn, new Point2D(0, 0));
+        Map<Point2D, List<String>> enemiesToSpawn = myLevels.get(myActiveLevelIndex).update(counter);
+        for (Point2D loc : enemiesToSpawn.keySet()) {
+            myLayout.spawnEnemy(enemiesToSpawn.get(loc), loc);
+        }
         myLayout.update(counter);
     }
 
@@ -102,7 +103,6 @@ public class Game implements Updateable, Endable {
     }
 
     public void placeTower (String id, double sceneX, double sceneY) {
-        System.out.println("sup");
         myLayout.placeTower(id, new Point2D(sceneX, sceneY));
     }
 }
