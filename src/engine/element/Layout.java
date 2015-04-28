@@ -60,9 +60,6 @@ public class Layout implements Updateable {
      * Table which contains interactions between game elements
      */
     private ActionManager myActionManager;
-    
-    private final int ROW_INDEX = 0;
-    private final int COLUMN_INDEX = 1;
 
     public Layout (List<Sprite> myNodes) {
         myNodeList = myNodes;
@@ -113,9 +110,9 @@ public class Layout implements Updateable {
     	Enemy enemy = (Enemy) e;
     	GridCell[][] grid = myGameMap.getMap();
     	int[] startIndices = myGameMap.getRowColAtCoordinates(enemy.getLocationX(), enemy.getLocationY());
-    	int[] endIndices = myGameMap.getRowColAtCoordinates(myGoalCoordinates[COLUMN_INDEX], myGoalCoordinates[ROW_INDEX]);
+    	int[] endIndices = myGameMap.getRowColAtCoordinates(myGoalCoordinates[1], myGoalCoordinates[0]);
     	try {
-			enemy.updatePath(grid, startIndices[ROW_INDEX], startIndices[COLUMN_INDEX], endIndices[ROW_INDEX], endIndices[COLUMN_INDEX]);
+			enemy.updatePath(grid, startIndices[0], startIndices[1], endIndices[0], endIndices[1]);
 		} catch (NoPathExistsException e1) {
 			e1.printStackTrace();
 		}

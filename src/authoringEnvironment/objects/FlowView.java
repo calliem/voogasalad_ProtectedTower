@@ -124,7 +124,30 @@ public class FlowView extends HBox {
         return arrow;
     }
 
+<<<<<<< HEAD
     protected void selectWave () {
+=======
+    private void selectUnit () {
+        SpriteSetting chooseUnit =
+                new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES, null,
+                                  Variables.PARTNAME_ENEMIES);
+        chooseUnit.getChildren().remove(0);
+        chooseUnit.setTextColor(Color.BLACK);
+        insertElement(chooseUnit);
+
+        List<Double> unitDelay = new ArrayList<Double>();
+        List<String> fileNames = new ArrayList<String>();
+        try {
+            unitDelay.add(Double.parseDouble(delayTextField.getText()));
+            delays = unitDelay;
+        }
+        catch (NumberFormatException e) {
+
+        }
+    }
+
+    private void selectWave () {
+>>>>>>> parent of 67735d4... magic number refactor
         File file = fileChooser.showOpenDialog(null);
         Text waveNameDisplay = new Text(file.getName());
         insertElement(waveNameDisplay);
