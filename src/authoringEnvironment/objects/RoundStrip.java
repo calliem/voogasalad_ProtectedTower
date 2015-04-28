@@ -2,7 +2,11 @@ package authoringEnvironment.objects;
 
 import java.util.List;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.layout.HBox;
 import authoringEnvironment.Controller;
+import authoringEnvironment.map.MapWorkspace;
 
 /**
  * Extends FlowEditor
@@ -21,8 +25,13 @@ public class RoundStrip extends FlowStrip {
     }
 
     @Override
-    protected void addAtLeftOfRow () {
-//        mapDisplay = new LevelUpdatableDisplay(maps, 3, mapWorkspace); // remove default values TODO
+    protected void addAtLeftOfRow (HBox content) {
+        //ObservableList<GameObject> maps = myController.getMaps();
+        //variables.parameter
+//        ObservableList<String> mapKeys = myController.getKeysForPartType("Maps");
+//        maps = myController.get
+//        MapWorkspace mapWorkspace = new MapWorkspace();
+//        mapDisplay = new LevelUpdatableDisplay(maps, 3, mapWorkspace); 
 //
 //        maps.addListener(new ListChangeListener<GameObject>() {
 //            @Override
@@ -30,6 +39,7 @@ public class RoundStrip extends FlowStrip {
 //                mapDisplay.updateDisplay((List<GameObject>) change.getList());
 //            }
 //        });
+//        content.getChildren().add(mapDisplay);
     }
 
     @Override

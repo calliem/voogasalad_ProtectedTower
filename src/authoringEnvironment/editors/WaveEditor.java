@@ -3,16 +3,10 @@ package authoringEnvironment.editors;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.WaveFlowView;
-import authoringEnvironment.util.NamePrompt;
 
 
 /**
@@ -25,27 +19,8 @@ import authoringEnvironment.util.NamePrompt;
 
 public class WaveEditor extends FlowEditor {
     private Map<String, ArrayList<WaveFlowView>> myWaves;
-    private static final String WAVE = "Wave";
-    private static final int PADDING = 10;
-    private static final String NO_WAVES = "No waves yet...";
-    private static final int BUTTON_HEIGHT = 24;
-    private static final int WAVE_PANEL_HEIGHT = 105;
-    private static final int INFO_PANEL_WIDTH = 170;
-    private Text empty;
-    private VBox editorLayout;
-    private ScrollPane contentScrollPane;
-    private StackPane editor;
-
     private String myKey;
 
-    private int numWaves = 0;
-    private NamePrompt prompt = new NamePrompt("wave");
-    private static final Color EDITOR_BACKGROUND_COLOR = Color.GRAY;
-    private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
-    private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
-    private static final Color WAVE_NAME_COLOR = Color.GOLDENROD;
-
-    private Node activeOverlay;
 
     /**
      * WaveEditor constructor, calls MainEditor superclass and initializes a map
@@ -246,14 +221,14 @@ public class WaveEditor extends FlowEditor {
 //            e.printStackTrace();
 //        }
 //    }
-
-    private void addUnitToWave (ScrollPane displayPane, HBox wave, String waveName) {
-        WaveFlowView unit = new WaveFlowView(100, myController);
-        wave.getChildren().add(unit);
-        myWaves.get(waveName).add(unit);
-
-        displayPane.setHvalue(2.0);
-    }
+//
+//    private void addUnitToWave (ScrollPane displayPane, HBox wave, String waveName) {
+//        WaveFlowView unit = new WaveFlowView(100, myController);
+//        wave.getChildren().add(unit);
+//        myWaves.get(waveName).add(unit);
+//
+//        displayPane.setHvalue(2.0);
+//    }
 
     /**
      * Gets wave information

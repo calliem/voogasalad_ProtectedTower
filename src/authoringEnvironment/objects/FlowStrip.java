@@ -6,6 +6,7 @@ import java.util.List;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -84,13 +85,13 @@ public abstract class FlowStrip extends HBox {
 
         buttonDisplay.getChildren().addAll(buttonBackground, info);
         // waveContent.getChildren().add(buttonDisplay);
-        newRow.setContent(content);
 
-        addAtLeftOfRow();
+        addAtLeftOfRow(content);
+        newRow.setContent(content);
         getChildren().addAll(buttonDisplay, newRow);
     }
 
-    protected abstract void addAtLeftOfRow ();
+    protected abstract void addAtLeftOfRow (HBox content);
 
     protected abstract void saveData (String componentName);
 

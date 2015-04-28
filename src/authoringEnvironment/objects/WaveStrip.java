@@ -2,6 +2,8 @@ package authoringEnvironment.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.Node;
+import javafx.scene.layout.HBox;
 import authoringEnvironment.Controller;
 import authoringEnvironment.DataFormatException;
 import authoringEnvironment.MissingInformationException;
@@ -25,7 +27,7 @@ public class WaveStrip extends FlowStrip {
     }
 
     @Override
-    protected void addAtLeftOfRow () {        
+    protected void addAtLeftOfRow (HBox content) {
     }
 
     @Override

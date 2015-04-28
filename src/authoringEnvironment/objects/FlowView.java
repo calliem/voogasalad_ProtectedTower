@@ -45,7 +45,7 @@ public class FlowView extends HBox {
     private FileChooser fileChooser;
     protected Controller myController;
     private int myHeight;
-    private List<String> partFileNames;
+    protected List<String> partFileNames;
     protected List<Double> delays;
 
     private VBox selector;
