@@ -41,21 +41,21 @@ import authoringEnvironment.setting.SpriteSetting;
  */
 
 public class FlowView extends HBox {
+    protected TextField delayTextField;
+    private FileChooser fileChooser;
+    protected Controller myController;
+    private int myHeight;
+    protected List<String> partFileNames;
+    protected List<Double> delays;
+
+    private VBox selector;
+
+    // TODO: take back all the instance variables that belong in this class only
 
     private static final double VBOX_PADDING_MULTIPLIER = 0.5;
     private static final int PADDING = 10;
     private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
-
-    protected TextField delayTextField;
-    private FileChooser fileChooser;
-    protected Controller myController;
-    private int myHeight;
-    private List<String> partFileNames;
-    protected List<Double> delays;
-    private VBox selector;
-
-    // TODO: take back all the instance variables that belong in this class only
 
     /**
      * Creates the visual and input elements for the "timeline" in the
@@ -124,30 +124,7 @@ public class FlowView extends HBox {
         return arrow;
     }
 
-<<<<<<< HEAD
     protected void selectWave () {
-=======
-    private void selectUnit () {
-        SpriteSetting chooseUnit =
-                new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES, null,
-                                  Variables.PARTNAME_ENEMIES);
-        chooseUnit.getChildren().remove(0);
-        chooseUnit.setTextColor(Color.BLACK);
-        insertElement(chooseUnit);
-
-        List<Double> unitDelay = new ArrayList<Double>();
-        List<String> fileNames = new ArrayList<String>();
-        try {
-            unitDelay.add(Double.parseDouble(delayTextField.getText()));
-            delays = unitDelay;
-        }
-        catch (NumberFormatException e) {
-
-        }
-    }
-
-    private void selectWave () {
->>>>>>> parent of 67735d4... magic number refactor
         File file = fileChooser.showOpenDialog(null);
         Text waveNameDisplay = new Text(file.getName());
         insertElement(waveNameDisplay);
