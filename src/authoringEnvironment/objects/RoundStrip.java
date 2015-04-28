@@ -1,12 +1,8 @@
 package authoringEnvironment.objects;
 
-import java.util.List;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import authoringEnvironment.Controller;
-import authoringEnvironment.map.MapWorkspace;
+
 
 /**
  * Extends FlowEditor
@@ -45,8 +41,7 @@ public class RoundStrip extends FlowStrip {
     @Override
     protected void saveData (String componentName) {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
 }

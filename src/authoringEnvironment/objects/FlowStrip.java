@@ -18,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+
 /**
  * Superclass component of FlowEditors, handles all the data for one round/wave
  * 
@@ -26,14 +27,16 @@ import javafx.scene.text.TextAlignment;
  *
  */
 public abstract class FlowStrip extends HBox {
-    private Controller myController;
-    protected String myKey;
+
     private static final int PADDING = 10;
     private static final int STRIP_PANEL_HEIGHT = 105;
     private static final int INFO_PANEL_WIDTH = 170;
     private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
     private static final Color STRIP_NAME_COLOR = Color.GOLDENROD;
     private static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
+
+    private Controller myController;
+    protected String myKey;
     protected List<FlowView> myComponents;
     private String editorType;
 

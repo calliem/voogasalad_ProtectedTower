@@ -9,19 +9,15 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.FlowStrip;
 import authoringEnvironment.objects.FlowView;
-import authoringEnvironment.objects.WaveFlowView;
 import authoringEnvironment.util.NamePrompt;
 
 
@@ -34,24 +30,22 @@ import authoringEnvironment.util.NamePrompt;
  */
 public abstract class FlowEditor extends Editor {
 
-    private Map<String, ArrayList<FlowView>> myComponents;
     private static final int PADDING = 10;
-    private String NOTHING_CREATED;
-
     private static final int BUTTON_HEIGHT = 24;
     private static final int STRIP_PANEL_HEIGHT = 105;
+    private static final Color EDITOR_BACKGROUND_COLOR = Color.GRAY;
+    private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
+    public static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
+
+    private Map<String, ArrayList<FlowView>> myComponents;
+    private String NOTHING_CREATED;
     private Text empty;
     private VBox editorLayout;
     private ScrollPane contentScrollPane;
     private StackPane editor;
-
     private String myKey;
-
     private int rows = 0;
     private NamePrompt prompt = new NamePrompt(editorName.toLowerCase());
-    private static final Color EDITOR_BACKGROUND_COLOR = Color.GRAY;
-    private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
-    public static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
 
     public FlowEditor (Controller controller, String name, String nameWithoutEditor) {
         super(controller, name, nameWithoutEditor);
@@ -69,8 +63,8 @@ public abstract class FlowEditor extends Editor {
      */
     @Override
     public Group configureUI () {
-
         Group visuals = new Group();
+        // TODO remove dependency
         NOTHING_CREATED = "No " + editorName.toLowerCase() + "s yet...";
         editor = new StackPane();
         Rectangle editorBackground =
@@ -93,9 +87,8 @@ public abstract class FlowEditor extends Editor {
         contentScrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
         contentScrollPane.setMaxHeight(CONTENT_HEIGHT - (BUTTON_HEIGHT + 2 * PADDING));
         contentScrollPane.setMaxWidth(CONTENT_WIDTH);
-        
-        
-        //System.out.println("Editor Name = " + editorName);
+
+        // System.out.println("Editor Name = " + editorName);
         Button makeNewRow = new Button("Create New " + editorName);
         makeNewRow.setMaxHeight(BUTTON_HEIGHT);
         makeNewRow.setOnAction(e -> {
@@ -166,7 +159,7 @@ public abstract class FlowEditor extends Editor {
         prompt.showPrompt(editor);
         isOverlayActive = true;
     }
-    
+
     @Override
     public void hideOverlay () {
         if (isOverlayActive) {

@@ -18,7 +18,6 @@ public class MapUpdatableDisplay extends UpdatableDisplay {
     protected void objectClicked (GameObject object, StackPane objectView) {
         super.objectClicked(object, objectView);
         mySidebar.changeMap((TileMap) object);
-        System.out.println("change map");
 
         // mySidebar.getMapWorkspace().updateWithNewMap(object);
         // mySidebar.setMapNameTextField(object.getName());

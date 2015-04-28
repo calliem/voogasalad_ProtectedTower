@@ -28,19 +28,16 @@ import authoringEnvironment.setting.Setting;
 
 public class Controller {
 
-    private static final int PARTTYPE_INDEX_IN_KEY = 1;
-
     private static final String DIFFERENT_LIST_SIZE_MESSAGE =
             "Lists passed must contain same number of elements.";
+    public static final String KEY_BEFORE_CREATION = "Key not initialized yet";
 
     private InstanceManager currentGame;
     private Map<String, ObservableList<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
 
-    public static final String KEY_BEFORE_CREATION = "Key not initialized yet";
-
-    protected Controller (InstanceManager IM) {
-        currentGame = IM;
+    protected Controller (InstanceManager instance) {
+        currentGame = instance;
         partTypeToKeyList = new HashMap<String, ObservableList<String>>();
         populateKeyList();
         myMaps = FXCollections.observableArrayList();
