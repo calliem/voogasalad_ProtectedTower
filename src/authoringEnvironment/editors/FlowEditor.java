@@ -38,7 +38,7 @@ public abstract class FlowEditor extends Editor {
     public static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
 
     private Map<String, ArrayList<FlowView>> myComponents;
-    private String NOTHING_CREATED;
+    private String NOTHING_CREATED = "No " + editorName.toLowerCase() + "s yet...";;
     private Text empty;
     private VBox editorLayout;
     private ScrollPane contentScrollPane;
@@ -65,7 +65,7 @@ public abstract class FlowEditor extends Editor {
     public Group configureUI () {
         Group visuals = new Group();
         // TODO remove dependency
-        NOTHING_CREATED = "No " + editorName.toLowerCase() + "s yet...";
+
         editor = new StackPane();
         Rectangle editorBackground =
                 new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
