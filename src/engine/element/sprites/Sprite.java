@@ -1,6 +1,7 @@
 package engine.element.sprites;
 
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
 import engine.Updateable;
@@ -30,8 +31,8 @@ public abstract class Sprite extends GameElement implements Updateable {
 
     // TODO remove these once testing is over
     @Deprecated
-    protected void setImageView (ImageView image) {
-        myImage = image;
+    protected void setImageView (Image image) {
+        myImage = new ImageView(image);
     }
 
     // Setters and getters

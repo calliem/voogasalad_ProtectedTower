@@ -13,14 +13,14 @@ import javafx.scene.shape.StrokeLineCap;
  *
  */
 
-public class BoundLine extends Line {
+class BoundLine extends Line {
 
     private static final int STROKE_WIDTH = 2;
 
-    public BoundLine (DoubleProperty startX,
-                      DoubleProperty startY,
-                      DoubleProperty endX,
-                      DoubleProperty endY) {
+    BoundLine (DoubleProperty startX,
+               DoubleProperty startY,
+               DoubleProperty endX,
+               DoubleProperty endY) {
         startXProperty().bind(startX);
         startYProperty().bind(startY);
         endXProperty().bind(endX);
