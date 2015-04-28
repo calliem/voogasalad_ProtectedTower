@@ -2,6 +2,7 @@ package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
@@ -68,7 +69,7 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
     }
 
     @Override
-    public List<String> update (int counter) {
+    public Map<Object, List<String>> update (int counter) {
         return myActiveRound.update(counter);
     }
 

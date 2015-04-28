@@ -1,7 +1,9 @@
 package engine.element;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
@@ -35,12 +37,15 @@ public class Wave implements UpdateAndReturnable, Endable {
     }
 
     @Override
-    public List<String> update (int counter) {
+    public Map<Object, List<String>> update (int counter) {
+        Map<Object, List<String>> tempReturnMap = null;
         if (++myTimer == mySendRate && !hasEnded()) {
             myTimer = 0;
-            return myEnemies.get(myEnemyIndex++);
+            tempReturnMap = new HashMap<>();
+            //TODO: be aware of pathID and pass that up instead of null
+            tempReturnMap.put(null, myEnemies.get(myEnemyIndex++));
         }
-        return null; // No enemies to return
+        return tempReturnMap; // Null if no enemies to return
     }
 
 }

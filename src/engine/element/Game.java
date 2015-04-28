@@ -69,9 +69,10 @@ public class Game implements Updateable, Endable {
     public void update (int counter) {
         System.out.println("Beginning cycle " + counter);
         myConditions.forEach(c -> c.act(lives));
-        Map<Point2D, List<String>> enemiesToSpawn = myLevels.get(myActiveLevelIndex).update(counter);
-        for (Point2D loc : enemiesToSpawn.keySet()) {
-            myLayout.spawnEnemy(enemiesToSpawn.get(loc), loc);
+        Map<Object, List<String>> enemiesToSpawn =
+                myLevels.get(myActiveLevelIndex).update(counter);
+        for (Object loc : enemiesToSpawn.keySet()) {
+            myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
         }
         myLayout.update(counter);
     }
