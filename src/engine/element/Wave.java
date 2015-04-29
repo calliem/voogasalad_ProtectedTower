@@ -20,15 +20,20 @@ import engine.UpdateAndReturnable;
 public class Wave implements UpdateAndReturnable, Endable {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "null")
-    private List<List<String>> myEnemies;
-    @parameter(settable = true, playerDisplay = false, defaultValue = "1.0")
-    private double mySendRate;
+    private List<String> myEnemies;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private List<Double> mySendTimes;
 
     private int myEnemyIndex = 0;
     private int myTimer = 0;
+    private String myPath;
 
     public Wave () {
         myEnemies = new ArrayList<>();
+    }
+
+    public void setPath (String pathGUID) {
+        myPath = pathGUID;
     }
 
     @Override
@@ -39,12 +44,17 @@ public class Wave implements UpdateAndReturnable, Endable {
     @Override
     public Map<Object, List<String>> update (int counter) {
         Map<Object, List<String>> tempReturnMap = null;
-        if (++myTimer == mySendRate && !hasEnded()) {
-            myTimer = 0;
+        
+        if (myTimer == mySendTimes.get(myEnemyIndex)) {
             tempReturnMap = new HashMap<>();
-            //TODO: be aware of pathID and pass that up instead of null
-            tempReturnMap.put(null, myEnemies.get(myEnemyIndex++));
+            List<String> enemiesToReturn = new ArrayList<>();
+            while (myTimer == mySendTimes.get(myEnemyIndex) && !hasEnded()) {
+                enemiesToReturn.add(myEnemies.get(myEnemyIndex++));
+            }
+            tempReturnMap.put(myPath, enemiesToReturn);
         }
+        
+        myTimer++;
         return tempReturnMap; // Null if no enemies to return
     }
 
