@@ -1,13 +1,11 @@
 package authoringEnvironment.editors;
 
-import java.util.Map;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Group;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import authoringEnvironment.Controller;
-import authoringEnvironment.InstanceManager;
 import authoringEnvironment.objects.TileView;
+import authoringEnvironment.util.Scaler;
 
 
 /**
@@ -21,13 +19,10 @@ import authoringEnvironment.objects.TileView;
  *
  */
 public class TileEditor extends SpriteEditor {
-    private Group visuals;
-    private TagDisplay tags;
-    private static final Color BACKGROUND_COLOR = Color.GRAY;
-    private static final int PADDING = 10;
+    private static final int TILE_SIZE = 100;
     
-    public TileEditor (Controller c, String name, String nameWithoutEditor) {
-        super(c, name, nameWithoutEditor);
+    public TileEditor (Controller c, String name) {
+        super(c, name);
         prompt.setImageChooser(false);
         prompt.setColorPicker(true);
     }
@@ -45,15 +40,23 @@ public class TileEditor extends SpriteEditor {
     private void createTile(String name, Color color){
         TileView tile = new TileView(myController, name, color);
         tile.initiateEditableState();
+        tile.getTileBody().setOnMousePressed(e -> {
+            showOverlay(tile);
+        });
+        tile.getCloseButton().setOnAction(e -> {
+            hideTileOverlay(tile);
+        });
         updateOnExists(tile);
         
-        Map<String, Object> part = tile.getTileInfo();
-        part.put(InstanceManager.PART_TYPE_KEY, partNames.getString(editorType));
-        try{
-            myController.addPartToGame(part);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        tile.saveTile();
+    }
+    
+    private void showOverlay(TileView tile){
+        Scaler.scaleOverlay(0.0, 1.0, tile.getOverlay());
+        myContent.getChildren().add(tile.getOverlay());
+    }
+    
+    private void hideTileOverlay(TileView tile){
+        Scaler.scaleOverlay(1.0, 0.0, tile.getOverlay()).setOnFinished(e -> myContent.getChildren().remove(tile.getOverlay()));
     }
 }

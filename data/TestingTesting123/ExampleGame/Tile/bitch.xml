@@ -6,25 +6,25 @@
   <entry>
     <string>Color</string>
     <javafx.scene.paint.Color>
-      <red>1.0</red>
-      <green>1.0</green>
-      <blue>1.0</blue>
+      <red>0.9019608</red>
+      <green>0.3019608</green>
+      <blue>0.3019608</blue>
       <opacity>1.0</opacity>
       <platformPaint class="com.sun.prism.paint.Color">
         <type>COLOR</type>
         <proportional>false</proportional>
         <isMutable>false</isMutable>
-        <argb>-1</argb>
-        <r>1.0</r>
-        <g>1.0</g>
-        <b>1.0</b>
+        <argb>-1684147</argb>
+        <r>0.9019608</r>
+        <g>0.3019608</g>
+        <b>0.3019608</b>
         <a>1.0</a>
       </platformPaint>
     </javafx.scene.paint.Color>
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed1</string>
+    <string>bitch</string>
   </entry>
   <entry>
     <string>PartKey</string>

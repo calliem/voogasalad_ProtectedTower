@@ -241,6 +241,12 @@ public class Controller {
         return false;
     }
 
+    public boolean removeTagFromPart(String partKey, String tag) {
+        if (currentGame.containsKey(partKey)) {
+            return currentGame.removeTagFromPart(partKey, tag);
+        }
+        return false;
+    }
     // /**
     // * Removes a part from the game file.
     // *

@@ -11,8 +11,8 @@ import authoringEnvironment.Controller;
  */
 
 public class EnemyEditor extends SpriteEditor {
-    public EnemyEditor (Controller c, String name, String nameWithoutEditor) {
-        super(c, name, nameWithoutEditor);
+    public EnemyEditor (Controller c, String name) {
+        super(c, name);
         // TODO Auto-generated constructor stub
     }
 

@@ -31,6 +31,7 @@ public class TagGroup extends Group{
     private Rectangle overlayBackground;
     private StackPane closeButton;
     private Controller myController;
+    private String myKey;
     
     private static final int PADDING = 5;
     private static final int TAG_WIDTH = 75;
@@ -38,7 +39,8 @@ public class TagGroup extends Group{
     private static final int OVERLAY_HEIGHT = 200;
     private static final int OVERLAY_WIDTH = 100;
     
-    public TagGroup(Controller controller){
+    public TagGroup(Controller controller, String partKey){
+        myKey = partKey;
         tagListDisplay = new VBox(PADDING);
         tagListDisplay.setTranslateY(PADDING);
         tagListDisplay.setAlignment(Pos.TOP_CENTER);
@@ -120,6 +122,7 @@ public class TagGroup extends Group{
         tagListDisplay.getChildren().remove(tag);
         tagList.remove(tag.getLabel());
         tagObjects.remove(tag);
+        myController.removeTagFromPart(myKey, tag.getLabel());
         
         showDecrease();
     }
@@ -143,6 +146,7 @@ public class TagGroup extends Group{
             Tag tagToAdd = new Tag(tag.getLabel());
             tagList.add(tagToAdd.getLabel());
             tagObjects.add(tagToAdd);
+            myController.addTagToPart(myKey, tagToAdd.getLabel());
             tagToAdd.getButton().setOnMousePressed(e -> {
                 tagToAdd.playDeleteAnimation().setOnFinished(ae -> removeTag(tagToAdd));
             });

@@ -55,6 +55,8 @@ public abstract class SpriteEditor extends Editor {
     protected NamePrompt prompt;
 
     private static final int ROW_SIZE = 7;
+    private static final int BUTTON_OFFSET = -10;
+    private static final int BUTTON_WIDTH = 100;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
 
     private Node activeOverlay;
@@ -72,8 +74,8 @@ public abstract class SpriteEditor extends Editor {
      * @param s
      *        the stage on which the authoring environment is displayed
      */
-    public SpriteEditor (Controller c, String name, String nameWithoutEditor) {
-        super(c, name, nameWithoutEditor);
+    public SpriteEditor (Controller c, String name) {
+        super(c, name);
     }
 
     /**
@@ -172,30 +174,42 @@ public abstract class SpriteEditor extends Editor {
 
     private HBox setupEditControls () {
         HBox editControls = new HBox(10);
+//        editControls.setTranslateX(-10);
         editControls.setAlignment(Pos.CENTER_RIGHT);
         Button edit = new Button("Edit");
-        edit.setPrefWidth(100);
-        edit.setTranslateX(-10);
+        edit.setPrefWidth(BUTTON_WIDTH);
+        edit.setTranslateX(BUTTON_OFFSET);
 
+        Button load = new Button("Load...");
+        load.setPrefWidth(BUTTON_WIDTH);
+        load.setTranslateX(BUTTON_OFFSET);
+        load.setOnAction(e -> {
+            loadSprite();
+        });
+        
         Button add = new Button("+ "
                 + partNames.getString(editorType));
-        add.setTranslateX(-10);
-        add.setPrefWidth(100);
+        add.setPrefWidth(BUTTON_WIDTH);
+        add.setTranslateX(BUTTON_OFFSET);
         add.setOnMousePressed( (e) -> {
             promptSpriteCreation();
         });
 
         edit.setOnAction( (e) -> {
             if (!editing) {
-                startEditing(editControls, edit, add);
+                startEditing(editControls, edit, add, load);
             }
             else {
-                finishEditing(editControls, edit, add);
+                finishEditing(editControls, edit, add, load);
             }
             editing = !editing;
         });
         editControls.getChildren().add(edit);
         return editControls;
+    }
+    
+    protected void loadSprite(){
+        
     }
 
     protected void promptSpriteCreation () {
@@ -340,24 +354,28 @@ public abstract class SpriteEditor extends Editor {
         }
     }
 
-    private void finishEditing (HBox editControls, Button edit, Button add) {
-        TranslateTransition move = transitionButton(add, -10, 90);
-        move.setOnFinished(e -> editControls.getChildren().remove(0));
+    private void finishEditing (HBox editControls, Button edit, Button add, Button load) {
+        TranslateTransition moveAdd = transitionButton(add, BUTTON_OFFSET, BUTTON_WIDTH+BUTTON_OFFSET);
+        TranslateTransition moveLoad = transitionButton(load, BUTTON_OFFSET, BUTTON_WIDTH+BUTTON_OFFSET);
+        moveAdd.setOnFinished(e -> editControls.getChildren().remove(add));
+        moveLoad.setOnFinished(e -> editControls.getChildren().remove(load));
         edit.setText("Edit");
         makeSpritesUneditable();
     }
 
+    private void startEditing (HBox editControls, Button edit, Button add, Button load) {
+        editControls.getChildren().add(0, add);
+        editControls.getChildren().add(1, load);
+        transitionButton(load, BUTTON_WIDTH+BUTTON_OFFSET, BUTTON_OFFSET);
+        transitionButton(add, 2*BUTTON_WIDTH+BUTTON_OFFSET, BUTTON_OFFSET);
+        edit.setText("Done");
+        makeSpritesEditable();
+    }
+    
     protected void makeSpritesUneditable () {
         for (Node sprite : spritesCreated) {
             ((ObjectView) sprite).exitEditableState();
         }
-    }
-
-    private void startEditing (HBox editControls, Button edit, Button add) {
-        editControls.getChildren().add(0, add);
-        transitionButton(add, 90, -10);
-        edit.setText("Done");
-        makeSpritesEditable();
     }
 
     protected void makeSpritesEditable () {

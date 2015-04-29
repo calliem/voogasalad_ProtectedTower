@@ -239,6 +239,17 @@ public class InstanceManager {
         
     }
     
+    protected boolean removeTagFromPart(String partKey, String tag) {
+        Map<String, Object> removeFrom = userParts.get(partKey);
+        if(removeFrom.containsKey(TAGS_KEY)){
+            List<String> tagList = (List<String>) userParts.get(TAGS_KEY);
+            boolean removed = tagList.remove(tag);
+            removeFrom.put(TAGS_KEY, tagList);
+            return removed;
+        }
+        return false;
+    }
+    
     public boolean containsKey(String key){
         return userParts.containsKey(key);
     }

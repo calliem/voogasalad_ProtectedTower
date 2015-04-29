@@ -42,14 +42,12 @@ public abstract class SpriteView extends ObjectView {
     private VBox display;
     private VBox editableContent;
     private StackPane overlayContent;
-    private Button overlayCloseButton;
+    
     private Text overlayErrorMessage;
 
     private String spriteName;
     private String imageFile;
     private List<Setting> parameterFields;
-
-    private String myKey;
 
     private Text spriteNameDisplay;
     private Text overlaySpriteNameDisplay;
@@ -80,7 +78,6 @@ public abstract class SpriteView extends ObjectView {
     public SpriteView (Controller c, String name, String image) throws ClassNotFoundException,
         IllegalArgumentException, IllegalAccessException {
         super(c);
-        myKey = Controller.KEY_BEFORE_CREATION;
 
         spriteName = name;
         imageFile = image;
@@ -179,17 +176,14 @@ public abstract class SpriteView extends ObjectView {
         saved.setFill(Color.YELLOW);
         saved.setVisible(false);
 
-        Button save = new Button("Save");
-        save.setOnAction( (e) -> {
+        saveButton.setOnAction( (e) -> {
             if (saveParameterFields(true)) {
                 displaySavedMessage();
             }
         });
 
-        overlayCloseButton = new Button("Cancel");
-
         buttons.setAlignment(Pos.CENTER);
-        buttons.getChildren().addAll(save, overlayCloseButton);
+        buttons.getChildren().addAll(saveButton, cancelButton);
 
         editableContent.getChildren().addAll(overlaySpriteNameDisplay,
                                              overlayErrorMessage, settingsObjects, buttons, saved);
@@ -315,10 +309,6 @@ public abstract class SpriteView extends ObjectView {
 
     public StackPane getEditorOverlay () {
         return overlayContent;
-    }
-
-    public Button getCloseButton () {
-        return overlayCloseButton;
     }
 
     public String getName () {
