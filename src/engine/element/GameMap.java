@@ -1,44 +1,71 @@
 package engine.element;
 
-import java.util.Map;
+import annotations.parameter;
 import engine.element.sprites.GridCell;
+import engine.factories.GameElementFactory;
 
 
-public class GameMap extends GameElement {
+/**
+ * This class represents the map for a game, containing cells which specify certain tags to
+ * determine if towers can be placed on them, if enemies can travel over, etc.
+ * 
+ * @author Qian Wang
+ *
+ */
+public class GameMap {
 
+    @parameter(settable = true, playerDisplay = false, defaultValue = "20")
+    private String[][] myTileNames;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "20")
+    private Integer rows;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "30")
+    private Integer columns;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "5")
+    private Integer tileSize;
+
+    /**
+     * Holds the actual grid of cells, showing which cells have which tags
+     */
     private GridCell[][] myMap;
 
-    public GameMap (Map<String, Object> params) {
-        super.setParameterMap(params);
-        loadMap();
+    public GameMap () {
+
     }
 
-    private void loadMap () {
-        String[][] mapLayout = (String[][]) super.getParameter("MapLayout");
-        Double tileSize = (Double) super.getParameter("TileSize");
-
-        GridCell[][] map = new GridCell[mapLayout.length][mapLayout[0].length];
-
-        // for (int[] key : mapLayout.keySet()) {
-        // GridCell cell = factory.getGridCell(mapLayout.get(key));
-        // int row = key[0];
-        // int col = key[1];
-        // cell.setLocation(col * tileSize, row * tileSize);
-        // cell.setCenter((col + 1 / 2) * tileSize, (row + 1 / 2) * tileSize);
-        // map[row][col] = cell;
-        // }
-        myMap = map;
+    /**
+     * Creates an instance of the map made of GridCells and stores it as an instance variable
+     * 
+     * @param factory GameElementFactory which can be used to generate the correct GridCell objects
+     */
+    public void loadMap (GameElementFactory factory) {
+        myMap = new GridCell[myTileNames.length][myTileNames[0].length];
+        for (int i = 0; i < myTileNames.length; i++) {
+            for (int j = 0; j < myTileNames[i].length; j++) {
+                myMap[i][j] = (GridCell) factory.getGameElement("GridCell", myTileNames[i][j]);
+            }
+        }
     }
 
     public GridCell[][] getMap () {
         return myMap;
     }
 
+    /**
+     * @return total height of the map in pixels
+     */
     public double getCoordinateHeight () {
-        return (double) super.getParameter("Rows") * (double) super.getParameter("TileSize");
+        return rows * tileSize;
     }
 
+    /**
+     * @return total width of the map in pixels
+     */
     public double getCoordinateWidth () {
-        return (double) super.getParameter("Columns") * (double) super.getParameter("TileSize");
+        return columns * tileSize;
+    }
+    
+    public int[] getRowColAtCoordinates(double x, double y){    	
+    	int[] rowCol = { (int) (rows*y/getCoordinateHeight()), (int) (columns*x/getCoordinateWidth()) };
+    	return rowCol;
     }
 }

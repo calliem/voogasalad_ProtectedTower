@@ -33,16 +33,15 @@ public class Controller {
 
     private static final String DIFFERENT_LIST_SIZE_MESSAGE =
             "Lists passed must contain same number of elements.";
+    public static final String KEY_BEFORE_CREATION = "Key not initialized yet";
 
     private InstanceManager currentGame;
     private Map<String, ObservableList<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
     private ObservableList<String> gameTags;
 
-    public static final String KEY_BEFORE_CREATION = "Key not initialized yet";
-
-    protected Controller (InstanceManager IM) {
-        currentGame = IM;
+    protected Controller (InstanceManager instance) {
+        currentGame = instance;
         partTypeToKeyList = new HashMap<String, ObservableList<String>>();
         populateKeyList();
         myMaps = FXCollections.observableArrayList();
@@ -280,6 +279,7 @@ public class Controller {
     }
 
     public void specifyPartImage (String partKey, String imageFilePath) {
+        System.out.println("partkey " + partKey + " space " + imageFilePath);
         currentGame.specifyPartImage(partKey, imageFilePath);
     }
 

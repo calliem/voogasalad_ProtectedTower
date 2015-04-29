@@ -1,9 +1,11 @@
 package player;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
+import annotations.parameter;
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -19,6 +21,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -29,7 +33,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -47,25 +50,26 @@ import engine.element.sprites.Tower;
  * the GameLoop which then runs the game.
  */
 public class GamePlayer extends Application {
-    private GameController game;
-    private Stage playerStage;
-    private Group engineRoot = new Group();
-    private Scene mainScene;
-    private VBox sideBar;
-    private GridPane towerGrid = new GridPane();
-    private double screenWidth = 0;
-    private double screenHeight = 0;
-    private Pane mainArea;
-    private ScrollPane towerDisplay;
+    private GameController myGame;
+    private Stage myPlayerStage;
+    private Group myEngineRoot = new Group();
+    private Scene myMainScene;
+    private VBox mySidebar;
+    private GridPane myTowerGrid = new GridPane();
+    private double myScreenWidth = 0;
+    private double myScreenHeight = 0;
+    private Pane myMainArea;
+    private ScrollPane myTowerDisplay;
     private GameController myGameController;
+    private VBox myInfoBox;
 
     // find and open .game file
     public void loadGame () {
 
-        engineRoot.getChildren().clear();
-        towerGrid.getChildren().clear();
+        myEngineRoot.getChildren().clear();
+        myTowerGrid.getChildren().clear();
         File gameFile = getGameFile();
-        playerStage.setTitle(gameFile.getName().split("\\.")[0]);
+        myPlayerStage.setTitle(gameFile.getName().split("\\.")[0]);
         ObservableList<Tower> availableTowers =
                 FXCollections.observableArrayList(new ArrayList<>());
         availableTowers.addListener(new ListChangeListener<Tower>() {
@@ -74,34 +78,34 @@ public class GamePlayer extends Application {
                 makeTowerGrid(change.getList());
             }
         });
-        ObservableList<Node> displayList = FXCollections.observableArrayList(new ArrayList<>());
-        // try{
-        // myGameController = new GameController(gameFile.getParent(),displayList);
-        // }
-        // catch(InsufficientParametersException e){
-        // return;
-        // }
-        displayList.addListener(new ListChangeListener<Node>() {
-            @Override
-            public void onChanged (Change change) {
+        ObservableList<Sprite> displayList = FXCollections.observableArrayList(new ArrayList<>());
+        try {
+            myGameController =
+                    new GameController(gameFile.getParent(), displayList);
+        }
+        catch (InsufficientParametersException e) {
+            return;
+        }
+        displayList.addListener((ListChangeListener<Sprite>) change-> {
                 while (change.next()) {
                     for (Object obj : change.getAddedSubList()) {
                         Sprite placeSprite = (Sprite) obj;
-                        mainArea.getChildren().add(placeSprite.getImageView());
+                        ImageView myView = placeSprite.getImageView();
+                        myView.setOnMouseClicked( m-> updateInfoBox(placeSprite));
+                        myMainArea.getChildren().add(myView);
                     }
                     for (Object obj : change.getRemoved()) {
-                        Sprite placeSprite = (Sprite) obj;
-                        mainArea.getChildren().remove(placeSprite.getImageView());
+                        Node placeSprite = (Node) obj;
+                        myMainArea.getChildren().remove(placeSprite);
                     }
                 }
-            }
         });
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
         Image myImage = new Image(".\\images\\liltower.jpg");
         ImageView test = new ImageView(myImage);
         ImageView test1 = new ImageView(myImage);
-        // ImageView test2 = new ImageView(myImage);
+        ImageView test2 = new ImageView(myImage);
         // ImageView test3 = new ImageView(myImage);
         // ImageView test4 = new ImageView(myImage);
         // ImageView test5 = new ImageView(myImage);
@@ -113,6 +117,32 @@ public class GamePlayer extends Application {
         // availableTowers.add(new Tower(test3));
         // availableTowers.add(new Tower(test4));
         // displayList.add(new Tower(test5));
+        //myGameController.startGame(60);
+    }
+
+    private TableView updateInfoBox (Sprite placeSprite) {
+        return null;
+        // TODO Auto-generated method stub
+//        TableView<String> infoBox = new TableView<>();
+//        
+//        
+//        TableColumn<String, String> name = new TableColumn<>();
+//        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().get));
+//        TableColumn<String, String> value = new TableColumn<>();
+//        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>();
+//        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue()
+//                .getUsername()));
+//        Class currentClass = placeSprite.getClass();
+//        while(currentClass!=Object.class){
+//            for(Field field:currentClass.getFields()){
+//                if(field.getAnnotation(parameter.class)!=null&&field.getAnnotation(parameter.class).playerDisplay()){
+//                    
+//                }
+//            }
+//            // Make a new row
+//            currentClass = currentClass.getSuperclass();
+//        }
+//        return null;
     }
 
     public static void main (String[] args) {
@@ -121,18 +151,18 @@ public class GamePlayer extends Application {
 
     @Override
     public void start (Stage primaryStage) throws Exception {
-        playerStage = primaryStage;
+        myPlayerStage = primaryStage;
         setScreenBounds(primaryStage);
-        playerStage.setMaximized(true);
+        myPlayerStage.setMaximized(true);
         Group root = new Group();
         Group menu = new Group();
-        sideBar = makeSideBar();
-        mainArea = makeMainPane();
-        mainScene = new Scene(root);
-        root.getChildren().addAll(mainArea, sideBar, menu);
+        mySidebar = makeSideBar();
+        myMainArea = makeMainPane();
+        myMainScene = new Scene(root);
+        root.getChildren().addAll(myMainArea, mySidebar, menu);
         menu.getChildren().add(setUpMenu());
-        playerStage.setScene(mainScene);
-        playerStage.show();
+        myPlayerStage.setScene(myMainScene);
+        myPlayerStage.show();
     }
 
     private MenuBar setUpMenu () throws InsufficientParametersException {
@@ -153,53 +183,53 @@ public class GamePlayer extends Application {
         fileOpener.setTitle("Select a Game");
         fileOpener.setInitialDirectory(new File("."));
         fileOpener.getExtensionFilters().add(new ExtensionFilter("Game Files", "*.game"));
-        return fileOpener.showOpenDialog(playerStage);
+        return fileOpener.showOpenDialog(myPlayerStage);
     }
 
     private Rectangle2D setScreenBounds (Stage primaryStage) {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-        screenWidth = bounds.getWidth();
-        screenHeight = bounds.getHeight();
+        myScreenWidth = bounds.getWidth();
+        myScreenHeight = bounds.getHeight();
         primaryStage.setX(bounds.getMinX());
         primaryStage.setY(bounds.getMinY());
-        primaryStage.setWidth(screenWidth);
-        primaryStage.setHeight(screenHeight);
+        primaryStage.setWidth(myScreenWidth);
+        primaryStage.setHeight(myScreenHeight);
         return bounds;
     }
 
     private VBox makeSideBar () {
-        sideBar = new VBox();
+        mySidebar = new VBox();
         // TODO: prop file
-        sideBar.setPrefWidth(screenWidth * 1 / 4);
-        sideBar.setPrefHeight(screenHeight);
+        mySidebar.setPrefWidth(myScreenWidth * 1 / 4);
+        mySidebar.setPrefHeight(myScreenHeight);
         // TODO: prop
-        sideBar.setTranslateX(screenWidth * 3 / 4);
+        mySidebar.setTranslateX(myScreenWidth * 3 / 4);
         // TODO: prop
-        sideBar.setStyle("-fx-border-style: solid outside; -fx-border-size: 0 0 0 2; -fx-border-color: transparent transparent transparent black; -fx-padding: 0; -fx-background-color: #00fb10");
+        mySidebar.setStyle("-fx-border-style: solid outside; -fx-border-size: 0 0 0 2; -fx-border-color: transparent transparent transparent black; -fx-padding: 0; -fx-background-color: #00fb10");
         // makeGameVarBox();
         // makeSpriteInfoBox();
-        towerDisplay = makeTowerScrollBox();
-        sideBar.getChildren().add(towerDisplay);
-        VBox.setMargin(towerDisplay, new Insets(0));
-        return sideBar;
+        myTowerDisplay = makeTowerScrollBox();
+        mySidebar.getChildren().add(myTowerDisplay);
+        VBox.setMargin(myTowerDisplay, new Insets(0));
+        return mySidebar;
     }
 
     private ScrollPane makeTowerScrollBox () {
-        towerDisplay = new ScrollPane();
-        towerDisplay.setPrefWidth(screenWidth / 4);
-        towerDisplay.setPrefHeight(screenHeight / 2);
-        towerDisplay.setTranslateY(screenHeight / 2);
-        towerDisplay.setStyle("-fx-background-color:transparent");
-        towerDisplay.vbarPolicyProperty().set(ScrollBarPolicy.AS_NEEDED);
-        towerDisplay.hbarPolicyProperty().set(ScrollBarPolicy.AS_NEEDED);
-        return towerDisplay;
+        myTowerDisplay = new ScrollPane();
+        myTowerDisplay.setPrefWidth(myScreenWidth / 4);
+        myTowerDisplay.setPrefHeight(myScreenHeight / 2);
+        myTowerDisplay.setTranslateY(myScreenHeight / 2);
+        myTowerDisplay.setStyle("-fx-background-color:transparent");
+        myTowerDisplay.vbarPolicyProperty().set(ScrollBarPolicy.AS_NEEDED);
+        myTowerDisplay.hbarPolicyProperty().set(ScrollBarPolicy.AS_NEEDED);
+        return myTowerDisplay;
     }
 
     private void makeTowerGrid (ObservableList<Tower> towerList) {
-        towerGrid = new GridPane();
-        towerGrid.setPadding(new Insets(20));
-        towerGrid.setAlignment(Pos.CENTER);
+        myTowerGrid = new GridPane();
+        myTowerGrid.setPadding(new Insets(20));
+        myTowerGrid.setAlignment(Pos.CENTER);
         double maxWidth = 0;
         for (Tower tower : towerList) {
             double towerWidth = tower.getImageView().getBoundsInParent().getWidth();
@@ -207,16 +237,16 @@ public class GamePlayer extends Application {
                 maxWidth = towerWidth;
             }
         }
-        int numCols = (int) Math.floor((towerDisplay.getPrefWidth() - 40) / (maxWidth));
+        int numCols = (int) Math.floor((myTowerDisplay.getPrefWidth() - 40) / (maxWidth));
         if (numCols > towerList.size()) {
             numCols = towerList.size();
         }
         System.out.println(numCols);
-        towerGrid.setHgap((towerDisplay.getPrefWidth() - 40 - numCols * maxWidth) / (numCols - 1));
+        myTowerGrid.setHgap((myTowerDisplay.getPrefWidth() - 40 - numCols * maxWidth) / (numCols - 1));
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints currCol = new ColumnConstraints();
             currCol.setMaxWidth(maxWidth);
-            towerGrid.getColumnConstraints().add(currCol);
+            myTowerGrid.getColumnConstraints().add(currCol);
         }
         // if(numCols!=1){
         // }
@@ -226,11 +256,13 @@ public class GamePlayer extends Application {
 
                 @Override
                 public void handle (MouseEvent event) {
-                    Dragboard db = myView.startDragAndDrop(TransferMode.ANY);
+                    Dragboard db = myView.startDragAndDrop(TransferMode.COPY);
 
                     /* Put a string on a dragboard */
                     ClipboardContent content = new ClipboardContent();
+                    myView.setId("tower");
                     content.putImage(myView.getImage());
+                    content.putString(myView.getId());
                     db.setContent(content);
 
                     event.consume();
@@ -238,36 +270,39 @@ public class GamePlayer extends Application {
                 }
 
             });
-            towerGrid.add(myView, i % numCols, i / numCols);
+            myTowerGrid.add(myView, i % numCols, i / numCols);
         }
-        towerDisplay.setContent(towerGrid);
+        myTowerDisplay.setContent(myTowerGrid);
     }
 
     private Pane makeMainPane () {
-        Pane mainArea = new Pane(engineRoot);
+        Pane mainArea = new Pane(myEngineRoot);
         // TODO: property file this
-        mainArea.setPrefWidth(screenWidth - screenWidth / 4);
-        mainArea.setPrefHeight(screenHeight);
+        mainArea.setPrefWidth(myScreenWidth - myScreenWidth / 4);
+        mainArea.setPrefHeight(myScreenHeight);
         mainArea.setStyle("-fx-background-color: #00dbc1");
         mainArea.setOnDragOver(event ->{
                 Dragboard db = event.getDragboard();
-                if (db.hasImage()) {
-                    event.acceptTransferModes(TransferMode.ANY);
+                if (db.hasString()) {
+                    event.acceptTransferModes(TransferMode.COPY);
                 }
                 event.consume();
         });
         mainArea.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
-                if (db.hasImage()) {
-                    ImageView place = new ImageView(db.getImage());
-                    place.setTranslateX(event.getSceneX() -
-                                        Math.floor(db.getImage().getWidth() / 2));
-                    place.setTranslateY(event.getSceneY() -
-                                        Math.floor(db.getImage().getHeight() / 2));
+                if (db.hasString()) {
+                    // ImageView place = new ImageView(db.getImage());
+                    System.out.println(db.getString());
+                    myGameController.addPlaceable(db.getString(), event.getSceneX(),
+                                                  event.getSceneY());
+                    // place.setTranslateX(event.getSceneX() -
+                    // Math.floor(db.getImage().getWidth() / 2));
+                    // place.setTranslateY(event.getSceneY() -
+                    // Math.floor(db.getImage().getHeight() / 2));
                     // TODO: tell engine about this
                     // game.addTower(place,);
-                    mainArea.getChildren().add(place);
+                    // mainArea.getChildren().add(place);
                     success = true;
                 }
                 /*

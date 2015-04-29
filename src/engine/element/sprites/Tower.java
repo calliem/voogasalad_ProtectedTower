@@ -1,6 +1,9 @@
 package engine.element.sprites;
 
+import java.util.List;
+import java.util.Set;
 import javafx.scene.image.ImageView;
+import annotations.parameter;
 
 
 /**
@@ -9,18 +12,38 @@ import javafx.scene.image.ImageView;
  * 
  * @author Qian Wang
  * @author Bojia Chen
+ * @author Greg McKeon
  *
  */
 public class Tower extends GameSprite {
 
-    public Tower () {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+    @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
+    private Double attackSpeed;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
+    private Double attackRange;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "Close")
+    private String attackPriority;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    private List<String> projectiles;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
+    private Double cost;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
+    private Double buildTime;
+
+    private Set<GameElement> myTargets;
 
     // TODO remove once testing is over
     public Tower (ImageView test) {
         super.setImageView(test);
+    }
+
+    /**
+     * Adds new sprites for the tower to target
+     * 
+     * @param sprites Set<GameElement> object of sprites
+     */
+    public void addTargets (Set<GameElement> sprites) {
+        sprites.forEach(s -> myTargets.add(s));
     }
 
     @Override
@@ -30,14 +53,9 @@ public class Tower extends GameSprite {
     }
 
     @Override
-    public void onCollide (Sprite sprite) {
+    public void onCollide (GameElement element) {
         // TODO Auto-generated method stub
 
-    }
-
-    @Override
-    public Tower clone () {
-        return null;
     }
 
     /**
@@ -48,4 +66,9 @@ public class Tower extends GameSprite {
         return;
     }
 
+    @Override
+    public void update (int counter) {
+        // TODO Auto-generated method stub
+        System.out.println("Tower updated");
+    }
 }

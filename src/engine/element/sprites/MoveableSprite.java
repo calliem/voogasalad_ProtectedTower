@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import annotations.parameter;
 import javafx.geometry.Point2D;
 
 
@@ -8,18 +9,22 @@ import javafx.geometry.Point2D;
  * include those to control movement. A variable representing velocity can be used to move.
  * 
  * @author Qian Wang
+ * @author Greg McKeon
  *
  */
 public abstract class MoveableSprite extends Sprite {
 
-    private Point2D myHeading;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
+    private Double speed;
+    @parameter(settable = true, playerDisplay = true)
+    private String group = null;
+    /**
+     * Holds the current heading of the sprite
+     */
+    @parameter(playerDisplay = true)
+    private Point2D heading;
 
     // private double myRange;
-
-    public MoveableSprite () {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
     // Setters and getters
 
@@ -29,7 +34,7 @@ public abstract class MoveableSprite extends Sprite {
      * @param heading Point2D object representing x and y components of heading
      */
     protected void setHeading (Point2D velocity) {
-        myHeading = velocity.normalize();
+        heading = velocity.normalize();
     }
 
     /**
@@ -38,28 +43,12 @@ public abstract class MoveableSprite extends Sprite {
      * @return normalized Point2D representing the heading of the object
      */
     protected Point2D getHeading () {
-        return myHeading;
+        return heading;
     }
 
-    /**
-     * Sets the velocity of the sprite to a normalized value
-     * 
-     * @param x double of x component of velocity
-     * @param y double of y component of velocity
-     */
-    // protected void setVelocity (double x, double y) {
-    // myVelocity = new Point2D(x, y).normalize();
-    // }
-
-    /**
-     * Sets the range of the sprite movement. This value is used to test is the sprite has traveled
-     * past its rated range, in which case it can stop moving.
-     * 
-     * @param range double value of the range the sprite should move before stopping
-     */
-    // protected void setRange (double range) {
-    // myRange = range;
-    // }
+    public Double getSpeed () {
+        return speed;
+    }
 
     // Abstract methods
 

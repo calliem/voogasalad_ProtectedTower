@@ -13,23 +13,7 @@ public class ItemEditor extends SpriteEditor {
         super(c, name);
     }
 
-    @Override
-    public void update () {
-        // TODO Auto-generated method stub
 
-    }
 
-    // @Override
-    // protected Group configureUI() {
-    // // TODO Auto-generated method stub
-    // return new Group();
-    // }
-
-    // @Override
-    // public void update() {
-    // // TODO Auto-generated method stub
-    // System.out.println("itemeditor updated");
-    //
-    // }
 
 }

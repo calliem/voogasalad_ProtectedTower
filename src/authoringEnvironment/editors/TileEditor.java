@@ -56,9 +56,4 @@ public class TileEditor extends SpriteEditor {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void update () {
-        
-    }
 }

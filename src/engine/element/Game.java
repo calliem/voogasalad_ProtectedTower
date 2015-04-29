@@ -5,12 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import util.reflection.Reflection;
+import annotations.parameter;
 import engine.Bank;
 import engine.Endable;
 import engine.Updateable;
 import engine.conditions.Condition;
+import engine.element.sprites.Sprite;
 
 
 /**
@@ -21,15 +22,17 @@ import engine.conditions.Condition;
  * @author Bojia Chen
  *
  */
-public class Game extends GameElement implements Updateable, Endable {
+public class Game implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
-    private static final String PARAMETER_HEALTH = "HP";
+
+    @parameter(settable = true, playerDisplay = true, defaultValue = "20")
+    private Integer lives;
 
     /**
      * List of Javafx objects so that new nodes can be added for the player to display
      */
-    private List<Node> myNodes;
+    private List<Sprite> myNodes;
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
@@ -37,7 +40,7 @@ public class Game extends GameElement implements Updateable, Endable {
     private Bank myBank;
     private int myPoints;
 
-    public Game (List<Node> nodes) {
+    public Game (List<Sprite> nodes) {
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
         myNodes = nodes;
@@ -64,7 +67,8 @@ public class Game extends GameElement implements Updateable, Endable {
      */
     @Override
     public void update (int counter) {
-        myConditions.forEach(c -> c.act((int) super.getParameter(PARAMETER_HEALTH)));
+        System.out.println("Beginning cycle " + counter);
+        myConditions.forEach(c -> c.act(lives));
         List<String> enemiesToSpawn = myLevels.get(myActiveLevelIndex).update(counter);
         // TODO update spawn location to correct one
         myLayout.spawnEnemy(enemiesToSpawn, new Point2D(0, 0));
@@ -80,7 +84,7 @@ public class Game extends GameElement implements Updateable, Endable {
     public void addLevels (Map<String, Map<String, Object>> levels) {
         levels.keySet().forEach(l -> {
             Level tempLevel = (Level) Reflection.createInstance(PACKAGE_LOCATION_LEVEL);
-            tempLevel.setParameterMap(levels.get(l));
+            // TODO maybe need to add levels factory
             myLevels.add(tempLevel);
         });
         Collections.sort(myLevels);
@@ -97,7 +101,8 @@ public class Game extends GameElement implements Updateable, Endable {
         myLayout.initializeGameElement(className, allObjects);
     }
 
-    public void addLayoutParameters (Map<String, Object> parameters) {
-        myLayout.setParameterMap(parameters);
+    public void placeTower (String id, double sceneX, double sceneY) {
+        System.out.println("sup");
+        myLayout.placeTower(id, new Point2D(sceneX, sceneY));
     }
 }

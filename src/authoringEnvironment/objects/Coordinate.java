@@ -1,27 +1,27 @@
 package authoringEnvironment.objects;
 
 /**
- * Data structure that stores x- and y-coordinates on a Cartesian plane.
+ * Data structure that stores x- and y-coordinates on a Cartesian plane. Because JavaFX objects
+ * cannot be easily written to XStream, this is a simpler alternative to Point2D.
  * 
  * @author Callie Mao
  *
  */
-
 public class Coordinate {
 
-    private int myX;
-    private int myY;
+    private double myX;
+    private double myY;
 
-    public Coordinate (int x, int y) {
+    public Coordinate (double x, double y) {
         myX = x;
         myY = y;
     }
 
-    public int getX () {
+    public double getX () {
         return myX;
     }
 
-    public int getY () {
+    public double getY () {
         return myY;
     }
 }

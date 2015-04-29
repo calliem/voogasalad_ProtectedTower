@@ -2,7 +2,12 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import annotations.parameter;
+import authoringEnvironment.pathing.CurveCoordinates;
 import javafx.animation.PathTransition;
+import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -19,15 +24,20 @@ import engine.InsufficientParametersException;
  * Some may also be able to attack towers.
  * 
  * @author Qian Wang
+ * @author Sean Scott
+ * @author Greg McKeon
  *
  */
-public class Enemy extends MoveableSprite {
+
+public class Enemy extends GameSprite {
+
+    private static final int MOVE_DELAY = 1000;
+
+    @parameter(settable = false, playerDisplay = true, defaultValue = "false")
+    private Boolean CanHurtPlayer;
 
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
-    private static final String PARAMETER_SPEED = "Speed";
-    private static final String PARAMETER_HEALTH = "HP";
-    private static final String PARAMETER_DAMAGE = "Damage";
 
     public Enemy () {
         super();
@@ -40,25 +50,65 @@ public class Enemy extends MoveableSprite {
     }
 
     @Override
-    public void onCollide (Sprite sprite) {
-        // TODO Check if this works in changing the variable in the parameters map
-        int health = (int) super.getParameter(PARAMETER_HEALTH);
-        health -= (int) sprite.getParameter(PARAMETER_DAMAGE);
+    public void onCollide (GameElement element) {
+        // TODO write collide methods
+        // super.decreaseHealth(sprite.getDamage());
+    }
+
+    /**
+     * Adds a poison modifier to the enemy so it loses health for a set duration
+     * 
+     * @param damage the amount of damage the enemy should lose
+     * @param duration the amount of time damage should be lost
+     */
+    public void poison (int damage, int duration) {
+        Timer timer = new Timer();
+        TimerTask poison = new TimerTask() {
+            @Override
+            public void run () {
+                decreaseHealth(damage);
+            }
+        };
+        timer.schedule(poison, MOVE_DELAY, (long) (MOVE_DURATION * duration));
+    }
+
+    protected void decreaseHealth (Integer amount) {
+        super.decreaseHealth(amount);
     }
 
     @Override
     public void move () {
-        int speed = (int) super.getParameter(PARAMETER_SPEED);
-        Path path = new Path();
-        for (GridCell cell : myPath) {
-            path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));
-        }
+        Path path = pathPlanned();
         PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) / speed));
+        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) /
+                                                   super.getSpeed()));
         pathTransition.setPath(path);
         pathTransition.setNode(super.getImageView());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.play();
+    }
+
+    public Path pathBezier (List<CurveCoordinates> curves) {
+        Path path = new Path();
+        for (CurveCoordinates curve : curves) {
+            double Control1X = curve.getControl1Coordinate().getX();
+            double Control1Y = curve.getControl1Coordinate().getY();
+            double Control2X = curve.getControl2Coordinate().getX();
+            double Control2Y = curve.getControl2Coordinate().getY();
+            double EndX = curve.getEndCoordinate().getX();
+            double EndY = curve.getEndCoordinate().getY();
+            path.getElements().add(new CubicCurveTo(Control1X, Control1Y, Control2X, Control2Y,
+                                                    EndX, EndY));
+        }
+        return path;
+    }
+
+    public Path pathPlanned () {
+        Path path = new Path();
+        for (GridCell cell : myPath) {
+            path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));
+        }
+        return path;
     }
 
     /**
@@ -69,7 +119,6 @@ public class Enemy extends MoveableSprite {
      * @throws InsufficientParametersException
      */
     public void updatePath (GridCell[][] grid,
-                            String type,
                             int startRow,
                             int startCol,
                             int goalRow,
@@ -88,6 +137,10 @@ public class Enemy extends MoveableSprite {
             gridPath.add(grid[coord.getRow()][coord.getCol()]);
         }
         myPath = gridPath;
+    }
+
+    @Override
+    public void update (int counter) {
     }
 
 }

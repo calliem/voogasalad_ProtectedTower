@@ -23,9 +23,4 @@ public class TowerEditor extends SpriteEditor {
         super(c, name);
     }
 
-    @Override
-    public void update () {
-        // TODO Auto-generated method stub
-
-    }
 }

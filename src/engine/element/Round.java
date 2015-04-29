@@ -2,6 +2,7 @@ package engine.element;
 
 import java.util.ArrayList;
 import java.util.List;
+import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
 
@@ -14,7 +15,17 @@ import engine.UpdateAndReturnable;
  * @author Bojia Chen
  *
  */
-public class Round extends GameElement implements UpdateAndReturnable, Endable {
+public class Round implements UpdateAndReturnable, Endable {
+
+    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    private List<String> waves;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    private List<String> quantities;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
+    private Double sendRate;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "0")
+    private Integer spawnLocation;
+    
     private List<Wave> myWaves;
     private int myMaxWaveDelay; // defines how many frames to wait between sending waves
     private int myWaveDelay = 0;

@@ -1,17 +1,22 @@
 package authoringEnvironment.objects;
 
 import java.util.ResourceBundle;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.map.MapWorkspace;
 
@@ -91,6 +96,20 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         accordionContext.getPanes().add(organizer);
         return context;
     }
+    
+  /*  protected void displayWorkspaceMessage(String text, Color color){
+        Text saved = new Text(text);
+        saved.setFill(color);
+        saved.setFont(new Font(20));
+        StackPane.setAlignment(saved, Pos.BOTTOM_CENTER);
+        //saved.setVisible(false);
+        myMapWorkspace.getChildren().add(saved);
+        
+        //saved.setVisible(true);
+        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+        pause.play();
+        pause.setOnFinished(e ->getMapWorkspace().getChildren().remove(saved));
+    }*/
 
     protected ListView<Node> createListView (ObservableList<Node> items, int height) {
         ListView<Node> list = new ListView<Node>();

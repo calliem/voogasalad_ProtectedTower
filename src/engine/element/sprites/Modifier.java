@@ -5,18 +5,18 @@ package engine.element.sprites;
  * as a status effect.
  * 
  * @author Qian Wang
+ * @author Greg McKeon
  *
  */
-public class Modifier extends Sprite {
+public class Modifier extends GameElement {
 
     public Modifier () {
         super();
     }
 
     @Override
-    public void onCollide (Sprite sprite) {
-        // TODO Auto-generated method stub
-
+    public void onCollide (GameElement element) {
+        
     }
 
 }

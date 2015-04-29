@@ -1,6 +1,6 @@
 package authoringEnvironment.objects;
 
-import imageselectorTEMP.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -32,29 +33,29 @@ import authoringEnvironment.setting.SpriteSetting;
 
 /**
  * Creates the visual selector for adding a unit/wave and the time delay. Stores
- * the information for the WaveEditor
+ * the information for a FlowEditor
  * 
  * @author Megan Gutter
- * @author Callie Mao
+ * @author Kevin He
  *
  */
 
 public class FlowView extends HBox {
-    private TextField delayTextField;
-    private FileChooser fileChooser;
-    private Controller myController;
-    private int myHeight;
-    private List<String> partFileNames;
-    private List<Double> delays;
-
-    private VBox selector;
-
-    // TODO: take back all the instance variables that belong in this class only
 
     private static final double VBOX_PADDING_MULTIPLIER = 0.5;
     private static final int PADDING = 10;
     private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
+
+    protected TextField delayTextField;
+    private FileChooser fileChooser;
+    protected Controller myController;
+    private int myHeight;
+    private List<String> partFileNames;
+    protected List<Double> delays;
+    private VBox selector;
+
+    // TODO: take back all the instance variables that belong in this class only
 
     /**
      * Creates the visual and input elements for the "timeline" in the
@@ -76,30 +77,22 @@ public class FlowView extends HBox {
         selector = new VBox(VBOX_PADDING_MULTIPLIER * PADDING);
         selector.setAlignment(Pos.CENTER);
 
-        ArrayList<String> options = new ArrayList<>();
-        options.add("Unit");
-        options.add("Wave");
-        ObservableList<String> optionsList = FXCollections.observableArrayList(options);
-        final ComboBox<String> partSelectorBox = new ComboBox<>(optionsList);
-        Tooltip tooltip = new Tooltip("Select something to add!");
-        tooltip.setTextAlignment(TextAlignment.CENTER);
-        Tooltip.install(partSelectorBox, tooltip);
+        final List<Node> partSelectorBox = createOptionSelector();
 
-        // TODO: use lambda for selectUnit/selectWave method?
-        partSelectorBox.setPromptText("...");
-        partSelectorBox.valueProperty().addListener( (obs, oldValue, newValue) -> {
-            if (newValue.equals("Unit"))
-                selectUnit();
-                                                    else if (newValue.equals("Wave"))
-                                                        selectWave();
-                                                });
-
-        selector.getChildren().add(partSelectorBox);
+        selector.getChildren().addAll(partSelectorBox);
         this.getChildren().add(selector);
 
         VBox arrow = createArrowAndDelayVisuals();
         this.getChildren().add(arrow);
         this.setPrefHeight(myHeight);
+    }
+
+    protected List<Node> createOptionSelector () {
+        List<Node> options = new ArrayList<Node>();
+        Button waveButton = new Button("Choose Wave");
+        waveButton.setOnAction(e -> selectWave());
+        options.add(waveButton);
+        return options;
     }
 
     private void showArrowAnimation (ImageView arrow, TextField field) {
@@ -131,26 +124,7 @@ public class FlowView extends HBox {
         return arrow;
     }
 
-    private void selectUnit () {
-        SpriteSetting chooseUnit =
-                new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES,
-                                  Variables.PARTNAME_ENEMIES);
-        chooseUnit.getChildren().remove(0);
-        chooseUnit.setTextColor(Color.BLACK);
-        insertElement(chooseUnit);
-
-        List<Double> unitDelay = new ArrayList<Double>();
-        List<String> fileNames = new ArrayList<String>();
-        try {
-            unitDelay.add(Double.parseDouble(delayTextField.getText()));
-            delays = unitDelay;
-        }
-        catch (NumberFormatException e) {
-
-        }
-    }
-
-    private void selectWave () {
+    protected void selectWave () {
         File file = fileChooser.showOpenDialog(null);
         Text waveNameDisplay = new Text(file.getName());
         insertElement(waveNameDisplay);
@@ -166,7 +140,7 @@ public class FlowView extends HBox {
         }
     }
 
-    private void insertElement (Node node) {
+    protected void insertElement (Node node) {
         if (selector.getChildren().size() > 1) {
             selector.getChildren().remove(1);
         }
