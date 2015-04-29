@@ -170,8 +170,10 @@ public class Controller {
                                                       String partName,
                                                       List<String> params,
                                                       List<Object> data) throws DataFormatException {
-        if (params.size() != data.size()) { throw new DataFormatException(
-                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
+        if (params.size() != data.size()) {
+            throw new DataFormatException(
+                                          DIFFERENT_LIST_SIZE_MESSAGE);
+        }
         Map<String, Object> toAdd = new HashMap<String, Object>();
         for (int i = 0; i < params.size(); i++) {
             toAdd.put(params.get(i), data.get(i));
@@ -192,6 +194,14 @@ public class Controller {
         partTypeToKeyList.get(partType).add(key);
         System.out.println("key added: " + key);
         return key;
+    }
+
+    public boolean addTagToPart (String partKey, String tag) {
+        if (currentGame.containsKey(partKey)) {
+            currentGame.addTagToPart(partKey, tag);
+            return true;
+        }
+        return false;
     }
 
     // /**
