@@ -7,13 +7,14 @@ import java.util.Map;
 import authoringEnvironment.InstanceManager;
 
 
-public class DesktopExampleGameMap {
+public class ExampleGameMap {
 
-    public static final Map<String, Object> MAP = generateExampleMap();
+    public static final Map<String,Map<String, Object>> MAP = generateExampleMap();
 
-    private static Map<String, Object> generateExampleMap () {
+    private static Map<String, Map<String, Object>> generateExampleMap () {
         Map<String, Object> gameMap = new HashMap<String, Object>();
-
+        Map<String,Map<String,Object>> part = new HashMap<String,Map<String,Object>>();
+        
         Integer rows = 20;
         Integer columns = 30;
         Integer tileSize = 5;
@@ -36,6 +37,8 @@ public class DesktopExampleGameMap {
         gameMap.put("columns", columns);
         gameMap.put("tileSize", tileSize);
         gameMap.put("myTileNames", myTileNames);
-        return gameMap;
+        
+        part.put("DesktopTestGameMap_Part0.GameMap", gameMap);
+        return part;
     }
 }

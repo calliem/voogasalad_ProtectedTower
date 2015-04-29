@@ -9,9 +9,10 @@ import authoringEnvironment.InstanceManager;
 
 public class ExampleWave {
 
-    public static final Map<String, Object> WAVE_1 = generateExampleWave();
+    public static final Map<String,Map<String, Object>> WAVE_1 = generateExampleWave();
 
-    private static Map<String, Object> generateExampleWave () {
+    private static Map<String, Map<String, Object>> generateExampleWave () {
+        Map<String, Map<String,Object>> part = new HashMap<String,Map<String,Object>>();
         Map<String, Object> wave = new HashMap<String, Object>();
 
         List<Double> mySendTimes = new ArrayList<Double>();
@@ -32,6 +33,7 @@ public class ExampleWave {
         wave.put(InstanceManager.PART_KEY_KEY, "TestWavePart0.Wave");
         wave.put("mySendTimes",mySendTimes);
         wave.put("myEnemies",myEnemies);
-        return wave;
+        part.put("TestWavePart0.Wave", wave);
+        return part;
     }
 }

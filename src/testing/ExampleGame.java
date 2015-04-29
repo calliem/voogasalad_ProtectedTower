@@ -8,10 +8,11 @@ import authoringEnvironment.InstanceManager;
 
 public class ExampleGame {
     
-    public static final Map<String, Object> GAME = generateExampleGame();
+    public static final Map<String,Map<String, Object>> GAME = generateExampleGame();
 
-    private static Map<String, Object> generateExampleGame () {
+    private static Map<String, Map<String, Object>> generateExampleGame () {
         Map<String, Object> game = new HashMap<String, Object>();
+        Map<String,Map<String,Object>> part = new HashMap<String,Map<String,Object>>();
         
         Integer lives = 20;
         
@@ -19,8 +20,10 @@ public class ExampleGame {
         game.put(InstanceManager.PART_TYPE_KEY, "Game");
         game.put(InstanceManager.PART_KEY_KEY, "DesktopTestGame_Part0.Game");
         game.put("lives", lives);
+        
+        part.put("DesktopTestGame_Part0.Game", game);
 
-        return game;
+        return part;
     }
 
 }

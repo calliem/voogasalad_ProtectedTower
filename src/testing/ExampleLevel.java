@@ -9,10 +9,11 @@ import authoringEnvironment.InstanceManager;
 
 public class ExampleLevel {
 
-    public static final Map<String, Object> LEVEL = generateExampleLevel();
+    public static final Map<String,Map<String, Object>> LEVEL = generateExampleLevel();
 
-    private static Map<String, Object> generateExampleLevel () {
+    private static Map<String, Map<String, Object>> generateExampleLevel () {
         Map<String, Object> level = new HashMap<String, Object>();
+        Map<String,Map<String,Object>> part = new HashMap<String,Map<String,Object>>();
 
         Integer myLives = 20;
         List<String> myRounds = new ArrayList<String>();
@@ -31,6 +32,8 @@ public class ExampleLevel {
         level.put("myRounds",myRounds);
         level.put("myConditions",myConditions);
         level.put("myNumber", myNumber);
-        return level;
+        
+        part.put("DesktopTestlevel_Part0.Level", level);
+        return part;
     }
 }
