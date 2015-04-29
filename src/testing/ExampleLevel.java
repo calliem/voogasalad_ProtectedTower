@@ -11,7 +11,7 @@ public class ExampleLevel {
 
     public static final Map<String,Map<String, Object>> LEVEL = generateExampleLevel();
 
-    private static Map<String, Map<String, Object>> generateExampleLevel () {
+    public static Map<String, Map<String, Object>> generateExampleLevel () {
         Map<String, Object> level = new HashMap<String, Object>();
         Map<String,Map<String,Object>> part = new HashMap<String,Map<String,Object>>();
 

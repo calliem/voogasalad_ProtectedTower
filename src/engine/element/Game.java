@@ -12,6 +12,7 @@ import engine.Endable;
 import engine.Updateable;
 import engine.conditions.Condition;
 import engine.element.sprites.Sprite;
+import engine.factories.GameElementFactory;
 
 
 /**
@@ -39,13 +40,17 @@ public class Game implements Updateable, Endable {
     private int myActiveLevelIndex;
     private Bank myBank;
     private int myPoints;
+    private GameElementFactory myGameElementFactory;
 
     public Game (List<Sprite> nodes,Map<String,Object> parameters) {
+        myGameElementFactory = new GameElementFactory();
+        
         lives = (Integer) parameters.get("lives");
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
         myNodes = nodes;
         myLayout = new Layout(myNodes);
+        myLayout.setFactory(myGameElementFactory);
         myActiveLevelIndex = 0;
         myBank = new Bank();
         myPoints = 0;

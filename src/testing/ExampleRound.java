@@ -10,7 +10,7 @@ import authoringEnvironment.InstanceManager;
 public class ExampleRound {
     public static final Map<String,Map<String, Object>> ROUND = generateExampleRound();
 
-    private static Map<String, Map<String, Object>> generateExampleRound () {
+    public static Map<String, Map<String, Object>> generateExampleRound () {
         Map<String,Map<String,Object>> part = new HashMap<String,Map<String,Object>>();
         
         Map<String, Object> round = new HashMap<String, Object>();

@@ -11,7 +11,7 @@ public class ExampleWave {
 
     public static final Map<String,Map<String, Object>> WAVE_1 = generateExampleWave();
 
-    private static Map<String, Map<String, Object>> generateExampleWave () {
+    public static Map<String, Map<String, Object>> generateExampleWave () {
         Map<String, Map<String,Object>> part = new HashMap<String,Map<String,Object>>();
         Map<String, Object> wave = new HashMap<String, Object>();
 
