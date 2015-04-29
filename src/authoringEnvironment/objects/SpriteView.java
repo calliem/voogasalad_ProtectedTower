@@ -24,6 +24,7 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
+import authoringEnvironment.setting.ImageViewSetting;
 import authoringEnvironment.setting.Setting;
 import authoringEnvironment.setting.StringSetting;
 import authoringEnvironment.util.Scaler;
@@ -145,12 +146,27 @@ public abstract class SpriteView extends StackPane {
         settingsObjects.setMaxWidth(150);
 
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
-
-        for (Setting s : settings) {
-            parameterFields.add(s);
-            settingsObjects.getChildren().add(s);
+        // move the image to be first in the settings list
+        for (int i = 0; i < settings.size(); i++) {
+            if (settings.get(i) instanceof ImageViewSetting) {
+                parameterFields.add(0, settings.get(i));
+                settingsObjects.getChildren().add(0, settings.get(i));
+            }
+            break;
         }
-
+        for (int j = 0; j < settings.size(); j++) {
+            if (settings.get(j) instanceof ImageViewSetting) {
+                continue;
+            }
+            if (settings.get(j) instanceof StringSetting &&
+                settings.get(j).getParameterName().equals("name")) {
+                parameterFields.add(1, settings.get(j));
+                settingsObjects.getChildren().add(1, settings.get(j));
+                continue;
+            }
+            parameterFields.add(settings.get(j));
+            settingsObjects.getChildren().add(settings.get(j));
+        }
         initializeSpriteInfo();
 
         HBox buttons = new HBox(10);

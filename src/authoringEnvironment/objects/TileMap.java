@@ -26,17 +26,22 @@ public class TileMap extends GameObject {
     private ImageView myBackground;
     private Color myActiveColor;
     private String imgFilePath;
-    private int myMapRows;
-    private int myMapCols;
-    private Group myRoot; // need to include this instead of extending Group for additional
-                          // extendibility and so that GameObject can be extended
-    private Group myGridLines;
-    private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
-    // tag
 
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
     private static final String TILE_KEY_ARRAY = "TileArrayKeys";
     private static final int LINE_START_COORDINATE = 0;
+
+    private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
+                                             // tag
+
+    // allowing both width and height gives greater flexibility in map creation
+    private int myMapRows;
+    private int myMapCols;
+    private Group myRoot; // need to include this instead of extending Group for additional
+                          // extendibility and so that GameObject can be extended
+
+    private Group myGridLines;
+
     private static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
 
     // TODO: user specifies rectangle or square dimensions...allow this flexibility
@@ -48,7 +53,7 @@ public class TileMap extends GameObject {
         myTileSize = tileSize;
         myGridLines = new Group();
         myActiveColor = DEFAULT_TILE_COLOR;
-        // imgFilePath = DEFAULT_BACKGROUND_PATH;
+       // imgFilePath = DEFAULT_BACKGROUND_PATH;
         imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
         setThumbnail(myBackground);
@@ -109,9 +114,8 @@ public class TileMap extends GameObject {
 
     private void attachTileListener (Tile tile) {
         tile.setOnMouseClicked(e -> tileClicked(tile));
-        // this method is used instead of tileClicked to allow for easier "coloring" of large groups
-        // of tiles
-        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor));
+      //this method is used instead of tileClicked to allow for easier "coloring" of large groups of tiles
+        tile.setOnMouseDragEntered(e -> tile.setFill(myActiveColor)); 
     }
 
     public void changeTileSize (int tileSize) {
@@ -310,8 +314,8 @@ public class TileMap extends GameObject {
     public Group getRoot () {
         return myRoot;
     }
-
-    public String getImgFilePath () {
+    
+    public String getImgFilePath(){
         return imgFilePath;
     }
 

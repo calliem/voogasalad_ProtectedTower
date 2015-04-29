@@ -103,16 +103,13 @@ public class GamePlayer extends Application {
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
         Image myImage = new Image(".\\images\\liltower.jpg");
-        ImageView test = new ImageView(myImage);
-        ImageView test1 = new ImageView(myImage);
-        ImageView test2 = new ImageView(myImage);
         // ImageView test3 = new ImageView(myImage);
         // ImageView test4 = new ImageView(myImage);
         // ImageView test5 = new ImageView(myImage);
         // test5.setTranslateX(300);
         // test5.setTranslateY(300);
-        availableTowers.add(new Tower(test));
-        availableTowers.add(new Tower(test1));
+        availableTowers.add(new Tower(myImage));
+        availableTowers.add(new Tower(myImage));
         // availableTowers.add(new Tower(test2));
         // availableTowers.add(new Tower(test3));
         // availableTowers.add(new Tower(test4));
