@@ -1,4 +1,4 @@
-package engine;
+package testing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 import authoringEnvironment.InstanceManager;
 
+
 public class ExampleWave {
 
-    
     public static final Map<String, Object> WAVE_1 = generateExampleWave();
-    
-    private static Map<String, Object> generateExampleWave(){
+
+    private static Map<String, Object> generateExampleWave () {
         Map<String, Object> wave = new HashMap<String, Object>();
 
         List<Integer> delay = new ArrayList<Integer>();
