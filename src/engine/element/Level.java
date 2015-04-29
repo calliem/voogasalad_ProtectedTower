@@ -6,6 +6,7 @@ import java.util.Map;
 import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
+import engine.factories.GameElementFactory;
 
 
 /**
@@ -21,27 +22,33 @@ import engine.UpdateAndReturnable;
 public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "20")
-    private Integer lives;
+    private Integer myLives;
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
-    private List<String> rounds;
+    private List<String> myRounds;
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
-    private List<String> quantities;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
-    private Double sendRate;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
-    private List<String> conditions;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "0")
-    private Integer number;
+    private List<String> myConditions;
 
-    private List<Round> myRounds;
+    /**
+     * Identifies the level number. Used to determine order.
+     */
+    @parameter(settable = true, playerDisplay = true, defaultValue = "0")
+    private Integer myNumber;
+
+    private static final String PARAMETER_ROUND = "Round";
+
     private int myActiveRoundIndex = 0;
     private Round myActiveRound;
+    private GameElementFactory myGameElementFactory;
 
     // TODO: Win/Lose Conditions
 
     public Level () {
         myRounds = new ArrayList<>();
-        myActiveRound = myRounds.get(myActiveRoundIndex);
+        setActiveRound();
+    }
+
+    public void setGameElementFactory (GameElementFactory factory) {
+        myGameElementFactory = factory;
     }
 
     /**
@@ -58,9 +65,14 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
             return false;
         }
         else {
-            myActiveRound = myRounds.get(myActiveRoundIndex);
+            setActiveRound();
             return true;
         }
+    }
+
+    private void setActiveRound () {
+        String roundGUID = myRounds.get(myActiveRoundIndex);
+        myActiveRound = (Round) myGameElementFactory.getGameElement(PARAMETER_ROUND, roundGUID);
     }
 
     @Override
@@ -75,8 +87,8 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
 
     @Override
     public int compareTo (Level other) {
-        int thisLevel = this.number;
-        int otherLevel = other.number;
+        int thisLevel = this.myNumber;
+        int otherLevel = other.myNumber;
         return thisLevel - otherLevel;
     }
 

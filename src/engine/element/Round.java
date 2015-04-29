@@ -7,6 +7,7 @@ import java.util.Map;
 import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
+import engine.factories.GameElementFactory;
 
 
 /**
@@ -20,55 +21,84 @@ import engine.UpdateAndReturnable;
 public class Round implements UpdateAndReturnable, Endable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
-    private List<String> waves;
+    private List<String> myWaves;
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
-    private List<String> quantities; // TODO: Verify if this parameter still exists
-    @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
-    private List<Double> sendRate;   // TODO: Change to time?
-    @parameter(settable = true, playerDisplay = true, defaultValue = "0")
-    private List<Integer> spawnLocation;
+    private List<Double> mySendTimes;
+    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    private List<String> myWavePaths;
 
-    private List<Wave> myWaves;
+    private static final String PARAMETER_WAVE = "Wave";
+
     private List<Wave> myActiveWaves;
-    private int myMaxWaveDelay; // defines how many frames to wait between sending waves
-    private int myWaveDelay = 0;
-    private int myActiveWaveIndex = 0;
+    private GameElementFactory myGameElementFactory;
+    private int myCurrentWaveIndex = 0;
     private int myTimer = 0;
-    private Wave myActiveWave;
 
     public Round () {
-        myWaves = new ArrayList<>();
         myActiveWaves = new ArrayList<>();
-        myActiveWave = myWaves.get(myActiveWaveIndex);
-        //TODO: Make sure that waves, quantities, sendRate, and spawnLocation are same size
+        // TODO: Make sure that waves, quantities, sendRate, and spawnLocation are same size
+    }
+
+    public void setGameElementFactory (GameElementFactory factory) {
+        myGameElementFactory = factory;
     }
 
     @Override
     public boolean hasEnded () {
-        // return myActiveWaveIndex == myWaves.size();
-        return myActiveWaveIndex == waves.size() && myActiveWaves.isEmpty();
+        return myCurrentWaveIndex == myWaves.size() && myActiveWaves.isEmpty();
     }
 
     @Override
     public Map<Object, List<String>> update (int counter) {
-        myTimer++;
         Map<Object, List<String>> tempReturnMap = null;
-        while (myWaveDelay == sendRate.get(myActiveWaveIndex) && !hasEnded()) {
-            myWaveDelay = 0;
-            myActiveWaves.add(myWaves.get(myActiveWaveIndex++));
+
+        while (myTimer == mySendTimes.get(myCurrentWaveIndex) && !hasEnded()) {
+            String waveGUID = myWaves.get(myCurrentWaveIndex);
+            String wavePath = myWavePaths.get(myCurrentWaveIndex++);
+            Wave waveToAdd = (Wave) myGameElementFactory.getGameElement(PARAMETER_WAVE, waveGUID);
+            waveToAdd.setPath(wavePath);
+            myActiveWaves.add(waveToAdd);
             // myActiveWave = myWaves.get(++myActiveWaveIndex);
         }
+
         for (Wave activeWave : myActiveWaves) {
             if (activeWave.hasEnded()) {
                 myActiveWaves.remove(activeWave);
             }
             else {
-                tempReturnMap = new HashMap<>();
-                return myActiveWave.update(counter);
+                mergeMaps(activeWave.update(counter), tempReturnMap);
             }
         }
 
+        myTimer++;
+
         return tempReturnMap;
+    }
+
+    /**
+     * Helper method for merging the contents of one map into another. Returs immediately if source
+     * map is null. Initializes new map if destination map is null.
+     * 
+     * @param from Source map
+     * @param to Destination map
+     */
+    private void mergeMaps (Map<Object, List<String>> from, Map<Object, List<String>> to) {
+        if (from == null) {
+            return;
+        }
+
+        if (to == null) {
+            to = new HashMap<>();
+        }
+
+        for (Object obj : from.keySet()) {
+            if (to.containsKey(obj)) {
+                to.get(obj).addAll(from.get(obj));
+            }
+            else {
+                to.put(obj, from.get(obj));
+            }
+        }
     }
 
 }

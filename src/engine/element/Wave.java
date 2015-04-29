@@ -29,7 +29,7 @@ public class Wave implements UpdateAndReturnable, Endable {
     private String myPath;
 
     public Wave () {
-        myEnemies = new ArrayList<>();
+        // TODO: make sure that myEnemies and mySendTimes are same size
     }
 
     public void setPath (String pathGUID) {
@@ -44,7 +44,7 @@ public class Wave implements UpdateAndReturnable, Endable {
     @Override
     public Map<Object, List<String>> update (int counter) {
         Map<Object, List<String>> tempReturnMap = null;
-        
+
         if (myTimer == mySendTimes.get(myEnemyIndex)) {
             tempReturnMap = new HashMap<>();
             List<String> enemiesToReturn = new ArrayList<>();
@@ -53,7 +53,7 @@ public class Wave implements UpdateAndReturnable, Endable {
             }
             tempReturnMap.put(myPath, enemiesToReturn);
         }
-        
+
         myTimer++;
         return tempReturnMap; // Null if no enemies to return
     }
