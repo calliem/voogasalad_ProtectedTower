@@ -1,6 +1,6 @@
 package authoringEnvironment.map;
 
-import imageselectorTEMP.GraphicFileChooser;
+import imageselector.GraphicFileChooser;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
@@ -393,7 +393,7 @@ public class MapSidebar extends Sidebar {
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton
                 .setOnMouseClicked(e -> {
-                    remove(getMapWorkspace().getActivePath(), null, null);
+                //    remove(getMapWorkspace().getActivePath(), null, null); //TODO: add gameobject interface
                     getMapWorkspace().deactivatePathMode();
                 });
 

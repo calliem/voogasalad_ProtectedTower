@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import util.reflection.Reflection;
+import engine.element.sprites.GameElement;
 
 
 /**
@@ -97,7 +98,8 @@ public class GameElementFactory {
             return element;
         }
         else {
-            throw new InvalidParameterException(guid + "is not defined as a type of " + className);
+            throw new InvalidParameterException(guid + "is not defined as an element of type " +
+                                                className);
         }
     }
 

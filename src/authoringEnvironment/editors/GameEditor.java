@@ -28,11 +28,6 @@ public class GameEditor extends Editor {
     // private String myName;
     // private String myDescription;
     // private int myLives;
-    
-    // TODO: how to get this number
-    // from Johnny
-    private static final int DEFAULT_LIVES = 20;
-    
     private TextField gameNameEntry;
     private TextArea gameDescriptionEntry;
     private TextField totalLivesEntry;
@@ -41,8 +36,8 @@ public class GameEditor extends Editor {
     private static final ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
                                                                   "game_editor_english");
 
-    public GameEditor (Controller controller, String name, String nameWithoutEditor) {
-        super(controller, name, nameWithoutEditor);
+    public GameEditor (Controller controller, String name) {
+        super(controller, name);
     }
 
     @Override

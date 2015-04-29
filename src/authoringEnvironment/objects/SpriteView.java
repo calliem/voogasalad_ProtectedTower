@@ -1,6 +1,6 @@
 package authoringEnvironment.objects;
 
-import imageselectorTEMP.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.PauseTransition;
@@ -8,6 +8,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +26,7 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
+import authoringEnvironment.setting.ImageViewSetting;
 import authoringEnvironment.setting.Setting;
 import authoringEnvironment.setting.StringSetting;
 import authoringEnvironment.util.Scaler;
@@ -37,19 +40,16 @@ import authoringEnvironment.util.Scaler;
  *
  */
 
-public abstract class SpriteView extends StackPane {
+public abstract class SpriteView extends ObjectView {
     private VBox display;
     private VBox editableContent;
     private StackPane overlayContent;
-    private Button overlayCloseButton;
+    
     private Text overlayErrorMessage;
-    private BooleanProperty exists;
 
     private String spriteName;
     private String imageFile;
     private List<Setting> parameterFields;
-
-    private String myKey;
 
     private Text spriteNameDisplay;
     private Text overlaySpriteNameDisplay;
@@ -62,10 +62,12 @@ public abstract class SpriteView extends StackPane {
     private static final int NAME_INDEX = 1;
     // private static final String DEFAULT_NAME = "Unnamed";
 
-    private Controller myController;
     private String id;
     private ImageView previewImage;
-
+    private StackPane displayPane;
+    
+    private static final int PADDING = 10;
+    
     /**
      * Creates visual representation of a sprite created by
      * the user in the authoring environment.
@@ -79,8 +81,7 @@ public abstract class SpriteView extends StackPane {
      */
     public SpriteView (Controller c, String name, String image) throws ClassNotFoundException,
         IllegalArgumentException, IllegalAccessException {
-        myKey = Controller.KEY_BEFORE_CREATION;
-        myController = c;
+        super(c);
 
         spriteName = name;
         imageFile = image;
@@ -88,8 +89,8 @@ public abstract class SpriteView extends StackPane {
         ScaleImage.scale(previewImage, 90, 70);
 
         parameterFields = new ArrayList<>();
-        exists = new SimpleBooleanProperty(true);
 
+        displayPane = new StackPane();
         display = new VBox(5);
         display.setAlignment(Pos.CENTER);
 
@@ -100,7 +101,8 @@ public abstract class SpriteView extends StackPane {
         spriteNameDisplay.setWrappingWidth(90);
 
         display.getChildren().addAll(previewImage, spriteNameDisplay);
-        getChildren().addAll(spriteBackground, display);
+        displayPane.getChildren().addAll(spriteBackground, display);
+        objectLayout.getChildren().addAll(displayPane, tagGroup);
 
         try {
             setupEditableContent();
@@ -120,6 +122,10 @@ public abstract class SpriteView extends StackPane {
         setupOverlayContent();
         setupTooltipText(getSpriteInfo());
     }
+    
+    public StackPane getSpriteBody(){
+        return displayPane;
+    }
 
     private String getSpriteType () {
         String path = this.getClass().toString();
@@ -132,6 +138,7 @@ public abstract class SpriteView extends StackPane {
                                         IllegalAccessException {
         editableContent = new VBox(10);
         editableContent.setAlignment(Pos.CENTER);
+        editableContent.setMaxWidth(300);
 
         overlaySpriteNameDisplay = new Text(spriteName);
         overlaySpriteNameDisplay.setFont(new Font(30));
@@ -140,17 +147,41 @@ public abstract class SpriteView extends StackPane {
         overlayErrorMessage = new Text("Please check your parameters for errors.");
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
+        
+        editableContent.getChildren().addAll(overlaySpriteNameDisplay, overlayErrorMessage);
+        
+        ScrollPane settingsDisplay = new ScrollPane();
+        settingsDisplay.setPrefHeight(300);
+        settingsDisplay.setPrefWidth(200);
+        settingsDisplay.setHbarPolicy(ScrollBarPolicy.NEVER);
 
-        VBox settingsObjects = new VBox(10);
-        settingsObjects.setMaxWidth(150);
-
+        VBox settingsObjects = new VBox(PADDING);
+        settingsObjects.setMaxWidth(200);
+        
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
-
-        for (Setting s : settings) {
-            parameterFields.add(s);
-            settingsObjects.getChildren().add(s);
+        // move the image to be first in the settings list
+        for (int i = 0; i < settings.size(); i++) {
+            if (settings.get(i) instanceof ImageViewSetting) {
+                parameterFields.add(0, settings.get(i));
+                editableContent.getChildren().add(settings.get(i));
+                break;
+            }
         }
-
+        
+        for (int j = 0; j < settings.size(); j++) {
+            if (settings.get(j) instanceof ImageViewSetting) {
+                continue;
+            }
+            if (settings.get(j) instanceof StringSetting &&
+                settings.get(j).getParameterName().equals("name")) {
+                parameterFields.add(1, settings.get(j));
+                editableContent.getChildren().add(settings.get(j));
+                continue;
+            }
+            parameterFields.add(settings.get(j));
+            settingsObjects.getChildren().add(settings.get(j));
+        }
+        settingsDisplay.setContent(settingsObjects);
         initializeSpriteInfo();
 
         HBox buttons = new HBox(10);
@@ -159,20 +190,16 @@ public abstract class SpriteView extends StackPane {
         saved.setFill(Color.YELLOW);
         saved.setVisible(false);
 
-        Button save = new Button("Save");
-        save.setOnAction( (e) -> {
+        saveButton.setOnAction( (e) -> {
             if (saveParameterFields(true)) {
                 displaySavedMessage();
             }
         });
 
-        overlayCloseButton = new Button("Cancel");
-
         buttons.setAlignment(Pos.CENTER);
-        buttons.getChildren().addAll(save, overlayCloseButton);
+        buttons.getChildren().addAll(saveButton, cancelButton);
 
-        editableContent.getChildren().addAll(overlaySpriteNameDisplay,
-                                             overlayErrorMessage, settingsObjects, buttons, saved);
+        editableContent.getChildren().addAll(settingsDisplay, buttons, saved);
     }
 
     private void initializeSpriteInfo () {
@@ -256,28 +283,6 @@ public abstract class SpriteView extends StackPane {
     }
 
     /**
-     * Make this sprite editable (i.e. allow the user to delete it)
-     */
-    public void initiateEditableState () {
-        ImageView close = new ImageView(new Image("images/close.png"));
-        close.setTranslateX(10);
-        close.setTranslateY(-10);
-        close.setFitWidth(20);
-        close.setPreserveRatio(true);
-        close.setOnMousePressed( (e) -> {
-            Scaler.scaleOverlay(1.0, 0.0, this);
-            exists.setValue(false);
-        });
-        this.getChildren().add(close);
-        StackPane.setAlignment(close, Pos.TOP_RIGHT);
-    }
-
-    public void exitEditableState () {
-        // removes the 'x' button.
-        this.getChildren().remove(this.getChildren().size() - 1);
-    }
-
-    /**
      * Returns the sprite's parameter fields as an array of two strings, the parameter name
      * and the parameter field value.
      * 
@@ -304,7 +309,7 @@ public abstract class SpriteView extends StackPane {
 
         Tooltip tooltip = new Tooltip(tooltipText);
         tooltip.setTextAlignment(TextAlignment.LEFT);
-        Tooltip.install(this, tooltip);
+        Tooltip.install(displayPane, tooltip);
     }
 
     public String getImageFilePath () {
@@ -319,15 +324,7 @@ public abstract class SpriteView extends StackPane {
         return overlayContent;
     }
 
-    public Button getCloseButton () {
-        return overlayCloseButton;
-    }
-
     public String getName () {
         return spriteName;
-    }
-
-    public BooleanProperty isExisting () {
-        return exists;
     }
 }

@@ -27,6 +27,9 @@ import authoringEnvironment.setting.Setting;
  */
 
 public class Controller {
+    //TODO: ADD TAG TO KEY
+    
+    private static final int PARTTYPE_INDEX_IN_KEY = 1;
 
     private static final String DIFFERENT_LIST_SIZE_MESSAGE =
             "Lists passed must contain same number of elements.";
@@ -35,12 +38,14 @@ public class Controller {
     private InstanceManager currentGame;
     private Map<String, ObservableList<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
+    private ObservableList<String> gameTags;
 
     protected Controller (InstanceManager instance) {
         currentGame = instance;
         partTypeToKeyList = new HashMap<String, ObservableList<String>>();
         populateKeyList();
         myMaps = FXCollections.observableArrayList();
+        gameTags = FXCollections.observableArrayList();
     }
 
     protected Controller (String gameName, String rootDir) {
@@ -107,15 +112,47 @@ public class Controller {
     /**
      * Takes a list of settings and a part type and creates an appropriate Map<String, Object> from
      * that.
+     * 
+     * @throws MissingInformationException
      */
-    private Map<String, Object> generateMapFromSettings (String partType, List<Setting> settings) {
+    private Map<String, Object> generateMapFromSettings (String partType, List<Setting> settings)
+                                                                                                 throws MissingInformationException {
         Map<String, Object> partToAdd = new HashMap<String, Object>();
         for (Setting s : settings) {
             partToAdd.put(s.getParameterName(), s.getParameterValue());
         }
+        // addPartToGame(partType, partToAdd);
         partToAdd.put(InstanceManager.PART_TYPE_KEY, partType);
         System.out.println("toadd: " + partToAdd);
         return partToAdd;
+    }
+
+    // /**
+    // * Removes a part from the game file.
+    // *
+    // * @param partType the type of part that is being removed
+    // * @param partName the name of the part that is being removed
+    // * @return true if the list of parts contained the specified part
+    // */
+    // public boolean removePartFromGame(String partType, String partName){
+    // return partTypeToKeyList.get(partType).remove(partName);
+    // }
+
+    public boolean addNewTag (String tag) {
+        if (!gameTags.contains(tag)) { return gameTags.add(tag); }
+        return false;
+    }
+
+    public boolean tagExists (String tag) {
+        return gameTags.contains(tag);
+    }
+
+    public boolean removeTag (String tag) {
+        return gameTags.remove(tag);
+    }
+
+    public ObservableList<String> getTagsList () {
+        return gameTags;
     }
 
     /**
@@ -170,8 +207,10 @@ public class Controller {
                                                       String partName,
                                                       List<String> params,
                                                       List<Object> data) throws DataFormatException {
-        if (params.size() != data.size()) { throw new DataFormatException(
-                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
+        if (params.size() != data.size()) {
+            throw new DataFormatException(
+                                          DIFFERENT_LIST_SIZE_MESSAGE);
+        }
         Map<String, Object> toAdd = new HashMap<String, Object>();
         for (int i = 0; i < params.size(); i++) {
             toAdd.put(params.get(i), data.get(i));
@@ -186,7 +225,7 @@ public class Controller {
      * in the game.
      */
     private String addKey (String key) {
-        String partType = key.substring(key.indexOf(".") + 1);
+        String partType = key.substring(key.indexOf('.') + 1);
         if (!partTypeToKeyList.keySet().contains(partType))
             partTypeToKeyList.put(partType, FXCollections.observableList(new ArrayList<String>()));
         partTypeToKeyList.get(partType).add(key);
@@ -194,6 +233,20 @@ public class Controller {
         return key;
     }
 
+    public boolean addTagToPart (String partKey, String tag) {
+        if (currentGame.containsKey(partKey)) {
+            currentGame.addTagToPart(partKey, tag);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeTagFromPart(String partKey, String tag) {
+        if (currentGame.containsKey(partKey)) {
+            return currentGame.removeTagFromPart(partKey, tag);
+        }
+        return false;
+    }
     // /**
     // * Removes a part from the game file.
     // *
@@ -217,6 +270,7 @@ public class Controller {
      *         the editor.
      */
     public ObservableList<String> getKeysForPartType (String partType) {
+        System.out.println(partTypeToKeyList);
         if (!partTypeToKeyList.keySet().contains(partType))
             return FXCollections.observableArrayList(new ArrayList<String>());
         return FXCollections.observableList(partTypeToKeyList.get(partType));
@@ -305,10 +359,4 @@ public class Controller {
     public ObservableList<GameObject> getMaps () {
         return myMaps;
     }
-
-    /*
-     * public void setMaps (ObservableList<GameObject> maps) {
-     * myMaps = maps;
-     * }
-     */
 }

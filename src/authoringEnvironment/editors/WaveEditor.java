@@ -55,8 +55,8 @@ public class WaveEditor extends FlowEditor {
      * @param name
      *        Name of the tab
      */
-    public WaveEditor (Controller c, String name, String nameWithoutEditor) {
-        super(c, name, nameWithoutEditor);
+    public WaveEditor (Controller c, String name) {
+        super(c, name);
         myKey = Controller.KEY_BEFORE_CREATION;
         myWaves = new HashMap<String, ArrayList<WaveFlowView>>();
     }
@@ -261,10 +261,5 @@ public class WaveEditor extends FlowEditor {
      */
     public Map<String, ArrayList<WaveFlowView>> getWaves () {
         return myWaves;
-    }
-
-    @Override
-    protected String returnEditorTypeName () {
-        return "Wave";
     }
 }
