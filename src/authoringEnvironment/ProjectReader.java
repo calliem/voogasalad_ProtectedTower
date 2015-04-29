@@ -212,7 +212,7 @@ public class ProjectReader {
                 catch (IllegalAccessException | InvocationTargetException
                         | NoSuchMethodException | SecurityException e1) {
                     System.err.println("Editor couldn't be created.");
-                    // e1.printStackTrace();
+                     e1.printStackTrace();
                 }
                 orderedEditorList.add(editorToAdd);
             }

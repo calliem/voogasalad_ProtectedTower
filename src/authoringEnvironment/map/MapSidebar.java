@@ -396,7 +396,7 @@ public class MapSidebar extends Sidebar {
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton
                 .setOnMouseClicked(e -> {
-                //    remove(getMapWorkspace().getActivePath(), null, null); //TODO: add gameobject interface
+                 //   remove(getMapWorkspace().getActivePath(), null, null); //TODO: add gameobject interface
                     getMapWorkspace().deactivatePathMode();
                 });
 
@@ -429,6 +429,7 @@ public class MapSidebar extends Sidebar {
         getMapWorkspace().deactivatePathMode();
         getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
                                          Color.GREEN);
+        
         Map<String, Object> mapSettings = getMapWorkspace().getActivePath().save();
         try {
             myController.addPartToGame(mapSettings);

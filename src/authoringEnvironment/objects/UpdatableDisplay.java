@@ -47,25 +47,20 @@ public abstract class UpdatableDisplay extends VBox {
         ObservableList<String> keys = c.getKeysForPartType(partType);
         myObjects = new ArrayList<GameObject>();
         for (String key : keys) {
-            try {
-                Map<String, Object> partParameters = c.getPartCopy(key);
-                ImageView thumbnail;
-                if (partParameters.containsKey(Variables.PARAMETER_IMAGE)) {
-                    Image img = (Image) partParameters.get(Variables.PARAMETER_IMAGE);
-                    thumbnail = new ImageView(img);
-                }
-                else {
-                //    String thumbnailFilePath = (String) c.getImageForKey(key);
-                  //  thumbnail = new ImageView(new Image(thumbnailFilePath));
-                    //TODO
-                    System.out.println("does not contain an image");
-                }
-                setThumbnailSize(thumbnail); //TODO
+            Map<String, Object> partParameters = c.getPartCopy(key);
+            ImageView thumbnail;
+            if (partParameters.containsKey(Variables.PARAMETER_IMAGE)) {
+                Image img = (Image) partParameters.get(Variables.PARAMETER_IMAGE);
+                thumbnail = new ImageView(img);
             }
-            catch (NoImageFoundException e) {
-                e.printStackTrace();
+            else {
+            //    String thumbnailFilePath = (String) c.getImageForKey(key);
+              //  thumbnail = new ImageView(new Image(thumbnailFilePath));
+                //TODO
+                System.out.println("does not contain an image");
+                thumbnail = null;
             }
-            // create the object and add it to the list
+            setThumbnailSize(thumbnail); //TODO
         }
     }
 

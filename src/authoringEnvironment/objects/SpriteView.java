@@ -227,7 +227,7 @@ public abstract class SpriteView extends StackPane {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            myController.specifyPartImage(myKey, imageFile);
+            myController.addImageToPart(myKey, new Image(imageFile));
             displaySavedMessage();
         }
         return correctFormat && save;

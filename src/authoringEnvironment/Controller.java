@@ -324,6 +324,7 @@ public class Controller {
         return myMaps;
     }
 
+
     /*
      * public void setMaps (ObservableList<GameObject> maps) {
      * myMaps = maps;

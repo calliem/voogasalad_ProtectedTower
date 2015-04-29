@@ -174,6 +174,8 @@ public class MapWorkspace extends StackPane {
     public void deactivatePathMode () {
         myActiveMap.attachTileListeners();
         myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
+        myActiveMap.getRoot().getChildren().remove(myActivePath);
+
     }
 
     public Color getActiveColor () {

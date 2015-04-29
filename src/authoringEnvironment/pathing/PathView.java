@@ -43,54 +43,7 @@ public class PathView extends GameObject{
         return numPoints;
     }
 
- /*   public void createCurve (double startX, double startY, double endX, double endY) {
-        // TODO: remove this method
-        CubicCurve curve = createStartingCurve(startX, startY, endX, endY);
-
-        Line controlLine1 =
-                new BoundLine(curve.controlX1Property(), curve.controlY1Property(),
-                              curve.startXProperty(), curve.startYProperty());
-        Line controlLine2 =
-                new BoundLine(curve.controlX2Property(), curve.controlY2Property(),
-                              curve.endXProperty(), curve.endYProperty());
-
-        Anchor start =
-                new Anchor(Color.PALEGREEN, curve.startXProperty(), curve.startYProperty(),
-                           myParent.getWidth(), myParent.getHeight());
-        Anchor control1 =
-                new Anchor(Color.GOLD, curve.controlX1Property(), curve.controlY1Property(),
-                           myParent.getWidth(), myParent.getHeight());
-        Anchor control2 =
-                new Anchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property(),
-                           myParent.getWidth(), myParent.getHeight());
-        Anchor end =
-                new Anchor(Color.TOMATO, curve.endXProperty(), curve.endYProperty(),
-                           myParent.getWidth(), myParent.getHeight());
-
-        myAnchors.add(control1);
-        myAnchors.add(control2);
-
-        Coordinate startCoordinates = start.getCoordinates();
-        Coordinate endCoordinates = end.getCoordinates();
-        Coordinate ctrl1Coordinates = control1.getCoordinates();
-        Coordinate ctrl2Coordinates = control2.getCoordinates();
-
-        /*
-         * Curve pathView =
-         * new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
-         * myPaths.add(pathView);
-         
-
-        CurveCoordinates curveCoordinates =
-                new CurveCoordinates(startCoordinates, endCoordinates, ctrl1Coordinates,
-                                     ctrl2Coordinates);
-
-        myPaths.add(curveCoordinates);
-
-        Group path = new Group(controlLine1, controlLine2, curve, start, control1,
-                               control2, end);
-        myParent.getRoot().getChildren().add(path);
-    }*/
+ 
 
     public boolean areAnchorsSelected () {
         for (Anchor anchor : myAnchors) {
@@ -241,5 +194,54 @@ public class PathView extends GameObject{
     public int getHeight () {
         return myParent.getHeight();
     }
+    
+    /*   public void createCurve (double startX, double startY, double endX, double endY) {
+    // TODO: remove this method
+    CubicCurve curve = createStartingCurve(startX, startY, endX, endY);
+
+    Line controlLine1 =
+            new BoundLine(curve.controlX1Property(), curve.controlY1Property(),
+                          curve.startXProperty(), curve.startYProperty());
+    Line controlLine2 =
+            new BoundLine(curve.controlX2Property(), curve.controlY2Property(),
+                          curve.endXProperty(), curve.endYProperty());
+
+    Anchor start =
+            new Anchor(Color.PALEGREEN, curve.startXProperty(), curve.startYProperty(),
+                       myParent.getWidth(), myParent.getHeight());
+    Anchor control1 =
+            new Anchor(Color.GOLD, curve.controlX1Property(), curve.controlY1Property(),
+                       myParent.getWidth(), myParent.getHeight());
+    Anchor control2 =
+            new Anchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property(),
+                       myParent.getWidth(), myParent.getHeight());
+    Anchor end =
+            new Anchor(Color.TOMATO, curve.endXProperty(), curve.endYProperty(),
+                       myParent.getWidth(), myParent.getHeight());
+
+    myAnchors.add(control1);
+    myAnchors.add(control2);
+
+    Coordinate startCoordinates = start.getCoordinates();
+    Coordinate endCoordinates = end.getCoordinates();
+    Coordinate ctrl1Coordinates = control1.getCoordinates();
+    Coordinate ctrl2Coordinates = control2.getCoordinates();
+
+    /*
+     * Curve pathView =
+     * new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
+     * myPaths.add(pathView);
+     
+
+    CurveCoordinates curveCoordinates =
+            new CurveCoordinates(startCoordinates, endCoordinates, ctrl1Coordinates,
+                                 ctrl2Coordinates);
+
+    myPaths.add(curveCoordinates);
+
+    Group path = new Group(controlLine1, controlLine2, curve, start, control1,
+                           control2, end);
+    myParent.getRoot().getChildren().add(path);
+}*/
 
 }
