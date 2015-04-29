@@ -38,33 +38,32 @@ public class ProjectReader {
                                            "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
 
-    // TODO Greg pls fix
     /**
      * The getParamsNoTypeOrName method is called by WaveStrip and currently has an error because
-     * this are commented out. Do we need to rewrite these?
+     * this are commented out. Do we need to rewrite these? I think they're bad, but would mean a bigg rewrite we dont have time for.  Theyre fine for now
      */
-    // public static String[] getParamListForPart (String partType) throws ClassNotFoundException {
-    // Class<?> currentClass = Class.forName(partType);
-    // Field[] myFields = currentClass.getDeclaredFields();
-    // List<Field> neededFields = new ArrayList<>();
-    // for (Field field : myFields) {
-    // if (field.getAnnotation(parameter.class).settable()) {
-    // neededFields.add(field);
-    // }
-    // }
-    // return null;
-    // }
-    //
-    // public static List<String> getParamsNoTypeOrName (String partType) {
-    // String[] params = getParamListForPart(partType);
-    // List<String> finalList = new ArrayList<String>();
-    // for (String param : params) {
-    // if (!param.equals(InstanceManager.nameKey)
-    // && !param.equals(InstanceManager.partTypeKey))
-    // finalList.add(param);
-    // }
-    // return finalList;
-    // }
+    public static String[] getParamListForPart (String partType) throws ClassNotFoundException {
+        Class<?> currentClass = Class.forName(partType);
+        Field[] myFields = currentClass.getDeclaredFields();
+        List<Field> neededFields = new ArrayList<>();
+        for (Field field : myFields) {
+            if (field.getAnnotation(parameter.class).settable()) {
+                neededFields.add(field);
+            }
+        }
+        return null;
+    }
+
+    public static List<String> getParamsNoTypeOrName (String partType) throws ClassNotFoundException {
+        String[] params = getParamListForPart(partType);
+        List<String> finalList = new ArrayList<String>();
+        for (String param : params) {
+            if (!param.equals(InstanceManager.NAME_KEY)
+                && !param.equals(InstanceManager.PART_TYPE_KEY))
+                finalList.add(param);
+        }
+        return finalList;
+    }
 
     /**
      * Generates the Settings objects the Overlay UI needs to allow the user to
