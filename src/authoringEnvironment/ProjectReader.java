@@ -181,8 +181,8 @@ public class ProjectReader {
                 try {
                     // System.out.println("Being created: " + s);
                     editorToAdd = (Editor) Class.forName(toCreate)
-                            .getConstructor(Controller.class, String.class, String.class)
-                            .newInstance(c, s, s.substring(0, s.length() - 6)); // TODO: change last
+                            .getConstructor(Controller.class, String.class)
+                            .newInstance(c, s); // TODO: change last
                                                                                 // input later
                 }
                 catch (InstantiationException | IllegalArgumentException e1) {
