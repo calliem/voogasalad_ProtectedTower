@@ -21,15 +21,15 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>asdf</string>
+    <string>p2</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.Projectile</string>
+    <string>ExampleGame_Part1.Projectile</string>
   </entry>
   <entry>
     <string>speed</string>
-    <double>1.0</double>
+    <double>500.0</double>
   </entry>
   <entry>
     <string>Tags</string>

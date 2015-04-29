@@ -27,8 +27,8 @@ import authoringEnvironment.setting.Setting;
  */
 
 public class Controller {
-    //TODO: ADD TAG TO KEY
-    
+    // TODO: ADD TAG TO KEY
+
     private static final int PARTTYPE_INDEX_IN_KEY = 1;
 
     private static final String DIFFERENT_LIST_SIZE_MESSAGE =
@@ -139,7 +139,9 @@ public class Controller {
     // }
 
     public boolean addNewTag (String tag) {
-        if (!gameTags.contains(tag)) { return gameTags.add(tag); }
+        if (!gameTags.contains(tag)) {
+            return gameTags.add(tag);
+        }
         return false;
     }
 
@@ -228,25 +230,28 @@ public class Controller {
         String partType = key.substring(key.indexOf('.') + 1);
         if (!partTypeToKeyList.keySet().contains(partType))
             partTypeToKeyList.put(partType, FXCollections.observableList(new ArrayList<String>()));
-        partTypeToKeyList.get(partType).add(key);
+        if (!partTypeToKeyList.get(partType).contains(key))
+            partTypeToKeyList.get(partType).add(key);
         System.out.println("key added: " + key);
         return key;
     }
 
-    public boolean addTagToPart (String partKey, String tag) {
+    public boolean addTagToPart (String partKey, String tag){
         if (currentGame.containsKey(partKey)) {
             currentGame.addTagToPart(partKey, tag);
             return true;
         }
+        System.out.println(partKey + " part not found");
         return false;
     }
 
-    public boolean removeTagFromPart(String partKey, String tag) {
+    public boolean removeTagFromPart (String partKey, String tag) {
         if (currentGame.containsKey(partKey)) {
             return currentGame.removeTagFromPart(partKey, tag);
         }
         return false;
     }
+
     // /**
     // * Removes a part from the game file.
     // *

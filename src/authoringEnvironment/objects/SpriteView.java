@@ -44,7 +44,7 @@ public abstract class SpriteView extends ObjectView {
     private VBox display;
     private VBox editableContent;
     private StackPane overlayContent;
-    
+
     private Text overlayErrorMessage;
 
     private String spriteName;
@@ -65,9 +65,9 @@ public abstract class SpriteView extends ObjectView {
     private String id;
     private ImageView previewImage;
     private StackPane displayPane;
-    
+
     private static final int PADDING = 10;
-    
+
     /**
      * Creates visual representation of a sprite created by
      * the user in the authoring environment.
@@ -122,8 +122,8 @@ public abstract class SpriteView extends ObjectView {
         setupOverlayContent();
         setupTooltipText(getSpriteInfo());
     }
-    
-    public StackPane getSpriteBody(){
+
+    public StackPane getSpriteBody () {
         return displayPane;
     }
 
@@ -147,9 +147,9 @@ public abstract class SpriteView extends ObjectView {
         overlayErrorMessage = new Text("Please check your parameters for errors.");
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
-        
+
         editableContent.getChildren().addAll(overlaySpriteNameDisplay, overlayErrorMessage);
-        
+
         ScrollPane settingsDisplay = new ScrollPane();
         settingsDisplay.setPrefHeight(300);
         settingsDisplay.setPrefWidth(200);
@@ -157,7 +157,7 @@ public abstract class SpriteView extends ObjectView {
 
         VBox settingsObjects = new VBox(PADDING);
         settingsObjects.setMaxWidth(200);
-        
+
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
         // move the image to be first in the settings list
         for (int i = 0; i < settings.size(); i++) {
@@ -167,7 +167,7 @@ public abstract class SpriteView extends ObjectView {
                 break;
             }
         }
-        
+
         for (int j = 0; j < settings.size(); j++) {
             if (settings.get(j) instanceof ImageViewSetting) {
                 continue;
@@ -238,6 +238,7 @@ public abstract class SpriteView extends ObjectView {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            tagGroup.setKey(myKey);
             myController.specifyPartImage(myKey, imageFile);
             displaySavedMessage();
         }

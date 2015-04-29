@@ -1,15 +1,11 @@
 <map>
   <entry>
     <string>PartType</string>
-    <string>Projectile</string>
+    <string>Enemy</string>
   </entry>
   <entry>
     <string>image</string>
-    <string>imageselector/img_not_available.png</string>
-  </entry>
-  <entry>
-    <string>damage</string>
-    <int>1</int>
+    <string>images/more.png</string>
   </entry>
   <entry>
     <string>boundingWidth</string>
@@ -21,11 +17,19 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>asdf</string>
+    <string>MoreGuy</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.Projectile</string>
+    <string>ExampleGame_Part1.Enemy</string>
+  </entry>
+  <entry>
+    <string>health</string>
+    <int>100</int>
+  </entry>
+  <entry>
+    <string>nextSprites</string>
+    <string>5.</string>
   </entry>
   <entry>
     <string>speed</string>
