@@ -1,13 +1,13 @@
 package authoringEnvironment.pathing;
 
+import java.util.ArrayList;
 import authoringEnvironment.objects.Coordinate;
 
 
 /**
  * Class containing all coordinates for the properties of a single Bezier curve path. This includes
- * its start coordinate, end coordinate, and the coordinates of the two control points.
- * This serves as a data structure to serve all coordinates and is a simplified version to be
- * written into XStream.
+ * its start coordinate, end coordinate, and the coordinates of the two control points. 
+ * This serves as a data structure to serve all coordinates and is a simplified version to be written into XStream.
  * 
  * @author Callie Mao
  *

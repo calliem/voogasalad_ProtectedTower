@@ -28,11 +28,6 @@ public class GameEditor extends Editor {
     // private String myName;
     // private String myDescription;
     // private int myLives;
-    
-    // TODO: how to get this number
-    // from Johnny
-    private static final int DEFAULT_LIVES = 20;
-    
     private TextField gameNameEntry;
     private TextArea gameDescriptionEntry;
     private TextField totalLivesEntry;

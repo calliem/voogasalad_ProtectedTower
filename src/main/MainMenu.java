@@ -1,4 +1,4 @@
-package protectedtower;
+package main;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;

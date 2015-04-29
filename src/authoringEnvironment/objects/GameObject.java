@@ -33,7 +33,6 @@ public abstract class GameObject {
     }
 
     public void setName (String name) {
-        System.out.println(name);
         myName = name;
     }
 
@@ -44,6 +43,10 @@ public abstract class GameObject {
     public String getKey () {
         return myKey;
     }
+    
+    public abstract int getWidth();
+    
+    public abstract int getHeight();
 
     public ImageView getImagePreview () {
         return myImageView;

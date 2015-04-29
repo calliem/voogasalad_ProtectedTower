@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import util.IntArray2DToImageConverter.src.ImageToInt2DArray;
+import util.IntArray2DToImageConverter.src.IntArray2DToImageConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.setting.Setting;
 
@@ -170,8 +174,10 @@ public class Controller {
                                                       String partName,
                                                       List<String> params,
                                                       List<Object> data) throws DataFormatException {
-        if (params.size() != data.size()) { throw new DataFormatException(
-                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
+        if (params.size() != data.size()) {
+            throw new DataFormatException(
+                                          DIFFERENT_LIST_SIZE_MESSAGE);
+        }
         Map<String, Object> toAdd = new HashMap<String, Object>();
         for (int i = 0; i < params.size(); i++) {
             toAdd.put(params.get(i), data.get(i));
@@ -193,6 +199,16 @@ public class Controller {
         System.out.println("key added: " + key);
         return key;
     }
+
+    public boolean addTagToPart (String partKey, String tag) {
+        if (currentGame.containsKey(partKey)) {
+            currentGame.addTagToPart(partKey, tag);
+            return true;
+        }
+        return false;
+    }
+    
+    
 
     // /**
     // * Removes a part from the game file.
@@ -232,17 +248,19 @@ public class Controller {
      * @return The full file path of the image for the part at that key
      * @throws NoImageFoundException
      */
-    public String getImageForKey (String key) throws NoImageFoundException {
+    public Image getImageForKey (String key) throws NoImageFoundException {
         Map<String, Object> partCopy = getPartCopy(key);
         if (!partCopy.keySet().contains(InstanceManager.IMAGE_KEY))
             throw new NoImageFoundException("No image is specified for part: "
                                             + key);
-        return (String) partCopy.get(InstanceManager.IMAGE_KEY);
+        int[][] imageData = (int[][]) partCopy.get(InstanceManager.IMAGE_KEY);
+        return IntArray2DToImageConverter.convert2DIntArrayToImage(imageData, 1);
+        
     }
 
-    public void specifyPartImage (String partKey, String imageFilePath) {
-        System.out.println("partkey " + partKey + " space " + imageFilePath);
-        currentGame.specifyPartImage(partKey, imageFilePath);
+    public void addImageToPart (String partKey, Image image) {
+        int[][] pixelArray = ImageToInt2DArray.convertImageTo2DIntArray(image, (int) image.getWidth(), (int) image.getHeight());
+        currentGame.specifyPartImage(partKey, pixelArray);
     }
 
     /**

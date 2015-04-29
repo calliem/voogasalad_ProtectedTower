@@ -1,6 +1,6 @@
 package authoringEnvironment.map;
 
-import imageselectorTEMP.GraphicFileChooser;
+import imageselector.GraphicFileChooser;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
@@ -29,6 +29,7 @@ import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.util.Scaler;
+import authoringEnvironment.util.Screenshot;
 
 
 /**
@@ -238,14 +239,16 @@ public class MapSidebar extends Sidebar {
      * @param activeMap
      */
     private TileMap saveMap (TileMap activeMap) {
-        System.out.println("textfield: " + mapNameTextField.getText());
         activeMap.setName(mapNameTextField.getText());
-        WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
+        
+        ImageView snapView = Screenshot.snap(activeMap);
+       /* WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
         ImageView snapView = new ImageView();
-        snapView.setImage(snapImage);
+        snapView.setImage(snapImage);*/
         activeMap.setThumbnail(snapView);
 
+        
         if (!super.getMaps().contains(activeMap)) {
             super.getMaps().add(activeMap);
         }
@@ -393,7 +396,7 @@ public class MapSidebar extends Sidebar {
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton
                 .setOnMouseClicked(e -> {
-                    remove(getMapWorkspace().getActivePath(), null, null);
+                //    remove(getMapWorkspace().getActivePath(), null, null); //TODO: add gameobject interface
                     getMapWorkspace().deactivatePathMode();
                 });
 
@@ -426,6 +429,14 @@ public class MapSidebar extends Sidebar {
         getMapWorkspace().deactivatePathMode();
         getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
                                          Color.GREEN);
+        Map<String, Object> mapSettings = getMapWorkspace().getActivePath().save();
+        try {
+            myController.addPartToGame(mapSettings);
+        }
+        catch (MissingInformationException e) {
+            e.printStackTrace();
+        }
+        
     }
 
 }

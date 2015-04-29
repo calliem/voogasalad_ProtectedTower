@@ -1,6 +1,6 @@
 package authoringEnvironment.objects;
 
-import imageselectorTEMP.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,21 +41,21 @@ import authoringEnvironment.setting.SpriteSetting;
  */
 
 public class FlowView extends HBox {
+    protected TextField delayTextField;
+    private FileChooser fileChooser;
+    protected Controller myController;
+    private int myHeight;
+    protected List<String> partFileNames;
+    protected List<Double> delays;
+
+    private VBox selector;
+
+    // TODO: take back all the instance variables that belong in this class only
 
     private static final double VBOX_PADDING_MULTIPLIER = 0.5;
     private static final int PADDING = 10;
     private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
-
-    protected TextField delayTextField;
-    private FileChooser fileChooser;
-    protected Controller myController;
-    private int myHeight;
-    private List<String> partFileNames;
-    protected List<Double> delays;
-    private VBox selector;
-
-    // TODO: take back all the instance variables that belong in this class only
 
     /**
      * Creates the visual and input elements for the "timeline" in the
