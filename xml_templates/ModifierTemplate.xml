@@ -1,0 +1,26 @@
+<map>
+  <entry>
+    <string>Name</string>
+    <string>BasicModifier</string>
+  </entry>
+  <entry>
+    <string>PartType</string>
+    <string>Modifier</string>
+  </entry>
+  <entry>
+    <string>Tags</string>
+    <string>Basic</string>
+  </entry>
+  <entry>
+    <string>BoundingWidth</string>
+    <double>10.0</double>
+  </entry>
+  <entry>
+    <string>BoundingHeight</string>
+    <double>10.0</double>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>Part0.Modifier</string>
+  </entry>
+</map>
