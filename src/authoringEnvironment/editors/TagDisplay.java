@@ -31,6 +31,8 @@ public class TagDisplay extends HBox{
             .getEnvironmentHeight();
     private static final int CONTENT_WIDTH = 100;
     private static final int PADDING = 5;
+    private static final int PROMPT_WIDTH = 200;
+    private static final int PROMPT_HEIGHT = 150;
     
     private Controller myController;
     private StackPane myContent;
@@ -113,7 +115,7 @@ public class TagDisplay extends HBox{
     }
     
     private void createPrompt(){
-        Rectangle promptBackground = new Rectangle(200, 300);
+        Rectangle promptBackground = new Rectangle(PROMPT_WIDTH, PROMPT_HEIGHT);
         promptBackground.setArcWidth(10);
         promptBackground.setArcHeight(10);
         promptBackground.setOpacity(0.8);

@@ -1,0 +1,33 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Tile</string>
+  </entry>
+  <entry>
+    <string>Color</string>
+    <javafx.scene.paint.Color>
+      <red>1.0</red>
+      <green>0.7019608</green>
+      <blue>0.5019608</blue>
+      <opacity>1.0</opacity>
+      <platformPaint class="com.sun.prism.paint.Color">
+        <type>COLOR</type>
+        <proportional>false</proportional>
+        <isMutable>false</isMutable>
+        <argb>-19584</argb>
+        <r>1.0</r>
+        <g>0.7019608</g>
+        <b>0.5019608</b>
+        <a>1.0</a>
+      </platformPaint>
+    </javafx.scene.paint.Color>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>ExampleGame_Part1.Tile</string>
+  </entry>
+  <entry>
+    <string>Name</string>
+    <string>asdf</string>
+  </entry>
+</map>

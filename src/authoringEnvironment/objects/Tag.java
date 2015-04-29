@@ -19,7 +19,7 @@ import javafx.util.Duration;
 
 public class Tag extends Group {
     private String tagLabel;
-    private ImageView closeButton;
+    private DeleteButton closeButton;
 
     private static final int TAG_WIDTH = 75;
     private static final int TAG_HEIGHT = 20;
@@ -36,11 +36,7 @@ public class Tag extends Group {
         tagLabel = tagName;
 
         tagDisplay = new StackPane();
-        closeButton = new ImageView(new Image("images/close.png"));
-        ScaleImage.scale(closeButton, BUTTON_SIZE, BUTTON_SIZE);
-        closeButton.setTranslateX(TAG_WIDTH - BUTTON_SIZE / 2);
-        closeButton.setTranslateY(-BUTTON_SIZE / 2);
-        // closeButton.setVisible(false);
+        closeButton = new DeleteButton(BUTTON_SIZE);
 
         Rectangle tagBody = new Rectangle(TAG_WIDTH, TAG_HEIGHT, TAG_COLOR);
         tagBody.setArcWidth(10);
@@ -91,7 +87,7 @@ public class Tag extends Group {
         closeButton.setVisible(false);
     }
 
-    public ImageView getButton () {
+    public DeleteButton getButton () {
         return closeButton;
     }
 

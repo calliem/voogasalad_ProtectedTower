@@ -17,12 +17,11 @@ public class Coordinate {
         myY = y;
     }
 
-    private int getX () {
+    public int getX () {
         return myX;
     }
 
-    private int getY () {
+    public int getY () {
         return myY;
     }
-
 }

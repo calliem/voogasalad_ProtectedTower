@@ -36,14 +36,12 @@ import authoringEnvironment.util.Scaler;
  *
  */
 
-public abstract class SpriteView extends StackPane {
+public abstract class SpriteView extends ObjectView {
     private VBox display;
     private VBox editableContent;
     private StackPane overlayContent;
     private Button overlayCloseButton;
-    private ImageView deleteButton;
     private Text overlayErrorMessage;
-    private BooleanProperty exists;
 
     private String spriteName;
     private String imageFile;
@@ -62,12 +60,10 @@ public abstract class SpriteView extends StackPane {
     private static final int NAME_INDEX = 1;
     // private static final String DEFAULT_NAME = "Unnamed";
 
-    private Controller myController;
     private String id;
     private ImageView previewImage;
-    private TagGroup tagGroup;
     private StackPane displayPane;
-
+    
     /**
      * Creates visual representation of a sprite created by
      * the user in the authoring environment.
@@ -77,8 +73,8 @@ public abstract class SpriteView extends StackPane {
      * @param image the file path of this sprite's image
      */
     public SpriteView (Controller c, String name, String image) {
+        super(c);
         myKey = Controller.KEY_BEFORE_CREATION;
-        myController = c;
 
         spriteName = name;
         imageFile = image;
@@ -86,10 +82,7 @@ public abstract class SpriteView extends StackPane {
         ScaleImage.scale(previewImage, 90, 70);
 
         parameterFields = new ArrayList<>();
-        exists = new SimpleBooleanProperty(true);
 
-        VBox spriteLayout = new VBox(5);
-        spriteLayout.setAlignment(Pos.CENTER);
         displayPane = new StackPane();
         display = new VBox(5);
         display.setAlignment(Pos.CENTER);
@@ -99,30 +92,14 @@ public abstract class SpriteView extends StackPane {
         spriteNameDisplay.setFont(new Font(10));
         spriteNameDisplay.setTextAlignment(TextAlignment.CENTER);
         spriteNameDisplay.setWrappingWidth(90);
-        
-        tagGroup = new TagGroup(myController);
-        tagGroup.setOnMousePressed(e -> {
-            Scaler.scaleOverlay(0.0, 1.0, tagGroup.getOverlay());
-            this.getChildren().add(tagGroup.getOverlay());
-        });
-        
-        tagGroup.getCloseButton().setOnMousePressed(e -> {
-            Scaler.scaleOverlay(1.0, 0.0, tagGroup.getOverlay());
-            this.getChildren().remove(tagGroup.getOverlay());
-        });
 
         display.getChildren().addAll(previewImage, spriteNameDisplay);
         displayPane.getChildren().addAll(spriteBackground, display);
-        spriteLayout.getChildren().addAll(displayPane, tagGroup);
-        getChildren().add(spriteLayout);
+        objectLayout.getChildren().addAll(displayPane, tagGroup);
 
         setupEditableContent();
         setupOverlayContent();
         setupTooltipText(getSpriteInfo());
-    }
-    
-    public TagGroup getTagGroup(){
-        return tagGroup;
     }
     
     public StackPane getSpriteBody(){
@@ -261,28 +238,6 @@ public abstract class SpriteView extends StackPane {
     }
 
     /**
-     * Make this sprite editable (i.e. allow the user to delete it)
-     */
-    public void initiateEditableState () {
-        deleteButton = new ImageView(new Image("images/close.png"));
-        deleteButton.setTranslateX(10);
-        deleteButton.setTranslateY(-10);
-        deleteButton.setFitWidth(20);
-        deleteButton.setPreserveRatio(true);
-        deleteButton.setOnMousePressed( (e) -> {
-//            Scaler.scaleOverlay(1.0, 0.0, this);
-            exists.setValue(false);
-        });
-        this.getChildren().add(deleteButton);
-        StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
-    }
-
-    public void exitEditableState () {
-        // removes the 'x' button.
-        this.getChildren().remove(deleteButton);
-    }
-
-    /**
      * Returns the sprite's parameter fields as an array of two strings, the parameter name
      * and the parameter field value.
      * 
@@ -309,7 +264,7 @@ public abstract class SpriteView extends StackPane {
 
         Tooltip tooltip = new Tooltip(tooltipText);
         tooltip.setTextAlignment(TextAlignment.LEFT);
-        Tooltip.install(this, tooltip);
+        Tooltip.install(displayPane, tooltip);
     }
 
     public String getImageFilePath () {
@@ -330,9 +285,5 @@ public abstract class SpriteView extends StackPane {
 
     public String getName () {
         return spriteName;
-    }
-
-    public BooleanProperty isExisting () {
-        return exists;
     }
 }

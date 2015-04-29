@@ -1,36 +1,37 @@
 package authoringEnvironment.objects;
 
+import java.util.HashMap;
+import java.util.Map;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import authoringEnvironment.Controller;
+import authoringEnvironment.InstanceManager;
 
-public class TileView extends VBox{
+public class TileView extends ObjectView{
+    private String myName;
     private Rectangle tile;
     private Color tileColor;
-    private Controller myController;
-    private TagGroup tagsRecord;
     private static final int TILE_SIZE = 100;
-    private static final int PADDING = 5;
+    private static final String COLOR_KEY = "Color";
     
-    public TileView (Controller controller, Color color) {
-        super(PADDING);
+    public TileView (Controller controller, String name, Color color) {
+        super(controller);
+        myName = name;
         tileColor = color;
         tile = new Rectangle(TILE_SIZE, TILE_SIZE, tileColor);
-        myController = controller;
         
-        tagsRecord = new TagGroup(myController);
-        
-        this.getChildren().addAll(tile, tagsRecord);
-        this.setAlignment(Pos.CENTER);
+        objectLayout.getChildren().addAll(tile, tagGroup);
     }
     
-    public TagGroup getTagsDisplay(){
-        return tagsRecord;
-    }
-    
-    public void addTagToObject(Tag tag){
-        tagsRecord.addTag(tag);
+    public Map<String, Object> getTileInfo(){
+        Map<String, Object> info = new HashMap<>();
+        info.put(InstanceManager.NAME_KEY, myName);
+        info.put(COLOR_KEY, tileColor);
+        return info;
     }
 }

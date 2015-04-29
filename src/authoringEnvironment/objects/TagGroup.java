@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.Controller;
+import authoringEnvironment.util.Scaler;
 
 public class TagGroup extends Group{
     private VBox tagListDisplay;
@@ -84,10 +85,22 @@ public class TagGroup extends Group{
         overlayView.setContent(overlayContent);
         overlayView.setVbarPolicy(ScrollBarPolicy.NEVER);
         overlayView.setHbarPolicy(ScrollBarPolicy.NEVER);
-        overlayView.setPrefWidth(100);
+        overlayView.setMaxWidth(100);
         overlayView.setMaxHeight(OVERLAY_HEIGHT);
         
         this.getChildren().add(countDisplay);
+    }
+    
+    public void setupListeners (StackPane object) {
+        this.setOnMousePressed(e -> {
+            Scaler.scaleOverlay(0.0, 1.0, overlayView);
+            object.getChildren().add(overlayView);
+        });
+        
+        this.getCloseButton().setOnMousePressed(e -> {
+            Scaler.scaleOverlay(1.0, 0.0, overlayView);
+            object.getChildren().remove(overlayView);
+        });
     }
     
     public StackPane getCloseButton(){
@@ -97,34 +110,50 @@ public class TagGroup extends Group{
     public void update(){
         for(Tag tag : tagObjects){
             if(!myController.tagExists(tag.getLabel())){
-                tagListDisplay.getChildren().remove(tag);
-                tagList.remove(tag.getLabel());
-                tagObjects.remove(tag);
-                
-                tagCount--;
-                tagCountDisplay.setText(tagCount+"");
-                animateCountChange();
-                
+                removeTag(tag);
                 return;
             }
         }
     }
     
+    private void removeTag(Tag tag){
+        tagListDisplay.getChildren().remove(tag);
+        tagList.remove(tag.getLabel());
+        tagObjects.remove(tag);
+        
+        showDecrease();
+    }
+    
+    private void showDecrease(){
+        tagCount--;
+        tagCountDisplay.setText(tagCount+"");
+        animateCountChange();
+    }
+    
+    private void showIncrease(){
+        tagCount++;
+        tagCountDisplay.setText(tagCount+"");
+        animateCountChange();
+    }
+    
     public void addTag(Tag tag){
         if(!tagList.contains(tag.getLabel())){
-            tagCount++;
-            tagCountDisplay.setText(tagCount+"");
-
-            animateCountChange();
+            showIncrease();
 
             Tag tagToAdd = new Tag(tag.getLabel());
             tagList.add(tagToAdd.getLabel());
             tagObjects.add(tagToAdd);
-//            tagToAdd.hideButton();
+            tagToAdd.getButton().setOnMousePressed(e -> {
+                tagToAdd.playDeleteAnimation().setOnFinished(ae -> removeTag(tagToAdd));
+            });
 
             adjustBackground();
             tagListDisplay.getChildren().add(tagToAdd);
         }
+    }
+    
+    public List<String> getTagList(){
+        return tagList;
     }
     
     private void animateCountChange(){
