@@ -1,4 +1,4 @@
-package authoringEnvironment.objects;
+    package authoringEnvironment.objects;
 
 import java.util.Map;
 import javafx.scene.Group;
@@ -69,7 +69,7 @@ public abstract class GameObject {
      * 
      * @param image
      */
-    public void setThumbnail (ImageView image) {
+    public void setImagePreview (ImageView image) {
         
         //TODO: don't set the thumbnail size here, set it in the updatablesdisplay
         ImageView thumbnail = new ImageView(image.getImage());

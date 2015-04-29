@@ -19,7 +19,7 @@ public abstract class GameElement implements Collidable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String name;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
+    @parameter(settable = false, playerDisplay = true, defaultValue = "Basic")
     private List<String> tags;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double boundingHeight;

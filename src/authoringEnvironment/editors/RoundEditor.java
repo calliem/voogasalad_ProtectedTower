@@ -11,14 +11,7 @@ import authoringEnvironment.Controller;
  */
 public class RoundEditor extends FlowEditor {
 
-    public RoundEditor (Controller c, String name, String nameWithoutEditor) {
-        super(c, name, nameWithoutEditor);
+    public RoundEditor (Controller c, String name) {
+        super(c, name);
     }
-
-    @Override
-    protected String returnEditorTypeName () {
-        return "Round";
-    }
-    
-
 }

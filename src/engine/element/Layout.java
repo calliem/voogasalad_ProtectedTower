@@ -224,8 +224,8 @@ public class Layout implements Updateable {
      * @param enemyIDs List<String> of IDs of Enemy objects to place
      * @param location Point2D representing location on grid
      */
-    public void spawnEnemy (List<String> enemyIDs, Point2D location) {
-        enemyIDs.forEach(i -> spawnEnemy(i, location));
+    public void spawnEnemy (List<String> enemyIDs, String pathID) {
+        enemyIDs.forEach(i -> spawnEnemy(i, pathID));
     }
 
     /**
@@ -234,8 +234,9 @@ public class Layout implements Updateable {
      * @param enemyID String ID of Enemy object to place
      * @param location Point2D representing location on grid
      */
-    public void spawnEnemy (String enemyID, Point2D location) {
+    public void spawnEnemy (String enemyID, String pathID) {
         Enemy e = (Enemy) myGameElementFactory.getGameElement("Enemy", enemyID);
+        Point2D location = null; //TODO: Lookup spawn point given pathID
         e.setLocation(location);
         myEnemyList.add(e);
     }

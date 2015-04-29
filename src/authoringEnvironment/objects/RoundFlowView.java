@@ -45,7 +45,7 @@ public class RoundFlowView extends FlowView {
         pathSelectorBox.setPromptText("...");
         pathSelectorBox.valueProperty().addListener( (obs, oldValue, newValue) -> {
             pathFileNames = new ArrayList<String>();
-            pathFileNames.add("pathstartnameidk" + newValue); //TODO: get the path file start name idk
+            pathFileNames.add("pathstartnameidk" + newValue); //TODO: get the keys
         });
         options.add(pathSelectorBox);
         

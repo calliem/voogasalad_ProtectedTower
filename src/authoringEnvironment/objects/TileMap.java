@@ -62,7 +62,7 @@ public class TileMap extends GameObject {
        // imgFilePath = DEFAULT_BACKGROUND_PATH;
         imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
-        setThumbnail(myBackground);
+        setImagePreview(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
         // TODO: sethover x, y coordinate, tile size, etc.
@@ -110,7 +110,7 @@ public class TileMap extends GameObject {
         myBackground = new ImageView(image);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(0, myBackground);
-        setThumbnail(myBackground);
+        setImagePreview(myBackground);
     }
 
     // TODO:duplicated tile listeners being added/deleted?

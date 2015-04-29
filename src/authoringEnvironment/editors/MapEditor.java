@@ -35,8 +35,8 @@ public class MapEditor extends MainEditor {
 
     // TODO: remove the dimensions parameter because we apparently can ust get that form the main
     // enviornment?
-    public MapEditor (Controller c, String name, String nameWithoutEditor) {
-        super(c, name, nameWithoutEditor);
+    public MapEditor (Controller c, String name) {
+        super(c, name);
         // myMaps = new ArrayList<GameObject>(); //is that bad though since you could technically
         // add a Rectangle by accident and then someone else's code is screwed up if they try to use
         // a rectangle that they think is a tilemap

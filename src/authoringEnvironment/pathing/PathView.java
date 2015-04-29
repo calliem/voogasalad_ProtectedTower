@@ -163,17 +163,22 @@ public class PathView extends GameObject {
     }
 
     public Map<String, Object> save () {
+        System.out.println(myAnchors);
         // TODO: getName
-        ImageView image = Screenshot.snap(this);
-        Image thumbnail = image.getImage();
+        ImageView image = Screenshot.snap(myParent);
+        //Image thumbnail = image.getImage();
+        setImagePreview(image);
         
         Map<String, Object> settings = new HashMap<String, Object>();
         settings.put(InstanceManager.NAME_KEY, myName);
         settings.put(Variables.PARAMETER_CURVES_COORDINATES, myPaths);
         settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
-        settings.put(Variables.PARAMETER_IMAGE, thumbnail);
+
+      //  settings.put(Variables.PARAMETER_IMAGE, thumbnail);
         return settings;
     }
+        
+        
 
     protected String getToolTipInfo () {
         String info = "";

@@ -11,6 +11,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
@@ -28,6 +29,7 @@ import authoringEnvironment.objects.MapUpdatableDisplay;
 import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
+import authoringEnvironment.pathing.PathView;
 import authoringEnvironment.util.Scaler;
 import authoringEnvironment.util.Screenshot;
 
@@ -246,7 +248,7 @@ public class MapSidebar extends Sidebar {
         snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
         ImageView snapView = new ImageView();
         snapView.setImage(snapImage);*/
-        activeMap.setThumbnail(snapView);
+        activeMap.setImagePreview(snapView);
 
         
         if (!super.getMaps().contains(activeMap)) {
@@ -430,19 +432,19 @@ public class MapSidebar extends Sidebar {
         getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
                                          Color.GREEN);
         
-        
-        Map<String, Object> mapSettings = getMapWorkspace().getActivePath().save();
-        System.out.println(mapSettings);
-        System.out.println(getMapWorkspace().getActivePath());
-        System.out.println(myController);
+        PathView activePath = getMapWorkspace().getActivePath();
+        Map<String, Object> mapSettings = activePath.save();
         
         try {
-            myController.addPartToGame(mapSettings);
+            String partKey = myController.addPartToGame(mapSettings);
+            activePath.setKey(partKey);
+            myController.addImageToPart (partKey, activePath.getImagePreview().getImage());
         }
         catch (MissingInformationException e) {
             e.printStackTrace();
         }
         
     }
+
 
 }

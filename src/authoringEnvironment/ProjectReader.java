@@ -114,36 +114,37 @@ public class ProjectReader {
      * This commented out code below was previously used when loading from a properties file
      * The above code is the same method but for use with annotations and reflection
      */
-    // public static List<Setting> generateSettingsListOld (Controller controller, String partType){
-    // // System.out.println("genreate stginsgl list calle");
-    // List<Setting> settingsList = new ArrayList<Setting>();
-    // ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-    // String[] params = getParamListForPart(partType);
-    // System.out.println("params for " + partType + ": " + SetHandler.listFromArray(params));
-    // List<String> paramsList = SetHandler.listFromArray(params);
-    // Collections.sort(paramsList);
-    // System.out.println("sorted? param list: " + paramsList);
-    // paramsList = SetHandler.trimBeforeDot(paramsList);
-    // for (String param : paramsList) {
-    // String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
-    // String dataType = typeAndDefault[0];
-    // String defaultVal = typeAndDefault[1];
-    // settingsList.add(generateSetting(controller, partType, param, defaultVal,
-    // dataType));
-    // }
-    // ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-    // String[] params = getParamListForPart(partType);
-    // System.out.println("params for " + partType + ": "
-    // + SetHandler.listFromArray(params));
-    // List<String> paramsList = SetHandler.listFromArray(params);
-    // Collections.sort(paramsList);
-    // System.out.println("sorted? param list: " + paramsList);
-    // paramsList = SetHandler.trimBeforeDot(paramsList);
-    // for (String param : paramsList) {
-    // String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
-    // String dataType = typeAndDefault[0];
-    // String defaultVal = typeAndDefault[1];
-    // }
+//     public static List<Setting> generateSettingsListOld (Controller controller, String partType){
+//     // System.out.println("genreate stginsgl list calle");
+//     List<Setting> settingsList = new ArrayList<Setting>();
+//     ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
+//     String[] params = getParamListForPart(partType);
+//     System.out.println("params for " + partType + ": " + SetHandler.listFromArray(params));
+//     List<String> paramsList = SetHandler.listFromArray(params);
+//     Collections.sort(paramsList);
+//     System.out.println("sorted? param list: " + paramsList);
+//     paramsList = SetHandler.trimBeforeDot(paramsList);
+//     for (String param : paramsList) {
+//     String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
+//     String dataType = typeAndDefault[0];
+//     String defaultVal = typeAndDefault[1];
+//     settingsList.add(generateSetting(controller, partType, param, defaultVal,
+//     dataType));
+//     }
+//     ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
+//     String[] params = getParamListForPart(partType);
+//     System.out.println("params for " + partType + ": "
+//     + SetHandler.listFromArray(params));
+//     List<String> paramsList = SetHandler.listFromArray(params);
+//     Collections.sort(paramsList);
+//     System.out.println("sorted? param list: " + paramsList);
+//     paramsList = SetHandler.trimBeforeDot(paramsList);
+//     for (String param : paramsList) {
+//     String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
+//     String dataType = typeAndDefault[0];
+//     String defaultVal = typeAndDefault[1];
+//     }
+//     }
 
     /**
      * Generates one setting object from the 4 parameters given
@@ -194,8 +195,8 @@ public class ProjectReader {
                 try {
                     // System.out.println("Being created: " + s);
                     editorToAdd = (Editor) Class.forName(toCreate)
-                            .getConstructor(Controller.class, String.class, String.class)
-                            .newInstance(c, s, s.substring(0, s.length() - 6)); // TODO: change last
+                            .getConstructor(Controller.class, String.class)
+                            .newInstance(c, s); // TODO: change last
                                                                                 // input later
                 }
                 catch (InstantiationException | IllegalArgumentException e1) {
