@@ -19,4 +19,8 @@
     <string>Image</string>
     <string>imageselector/img_not_available.png</string>
   </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>Part0.Sprite</string>
+  </entry>
 </map>

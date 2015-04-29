@@ -27,4 +27,8 @@
     <string>Speed</string>
     <double>1.0</double>
   </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>Part0.MovableSprite</string>
+  </entry>
 </map>

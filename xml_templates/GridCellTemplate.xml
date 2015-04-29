@@ -15,4 +15,8 @@
     <string>BoundingHeight</string>
     <double>10.0</double>
   </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>Part0.GridCell</string>
+  </entry>
 </map>

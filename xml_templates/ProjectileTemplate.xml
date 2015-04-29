@@ -31,4 +31,8 @@
     <string>Damage</string>
     <integer>10</integer>
   </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>Part0.Projectile</string>
+  </entry>
 </map>

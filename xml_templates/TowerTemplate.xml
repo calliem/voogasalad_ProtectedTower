@@ -55,4 +55,8 @@
     <string>Projectile</string>
     <string>BasicProjectile</string>
   </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>Part0.Tower</string>
+  </entry>
 </map>
