@@ -4,7 +4,6 @@ import imageselectorTEMP.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -16,10 +15,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import authoringEnvironment.Controller;
-import authoringEnvironment.InstanceManager;
-import authoringEnvironment.util.Scaler;
 import util.misc.SetHandler;
+import authoringEnvironment.Controller;
+import authoringEnvironment.DataFormatException;
+import authoringEnvironment.InstanceManager;
+import authoringEnvironment.MissingInformationException;
+import authoringEnvironment.ProjectReader;
 
 
 /**
@@ -35,6 +36,7 @@ public class RoundStrip extends FlowStrip {
     private static final int MAP_SELECTOR_WIDTH = 205;
     private static final int PADDING = 10;
     private static final int ROW_SIZE = 3;
+    private static final String ROUND= "Round";
 
     private VBox rowContainer;
     private StackPane mapsAndBackground;
@@ -157,8 +159,23 @@ public class RoundStrip extends FlowStrip {
 
     @Override
     protected void saveData (String componentName) {
-        // TODO Auto-generated method stub
-
+        
+        
+        List<Object> data = new ArrayList<Object>();
+        //data.addAll();
+        try {
+            if (myKey.equals(Controller.KEY_BEFORE_CREATION))
+                myKey = myController.addPartToGame(ROUND, componentName,
+                                                   ProjectReader.getParamsNoTypeOrName(ROUND), data);
+            else
+                myKey =
+                        myController.addPartToGame(myKey, ROUND, componentName,
+                                                   ProjectReader.getParamsNoTypeOrName(ROUND), data);
+        }
+        catch (MissingInformationException | DataFormatException | ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }
