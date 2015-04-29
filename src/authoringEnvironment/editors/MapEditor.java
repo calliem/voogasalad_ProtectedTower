@@ -13,7 +13,6 @@ import authoringEnvironment.objects.Sidebar;
  * 
  * @author Callie Mao
  */
-
 public class MapEditor extends MainEditor {
 
     // TODO: store tags within map editor or within each individual map? different maps can have
@@ -28,15 +27,16 @@ public class MapEditor extends MainEditor {
     private static final int DEFAULT_TILE_SIZE = 50; // based on height since monitor height < width
                                                      // and that is usually the limiting factor
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
-    private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
-                                                                  "map_editor_english");
+    private static final ResourceBundle myResources = ResourceBundle
+            .getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
+    
     // private List<GameObject> myMaps;
     private Sidebar mySidebar;  // TODO: maybe move this into the superclass?
 
     // TODO: remove the dimensions parameter because we apparently can ust get that form the main
     // enviornment?
-    public MapEditor (Controller c, String name) {
-        super(c, name);
+    public MapEditor (Controller c, String name, String nameWithoutEditor) {
+        super(c, name, nameWithoutEditor);
         // myMaps = new ArrayList<GameObject>(); //is that bad though since you could technically
         // add a Rectangle by accident and then someone else's code is screwed up if they try to use
         // a rectangle that they think is a tilemap

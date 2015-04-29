@@ -13,6 +13,9 @@ public class Variables {
     public static final String PARAMETER_RANGE = "Range";
     public static final String PARAMETER_DAMAGE = "Damage";
     public static final String PARAMETER_SPEED = "Speed";
+    public static final String PARAMETER_CURVES = "Curves";
+    public static final String DESCRIPTION = "Description";
+    public static final String LIVES = "Lives";
 
     public static final String PARTNAME_TOWER = "Tower";
     public final static String PARTNAME_ENEMIES = "Enemies";

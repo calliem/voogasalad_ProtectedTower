@@ -72,8 +72,8 @@ public abstract class SpriteEditor extends Editor {
      * @param s
      *        the stage on which the authoring environment is displayed
      */
-    public SpriteEditor (Controller c, String name) {
-        super(c, name);
+    public SpriteEditor (Controller c, String name, String nameWithoutEditor) {
+        super(c, name, nameWithoutEditor);
     }
 
     /**

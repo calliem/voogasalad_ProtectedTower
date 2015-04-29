@@ -33,16 +33,15 @@ public class Controller {
 
     private static final String DIFFERENT_LIST_SIZE_MESSAGE =
             "Lists passed must contain same number of elements.";
+    public static final String KEY_BEFORE_CREATION = "Key not initialized yet";
 
     private InstanceManager currentGame;
     private Map<String, ObservableList<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
     private ObservableList<String> gameTags;
 
-    public static final String KEY_BEFORE_CREATION = "Key not initialized yet";
-
-    protected Controller (InstanceManager IM) {
-        currentGame = IM;
+    protected Controller (InstanceManager instance) {
+        currentGame = instance;
         partTypeToKeyList = new HashMap<String, ObservableList<String>>();
         populateKeyList();
         myMaps = FXCollections.observableArrayList();
@@ -208,8 +207,10 @@ public class Controller {
                                                       String partName,
                                                       List<String> params,
                                                       List<Object> data) throws DataFormatException {
-        if (params.size() != data.size()) { throw new DataFormatException(
-                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
+        if (params.size() != data.size()) {
+            throw new DataFormatException(
+                                          DIFFERENT_LIST_SIZE_MESSAGE);
+        }
         Map<String, Object> toAdd = new HashMap<String, Object>();
         for (int i = 0; i < params.size(); i++) {
             toAdd.put(params.get(i), data.get(i));
@@ -230,6 +231,14 @@ public class Controller {
         partTypeToKeyList.get(partType).add(key);
         System.out.println("key added: " + key);
         return key;
+    }
+
+    public boolean addTagToPart (String partKey, String tag) {
+        if (currentGame.containsKey(partKey)) {
+            currentGame.addTagToPart(partKey, tag);
+            return true;
+        }
+        return false;
     }
 
     // /**
@@ -280,6 +289,7 @@ public class Controller {
     }
 
     public void specifyPartImage (String partKey, String imageFilePath) {
+        System.out.println("partkey " + partKey + " space " + imageFilePath);
         currentGame.specifyPartImage(partKey, imageFilePath);
     }
 

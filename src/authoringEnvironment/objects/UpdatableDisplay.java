@@ -1,6 +1,7 @@
 package authoringEnvironment.objects;
 
 import java.util.List;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -71,7 +72,6 @@ public abstract class UpdatableDisplay extends VBox {
             thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
                                    Variables.THUMBNAIL_SIZE_MULTIPLIER);
             if (objectView == selectedView){ //TODO: this doesn't work since we're making a new objectview each time. have to check something else
-                System.out.println(objectView + "I'M THE SELECTED ONE");
                 selectObject(objectView);
             }
 
@@ -165,4 +165,5 @@ public abstract class UpdatableDisplay extends VBox {
     public void setSelectedView(StackPane view){
         selectedView = view;
     }
+
 }

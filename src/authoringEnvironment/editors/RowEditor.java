@@ -8,8 +8,8 @@ import authoringEnvironment.Controller;
 
 public class RowEditor extends Editor {
 
-    public RowEditor (Controller c, String name) {
-        super(c, name);
+    public RowEditor (Controller c, String name, String nameWithoutEditor) {
+        super(c, name, nameWithoutEditor);
         // TODO Auto-generated constructor stub
     }
 
@@ -20,12 +20,6 @@ public class RowEditor extends Editor {
 
         // TODO Auto-generated method stub
         return new Group();
-    }
-
-    @Override
-    public void update () {
-        // TODO Auto-generated method stub
-
     }
 
 }

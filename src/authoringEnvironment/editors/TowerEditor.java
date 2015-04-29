@@ -19,13 +19,8 @@ public class TowerEditor extends SpriteEditor {
      * @param rb the resource bundle containing displayed strings
      * @param s the stage on which the authoring environment is displayed
      */
-    public TowerEditor (Controller c, String name) {
-        super(c, name);
+    public TowerEditor (Controller c, String name, String nameWithoutEditor) {
+        super(c, name, nameWithoutEditor);
     }
 
-    @Override
-    public void update () {
-        // TODO Auto-generated method stub
-
-    }
 }

@@ -30,8 +30,8 @@ public class LevelEditor extends MainEditor {
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
                                                                   "level_editor_english");
 
-    public LevelEditor (Controller c, String name) {
-        super(c, name);
+    public LevelEditor (Controller c, String name, String nameWithoutEditor) {
+        super(c, name, nameWithoutEditor);
         mySidebar = new LevelSidebar(myResources, getMaps(), getMapWorkspace());
         getPane().add(mySidebar, 1, 0); // TODO: don't hardcode the Maps editor. Find a way to get
         // it from teh existing one so that changing one thing in code won't require changes

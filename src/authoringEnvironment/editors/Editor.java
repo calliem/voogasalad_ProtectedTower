@@ -25,6 +25,7 @@ import authoringEnvironment.Controller;
 public abstract class Editor extends Tab {
 
     protected String editorType;
+    protected String editorName;
     private Group contentRoot;
     protected Controller myController;
     protected boolean isOverlayActive = false;
@@ -43,9 +44,10 @@ public abstract class Editor extends Tab {
     protected static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment
             .getEnvironmentHeight();
 
-    public Editor (Controller controller, String name) {
+    public Editor (Controller controller, String name, String nameWithoutEditor) {
         myController = controller;
         editorType = name;
+        editorName = nameWithoutEditor;
         contentRoot = configureUI();
         this.setContent(contentRoot);
         this.setText(tabNames.getString(editorType));
@@ -87,5 +89,4 @@ public abstract class Editor extends Tab {
         return isOverlayActive;
     }
 
-    public abstract void update ();
 }

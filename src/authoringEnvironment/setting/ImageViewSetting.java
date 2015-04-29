@@ -1,14 +1,14 @@
 package authoringEnvironment.setting;
 
-import imageselectorTEMP.ImageSelector;
+import imageselector.ImageSelector;
 import javafx.scene.layout.HBox;
 import authoringEnvironment.Controller;
 
-public class ImageSetting extends Setting {
+public class ImageViewSetting extends Setting {
     private ImageSelector selector;
 
-    public ImageSetting (Controller controller, String part, String label, String value) {
-        super(controller, part, label, value);
+    public ImageViewSetting (Controller controller, String part, String label, String parameterName, String value) {
+        super(controller, part, label, parameterName, value);
         // TODO Auto-generated constructor stub
     }
     

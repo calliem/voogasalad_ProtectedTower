@@ -1,6 +1,6 @@
 package authoringEnvironment.objects;
 
-import imageselectorTEMP.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.PauseTransition;
@@ -24,7 +24,9 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
+import authoringEnvironment.setting.ImageViewSetting;
 import authoringEnvironment.setting.Setting;
+import authoringEnvironment.setting.StringSetting;
 import authoringEnvironment.util.Scaler;
 
 
@@ -71,8 +73,12 @@ public abstract class SpriteView extends ObjectView {
      * @param c controller needed to obtain partKeys from other tabs
      * @param name name of this sprite, designated by user
      * @param image the file path of this sprite's image
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws ClassNotFoundException
      */
-    public SpriteView (Controller c, String name, String image) {
+    public SpriteView (Controller c, String name, String image) throws ClassNotFoundException,
+        IllegalArgumentException, IllegalAccessException {
         super(c);
         myKey = Controller.KEY_BEFORE_CREATION;
 
@@ -97,7 +103,21 @@ public abstract class SpriteView extends ObjectView {
         displayPane.getChildren().addAll(spriteBackground, display);
         objectLayout.getChildren().addAll(displayPane, tagGroup);
 
-        setupEditableContent();
+        try {
+            setupEditableContent();
+        }
+        catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         setupOverlayContent();
         setupTooltipText(getSpriteInfo());
     }
@@ -113,7 +133,8 @@ public abstract class SpriteView extends ObjectView {
         return path;
     }
 
-    private void setupEditableContent () {
+    private void setupEditableContent () throws ClassNotFoundException, IllegalArgumentException,
+                                        IllegalAccessException {
         editableContent = new VBox(10);
         editableContent.setAlignment(Pos.CENTER);
 
@@ -129,11 +150,27 @@ public abstract class SpriteView extends ObjectView {
         settingsObjects.setMaxWidth(150);
 
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
-        for (Setting s : settings) {
-            parameterFields.add(s);
-            settingsObjects.getChildren().add(s);
+        // move the image to be first in the settings list
+        for (int i = 0; i < settings.size(); i++) {
+            if (settings.get(i) instanceof ImageViewSetting) {
+                parameterFields.add(0, settings.get(i));
+                settingsObjects.getChildren().add(0, settings.get(i));
+            }
+            break;
         }
-
+        for (int j = 0; j < settings.size(); j++) {
+            if (settings.get(j) instanceof ImageViewSetting) {
+                continue;
+            }
+            if (settings.get(j) instanceof StringSetting &&
+                settings.get(j).getParameterName().equals("name")) {
+                parameterFields.add(1, settings.get(j));
+                settingsObjects.getChildren().add(1, settings.get(j));
+                continue;
+            }
+            parameterFields.add(settings.get(j));
+            settingsObjects.getChildren().add(settings.get(j));
+        }
         initializeSpriteInfo();
 
         HBox buttons = new HBox(10);
@@ -187,7 +224,8 @@ public abstract class SpriteView extends ObjectView {
                 if (myKey.equals(Controller.KEY_BEFORE_CREATION))
                     myKey = myController.addPartToGame(getSpriteType(),
                                                        parameterFields);
-                else myKey = myController.addPartToGame(myKey, getSpriteType(), parameterFields);
+                else
+                    myKey = myController.addPartToGame(myKey, getSpriteType(), parameterFields);
             }
             catch (MissingInformationException e) {
                 // TODO Auto-generated catch block

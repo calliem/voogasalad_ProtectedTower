@@ -1,4 +1,4 @@
-package imageselectorTEMP;
+package imageselector;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -69,7 +69,9 @@ public class GraphicFileChooser extends StackPane {
     }
 
     private void selectFile () {
+        fileChooser.setInitialDirectory(new File("./src/images"));
         File file = fileChooser.showOpenDialog(null);
+ 
         if (file != null) {
             String fileName = file.getName();
             fileDisplay.setText(fileName);

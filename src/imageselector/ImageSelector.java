@@ -1,6 +1,6 @@
-package imageselectorTEMP;
+package imageselector;
 
-import imageselectorTEMP.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -29,7 +29,7 @@ public class ImageSelector extends VBox {
     private double previewImageHeight = 100;
     private double previewImageWidth = 100;
     private static final int PADDING = 10;
-    private static final String NOT_AVAILABLE = "imageselectorTEMP/img_not_available.png";
+    private static final String NOT_AVAILABLE = "imageselector/img_not_available.png";
 //    private static final String SELECTOR_RESOURCES = "imageselector/SelectorText.properties";
     private static final String IMAGE_PROMPT = "Choose an image...";
 

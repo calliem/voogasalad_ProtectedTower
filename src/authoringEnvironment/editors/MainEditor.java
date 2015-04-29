@@ -32,14 +32,14 @@ public abstract class MainEditor extends Editor {
     // VARIABLES IN MAP
     // WORKSPACE
     private static final double MAP_HEIGHT_PERCENT = 100; // THIS IS REPLICATED
-    private static final String DARK_TAB_CSS = "-fx-base: #3c3c3c;";
+    protected static final String DARK_TAB_CSS = "-fx-base: #3c3c3c;";
 
     // WITH THOSE
     // VARIABLES IN MAP
     // WORKSPACE
 
-    public MainEditor (Controller c, String name) {
-        super(c, name);
+    public MainEditor (Controller c, String name, String nameWithoutEditor) {
+        super(c, name, nameWithoutEditor);
         this.setStyle(DARK_TAB_CSS);
         myMaps = c.getMaps();
     }
