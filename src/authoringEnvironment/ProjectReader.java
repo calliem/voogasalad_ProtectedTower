@@ -38,28 +38,32 @@ public class ProjectReader {
                                            "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
 
-    //
-    // public static String[] getParamListForPart(String partType) throws ClassNotFoundException{
-    // Class<?> currentClass = Class.forName(partType);
-    // Field[] myFields = currentClass.getDeclaredFields();
-    // List<Field> neededFields = new ArrayList<>();
-    // for(Field field: myFields){
-    // if(field.getAnnotation(parameter.class).settable()){
-    // neededFields.add(field);
-    // }
-    // }
-    // return null;
-    // }
-    // public static List<String> getParamsNoTypeOrName (String partType) {
-    // String[] params = getParamListForPart(partType);
-    // List<String> finalList = new ArrayList<String>();
-    // for (String param : params) {
-    // if (!param.equals(InstanceManager.nameKey)
-    // && !param.equals(InstanceManager.partTypeKey))
-    // finalList.add(param);
-    // }
-    // return finalList;
-    // }
+    /**
+     * The getParamsNoTypeOrName method is called by WaveStrip and currently has an error because
+     * this are commented out. Do we need to rewrite these? I think they're bad, but would mean a bigg rewrite we dont have time for.  Theyre fine for now
+     */
+    public static String[] getParamListForPart (String partType) throws ClassNotFoundException {
+        Class<?> currentClass = Class.forName(partType);
+        Field[] myFields = currentClass.getDeclaredFields();
+        List<Field> neededFields = new ArrayList<>();
+        for (Field field : myFields) {
+            if (field.getAnnotation(parameter.class).settable()) {
+                neededFields.add(field);
+            }
+        }
+        return null;
+    }
+
+    public static List<String> getParamsNoTypeOrName (String partType) throws ClassNotFoundException {
+        String[] params = getParamListForPart(partType);
+        List<String> finalList = new ArrayList<String>();
+        for (String param : params) {
+            if (!param.equals(InstanceManager.NAME_KEY)
+                && !param.equals(InstanceManager.PART_TYPE_KEY))
+                finalList.add(param);
+        }
+        return finalList;
+    }
 
     /**
      * Generates the Settings objects the Overlay UI needs to allow the user to
@@ -92,11 +96,13 @@ public class ProjectReader {
                         ParameterizedType pt = (ParameterizedType) type;
                         Type paramType = pt.getActualTypeArguments()[0];
                         paramName = paramType.getTypeName();
-                        int lastClassindex = paramName.lastIndexOf(".")+1;
+                        int lastClassindex = paramName.lastIndexOf(".") + 1;
                         paramName = paramName.substring(lastClassindex);
                     }
-                    settingsList.add(generateSetting(controller, partType, field.getName(), paramName, field
-                            .getAnnotation(parameter.class).defaultValue(),
+                    settingsList.add(generateSetting(controller, partType, field.getName(),
+                                                     paramName, field
+                                                             .getAnnotation(parameter.class)
+                                                             .defaultValue(),
                                                      field.getType().getSimpleName()));
                 }
             }
@@ -104,56 +110,50 @@ public class ProjectReader {
         return settingsList;
     }
 
-    // public static List<Setting> generateSettingsList (Controller controller, String partType)
-    // {
-    // // System.out.println("genreate stginsgl list calle");
-    // List<Setting> settingsList = new ArrayList<Setting>();
-    // ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-    //
-    // String[] params = getParamListForPart(partType);
-    // System.out.println("params for " + partType + ": "
-    // + SetHandler.listFromArray(params));
-    // List<String> paramsList = SetHandler.listFromArray(params);
-    // Collections.sort(paramsList);
-    // System.out.println("sorted? param list: " + paramsList);
-    // paramsList = SetHandler.trimBeforeDot(paramsList);
-    // for (String param : paramsList) {
-    // String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
-    // String dataType = typeAndDefault[0];
-    // String defaultVal = typeAndDefault[1];
-    //
-    // settingsList.add(generateSetting(controller, partType, param, defaultVal,
-    // dataType));
-    //
-    // }
-
-    // ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-    // String[] params = getParamListForPart(partType);
-    // System.out.println("params for " + partType + ": "
-    // + SetHandler.listFromArray(params));
-    // List<String> paramsList = SetHandler.listFromArray(params);
-    // Collections.sort(paramsList);
-    // System.out.println("sorted? param list: " + paramsList);
-    // paramsList = SetHandler.trimBeforeDot(paramsList);
-    // for (String param : paramsList) {
-    // String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
-    // String dataType = typeAndDefault[0];
-    // String defaultVal = typeAndDefault[1];
-    // }
+    /**
+     * This commented out code below was previously used when loading from a properties file
+     * The above code is the same method but for use with annotations and reflection
+     */
+//     public static List<Setting> generateSettingsListOld (Controller controller, String partType){
+//     // System.out.println("genreate stginsgl list calle");
+//     List<Setting> settingsList = new ArrayList<Setting>();
+//     ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
+//     String[] params = getParamListForPart(partType);
+//     System.out.println("params for " + partType + ": " + SetHandler.listFromArray(params));
+//     List<String> paramsList = SetHandler.listFromArray(params);
+//     Collections.sort(paramsList);
+//     System.out.println("sorted? param list: " + paramsList);
+//     paramsList = SetHandler.trimBeforeDot(paramsList);
+//     for (String param : paramsList) {
+//     String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
+//     String dataType = typeAndDefault[0];
+//     String defaultVal = typeAndDefault[1];
+//     settingsList.add(generateSetting(controller, partType, param, defaultVal,
+//     dataType));
+//     }
+//     ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
+//     String[] params = getParamListForPart(partType);
+//     System.out.println("params for " + partType + ": "
+//     + SetHandler.listFromArray(params));
+//     List<String> paramsList = SetHandler.listFromArray(params);
+//     Collections.sort(paramsList);
+//     System.out.println("sorted? param list: " + paramsList);
+//     paramsList = SetHandler.trimBeforeDot(paramsList);
+//     for (String param : paramsList) {
+//     String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
+//     String dataType = typeAndDefault[0];
+//     String defaultVal = typeAndDefault[1];
+//     }
+//     }
 
     /**
      * Generates one setting object from the 4 parameters given
      * 
-     * @param partType
-     *        The type of part, i.e. "Tower"
-     * @param param
-     *        The name of the parameter the Setting is being generated for,
-     *        i.e. "HP"
-     * @param parameterClass 
-     * @param defaultVal
-     *        The default value of the Setting, i.e. "0"
-     * @param dataType
-     *        The type of the data, i.e. "Integer"
+     * @param partType The type of part, i.e. "Tower"
+     * @param param The name of the parameter the Setting is being generated for, i.e. "HP"
+     * @param parameterClass
+     * @param defaultVal The default value of the Setting, i.e. "0"
+     * @param dataType The type of the data, i.e. "Integer"
      * @return The Setting object corresponding to these parameters
      */
     public static Setting generateSetting (Controller controller, String partType, String param,
@@ -171,7 +171,8 @@ public class ProjectReader {
 
         try {
             s =
-                    (Setting) c.getConstructor(Controller.class, String.class, String.class, String.class,
+                    (Setting) c.getConstructor(Controller.class, String.class, String.class,
+                                               String.class,
                                                String.class)
                             .newInstance(controller, partType, param, paramName, defaultVal);
         }
@@ -181,7 +182,6 @@ public class ProjectReader {
             // display error message, don't let the null value be used
             System.err.println("Setting object couldn't be created");
         }
-
         return s;
     }
 
@@ -195,8 +195,8 @@ public class ProjectReader {
                 try {
                     // System.out.println("Being created: " + s);
                     editorToAdd = (Editor) Class.forName(toCreate)
-                            .getConstructor(Controller.class, String.class, String.class)
-                            .newInstance(c, s, s.substring(0, s.length() - 6)); // TODO: change last
+                            .getConstructor(Controller.class, String.class)
+                            .newInstance(c, s); // TODO: change last
                                                                                 // input later
                 }
                 catch (InstantiationException | IllegalArgumentException e1) {

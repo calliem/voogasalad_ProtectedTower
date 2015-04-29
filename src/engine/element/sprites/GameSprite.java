@@ -34,7 +34,7 @@ public abstract class GameSprite extends MoveableSprite {
     }
 
     /**
-     * @return the nextSprites
+     * @return List<String> of the next Sprites
      */
     public List<String> getNextSprites () {
         return Collections.unmodifiableList(nextSprites);

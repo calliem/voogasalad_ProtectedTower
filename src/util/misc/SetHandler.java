@@ -34,6 +34,13 @@ public class SetHandler {
 			lower.add(word.toLowerCase());
 		return lower;
 	}
+	
+	public static Set<String> setFromList(List<String> s){
+	    Set<String> toReturn = new HashSet<String>();
+	    for(String entry : s)
+	        toReturn.add(entry);
+	    return toReturn;
+	}
 
 	/**
 	 * gets rid off all characters before a '.', including the '.', in each

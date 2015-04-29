@@ -2,10 +2,13 @@ package authoringEnvironment.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.Node;
+import javafx.scene.layout.HBox;
 import authoringEnvironment.Controller;
 import authoringEnvironment.DataFormatException;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
+
 
 /**
  * Extends FlowEditor
@@ -25,7 +28,7 @@ public class WaveStrip extends FlowStrip {
     }
 
     @Override
-    protected void addAtLeftOfRow () {        
+    protected void addAtLeftOfRow (HBox content) {
     }
 
     @Override
@@ -38,6 +41,10 @@ public class WaveStrip extends FlowStrip {
         for (FlowView unit : myComponents) {
             partFileNames.addAll(unit.getFileNames());
             delays.addAll(unit.getDelays());
+            //Get rid of potential last element due to extra arrow/input space
+            if (partFileNames.size() != delays.size()) {
+                delays.remove(delays.size() - 1);
+            }
         }
 
         for (Double d : delays) {
@@ -51,19 +58,20 @@ public class WaveStrip extends FlowStrip {
         data.add(partFileNames);
         data.add(times);
         try {
-            if (myKey.equals(Controller.KEY_BEFORE_CREATION))
+            if (myKey.equals(Controller.KEY_BEFORE_CREATION)) {
                 myKey = myController.addPartToGame(WAVE, componentName,
                                                    ProjectReader.getParamsNoTypeOrName(WAVE), data);
-            else
-                myKey =
-                        myController.addPartToGame(myKey, WAVE, componentName,
+            }
+            else {
+                myKey = myController.addPartToGame(myKey, WAVE, componentName,
                                                    ProjectReader.getParamsNoTypeOrName(WAVE), data);
+            }
         }
         catch (MissingInformationException | DataFormatException | ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-       
+
     }
 
 }

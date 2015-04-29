@@ -19,7 +19,7 @@ public abstract class GameElement implements Collidable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String name;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
+    @parameter(settable = false, playerDisplay = true, defaultValue = "Basic")
     private List<String> tags;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double boundingHeight;
@@ -28,8 +28,8 @@ public abstract class GameElement implements Collidable {
     /**
      * Holds the current location of the object
      */
-//    @parameter(settable = false, playerDisplay = true)
-//    private Point2D myLocation;
+    @parameter(settable = false, playerDisplay = true)
+    private Point2D myLocation;
 
     // Getters and setters
 

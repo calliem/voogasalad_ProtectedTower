@@ -1,6 +1,6 @@
 package authoringEnvironment.objects;
 
-import imageselectorTEMP.util.ScaleImage;
+import imageselector.util.ScaleImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
