@@ -34,7 +34,7 @@ public class Tower extends GameSprite {
     private Set<GameElement> myTargets;
 
     // TODO remove once testing is over
-    public Tower (Image test) {
+    public Tower (ImageView test) {
         super.setImageView(test);
     }
 
