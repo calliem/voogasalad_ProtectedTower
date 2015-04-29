@@ -47,6 +47,7 @@ public abstract class Setting extends VBox{
         
         error = new ImageView(new Image(String.format("images/%s.png", "error")));
         ScaleImage.scale(error, MESSAGE_SIZE, MESSAGE_SIZE);
+        error.setVisible(false);
         
         this.label = label;
         parameter = new Text(String.format("%s:", label));
@@ -78,7 +79,6 @@ public abstract class Setting extends VBox{
         editableField.setMinWidth(FIELD_WIDTH);
         editableField.setAlignment(Pos.CENTER);
         
-        error.setVisible(false);
         basicLayout.getChildren().addAll(editableField, error);
     }
     /**

@@ -104,7 +104,10 @@ public class InstanceManager {
         if (!missingKey.equals(NO_KEYS_MISSING))
             throw new MissingInformationException(missingKeyErrorMessage(missingKey));
         //keep the tags
+        if(fullPartMap.keySet().contains(TAGS_KEY))
         fullPartMap.put(TAGS_KEY, userParts.get(key).get(TAGS_KEY));
+        else
+            fullPartMap.put(TAGS_KEY, new ArrayList<String>());
         userParts.put(key, fullPartMap);
         writePartToXML(fullPartMap);
         return key;
@@ -234,6 +237,17 @@ public class InstanceManager {
             addTagTo.put(TAGS_KEY, tagList);
         }
         
+    }
+    
+    protected boolean removeTagFromPart(String partKey, String tag) {
+        Map<String, Object> removeFrom = userParts.get(partKey);
+        if(removeFrom.containsKey(TAGS_KEY)){
+            List<String> tagList = (List<String>) userParts.get(TAGS_KEY);
+            boolean removed = tagList.remove(tag);
+            removeFrom.put(TAGS_KEY, tagList);
+            return removed;
+        }
+        return false;
     }
     
     public boolean containsKey(String key){

@@ -88,11 +88,14 @@ public class MainMenu {
         mainContent.getChildren().addAll(buttons, go);
         
         authoring.setOnMouseClicked(e -> {
-            if(!mainContent.getChildren().contains(test)){
-                mainContent.getChildren().add(1, test);
-                entryAnimation(mainContent, test, go);
-            }
+            //TODO: re-enable this;
+//            if(!mainContent.getChildren().contains(test)){
+//                mainContent.getChildren().add(1, test);
+//                entryAnimation(mainContent, test, go);
+//            }
             sceneSelected = Main.getScenes()[1];
+            myStage.setScene(sceneSelected);
+            myStage.show();
         });
 
         go.setOnMouseClicked(e -> {
