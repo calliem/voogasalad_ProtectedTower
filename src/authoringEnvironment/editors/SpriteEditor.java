@@ -228,6 +228,7 @@ public abstract class SpriteEditor extends Editor {
         String type = partNames.getString(editorType);
         try {
             String needed = spriteNeeded.getString(type);
+            System.out.println("projectiles present: " + myController.getKeysForPartType("Projectile"));
             if (myController.getKeysForPartType(needed).size() == 0) {
                 prompt.displayPermanentError(String.format("Please create %ss first!",
                                                            needed.toLowerCase()));
