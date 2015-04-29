@@ -27,7 +27,8 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
     private List<String> myRounds;
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
     private List<String> myConditions;
-
+    
+    
     /**
      * Identifies the level number. Used to determine order.
      */
@@ -42,8 +43,11 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
 
     // TODO: Win/Lose Conditions
 
-    public Level () {
-        myRounds = new ArrayList<>();
+    public Level (Map<String,Object> parameters) {
+        myLives = (Integer) parameters.get("myLives");
+        myRounds = (List<String>) parameters.get("myRounds");
+        myConditions = (List<String>) parameters.get("myConditions");
+        myNumber = (Integer) parameters.get("myNumber");
         setActiveRound();
     }
 

@@ -17,6 +17,7 @@ public class ExampleLevel {
         Integer myLives = 20;
         List<String> myRounds = new ArrayList<String>();
         List<String> myConditions = new ArrayList<String>();
+        Integer myNumber = 0;
         
         myRounds.add("DesktopTestRound_Part0.Round");
         
@@ -29,6 +30,7 @@ public class ExampleLevel {
         level.put("myLives", myLives);
         level.put("myRounds",myRounds);
         level.put("myConditions",myConditions);
+        level.put("myNumber", myNumber);
         return level;
     }
 }

@@ -40,7 +40,8 @@ public class Game implements Updateable, Endable {
     private Bank myBank;
     private int myPoints;
 
-    public Game (List<Sprite> nodes) {
+    public Game (List<Sprite> nodes,Map<String,Object> parameters) {
+        lives = (Integer) parameters.get("lives");
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
         myNodes = nodes;

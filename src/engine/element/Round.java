@@ -34,7 +34,10 @@ public class Round implements UpdateAndReturnable, Endable {
     private int myCurrentWaveIndex = 0;
     private int myTimer = 0;
 
-    public Round () {
+    public Round (Map<String,Object> parameters){
+        myWaves = (List<String>) parameters.get("myWaves");
+        mySendTimes = (List<Double>) parameters.get("mySendTimes");
+        myWavePaths = (List<String>) parameters.get("myWavePaths");
         myActiveWaves = new ArrayList<>();
         // TODO: Make sure that waves, quantities, sendRate, and spawnLocation are same size
     }
