@@ -24,7 +24,6 @@ import authoringEnvironment.util.NamePrompt;
  */
 
 public class WaveEditor extends FlowEditor {
-
     private static final String WAVE = "Wave";
     private static final int PADDING = 10;
     private static final String NO_WAVES = "No waves yet...";
@@ -209,49 +208,49 @@ public class WaveEditor extends FlowEditor {
     // contents.getChildren().add(waveDisplay);
     // }
 
-    // private void saveWaveData (String waveName) {
-    // List<String> partFileNames = new ArrayList<String>();
-    // List<Double> delays = new ArrayList<Double>();
-    // List<Double> times = new ArrayList<Double>();
-    // times.add(0.0);
-    //
-    // for (WaveFlowView unit : myWaves.get(waveName)) {
-    // partFileNames.addAll(unit.getFileNames());
-    // delays.addAll(unit.getDelays());
-    // }
-    //
-    // for (Double d : delays) {
-    // Double all = 0.0;
-    // for (Double t : times)
-    // all += t;
-    // times.add(all + d);
-    // }
-    //
-    // List<Object> data = new ArrayList<Object>();
-    // data.add(partFileNames);
-    // data.add(times);
-    // try {
-    // if (myKey.equals(Controller.KEY_BEFORE_CREATION))
-    // myKey = myController.addPartToGame(WAVE, waveName,
-    // ProjectReader.getParamsNoTypeOrName(WAVE), data);
-    // else
-    // myKey =
-    // myController.addPartToGame(myKey, WAVE, waveName,
-    // ProjectReader.getParamsNoTypeOrName(WAVE), data);
-    // }
-    // catch (MissingInformationException | DataFormatException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // }
-
-    private void addUnitToWave (ScrollPane displayPane, HBox wave, String waveName) {
-        WaveFlowView unit = new WaveFlowView(100, myController);
-        wave.getChildren().add(unit);
-        myWaves.get(waveName).add(unit);
-
-        displayPane.setHvalue(2.0);
-    }
+//    private void saveWaveData (String waveName) {
+//        List<String> partFileNames = new ArrayList<String>();
+//        List<Double> delays = new ArrayList<Double>();
+//        List<Double> times = new ArrayList<Double>();
+//        times.add(0.0);
+//
+//        for (WaveFlowView unit : myWaves.get(waveName)) {
+//            partFileNames.addAll(unit.getFileNames());
+//            delays.addAll(unit.getDelays());
+//        }
+//
+//        for (Double d : delays) {
+//            Double all = 0.0;
+//            for (Double t : times)
+//                all += t;
+//            times.add(all + d);
+//        }
+//
+//        List<Object> data = new ArrayList<Object>();
+//        data.add(partFileNames);
+//        data.add(times);
+//        try {
+//            if (myKey.equals(Controller.KEY_BEFORE_CREATION))
+//                myKey = myController.addPartToGame(WAVE, waveName,
+//                                                   ProjectReader.getParamsNoTypeOrName(WAVE), data);
+//            else
+//                myKey =
+//                        myController.addPartToGame(myKey, WAVE, waveName,
+//                                                   ProjectReader.getParamsNoTypeOrName(WAVE), data);
+//        }
+//        catch (MissingInformationException | DataFormatException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    private void addUnitToWave (ScrollPane displayPane, HBox wave, String waveName) {
+//        WaveFlowView unit = new WaveFlowView(100, myController);
+//        wave.getChildren().add(unit);
+//        myWaves.get(waveName).add(unit);
+//
+//        displayPane.setHvalue(2.0);
+//    }
 
     /**
      * Gets wave information
