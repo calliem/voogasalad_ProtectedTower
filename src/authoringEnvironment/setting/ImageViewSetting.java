@@ -1,6 +1,6 @@
 package authoringEnvironment.setting;
 
-import imageselectorTEMP.ImageSelector;
+import imageselector.ImageSelector;
 import javafx.scene.layout.HBox;
 import authoringEnvironment.Controller;
 

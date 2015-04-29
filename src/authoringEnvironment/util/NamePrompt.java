@@ -1,6 +1,6 @@
 package authoringEnvironment.util;
 
-import imageselectorTEMP.ImageSelector;
+import imageselector.ImageSelector;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
