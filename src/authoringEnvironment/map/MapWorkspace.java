@@ -1,25 +1,21 @@
 package authoringEnvironment.map;
 
-<<<<<<< HEAD
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-=======
->>>>>>> parent of 50d57e5... magic number fix
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.pathing.PathView;
 import authoringEnvironment.objects.TileMap;
-<<<<<<< HEAD
 import authoringEnvironment.pathing.Anchor;
-=======
-import authoringEnvironment.pathing.Curve;
->>>>>>> parent of 50d57e5... magic number fix
 
 
 /**
@@ -32,15 +28,15 @@ import authoringEnvironment.pathing.Curve;
  */
 public class MapWorkspace extends StackPane {
 
-    private TileMap myActiveMap;
-    private Curve myActivePath; 
+    private static final Color MAP_BACKGROUND_COLOR = Color.web("2A2A29");
+
+    private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private static final int DEFAULT_MAP_ROWS =
             (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);
     private static final int DEFAULT_MAP_COLS =
             (int) (AuthoringEnvironment.getEnvironmentHeight() * .9 / 25); // getHeight();
     private static final int DEFAULT_TILE_SIZE = 30; // based on height since monitor height < width
                                                      // and that is usually the limiting factor
-<<<<<<< HEAD
     private static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
     private static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
     private static final double MESSAGE_DISPLAY_DURATION = 1000;
@@ -50,22 +46,18 @@ public class MapWorkspace extends StackPane {
     private PathView myActivePath;
     private Color myActiveColor;
     private Rectangle pathModeOverlay;
-=======
-
-    public static final double MAP_WIDTH_MULTIPLIER = .75;
-    public static final double MAP_HEIGHT_PERCENT = 100;
->>>>>>> parent of 50d57e5... magic number fix
 
     // TODO: fix all of these constants so there are no more replicates
 
-    public MapWorkspace () { // Dimension2D pass this in?
+    public MapWorkspace () {
         super();
         Rectangle background =
-                new Rectangle(AuthoringEnvironment.getEnvironmentWidth() * MAP_WIDTH_MULTIPLIER,
-                              0.9 * AuthoringEnvironment.getEnvironmentHeight(),
-                              Color.web("2A2A29"));
+                new Rectangle(AuthoringEnvironment.getEnvironmentWidth() *
+                              WORKSPACE_WIDTH_MULTIPLIER,
+                              WORKSPACE_HEIGHT_MULTIPLIER *
+                                      AuthoringEnvironment.getEnvironmentHeight(),
+                              MAP_BACKGROUND_COLOR);
         getChildren().add(background);
-<<<<<<< HEAD
         StackPane.setAlignment(background, Pos.CENTER);
 
         createDefaultMap();
@@ -76,15 +68,12 @@ public class MapWorkspace extends StackPane {
         StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
 
         
-=======
-        createDefaultMap(Variables.DEFAULT_TILE_COLOR);
->>>>>>> parent of 50d57e5... magic number fix
 
     }
 
-    public TileMap createDefaultMap (Color currentActiveColor) {
+    public TileMap createDefaultMap () {
         TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
-        updateWithNewMap(defaultMap, currentActiveColor);
+        updateWithNewMap(defaultMap);
         return defaultMap;
     }
 
@@ -92,28 +81,20 @@ public class MapWorkspace extends StackPane {
         return myActiveMap;
     }
 
-    public void removeMap () {
-        if (myActiveMap == null)
+    public PathView getActivePath () {
+        return myActivePath;
+    }
+
+    public void remove (Node node) {
+        if (node == null)
             return;
-        if (getChildren().contains(myActiveMap.getRoot())) {
-            System.out.println("remove active map");
-            getChildren().remove(myActiveMap.getRoot());
-            myActiveMap = null;
+        if (getChildren().contains(node)) {
+            getChildren().remove(node);
+            node = null; // this prob wil lnot work
         }
     }
 
-<<<<<<< HEAD
     private void update (GameObject object) {
-=======
-    public void updateWithNewMap (GameObject object, Color currentActiveColor) {
-        // TODO: reattach event handlers if none
-        // TODO: doing this is not actually that good because javaFX does not allow you to have
-        // multiple nodes, so you will require an update method which is doign exactly what you did
-        // before. Maybe reconstructing the object may be best here.
-        // updateWithInteractiveNewMap;
-        // updateWithNonInteractiveNewMap();
-
->>>>>>> parent of 50d57e5... magic number fix
         if (myActiveMap != null && myActiveMap.getRoot() != null) {
             getChildren().remove(myActiveMap.getRoot());
         }
@@ -138,7 +119,6 @@ public class MapWorkspace extends StackPane {
          */
         // });
 
-<<<<<<< HEAD
         myActiveMap.setActiveColor(myActiveColor);
 
     }
@@ -147,7 +127,7 @@ public class MapWorkspace extends StackPane {
     public void updateWithNewPath (GameObject object) {
         update(object);
 
-        myActivePath = (PathView) object;
+        //myActivePath = (PathView) object;
         // if (getChildren().contains(myActiveMap.getRoot())){
         // System.out.println("active map already exists");
 
@@ -203,13 +183,6 @@ public class MapWorkspace extends StackPane {
     public void setActiveColor (Color color) {
         myActiveMap.setActiveColor(color);
         myActiveColor = color;
-=======
-        myActiveMap.setActiveColor(currentActiveColor);
->>>>>>> parent of 50d57e5... magic number fix
     }
-    
-  /*  public void displayMessage(String message){
-        
-    }*/
 
 }
