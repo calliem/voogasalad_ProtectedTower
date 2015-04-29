@@ -4,6 +4,10 @@
     <string>UnnamedProjectile</string>
   </entry>
   <entry>
+    <string>PartType</string>
+    <string>Projectile</string>
+  </entry>
+  <entry>
     <string>Tags</string>
     <string>Basic</string>
   </entry>
