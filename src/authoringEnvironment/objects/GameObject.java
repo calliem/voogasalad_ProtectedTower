@@ -26,7 +26,7 @@ public abstract class GameObject {
 
     private String myKey;
     private String myName;
-    private ImageView myThumbnail;
+    private ImageView myImageView;
 
     public String getName () {
         return myName;
@@ -45,12 +45,12 @@ public abstract class GameObject {
         return myKey;
     }
 
-    public ImageView getThumbnail () {
-        return myThumbnail;
+    public ImageView getImagePreview () {
+        return myImageView;
     }
 
     public ImageView getUniqueThumbnail () {
-        ImageView uniqueNode = new ImageView(myThumbnail.getImage());
+        ImageView uniqueNode = new ImageView(myImageView.getImage());
 
         Tooltip t = new Tooltip(getToolTipInfo());
         t.setTextAlignment(TextAlignment.LEFT);
@@ -67,20 +67,20 @@ public abstract class GameObject {
      * @param image
      */
     public void setThumbnail (ImageView image) {
+        
+        //TODO: don't set the thumbnail size here, set it in the updatablesdisplay
         ImageView thumbnail = new ImageView(image.getImage());
-        thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
-                              Variables.THUMBNAIL_SIZE_MULTIPLIER);
-        thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
-                               Variables.THUMBNAIL_SIZE_MULTIPLIER);
-        
-        
-        myThumbnail = thumbnail;
+        //thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
+          //                    Variables.THUMBNAIL_SIZE_MULTIPLIER);
+        //thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
+         //                      Variables.THUMBNAIL_SIZE_MULTIPLIER);
+        myImageView = thumbnail;
     }
 
     public abstract Map<String, Object> save ();
     
     public abstract Group getRoot();
     
-    protected abstract String getToolTipInfo();
+    protected abstract String getToolTipInfo(); //TODO: items to be displayed on the tooltip store within a properties file
 
 }

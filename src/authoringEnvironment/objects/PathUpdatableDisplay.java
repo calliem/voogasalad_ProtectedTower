@@ -9,8 +9,8 @@ public class PathUpdatableDisplay extends UpdatableDisplay {
 
     private MapWorkspace myMapWorkspace;
 
-    public PathUpdatableDisplay (List<GameObject> list, int rowSize, MapWorkspace mapWorkspace) {
-        super(list, rowSize);
+    public PathUpdatableDisplay (List<GameObject> list, int rowSize, int thumbnailSize, MapWorkspace mapWorkspace) {
+        super(list, rowSize, thumbnailSize);
         myMapWorkspace = mapWorkspace;
         // TODO Auto-generated constructor stub
     }

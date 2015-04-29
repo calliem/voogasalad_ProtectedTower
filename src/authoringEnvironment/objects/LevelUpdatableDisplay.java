@@ -9,8 +9,8 @@ public class LevelUpdatableDisplay extends UpdatableDisplay {
 
     private MapWorkspace myMapWorkspace;
 
-    public LevelUpdatableDisplay (List<GameObject> list, int rowSize, MapWorkspace mapWorkspace) {
-        super(list, rowSize);
+    public LevelUpdatableDisplay (List<GameObject> list, int rowSize, double thumbnailSizeMultiplier, MapWorkspace mapWorkspace) {
+        super(list, rowSize, thumbnailSizeMultiplier);
         myMapWorkspace = mapWorkspace;
         // TODO Auto-generated constructor stub
     }

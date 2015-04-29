@@ -19,6 +19,8 @@ import authoringEnvironment.Variables;
  *
  */
 
+//extends Group implements GameObject
+
 public class TileMap extends GameObject {
 
     private Tile[][] newMap;

@@ -372,7 +372,7 @@ public class MapSidebar extends Sidebar {
 
         // display maps
         mapDisplay =
-                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
+                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, Variables.THUMBNAIL_SIZE_MULTIPLIER, this); // test
         container.add(mapDisplay, 0, 5, 2, 1);
 
         // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
