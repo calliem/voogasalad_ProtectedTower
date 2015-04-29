@@ -1,6 +1,6 @@
 package authoringEnvironment.map;
 
-import imageselectorTEMP.GraphicFileChooser;
+import imageselector.GraphicFileChooser;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;

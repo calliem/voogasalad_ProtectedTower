@@ -2,6 +2,7 @@ package authoringEnvironment;
 
 import java.util.List;
 import java.util.ResourceBundle;
+import main.Main;
 import javafx.application.Platform;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Scene;
@@ -15,7 +16,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
-import protectedtower.Main;
 import authoringEnvironment.editors.Editor;
 
 
