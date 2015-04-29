@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.pathing.PathView;
+import authoringEnvironment.objects.PathView;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.pathing.Anchor;
 
@@ -127,7 +127,7 @@ public class MapWorkspace extends StackPane {
     public void updateWithNewPath (GameObject object) {
         update(object);
 
-        //myActivePath = (PathView) object;
+        myActivePath = (PathView) object;
         // if (getChildren().contains(myActiveMap.getRoot())){
         // System.out.println("active map already exists");
 

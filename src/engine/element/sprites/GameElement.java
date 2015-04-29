@@ -28,7 +28,7 @@ public abstract class GameElement implements Collidable {
     /**
      * Holds the current location of the object
      */
-    @parameter(settable = false, playerDisplay = true)
+    @parameter(playerDisplay = true)
     private Point2D myLocation;
 
     // Getters and setters

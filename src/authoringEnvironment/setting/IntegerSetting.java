@@ -12,8 +12,8 @@ import authoringEnvironment.Controller;
 public class IntegerSetting extends Setting {
     private Integer dataAsInteger;
     
-    public IntegerSetting(Controller controller, String part, String label, String parameterName,  String defaultVal){
-        super(controller, part, label, parameterName, defaultVal);
+    public IntegerSetting(Controller controller, String part, String label, String defaultVal){
+        super(controller, part, label, defaultVal);
     }
     
     @Override

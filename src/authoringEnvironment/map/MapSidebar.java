@@ -393,7 +393,7 @@ public class MapSidebar extends Sidebar {
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton
                 .setOnMouseClicked(e -> {
-                //    remove(getMapWorkspace().getActivePath(), null, null); //TODO: add gameobject interface
+                    remove(getMapWorkspace().getActivePath(), null, null);
                     getMapWorkspace().deactivatePathMode();
                 });
 

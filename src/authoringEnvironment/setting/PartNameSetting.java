@@ -5,11 +5,10 @@ import authoringEnvironment.Controller;
 
 public class PartNameSetting extends StringSetting {
 
-
-    public PartNameSetting (Controller controller, String part, String label, String parameterName, String value) {
-        super(controller, part, label, parameterName, value);
+    public PartNameSetting (Controller controller, String part, String label, String value) {
+        super(controller, part, label, value);
     }
-    
+
     @Override
     public boolean parseField () {
         if (textBox().getText().length() > 25 || textBox().getText().length() < 1) {

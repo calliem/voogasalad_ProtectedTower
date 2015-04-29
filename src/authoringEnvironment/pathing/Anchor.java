@@ -1,20 +1,18 @@
 package authoringEnvironment.pathing;
 
-import authoringEnvironment.objects.Coordinate;
-import javafx.animation.PauseTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
-import javafx.util.Duration;
+import authoringEnvironment.objects.Coordinate;
 
 
 /**
- * This class codes for a draggable anchor point that is displayed to the user visually as a circle.
+ * This class codes for a draggable anchor point that is displayed to the user visually as a movable
+ * circle.
  * 
  * @author Callie Mao, jewelsea (StackOverflow)
  *
@@ -53,18 +51,18 @@ public class Anchor extends Circle {
             @Override
             public void handle (MouseEvent mouseEvent) {
                 // record a delta distance for the drag and drop operation.
-                System.out.println("anchor pressed!");
+
                 isPressed = true;
                 dragDelta.x = getCenterX() - mouseEvent.getX();
                 dragDelta.y = getCenterY() - mouseEvent.getY();
                 getScene().setCursor(Cursor.MOVE);
-                System.out.println("end of anchor pressed method " + isPressed + this);
+
             }
         });
         setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
-                System.out.println("anchor released!");
+
                 getScene().setCursor(Cursor.HAND);
                 // PauseTransition pause = new PauseTransition(Duration.millis(10000));
                 // pause.play();
@@ -79,7 +77,7 @@ public class Anchor extends Circle {
         setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
-                System.out.println("anchor dragged!");
+
                 isPressed = true;
                 double newX = mouseEvent.getX() + dragDelta.x;
                 if (newX > 0 + RADIUS && newX < parentWidth - RADIUS) {
@@ -110,7 +108,7 @@ public class Anchor extends Circle {
     }
 
     public boolean isSelected () {
-        System.out.println("Get is selected " + isPressed);
+
         return isPressed;
     }
 
