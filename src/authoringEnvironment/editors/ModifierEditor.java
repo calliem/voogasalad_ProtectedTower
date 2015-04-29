@@ -25,35 +25,29 @@ public class ModifierEditor extends Editor {
     private static final Color EDITOR_BACKGROUND_COLOR = Color.GRAY;
     private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
-    private String NOTHING_CREATED = "No " + editorName.toLowerCase() + "s yet...";
-    private Rectangle modifiersDisplayBackground =
-            new Rectangle(CONTENT_WIDTH, STRIP_PANEL_HEIGHT + 2 * PADDING,
-                          DISPLAY_BACKGROUND_COLOR);
+    private String NOTHING_CREATED;
     private Pane editor;
     private VBox editorLayout;
     private ScrollPane contentScrollPane;
+    private Text empty;
 
     public ModifierEditor (Controller controller, String name, String nameWithoutEditor) {
         super(controller, name, nameWithoutEditor);
-        
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     protected Group configureUI () {
         Group visuals = new Group();
-        StackPane modifiersDisplay = new StackPane();
-        visuals.getChildren().add(modifiersDisplay);
-        
+        NOTHING_CREATED = "No " + editorName.toLowerCase() + "s yet...";
+        Pane modifiersDisplay = new StackPane();
         editor = new StackPane();
         Rectangle editorBackground =
                 new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
 
         editorLayout = new VBox(PADDING);
-        Text empty = new Text(NOTHING_CREATED);
+        empty = new Text(NOTHING_CREATED);
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
-
 
         VBox contents = new VBox(PADDING);
         contents.setAlignment(Pos.CENTER_LEFT);
@@ -69,14 +63,12 @@ public class ModifierEditor extends Editor {
             addNewRow(contents);
         });
 
-        //modifiersDisplay.getChildren().add(modifiersDisplayBackground);
         contentScrollPane.setContent(modifiersDisplay);
 
         editorLayout.getChildren().addAll(makeNewRow);
         editorLayout.setAlignment(Pos.TOP_CENTER);
         editorLayout.setTranslateY(PADDING);
         StackPane.setAlignment(makeNewRow, Pos.TOP_RIGHT);
-
         editor.getChildren().addAll(editorBackground, editorLayout, empty);
 
         visuals.getChildren().add(editor);
@@ -85,14 +77,14 @@ public class ModifierEditor extends Editor {
 
     private void addNewRow (VBox contents) {
         // TODO Auto-generated method stub
-        HBox row = new HBox();
-        ChoiceBox<String> type = new ChoiceBox<>();
-        ChoiceBox<String> authoringObjects = new ChoiceBox<>(myController.getKeysForPartType("Tower"));
-        row.getChildren().add(authoringObjects);
-        contents.getChildren().add(row);
-//        myController.
-        
-    }
+        // HBox row = new HBox();
+        // ChoiceBox<String> type = new ChoiceBox<>();
+        // ChoiceBox<String> authoringObjects = new
+        // ChoiceBox<>(myController.getKeysForPartType("Tower"));
+        // row.getChildren().add(authoringObjects);
+        // contents.getChildren().add(row);
+        // myController.
 
+    }
 
 }

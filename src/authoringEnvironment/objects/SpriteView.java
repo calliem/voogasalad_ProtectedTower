@@ -151,8 +151,8 @@ public abstract class SpriteView extends StackPane {
             if (settings.get(i) instanceof ImageViewSetting) {
                 parameterFields.add(0, settings.get(i));
                 settingsObjects.getChildren().add(0, settings.get(i));
-            }
-            break;
+                break;
+            }   
         }
         for (int j = 0; j < settings.size(); j++) {
             if (settings.get(j) instanceof ImageViewSetting) {
