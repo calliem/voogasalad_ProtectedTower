@@ -165,6 +165,7 @@ public abstract class SpriteView extends StackPane {
                 continue;
             }
             parameterFields.add(settings.get(j));
+            System.out.println("setting was " +settings.get(j));
             settingsObjects.getChildren().add(settings.get(j));
         }
         initializeSpriteInfo();

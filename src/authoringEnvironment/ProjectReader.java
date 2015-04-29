@@ -203,12 +203,12 @@ public class ProjectReader {
                     System.err.println("Constructor Editor() doesn't exist or was"
                                        + "incorrectly called");
                     System.err.println("Tab's Editor is currently null");
-                    // e1.printStackTrace();
+                     e1.printStackTrace();
                 }
                 catch (ClassNotFoundException e1) {
                     System.err.println("Editor not found: " + toCreate);
                     System.err.println("Tab's Editor is currently null");
-                    // e1.printStackTrace();
+                     e1.printStackTrace();
                 }
                 catch (IllegalAccessException | InvocationTargetException
                         | NoSuchMethodException | SecurityException e1) {

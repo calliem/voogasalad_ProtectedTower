@@ -1,6 +1,7 @@
 package engine.element.sprites;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import annotations.parameter;
 
@@ -20,7 +21,7 @@ public abstract class GameSprite extends MoveableSprite {
      * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
      */
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
-    private Set<String> nextSprites;
+    private List<String> nextSprites;
 
     // Getters and setters
 
@@ -35,8 +36,8 @@ public abstract class GameSprite extends MoveableSprite {
     /**
      * @return the nextSprites
      */
-    public Set<String> getNextSprites () {
-        return Collections.unmodifiableSet(nextSprites);
+    public List<String> getNextSprites () {
+        return Collections.unmodifiableList(nextSprites);
     }
 
 }

@@ -30,6 +30,8 @@ public class ModifierEditor extends Editor {
     private VBox editorLayout;
     private ScrollPane contentScrollPane;
     private Text empty;
+    private Pane modifiersDisplay;
+    private Button makeNewRow;
 
     public ModifierEditor (Controller controller, String name, String nameWithoutEditor) {
         super(controller, name, nameWithoutEditor);
@@ -39,12 +41,11 @@ public class ModifierEditor extends Editor {
     protected Group configureUI () {
         Group visuals = new Group();
         NOTHING_CREATED = "No " + editorName.toLowerCase() + "s yet...";
-        Pane modifiersDisplay = new StackPane();
+        modifiersDisplay = new StackPane();
         editor = new StackPane();
         Rectangle editorBackground =
                 new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
 
-        editorLayout = new VBox(PADDING);
         empty = new Text(NOTHING_CREATED);
         empty.setFont(new Font(30));
         empty.setFill(Color.WHITE);
@@ -57,7 +58,7 @@ public class ModifierEditor extends Editor {
         contentScrollPane.setMaxHeight(CONTENT_HEIGHT - (BUTTON_HEIGHT + 2 * PADDING));
         contentScrollPane.setMaxWidth(CONTENT_WIDTH);
 
-        Button makeNewRow = new Button("Create New " + editorName);
+        makeNewRow = new Button("Create New " + editorName);
         makeNewRow.setMaxHeight(BUTTON_HEIGHT);
         makeNewRow.setOnAction(e -> {
             addNewRow(contents);
@@ -65,24 +66,29 @@ public class ModifierEditor extends Editor {
 
         contentScrollPane.setContent(modifiersDisplay);
 
+        editorLayout = new VBox(PADDING);
         editorLayout.getChildren().addAll(makeNewRow);
         editorLayout.setAlignment(Pos.TOP_CENTER);
         editorLayout.setTranslateY(PADDING);
         StackPane.setAlignment(makeNewRow, Pos.TOP_RIGHT);
         editor.getChildren().addAll(editorBackground, editorLayout, empty);
-
         visuals.getChildren().add(editor);
         return visuals;
     }
 
     private void addNewRow (VBox contents) {
         // TODO Auto-generated method stub
-        // HBox row = new HBox();
-        // ChoiceBox<String> type = new ChoiceBox<>();
-        // ChoiceBox<String> authoringObjects = new
-        // ChoiceBox<>(myController.getKeysForPartType("Tower"));
-        // row.getChildren().add(authoringObjects);
-        // contents.getChildren().add(row);
+        if (editorLayout.getChildren().size() == 1) {
+            editor.getChildren().remove(empty);
+        }
+        HBox row = new HBox(PADDING);
+        ChoiceBox<String> type = new ChoiceBox<>();
+        ChoiceBox<String> authoringObjects =
+                new ChoiceBox<>();
+            authoringObjects.setItems(myController.getKeysForPartType("Tower"));
+        
+        row.getChildren().add(authoringObjects);
+        editorLayout.getChildren().add(0, row);
         // myController.
 
     }
