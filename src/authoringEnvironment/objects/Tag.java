@@ -37,6 +37,8 @@ public class Tag extends Group {
 
         tagDisplay = new StackPane();
         closeButton = new DeleteButton(BUTTON_SIZE);
+        closeButton.setTranslateX(TAG_WIDTH-BUTTON_SIZE/2);
+        closeButton.setTranslateY(-BUTTON_SIZE/2);
 
         Rectangle tagBody = new Rectangle(TAG_WIDTH, TAG_HEIGHT, TAG_COLOR);
         tagBody.setArcWidth(10);
