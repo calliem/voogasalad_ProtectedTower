@@ -8,6 +8,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -63,6 +65,8 @@ public abstract class SpriteView extends ObjectView {
     private String id;
     private ImageView previewImage;
     private StackPane displayPane;
+    
+    private static final int PADDING = 10;
     
     /**
      * Creates visual representation of a sprite created by
@@ -134,6 +138,7 @@ public abstract class SpriteView extends ObjectView {
                                         IllegalAccessException {
         editableContent = new VBox(10);
         editableContent.setAlignment(Pos.CENTER);
+        editableContent.setMaxWidth(300);
 
         overlaySpriteNameDisplay = new Text(spriteName);
         overlaySpriteNameDisplay.setFont(new Font(30));
@@ -142,19 +147,27 @@ public abstract class SpriteView extends ObjectView {
         overlayErrorMessage = new Text("Please check your parameters for errors.");
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
+        
+        editableContent.getChildren().addAll(overlaySpriteNameDisplay, overlayErrorMessage);
+        
+        ScrollPane settingsDisplay = new ScrollPane();
+        settingsDisplay.setPrefHeight(300);
+        settingsDisplay.setPrefWidth(200);
+        settingsDisplay.setHbarPolicy(ScrollBarPolicy.NEVER);
 
-        VBox settingsObjects = new VBox(10);
-        settingsObjects.setMaxWidth(150);
-
+        VBox settingsObjects = new VBox(PADDING);
+        settingsObjects.setMaxWidth(200);
+        
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
         // move the image to be first in the settings list
         for (int i = 0; i < settings.size(); i++) {
             if (settings.get(i) instanceof ImageViewSetting) {
                 parameterFields.add(0, settings.get(i));
-                settingsObjects.getChildren().add(0, settings.get(i));
+                editableContent.getChildren().add(settings.get(i));
                 break;
             }
         }
+        
         for (int j = 0; j < settings.size(); j++) {
             if (settings.get(j) instanceof ImageViewSetting) {
                 continue;
@@ -162,12 +175,13 @@ public abstract class SpriteView extends ObjectView {
             if (settings.get(j) instanceof StringSetting &&
                 settings.get(j).getParameterName().equals("name")) {
                 parameterFields.add(1, settings.get(j));
-                settingsObjects.getChildren().add(1, settings.get(j));
+                editableContent.getChildren().add(settings.get(j));
                 continue;
             }
             parameterFields.add(settings.get(j));
             settingsObjects.getChildren().add(settings.get(j));
         }
+        settingsDisplay.setContent(settingsObjects);
         initializeSpriteInfo();
 
         HBox buttons = new HBox(10);
@@ -185,8 +199,7 @@ public abstract class SpriteView extends ObjectView {
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(saveButton, cancelButton);
 
-        editableContent.getChildren().addAll(overlaySpriteNameDisplay,
-                                             overlayErrorMessage, settingsObjects, buttons, saved);
+        editableContent.getChildren().addAll(settingsDisplay, buttons, saved);
     }
 
     private void initializeSpriteInfo () {

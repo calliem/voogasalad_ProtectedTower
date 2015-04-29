@@ -47,7 +47,7 @@ public abstract class SpriteEditor extends Editor {
     private Group visuals;
     protected StackPane myContent;
     protected HBox currentRow;
-    private boolean editing = false;
+    protected boolean editing = false;
     private Text empty;
     protected List<Node> spritesCreated;
     protected List<TagGroup> tagGroupsList;

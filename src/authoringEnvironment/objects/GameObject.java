@@ -1,4 +1,4 @@
-package authoringEnvironment.objects;
+    package authoringEnvironment.objects;
 
 import java.util.Map;
 import javafx.scene.Group;

@@ -41,7 +41,9 @@ public class TileEditor extends SpriteEditor {
         TileView tile = new TileView(myController, name, color);
         tile.initiateEditableState();
         tile.getTileBody().setOnMousePressed(e -> {
-            showOverlay(tile);
+            if(editing){
+                showOverlay(tile);
+            }
         });
         tile.getCloseButton().setOnAction(e -> {
             hideTileOverlay(tile);
