@@ -7,6 +7,8 @@ import java.util.Map;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
@@ -17,9 +19,10 @@ import authoringEnvironment.Variables;
 import authoringEnvironment.objects.Coordinate;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.util.Screenshot;
 
 
-public class PathView extends GameObject{
+public class PathView extends GameObject {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private static final int DEFAULT_STROKE_WIDTH = 4;
     private TileMap myParent;
@@ -42,8 +45,6 @@ public class PathView extends GameObject{
     public int getNumPoints () {
         return numPoints;
     }
-
- 
 
     public boolean areAnchorsSelected () {
         for (Anchor anchor : myAnchors) {
@@ -72,7 +73,7 @@ public class PathView extends GameObject{
         num.xProperty().bind(anchor.centerXProperty());
         num.yProperty().bind(anchor.centerYProperty());
         myRoot.getChildren().add(num);
-        //myParent.getRoot().getChildren().add(num);
+        // myParent.getRoot().getChildren().add(num);
         mostRecentPoint = anchor;
         myAnchors.add(anchor);
 
@@ -103,7 +104,7 @@ public class PathView extends GameObject{
 
         curve.startYProperty().bind(start.centerYProperty());
         curve.endYProperty().bind(end.centerYProperty());
-        
+
         Coordinate startCoordinates = start.getCoordinates();
         Coordinate endCoordinates = end.getCoordinates();
         Coordinate ctrl1Coordinates = control1.getCoordinates();
@@ -163,12 +164,14 @@ public class PathView extends GameObject{
 
     public Map<String, Object> save () {
         // TODO: getName
-        String name = "temporary"; // testing only TODO: remove
+        ImageView image = Screenshot.snap(this);
+        Image thumbnail = image.getImage();
+        
         Map<String, Object> settings = new HashMap<String, Object>();
         settings.put(InstanceManager.NAME_KEY, myName);
         settings.put(Variables.PARAMETER_CURVES_COORDINATES, myPaths);
         settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
-        settings.put(Variables.PARAMETER_IMAGE, "test");
+        settings.put(Variables.PARAMETER_IMAGE, thumbnail);
         return settings;
     }
 
@@ -194,54 +197,5 @@ public class PathView extends GameObject{
     public int getHeight () {
         return myParent.getHeight();
     }
-    
-    /*   public void createCurve (double startX, double startY, double endX, double endY) {
-    // TODO: remove this method
-    CubicCurve curve = createStartingCurve(startX, startY, endX, endY);
-
-    Line controlLine1 =
-            new BoundLine(curve.controlX1Property(), curve.controlY1Property(),
-                          curve.startXProperty(), curve.startYProperty());
-    Line controlLine2 =
-            new BoundLine(curve.controlX2Property(), curve.controlY2Property(),
-                          curve.endXProperty(), curve.endYProperty());
-
-    Anchor start =
-            new Anchor(Color.PALEGREEN, curve.startXProperty(), curve.startYProperty(),
-                       myParent.getWidth(), myParent.getHeight());
-    Anchor control1 =
-            new Anchor(Color.GOLD, curve.controlX1Property(), curve.controlY1Property(),
-                       myParent.getWidth(), myParent.getHeight());
-    Anchor control2 =
-            new Anchor(Color.GOLDENROD, curve.controlX2Property(), curve.controlY2Property(),
-                       myParent.getWidth(), myParent.getHeight());
-    Anchor end =
-            new Anchor(Color.TOMATO, curve.endXProperty(), curve.endYProperty(),
-                       myParent.getWidth(), myParent.getHeight());
-
-    myAnchors.add(control1);
-    myAnchors.add(control2);
-
-    Coordinate startCoordinates = start.getCoordinates();
-    Coordinate endCoordinates = end.getCoordinates();
-    Coordinate ctrl1Coordinates = control1.getCoordinates();
-    Coordinate ctrl2Coordinates = control2.getCoordinates();
-
-    /*
-     * Curve pathView =
-     * new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
-     * myPaths.add(pathView);
-     
-
-    CurveCoordinates curveCoordinates =
-            new CurveCoordinates(startCoordinates, endCoordinates, ctrl1Coordinates,
-                                 ctrl2Coordinates);
-
-    myPaths.add(curveCoordinates);
-
-    Group path = new Group(controlLine1, controlLine2, curve, start, control1,
-                           control2, end);
-    myParent.getRoot().getChildren().add(path);
-}*/
 
 }

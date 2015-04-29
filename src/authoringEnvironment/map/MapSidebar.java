@@ -430,7 +430,12 @@ public class MapSidebar extends Sidebar {
         getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
                                          Color.GREEN);
         
+        
         Map<String, Object> mapSettings = getMapWorkspace().getActivePath().save();
+        System.out.println(mapSettings);
+        System.out.println(getMapWorkspace().getActivePath());
+        System.out.println(myController);
+        
         try {
             myController.addPartToGame(mapSettings);
         }

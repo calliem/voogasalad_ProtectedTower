@@ -104,6 +104,10 @@ public class InstanceManager {
         if (!missingKey.equals(NO_KEYS_MISSING))
             throw new MissingInformationException(missingKeyErrorMessage(missingKey));
         //keep the tags
+        System.out.println(fullPartMap);
+        System.out.println(key);
+        System.out.println(userParts.get(key));
+        System.out.println(userParts);
         fullPartMap.put(TAGS_KEY, userParts.get(key).get(TAGS_KEY));
         userParts.put(key, fullPartMap);
         writePartToXML(fullPartMap);
