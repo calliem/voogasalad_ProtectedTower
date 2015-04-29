@@ -43,7 +43,6 @@ public class InstanceManager {
     public static final String NAME_KEY = "name";
     public static final String TAGS_KEY = "Tags";
 
-
     public static final String IMAGE_KEY = "imagePath";
     public static final String SAVE_PATH_KEY = "SavePath";
 
@@ -103,7 +102,7 @@ public class InstanceManager {
         String missingKey = checkMissingInformation(fullPartMap);
         if (!missingKey.equals(NO_KEYS_MISSING))
             throw new MissingInformationException(missingKeyErrorMessage(missingKey));
-        //keep the tags
+        // keep the tags
         fullPartMap.put(TAGS_KEY, userParts.get(key).get(TAGS_KEY));
         userParts.put(key, fullPartMap);
         writePartToXML(fullPartMap);
@@ -130,6 +129,14 @@ public class InstanceManager {
         return missingKey;
     }
 
+    protected boolean deletePart (String partKey) {
+        if (userParts.keySet().contains(partKey)) {
+            userParts.remove(partKey);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Writes the part, passed as a Map, into an XML file in:
      * rootDirectory/partType/partName.xml, for example:
@@ -150,6 +157,9 @@ public class InstanceManager {
      * Writes all parts of the current game into their respective files
      */
     public void writeAllPartsToXML () {
+        //TODO: clear all the parts that were deleted
+        //in order to do this, we need to make sure loading loads the IM correctly, or else
+        //it could clear ones that shouldn't have been cleared
         for (String key : userParts.keySet())
             writePartToXML(userParts.get(key));
     }
@@ -220,23 +230,23 @@ public class InstanceManager {
     public void specifyPartImage (String partKey, String imageFilePath) {
         userParts.get(partKey).put(IMAGE_KEY, imageFilePath);
     }
-    
-    protected void addTagToPart(String partKey, String tag){
+
+    protected void addTagToPart (String partKey, String tag) {
         Map<String, Object> addTagTo = userParts.get(partKey);
-        if(addTagTo.containsKey(TAGS_KEY)){
-           List<String> tagList =  (List<String>) userParts.get(TAGS_KEY);
-           tagList.add(tag);
-           addTagTo.put(TAGS_KEY, tagList);
+        if (addTagTo.containsKey(TAGS_KEY)) {
+            List<String> tagList = (List<String>) userParts.get(TAGS_KEY);
+            tagList.add(tag);
+            addTagTo.put(TAGS_KEY, tagList);
         }
-        else{
+        else {
             List<String> tagList = new ArrayList<String>();
             tagList.add(tag);
             addTagTo.put(TAGS_KEY, tagList);
         }
-        
+
     }
-    
-    public boolean containsKey(String key){
+
+    public boolean containsKey (String key) {
         return userParts.containsKey(key);
     }
 
