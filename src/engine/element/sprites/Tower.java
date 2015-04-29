@@ -1,6 +1,7 @@
 package engine.element.sprites;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
@@ -32,11 +33,22 @@ public class Tower extends GameSprite {
 
     private Set<GameElement> myTargets;
 
-    // TODO remove once testing is over
-    public Tower (ImageView test) {
-        super.setImageView(test);
-    }
+//    // TODO remove once testing is over
+//    public Tower (Map<String,Object> parameters, ImageView test) {
+//        super.setImageView(test);
+//    }
 
+    public Tower (Map<String, Object> parameters) {
+        super(parameters);
+        
+        attackSpeed = (Double) parameters.get("attackSpeed");
+        attackRange = (Double) parameters.get("attackRange");
+        attackPriority = (String) parameters.get("attackPriority");
+        projectiles = (List<String>) parameters.get("projectiles");
+        cost = (Double) parameters.get("cost");
+        buildTime = (Double) parameters.get("buildTime");
+    }
+    
     /**
      * Adds new sprites for the tower to target
      * 

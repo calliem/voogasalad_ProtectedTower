@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import java.util.Map;
 import annotations.parameter;
 
 
@@ -14,6 +15,11 @@ public class Projectile extends MoveableSprite {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1")
     private Integer damage;
+
+    public Projectile(Map<String, Object> parameters){
+        super(parameters);
+        damage = (Integer) parameters.get("damage");
+    }
 
     // Getters and setters
 
@@ -35,7 +41,7 @@ public class Projectile extends MoveableSprite {
     @Override
     public void move () {
         super.setLocation(super.getLocation()
-                .add(super.getHeading().multiply(super.getSpeed())));
+                          .add(super.getHeading().multiply(super.getSpeed())));
     }
 
     @Override

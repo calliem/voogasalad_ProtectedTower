@@ -111,8 +111,8 @@ public class GamePlayer extends Application {
         // ImageView test5 = new ImageView(myImage);
         // test5.setTranslateX(300);
         // test5.setTranslateY(300);
-        availableTowers.add(new Tower(test));
-        availableTowers.add(new Tower(test1));
+//        availableTowers.add(new Tower(test));
+//        availableTowers.add(new Tower(test1));
         // availableTowers.add(new Tower(test2));
         // availableTowers.add(new Tower(test3));
         // availableTowers.add(new Tower(test4));

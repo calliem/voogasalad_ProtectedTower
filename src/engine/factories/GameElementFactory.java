@@ -93,7 +93,8 @@ public class GameElementFactory {
      */
     public Object getGameElement (String className, String guid) {
         if (myGameElements.get(className).containsKey(guid)) {
-            Object element = Reflection.createInstance(MY_CLASS_LOCATION);
+//            Object element = Reflection.createInstance(MY_CLASS_LOCATION);
+            Object element = Reflection.createInstance(MY_CLASS_LOCATION, myGameElements.get(className).get(guid));
             // TODO set up instance variables with reflection
             return element;
         }

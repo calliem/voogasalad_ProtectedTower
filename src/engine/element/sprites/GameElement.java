@@ -2,6 +2,7 @@ package engine.element.sprites;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javafx.geometry.Point2D;
 import annotations.parameter;
 import engine.Collidable;
@@ -30,6 +31,13 @@ public abstract class GameElement implements Collidable {
      */
     @parameter(playerDisplay = true)
     private Point2D myLocation;
+
+    public GameElement (Map<String, Object> parameters) {
+        name = (String) parameters.get("name");
+        tags = (List<String>) parameters.get("tags");
+        boundingHeight = (Double) parameters.get("boundingHeight");
+        boundingWidth = (Double) parameters.get("boundingWidth");
+    }
 
     // Getters and setters
 

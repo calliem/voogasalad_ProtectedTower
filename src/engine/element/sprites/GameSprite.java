@@ -1,6 +1,8 @@
 package engine.element.sprites;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import annotations.parameter;
 
@@ -21,6 +23,12 @@ public abstract class GameSprite extends MoveableSprite {
      */
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
     private Set<String> nextSprites;
+
+    public GameSprite (Map<String, Object> parameters) {
+        super(parameters);
+        health = (Integer) parameters.get("health");
+        nextSprites = (Set<String>) parameters.get("nextSprites");
+    }
 
     // Getters and setters
 

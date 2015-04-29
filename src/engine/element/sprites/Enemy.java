@@ -2,6 +2,7 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import annotations.parameter;
@@ -31,6 +32,12 @@ import engine.InsufficientParametersException;
 
 public class Enemy extends GameSprite {
 
+    public Enemy (Map<String, Object> parameters) {
+        super(parameters);
+
+        CanHurtPlayer = (Boolean) parameters.get("CanHurtPlayer");
+    }
+
     private static final int MOVE_DELAY = 1000;
 
     @parameter(settable = false, playerDisplay = true, defaultValue = "false")
@@ -38,10 +45,6 @@ public class Enemy extends GameSprite {
 
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
-
-    public Enemy () {
-        super();
-    }
 
     @Override
     public void target (Sprite sprite) {

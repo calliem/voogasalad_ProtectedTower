@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import java.util.Map;
 import javafx.geometry.Point2D;
 
 
@@ -12,6 +13,10 @@ import javafx.geometry.Point2D;
  *
  */
 public class GridCell extends GameElement {
+
+    public GridCell (Map<String, Object> parameters) {
+        super(parameters);
+    }
 
     private Point2D centerLocation;
 
