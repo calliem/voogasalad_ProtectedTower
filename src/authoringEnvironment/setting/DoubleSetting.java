@@ -11,8 +11,8 @@ public class DoubleSetting extends Setting{
 
     private Double dataAsDouble;
 
-    public DoubleSetting(Controller controller, String part, String paramName, String defaultVal){
-        super(controller, part, paramName, defaultVal);
+    public DoubleSetting(Controller controller, String part, String paramName, String parameterName, String defaultVal){
+        super(controller, part, paramName, parameterName, defaultVal);
     }
 
     @Override

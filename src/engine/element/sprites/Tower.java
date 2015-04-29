@@ -2,6 +2,7 @@ package engine.element.sprites;
 
 import java.util.List;
 import java.util.Set;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
 
@@ -33,7 +34,7 @@ public class Tower extends GameSprite {
     private Set<GameElement> myTargets;
 
     // TODO remove once testing is over
-    public Tower (ImageView test) {
+    public Tower (Image test) {
         super.setImageView(test);
     }
 

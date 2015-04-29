@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import util.misc.SetHandler;
+import util.player.ReflectionUtil;
 import annotations.parameter;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.setting.Setting;
@@ -35,6 +38,10 @@ public class ProjectReader {
                                            "/src/resources/display/main_environment_english.properties";
     private static final String settingsPackage = "authoringEnvironment.setting.";
 
+    /**
+     * The getParamsNoTypeOrName method is called by WaveStrip and currently has an error because
+     * this are commented out. Do we need to rewrite these? I think they're bad, but would mean a bigg rewrite we dont have time for.  Theyre fine for now
+     */
     public static String[] getParamListForPart (String partType) throws ClassNotFoundException {
         Class<?> currentClass = Class.forName(partType);
         Field[] myFields = currentClass.getDeclaredFields();
@@ -47,15 +54,13 @@ public class ProjectReader {
         return null;
     }
 
-    public static List<String> getParamsNoTypeOrName (String partType)
-                                                                      throws ClassNotFoundException {
+    public static List<String> getParamsNoTypeOrName (String partType) throws ClassNotFoundException {
         String[] params = getParamListForPart(partType);
         List<String> finalList = new ArrayList<String>();
         for (String param : params) {
             if (!param.equals(InstanceManager.NAME_KEY)
-                && !param.equals(InstanceManager.PART_TYPE_KEY)) {
+                && !param.equals(InstanceManager.PART_TYPE_KEY))
                 finalList.add(param);
-            }
         }
         return finalList;
     }
@@ -77,29 +82,44 @@ public class ProjectReader {
                                                                                              IllegalAccessException {
         System.out.println("genreate stginsgl list calle " + classLists.getString(partType));
         Class<?> currentClass = Class.forName(classLists.getString(partType));
-        Field[] myFields = currentClass.getDeclaredFields();
+        List<Class<?>> classesWithFields = ReflectionUtil.getPackageParentList(currentClass);
         List<Setting> settingsList = new ArrayList<Setting>();
-        for (Field field : myFields) {
-            System.out.println("field" + field);
-            if (field.getAnnotation(parameter.class) != null &&
-                field.getAnnotation(parameter.class).settable()) {
-                settingsList.add(generateSetting(controller, partType, field.getName(), field
-                        .getAnnotation(parameter.class).defaultValue(),
-                                                 field.getType().getSimpleName()));
+        for (Class<?> myClass : classesWithFields) {
+            Field[] myFields = myClass.getDeclaredFields();
+            for (Field field : myFields) {
+                String paramName = null;
+                System.out.println("field" + field);
+                if (field.getAnnotation(parameter.class) != null &&
+                    field.getAnnotation(parameter.class).settable()) {
+                    Type type = field.getGenericType();
+                    if (type instanceof ParameterizedType) {
+                        ParameterizedType pt = (ParameterizedType) type;
+                        Type paramType = pt.getActualTypeArguments()[0];
+                        paramName = paramType.getTypeName();
+                        int lastClassindex = paramName.lastIndexOf(".") + 1;
+                        paramName = paramName.substring(lastClassindex);
+                    }
+                    settingsList.add(generateSetting(controller, partType, field.getName(),
+                                                     paramName, field
+                                                             .getAnnotation(parameter.class)
+                                                             .defaultValue(),
+                                                     field.getType().getSimpleName()));
+                }
             }
         }
         return settingsList;
     }
 
-    // public static List<Setting> generateSettingsList (Controller controller, String partType)
-    // {
+    /**
+     * This commented out code below was previously used when loading from a properties file
+     * The above code is the same method but for use with annotations and reflection
+     */
+    // public static List<Setting> generateSettingsListOld (Controller controller, String partType){
     // // System.out.println("genreate stginsgl list calle");
     // List<Setting> settingsList = new ArrayList<Setting>();
     // ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
-    //
     // String[] params = getParamListForPart(partType);
-    // System.out.println("params for " + partType + ": "
-    // + SetHandler.listFromArray(params));
+    // System.out.println("params for " + partType + ": " + SetHandler.listFromArray(params));
     // List<String> paramsList = SetHandler.listFromArray(params);
     // Collections.sort(paramsList);
     // System.out.println("sorted? param list: " + paramsList);
@@ -108,12 +128,9 @@ public class ProjectReader {
     // String[] typeAndDefault = paramSpecs.getString(param).split("\\s+");
     // String dataType = typeAndDefault[0];
     // String defaultVal = typeAndDefault[1];
-    //
     // settingsList.add(generateSetting(controller, partType, param, defaultVal,
     // dataType));
-    //
     // }
-
     // ResourceBundle paramSpecs = ResourceBundle.getBundle(paramSpecsFile);
     // String[] params = getParamListForPart(partType);
     // System.out.println("params for " + partType + ": "
@@ -131,19 +148,15 @@ public class ProjectReader {
     /**
      * Generates one setting object from the 4 parameters given
      * 
-     * @param partType
-     *        The type of part, i.e. "Tower"
-     * @param param
-     *        The name of the parameter the Setting is being generated for,
-     *        i.e. "HP"
-     * @param defaultVal
-     *        The default value of the Setting, i.e. "0"
-     * @param dataType
-     *        The type of the data, i.e. "Integer"
+     * @param partType The type of part, i.e. "Tower"
+     * @param param The name of the parameter the Setting is being generated for, i.e. "HP"
+     * @param parameterClass
+     * @param defaultVal The default value of the Setting, i.e. "0"
+     * @param dataType The type of the data, i.e. "Integer"
      * @return The Setting object corresponding to these parameters
      */
     public static Setting generateSetting (Controller controller, String partType, String param,
-                                           String defaultVal, String dataType) {
+                                           String paramName, String defaultVal, String dataType) {
         Class<?> c = String.class;
         Setting s = null;
         String settingToGet = settingsPackage + dataType + "Setting";
@@ -158,8 +171,9 @@ public class ProjectReader {
         try {
             s =
                     (Setting) c.getConstructor(Controller.class, String.class, String.class,
-                                               String.class).newInstance(controller, partType,
-                                                                         param, defaultVal);
+                                               String.class,
+                                               String.class)
+                            .newInstance(controller, partType, param, paramName, defaultVal);
         }
         catch (InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException
@@ -167,7 +181,6 @@ public class ProjectReader {
             // display error message, don't let the null value be used
             System.err.println("Setting object couldn't be created");
         }
-
         return s;
     }
 

@@ -41,8 +41,8 @@ public class SpriteSetting extends Setting {
     private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
 
-    public SpriteSetting (Controller controller, String part, String label, String value) {
-        super(controller, part, label, value);
+    public SpriteSetting (Controller controller, String part, String label, String parameterName, String value) {
+        super(controller, part, label, parameterName, value);
     }
 
     @Override
