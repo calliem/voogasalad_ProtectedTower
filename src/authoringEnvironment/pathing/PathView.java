@@ -26,7 +26,7 @@ public class PathView extends GameObject {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private static final int DEFAULT_STROKE_WIDTH = 4;
     private TileMap myParent;
-    private List<CurveCoordinates> myPaths;
+   // private List<CurveCoordinates> myPaths;
     private String myName;
     private int numPoints;
     private Anchor mostRecentPoint;
@@ -36,7 +36,7 @@ public class PathView extends GameObject {
     public PathView (TileMap parent) {
         myAnchors = new ArrayList<Anchor>();
         myParent = parent;
-        myPaths = new ArrayList<CurveCoordinates>();
+    //    myPaths = new ArrayList<CurveCoordinates>();
         numPoints = 0;
         myRoot = new Group();
         myParent.getRoot().getChildren().add(myRoot);
@@ -76,6 +76,7 @@ public class PathView extends GameObject {
         // myParent.getRoot().getChildren().add(num);
         mostRecentPoint = anchor;
         myAnchors.add(anchor);
+        System.out.println("add " + anchor);
 
         numPoints++;
 
@@ -116,14 +117,16 @@ public class PathView extends GameObject {
          * myPaths.add(pathView);
          */
 
-        CurveCoordinates curveCoordinates =
+        /*CurveCoordinates curveCoordinates =
                 new CurveCoordinates(startCoordinates, endCoordinates, ctrl1Coordinates,
-                                     ctrl2Coordinates);
+                                     ctrl2Coordinates);*/
 
-        myPaths.add(curveCoordinates);
+       // myPaths.add(curveCoordinates);
 
         myAnchors.add(control1);
+        System.out.println("add control " + control1);
         myAnchors.add(control2);
+        System.out.println("add control " + control2);
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
         myRoot.getChildren().add(path);
@@ -163,7 +166,11 @@ public class PathView extends GameObject {
     }
 
     public Map<String, Object> save () {
-        System.out.println(myAnchors);
+        List<Coordinate> anchorCoordinates = new ArrayList<Coordinate>();
+        for (Anchor anchor: myAnchors){
+            anchorCoordinates.add(anchor.getCoordinates());
+        }
+        System.out.println(anchorCoordinates);
         // TODO: getName
         ImageView image = Screenshot.snap(myParent);
         //Image thumbnail = image.getImage();
@@ -171,7 +178,7 @@ public class PathView extends GameObject {
         
         Map<String, Object> settings = new HashMap<String, Object>();
         settings.put(InstanceManager.NAME_KEY, myName);
-        settings.put(Variables.PARAMETER_CURVES_COORDINATES, myPaths);
+        settings.put(Variables.PARAMETER_CURVES_COORDINATES, anchorCoordinates);
         settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
 
       //  settings.put(Variables.PARAMETER_IMAGE, thumbnail);
