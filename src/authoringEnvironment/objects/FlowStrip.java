@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.editors.FlowEditor;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -29,13 +30,13 @@ import javafx.scene.text.TextAlignment;
 public abstract class FlowStrip extends HBox {
 
     private static final int PADDING = 10;
-    private static final int STRIP_PANEL_HEIGHT = 105;
+    private static final int STRIP_PANEL_HEIGHT = FlowEditor.STRIP_PANEL_HEIGHT;
     private static final int INFO_PANEL_WIDTH = 170;
     private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
     private static final Color STRIP_NAME_COLOR = Color.GOLDENROD;
     private static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
 
-    private Controller myController;
+    protected Controller myController;
     protected String myKey;
     protected List<FlowView> myComponents;
     private String editorType;
@@ -72,7 +73,7 @@ public abstract class FlowStrip extends HBox {
         Button save = new Button("Save");
         save.setOnAction(e -> saveData(componentName));
 
-        HBox buttons = new HBox(PADDING);
+        VBox buttons = new VBox(PADDING);
         buttons.setAlignment(Pos.CENTER);
 
         Text componentNameDisplay = new Text(componentName);

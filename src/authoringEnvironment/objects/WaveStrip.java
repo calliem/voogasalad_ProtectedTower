@@ -40,6 +40,10 @@ public class WaveStrip extends FlowStrip {
         for (FlowView unit : myComponents) {
             partFileNames.addAll(unit.getFileNames());
             delays.addAll(unit.getDelays());
+            //Get rid of potential last element due to extra arrow/input space
+            if (partFileNames.size() != delays.size()) {
+                delays.remove(delays.size() - 1);
+            }
         }
 
         for (Double d : delays) {

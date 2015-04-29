@@ -252,15 +252,6 @@ public class WaveEditor extends FlowEditor {
 //        displayPane.setHvalue(2.0);
 //    }
 
-
-    private void addUnitToWave (ScrollPane displayPane, HBox wave, String waveName) {
-        WaveFlowView unit = new WaveFlowView(100, myController);
-        wave.getChildren().add(unit);
-        myWaves.get(waveName).add(unit);
-
-        displayPane.setHvalue(2.0);
-    }
-
     /**
      * Gets wave information
      * 
