@@ -38,7 +38,7 @@ public class MapWorkspace extends StackPane {
                                                      // and that is usually the limiting factor
     private static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
     private static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
-    private static final double MESSAGE_DISPLAY_DURATION = 1000;
+    private static final double MESSAGE_DISPLAY_DURATION = 1500;
     private static final int MESSAGE_FONT_SIZE = 20;
     private static final String EMPTY_KEY = "";
 
@@ -64,7 +64,8 @@ public class MapWorkspace extends StackPane {
 
         createDefaultMap();
         pathModeOverlay =
-                //new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS, myActiveMap.getHeight()+2*Anchor.RADIUS);
+                // new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS,
+                // myActiveMap.getHeight()+2*Anchor.RADIUS);
                 new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
         pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
         StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
@@ -85,47 +86,32 @@ public class MapWorkspace extends StackPane {
     }
 
     public void remove (Node node) {
+        System.out.println("REMOVEEEE" + node);
         if (node == null)
             return;
         if (getChildren().contains(node)) {
             getChildren().remove(node);
-            node = null; // this prob wil lnot work
         }
     }
 
-    private void update (GameObject object) {
-        if (myActiveMap != null && myActiveMap.getRoot() != null) {
-            getChildren().remove(myActiveMap.getRoot());
+    private void update (GameObject oldObject, GameObject object) {
+        if (oldObject != null) {
+            remove(oldObject.getRoot());
         }
         StackPane.setAlignment(object.getRoot(), Pos.CENTER);
         getChildren().add(object.getRoot());
     }
 
     public void updateWithNewMap (GameObject object) {
-        update(object);
-
+        update(myActiveMap, object);
         myActiveMap = (TileMap) object;
         myActiveMap.setActiveTile(EMPTY_KEY);
     }
 
     // TODO: duplicated
     public void updateWithNewPath (GameObject object) {
-        update(object);
-
-        //myActivePath = (PathView) object;
-        // if (getChildren().contains(myActiveMap.getRoot())){
-        // System.out.println("active map already exists");
-
-        // scaler....
-
-        // TODO:
-        /*
-         * ScaleTransition scale =
-         * Scaler.scaleOverlay(0.0, 1.0, myActiveMap.getRoot());
-         * scale.setOnFinished( (e) -> {
-         */
-        // });
-
+        update(myActivePath, object);
+        myActivePath = (PathView) object;
     }
 
     public void createNewPath () {
@@ -137,7 +123,6 @@ public class MapWorkspace extends StackPane {
         if (!path.areAnchorsSelected())
             path.addAnchor(e.getX(), e.getY());
     }
-
 
     protected void displayMessage (String text, Color color) {
         Text saved = new Text(text);
@@ -152,13 +137,14 @@ public class MapWorkspace extends StackPane {
 
     public void activatePathMode () {
         myActiveMap.removeTileListeners();
-        
         myActiveMap.getRoot().getChildren().add(pathModeOverlay);
     }
 
     public void deactivatePathMode () {
         myActiveMap.attachTileListeners();
         myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
+        myActiveMap.getRoot().getChildren().remove(myActivePath);
+
     }
 
     public String getActiveTile () {
@@ -168,6 +154,14 @@ public class MapWorkspace extends StackPane {
     public void setActiveColor (String tileKey) {
         myActiveMap.setActiveTile(tileKey);
         myActiveTile = tileKey;
+    }
+    
+    public void setActivePath (PathView path) {
+        myActivePath = null;
+    }
+
+    public void setActiveMap (TileMap map) {
+        myActiveMap = null;
     }
 
 }

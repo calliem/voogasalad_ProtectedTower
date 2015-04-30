@@ -6,17 +6,17 @@
   <entry>
     <string>Color</string>
     <javafx.scene.paint.Color>
-      <red>0.4</red>
-      <green>0.101960786</green>
+      <red>0.2</red>
+      <green>0.4</green>
       <blue>0.2</blue>
       <opacity>1.0</opacity>
       <platformPaint class="com.sun.prism.paint.Color">
         <type>COLOR</type>
         <proportional>false</proportional>
         <isMutable>false</isMutable>
-        <argb>-10085837</argb>
-        <r>0.4</r>
-        <g>0.101960786</g>
+        <argb>-13408717</argb>
+        <r>0.2</r>
+        <g>0.4</g>
         <b>0.2</b>
         <a>1.0</a>
       </platformPaint>
@@ -24,7 +24,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>WHAT penis</string>
+    <string>asdfasdf</string>
   </entry>
   <entry>
     <string>PartKey</string>

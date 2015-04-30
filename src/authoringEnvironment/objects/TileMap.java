@@ -23,6 +23,8 @@ import authoringEnvironment.Variables;
  *
  */
 
+//extends Group implements GameObject
+
 public class TileMap extends GameObject {
 
     private StringProperty[][] myTileKeys;
@@ -30,7 +32,7 @@ public class TileMap extends GameObject {
     private int myTileSize;
     private ImageView myBackground;
     private String myActiveTile;
-    private String imgFilePath;
+    private String myBackgroundFilePath;
     private Controller myController;
     private static final String EMPTY_KEY = ""; 
     private static final Color EMPTY_COLOR = Color.WHITE;
@@ -62,9 +64,10 @@ public class TileMap extends GameObject {
         myGridLines = new Group();
         myActiveTile = EMPTY_KEY;
        // imgFilePath = DEFAULT_BACKGROUND_PATH;
-        imgFilePath = null;
+//        imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
-        setThumbnail(myBackground);
+        myBackgroundFilePath = DEFAULT_BACKGROUND_PATH;
+        setImageView(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
         // TODO: sethover x, y coordinate, tile size, etc.
@@ -73,28 +76,33 @@ public class TileMap extends GameObject {
         createGridLines();
         changeTileSize(myTileSize);
     }
+    
+//    public void setTiles(Tile[][] tiles){
+//        newMap = tiles;
+//    }
 
     private void setImageDimensions (ImageView image) {
         image.setFitWidth(myMapCols * myTileSize);
         image.setFitHeight(myMapRows * myTileSize);
     }
 
-    public int getWidth () {
+    public double getWidth () {
         return myTileSize * myMapCols;
     }
 
-    public int getHeight () {
+    public double getHeight () {
         return myTileSize * myMapRows;
     }
 
     public void setBackground (String filepath) {
-        imgFilePath = filepath;
+        myBackgroundFilePath = filepath;
         myRoot.getChildren().remove(myBackground);
         Image image = new Image(filepath);
+        myBackgroundFilePath = filepath;
         myBackground = new ImageView(image);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(0, myBackground);
-        setThumbnail(myBackground);
+        setImageView(myBackground);
     }
 
     // TODO:duplicated tile listeners being added/deleted?
@@ -278,7 +286,8 @@ public class TileMap extends GameObject {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.NAME_KEY, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
-        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
+        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackgroundFilePath);
+        mapSettings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_MAP);
 
 //        String[][] tileKeyArray = new String[myTileKeys.length][myTileKeys[0].length];
 //        for (int i = 0; i < myTileKeys.length; i++) {
@@ -295,13 +304,12 @@ public class TileMap extends GameObject {
     }
     
     public String getImgFilePath(){
-        return imgFilePath;
+        return myBackgroundFilePath;
     }
 
     @Override
     protected String getToolTipInfo () {
-        String info = "";
-        info += "Name: " + getName();
+        String info = super.getToolTipInfo();
         info += "\nNumber of Tiles: " + myMapRows + " x " + myMapCols;
         info += "\nTile Size: " + myTileSize;
         return info;

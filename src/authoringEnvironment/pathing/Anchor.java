@@ -27,8 +27,8 @@ public class Anchor extends Circle {
     public Anchor (Color color,
                    DoubleProperty x,
                    DoubleProperty y,
-                   int parentWidth,
-                   int parentHeight) {
+                   double parentWidth,
+                   double parentHeight) {
         super(x.get(), y.get(), RADIUS);
         setFill(color.deriveColor(1, 1, 1, 0.5));
         setStroke(color);
@@ -47,7 +47,7 @@ public class Anchor extends Circle {
     }
 
     // make a node movable by dragging it around with the mouse.
-    private void enableDrag (int parentWidth, int parentHeight) {
+    private void enableDrag (double parentWidth, double parentHeight) {
         final Delta dragDelta = new Delta();
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override

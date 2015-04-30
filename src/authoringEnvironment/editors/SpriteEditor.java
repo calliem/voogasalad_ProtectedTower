@@ -335,6 +335,8 @@ public abstract class SpriteEditor extends Editor {
         spritesCreated.remove(sprite);
         tagGroupsList.remove(sprite.getTagGroup());
         numSprites.setValue(spritesCreated.size());
+        
+        //TODO: delete from controller
     }
 
     private void setupSpriteAction (SpriteView sprite) {
@@ -423,4 +425,6 @@ public abstract class SpriteEditor extends Editor {
     public void setActiveOverlay (Node activeOverlay) {
         this.activeOverlay = activeOverlay;
     }
+    
+    public void update(){}
 }

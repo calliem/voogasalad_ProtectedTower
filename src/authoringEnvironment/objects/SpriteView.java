@@ -289,8 +289,8 @@ public abstract class SpriteView extends ObjectView {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            tagGroup.setKey(myKey);
             myController.specifyPartImage(myKey, imageFile);
+            tagGroup.setKey(myKey);
             displaySavedMessage();
         }
         return correctFormat && save;

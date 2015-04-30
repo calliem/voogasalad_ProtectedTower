@@ -262,4 +262,10 @@ public class WaveEditor extends FlowEditor {
     public Map<String, ArrayList<WaveFlowView>> getWaves () {
         return myWaves;
     }
+
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
+    }
 }

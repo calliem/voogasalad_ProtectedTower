@@ -1,6 +1,5 @@
 package authoringEnvironment;
 
-import java.awt.Image;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 
 
@@ -250,8 +251,9 @@ public class InstanceManager {
 
     protected void specifyPartImage (String partKey, String imageFilePath) {
         String realFilePath = "src/" + imageFilePath;
-        String locationAfterRootDirectory = GameCreator.IMAGE_DATA_FOLDER + "/" +
-                partKey.substring(0, partKey.indexOf(".")) + "Image.png";
+        String locationAfterRootDirectory =
+                GameCreator.IMAGE_DATA_FOLDER + "/" +
+                        partKey.substring(0, partKey.indexOf(".")) + "Image.png";
         String writeLocation = rootDirectory + locationAfterRootDirectory;
         try {
             File imageToSave = new File(realFilePath);
@@ -260,6 +262,20 @@ public class InstanceManager {
         }
         catch (IOException e) {
             // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        userParts.get(partKey).put(IMAGE_KEY, locationAfterRootDirectory);
+    }
+
+    protected void specifyPartImage (String partKey, Image image) {
+        String locationAfterRootDirectory =
+                GameCreator.IMAGE_DATA_FOLDER + "/" +
+                        partKey.substring(0, partKey.indexOf(".")) + "Image.png";
+        String writeLocation = rootDirectory + locationAfterRootDirectory;
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", new File(writeLocation));
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
         userParts.get(partKey).put(IMAGE_KEY, locationAfterRootDirectory);

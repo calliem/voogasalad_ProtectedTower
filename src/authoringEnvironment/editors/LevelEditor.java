@@ -47,6 +47,12 @@ public class LevelEditor extends MainEditor {
         // part.get(MapEditor.TILE_MAP);
     }
 
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
+    }
+
     /*
      * @Override
      * public void update() {
