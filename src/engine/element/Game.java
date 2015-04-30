@@ -68,7 +68,7 @@ public class Game implements Updateable, Endable {
     @Override
     public void update (int counter) {
         System.out.println("Beginning cycle " + counter);
-        myConditions.forEach(c -> c.act(lives));
+        myConditions.forEach(c -> c.check());
         Map<Object, List<String>> enemiesToSpawn =
                 myLevels.get(myActiveLevelIndex).update(counter);
         for (Object loc : enemiesToSpawn.keySet()) {
