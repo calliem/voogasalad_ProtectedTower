@@ -4,7 +4,6 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import util.reflection.Reflection;
-import engine.element.sprites.GameElement;
 
 
 /**
@@ -58,6 +57,7 @@ public class GameElementFactory {
         myPartTypeToPackage.put("GameMap", "engine.element.GameMap");
         myPartTypeToPackage.put("Round", "engine.element.Round");
         myPartTypeToPackage.put("Wave", "engine.element.Wave");
+        myPartTypeToPackage.put("MapPath", "engine.element.sprite.MapPath");
     }
 
     /**

@@ -22,6 +22,7 @@ public class ObjectView extends StackPane{
     
     private static final int PADDING = 5;
     private static final int DELETE_BUTTON_SIZE = 20;
+    protected static final double OVERLAY_OPACITY = 0.8; 
     protected Text message;
     
     private static final String displayTextFile = "resources/display/interface_text";

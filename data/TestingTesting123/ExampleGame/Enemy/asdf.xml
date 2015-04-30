@@ -17,11 +17,11 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed1</string>
+    <string>asdf</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.Enemy</string>
+    <string>ExampleGame_Part1.Enemy</string>
   </entry>
   <entry>
     <string>health</string>
@@ -29,11 +29,11 @@
   </entry>
   <entry>
     <string>CanHurtPlayer</string>
-    <boolean>false</boolean>
+    <boolean>true</boolean>
   </entry>
   <entry>
     <string>nextSpritesList</string>
-    <string>null</string>
+    <string>ExampleGame_Part0.Enemy</string>
   </entry>
   <entry>
     <string>speed</string>

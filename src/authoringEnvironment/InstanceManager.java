@@ -22,8 +22,16 @@ public class InstanceManager {
     private static final String GAME_ROOT_DIRECTORY =
             System.getProperty("user.dir").concat("/gamedata/exampleUserData");
 
-    private static final String PARTS_FILE_NAME = "GameParts.xml";
     private static final String INSTANCE_MANAGER_FILE_NAME = "GameManager.xml";
+    public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
+    
+    public static final String PART_KEY_KEY = "PartKey";
+    public static final String PART_TYPE_KEY = "PartType";
+    public static final String NAME_KEY = "name";
+    public static final String TAGS_KEY = "Tags";
+    public static final String IMAGE_KEY = "image";
+    
+    private static final String NO_KEYS_MISSING = "no keys missing";
 
     /**
      * a map of all the parts the user has created each part is represented by a map mapping the
@@ -35,19 +43,6 @@ public class InstanceManager {
     private String rootDirectory;
     private static int partID;
 
-    public static final String PART_KEY_KEY = "PartKey";
-    private static final String MISSING_NAME_KEY_MESSAGE =
-            "Map passed must contain a \"Name\" key. Key is case sensitive.";
-
-    public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
-    public static final String PART_TYPE_KEY = "PartType";
-    public static final String NAME_KEY = "name";
-    public static final String TAGS_KEY = "Tags";
-
-    public static final String IMAGE_KEY = "imagePath";
-    public static final String SAVE_PATH_KEY = "SavePath";
-
-    private static final String NO_KEYS_MISSING = "no keys missing";
 
     /**
      * Generates an instance manager for a game. An InstanceManager has a name
@@ -91,13 +86,13 @@ public class InstanceManager {
         this(name, partData, DEFAULT_SAVE_LOCATION + "/" + name);
     }
 
-    public String addPart (Map<String, Object> fullPartMap) throws MissingInformationException {
+    protected String addPart (Map<String, Object> fullPartMap) throws MissingInformationException {
         String key = generateKey(fullPartMap);
         fullPartMap.put(PART_KEY_KEY, key);
         return addPart(key, fullPartMap);
     }
 
-    public String addPart (String key, Map<String, Object> fullPartMap)
+    protected String addPart (String key, Map<String, Object> fullPartMap)
                                                                        throws MissingInformationException {
         fullPartMap.put(TAGS_KEY, getTagList(key));
         fullPartMap.put(PART_KEY_KEY, key);
@@ -176,7 +171,7 @@ public class InstanceManager {
     /**
      * Writes all parts of the current game into their respective files
      */
-    public void writeAllPartsToXML () {
+    private void writeAllPartsToXML () {
         for (String key : userParts.keySet())
             writePartToXML(userParts.get(key));
     }
@@ -189,7 +184,7 @@ public class InstanceManager {
      * 
      * @return the directory where the InstanceManager object was saved
      */
-    public String saveGame () {
+    protected String saveGame () {
         clearGameFolders();
         writeAllPartsToXML();
         System.out.println("writing to xml manager");
@@ -206,10 +201,9 @@ public class InstanceManager {
     }
 
     /**
-     * Loads the InstanceManager object that's stored in a data file. The path
-     * to this data file is found in the file that the String argument leads to.
-     * This path will lead to a .game file. This method can only be called by
-     * the authoring environment.
+     * Loads the InstanceManager object that's stored in a data file. In order
+     * to get the root directory of this game, simply remove the filename of
+     * the .gamefile file.
      * 
      * @param pathToRootDirFile
      *        The location of the file that holds the path to the root
@@ -251,26 +245,21 @@ public class InstanceManager {
         return new HashMap<String, Map<String, Object>>(userParts);
     }
 
-    public void specifyPartImage (String partKey, String imageFilePath) {
+    protected void specifyPartImage (String partKey, String imageFilePath) {
         userParts.get(partKey).put(IMAGE_KEY, imageFilePath);
     }
 
     protected void addTagToPart (String partKey, String tag) {
         Map<String, Object> addTagTo = userParts.get(partKey);
-        System.out.println("addTagTo: " + addTagTo);
         if (addTagTo.containsKey(TAGS_KEY)) {
             List<String> tagList = (List<String>) userParts.get(partKey).get(TAGS_KEY);
-            System.out.println("taglist: " + tagList);
-            System.out.println("tag: " + tag);
             tagList.add(tag);
             addTagTo.put(TAGS_KEY, tagList);
-            System.out.println("new tag list: " + tagList);
         }
         else {
             List<String> tagList = new ArrayList<String>();
             tagList.add(tag);
             addTagTo.put(TAGS_KEY, tagList);
-            System.out.println("else new tag list: " + tagList);
         }
         try {
             addPart(partKey, addTagTo);
@@ -292,7 +281,7 @@ public class InstanceManager {
         return false;
     }
 
-    public boolean containsKey (String key) {
+    protected boolean containsKey (String key) {
         return userParts.containsKey(key);
     }
 
@@ -306,7 +295,7 @@ public class InstanceManager {
      * @throws IOException
      */
 
-    public Map<String, Object> getPartFromXML (String fileLocation)
+    protected Map<String, Object> getPartFromXML (String fileLocation)
                                                                    throws IOException {
 
         return (Map<String, Object>) XMLWriter.fromXML(fileLocation);
@@ -321,11 +310,11 @@ public class InstanceManager {
         return toPrint.toString();
     }
 
-    public String getName () {
+    protected String getName () {
         return gameName;
     }
 
-    public String getRootDirectory () {
+    protected String getRootDirectory () {
         return rootDirectory;
     }
     /*

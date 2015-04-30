@@ -31,6 +31,7 @@ import authoringEnvironment.objects.ObjectView;
 import authoringEnvironment.objects.SpriteView;
 import authoringEnvironment.objects.Tag;
 import authoringEnvironment.objects.TagGroup;
+import authoringEnvironment.util.ErrorAlert;
 import authoringEnvironment.util.NamePrompt;
 import authoringEnvironment.util.Scaler;
 
@@ -209,7 +210,14 @@ public abstract class SpriteEditor extends Editor {
     }
     
     protected void loadSprite(){
-        
+        ErrorAlert test = new ErrorAlert("This is coming soon!");
+        test.showError();
+        myContent.getChildren().add(test);
+        test.getOkButton().setOnAction(e -> {
+            test.hideError().setOnFinished(ae -> {
+                myContent.getChildren().remove(test);
+            });
+        });
     }
 
     protected void promptSpriteCreation () {
@@ -243,7 +251,7 @@ public abstract class SpriteEditor extends Editor {
         try {
             String needed = spriteNeeded.getString(type);
             System.out.println("projectiles present: " + myController.getKeysForPartType("Projectile"));
-            if (myController.getKeysForPartType(needed).size() == 0) {
+            if (myController.getKeysForPartType(needed).size() == 0 && !needed.equals(type)) {
                 prompt.displayPermanentError(String.format("Please create %ss first!",
                                                            needed.toLowerCase()));
             }

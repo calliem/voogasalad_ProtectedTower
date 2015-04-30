@@ -1,7 +1,11 @@
 <map>
   <entry>
     <string>PartType</string>
-    <string>Enemy</string>
+    <string>Projectile</string>
+  </entry>
+  <entry>
+    <string>damage</string>
+    <int>1</int>
   </entry>
   <entry>
     <string>boundingWidth</string>
@@ -17,23 +21,11 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed1</string>
+    <string>asdfzxcv</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.Enemy</string>
-  </entry>
-  <entry>
-    <string>health</string>
-    <int>100</int>
-  </entry>
-  <entry>
-    <string>CanHurtPlayer</string>
-    <boolean>false</boolean>
-  </entry>
-  <entry>
-    <string>nextSpritesList</string>
-    <string>null</string>
+    <string>ExampleGame_Part1.Projectile</string>
   </entry>
   <entry>
     <string>speed</string>

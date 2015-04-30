@@ -55,7 +55,7 @@ public class WaveFlowView extends FlowView {
     private void selectUnit () {
         SpriteSetting chooseUnit =
                 new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES,
-                                  null, Variables.PARTNAME_ENEMIES);
+                                  Variables.PARTNAME_ENEMIES);
         chooseUnit.setSingularChoice(true);
         chooseUnit.getChildren().remove(0);
         chooseUnit.setTextColor(Color.BLACK);

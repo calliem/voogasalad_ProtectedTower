@@ -32,6 +32,7 @@ import engine.factories.GameElementFactory;
  * @author Michael Yang
  * @author Qian Wang
  * @author Bojia Chen
+ * @author Sean Scott
  *
  */
 public class Layout implements Updateable {
@@ -76,7 +77,7 @@ public class Layout implements Updateable {
      */
     // TODO Poor design to have a method for every kind of sprite, need to think of a better way to
     // do this without repeating code
-    public void removeSprite (Sprite sprite) {
+    public void removeSprite (GameElement sprite) {
         myProjectileList.remove(sprite);
         myEnemyList.remove(sprite);
         myTowerList.remove(sprite);
@@ -116,7 +117,7 @@ public class Layout implements Updateable {
         int[] endIndices =
                 myGameMap.getRowColAtCoordinates(myGoalCoordinates[1], myGoalCoordinates[0]);
         try {
-            enemy.updatePath(grid, startIndices[0], startIndices[1], endIndices[0], endIndices[1]);
+            enemy.planPath(grid, startIndices[0], startIndices[1], endIndices[0], endIndices[1]);
         }
         catch (NoPathExistsException e1) {
             e1.printStackTrace();
@@ -277,9 +278,21 @@ public class Layout implements Updateable {
         updateSpriteLocations();
         updateSpriteCollisions();
         updateSpriteTargeting();
+        removeDeadSprites();
     }
 
     /**
+     * Removes all GameElements that have a statetag of dead.
+     */
+    
+    private void removeDeadSprites() {
+    	for (GameElement g: this.getSprites()){
+    		if (g.getState().equals(GameElement.DEAD_STATE))
+    			this.removeSprite(g);
+    	}
+	}
+
+	/**
      * Updates the positions of all sprites.
      */
     private void updateSpriteLocations () {
