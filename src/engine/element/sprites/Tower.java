@@ -118,4 +118,8 @@ public class Tower extends GameSprite {
     	return cost;
     }
 
+	public double getRange() {
+		return attackRange;
+	}
+
 }
