@@ -16,6 +16,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.DataFormatException;
+import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.editors.FlowEditor;
 
 
@@ -36,7 +38,7 @@ public abstract class FlowStrip extends HBox {
     private static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
 
     protected Controller myController;
-    protected String myKey;
+    private String myKey;
     protected List<FlowView> myComponents;
     private String editorType;
 
@@ -133,5 +135,22 @@ public abstract class FlowStrip extends HBox {
             times.remove(times.size() - 1);
         }
         return times;
+    }
+    
+    protected void saveToGame (String partType, String componentName, List<String> params, List<Object> data) {
+        try {
+            if (myKey.equals(Controller.KEY_BEFORE_CREATION)) {
+                myKey = myController.addPartToGame(partType, componentName,
+                                                   params, data);
+            }
+            else {
+                myKey = myController.addPartToGame(myKey, partType, componentName,
+                                                   params, data);
+            }
+        }
+        catch (MissingInformationException | DataFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

@@ -20,12 +20,11 @@ import authoringEnvironment.Controller;
  *
  */
 public class RoundFlowView extends FlowView {
-    private Controller myController;
+    private List<String> pathSelections;
     private List<String> pathKeys;
 
     public RoundFlowView (int height, Controller c) {
         super(height, c);
-        myController = c;
     }
 
     @Override
@@ -35,8 +34,8 @@ public class RoundFlowView extends FlowView {
         waveButton.setOnAction(e -> selectWave());
         options.add(waveButton);
         
-        List<String> comboSelections = new ArrayList();
-        ObservableList<String> optionsList = FXCollections.observableArrayList(comboSelections);//TODO: Get path selections for map selection
+        pathSelections = new ArrayList<String>();
+        ObservableList<String> optionsList = FXCollections.observableArrayList(pathSelections);//TODO: Get path selections for map selection
         final ComboBox<String> pathSelectorBox = new ComboBox<>(optionsList);
         Tooltip tooltip = new Tooltip("Select something to add!");
         tooltip.setTextAlignment(TextAlignment.CENTER);
@@ -50,6 +49,10 @@ public class RoundFlowView extends FlowView {
         options.add(pathSelectorBox);
         
         return options;
+    }
+    
+    public void changePathSelection(List<String> paths) {
+         pathSelections = paths;
     }
     
     public List<String> getPaths() {

@@ -24,6 +24,9 @@ import authoringEnvironment.setting.SpriteSetting;
  */
 public class WaveFlowView extends FlowView {
 
+    private static final String WAVE = "Wave";
+    private static final String UNIT = "Unit";
+
     public WaveFlowView (int height, Controller c) {
         super(height, c);
     }
@@ -32,8 +35,8 @@ public class WaveFlowView extends FlowView {
     protected List<Node> createOptionSelector () {
         ArrayList<String> comboSelections = new ArrayList<>();
         List<Node> options = new ArrayList<Node>();
-        comboSelections.add("Unit");
-        comboSelections.add("Wave");
+        comboSelections.add(UNIT);
+        comboSelections.add(WAVE);
         ObservableList<String> optionsList = FXCollections.observableArrayList(comboSelections);
         final ComboBox<String> partSelectorBox = new ComboBox<>(optionsList);
         Tooltip tooltip = new Tooltip("Select something to add!");
@@ -43,9 +46,9 @@ public class WaveFlowView extends FlowView {
         // TODO: use lambda for selectUnit/selectWave method?
         partSelectorBox.setPromptText("...");
         partSelectorBox.valueProperty().addListener( (obs, oldValue, newValue) -> {
-            if (newValue.equals("Unit"))
+            if (newValue.equals(UNIT))
                 selectUnit();
-                                                    else if (newValue.equals("Wave"))
+                                                    else if (newValue.equals(WAVE))
                                                         selectWave();
                                                 });
         options.add(partSelectorBox);
@@ -54,7 +57,7 @@ public class WaveFlowView extends FlowView {
 
     private void selectUnit () {
         SpriteSetting chooseUnit =
-                new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES,
+                new SpriteSetting(myController, WAVE, Variables.PARTNAME_ENEMIES,
                                   Variables.PARTNAME_ENEMIES);
         chooseUnit.setSingularChoice(true);
         chooseUnit.getChildren().remove(0);
