@@ -1,10 +1,11 @@
 package engine.element.sprites;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import annotations.parameter;
 import authoringEnvironment.objects.Coordinate;
 import javafx.animation.PathTransition;
@@ -92,17 +93,21 @@ public class Enemy extends GameSprite {
 
     /**
      * Takes a predefined path using Bezier curves
+     * 
      * @param curveCoords
      */
     public void bezierPath (List<Coordinate> curveCoords) {
         Path path = new Path();
         for (int i = 1; i < curveCoords.size(); i++) {
-            path.getElements().add(new CubicCurveTo(curveCoords.get(i).getX(), curveCoords.get(i).getY(), 
-            										curveCoords.get(i+1).getX(), curveCoords.get(i+1).getY(), 
-            										curveCoords.get(i+2).getX(), curveCoords.get(i+2).getY()));
+            path.getElements().add(new CubicCurveTo(curveCoords.get(i).getX(), curveCoords.get(i)
+                                           .getY(),
+                                                    curveCoords.get(i + 1).getX(), curveCoords
+                                                            .get(i + 1).getY(),
+                                                    curveCoords.get(i + 2).getX(), curveCoords
+                                                            .get(i + 2).getY()));
         }
         myPath = path;
-        myPathLength = (curveCoords.size()-1)/3;
+        myPathLength = (curveCoords.size() - 1) / 3;
         move();
     }
 
@@ -114,15 +119,15 @@ public class Enemy extends GameSprite {
      * @throws InsufficientParametersException
      */
     public void planPath (GridCell[][] grid,
-                            int startRow,
-                            int startCol,
-                            int goalRow,
-                            int goalCol) throws NoPathExistsException {
+                          int startRow,
+                          int startCol,
+                          int goalRow,
+                          int goalCol) throws NoPathExistsException {
         GridWrapper wrap = new GridWrapper();
         wrap.initializeGraph(grid, new ObstacleFunction() {
             @Override
             public boolean isObstacle (Object o) {
-            	GridCell cell = (GridCell) o;
+                GridCell cell = (GridCell) o;
                 return false;
             }
         });
@@ -142,7 +147,13 @@ public class Enemy extends GameSprite {
     }
 
     @Override
-    public void update (int counter) {
+    public Map<Object, List<String>> update () {
+        move();
+        Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
+        if (this.getHealth() == 0) {
+            spawnMap.put(this.getLocation(), this.getNextSprites());
+        }
+        return spawnMap;
     }
 
 }

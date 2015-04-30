@@ -49,7 +49,7 @@ public class Round implements UpdateAndReturnable, Endable {
     }
 
     @Override
-    public Map<Object, List<String>> update (int counter) {
+    public Map<Object, List<String>> update () {
         Map<Object, List<String>> tempReturnMap = null;
 
         while (myTimer == mySendTimes.get(myCurrentWaveIndex) && !hasEnded()) {
@@ -66,7 +66,7 @@ public class Round implements UpdateAndReturnable, Endable {
                 myActiveWaves.remove(activeWave);
             }
             else {
-                mergeMaps(activeWave.update(counter), tempReturnMap);
+                mergeMaps(activeWave.update(), tempReturnMap);
             }
         }
 
