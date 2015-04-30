@@ -35,25 +35,13 @@ public class WaveStrip extends FlowStrip {
     protected void saveData (String componentName) {
         List<String> partFileNames = new ArrayList<String>();
         List<Double> delays = new ArrayList<Double>();
-        List<Double> times = new ArrayList<Double>();
-        times.add(0.0);
 
         for (FlowView unit : myComponents) {
             partFileNames.addAll(unit.getFileNames());
             delays.addAll(unit.getDelays());
         }
-
-        for (Double d : delays) {
-            Double all = 0.0;
-            for (Double t : times)
-                all += t;
-            times.add(all + d);
-        }
         
-        // Get rid of potential last element due to extra arrow/input space
-        if (partFileNames.size() != times.size()) {
-            times.remove(times.size() - 1);
-        }
+        List<Double> times = getTimesFromZero(partFileNames, delays);
         
         List<String> params = new ArrayList<String>();
         params.add(ENEMIES_KEY);

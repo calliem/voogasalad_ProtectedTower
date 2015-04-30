@@ -56,18 +56,17 @@ public class WaveFlowView extends FlowView {
         SpriteSetting chooseUnit =
                 new SpriteSetting(myController, "Wave", Variables.PARTNAME_ENEMIES,
                                   null, Variables.PARTNAME_ENEMIES);
+        chooseUnit.setSingularChoice(true);
         chooseUnit.getChildren().remove(0);
         chooseUnit.setTextColor(Color.BLACK);
         insertElement(chooseUnit);
 
-        List<Double> unitDelay = new ArrayList<Double>();
         List<String> fileNames = new ArrayList<String>();
         try {
             fileNames.add(chooseUnit.getDataAsString());
             partFileNames = fileNames;
         }
         catch (NumberFormatException e) {
-
         }
     }
 }

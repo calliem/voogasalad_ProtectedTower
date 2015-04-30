@@ -3,11 +3,7 @@ package authoringEnvironment.objects;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import authoringEnvironment.AuthoringEnvironment;
-import authoringEnvironment.Controller;
-import authoringEnvironment.editors.FlowEditor;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -18,6 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
+import authoringEnvironment.editors.FlowEditor;
 
 
 /**
@@ -117,5 +116,22 @@ public abstract class FlowStrip extends HBox {
         myComponents.add(flow);
 
         displayPane.setHvalue(2.0);
+    }
+    
+    protected List<Double> getTimesFromZero (List<String> partFileNames, List<Double> delays) {
+        List<Double> times = new ArrayList<Double>();
+        times.add(0.0);
+        for (Double d : delays) {
+            Double all = 0.0;
+            for (Double t : times)
+                all += t;
+            times.add(all + d);
+        }
+        
+        // Get rid of potential last element due to extra arrow/input space
+        if (partFileNames.size() != times.size()) {
+            times.remove(times.size() - 1);
+        }
+        return times;
     }
 }

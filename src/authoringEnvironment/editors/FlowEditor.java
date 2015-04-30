@@ -43,7 +43,6 @@ public abstract class FlowEditor extends Editor {
     private VBox editorLayout;
     private ScrollPane contentScrollPane;
     private StackPane editor;
-    private String myKey;
     private int rows = 0;
     private NamePrompt prompt = new NamePrompt(partNames.getString(editorType).toLowerCase());
 

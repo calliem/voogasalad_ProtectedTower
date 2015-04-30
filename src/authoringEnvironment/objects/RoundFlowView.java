@@ -21,7 +21,7 @@ import authoringEnvironment.Controller;
  */
 public class RoundFlowView extends FlowView {
     private Controller myController;
-    private List<String> pathFileNames;
+    private List<String> pathKeys;
 
     public RoundFlowView (int height, Controller c) {
         super(height, c);
@@ -44,8 +44,8 @@ public class RoundFlowView extends FlowView {
 
         pathSelectorBox.setPromptText("...");
         pathSelectorBox.valueProperty().addListener( (obs, oldValue, newValue) -> {
-            pathFileNames = new ArrayList<String>();
-            pathFileNames.add("pathstartnameidk" + newValue); //TODO: get the keys
+            pathKeys = new ArrayList<String>();
+            pathKeys.add("pathstartnameidk " + newValue); //TODO: get the keys
         });
         options.add(pathSelectorBox);
         
@@ -53,6 +53,6 @@ public class RoundFlowView extends FlowView {
     }
     
     public List<String> getPaths() {
-        return pathFileNames;
+        return pathKeys;
     }
 }

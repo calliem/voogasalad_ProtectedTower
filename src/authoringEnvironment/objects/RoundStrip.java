@@ -20,7 +20,6 @@ import authoringEnvironment.Controller;
 import authoringEnvironment.DataFormatException;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.MissingInformationException;
-import authoringEnvironment.ProjectReader;
 
 
 /**
@@ -36,7 +35,10 @@ public class RoundStrip extends FlowStrip {
     private static final int MAP_SELECTOR_WIDTH = 205;
     private static final int PADDING = 10;
     private static final int ROW_SIZE = 3;
-    private static final String ROUND= "Round";
+    private static final String ROUND = "Round";
+    private static final String WAVES_KEY = "Waves";
+    private static final String TIMES_KEY = "Times";
+    private static final String PATHS_KEY = "Paths";
 
     private VBox rowContainer;
     private StackPane mapsAndBackground;
@@ -57,7 +59,6 @@ public class RoundStrip extends FlowStrip {
         scrollingMapSelector.setMaxHeight(MAP_SELECTOR_HEIGHT);
         scrollingMapSelector.setMaxWidth(MAP_SELECTOR_WIDTH);
         scrollingMapSelector.setHbarPolicy(ScrollBarPolicy.NEVER);
-
 
         StackPane mapsAndBackground = new StackPane();
         Rectangle background =
@@ -159,20 +160,36 @@ public class RoundStrip extends FlowStrip {
 
     @Override
     protected void saveData (String componentName) {
-        
-        
+        List<String> partFileNames = new ArrayList<String>();
+        List<String> pathFileNames = new ArrayList<String>();
+        List<Double> delays = new ArrayList<Double>();
+
+        for (FlowView unit : myComponents) {
+            partFileNames.addAll(unit.getFileNames());
+            pathFileNames.addAll(((RoundFlowView) unit).getPaths());
+            delays.addAll(unit.getDelays());
+        }
+
+        List<Double> times = getTimesFromZero(pathFileNames, delays);
+
         List<Object> data = new ArrayList<Object>();
-        //data.addAll();
+        data.add(partFileNames);
+        data.add(times);
+        List<String> params = new ArrayList<String>();
+        params.add(WAVES_KEY);
+        params.add(PATHS_KEY);
+        params.add(TIMES_KEY);
+
         try {
             if (myKey.equals(Controller.KEY_BEFORE_CREATION))
                 myKey = myController.addPartToGame(ROUND, componentName,
-                                                   ProjectReader.getParamsNoTypeOrName(ROUND), data);
+                                                   params, data);
             else
                 myKey =
                         myController.addPartToGame(myKey, ROUND, componentName,
-                                                   ProjectReader.getParamsNoTypeOrName(ROUND), data);
+                                                   params, data);
         }
-        catch (MissingInformationException | DataFormatException | ClassNotFoundException e) {
+        catch (MissingInformationException | DataFormatException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
