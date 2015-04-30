@@ -1,11 +1,8 @@
 package player;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import annotations.parameter;
 import javafx.application.Application;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -21,12 +18,10 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -50,7 +45,6 @@ import engine.element.sprites.Tower;
  * the GameLoop which then runs the game.
  */
 public class GamePlayer extends Application {
-    private GameController myGame;
     private Stage myPlayerStage;
     private Group myEngineRoot = new Group();
     private Scene myMainScene;
