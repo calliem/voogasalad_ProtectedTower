@@ -10,6 +10,7 @@ import testing.ExampleRound;
 import testing.ExampleWave;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import authoringEnvironment.GameCreator;
@@ -64,7 +65,7 @@ public class GameController {
      * @throws InsufficientParametersException when filepath does not point to a well defined game
      *         file
      */
-    public GameController (String filepath, List<Sprite> nodes, List<Tower> possibleTowers)
+    public GameController (String filepath, List<Sprite> nodes, List<Tower> possibleTowers, Group background)
         throws InsufficientParametersException {
         myTowerManager = new TowerManager();
         myGame = this.loadGame(filepath, nodes, possibleTowers);
@@ -189,6 +190,6 @@ public class GameController {
         GameController test =
                 new GameController(
                                    "data//DesktopTDTest//DesktopTD//DesktopTD.gamefile",
-                                   new ArrayList<Sprite>(), new ArrayList<Tower>());
+                                   new ArrayList<Sprite>(), new ArrayList<Tower>(), null);
     }
 }
