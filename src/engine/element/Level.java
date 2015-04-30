@@ -81,8 +81,8 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
     }
 
     @Override
-    public Map<Object, List<String>> update (int counter) {
-        return myActiveRound.update(counter);
+    public Map<Object, List<String>> update () {
+        return myActiveRound.update();
     }
 
     @Override

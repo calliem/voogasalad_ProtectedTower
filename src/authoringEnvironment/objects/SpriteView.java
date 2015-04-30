@@ -28,6 +28,7 @@ import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.ImageViewSetting;
 import authoringEnvironment.setting.Setting;
+import authoringEnvironment.setting.SpriteSetting;
 import authoringEnvironment.setting.StringSetting;
 import authoringEnvironment.util.Scaler;
 
@@ -36,7 +37,6 @@ import authoringEnvironment.util.Scaler;
  * Displays an editable sprite object instance along with overlay interactions upon click.
  * 
  * @author Kevin He
- * @author Callie Mao
  *
  */
 
@@ -62,12 +62,30 @@ public abstract class SpriteView extends ObjectView {
     private static final int NAME_INDEX = 1;
     // private static final String DEFAULT_NAME = "Unnamed";
 
-    private String id;
     private ImageView previewImage;
     private StackPane displayPane;
-
+    
+    private static final int HALF_PADDING = 5;
     private static final int PADDING = 10;
-
+    private static final int SCALE_IMAGE_WIDTH = 90;
+    private static final int SCALE_IMAGE_HEIGHT = 70;
+    private static final int DISPLAY_PANE_WIDTH = 300;
+    private static final int DISPLAY_PANE_HEIGHT = 300;
+    private static final int SPRITE_SIZE = 100;
+    private static final int OVERLAY_SPRITE_NAME_SIZE = 30;
+    private static final int SPRITE_NAME_SIZE = 10;
+    private static final Color SPRITE_COLOR = Color.WHITE;
+    private static final Color STROKE_COLOR = Color.BLACK;
+    private static final int ARC_SIZE = 10;
+    private static final int STROKE_WIDTH = 2;
+    private static final String SAVED_MESSAGE = "%s saved!";
+    private static final String PARAMETER_ERROR_MESSAGE = "Please check your parameters for errors.";
+    private static final int OVERLAY_CONTENT_WIDTH = 300;
+    private static final int SETTING_HEIGHT = 24;
+    private static final int SPRITE_SETTING_HEIGHT = 79;
+    private static final int DISPLAY_SAVED_DURATION = 1000;
+    private static final int FIRST_ELEMENT = 0;
+    
     /**
      * Creates visual representation of a sprite created by
      * the user in the authoring environment.
@@ -86,19 +104,24 @@ public abstract class SpriteView extends ObjectView {
         spriteName = name;
         imageFile = image;
         previewImage = new ImageView(new Image(imageFile));
-        ScaleImage.scale(previewImage, 90, 70);
+        ScaleImage.scale(previewImage, SCALE_IMAGE_WIDTH, SCALE_IMAGE_HEIGHT);
 
         parameterFields = new ArrayList<>();
 
         displayPane = new StackPane();
-        display = new VBox(5);
+        display = new VBox(HALF_PADDING);
         display.setAlignment(Pos.CENTER);
 
-        Rectangle spriteBackground = new Rectangle(100, 100, Color.WHITE);
+        Rectangle spriteBackground = new Rectangle(SPRITE_SIZE, SPRITE_SIZE, SPRITE_COLOR);
+        spriteBackground.setArcWidth(ARC_SIZE);
+        spriteBackground.setArcHeight(ARC_SIZE);
+        spriteBackground.setStroke(STROKE_COLOR);
+        spriteBackground.setStrokeWidth(STROKE_WIDTH);
+        
         spriteNameDisplay = new Text(spriteName);
-        spriteNameDisplay.setFont(new Font(10));
+        spriteNameDisplay.setFont(new Font(SPRITE_NAME_SIZE));
         spriteNameDisplay.setTextAlignment(TextAlignment.CENTER);
-        spriteNameDisplay.setWrappingWidth(90);
+        spriteNameDisplay.setWrappingWidth(SPRITE_SIZE - PADDING);
 
         display.getChildren().addAll(previewImage, spriteNameDisplay);
         displayPane.getChildren().addAll(spriteBackground, display);
@@ -136,57 +159,72 @@ public abstract class SpriteView extends ObjectView {
 
     private void setupEditableContent () throws ClassNotFoundException, IllegalArgumentException,
                                         IllegalAccessException {
-        editableContent = new VBox(10);
+        editableContent = new VBox(PADDING);
         editableContent.setAlignment(Pos.CENTER);
-        editableContent.setMaxWidth(300);
+        editableContent.setMaxWidth(OVERLAY_CONTENT_WIDTH);
 
         overlaySpriteNameDisplay = new Text(spriteName);
-        overlaySpriteNameDisplay.setFont(new Font(30));
+        overlaySpriteNameDisplay.setFont(new Font(OVERLAY_SPRITE_NAME_SIZE));
         overlaySpriteNameDisplay.setFill(Color.WHITE);
 
-        overlayErrorMessage = new Text("Please check your parameters for errors.");
+        overlayErrorMessage = new Text(PARAMETER_ERROR_MESSAGE);
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
 
         editableContent.getChildren().addAll(overlaySpriteNameDisplay, overlayErrorMessage);
-
-        ScrollPane settingsDisplay = new ScrollPane();
-        settingsDisplay.setPrefHeight(300);
-        settingsDisplay.setPrefWidth(200);
-        settingsDisplay.setHbarPolicy(ScrollBarPolicy.NEVER);
+        
+        ScrollPane settingsDisplayPane = new ScrollPane();
+        settingsDisplayPane.setPrefHeight(DISPLAY_PANE_HEIGHT);
+        settingsDisplayPane.setMaxWidth(DISPLAY_PANE_WIDTH);
+        settingsDisplayPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+        settingsDisplayPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+        
+        StackPane settingsDisplay = new StackPane();
+        Rectangle displayBackground = new Rectangle(DISPLAY_PANE_WIDTH, DISPLAY_PANE_HEIGHT);
+        displayBackground.setOpacity(OVERLAY_OPACITY);
 
         VBox settingsObjects = new VBox(PADDING);
-        settingsObjects.setMaxWidth(200);
-
+        settingsObjects.setMaxWidth(DISPLAY_PANE_WIDTH);
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
         // move the image to be first in the settings list
         for (int i = 0; i < settings.size(); i++) {
             if (settings.get(i) instanceof ImageViewSetting) {
-                parameterFields.add(0, settings.get(i));
+                parameterFields.add(IMAGE_INDEX, settings.get(i));
                 editableContent.getChildren().add(settings.get(i));
                 break;
             }
         }
-
+        int spriteSettingCounter = 0; // For background scaling purposes
         for (int j = 0; j < settings.size(); j++) {
             if (settings.get(j) instanceof ImageViewSetting) {
                 continue;
             }
             if (settings.get(j) instanceof StringSetting &&
                 settings.get(j).getParameterName().equals("name")) {
-                parameterFields.add(1, settings.get(j));
+                ((StringSetting) settings.get(j)).setCheckName(true);
+                parameterFields.add(NAME_INDEX, settings.get(j));
                 editableContent.getChildren().add(settings.get(j));
                 continue;
+            }
+            if(settings.get(j) instanceof SpriteSetting){
+                spriteSettingCounter++;
             }
             parameterFields.add(settings.get(j));
             settingsObjects.getChildren().add(settings.get(j));
         }
-        settingsDisplay.setContent(settingsObjects);
+        
+        settingsObjects.setTranslateY(PADDING);
+        
+        int numSettings = settings.size();
+        adjustBackground(displayBackground, spriteSettingCounter, numSettings);
+        
+        settingsDisplay.getChildren().addAll(displayBackground, settingsObjects);
+        settingsDisplayPane.setContent(settingsDisplay);
         initializeSpriteInfo();
 
-        HBox buttons = new HBox(10);
+        HBox buttons = new HBox(PADDING);
 
-        saved = new Text(getSpriteType() + " saved!");
+        saved = new Text(String.format(SAVED_MESSAGE, getSpriteType()));
         saved.setFill(Color.YELLOW);
         saved.setVisible(false);
 
@@ -199,7 +237,23 @@ public abstract class SpriteView extends ObjectView {
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(saveButton, cancelButton);
 
-        editableContent.getChildren().addAll(settingsDisplay, buttons, saved);
+        editableContent.getChildren().addAll(settingsDisplayPane, buttons, saved);
+    }
+
+    /**
+     * Adjusts the height of the background for the ScrollPane that displays the settings objects
+     * @param displayBackground the Rectangle object that is the background
+     * @param spriteSettingCounter      the number of spriteSettings that are being displayed
+     * @param numSettings       the number of settings objects that are being displayed
+     */
+    private void adjustBackground (Rectangle displayBackground,
+                                   int spriteSettingCounter,
+                                   int numSettings) {
+        
+        int newHeight = (numSettings - spriteSettingCounter) * SETTING_HEIGHT + spriteSettingCounter * SPRITE_SETTING_HEIGHT + numSettings*PADDING + PADDING;
+        if(newHeight > DISPLAY_PANE_HEIGHT){
+            displayBackground.setHeight(newHeight);
+        }
     }
 
     private void initializeSpriteInfo () {
@@ -238,8 +292,8 @@ public abstract class SpriteView extends ObjectView {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            tagGroup.setKey(myKey);
             myController.specifyPartImage(myKey, imageFile);
+            tagGroup.setKey(myKey);
             displaySavedMessage();
         }
         return correctFormat && save;
@@ -248,9 +302,9 @@ public abstract class SpriteView extends ObjectView {
     private void updateImageFile () {
         imageFile = parameterFields.get(IMAGE_INDEX).getDataAsString();
         previewImage = new ImageView(new Image(imageFile));
-        ScaleImage.scale(previewImage, 90, 70);
-        display.getChildren().remove(0);
-        display.getChildren().add(0, previewImage);
+        ScaleImage.scale(previewImage, SCALE_IMAGE_WIDTH, SCALE_IMAGE_HEIGHT);
+        display.getChildren().remove(FIRST_ELEMENT);
+        display.getChildren().add(FIRST_ELEMENT, previewImage);
     }
 
     private void updateSpriteName () {
@@ -261,7 +315,7 @@ public abstract class SpriteView extends ObjectView {
 
     private void displaySavedMessage () {
         saved.setVisible(true);
-        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+        PauseTransition pause = new PauseTransition(Duration.millis(DISPLAY_SAVED_DURATION));
         pause.play();
         pause.setOnFinished(ae -> saved.setVisible(false));
     }
@@ -279,7 +333,7 @@ public abstract class SpriteView extends ObjectView {
     private void setupOverlayContent () {
         overlayContent = new StackPane();
         Rectangle overlayBackground = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT);
-        overlayBackground.setOpacity(0.8);
+        overlayBackground.setOpacity(OVERLAY_OPACITY);
         overlayContent.getChildren().addAll(overlayBackground, editableContent);
     }
 

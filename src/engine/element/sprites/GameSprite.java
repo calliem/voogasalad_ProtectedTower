@@ -1,8 +1,11 @@
 package engine.element.sprites;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import engine.UpdateAndReturnable;
 import annotations.parameter;
 
 
@@ -13,15 +16,17 @@ import annotations.parameter;
  * @author Qian Wang
  *
  */
-public abstract class GameSprite extends MoveableSprite {
+public abstract class GameSprite extends MoveableSprite implements UpdateAndReturnable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "100")
     private Integer health;
     /**
      * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
      */
-    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    @parameter(settable = false, playerDisplay = true, defaultValue = "null")
     private List<String> nextSprites;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private Sprite nextSpritesList;
 
     // Getters and setters
 
@@ -39,5 +44,6 @@ public abstract class GameSprite extends MoveableSprite {
     public List<String> getNextSprites () {
         return Collections.unmodifiableList(nextSprites);
     }
+
 
 }

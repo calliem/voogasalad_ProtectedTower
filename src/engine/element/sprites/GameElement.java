@@ -1,7 +1,9 @@
 package engine.element.sprites;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import javafx.geometry.Point2D;
 import annotations.parameter;
 import engine.Collidable;
@@ -30,6 +32,13 @@ public abstract class GameElement implements Collidable {
      */
     @parameter(settable = false, playerDisplay = true)
     private Point2D myLocation;
+
+    public final static String ALIVE_STATE = "alive";
+    public final static String DEAD_STATE = "dead";
+    public final static String[] possibleStates = {ALIVE_STATE, DEAD_STATE};
+    @parameter(settable = false, playerDisplay = false)
+    private String stateTag = ALIVE_STATE;
+    
 
     // Getters and setters
 
@@ -61,6 +70,19 @@ public abstract class GameElement implements Collidable {
 
     protected String getName () {
         return name;
+    }
+    
+    public String getState () {
+    	return stateTag;
+    }
+    
+    public void setState(String state) {
+    	if (Arrays.asList(possibleStates).contains(state))
+    		stateTag = state;
+    }
+    
+    public void setDead() {
+    	stateTag = DEAD_STATE;
     }
 
     /**

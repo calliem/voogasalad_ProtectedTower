@@ -80,27 +80,19 @@ public class ProjectReader {
                                                                                              throws ClassNotFoundException,
                                                                                              IllegalArgumentException,
                                                                                              IllegalAccessException {
-        System.out.println("genreate stginsgl list calle " + classLists.getString(partType));
+//        System.out.println("genreate stginsgl list calle " + classLists.getString(partType));
         Class<?> currentClass = Class.forName(classLists.getString(partType));
         List<Class<?>> classesWithFields = ReflectionUtil.getPackageParentList(currentClass);
         List<Setting> settingsList = new ArrayList<Setting>();
         for (Class<?> myClass : classesWithFields) {
             Field[] myFields = myClass.getDeclaredFields();
             for (Field field : myFields) {
-                String paramName = null;
                 System.out.println("field" + field);
                 if (field.getAnnotation(parameter.class) != null &&
                     field.getAnnotation(parameter.class).settable()) {
-                    Type type = field.getGenericType();
-                    if (type instanceof ParameterizedType) {
-                        ParameterizedType pt = (ParameterizedType) type;
-                        Type paramType = pt.getActualTypeArguments()[0];
-                        paramName = paramType.getTypeName();
-                        int lastClassindex = paramName.lastIndexOf(".") + 1;
-                        paramName = paramName.substring(lastClassindex);
-                    }
+                    
                     settingsList.add(generateSetting(controller, partType, field.getName(),
-                                                     paramName, field
+                                                     field
                                                              .getAnnotation(parameter.class)
                                                              .defaultValue(),
                                                      field.getType().getSimpleName()));
@@ -157,7 +149,7 @@ public class ProjectReader {
      * @return The Setting object corresponding to these parameters
      */
     public static Setting generateSetting (Controller controller, String partType, String param,
-                                           String paramName, String defaultVal, String dataType) {
+                                           String defaultVal, String dataType) {
         Class<?> c = String.class;
         Setting s = null;
         String settingToGet = settingsPackage + dataType + "Setting";
@@ -172,15 +164,16 @@ public class ProjectReader {
         try {
             s =
                     (Setting) c.getConstructor(Controller.class, String.class, String.class,
-                                               String.class,
+                                               
                                                String.class)
-                            .newInstance(controller, partType, param, paramName, defaultVal);
+                            .newInstance(controller, partType, param, defaultVal);
         }
         catch (InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {
             // display error message, don't let the null value be used
             System.err.println("Setting object couldn't be created");
+            e.printStackTrace();
         }
         return s;
     }
@@ -213,7 +206,7 @@ public class ProjectReader {
                 catch (IllegalAccessException | InvocationTargetException
                         | NoSuchMethodException | SecurityException e1) {
                     System.err.println("Editor couldn't be created.");
-                    // e1.printStackTrace();
+                     e1.printStackTrace();
                 }
                 orderedEditorList.add(editorToAdd);
             }
