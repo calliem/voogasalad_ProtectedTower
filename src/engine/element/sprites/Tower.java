@@ -29,11 +29,18 @@ public class Tower extends GameSprite {
     // Use above projectile to read from data file
     // Use below projectile in front end to assign sprite objects
     @parameter(settable = true, playerDisplay = false, defaultValue = "null")
-    private Sprite projectileList;
+    private Projectile projectileList;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double cost;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double buildTime;
+    /**
+     * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
+     */
+    @parameter(settable = false, playerDisplay = true, defaultValue = "null")
+    private List<String> nextSprites;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private Tower nextSpritesList;
 
     private Set<GameElement> myTargets;
 

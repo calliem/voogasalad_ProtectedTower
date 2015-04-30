@@ -28,7 +28,7 @@ public class BooleanSetting extends Setting{
     }
     
     public void setParameterValue(Object value){
-        dataAsString = (String) value;
+        dataAsString = value.toString();
         checkbox.setSelected((Boolean) value);
     }
 

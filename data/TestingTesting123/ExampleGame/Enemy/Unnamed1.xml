@@ -1,15 +1,11 @@
 <map>
   <entry>
     <string>PartType</string>
-    <string>Projectile</string>
+    <string>Enemy</string>
   </entry>
   <entry>
     <string>image</string>
     <string>imageselector/img_not_available.png</string>
-  </entry>
-  <entry>
-    <string>damage</string>
-    <int>1</int>
   </entry>
   <entry>
     <string>boundingWidth</string>
@@ -21,11 +17,19 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed2</string>
+    <string>Unnamed1</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part1.Projectile</string>
+    <string>ExampleGame_Part0.Enemy</string>
+  </entry>
+  <entry>
+    <string>health</string>
+    <int>100</int>
+  </entry>
+  <entry>
+    <string>CanHurtPlayer</string>
+    <boolean>true</boolean>
   </entry>
   <entry>
     <string>speed</string>

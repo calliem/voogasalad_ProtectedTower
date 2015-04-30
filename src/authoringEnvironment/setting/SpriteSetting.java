@@ -47,6 +47,7 @@ public class SpriteSetting extends Setting {
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
 
     private boolean singularChoice = false;
+    protected String spriteDisplayed;
     
     public SpriteSetting (Controller controller, String part, String label, String value) {
         super(controller, part, label, value);
@@ -55,7 +56,11 @@ public class SpriteSetting extends Setting {
     @Override
     protected void setupInteractionLayout () {
         basicLayout.setAlignment(Pos.CENTER);
+        ImageView refresh = new ImageView(new Image("images/refresh.png"));
+        ScaleImage.scale(refresh, 20, 20);
+        basicLayout.getChildren().add(refresh);
         
+        setSpriteDisplayed();
         selectedFiles = new ArrayList<>();
        
         HBox graphicLayout = new HBox(PADDING);
@@ -68,6 +73,8 @@ public class SpriteSetting extends Setting {
         filePaths = FXCollections.observableList(new ArrayList<String>());
         setupScrollPane();
         setupSelectionPane();
+        
+        refresh.setOnMousePressed(e -> setupSelectionPane());
 
         filePaths.addListener(new ListChangeListener<String>() {
             @Override
@@ -76,11 +83,17 @@ public class SpriteSetting extends Setting {
             }
         });
         
-        images.get(INITIAL).setOpacity(SELECTED);
-        selectedFiles.add(filePaths.get(INITIAL));
+        if(!images.isEmpty()){
+            images.get(INITIAL).setOpacity(SELECTED);
+            selectedFiles.add(filePaths.get(INITIAL));
+        }
         
         graphicLayout.getChildren().addAll(graphicSelectorPane, error);
         this.getChildren().addAll(graphicLayout);
+    }
+    
+    protected void setSpriteDisplayed(){
+        
     }
     
     @Override
@@ -112,17 +125,19 @@ public class SpriteSetting extends Setting {
         
         images = new ArrayList<>();
         for (String path : filePaths) {
-            System.out.println("trying to get image at: " + myController.getImageForKey(path));
+//            System.out.println("trying to get image at: " + myController.getImageForKey(path));
             ImageView image = new ImageView(myController.getImageForKey(path));
             ScaleImage.scale(image, IMAGE_SIZE, IMAGE_SIZE);
             image.setOnMousePressed( (e) -> {
                 if(image.getOpacity() == SELECTED && !singularChoice){
                     image.setOpacity(UNSELECTED);
                     selectedFiles.remove(path);
+                    System.out.println("SELECTED FILES: " + selectedFiles);
                 }
                 else if(image.getOpacity() == UNSELECTED && !singularChoice){
                     image.setOpacity(SELECTED);
                     selectedFiles.add(path);
+                    System.out.println("SELECTED FILES: " + selectedFiles);
                 }
                 else if(image.getOpacity() == UNSELECTED && singularChoice){
                     makeSingleSelection(filePaths.indexOf(path));
@@ -162,8 +177,7 @@ public class SpriteSetting extends Setting {
     }
 
     private void retrieveSprites () {
-        filePaths = myController.getKeysForPartType(spriteNeeded
-                                                      .getString(partType));
+        filePaths = myController.getKeysForPartType(spriteDisplayed);
     }
 
     private void setupScrollPane () {
@@ -203,12 +217,14 @@ public class SpriteSetting extends Setting {
 
     @Override
     public boolean parseField () {
-        if(selectedFiles.size() == 0){
-            displayErrorAlert("Select at least one!");
-            return false;
-        }
+//        if(selectedFiles.size() == 0){
+//            displayErrorAlert("Select at least one!");
+//            return false;
+//        }
         dataAsString = convertDataToString();
-        hideErrorAlert();
+        System.out.println("data: " + selectedFiles);
+        System.out.println("dataAsString: " + dataAsString);
+//        hideErrorAlert();
         return true;
     }
 

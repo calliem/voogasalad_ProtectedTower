@@ -321,6 +321,7 @@ public class Controller {
                 (String) partCopy.get(InstanceManager.IMAGE_KEY);
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
+            System.out.println("DOES THE IMAGE EXIST? " + new File(absoluteImageFilePath).exists());
             RenderedImage toWrite = ImageIO.read(new File(absoluteImageFilePath));
             ImageIO.write(toWrite,"png", os);
             InputStream imageInputStream = new ByteArrayInputStream(os.toByteArray());
