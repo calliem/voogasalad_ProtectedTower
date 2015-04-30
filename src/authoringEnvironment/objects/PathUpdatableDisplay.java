@@ -12,9 +12,9 @@ public class PathUpdatableDisplay extends UpdatableDisplay {
 
     public PathUpdatableDisplay (List<GameObject> list,
                                  int rowSize,
-                                 double thumbnailSizeMultiplier,
+                                 int thumbnailSize,
                                  MapWorkspace mapWorkspace) {
-        super(list, rowSize, thumbnailSizeMultiplier);
+        super(list, rowSize, thumbnailSize);
         myMapWorkspace = mapWorkspace;
     }
 
