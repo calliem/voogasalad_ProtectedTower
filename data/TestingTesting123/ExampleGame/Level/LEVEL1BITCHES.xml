@@ -1,0 +1,30 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Level</string>
+  </entry>
+  <entry>
+    <string>GameMap</string>
+    <string>ExampleGame_Part4.GameMap</string>
+  </entry>
+  <entry>
+    <string>Rounds</string>
+    <list>
+      <string>ExampleGame_Part8.Round</string>
+      <string>ExampleGame_Part8.Round</string>
+      <string>ExampleGame_Part8.Round</string>
+    </list>
+  </entry>
+  <entry>
+    <string>name</string>
+    <string>LEVEL1BITCHES</string>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>ExampleGame_Part9.Level</string>
+  </entry>
+  <entry>
+    <string>Tags</string>
+    <list/>
+  </entry>
+</map>

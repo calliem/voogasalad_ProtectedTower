@@ -23,14 +23,14 @@ public class Main extends Application {
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
     private ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "main_environment_english");
     private static final String defaultSaveLocation = System.getProperty(
-			"user.dir").concat("/data/TestingTesting123");
+			"user.dir").concat("/data/ExampleGames");
     
     @Override
     public void start(Stage stage) throws Exception {
         initScreen();
         myStage = stage;
         
-        AuthoringEnvironment myView = new AuthoringEnvironment(stage, "ExampleGame", defaultSaveLocation);
+        AuthoringEnvironment myView = new AuthoringEnvironment(stage, "Game1DeathMap", defaultSaveLocation);
         Scene authoring = myView.initScene(myDimensions);
         
         GamePlayer myPlayer = new GamePlayer();

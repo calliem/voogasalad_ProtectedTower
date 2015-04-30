@@ -19,6 +19,7 @@ public class GameCreator {
     public static final ResourceBundle CLASS_LIST =
             ResourceBundle.getBundle(CLASS_LIST_FILE);
     public static final String IMAGE_DATA_FOLDER = "/ImageData";
+    public static final String TILE_FOLDER = "/Tile";
 
     // private static InstanceManager currentGame = new InstanceManager();
 
@@ -66,6 +67,7 @@ public class GameCreator {
         Set<String> toAdd = gameDirectories();
         toAdd.add(InstanceManager.PARTS_FILE_DIRECTORY);
         toAdd.add(IMAGE_DATA_FOLDER);
+        toAdd.add(TILE_FOLDER);
         return toAdd;
     }
 

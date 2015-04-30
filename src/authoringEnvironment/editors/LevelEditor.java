@@ -1,6 +1,7 @@
 package authoringEnvironment.editors;
 
 import java.util.ResourceBundle;
+import javafx.scene.control.Button;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.LevelSidebar;
 import authoringEnvironment.objects.UpdatableDisplay;
@@ -46,7 +47,7 @@ public class LevelEditor extends MainEditor {
         // part.get(InstanceManager.nameKey);
         // part.get(MapEditor.TILE_MAP);
     }
-
+    
     @Override
     public void update () {
         // TODO Auto-generated method stub
