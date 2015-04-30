@@ -5,9 +5,7 @@
   </entry>
   <entry>
     <string>PathKeys</string>
-    <list>
-      <string>ExampleGame_Part1.Path</string>
-    </list>
+    <list/>
   </entry>
   <entry>
     <string>Background</string>
@@ -15,7 +13,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>test</string>
+    <string>sdf</string>
   </entry>
   <entry>
     <string>PartKey</string>

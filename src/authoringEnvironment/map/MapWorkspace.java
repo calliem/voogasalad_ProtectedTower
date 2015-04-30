@@ -5,6 +5,7 @@ import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -48,6 +49,7 @@ public class MapWorkspace extends StackPane {
     private PathView myActivePath;
     private Color myActiveColor;
     private Rectangle pathModeOverlay;
+    private ImageView myActiveImg;
 
     // TODO: fix all of these constants so there are no more replicates
 
@@ -96,6 +98,13 @@ public class MapWorkspace extends StackPane {
         StackPane.setAlignment(object.getRoot(), Pos.CENTER);
         if (!getChildren().contains(object.getRoot()))
             getChildren().add(object.getRoot());
+    }
+    
+    public void updateWorkspaceWithImg(ImageView imgView){
+        if (myActiveImg != null)
+            remove(imgView);
+        getChildren().add(imgView);
+        myActiveImg = imgView;
     }
 
     public void updateWithNewMap (GameObject object) {

@@ -413,12 +413,18 @@ public class MapSidebar extends Sidebar {
                             .contains(getMapWorkspace().getActivePath()))
                         getMapWorkspace().getActiveMap().getPaths()
                                 .remove(getMapWorkspace().getActivePath());
-
+                    if (getMapWorkspace().getActiveMap().getPaths()
+                            .contains(getMapWorkspace().getActivePath())) {
+                        myController.deletePart(getMapWorkspace().getActivePath().getKey());
+                    }
                     remove(getMapWorkspace().getActivePath(), null, null); // TODO: add gameobject
                 // interface
                 getMapWorkspace().deactivatePathMode();
                 getMapWorkspace().setActivePath(null);
                 pathDisplay.updateDisplay(getMapWorkspace().getActiveMap().getPaths());
+                // }
+                // else
+                // getMapWorkspace().displayMessage("Cannot delete an unsaved map", Color.RED);
 
             });
 
@@ -463,7 +469,7 @@ public class MapSidebar extends Sidebar {
 
     private void clickSavePath () {
         getMapWorkspace().deactivatePathMode();
-        
+
         PathView activePath = getMapWorkspace().getActivePath();
 
         if (!getMaps().contains(getMapWorkspace().getActiveMap()))
@@ -474,8 +480,8 @@ public class MapSidebar extends Sidebar {
             savePath(activePath);
         }
     }
-    
-    private void savePath (PathView activePath){
+
+    private void savePath (PathView activePath) {
         activePath.setName(pathNameTextField.getText());
 
         Map<String, Object> mapSettings = activePath.save();
