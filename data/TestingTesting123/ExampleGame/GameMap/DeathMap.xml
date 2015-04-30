@@ -2334,284 +2334,22 @@
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-      </javafx.beans.property.StringProperty-array>
-      <javafx.beans.property.StringProperty-array>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
@@ -2828,6 +2566,530 @@
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+      </javafx.beans.property.StringProperty-array>
+      <javafx.beans.property.StringProperty-array>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+      </javafx.beans.property.StringProperty-array>
+      <javafx.beans.property.StringProperty-array>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
           <value></value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
@@ -3020,556 +3282,32 @@
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-      </javafx.beans.property.StringProperty-array>
-      <javafx.beans.property.StringProperty-array>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-      </javafx.beans.property.StringProperty-array>
-      <javafx.beans.property.StringProperty-array>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
@@ -3796,32 +3534,32 @@
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
@@ -4058,12 +3796,274 @@
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
           <value></value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
             <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+      </javafx.beans.property.StringProperty-array>
+      <javafx.beans.property.StringProperty-array>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
@@ -4300,6 +4300,530 @@
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+      </javafx.beans.property.StringProperty-array>
+      <javafx.beans.property.StringProperty-array>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+      </javafx.beans.property.StringProperty-array>
+      <javafx.beans.property.StringProperty-array>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value></value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string"></currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
+          <value>ExampleGame_Part7.Tile</value>
+          <valid>true</valid>
+          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
+            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
+            <listener class="null"/>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
+          </helper>
+          <name></name>
+        </javafx.beans.property.SimpleStringProperty>
+        <javafx.beans.property.SimpleStringProperty>
           <value></value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
@@ -4542,546 +5066,22 @@
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
         <javafx.beans.property.SimpleStringProperty>
-          <value></value>
+          <value>ExampleGame_Part7.Tile</value>
           <valid>true</valid>
           <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
             <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
             <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-      </javafx.beans.property.StringProperty-array>
-      <javafx.beans.property.StringProperty-array>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-      </javafx.beans.property.StringProperty-array>
-      <javafx.beans.property.StringProperty-array>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
-          </helper>
-          <name></name>
-        </javafx.beans.property.SimpleStringProperty>
-        <javafx.beans.property.SimpleStringProperty>
-          <value></value>
-          <valid>true</valid>
-          <helper class="com.sun.javafx.binding.ExpressionHelper$SingleChange">
-            <observable class="javafx.beans.property.SimpleStringProperty" reference="../.."/>
-            <listener class="null"/>
-            <currentValue class="string"></currentValue>
+            <currentValue class="string">ExampleGame_Part7.Tile</currentValue>
           </helper>
           <name></name>
         </javafx.beans.property.SimpleStringProperty>
@@ -5512,19 +5512,22 @@
   </entry>
   <entry>
     <string>PathKeys</string>
-    <list/>
+    <list>
+      <string>ExampleGame_Part5.Path</string>
+      <string>ExampleGame_Part6.Path</string>
+    </list>
   </entry>
   <entry>
     <string>Background</string>
-    <string>images/white_square.png</string>
+    <string>images/Death_Valley.png</string>
   </entry>
   <entry>
     <string>name</string>
-    <string></string>
+    <string>DeathMap</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.GameMap</string>
+    <string>ExampleGame_Part4.GameMap</string>
   </entry>
   <entry>
     <string>TileSize</string>

@@ -13,18 +13,21 @@ public class LevelUpdatableDisplay extends UpdatableDisplay {
 
     private MapWorkspace myMapWorkspace;
     private Controller myController;
+    private LevelSidebar sidebar;
 
     public LevelUpdatableDisplay (ObservableList<GameObject> observableList, int rowSize, double thumbnailSizeMultiplier, MapWorkspace mapWorkspace) {
         super(observableList, rowSize, thumbnailSizeMultiplier);
+       
         myMapWorkspace = mapWorkspace;
         // TODO Auto-generated constructor stub
     }
     
-    public LevelUpdatableDisplay (Controller c,
+    public LevelUpdatableDisplay (LevelSidebar l, Controller c,
                                  String partType,
                                  int rowSize,
                                  double thumbnailSizeMultiplier, MapWorkspace mapWorkspace) {
         super(c, partType, rowSize, thumbnailSizeMultiplier);
+        sidebar = l;
         myMapWorkspace = mapWorkspace;
         myController = c;
     }
@@ -36,6 +39,7 @@ public class LevelUpdatableDisplay extends UpdatableDisplay {
        // myMapWorkspace.updateWorkspaceWithImg(object);
       //  myMapWorkspace.getChildren().clear();
         try {
+            sidebar.setKey(object.getKey());
             myMapWorkspace.getChildren().add(new ImageView(myController.getImageForKey(object.getKey())));
         }
         catch (NoImageFoundException e) {
