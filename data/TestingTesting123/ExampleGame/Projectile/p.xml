@@ -5,7 +5,7 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>images/alert.png</string>
   </entry>
   <entry>
     <string>damage</string>
@@ -34,9 +34,5 @@
   <entry>
     <string>Tags</string>
     <list/>
-  </entry>
-  <entry>
-    <string>group</string>
-    <string>null</string>
   </entry>
 </map>
