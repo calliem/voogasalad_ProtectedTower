@@ -115,9 +115,23 @@ public class MapWorkspace extends StackPane {
                 Scaler.scaleOverlay(0.0, 1.0, object.getRoot());
         scale.setOnFinished( (e) -> {
             //TODO: figure out math placement
-            object.getRoot().setTranslateX(object.getAverageCenterPoint().getX() - AuthoringEnvironment.getEnvironmentWidth()*WORKSPACE_WIDTH_MULTIPLIER/2);
-            object.getRoot().setTranslateY(object.getAverageCenterPoint().getY() - AuthoringEnvironment.getEnvironmentHeight()*WORKSPACE_HEIGHT_MULTIPLIER/2);
+         /*   double centerX =  AuthoringEnvironment.getEnvironmentWidth()*WORKSPACE_WIDTH_MULTIPLIER/2;
+            double centerY = AuthoringEnvironment.getEnvironmentHeight()*WORKSPACE_HEIGHT_MULTIPLIER/2;
+            double avgX = object.getAverageCenterPoint().getX();
+            double avgY = object.getAverageCenterPoint().getY();
             
+            double diffX = avgX - centerX;
+            double diffY = avgY - centerY;
+            
+            if (diffX >= 0)
+                object.getRoot().setTranslateX(diffX);
+            else 
+                object.getRoot().setTranslateX(-1* diffX);
+            
+            if (diffY >= 0)
+                object.getRoot().setTranslateY(-1 * diffY);
+            else 
+                object.getRoot().setTranslateY(diffY);*/
             update(myActivePath, object);
 
             
