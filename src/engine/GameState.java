@@ -15,7 +15,7 @@ public class GameState {
     private int myPoints;
 
     public GameState () {
-        myBank = new Bank();
+        myBank = new Bank(0);
         myPoints = 0;
     }
 

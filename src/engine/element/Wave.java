@@ -42,7 +42,7 @@ public class Wave implements UpdateAndReturnable, Endable {
     }
 
     @Override
-    public Map<Object, List<String>> update (int counter) {
+    public Map<Object, List<String>> update () {
         Map<Object, List<String>> tempReturnMap = null;
 
         if (myTimer == mySendTimes.get(myEnemyIndex)) {

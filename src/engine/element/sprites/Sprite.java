@@ -1,8 +1,12 @@
 package engine.element.sprites;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
+import engine.UpdateAndReturnable;
 import engine.Updateable;
 
 
@@ -15,10 +19,11 @@ import engine.Updateable;
  *
  */
 
-public abstract class Sprite extends GameElement implements Updateable {
+public abstract class Sprite extends GameElement {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "")
     private ImageView image;
+
 
     public Sprite () {
 
@@ -58,6 +63,7 @@ public abstract class Sprite extends GameElement implements Updateable {
         image.setTranslateX(super.getLocationX());
         image.setTranslateY(super.getLocationY());
     }
+
 
     // Abstract methods
 
