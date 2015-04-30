@@ -8,7 +8,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import engine.element.sprites.GameElement;
-import engine.element.sprites.Sprite;
 
 
 /**
@@ -18,7 +17,7 @@ import engine.element.sprites.Sprite;
  * then find colliding members.
  * 
  * @author Qian Wang
- *
+ * @author Michael Yang
  */
 public class CollisionChecker {
 
