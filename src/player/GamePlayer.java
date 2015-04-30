@@ -265,7 +265,9 @@ public class GamePlayer extends Application {
 
     private Pane makeMainPane () {
         Pane mainArea = new Pane(myEngineRoot);
+        if(background!=null){
         mainArea.getChildren().add(0, background);
+        }
         // TODO: property file this
         mainArea.setPrefWidth(myScreenWidth - myScreenWidth / 4);
         mainArea.setPrefHeight(myScreenHeight);

@@ -16,7 +16,7 @@ public class MapPath extends GameElement {
     }
 
     public void addInstanceVariables (Map<String, Object> parameters) {
-        // TODO fill out this method
+        coordinates = (List<Coordinate>) parameters.get("Curves");
     }
 
     @Override
