@@ -1,0 +1,28 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Level</string>
+  </entry>
+  <entry>
+    <string>GameMap</string>
+    <null/>
+  </entry>
+  <entry>
+    <string>Rounds</string>
+    <list>
+      <string>ExampleGame_Part3.Round</string>
+    </list>
+  </entry>
+  <entry>
+    <string>name</string>
+    <string>Penis</string>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>ExampleGame_Part0.Level</string>
+  </entry>
+  <entry>
+    <string>Tags</string>
+    <list/>
+  </entry>
+</map>

@@ -9,26 +9,18 @@ import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import authoringEnvironment.Controller;
 import authoringEnvironment.Variables;
-import authoringEnvironment.setting.SpriteSetting;
 
 
 /**
@@ -41,6 +33,7 @@ import authoringEnvironment.setting.SpriteSetting;
  */
 
 public class FlowView extends HBox {
+    private static final String IMAGES_ARROW_ICON_PNG = "images/arrow_icon.png";
     protected TextField delayTextField;
     protected FileChooser fileChooser;
     protected Controller myController;
@@ -89,11 +82,11 @@ public class FlowView extends HBox {
     }
 
     protected List<Node> createOptionSelector (List<String> data) {
-        List<Node> options = new ArrayList<Node>();
-        Button waveButton = new Button("Choose Wave");
-        waveButton.setOnAction(e -> selectWave());
-        options.add(waveButton);
-        return options;
+//        List<Node> options = new ArrayList<Node>();
+//        Button waveButton = new Button("Choose Wave");
+//        waveButton.setOnAction(e -> selectWave());
+//        options.add(waveButton);
+        return null;
     }
 
     private void showArrowAnimation (ImageView arrow, TextField field) {
@@ -110,7 +103,7 @@ public class FlowView extends HBox {
     }
 
     private VBox createArrowAndDelayVisuals () {
-        ImageView arrowImage = new ImageView(new Image("images/arrow_icon.png"));
+        ImageView arrowImage = new ImageView(new Image(IMAGES_ARROW_ICON_PNG));
         ScaleImage.scaleByWidth(arrowImage, 120);
         delayTextField = new TextField();
         delayTextField.setPromptText("(sec)");
@@ -176,11 +169,11 @@ public class FlowView extends HBox {
     }
     
     public String getWaveKey(){
-        return "null";
+        return null;
     }
     
     public String getPathKey(){
-        return "penis";
+        return null;
     }
     
     public Double getDelay(){

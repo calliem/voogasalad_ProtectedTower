@@ -85,23 +85,23 @@ public class GamePlayer extends Application {
         ObservableList<Sprite> displayList = FXCollections.observableArrayList(new ArrayList<>());
         displayList.addListener((ListChangeListener<Sprite>) change -> {
             while (change.next()) {
-                for (Object obj : change.getAddedSubList()) {
+                for (Sprite obj : change.getAddedSubList()) {
 
-                    Sprite placeSprite = (Sprite) obj;
-
-                    ImageView myView = placeSprite.getImageView();
+              
+                    ImageView myView = obj.getImageView();
                     if (displayList.size() == 1) {
-                        ScaleImage.scaleNoPreserve(myView, myMainArea.getWidth(),
-                                                   myMainArea.getHeight());
+                        ScaleImage.scaleNoPreserve(myView, myMainArea.getWidth()*0.7,
+                                                   myMainArea.getHeight()*0.7);
                         myMainArea.getChildren().add(myView);
                         break;
                     }
-                    myView.setOnMouseClicked(m -> updateInfoBox(placeSprite));
+                    myView.setOnMouseClicked(m -> updateInfoBox(obj));
                     myMainArea.getChildren().add(myView);
                 }
-                for (Object obj : change.getRemoved()) {
-                    Node placeSprite = (Node) obj;
-                    myMainArea.getChildren().remove(placeSprite);
+                for (Sprite obj : change.getRemoved()) {
+                    
+                    System.err.println(myMainArea.getChildren().remove(obj.getImageView()));
+                    
                 }
             }
         });
@@ -185,7 +185,7 @@ public class GamePlayer extends Application {
     }
 
     @Override
-    public void start (Stage primaryStage) throws Exception {
+    public void start (Stage primaryStage) {
         myPlayerStage = primaryStage;
         setScreenBounds(primaryStage);
         myPlayerStage.setMaximized(true);
@@ -200,7 +200,11 @@ public class GamePlayer extends Application {
         myPlayerStage.show();
     }
 
-    private MenuBar setUpMenu () throws InsufficientParametersException {
+    public Scene getScene(){
+        return myMainScene;
+    }
+    
+    private MenuBar setUpMenu () {
         MenuBar myMenu = new MenuBar();
         Menu file = new Menu("File");
         MenuItem openGame = new MenuItem("Open Game");

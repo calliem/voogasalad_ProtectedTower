@@ -74,8 +74,12 @@ public class Layout implements Updateable {
 
     private final int ROW_INDEX = 0;
     private final int COLUMN_INDEX = 1;
+    private final Collection<BiConsumer<GameElement, GameElement>>[] nullActions =
+            (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[2];
 
     public Layout (List<Sprite> myNodes) {
+        nullActions[0] = new ArrayList<BiConsumer<GameElement, GameElement>>();
+        nullActions[1] = new ArrayList<BiConsumer<GameElement, GameElement>>();
         // TODO: Get environment map from front end to load into GroovyEngine, current map is empty
         // TODO: Get groovy scripts for user defined
         // TODO: Get interaction map from front end
@@ -85,6 +89,26 @@ public class Layout implements Updateable {
         myGroovyEngine = new GroovyEngine(new HashMap<String, Object>());
         makeActionManager(new HashMap<String, String>(), new HashMap<String[], List<Integer>[]>());
         modifiableHandler(new ArrayList<Modifier>());
+
+        Set<String> towerTags = new HashSet<String>();
+        Set<String> enemyTags = new HashSet<String>();
+        Set<String> projectileTags = new HashSet<String>();
+        myTowerList.forEach(t -> towerTags.add(t.getGUID()));
+        myEnemyList.forEach(t -> enemyTags.add(t.getGUID()));
+        myProjectileList.forEach(t -> projectileTags.add(t.getGUID()));
+
+        towerTags.forEach(t -> enemyTags.forEach(e ->
+        {
+            String[] pair = { t, e };
+            myActionManager.addEntryToManager(pair, nullActions);
+        }));
+
+        projectileTags.forEach(t -> enemyTags.forEach(e ->
+        {
+            String[] pair = { t, e };
+            myActionManager.addEntryToManager(pair, nullActions);
+        }));
+
     }
 
     /**
@@ -103,10 +127,11 @@ public class Layout implements Updateable {
      */
     // TODO Poor design to have a method for every kind of sprite, need to think of a better way to
     // do this without repeating code
-    public void removeSprite (GameElement sprite) {
+    public void removeSprite (Sprite sprite) {
         myProjectileList.remove(sprite);
         myEnemyList.remove(sprite);
         myTowerList.remove(sprite);
+        System.out.println(myNodeList.contains(sprite));
         myNodeList.remove(sprite);
     }
 
@@ -118,7 +143,7 @@ public class Layout implements Updateable {
      */
     public void modifiableHandler (Collection<Modifier> modifiers) {
         for (Modifier modifier : modifiers) {
-            String[] tagPair = {modifier.getActor(),modifier.getActee() };
+            String[] tagPair = { modifier.getActor(), modifier.getActee() };
             Collection<BiConsumer<GameElement, GameElement>>[] actions =
                     (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[2];
             Collection<BiConsumer<GameElement, GameElement>> action1 =
@@ -360,16 +385,15 @@ public class Layout implements Updateable {
     public void update () {
         updateSpriteTargeting();
         updateSpriteLocations();
-        // updateSpriteCollisions();
-        // removeDeadSprites();
+        updateSpriteCollisions();
+        removeDeadSprites();
     }
 
     /**
      * Removes all GameElements that have a statetag of dead.
      */
-
     private void removeDeadSprites () {
-        for (GameElement g : this.getSprites()) {
+        for (Sprite g : this.getSprites()) {
             if (g.getState().equals(GameElement.DEAD_STATE)) {
                 this.removeSprite(g);
             }
@@ -388,10 +412,10 @@ public class Layout implements Updateable {
                                                            p.getTarget()));
         });
 
-//         myEnemyList.forEach(p -> {
-//         Map<Object, List<String>> spawnMap = p.update();
-//         spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-//         });
+        myEnemyList.forEach(p -> {
+            Map<Object, List<String>> spawnMap = p.update();
+            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+        });
 
     }
 
@@ -408,7 +432,16 @@ public class Layout implements Updateable {
             Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(sprite);
             for (GameElement other : possibleInteractions) {
                 // TODO determine how many interactions should be made to each sprite
-                myActionManager.applyAction(sprite, other);
+                // myActionManager.applyAction(sprite, other);
+                System.out.println(sprite.getPartType()+ "\t" + other.getPartType());
+//                if (myActionManager.isAction(sprite, other)) {
+                    boolean isProjectile = sprite.getPartType().equalsIgnoreCase("Projectile");
+                    boolean isEnemy = other.getPartType().equalsIgnoreCase("Enemy");
+                    if (isProjectile && isEnemy) {
+                        sprite.setDead();
+                        other.setDead();
+                    }
+//                }
             }
         }
     }
@@ -418,9 +451,12 @@ public class Layout implements Updateable {
      */
     private void updateSpriteTargeting () {
         if (myTowerList.isEmpty()) { return; }
-        myCollisionChecker.createQuadTree(this.getSprites());
+        myCollisionChecker.createQuadTree(myEnemyList);
         for (Tower tower : myTowerList) {
-            tower.addTargets(filterTargets(myCollisionChecker.findTargetable(tower), tower));
+            Set<GameElement> setOfTargetables = myCollisionChecker.findTargetable(tower);
+            setOfTargetables.remove(tower);
+            System.out.println(setOfTargetables.size());
+            tower.addTargets(filterTargets(setOfTargetables, tower));
         }
     }
 
@@ -430,9 +466,9 @@ public class Layout implements Updateable {
                                                                  tower.getProjectile());
         Set<GameElement> targetables = new HashSet<>();
         for (GameElement g : targetable)
-            // if (myActionManager.isAction(g, tester)){
+//             if (myActionManager.isAction(g, tester)) {
             targetables.add(g);
-        // }
+//         }
         return targetables;
     }
 
