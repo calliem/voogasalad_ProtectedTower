@@ -40,8 +40,8 @@ public class ActionManager {
         // check that input is valid
         for (String[] key : interactionMap.keySet()) {
             if (key.length != REQUIRED_KEY_LENGTH ||
-                interactionMap.get(key).length != REQUIRED_KEY_LENGTH) { throw new InvalidParameterException(
-                                                                                                             "InteractionMap is in invalid format"); }
+                    interactionMap.get(key).length != REQUIRED_KEY_LENGTH) { throw new InvalidParameterException(
+                            "InteractionMap is in invalid format"); }
         }
         // declare and load the decision map
         myDecisionMap = new HashMap<String[], Collection<BiConsumer<GameElement, GameElement>>[]>();
@@ -89,10 +89,10 @@ public class ActionManager {
         }
         return false;
     }
-    
-    public boolean isAction(GameElement spriteOne, GameElement spriteTwo){
-    	String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
-    	return myDecisionMap.containsKey(spriteTagPair);
+
+    public boolean isAction (GameElement spriteOne, GameElement spriteTwo) {
+        String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
+        return myDecisionMap.containsKey(spriteTagPair);
     }
 
     /**
@@ -105,6 +105,28 @@ public class ActionManager {
     public boolean containsActionFor (Sprite spriteOne, Sprite spriteTwo) {
         String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
         return myDecisionMap.containsKey(spriteTagPair);
+    }
+
+    /**
+     * Method for adding/appending to an entry in the actionManager
+     * 
+     * @param tagPair
+     * @param actions
+     */
+    public void addEntryToManager (String[] tagPair,
+                                   Collection<BiConsumer<GameElement, GameElement>>[] actions) {
+        if (myDecisionMap.keySet().contains(tagPair)) {
+            for (BiConsumer<GameElement, GameElement> action : actions[0]) {
+                myDecisionMap.get(tagPair)[0].add(action);
+            }
+            for (BiConsumer<GameElement, GameElement> action : actions[1]) {
+                myDecisionMap.get(tagPair)[1].add(action);
+            }
+        }
+        else {
+            myDecisionMap.put(tagPair, actions);
+        }
+
     }
 
     /**

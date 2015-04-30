@@ -19,7 +19,7 @@ import engine.Reflectable;
  * @author Greg McKeon
  *
  */
-public abstract class GameElement implements Collidable, Reflectable {
+public abstract class GameElement implements Collidable, Reflectable,Modifiable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String name;
