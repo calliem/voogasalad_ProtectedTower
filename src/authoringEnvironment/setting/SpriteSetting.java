@@ -106,6 +106,7 @@ public class SpriteSetting extends Setting {
         
         images = new ArrayList<>();
         for (String path : filePaths) {
+            System.out.println("trying to get image at: " + myController.getImageForKey(path));
             ImageView image = new ImageView(myController.getImageForKey(path));
             ScaleImage.scale(image, IMAGE_SIZE, IMAGE_SIZE);
             image.setOnMousePressed( (e) -> {

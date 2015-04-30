@@ -1,12 +1,17 @@
 package authoringEnvironment;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import util.IntArray2DToImageConverter.src.ImageToInt2DArray;
-import util.IntArray2DToImageConverter.src.IntArray2DToImageConverter;
+import javax.imageio.ImageIO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -241,7 +246,7 @@ public class Controller {
         return key;
     }
 
-    public boolean addTagToPart (String partKey, String tag){
+    public boolean addTagToPart (String partKey, String tag) {
         if (currentGame.containsKey(partKey)) {
             currentGame.addTagToPart(partKey, tag);
             return true;
@@ -258,12 +263,12 @@ public class Controller {
         }
         return false;
     }
-    
-    public File getDirectoryToPartFolder(String partType){
+
+    public File getDirectoryToPartFolder (String partType) {
         return new File(currentGame.getRootDirectory() + "/" + partType);
     }
-    
-    public boolean deletePart(String partKey){
+
+    public boolean deletePart (String partKey) {
         return currentGame.deletePart(partKey);
     }
 
@@ -291,8 +296,9 @@ public class Controller {
      */
     public ObservableList<String> getKeysForPartType (String partType) {
         System.out.println(partTypeToKeyList);
-        if (!partTypeToKeyList.keySet().contains(partType)){
-            partTypeToKeyList.put(partType, FXCollections.observableArrayList(new ArrayList<String>()));
+        if (!partTypeToKeyList.keySet().contains(partType)) {
+            partTypeToKeyList.put(partType,
+                                  FXCollections.observableArrayList(new ArrayList<String>()));
         }
         return partTypeToKeyList.get(partType);
     }
@@ -310,16 +316,20 @@ public class Controller {
     public Image getImageForKey (String key) throws NoImageFoundException {
         Map<String, Object> partCopy = getPartCopy(key);
         if (!partCopy.keySet().contains(InstanceManager.IMAGE_KEY))
-            throw new NoImageFoundException("No image is specified for part: "
-                                            + key);
-        int[][] imageData = (int[][]) partCopy.get(InstanceManager.IMAGE_KEY);
-        return IntArray2DToImageConverter.convert2DIntArrayToImage(imageData, 1);
-        
-    }
-
-    public void addImageToPart (String partKey, Image image) {
-        int[][] pixelArray = ImageToInt2DArray.convertImageTo2DIntArray(image, (int) image.getWidth(), (int) image.getHeight());
-        currentGame.specifyPartImage(partKey, pixelArray);
+            throw new NoImageFoundException("No image is specified for part");
+        String absoluteImageFilePath = currentGame.getRootDirectory() +
+                (String) partCopy.get(InstanceManager.IMAGE_KEY);
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            RenderedImage toWrite = ImageIO.read(new File(absoluteImageFilePath));
+            ImageIO.write(toWrite,"png", os);
+            InputStream imageInputStream = new ByteArrayInputStream(os.toByteArray());
+            return new Image(imageInputStream);
+        }
+        catch (IOException e1) {
+            e1.printStackTrace();
+            throw new NoImageFoundException("something went wrong"); 
+        }      
     }
 
     /**

@@ -1,11 +1,14 @@
 package authoringEnvironment;
 
+import java.awt.Image;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.imageio.ImageIO;
 
 
 /**
@@ -24,13 +27,13 @@ public class InstanceManager {
 
     private static final String INSTANCE_MANAGER_FILE_NAME = "GameManager.xml";
     public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
-    
+
     public static final String PART_KEY_KEY = "PartKey";
     public static final String PART_TYPE_KEY = "PartType";
     public static final String NAME_KEY = "name";
     public static final String TAGS_KEY = "Tags";
     public static final String IMAGE_KEY = "image";
-    
+
     private static final String NO_KEYS_MISSING = "no keys missing";
 
     /**
@@ -42,7 +45,6 @@ public class InstanceManager {
     private String gameName;
     private String rootDirectory;
     private static int partID;
-
 
     /**
      * Generates an instance manager for a game. An InstanceManager has a name
@@ -93,7 +95,7 @@ public class InstanceManager {
     }
 
     protected String addPart (String key, Map<String, Object> fullPartMap)
-                                                                       throws MissingInformationException {
+                                                                          throws MissingInformationException {
         fullPartMap.put(TAGS_KEY, getTagList(key));
         fullPartMap.put(PART_KEY_KEY, key);
         String missingKey = checkMissingInformation(fullPartMap);
@@ -245,8 +247,21 @@ public class InstanceManager {
         return new HashMap<String, Map<String, Object>>(userParts);
     }
 
-    public void specifyPartImage (String partKey, int[][] image) {
-        userParts.get(partKey).put(IMAGE_KEY, image);
+    protected void specifyPartImage (String partKey, String imageFilePath) {
+        String realFilePath = "src/" + imageFilePath;
+        String locationAfterRootDirectory = GameCreator.IMAGE_DATA_FOLDER + "/" +
+                partKey.substring(0, partKey.indexOf(".")) + "Image.png";
+        String writeLocation = rootDirectory + locationAfterRootDirectory;
+        try {
+            File imageToSave = new File(realFilePath);
+            RenderedImage toWrite = ImageIO.read(imageToSave);
+            System.out.println(ImageIO.write(toWrite, "png", new File(writeLocation)));
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        userParts.get(partKey).put(IMAGE_KEY, locationAfterRootDirectory);
     }
 
     protected void addTagToPart (String partKey, String tag) {
@@ -296,7 +311,7 @@ public class InstanceManager {
      */
 
     protected Map<String, Object> getPartFromXML (String fileLocation)
-                                                                   throws IOException {
+                                                                      throws IOException {
 
         return (Map<String, Object>) XMLWriter.fromXML(fileLocation);
     }

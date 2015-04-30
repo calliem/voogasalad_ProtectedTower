@@ -43,8 +43,9 @@ public class AuthoringEnvironment {
     private Tab myCurrentTab;
     private Controller myController;
 
-    // private static final int TAB_HEIGHT_PERCENT
-    // private static final int TAB_HEIGHT_PERCENT
+    private static final int WIDTH_CONSTRAINT = 100;
+    private static final int MENU_HEIGHT_PERCENT = 4;
+    private static final int TAB_HEIGHT_PERCENT = WIDTH_CONSTRAINT - MENU_HEIGHT_PERCENT;
 
     private Editor currentEditor;
 
@@ -103,17 +104,13 @@ public class AuthoringEnvironment {
     }
 
     private void createEnvironment (GridPane grid) {
-        // TODO: hardcoded numbers should be removed
-        // TODO: remove 'x's' from tabs
-        // gridPane.setStyle("-fx-background-color: #C0C0C0;");
-
         ColumnConstraints col0 = new ColumnConstraints();
-        col0.setPercentWidth(100);
+        col0.setPercentWidth(WIDTH_CONSTRAINT);
 
         RowConstraints row0 = new RowConstraints();
-        row0.setPercentHeight(4);
+        row0.setPercentHeight(MENU_HEIGHT_PERCENT);
         RowConstraints row1 = new RowConstraints();
-        row1.setPercentHeight(96);
+        row1.setPercentHeight(TAB_HEIGHT_PERCENT);
         grid.getRowConstraints().add(row0);
         grid.getRowConstraints().add(row1);
         grid.getColumnConstraints().add(col0);
@@ -132,33 +129,6 @@ public class AuthoringEnvironment {
         myCurrentTab = myTabPane.getSelectionModel().getSelectedItem();
         grid.add(myTabPane, 0, 1);
     }
-
-    /**
-     * Populates the tab bar with 1 tab for every non-abstract class in editors package
-     */
-    /*
-     * private void update(Tab selectedTab){
-     * if (myCurrentTab != selectedTab){
-     * Editor editor = (Editor) myCurrentTab.getContent();
-     * Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the controller
-     * 
-     * myCurrentTab = selectedTab;
-     * Editor editor2 = (Editor) myCurrentTab.getContent();
-     * editor2.update();
-     * }
-     * }
-     * 
-     * protected void addTab(String tabName) {
-     * Tab tab = new Tab();
-     * tab.setText(tabName);
-     * tab.setContent(newEditor);
-     * if (main){
-     * tab.setStyle("-fx-base: #3c3c3c;");
-     * }
-     * tab.setClosable(false);
-     * myTabPane.getTabs().add(tab);
-     * }
-     */
 
     private MenuBar configureTopMenu () {
         Menu file = configureFileMenu();
@@ -273,4 +243,5 @@ public class AuthoringEnvironment {
 
         // this should be editor.update
     }
+
 }
