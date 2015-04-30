@@ -359,4 +359,8 @@ public class Controller {
     public ObservableList<GameObject> getMaps () {
         return myMaps;
     }
+
+    public String getNameForPart (String key) {
+        return (String) currentGame.getAllPartData().get(key).get(InstanceManager.NAME_KEY);
+    }
 }

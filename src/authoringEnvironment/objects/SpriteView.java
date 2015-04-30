@@ -4,10 +4,7 @@ import imageselector.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.PauseTransition;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tooltip;
@@ -29,7 +26,6 @@ import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.ImageViewSetting;
 import authoringEnvironment.setting.Setting;
 import authoringEnvironment.setting.StringSetting;
-import authoringEnvironment.util.Scaler;
 
 
 /**
