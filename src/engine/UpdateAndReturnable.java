@@ -22,5 +22,5 @@ public interface UpdateAndReturnable {
      * 
      * @param counter
      */
-    public Map<Object, List<String>> update (int counter);
+    public Map<Object, List<String>> update ();
 }
