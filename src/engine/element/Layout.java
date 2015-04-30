@@ -391,6 +391,7 @@ public class Layout implements Updateable {
      */
     public void initializeGameElement (String className, Map<String, Map<String, Object>> allObjects) {
         myGameElementFactory.add(className, allObjects);
+        System.out.println("Layout node list is " + myNodeList);
     }
 
     // TODO implement this
