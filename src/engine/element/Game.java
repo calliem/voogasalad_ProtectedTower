@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import util.reflection.Reflection;
 import annotations.parameter;
 import engine.Bank;
@@ -29,7 +28,6 @@ import engine.factories.GameElementFactory;
 public class Game implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
-    private int counter = 0;
     @parameter(settable = true, playerDisplay = true, defaultValue = "20")
     private Integer lives;
 
@@ -41,8 +39,10 @@ public class Game implements Updateable, Endable {
     private int myPoints;
     private GameElementFactory myGameElementFactory;
 
-    public Game (List<Sprite> nodes, Group background, Map<String, Object> parameters) {
-        myLayout = new Layout(nodes, background);
+    private int counter = 0;
+
+    public Game (List<Sprite> nodes, Map<String, Object> parameters) {
+        myLayout = new Layout(nodes);
         myGameElementFactory = new GameElementFactory();
         myLayout.setFactory(myGameElementFactory);
 
@@ -74,13 +74,13 @@ public class Game implements Updateable, Endable {
 
         System.out.println("Beginning cycle " + counter);
         // myConditions.forEach(c -> c.act(lives));
-        // Map<Object, List<String>> enemiesToSpawn =
-        // myLevels.get(myActiveLevelIndex).update(counter);
-        // for (Object loc : enemiesToSpawn.keySet()) {
-        // myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
-        // }
+        Map<Object, List<String>> enemiesToSpawn = myLevels.get(myActiveLevelIndex).update(counter);
+        for (Object loc : enemiesToSpawn.keySet()) {
+            myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
+        }
         myLayout.update(counter);
         counter++;
+
     }
 
     /**

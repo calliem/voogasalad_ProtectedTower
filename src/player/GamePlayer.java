@@ -3,7 +3,6 @@ package player;
 import imageselector.util.ScaleImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Observable;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -21,7 +20,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -84,9 +82,10 @@ public class GamePlayer extends Application {
 
                     ImageView myView = placeSprite.getImageView();
                     if (displayList.size() == 1) {
-                          ScaleImage.scaleNoPreserve(myView, myMainArea.getWidth(), myMainArea.getHeight());
-                          myMainArea.getChildren().add(myView);
-                          break;
+                        ScaleImage.scaleNoPreserve(myView, myMainArea.getWidth(),
+                                                   myMainArea.getHeight());
+                        myMainArea.getChildren().add(myView);
+                        break;
                     }
                     myView.setOnMouseClicked(m -> updateInfoBox(placeSprite));
                     myMainArea.getChildren().add(myView);
@@ -101,14 +100,14 @@ public class GamePlayer extends Application {
             myGameController =
                     new GameController(
                                        gameFile.getAbsolutePath(),
-                                       displayList, availableTowers, background);
+                                       displayList, availableTowers);
         }
         catch (InsufficientParametersException e) {
             return;
         }
 
         myGameController.startGame(1);
-        
+
     }
 
     private TableView updateInfoBox (Sprite placeSprite) {

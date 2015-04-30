@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import util.pathsearch.pathalgorithms.NoPathExistsException;
 import engine.ActionManager;
@@ -19,6 +18,7 @@ import engine.element.sprites.Enemy;
 import engine.element.sprites.GameElement;
 import engine.element.sprites.GameMap;
 import engine.element.sprites.GridCell;
+import engine.element.sprites.MapPath;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
@@ -43,11 +43,11 @@ public class Layout implements Updateable {
      * List of Javafx objects so that new nodes can be added for the player to display
      */
     private List<Sprite> myNodeList;
-    private Group myBackgroundNode;
     /**
      * Contains the map of the current game
      */
     private GameMap myGameMap;
+    private Map<String, MapPath> myPaths = new HashMap<>();
     private double[] myGoalCoordinates;
     // Lists of game elements
     private List<Tower> myTowerList = new ArrayList<>();
@@ -67,11 +67,9 @@ public class Layout implements Updateable {
     private final int ROW_INDEX = 0;
     private final int COLUMN_INDEX = 1;
 
-    public Layout (List<Sprite> myNodes, Group background) {
+    public Layout (List<Sprite> myNodes) {
         myNodeList = myNodes;
-        myBackgroundNode = background;
         myCollisionChecker = new CollisionChecker();
-
     }
 
     /**
@@ -157,7 +155,10 @@ public class Layout implements Updateable {
         else {
             myNodeList.add(0, myGameMap);
         }
-        System.out.println("Background set!");
+        myPaths.clear();
+        for (String pathID : myGameMap.getPathNames()) {
+            myPaths.put(pathID, (MapPath) myGameElementFactory.getGameElement("MapPath", pathID));
+        }
         Rectangle bounds =
                 new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
         myCollisionChecker.initializeQuadtree(bounds);
@@ -260,9 +261,10 @@ public class Layout implements Updateable {
      */
     public void spawnEnemy (String enemyID, String pathID) {
         Enemy e = (Enemy) myGameElementFactory.getGameElement("Enemy", enemyID);
-        Point2D location = new Point2D(700, 200); // TODO: Lookup spawn point given pathID
+        Point2D location = myPaths.get(pathID).getStartingPoint2D();
         e.setLocation(location);
         myEnemyList.add(e);
+        e.bezierPath(myPaths.get(pathID).getCoordinateList());
     }
 
     /**

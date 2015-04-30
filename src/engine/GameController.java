@@ -7,7 +7,6 @@ import java.util.Map;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import testing.ExampleGame;
@@ -69,11 +68,10 @@ public class GameController {
      */
     public GameController (String filepath,
                            List<Sprite> nodes,
-                           List<Tower> possibleTowers,
-                           Group background)
+                           List<Tower> possibleTowers)
         throws InsufficientParametersException {
         myTowerManager = new TowerManager();
-        myGame = this.loadGame(filepath, nodes, possibleTowers, background);
+        myGame = this.loadGame(filepath, nodes, possibleTowers);
         myGame.updateBackgroundTest("DesktopTestGameMap_Part0.GameMap");
     }
 
@@ -90,8 +88,8 @@ public class GameController {
      * @throws InsufficientParametersException when multiple games/layouts are created, or when no
      *         game elements are specified
      */
-    private Game loadGame (String filepath, List<Sprite> nodes, List<Tower> possibleTowers,
-                           Group background) throws InsufficientParametersException {
+    private Game loadGame (String filepath, List<Sprite> nodes, List<Tower> possibleTowers
+            ) throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String partName : PART_NAMES) {
             myObjects.put(partName, new HashMap<>());
@@ -110,7 +108,7 @@ public class GameController {
         }
         System.out.println("===================================================");
 
-        return initializeGame(nodes, myObjects, possibleTowers, background);
+        return initializeGame(nodes, myObjects, possibleTowers);
     }
 
     /**
@@ -127,10 +125,9 @@ public class GameController {
      */
     private Game initializeGame (List<Sprite> nodes,
                                  Map<String, Map<String, Map<String, Object>>> myObjects,
-                                 List<Tower> possibleTowers,
-                                 Group background) throws InsufficientParametersException {
+                                 List<Tower> possibleTowers) throws InsufficientParametersException {
         // store game parameters
-        Game myGame = new Game(nodes, background, ExampleGame.generateExampleGame());
+        Game myGame = new Game(nodes, ExampleGame.generateExampleGame());
 
         // TODO test for errors for 0 data files, or too many
         // if (myObjects.get("Game").size() != 1) {
@@ -174,7 +171,7 @@ public class GameController {
     public void startGame (long frameRate) {
         Timeline gameTimeline = new Timeline();
         KeyFrame game =
-                new KeyFrame(Duration.millis(1000/frameRate),
+                new KeyFrame(Duration.millis(1000 / frameRate),
                              e -> myGame.update());
         gameTimeline.getKeyFrames().add(game);
         gameTimeline.setCycleCount(Animation.INDEFINITE);
@@ -200,6 +197,6 @@ public class GameController {
         GameController test =
                 new GameController(
                                    "data//DesktopTDTest//DesktopTD//DesktopTD.gamefile",
-                                   new ArrayList<Sprite>(), new ArrayList<Tower>(), new Group());
+                                   new ArrayList<Sprite>(), new ArrayList<Tower>());
     }
 }

@@ -86,13 +86,15 @@ public class Enemy extends GameSprite {
 
     @Override
     public void move () {
-//        PathTransition pathTransition = new PathTransition();
-//        pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength /
-//                                                   super.getSpeed()));
-//        pathTransition.setPath(myPath);
-//        pathTransition.setNode(super.getImageView());
-//        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-//        pathTransition.play();
+        System.out.println(super.getLocationX());
+        super.setLocation(super.getLocationX(), super.getLocationY() + 1);
+        // PathTransition pathTransition = new PathTransition();
+        // pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength /
+        // super.getSpeed()));
+        // pathTransition.setPath(myPath);
+        // pathTransition.setNode(super.getImageView());
+        // pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        // pathTransition.play();
     }
 
     /**
@@ -103,7 +105,8 @@ public class Enemy extends GameSprite {
     public void bezierPath (List<Coordinate> curveCoords) {
         Path path = new Path();
         for (int i = 1; i < curveCoords.size(); i++) {
-            path.getElements().add(new CubicCurveTo(curveCoords.get(i).getX(), curveCoords.get(i)
+            path.getElements().add(
+                                   new CubicCurveTo(curveCoords.get(i).getX(), curveCoords.get(i)
                                            .getY(),
                                                     curveCoords.get(i + 1).getX(), curveCoords
                                                             .get(i + 1).getY(),

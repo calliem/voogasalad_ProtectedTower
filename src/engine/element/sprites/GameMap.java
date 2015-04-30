@@ -1,9 +1,9 @@
 package engine.element.sprites;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import annotations.parameter;
-import authoringEnvironment.objects.Coordinate;
 import engine.Reflectable;
 import engine.factories.GameElementFactory;
 
@@ -47,7 +47,6 @@ public class GameMap extends Sprite implements Reflectable {
         myPaths = (List<String>) parameters.get("Paths");
     }
 
-
     /**
      * Creates an instance of the map made of GridCells and stores it as an instance variable
      * 
@@ -85,6 +84,10 @@ public class GameMap extends Sprite implements Reflectable {
         { (int) (rows * y / getCoordinateHeight()),
          (int) (columns * x / getCoordinateWidth()) };
         return rowCol;
+    }
+
+    public List<String> getPathNames () {
+        return Collections.unmodifiableList(myPaths);
     }
 
     @Override
