@@ -46,6 +46,10 @@ public class Enemy extends GameSprite {
     public Enemy () {
         super();
     }
+    
+    public GridCell getGoal(){
+    	return myGridPath.get(myGridPath.size()-1);
+    }
 
     @Override
     public void target (Sprite sprite) {
