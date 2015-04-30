@@ -1,5 +1,6 @@
 package authoringEnvironment.util;
 
+import authoringEnvironment.objects.TileMap;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
@@ -18,4 +19,5 @@ public class Scaler {
 
         return scale;
     }
+
 }

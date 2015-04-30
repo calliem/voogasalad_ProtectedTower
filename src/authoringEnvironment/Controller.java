@@ -254,6 +254,8 @@ public class Controller {
         System.out.println(partKey + " part not found");
         return false;
     }
+    
+    
 
     public boolean removeTagFromPart (String partKey, String tag) {
         if (currentGame.containsKey(partKey)) {
@@ -314,8 +316,7 @@ public class Controller {
     public Image getImageForKey (String key) throws NoImageFoundException {
         Map<String, Object> partCopy = getPartCopy(key);
         if (!partCopy.keySet().contains(InstanceManager.IMAGE_KEY))
-            throw new NoImageFoundException("No image is specified for part: "
-                                            + key);
+            throw new NoImageFoundException("No image is specified for part");
         String absoluteImageFilePath = currentGame.getRootDirectory() +
                 (String) partCopy.get(InstanceManager.IMAGE_KEY);
         try {
@@ -335,7 +336,11 @@ public class Controller {
         System.out.println("partkey " + partKey + " space " + imageFilePath);
         currentGame.specifyPartImage(partKey, imageFilePath);
     }
-
+    
+    public void specifyPartImage (String partKey, Image image) {
+        currentGame.specifyPartImage(partKey, image);
+    }
+    
     /**
      * Gets a copy of the part of key partKey. All data is present, but
      * modifying the data won't change the actual data stored in the game.
@@ -396,4 +401,11 @@ public class Controller {
     public ObservableList<GameObject> getMaps () {
         return myMaps;
     }
+
+
+    /*
+     * public void setMaps (ObservableList<GameObject> maps) {
+     * myMaps = maps;
+     * }
+     */
 }

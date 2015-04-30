@@ -167,5 +167,7 @@ public abstract class FlowEditor extends Editor {
             });
         }
     }
+    
+    public void update(){};
 
 }
