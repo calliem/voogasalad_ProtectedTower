@@ -42,8 +42,9 @@ public class AuthoringEnvironment {
     private Tab myCurrentTab;
     private Controller myController;
 
-    // private static final int TAB_HEIGHT_PERCENT
-    // private static final int TAB_HEIGHT_PERCENT
+    private static final int WIDTH_CONSTRAINT = 100;
+    private static final int MENU_HEIGHT_PERCENT = 4;
+    private static final int TAB_HEIGHT_PERCENT = WIDTH_CONSTRAINT - MENU_HEIGHT_PERCENT;
 
     private Editor currentEditor;
 
@@ -102,17 +103,13 @@ public class AuthoringEnvironment {
     }
 
     private void createEnvironment (GridPane grid) {
-        // TODO: hardcoded numbers should be removed
-        // TODO: remove 'x's' from tabs
-        // gridPane.setStyle("-fx-background-color: #C0C0C0;");
-
         ColumnConstraints col0 = new ColumnConstraints();
-        col0.setPercentWidth(100);
+        col0.setPercentWidth(WIDTH_CONSTRAINT);
 
         RowConstraints row0 = new RowConstraints();
-        row0.setPercentHeight(4);
+        row0.setPercentHeight(MENU_HEIGHT_PERCENT);
         RowConstraints row1 = new RowConstraints();
-        row1.setPercentHeight(96);
+        row1.setPercentHeight(TAB_HEIGHT_PERCENT);
         grid.getRowConstraints().add(row0);
         grid.getRowConstraints().add(row1);
         grid.getColumnConstraints().add(col0);
@@ -124,33 +121,6 @@ public class AuthoringEnvironment {
         }
         grid.add(myTabPane, 0, 1);
     }
-
-    /**
-     * Populates the tab bar with 1 tab for every non-abstract class in editors package
-     */
-    /*
-     * private void update(Tab selectedTab){
-     * if (myCurrentTab != selectedTab){
-     * Editor editor = (Editor) myCurrentTab.getContent();
-     * Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the controller
-     * 
-     * myCurrentTab = selectedTab;
-     * Editor editor2 = (Editor) myCurrentTab.getContent();
-     * editor2.update();
-     * }
-     * }
-     * 
-     * protected void addTab(String tabName) {
-     * Tab tab = new Tab();
-     * tab.setText(tabName);
-     * tab.setContent(newEditor);
-     * if (main){
-     * tab.setStyle("-fx-base: #3c3c3c;");
-     * }
-     * tab.setClosable(false);
-     * myTabPane.getTabs().add(tab);
-     * }
-     */
 
     private MenuBar configureTopMenu () {
         Menu file = configureFileMenu();
@@ -185,74 +155,5 @@ public class AuthoringEnvironment {
     private void returnToMenu () {
         myStage.setScene(Main.getScenes()[MAIN_MENU_SCENE_INDEX]);
         myStage.show();
-    }
-
-    /**
-     * old code:
-     * 
-     * private void createTabs(){
-     * ProjectReader.populateTabBar(this, myDimensions, myResources, myStage);
-     * 
-     * //Tab selectedTab = myTabPane.getSelectionModel().getSelectedItem();
-     * for (Tab tab : myTabPane.getTabs()){
-     * System.out.println("loop " + tab.getText());
-     * tab.setOnSelectionChanged(e -> update(tab)); //is this updating the old tab?
-     * }
-     * myCurrentTab = myTabPane.getSelectionModel().getSelectedItem();
-     * }
-     * 
-     * @param selectedTab
-     */
-
-    private void update (Tab selectedTab) {
-        System.out.println("UPDATETAB()---------");
-        /*
-         * System.out.println("previousTab" + previousTab);
-         * System.out.println("selectedTab" + selectedTab);
-         * Editor editor = (Editor) selectedTab.getContent();
-         * System.out.println("changed selection to this selected tab: " + selectedTab.getText());
-         * 
-         * //if (previousTab != newTab)
-         * editor.update();
-         * //update the previous tab, not the current tab below!
-         * // Controller.updateEditor(selectedTab.getText(), editor); //this is dependent on the
-         * tab's name not changing, which may not be optimal design
-         * //why does this printout twice????
-         * //TODO: alternatively: use reflection to update the tab. unnecessary use of
-         * reflection....but might not be able to do anything else because of javafx limitations.
-         * that's also bad becasue of dependencies...
-         * //can i get the index of the tab and then match it to the one in the properties file?
-         * that's bad because of dependencies...brainstorm more ways
-         * 
-         * //below is just to allow for testing of the LevelEditor right now:
-         */
-
-        /*
-         * if (myCurrentTab != selectedTab){
-         * System.out.println("pls printout only once for tab " + myCurrentTab.getText());
-         * Editor editor = (Editor) myCurrentTab.getContent();
-         * //System.out.println("changed selection to this selected tab: " + selectedTab.getText());
-         * // editor.update(); //this should be editor.save
-         * Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the
-         * controller
-         * 
-         * myCurrentTab = selectedTab;
-         * Editor editor2 = (Editor) myCurrentTab.getContent();
-         * editor2.update();
-         * }
-         */
-
-        /*
-         * System.out.println("before" + myCurrentTab.getText());
-         * myCurrentTab = selectedTab;
-         * System.out.println("after" + myCurrentTab.getText());
-         * if (myCurrentTab == selectedTab){
-         * System.out.println("Update" + myCurrentTab.getText());
-         * Editor editor = (Editor) myCurrentTab.getContent();
-         * editor.update();
-         * }
-         */
-
-        // this should be editor.update
     }
 }
