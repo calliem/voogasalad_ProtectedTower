@@ -4,10 +4,7 @@ import imageselector.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.PauseTransition;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tooltip;
@@ -30,7 +27,6 @@ import authoringEnvironment.setting.ImageViewSetting;
 import authoringEnvironment.setting.Setting;
 import authoringEnvironment.setting.SpriteSetting;
 import authoringEnvironment.setting.StringSetting;
-import authoringEnvironment.util.Scaler;
 
 
 /**
@@ -192,7 +188,7 @@ public abstract class SpriteView extends ObjectView {
                 parameterFields.add(IMAGE_INDEX, settings.get(i));
                 editableContent.getChildren().add(settings.get(i));
                 break;
-            }
+            }   
         }
         int spriteSettingCounter = 0; // For background scaling purposes
         for (int j = 0; j < settings.size(); j++) {
@@ -210,6 +206,7 @@ public abstract class SpriteView extends ObjectView {
                 spriteSettingCounter++;
             }
             parameterFields.add(settings.get(j));
+            System.out.println("setting was " +settings.get(j));
             settingsObjects.getChildren().add(settings.get(j));
         }
         

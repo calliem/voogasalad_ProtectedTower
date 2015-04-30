@@ -60,7 +60,7 @@ public abstract class FlowStrip extends HBox {
                             (INFO_PANEL_WIDTH + 3 * PADDING));
 
         setAlignment(Pos.CENTER);
-
+        
         HBox content = new HBox(PADDING);
         content.setAlignment(Pos.CENTER_LEFT);
         content.setTranslateX(PADDING);

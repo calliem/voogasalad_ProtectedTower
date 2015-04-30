@@ -37,7 +37,6 @@ public class Main extends Application {
         Scene menu = myMainMenu.initScene(myDimensions);
         
         scenes = new Scene[]{menu, authoring};
-        
         setupStage(menu);
     }
     

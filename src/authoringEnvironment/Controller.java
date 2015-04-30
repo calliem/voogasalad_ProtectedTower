@@ -408,4 +408,8 @@ public class Controller {
      * myMaps = maps;
      * }
      */
+    public String getNameForPart (String key) {
+        return (String) currentGame.getAllPartData().get(key).get(InstanceManager.NAME_KEY);
+    }
+
 }

@@ -4,6 +4,10 @@
     <string>Tower</string>
   </entry>
   <entry>
+    <string>image</string>
+    <string>images/addtower.png</string>
+  </entry>
+  <entry>
     <string>attackRange</string>
     <double>1.0</double>
   </entry>
@@ -36,16 +40,12 @@
     <double>1.0</double>
   </entry>
   <entry>
-    <string>myImage</string>
-    <string>imageselector/img_not_available.png</string>
-  </entry>
-  <entry>
     <string>attackSpeed</string>
     <double>1.0</double>
   </entry>
   <entry>
     <string>name</string>
-    <string>klj;lkafds</string>
+    <string>aaa</string>
   </entry>
   <entry>
     <string>projectileList</string>

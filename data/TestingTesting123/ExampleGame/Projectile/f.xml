@@ -4,36 +4,36 @@
     <string>Projectile</string>
   </entry>
   <entry>
-    <string>damage</string>
-    <double>10.0</double>
-  </entry>
-  <entry>
-    <string>boundingWidth</string>
-    <double>40.0</double>
-  </entry>
-  <entry>
-    <string>boundingHeight</string>
-    <double>30.0</double>
-  </entry>
-  <entry>
-    <string>imagePath</string>
+    <string>image</string>
     <string>images/bluefire.png</string>
   </entry>
   <entry>
+    <string>damage</string>
+    <int>1</int>
+  </entry>
+  <entry>
+    <string>boundingWidth</string>
+    <double>0.0</double>
+  </entry>
+  <entry>
+    <string>boundingHeight</string>
+    <double>0.0</double>
+  </entry>
+  <entry>
     <string>name</string>
-    <string>lklk</string>
+    <string>f</string>
   </entry>
   <entry>
     <string>PartKey</string>
     <string>ExampleGame_Part0.Projectile</string>
   </entry>
   <entry>
-    <string>type</string>
-    <string>null</string>
+    <string>speed</string>
+    <double>1.0</double>
   </entry>
   <entry>
-    <string>speed</string>
-    <double>20.0</double>
+    <string>Tags</string>
+    <list/>
   </entry>
   <entry>
     <string>group</string>

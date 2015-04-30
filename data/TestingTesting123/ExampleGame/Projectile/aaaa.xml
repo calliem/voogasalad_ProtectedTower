@@ -5,7 +5,7 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>images/arrow_icon.png</string>
+    <string>images/bluefire.png</string>
   </entry>
   <entry>
     <string>damage</string>
@@ -34,5 +34,9 @@
   <entry>
     <string>Tags</string>
     <list/>
+  </entry>
+  <entry>
+    <string>group</string>
+    <string>null</string>
   </entry>
 </map>
