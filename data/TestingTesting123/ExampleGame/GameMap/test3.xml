@@ -13,11 +13,11 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>test</string>
+    <string>test3</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.GameMap</string>
+    <string>ExampleGame_Part1.GameMap</string>
   </entry>
   <entry>
     <string>TileSize</string>

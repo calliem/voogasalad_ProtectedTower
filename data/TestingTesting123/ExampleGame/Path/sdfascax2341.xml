@@ -5,11 +5,11 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>asdf</string>
+    <string>sdfascax2341</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part3.Path</string>
+    <string>ExampleGame_Part4.Path</string>
   </entry>
   <entry>
     <string>Tags</string>
@@ -19,20 +19,20 @@
     <string>Curves</string>
     <list>
       <authoringEnvironment.objects.Coordinate>
-        <myX>564.5</myX>
-        <myY>347.5</myY>
+        <myX>734.5</myX>
+        <myY>281.5</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>526.7</myX>
-        <myY>330.5</myY>
+        <myX>706.3</myX>
+        <myY>256.9</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>413.3</myX>
-        <myY>279.5</myY>
+        <myX>621.7</myX>
+        <myY>183.1</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>375.5</myX>
-        <myY>262.5</myY>
+        <myX>593.5</myX>
+        <myY>158.5</myY>
       </authoringEnvironment.objects.Coordinate>
     </list>
   </entry>

@@ -3,6 +3,7 @@ package authoringEnvironment.objects;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.StackPane;
+import authoringEnvironment.Controller;
 import authoringEnvironment.map.MapWorkspace;
 
 
@@ -14,6 +15,14 @@ public class LevelUpdatableDisplay extends UpdatableDisplay {
         super(observableList, rowSize, thumbnailSizeMultiplier);
         myMapWorkspace = mapWorkspace;
         // TODO Auto-generated constructor stub
+    }
+    
+    public LevelUpdatableDisplay (Controller c,
+                                 String partType,
+                                 int rowSize,
+                                 double thumbnailSizeMultiplier, MapWorkspace mapWorkspace) {
+        super(c, partType, rowSize, thumbnailSizeMultiplier);
+        myMapWorkspace = mapWorkspace;
     }
 
     @Override
