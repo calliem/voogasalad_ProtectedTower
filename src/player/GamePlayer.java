@@ -217,7 +217,7 @@ public class GamePlayer extends Application {
     private VBox makeInfoBox() {
     	myInfoBox = new VBox();
     	myInfoBox.setPrefSize(myScreenWidth/4, myScreenHeight/4);
-    	myInfoBox.setStyle("-fx-background-color:red");
+    	myInfoBox.setStyle("-fx-background-color:transparent");
     	myInfoBox.setTranslateY(-myScreenHeight/2);
     	myInfoBox.setAlignment(Pos.CENTER_LEFT);
     	Text lives = new Text();
