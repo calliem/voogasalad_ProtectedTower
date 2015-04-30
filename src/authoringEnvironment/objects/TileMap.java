@@ -35,7 +35,7 @@ public class TileMap extends GameObject {
     private String myBackgroundFilePath;
     private Controller myController;
     private static final String EMPTY_KEY = ""; 
-    private static final Color EMPTY_COLOR = Color.WHITE;
+    private static final Color EMPTY_COLOR = Color.TRANSPARENT;
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
     private static final String TILE_KEY_ARRAY = "TileArrayKeys";
     private static final int LINE_START_COORDINATE = 0;
@@ -95,6 +95,7 @@ public class TileMap extends GameObject {
     }
 
     public void setBackground (String filepath) {
+        System.out.println(filepath);
         myBackgroundFilePath = filepath;
         myRoot.getChildren().remove(myBackground);
         Image image = new Image(filepath);
@@ -172,6 +173,7 @@ public class TileMap extends GameObject {
             for (int j = 0; j < myTileKeys[0].length; j++) {
                 myTileKeys[i][j] = new SimpleStringProperty(EMPTY_KEY);
                 myTileDisplay[i][j] = new Rectangle(myTileSize, myTileSize, EMPTY_COLOR);
+                myTileDisplay[i][j].setOpacity(0.6);
                 
                 int rowIndex = i;
                 int colIndex = j;
@@ -289,12 +291,6 @@ public class TileMap extends GameObject {
         mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackgroundFilePath);
         mapSettings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_MAP);
 
-//        String[][] tileKeyArray = new String[myTileKeys.length][myTileKeys[0].length];
-//        for (int i = 0; i < myTileKeys.length; i++) {
-//            for (int j = 0; j < myTileKeys[0].length; j++) {
-//                tileKeyArray[i][j] = myTileKeys[i][j].getKey();
-//            }
-//        }
         mapSettings.put(TILE_KEY_ARRAY, myTileKeys);
         return mapSettings;
     }

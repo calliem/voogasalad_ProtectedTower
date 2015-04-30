@@ -151,7 +151,7 @@ public class MapWorkspace extends StackPane {
         return myActiveTile;
     }
 
-    public void setActiveColor (String tileKey) {
+    public void setActiveTile (String tileKey) {
         myActiveMap.setActiveTile(tileKey);
         myActiveTile = tileKey;
     }

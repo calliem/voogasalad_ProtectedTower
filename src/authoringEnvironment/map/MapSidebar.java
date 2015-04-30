@@ -184,9 +184,7 @@ public class MapSidebar extends Sidebar {
 
         // TODO: this is duplicated from Kevin's class
         GraphicFileChooser imgSelector = new GraphicFileChooser("Select background");
-        imgSelector.addExtensionFilter("gif");
-        imgSelector.addExtensionFilter("png");
-        imgSelector.addExtensionFilter("jpg");
+        imgSelector.addExtensionFilterByType("Image");
 
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener( (obs, oldValue, newValue) -> {

@@ -11,7 +11,6 @@ public class BooleanSetting extends Setting{
 
     public BooleanSetting (Controller controller, String part, String label, String value) {
         super(controller, part, label, value);
-        System.out.println("Tried");
         selected = Boolean.parseBoolean(value);
     }
 

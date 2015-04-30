@@ -83,6 +83,12 @@ public class SpriteSetting extends Setting {
         this.getChildren().addAll(graphicLayout);
     }
     
+    @Override
+    public void setParameterValue(Object value){
+        selectedFiles = (ArrayList<String>) value;
+        displaySavedValue();
+    }
+    
     private void setupSelectionPane(){
         retrieveSprites();
         try {

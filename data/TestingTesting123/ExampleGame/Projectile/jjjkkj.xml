@@ -36,6 +36,10 @@
     <double>10.0</double>
   </entry>
   <entry>
+    <string>Tags</string>
+    <list/>
+  </entry>
+  <entry>
     <string>group</string>
     <string>null</string>
   </entry>

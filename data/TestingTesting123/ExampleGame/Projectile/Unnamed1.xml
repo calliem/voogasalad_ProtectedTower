@@ -5,7 +5,7 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>images/bluefire.png</string>
+    <string>imageselector/img_not_available.png</string>
   </entry>
   <entry>
     <string>damage</string>
@@ -25,7 +25,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part2.Projectile</string>
+    <string>ExampleGame_Part1.Projectile</string>
   </entry>
   <entry>
     <string>speed</string>

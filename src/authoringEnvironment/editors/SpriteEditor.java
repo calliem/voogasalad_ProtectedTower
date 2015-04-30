@@ -1,8 +1,10 @@
 package authoringEnvironment.editors;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
@@ -25,6 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
@@ -223,14 +226,14 @@ public abstract class SpriteEditor extends Editor {
     }
 
     protected void loadSprite () {
-        ErrorAlert test = new ErrorAlert("This is coming soon!");
-        test.showError();
-        myContent.getChildren().add(test);
-        test.getOkButton().setOnAction(e -> {
-            test.hideError().setOnFinished(ae -> {
-                myContent.getChildren().remove(test);
-            });
-        });
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        
+        if (file != null) {
+            String fileName = file.getPath();
+            Map<String, Object> part = myController.loadPart(fileName);
+            addPart().loadFromFile(part);
+        }
     }
 
     protected void promptSpriteCreation () {
@@ -272,22 +275,29 @@ public abstract class SpriteEditor extends Editor {
         }
     }
 
-    protected void addPart () {
-        try {
-            addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile());
-        }
-        catch (Exception e) {
-        }
+    protected ObjectView addPart () {
+//        try {
+            return addSprite();
+//        }
+//        catch (Exception e) {
+//        }
     }
 
-    private void addSprite (String name, String imageFile) {
+    private SpriteView addSprite () {
         String className = String.format(SPRITE_PACKAGE_PATH, partNames.getString(editorType));
-        SpriteView sprite = generateSpriteView(myController, name, imageFile, className);
+        SpriteView sprite = null;
+        try{
+            sprite = generateSpriteView(myController, prompt.getEnteredName(), prompt.getSelectedImageFile(), className);
+        }
+        catch(Exception e){
+        }
         sprite.initiateEditableState();
         setupSpriteAction(sprite);
         updateOnExists(sprite);
 
         sprite.saveParameterFields(true);
+        prompt.reset();
+        return sprite;
     }
 
     protected void updateOnExists (ObjectView sprite) {

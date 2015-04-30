@@ -6,18 +6,18 @@
   <entry>
     <string>Color</string>
     <javafx.scene.paint.Color>
-      <red>0.9019608</red>
-      <green>0.3019608</green>
-      <blue>0.3019608</blue>
+      <red>1.0</red>
+      <green>0.4</green>
+      <blue>0.4</blue>
       <opacity>1.0</opacity>
       <platformPaint class="com.sun.prism.paint.Color">
         <type>COLOR</type>
         <proportional>false</proportional>
         <isMutable>false</isMutable>
-        <argb>-1684147</argb>
-        <r>0.9019608</r>
-        <g>0.3019608</g>
-        <b>0.3019608</b>
+        <argb>-39322</argb>
+        <r>1.0</r>
+        <g>0.4</g>
+        <b>0.4</b>
         <a>1.0</a>
       </platformPaint>
     </javafx.scene.paint.Color>
@@ -28,7 +28,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part1.Tile</string>
+    <string>ExampleGame_Part0.Tile</string>
   </entry>
   <entry>
     <string>Tags</string>
