@@ -35,11 +35,18 @@ public class Tower extends GameSprite {
     // Use above projectile to read from data file
     // Use below projectile in front end to assign sprite objects
     @parameter(settable = true, playerDisplay = false, defaultValue = "null")
-    private Sprite projectileList;
+    private Projectile projectileList;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double cost;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double buildTime;
+    /**
+     * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
+     */
+    @parameter(settable = false, playerDisplay = true, defaultValue = "null")
+    private List<String> nextSprites;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private Tower nextSpritesList;
     private int myTimer = 0;
 
     private List<GameElement> myTargets = new ArrayList<>();
@@ -59,7 +66,7 @@ public class Tower extends GameSprite {
         super.setLocation(location);
         myPriority = new AttackPriority(location);
     }
-    
+
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
 
@@ -71,7 +78,9 @@ public class Tower extends GameSprite {
         System.out.println(this + " has this many projectiles " + projectiles.size());
         cost = (Double) parameters.get("Cost");
         buildTime = (Double) parameters.get("BuildTime");
-    }    // TODO remove once testing is over
+        nextSprites = new ArrayList<String>();
+        nextSprites.add((String) parameters.get("NextSprites"));
+    }
 
     public String getProjectile () {
         return projectiles.get(0);
@@ -133,8 +142,8 @@ public class Tower extends GameSprite {
     @Override
     public void fixField (String fieldToModify, Object value) {
         Field[] possibleFields = this.getClass().getDeclaredFields();
-        for (Field field : possibleFields){
-            if(field.getName()==fieldToModify){
+        for (Field field : possibleFields) {
+            if (field.getName() == fieldToModify) {
                 try {
                     field.set(field.getType(), field.getType().getClass().cast(value));
                 }
@@ -156,6 +165,10 @@ public class Tower extends GameSprite {
     public void changeField (String fieldToModify, String value, Double duration) {
         // TODO Auto-generated method stub
 
+    }
+
+    public double getRange () {
+        return attackRange;
     }
 
 }

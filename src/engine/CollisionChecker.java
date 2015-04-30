@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import engine.element.sprites.GameElement;
+import engine.element.sprites.Tower;
 
 
 /**
@@ -94,7 +96,7 @@ public class CollisionChecker {
     private Circle createRange (GameElement sprite) {
         // TODO add range as an instance variable?
         return new Circle(sprite.getLocationX(), sprite.getLocationY(),
-                          (double) sprite.getBoundingHeight());
+                          (double) ((Tower) sprite).getRange());
     }
 
     /**

@@ -40,32 +40,39 @@ public class ActionManager {
         // check that input is valid
         for (String[] key : interactionMap.keySet()) {
             if (key.length != REQUIRED_KEY_LENGTH ||
-                interactionMap.get(key).length != REQUIRED_KEY_LENGTH) { throw new InvalidParameterException(
-                                                                                                             "InteractionMap is in invalid format"); }
+                    interactionMap.get(key).length != REQUIRED_KEY_LENGTH) { throw new InvalidParameterException(
+                            "InteractionMap is in invalid format"); }
         }
         // declare and load the decision map
         myDecisionMap = new HashMap<String[], Collection<BiConsumer<GameElement, GameElement>>[]>();
         for (String[] pair : interactionMap.keySet()) {
             Collection<BiConsumer<GameElement, GameElement>>[] actionArray =
-                    (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[2];
+                    (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[REQUIRED_KEY_LENGTH];
 
-            // Fill collection of actions
-            Collection<BiConsumer<GameElement, GameElement>> pairActions =
-                    new ArrayList<BiConsumer<GameElement, GameElement>>();
-            for (int i : interactionMap.get(pair)[0]) {
-                pairActions.add(actions.get(i));
-            }
-            actionArray[0] = pairActions;
-
-            Collection<BiConsumer<GameElement, GameElement>> actionsTwo =
-                    new ArrayList<BiConsumer<GameElement, GameElement>>();
-            for (int i : interactionMap.get(pair)[1]) {
-                actionsTwo.add(actions.get(i));
-            }
-            actionArray[1] = actionsTwo;
+            actionArray[0] = actionList(interactionMap.get(pair)[0], actions);
+            actionArray[1] = actionList(interactionMap.get(pair)[1], actions);
 
             myDecisionMap.put(pair, actionArray);
         }
+    }
+
+    /**
+     * Private helper method to generate collection of BiConsumers to be applied to certain sprite
+     * as a result of collision, using action indices and given actions
+     * 
+     * @param actionIndices
+     * @param actions
+     * @return
+     */
+    private Collection<BiConsumer<GameElement, GameElement>> actionList (List<Integer> actionIndices,
+                                                                         List<BiConsumer<GameElement, GameElement>> actions) {
+        Collection<BiConsumer<GameElement, GameElement>> returnList =
+                new ArrayList<BiConsumer<GameElement, GameElement>>();
+
+        for (int i : actionIndices) {
+            returnList.add(actions.get(i));
+        }
+        return returnList;
     }
 
     /**
@@ -89,10 +96,10 @@ public class ActionManager {
         }
         return false;
     }
-    
-    public boolean isAction(GameElement spriteOne, GameElement spriteTwo){
-    	String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
-    	return myDecisionMap.containsKey(spriteTagPair);
+
+    public boolean isAction (GameElement spriteOne, GameElement spriteTwo) {
+        String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
+        return myDecisionMap.containsKey(spriteTagPair);
     }
 
     /**
@@ -108,6 +115,28 @@ public class ActionManager {
     }
 
     /**
+     * Method for adding/appending to an entry in the actionManager
+     * 
+     * @param tagPair
+     * @param actions
+     */
+    public void addEntryToManager (String[] tagPair,
+                                   Collection<BiConsumer<GameElement, GameElement>>[] actions) {
+        if (myDecisionMap.keySet().contains(tagPair)) {
+            for (BiConsumer<GameElement, GameElement> action : actions[0]) {
+                myDecisionMap.get(tagPair)[0].add(action);
+            }
+            for (BiConsumer<GameElement, GameElement> action : actions[1]) {
+                myDecisionMap.get(tagPair)[1].add(action);
+            }
+        }
+        else {
+            myDecisionMap.put(tagPair, actions);
+        }
+
+    }
+
+    /**
      * Helper function to get String[] for pair of sprite tags from two sprites
      * 
      * @param spriteOne First sprite
@@ -115,10 +144,10 @@ public class ActionManager {
      * @return Array containing tags of sprites
      */
     private String[] getTagPair (GameElement spriteOne, GameElement spriteTwo) {
-        String[] spriteTagPair = new String[2];
+        String[] spriteTagPair = new String[REQUIRED_KEY_LENGTH];
         // TODO takes the first tag for now, make work for multiple tags
-        spriteTagPair[0] = (String) spriteOne.getTags().get(0);
-        spriteTagPair[1] = (String) spriteTwo.getTags().get(0);
+        spriteTagPair[0] = spriteOne.getTags().get(0);
+        spriteTagPair[1] = spriteTwo.getTags().get(0);
         return spriteTagPair;
     }
 

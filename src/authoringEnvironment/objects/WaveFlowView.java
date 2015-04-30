@@ -28,11 +28,11 @@ public class WaveFlowView extends FlowView {
     private static final String UNIT = "Unit";
 
     public WaveFlowView (int height, Controller c) {
-        super(height, c);
+        super(height, c, new ArrayList<String>());
     }
 
     @Override
-    protected List<Node> createOptionSelector () {
+    protected List<Node> createOptionSelector (List<String> data) {
         ArrayList<String> comboSelections = new ArrayList<>();
         List<Node> options = new ArrayList<Node>();
         comboSelections.add(UNIT);
