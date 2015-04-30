@@ -30,7 +30,7 @@ public class PathView extends GameObject {
     private Anchor mostRecentPoint;
     private List<Anchor> myAnchors;
     private Group myRoot;
-    private Coordinate paneTranslation;
+//    private Coordinate myAverageCenterPoint;
 
     public PathView (TileMap parent) {
         myAnchors = new ArrayList<Anchor>();
@@ -43,6 +43,18 @@ public class PathView extends GameObject {
 
     public int getNumPoints () {
         return numPoints;
+    }
+    
+    public Coordinate getAverageCenterPoint(){
+        double x = 0;
+        double y = 0;
+        for (int i = 0 ; i < myAnchors.size(); i ++){
+            x += myAnchors.get(i).getCenterX();
+            y += myAnchors.get(i).getCenterX();
+        }
+        x = x / myAnchors.size();
+        y = y / myAnchors.size();
+        return new Coordinate(x, y);
     }
 
     public boolean areAnchorsSelected () {

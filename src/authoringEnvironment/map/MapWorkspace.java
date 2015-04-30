@@ -6,7 +6,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -29,7 +28,7 @@ import authoringEnvironment.util.Scaler;
  * @author callie
  *
  */
-public class MapWorkspace extends AnchorPane {
+public class MapWorkspace extends StackPane {
 
     private static final Color MAP_BACKGROUND_COLOR = Color.web("2A2A29");
 
@@ -65,6 +64,8 @@ public class MapWorkspace extends AnchorPane {
 
         createDefaultMap();
         pathModeOverlay =
+                // new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS,
+                // myActiveMap.getHeight()+2*Anchor.RADIUS);
                 new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
         pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
         StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
@@ -73,11 +74,6 @@ public class MapWorkspace extends AnchorPane {
 
     public TileMap createDefaultMap () {
         TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
-        defaultMap.getRoot().setTranslateX(AuthoringEnvironment.getEnvironmentWidth() *
-                                           WORKSPACE_WIDTH_MULTIPLIER/12);
-        defaultMap.getRoot().setTranslateY(AuthoringEnvironment.getEnvironmentHeight() *
-                                           WORKSPACE_WIDTH_MULTIPLIER/12);
-      //  AnchorPane.setAlignment(v,Pos.CENTER_LEFT);
         updateWithNewMap(defaultMap);
         return defaultMap;
     }
@@ -103,7 +99,8 @@ public class MapWorkspace extends AnchorPane {
             remove(oldObject.getRoot());
         }
         StackPane.setAlignment(object.getRoot(), Pos.CENTER);
-        getChildren().add(object.getRoot());
+        if (!getChildren().contains(object.getRoot()))
+            getChildren().add(object.getRoot());
     }
 
     public void updateWithNewMap (GameObject object) {
@@ -117,15 +114,17 @@ public class MapWorkspace extends AnchorPane {
         ScaleTransition scale =
                 Scaler.scaleOverlay(0.0, 1.0, object.getRoot());
         scale.setOnFinished( (e) -> {
+            //TODO: figure out math placement
+            object.getRoot().setTranslateX(object.getAverageCenterPoint().getX() - AuthoringEnvironment.getEnvironmentWidth()*WORKSPACE_WIDTH_MULTIPLIER/2);
+            object.getRoot().setTranslateY(object.getAverageCenterPoint().getY() - AuthoringEnvironment.getEnvironmentHeight()*WORKSPACE_HEIGHT_MULTIPLIER/2);
+            
             update(myActivePath, object);
+
             
-           // object.getRoot().setTranslateX(object.getTranslation().getX());
-           // object.getRoot().setTranslateY(object.getTranslation().getY());
-            myActivePath = object;    
-            
+            myActivePath = object;
+
         });
-        
-        
+
     }
 
     public void createNewPath () {
@@ -142,10 +141,7 @@ public class MapWorkspace extends AnchorPane {
         Text saved = new Text(text);
         saved.setFill(color);
         saved.setFont(new Font(MESSAGE_FONT_SIZE));
-        saved.setTranslateX(AuthoringEnvironment.getEnvironmentWidth() *
-                            WORKSPACE_WIDTH_MULTIPLIER/12);
-        saved.setTranslateY(AuthoringEnvironment.getEnvironmentHeight() *
-                                           WORKSPACE_WIDTH_MULTIPLIER*.9);
+        StackPane.setAlignment(saved, Pos.BOTTOM_CENTER);
         getChildren().add(saved);
         PauseTransition pause = new PauseTransition(Duration.millis(MESSAGE_DISPLAY_DURATION));
         pause.play();
