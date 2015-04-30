@@ -71,14 +71,14 @@ public class Game implements Updateable, Endable {
      * @see Updateable#update(int)
      */
     public void update () {
-        
+
         System.out.println("Beginning cycle " + counter);
-//        myConditions.forEach(c -> c.act(lives));
-//        Map<Object, List<String>> enemiesToSpawn =
-//                myLevels.get(myActiveLevelIndex).update(counter);
-//        for (Object loc : enemiesToSpawn.keySet()) {
-//            myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
-//        }
+        // myConditions.forEach(c -> c.act(lives));
+        // Map<Object, List<String>> enemiesToSpawn =
+        // myLevels.get(myActiveLevelIndex).update(counter);
+        // for (Object loc : enemiesToSpawn.keySet()) {
+        // myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
+        // }
         myLayout.update(counter);
         counter++;
     }
@@ -122,14 +122,15 @@ public class Game implements Updateable, Endable {
         }
         return towers;
     }
-    
+
     public void updateBackgroundTest (String key) {
         myLayout.setMap(key);
+        myLevels.get(0).startNextRound();
     }
 
     @Override
     public void update (int counter) {
         // TODO Auto-generated method stub
-        
+
     }
 }
