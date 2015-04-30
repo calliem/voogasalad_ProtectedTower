@@ -99,14 +99,14 @@ public class Layout implements Updateable {
 
         towerTags.forEach(t -> enemyTags.forEach(e ->
         {
-            String[] pair = {t,e};
-            myActionManager.addEntryToManager( pair , nullActions);
+            String[] pair = { t, e };
+            myActionManager.addEntryToManager(pair, nullActions);
         }));
-        
+
         projectileTags.forEach(t -> enemyTags.forEach(e ->
         {
-            String[] pair = {t,e};
-            myActionManager.addEntryToManager( pair , nullActions);
+            String[] pair = { t, e };
+            myActionManager.addEntryToManager(pair, nullActions);
         }));
 
     }
@@ -127,7 +127,7 @@ public class Layout implements Updateable {
      */
     // TODO Poor design to have a method for every kind of sprite, need to think of a better way to
     // do this without repeating code
-    public void removeSprite (GameElement sprite) {
+    public void removeSprite (Sprite sprite) {
         myProjectileList.remove(sprite);
         myEnemyList.remove(sprite);
         myTowerList.remove(sprite);
@@ -392,7 +392,7 @@ public class Layout implements Updateable {
      * Removes all GameElements that have a statetag of dead.
      */
     private void removeDeadSprites () {
-        for (GameElement g : this.getSprites()) {
+        for (Sprite g : this.getSprites()) {
             if (g.getState().equals(GameElement.DEAD_STATE)) {
                 this.removeSprite(g);
             }
@@ -411,10 +411,10 @@ public class Layout implements Updateable {
                                                            p.getTarget()));
         });
 
-         myEnemyList.forEach(p -> {
-         Map<Object, List<String>> spawnMap = p.update();
-         spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-         });
+        myEnemyList.forEach(p -> {
+            Map<Object, List<String>> spawnMap = p.update();
+            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+        });
 
     }
 
@@ -431,7 +431,16 @@ public class Layout implements Updateable {
             Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(sprite);
             for (GameElement other : possibleInteractions) {
                 // TODO determine how many interactions should be made to each sprite
-                myActionManager.applyAction(sprite, other);
+                // myActionManager.applyAction(sprite, other);
+                System.out.println(sprite.getPartType()+ "\t" + other.getPartType());
+//                if (myActionManager.isAction(sprite, other)) {
+                    boolean isProjectile = sprite.getPartType().equalsIgnoreCase("Projectile");
+                    boolean isEnemy = other.getPartType().equalsIgnoreCase("Enemy");
+                    if (isProjectile && isEnemy) {
+                        sprite.setDead();
+                        other.setDead();
+                    }
+//                }
             }
         }
     }
@@ -456,9 +465,9 @@ public class Layout implements Updateable {
                                                                  tower.getProjectile());
         Set<GameElement> targetables = new HashSet<>();
         for (GameElement g : targetable)
-//            if (myActionManager.isAction(g, tester)) {
-                targetables.add(g);
-//            }
+//             if (myActionManager.isAction(g, tester)) {
+            targetables.add(g);
+//         }
         return targetables;
     }
 

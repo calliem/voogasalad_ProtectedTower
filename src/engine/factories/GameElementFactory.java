@@ -98,7 +98,7 @@ public class GameElementFactory {
             Reflectable element =
                     (Reflectable) Reflection.createInstance(myPartTypeToPackage.get(className));
             element.addInstanceVariables(myGameElements.get(className).get(guid));
-            System.out.println(String.format("%s %s created", className, guid));
+            // System.out.println(String.format("%s %s created", className, guid));
             return element;
         }
         else {
