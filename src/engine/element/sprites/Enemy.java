@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.animation.PathTransition;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -42,6 +43,7 @@ public class Enemy extends GameSprite {
     private double myPathLength;
     private List<GridCell> myGridPath;
     private static final double MOVE_DURATION = 1000;
+    private ImageView invisView = new ImageView();
 
     public Enemy () {
 
@@ -112,7 +114,7 @@ public class Enemy extends GameSprite {
     public void bezierPath (List<Coordinate> curveCoords) {
         Path path = new Path();
         MoveTo initial = new MoveTo();
-        System.out.println("ran "+this);
+        System.out.println("ran " + this);
         initial.setX(curveCoords.get(0).getX());
         initial.setY(curveCoords.get(0).getY());
         path.getElements().add(initial);
@@ -166,30 +168,31 @@ public class Enemy extends GameSprite {
 
     @Override
     public Map<Object, List<String>> update () {
-        move();
+//        move();
         Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
-//        if (this.getHealth() == 0) {
-//            spawnMap.put(this.getLocation(), this.getNextSprites());
-//        }
+        super.setLocation(super.getImageView().getTranslateX(), super.getImageView().getTranslateY());
+        // if (this.getHealth() == 0) {
+        // spawnMap.put(this.getLocation(), this.getNextSprites());
+        // }
         return spawnMap;
     }
 
     @Override
     public void fixField (String fieldToModify, Object value) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void setField (String fieldToModify, String value, Double duration) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void changeField (String fieldToModify, String value, Double duration) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }

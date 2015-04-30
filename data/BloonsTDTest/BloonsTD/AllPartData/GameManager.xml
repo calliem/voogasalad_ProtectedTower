@@ -371,11 +371,11 @@
   </entry>
   <entry>
     <string>BoundingWidth</string>
-    <double>10.0</double>
+    <double>100.0</double>
   </entry>
   <entry>
     <string>BoundingHeight</string>
-    <double>10.0</double>
+    <double>100.0</double>
   </entry>
   <entry>
     <string>Image</string>
@@ -387,7 +387,7 @@
   </entry>
   <entry>
     <string>Speed</string>
-    <double>1.0</double>
+    <double>10.0</double>
   </entry>
   <entry>
     <string>Health</string>
@@ -424,11 +424,11 @@
   </entry>
   <entry>
     <string>BoundingWidth</string>
-    <double>10.0</double>
+    <double>100.0</double>
   </entry>
   <entry>
     <string>BoundingHeight</string>
-    <double>10.0</double>
+    <double>100.0</double>
   </entry>
   <entry>
     <string>Image</string>
@@ -477,11 +477,11 @@
   </entry>
   <entry>
     <string>BoundingWidth</string>
-    <double>10.0</double>
+    <double>100.0</double>
   </entry>
   <entry>
     <string>BoundingHeight</string>
-    <double>10.0</double>
+    <double>100.0</double>
   </entry>
   <entry>
     <string>Image</string>
@@ -493,7 +493,7 @@
   </entry>
   <entry>
     <string>Speed</string>
-    <double>1.0</double>
+    <double>15.0</double>
   </entry>
   <entry>
     <string>Health</string>
