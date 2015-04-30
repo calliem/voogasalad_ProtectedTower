@@ -10,6 +10,7 @@ import engine.factories.GameElementFactory;
  * determine if towers can be placed on them, if enemies can travel over, etc.
  * 
  * @author Qian Wang
+ * @author Sean Scott
  *
  */
 public class GameMap {
