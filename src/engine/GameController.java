@@ -9,7 +9,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-import testing.ExampleGame;
 import testing.ExampleGameMap;
 import testing.ExampleLevel;
 import testing.ExampleRound;
@@ -127,24 +126,26 @@ public class GameController {
                                  Map<String, Map<String, Map<String, Object>>> myObjects,
                                  List<Tower> possibleTowers) throws InsufficientParametersException {
         // store game parameters
-        Game myGame = new Game(nodes, ExampleGame.generateExampleGame());
+        // Game myGame = new Game(nodes, ExampleGame.generateExampleGame());
+        Game myGame = null;
 
         // TODO test for errors for 0 data files, or too many
-        // if (myObjects.get("Game").size() != 1) {
-        // throw new InsufficientParametersException("Zero or multiple game data files created");
-        // }
-        // else {
-        // for (Map<String, Object> map : myObjects.get("Game").values()) {
-        // // TODO need game factory or something to initialize it
-        // }
-        // }
+        if (myObjects.get("Game").size() != 1) {
+            throw new InsufficientParametersException("Zero or multiple game data files created");
+        }
+        else {
+            for (Map<String, Object> map : myObjects.get("Game").values()) {
+                // TODO need game factory or something to initialize it
+                myGame = new Game(nodes, map);
+            }
+        }
 
-        // if (myObjects.get("Level").size() < 1) {
-        // throw new InsufficientParametersException("No game levels created");
-        // }
-        // else {
-        // myGame.addLevels(myObjects.get("Level"));
-        // }
+        if (myObjects.get("Level").size() < 1) {
+            throw new InsufficientParametersException("No game levels created");
+        }
+        else {
+            myGame.addLevels(myObjects.get("Level"));
+        }
 
         // TODO: ADDING LEVELS
         myGame.addLevels(ExampleLevel.generateExampleLevel());
@@ -154,9 +155,9 @@ public class GameController {
             myGame.addGameElement(partName, myObjects.get(partName));
         }
 
-        myGame.addGameElement("Round", ExampleRound.generateExampleRound());
-        myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
-        myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap2());
+//        myGame.addGameElement("Round", ExampleRound.generateExampleRound());
+//        myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
+//        myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap2());
 
         System.out.println("===================================================");
         // TODO: POPULATING TOWER MANAGER
