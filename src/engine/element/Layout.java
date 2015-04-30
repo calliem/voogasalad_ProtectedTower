@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 import util.pathsearch.pathalgorithms.NoPathExistsException;
 import engine.ActionManager;
 import engine.CollisionChecker;
+import engine.GroovyEngine;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.GameElement;
@@ -34,6 +35,7 @@ import engine.factories.GameElementFactory;
  * @author Qian Wang
  * @author Bojia Chen
  * @author Sean Scott
+ * @author Janan Zhu
  *
  */
 public class Layout implements Updateable {
@@ -66,13 +68,20 @@ public class Layout implements Updateable {
      */
     private Tower myHeldTower;
 
+    private GroovyEngine myGroovyEngine;
+
     private final int ROW_INDEX = 0;
     private final int COLUMN_INDEX = 1;
 
     public Layout (List<Sprite> myNodes) {
+        // TODO: Get environment map from front end to load into GroovyEngine, current map is empty
+        // TODO: Get groovy scripts for user defined
+        // TODO: Get interaction map from front end
         myNodeList = myNodes;
         myGameElementFactory = new GameElementFactory();
         myCollisionChecker = new CollisionChecker();
+        myGroovyEngine = new GroovyEngine(new HashMap<String, Object>());
+        makeCollisionTable(new HashMap<String, String>(), new HashMap<String[], List<Integer>[]>());
     }
 
     /**
@@ -90,28 +99,18 @@ public class Layout implements Updateable {
     }
 
     /**
-     * Temporary method to hardcode a collision table for testing purposes
+     * Method to create collision table from front-end user defined scripts and an interactionMap
+     * based on those scripts
      */
-    // TODO remove later
-    public void makeCollisionTable () {
+    public void makeCollisionTable (Map<String, String> definedScripts,
+                                    Map<String[], List<Integer>[]> interactionMap) {
         List<BiConsumer<GameElement, GameElement>> actionList =
                 new ArrayList<BiConsumer<GameElement, GameElement>>();
-        actionList.add( (e, f) -> e.onCollide(f));
-        actionList.add( (e, f) -> updatePathTest(e));
-        String[] spritePair = { "Enemy", "Projectile" };
-        String[] spritePairPath = { "Enemy", "Tower" };
-        List<Integer>[] actionPair = (List<Integer>[]) new Object[2];
-        List<Integer> action1 = Arrays.asList(new Integer[] { 0 });
-        actionPair[0] = action1;
-        List<Integer> action2 = Arrays.asList(new Integer[] { 0 });
-        actionPair[1] = action2;
-        List<Integer>[] actionPairPath = (List<Integer>[]) new Object[2];
-        action1 = Arrays.asList(new Integer[] { 1 });
-        actionPairPath[0] = action1;
-        Map<String[], List<Integer>[]> collisionMap = new HashMap<String[], List<Integer>[]>();
-        collisionMap.put(spritePair, actionPair);
-        collisionMap.put(spritePairPath, actionPairPath);
-        setActionManager(new ActionManager(collisionMap, actionList));
+        definedScripts.keySet()
+                .forEach(s -> myGroovyEngine.addScriptToEngine(s, definedScripts.get(s)));
+        definedScripts.keySet().forEach(t -> actionList.add( (s1, s2) -> myGroovyEngine
+                                                .applyScript(t, s1, s2)));
+        myActionManager = new ActionManager(interactionMap, actionList);
     }
 
     private void updatePathTest (GameElement e) {
@@ -127,10 +126,6 @@ public class Layout implements Updateable {
         catch (NoPathExistsException e1) {
             e1.printStackTrace();
         }
-    }
-
-    public void setActionManager (ActionManager table) {
-        myActionManager = table;
     }
 
     /**
@@ -161,17 +156,17 @@ public class Layout implements Updateable {
         Tower temp = (Tower) myGameElementFactory.getGameElement("Tower", towerID);
         placeTower(temp, location);
     }
-    
+
     /**
      * place held tower
      * 
      * @param location
      */
-    public void placeTower(Point2D location){
-    	placeTower(myHeldTower, location);
-    	myHeldTower = null;
+    public void placeTower (Point2D location) {
+        placeTower(myHeldTower, location);
+        myHeldTower = null;
     }
-    
+
     /**
      * places an instantiated tower at a location
      * 
@@ -179,19 +174,19 @@ public class Layout implements Updateable {
      * @param location
      */
     public void placeTower (Tower tower, Point2D location) {
-    	tower.setLocation(location);
-    	if (canPlace(tower, location)) {
+        tower.setLocation(location);
+        if (canPlace(tower, location)) {
             myTowerList.add(tower);
         }
     }
-    
+
     /**
      * prepares tower for placement
      * 
      * @param tower
      */
-    public void pickUpTower(Tower tower){
-    	myHeldTower = tower;
+    public void pickUpTower (Tower tower) {
+        myHeldTower = tower;
     }
 
     /**
@@ -263,12 +258,10 @@ public class Layout implements Updateable {
         enemyIDs.forEach(i -> spawnEnemy(i, pathID));
     }
 
-    
     public void spawnEnemy (List<String> enemyIDs, Point2D location) {
         enemyIDs.forEach(i -> spawnEnemy(i, location));
     }
 
-    
     /**
      * Creates a new Enemy object and adds it to the map at the specified location
      * 
@@ -281,7 +274,7 @@ public class Layout implements Updateable {
         e.setLocation(location);
         myEnemyList.add(e);
     }
-    
+
     public void spawnEnemy (String enemyID, Point2D location) {
         Enemy e = (Enemy) myGameElementFactory.getGameElement("Enemy", enemyID);
         e.setLocation(location);
@@ -339,28 +332,21 @@ public class Layout implements Updateable {
     }
 
     /**
-     * Updates the positions of all sprites and spawns all new projectiles.
+     * Updates the positions of all sprites and spawns all new projectiles and enemies.
      */
     private void updateSpriteLocations (int counter) {
-        // Move enemies
-        // myEnemyList.forEach(e -> e.move());
-        // Move projectiles
-//        updateSpriteLocations(counter,myProjectileList);
-    }
-    
-    private void updateSpriteLocations(int counter, List<MoveableSprite> spriteList){
-        myProjectileList.forEach(p->p.update(counter));
-        
+        myProjectileList.forEach(p -> p.update(counter));
+
         myTowerList.forEach(p -> {
             Map<Object, List<String>> spawnMap = p.update();
             spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q));
         });
-        
-        myTowerList.forEach(p -> {
+
+        myEnemyList.forEach(p -> {
             Map<Object, List<String>> spawnMap = p.update();
             spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
         });
-        
+
     }
 
     /**
@@ -390,20 +376,21 @@ public class Layout implements Updateable {
             tower.addTargets(filterTargets(myCollisionChecker.findTargetable(tower), tower));
         }
     }
-    
-    private Set<GameElement> filterTargets(Set<GameElement> targetable, Tower tower) {
-		Projectile tester = (Projectile) myGameElementFactory.getGameElement("Projectile", tower.getProjectile());
-		Set<GameElement> targetables = new HashSet<>();
-		for (GameElement g: targetable)
-			if (myActionManager.isAction(g, tester))
-				targetables.add(g);
-		return targetables;
-	}
-    
+
+    private Set<GameElement> filterTargets (Set<GameElement> targetable, Tower tower) {
+        Projectile tester =
+                (Projectile) myGameElementFactory.getGameElement("Projectile",
+                                                                 tower.getProjectile());
+        Set<GameElement> targetables = new HashSet<>();
+        for (GameElement g : targetable)
+            if (myActionManager.isAction(g, tester))
+                targetables.add(g);
+        return targetables;
+    }
 
     // Collision checking methods
 
-	/**
+    /**
      * Returns a list of all sprites in the map
      * 
      * @return List<Sprite> of all active sprites on the map

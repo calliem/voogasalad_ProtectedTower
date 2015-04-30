@@ -1,11 +1,11 @@
 package engine;
 
-import java.util.HashMap;
+import java.util.Map;
+
 
 public class Instance {
 
-	//why are these hashmaps instead of maps?
-	private HashMap<String, Object> myParams;
-	private HashMap<String, String> paramTypes;
+	private Map<String, Object> myParams;
+	private Map<String, String> paramTypes;
 
 }

@@ -133,7 +133,6 @@ public class Controller {
         }
         // addPartToGame(partType, partToAdd);
         partToAdd.put(InstanceManager.PART_TYPE_KEY, partType);
-        System.out.println("toadd: " + partToAdd);
         return partToAdd;
     }
 
@@ -255,6 +254,10 @@ public class Controller {
         return false;
     }
     
+    public String getNameForPart(String partKey){
+        return (String) getPartCopy(partKey).get(InstanceManager.NAME_KEY);
+    }
+    
     
 
     public boolean removeTagFromPart (String partKey, String tag) {
@@ -321,6 +324,7 @@ public class Controller {
                 (String) partCopy.get(InstanceManager.IMAGE_KEY);
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
+            System.out.println("DOES THE IMAGE EXIST? " + new File(absoluteImageFilePath).exists());
             RenderedImage toWrite = ImageIO.read(new File(absoluteImageFilePath));
             ImageIO.write(toWrite,"png", os);
             InputStream imageInputStream = new ByteArrayInputStream(os.toByteArray());
@@ -387,6 +391,7 @@ public class Controller {
         addKey(partKey);
         return part;
     }
+   
 
     private void populateKeyList () {
         for (String key : currentGame.getAllPartData().keySet()) {

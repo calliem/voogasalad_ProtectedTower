@@ -22,6 +22,12 @@ public class IntegerSetting extends Setting {
     }
     
     @Override
+    public void setParameterValue(Object value){
+        dataAsInteger = (Integer) value;
+        textBox().setText(dataAsInteger+"");
+    }
+    
+    @Override
     public boolean parseField () {
         try{
             dataAsInteger = Integer.parseInt(textBox().getText());
