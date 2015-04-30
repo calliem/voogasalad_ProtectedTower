@@ -1,14 +1,8 @@
 package authoringEnvironment.editors;
 
 import java.util.ResourceBundle;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 

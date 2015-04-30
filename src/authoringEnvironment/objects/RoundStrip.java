@@ -20,7 +20,6 @@ import util.misc.SetHandler;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.NoImageFoundException;
-import authoringEnvironment.Variables;
 
 
 /**
@@ -96,7 +95,7 @@ public class RoundStrip extends FlowStrip {
     private VBox createVBoxWithMapRows () throws NoImageFoundException {
         VBox rowContainer = new VBox(PADDING);
 
-        ObservableList<String> mapKeys = myController.getKeysForPartType(Variables.PARTNAME_MAP);
+        ObservableList<String> mapKeys = myController.getKeysForPartType(InstanceManager.GAMEMAP_PARTNAME);
         System.out.println("maps: " + mapKeys);
         HBox row = new HBox(PADDING);
         int mapsPlacedInRow = 0;

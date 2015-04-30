@@ -1,37 +1,26 @@
 package authoringEnvironment.objects;
 
-import imageselector.util.ScaleImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import util.misc.SetHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPaneBuilder;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.MissingInformationException;
-import authoringEnvironment.NoImageFoundException;
 import authoringEnvironment.Variables;
-import authoringEnvironment.editors.Editor;
 import authoringEnvironment.map.MapWorkspace;
 
 
@@ -43,19 +32,14 @@ import authoringEnvironment.map.MapWorkspace;
  *
  */
 
-public class LevelSidebar extends Sidebar{
+public class LevelSidebar extends Sidebar {
 
-    private Editor myMapEditor;
     private Controller myController;
 
-    private static final int LISTVIEW_HEIGHT = 200;
     private FileChooser fileChooser;
     private VBox roundOrder;
-    private ObservableList<GameObject> myMapList;
     private UpdatableDisplay mapDisplay;
     private VBox roundOrderAccordian;
-    private ScrollPane mapDisplayScrollPane;
-    private StackPane mapDisplayStackPane;
     private List<RoundDisplay> rounds;
     private static final int PADDING = 10;
     public static final String ROUNDS_KEY = "Rounds";
@@ -63,14 +47,19 @@ public class LevelSidebar extends Sidebar{
     private String myMapKey;
     private String myKey;
     private String myName;
-    private static final int ROW_SIZE = 3;
     
-    public LevelSidebar(ResourceBundle resources,
+    private ObservableList<GameObject> myMapList;
+
+    public LevelSidebar (ResourceBundle resources,
                          ObservableList<GameObject> observableList,
                          MapWorkspace mapWorkspace, Controller c) {
         super(resources, observableList, mapWorkspace);
         myMapList = FXCollections.observableList(observableList);
-        mapDisplay = new LevelUpdatableDisplay(this, c, Variables.PARTNAME_MAP, UPDATABLEDISPLAY_ELEMENTS, Variables.THUMBNAIL_SIZE_MULTIPLIER, mapWorkspace); // remove default values TODO
+
+        mapDisplay =
+                new LevelUpdatableDisplay(this, c, InstanceManager.GAMEMAP_PARTNAME,
+                                          UPDATABLEDISPLAY_ELEMENTS,
+                                          Variables.THUMBNAIL_SIZE_MULTIPLIER, mapWorkspace);
 
         observableList.addListener(new ListChangeListener<GameObject>() {
             @Override
@@ -78,7 +67,7 @@ public class LevelSidebar extends Sidebar{
                 mapDisplay.updateDisplay();
             }
         });
-        
+
         myName = "UnnamedLevel";
         myController = c;
         myKey = Controller.KEY_BEFORE_CREATION;
@@ -98,8 +87,6 @@ public class LevelSidebar extends Sidebar{
         roundOrder.getChildren().add(selectRoundAndSaveButtons());
         roundOrderAccordian.getChildren().add(roundOrder);
     }
-    
-    
 
     private VBox selectRoundAndSaveButtons () {
         VBox selectAndSave = new VBox(PADDING);
@@ -146,10 +133,10 @@ public class LevelSidebar extends Sidebar{
         catch (MissingInformationException e) {
             e.printStackTrace();
         }
-        getMapWorkspace().displayMessage("Save Successful", Color.ORCHID);
+        getMapWorkspace().displayMessage(getResources().getString("SaveSuccessful"), Color.ORCHID);
     }
-    
-    public void setKey(String key){
+
+    public void setKey (String key) {
         myMapKey = key;
     }
 
@@ -157,15 +144,17 @@ public class LevelSidebar extends Sidebar{
         container.getChildren().add(nameLevel());
 
     }
-    
-    private HBox nameLevel(){
+
+    private HBox nameLevel () {
         HBox box = new HBox(PADDING);
         box.getChildren().add(new Label("Level Name:"));
         TextField t = new TextField();
         t.setPromptText("Name your level");
         box.getChildren().add(t);
-        Button b = new Button ("Save");
-        b.setOnAction(e-> {myName = t.getText();});
+        Button b = new Button("Save");
+        b.setOnAction(e -> {
+            myName = t.getText();
+        });
         box.getChildren().add(b);
         return box;
     }

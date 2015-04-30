@@ -1,6 +1,5 @@
 package authoringEnvironment;
 
-import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,11 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.imageio.ImageIO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javax.imageio.ImageIO;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.setting.Setting;
 
@@ -37,7 +35,6 @@ import authoringEnvironment.setting.Setting;
  */
 
 public class Controller {
-    // TODO: ADD TAG TO KEY
 
     private static final int PARTTYPE_INDEX_IN_KEY = 1;
 
@@ -254,11 +251,6 @@ public class Controller {
         return false;
     }
     
-    public String getNameForPart(String partKey){
-        return (String) getPartCopy(partKey).get(InstanceManager.NAME_KEY);
-    }
-    
-    
 
     public boolean removeTagFromPart (String partKey, String tag) {
         if (currentGame.containsKey(partKey)) {
@@ -407,14 +399,11 @@ public class Controller {
         return myMaps;
     }
 
-
-    /*
-     * public void setMaps (ObservableList<GameObject> maps) {
-     * myMaps = maps;
-     * }
-     */
+<<<<<<< HEAD
+=======
     public String getNameForPart (String key) {
         return (String) currentGame.getAllPartData().get(key).get(InstanceManager.NAME_KEY);
     }
+>>>>>>> origin/master
 
 }

@@ -1,0 +1,37 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Tile</string>
+  </entry>
+  <entry>
+    <string>Color</string>
+    <javafx.scene.paint.Color>
+      <red>0.7019608</red>
+      <green>0.7019608</green>
+      <blue>0.101960786</blue>
+      <opacity>1.0</opacity>
+      <platformPaint class="com.sun.prism.paint.Color">
+        <type>COLOR</type>
+        <proportional>false</proportional>
+        <isMutable>false</isMutable>
+        <argb>-5000422</argb>
+        <r>0.7019608</r>
+        <g>0.7019608</g>
+        <b>0.101960786</b>
+        <a>1.0</a>
+      </platformPaint>
+    </javafx.scene.paint.Color>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>ExampleGame_Part1.Tile</string>
+  </entry>
+  <entry>
+    <string>Tags</string>
+    <list/>
+  </entry>
+  <entry>
+    <string>Name</string>
+    <string>TowerPlaceable</string>
+  </entry>
+</map>

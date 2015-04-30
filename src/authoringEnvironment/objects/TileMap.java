@@ -17,7 +17,6 @@ import javafx.scene.shape.Rectangle;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
-import authoringEnvironment.pathing.PathView;
 
 
 /**
@@ -27,9 +26,6 @@ import authoringEnvironment.pathing.PathView;
  * @author Callie Mao
  *
  */
-
-//extends Group implements GameObject
-
 public class TileMap extends GameObject {
 
     private StringProperty[][] myTileKeys;
@@ -38,29 +34,26 @@ public class TileMap extends GameObject {
     private ImageView myBackground;
     private String myActiveTile;
     private String myBackgroundFilePath;
+    private ObservableList<GameObject> myPaths;
+
     private Controller myController;
-    private static final String EMPTY_KEY = ""; 
+    private static final String EMPTY_KEY = "";
     private static final Color EMPTY_COLOR = Color.TRANSPARENT;
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
     private static final String TILE_KEY_ARRAY = "TileArrayKeys";
     private static final int LINE_START_COORDINATE = 0;
-    private ObservableList<GameObject> myPaths;
+    private static final String TILE_SIZE = "\nTile Size: ";
 
-
-    private Map<String, Integer> myTags; // maps a string to the number of elements with that
-                                             // tag
-
-    // allowing both width and height gives greater flexibility in map creation
     private int myMapRows;
     private int myMapCols;
-    private Group myRoot; // need to include this instead of extending Group for additional
+    private Group myRoot; // used this instead of extending Group for additional
                           // extendibility and so that GameObject can be extended
 
     private Group myGridLines;
 
-    private static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
+    private static final String NUMBER_OF_TILES = "\nNumber of Tiles: ";
+    private static final String X_SEPARATOR = " x ";
 
-    // TODO: user specifies rectangle or square dimensions...allow this flexibility
     public TileMap (Controller controller, int mapRows, int mapCols, int tileSize) {
         myController = controller;
         myRoot = new Group();
@@ -71,44 +64,27 @@ public class TileMap extends GameObject {
         myGridLines = new Group();
         myPaths = FXCollections.observableArrayList();
         myActiveTile = EMPTY_KEY;
-       // imgFilePath = DEFAULT_BACKGROUND_PATH;
-//        imgFilePath = null;
+        myPaths = FXCollections.observableArrayList();
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
         myBackgroundFilePath = DEFAULT_BACKGROUND_PATH;
         setImageView(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
-        // TODO: sethover x, y coordinate, tile size, etc.
-
         createMap(myMapRows, myMapCols);
         createGridLines();
         changeTileSize(myTileSize);
     }
-    
-    protected TileMap(){
-        
+
+    protected TileMap () {
     }
-    
-    public void addPath(PathView path){
-        myPaths.add(path);
-    }
-    
-    public void removePath(PathView path){
-        if (myPaths.contains(path))
-            myPaths.remove(path);
-    }
-    
-    public ObservableList<GameObject> getPaths(){
+
+    public ObservableList<GameObject> getPaths () {
         return myPaths;
     }
-    
+
     public TileMap (int mapRows, int mapCols, int tileSize) {
         myPaths = FXCollections.observableArrayList();
     }
-    
-//    public void setTiles(Tile[][] tiles){
-//        newMap = tiles;
-//    }
 
     private void setImageDimensions (ImageView image) {
         image.setFitWidth(myMapCols * myTileSize);
@@ -135,19 +111,25 @@ public class TileMap extends GameObject {
         setImageView(myBackground);
     }
 
-    // TODO:duplicated tile listeners being added/deleted?
     public void attachTileListeners () {
         for (int i = 0; i < myTileKeys.length; i++) {
             for (int j = 0; j < myTileKeys[0].length; j++) {
-                attachTileListener(i,j);
+                attachTileListener(i, j);
             }
         }
     }
 
     private void attachTileListener (int i, int j) {
         myTileDisplay[i][j].setOnMouseClicked(e -> tileClicked(i, j));
+<<<<<<< HEAD
       //this method is used instead of tileClicked to allow for easier "coloring" of large groups of tiles
         myTileDisplay[i][j].setOnMouseDragEntered(e -> myTileKeys[i][j].setValue(myActiveTile)); 
+=======
+        // this method is used instead of tileClicked to allow for easier "coloring" of large groups
+        // of tiles
+        myTileDisplay[i][j].setOnMouseDragEntered(e -> myTileKeys[i][j].setValue(myActiveTile));
+>>>>>>> origin/master
+        myTileDisplay[i][j].setOnMouseDragReleased(e -> {});
     }
 
     private void tileClicked (int i, int j) {
@@ -169,8 +151,8 @@ public class TileMap extends GameObject {
         updateGridLines();
         setImageDimensions(myBackground);
     }
-    
-    private void setTileSize(Rectangle tile, int rowIndex, int colIndex){
+
+    private void setTileSize (Rectangle tile, int rowIndex, int colIndex) {
         tile.setWidth(myTileSize);
         tile.setHeight(myTileSize);
         tile.setTranslateX(colIndex * myTileSize);
@@ -203,30 +185,32 @@ public class TileMap extends GameObject {
                 myTileKeys[i][j] = new SimpleStringProperty(EMPTY_KEY);
                 myTileDisplay[i][j] = new Rectangle(myTileSize, myTileSize, EMPTY_COLOR);
                 myTileDisplay[i][j].setOpacity(0.6);
-                
+
                 int rowIndex = i;
                 int colIndex = j;
-                myTileKeys[i][j].addListener((obs, oldValue, newValue) -> {
-                    if(newValue!=EMPTY_KEY){
+                myTileKeys[i][j].addListener( (obs, oldValue, newValue) -> {
+                    if (newValue != EMPTY_KEY) {
                         String key = myTileKeys[rowIndex][colIndex].getValue();
-                        Color color = (Color) myController.getPartCopy(key).get(InstanceManager.COLOR_KEY);
+                        Color color =
+                                (Color) myController.getPartCopy(key)
+                                        .get(InstanceManager.COLOR_KEY);
                         myTileDisplay[rowIndex][colIndex].setFill(color);
                     }
-                    else{
-                        myTileDisplay[rowIndex][colIndex].setFill(EMPTY_COLOR);
-                    }
-                });
+                        else {
+                            myTileDisplay[rowIndex][colIndex].setFill(EMPTY_COLOR);
+                        }
+                    });
                 positionTile(myTileDisplay[i][j], i, j);
                 myRoot.getChildren().add(myTileDisplay[i][j]);
-                
-                attachTileListener(i,j);
+
+                attachTileListener(i, j);
             }
         }
         setImageDimensions(myBackground);
         changeTileSize(myTileSize);
     }
-    
-    private void positionTile(Rectangle tile, int rowIndex, int colIndex){
+
+    private void positionTile (Rectangle tile, int rowIndex, int colIndex) {
         tile.setTranslateX(colIndex * myTileSize);
         tile.setTranslateY(rowIndex * myTileSize);
     }
@@ -246,10 +230,8 @@ public class TileMap extends GameObject {
 
         myMapCols = newMapCols;
         myMapRows = newMapRows;
-//        myTileKeys = newTiles;
         setImageDimensions(myBackground);
         changeTileSize(myTileSize);
-//        updateGridLines();
     }
 
     /**
@@ -281,15 +263,12 @@ public class TileMap extends GameObject {
         int mapWidth = myMapCols * myTileSize;
         int mapHeight = myMapRows * myTileSize;
 
-        // TODO: make an error display if mapwidth or mapheight is greater than allowed or create a
-        // scrollpane instead
-        // vertical lines
         for (int i = 0; i < mapWidth; i += myTileSize) {
             Line verticalLine = new Line(i, LINE_START_COORDINATE, i, mapHeight);
             verticalLine.setStroke(Color.web("B2B2B2"));
             myGridLines.getChildren().add(verticalLine);
         }
-        // horizontal lines
+
         for (int i = 0; i < mapHeight; i += myTileSize) {
             Line horizontalLine = new Line(0, i, mapWidth, i);
             horizontalLine.setStroke(Color.web("B2B2B2"));
@@ -318,14 +297,14 @@ public class TileMap extends GameObject {
         mapSettings.put(InstanceManager.NAME_KEY, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
         mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackgroundFilePath);
-        mapSettings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_MAP);
+        mapSettings.put(InstanceManager.PART_TYPE_KEY, InstanceManager.GAMEMAP_PARTNAME);
 
         mapSettings.put(TILE_KEY_ARRAY, myTileKeys);
-        
+
         List<String> pathKeys = new ArrayList<String>();
-        for (GameObject path : myPaths){
+        for (GameObject path : myPaths) {
             pathKeys.add(path.getKey());
-            
+
         }
         mapSettings.put(Variables.PARAMETER_PATH_KEYS, pathKeys);
         return mapSettings;
@@ -334,19 +313,16 @@ public class TileMap extends GameObject {
     public Group getRoot () {
         return myRoot;
     }
-    
-    public String getImgFilePath(){
+
+    public String getImgFilePath () {
         return myBackgroundFilePath;
     }
 
     @Override
     protected String getToolTipInfo () {
         String info = super.getToolTipInfo();
-        info += "\nNumber of Tiles: " + myMapRows + " x " + myMapCols;
-        info += "\nTile Size: " + myTileSize;
+        info += NUMBER_OF_TILES + myMapRows + X_SEPARATOR + myMapCols;
+        info += TILE_SIZE + myTileSize;
         return info;
     }
-
-
-
 }

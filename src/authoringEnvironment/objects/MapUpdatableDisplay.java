@@ -19,10 +19,6 @@ public class MapUpdatableDisplay extends UpdatableDisplay {
         super.objectClicked(object, objectView);
         mySidebar.changeMap((TileMap) object);
         mySidebar.updatePathDisplay((TileMap) object);
-
-        // mySidebar.getMapWorkspace().updateWithNewMap(object);
-        // mySidebar.setMapNameTextField(object.getName());
-        // mySidebar.setPaths
     }
 
 }

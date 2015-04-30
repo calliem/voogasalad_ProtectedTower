@@ -61,7 +61,6 @@ public abstract class FlowEditor extends Editor {
     @Override
     public Group configureUI () {
         Group visuals = new Group();
-        // TODO remove dependency
         NOTHING_CREATED = "No " + partNames.getString(editorType).toLowerCase() + "s yet...";
         editor = new StackPane();
         Rectangle editorBackground =
@@ -151,7 +150,6 @@ public abstract class FlowEditor extends Editor {
         contents.getChildren().add(display);
     }
 
-    // TODO: duplicated code in sprite editor, lines 195-199
     private void showOverlay () {
         prompt.showPrompt(editor);
         isOverlayActive = true;
@@ -166,7 +164,8 @@ public abstract class FlowEditor extends Editor {
             });
         }
     }
-    
-    public void update(){};
+
+    public void update () {
+    };
 
 }

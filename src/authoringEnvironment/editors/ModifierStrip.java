@@ -28,6 +28,7 @@ import authoringEnvironment.MissingInformationException;
 public class ModifierStrip extends VBox {
     private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
+    private static final int PADDING = 10;
 
     private String myKey;
     private Controller myController;
@@ -43,6 +44,7 @@ public class ModifierStrip extends VBox {
     private TextField amount;
     
     public ModifierStrip (Controller controller, double width) {
+        super(PADDING);
         myKey = Controller.KEY_BEFORE_CREATION;
         myController = controller;
         Text when = new Text("When");
@@ -113,6 +115,7 @@ public class ModifierStrip extends VBox {
                     catch (Exception e) {
                         System.err
                                 .print("Error Finding Fields! Update Properties File!");
+                        e.printStackTrace();
                     }
                 });
         HBox save = new HBox(ModifierEditor.PADDING);
@@ -127,10 +130,11 @@ public class ModifierStrip extends VBox {
 
     private ObservableList<String> generateFieldsList (String selectedItem)
                                                                            throws ClassNotFoundException {
-        System.out.println(selectedItem);
+
         List<Class<?>> classesWithFields =
                 ReflectionUtil.getPackageParentList(Class.forName("engine.element.sprites." +
                                                                   selectedItem));
+        System.out.println(classesWithFields.size());
         List<String> fieldsList = new ArrayList<String>();
 
         for (Class<?> myClass : classesWithFields) {

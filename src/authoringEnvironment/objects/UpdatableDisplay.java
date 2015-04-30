@@ -3,7 +3,6 @@ package authoringEnvironment.objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import util.IntArray2DToImageConverter.src.IntArray2DToImageConverter;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -21,6 +20,14 @@ import authoringEnvironment.NoImageFoundException;
 import authoringEnvironment.Variables;
 
 
+/**
+ * VBox that holds an updating display of game objects including the object's image and name. These
+ * are deleted and updated dynamically with observablelists and changelisteners to reflect any
+ * changes the user makes to the list in other classes.
+ * 
+ * @author Callie Mao
+ *
+ */
 public abstract class UpdatableDisplay extends VBox {
 
     private List<GameObject> myObjects;
@@ -32,6 +39,7 @@ public abstract class UpdatableDisplay extends VBox {
     private Controller myController;
     private String myPartType;
     private static final int SPACING = 15;
+    private static final String EMPTY_LIST = "This list is empty.";
 
     public UpdatableDisplay (List<GameObject> list,
                              int rowSize,
@@ -53,7 +61,6 @@ public abstract class UpdatableDisplay extends VBox {
         myController = c;
         myPartType = partType;
         numObjsPerRow = rowSize;
-
         populateObjects(keys);
         displayValues();
     }
@@ -64,13 +71,10 @@ public abstract class UpdatableDisplay extends VBox {
             Image image = null;
             try {
                 image = myController.getImageForKey(key);
-                // test image below:
             }
             catch (NoImageFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            // image = new Image("images/white_square.png");
 
             ImageView thumbnail = setThumbnailSize(new ImageView(image));
             String name = (String) partParameters.get(InstanceManager.NAME_KEY);
@@ -91,7 +95,6 @@ public abstract class UpdatableDisplay extends VBox {
     }
 
     private void displayValues () {
-        System.out.println("displayValues");
         ScrollPane container = new ScrollPane();
 
         container.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -102,8 +105,7 @@ public abstract class UpdatableDisplay extends VBox {
         setCurrentRow();
 
         if (myObjects.isEmpty()) {
-            Text isEmpty = new Text("This list is empty.");
-            // TODO: set text in center of scrollpane
+            Text isEmpty = new Text(EMPTY_LIST);
             objectsDisplay.getChildren().add(isEmpty);
         }
         for (GameObject object : myObjects) {
@@ -114,18 +116,9 @@ public abstract class UpdatableDisplay extends VBox {
 
             StackPane objectView = new StackPane();
 
-            ImageView thumbnail = object.getUniqueThumbnail(); // may give rectangle or imageview
-            // TODO; write if statement: if has thumbnail then get it, if not then get the image and
-            // resize it
+            ImageView thumbnail = object.getUniqueThumbnail();
             setThumbnailSize(thumbnail);
-            /*
-             * thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
-             * Variables.THUMBNAIL_SIZE_MULTIPLIER);
-             * thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
-             * Variables.THUMBNAIL_SIZE_MULTIPLIER);
-             */
-            if (objectView == selectedView) { // TODO: this doesn't work since we're making a new
-                                              // objectview each time. have to check something else
+            if (objectView == selectedView) {
                 selectObject(objectView);
             }
 
@@ -190,10 +183,7 @@ public abstract class UpdatableDisplay extends VBox {
     protected void objectClicked (GameObject object, StackPane objectView) {
         if (selectedView != null) {
             selectedView.setOpacity(1);
-            // deselectObject(selectedView);
         }
-        // objectView.setOpacity(1);
-
         selectObject(objectView);
         selectedView = objectView;
     }
@@ -201,8 +191,8 @@ public abstract class UpdatableDisplay extends VBox {
     public void setSelectedView (StackPane view) {
         selectedView = view;
     }
-    
-    public List<GameObject> getObjects(){
+
+    public List<GameObject> getObjects () {
         return myObjects;
     }
 

@@ -82,6 +82,8 @@ public class GamePlayer extends Application {
             }
         });
 
+//        myMainArea.setStyle("-fx-background-color: #3333333");
+        
         ObservableList<Sprite> displayList = FXCollections.observableArrayList(new ArrayList<>());
         displayList.addListener((ListChangeListener<Sprite>) change -> {
             while (change.next()) {
@@ -115,12 +117,11 @@ public class GamePlayer extends Application {
             return;
         }
 
-        myGameController.startGame(3);
+        myGameController.startGame(15);
 
     }
 
     private void updateInfoBox (Sprite placeSprite) {
-        System.out.println(placeSprite + " WASCLICK");
         infoBox = new TableView<>();
         infoBox.setPrefHeight(myScreenHeight / 2);
         infoBox.setPrefWidth(myScreenWidth / 4);
@@ -327,7 +328,7 @@ public class GamePlayer extends Application {
         // TODO: property file this
         mainArea.setPrefWidth(myScreenWidth - myScreenWidth / 4);
         mainArea.setPrefHeight(myScreenHeight);
-        mainArea.setStyle("-fx-background-color: #00dbc1");
+//        mainArea.setStyle("-fx-background-color: #3333333");
         mainArea.setOnDragOver(event -> {
             Dragboard db = event.getDragboard();
             if (db.hasString()) {
