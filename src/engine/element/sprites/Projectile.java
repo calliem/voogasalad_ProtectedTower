@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import javafx.geometry.Point2D;
 import engine.Updateable;
 import annotations.parameter;
 
@@ -54,7 +55,7 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     private void updateHeading() {
     	if(!target.getState().equals(DEAD_STATE))
-   			this.setHeading(target.getLocation());
+   			this.setHeading(new Point2D(target.getLocationX()-this.getLocationX() , target.getLocationY() - this.getLocationY()));
 	}
 
 	@Override
