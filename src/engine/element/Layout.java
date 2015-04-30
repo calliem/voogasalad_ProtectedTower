@@ -168,6 +168,7 @@ public class Layout implements Updateable {
      */
     public void placeTower(Point2D location){
     	placeTower(myHeldTower, location);
+    	myHeldTower = null;
     }
     
     /**
