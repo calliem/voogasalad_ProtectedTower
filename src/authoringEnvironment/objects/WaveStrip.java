@@ -2,12 +2,10 @@ package authoringEnvironment.objects;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import authoringEnvironment.Controller;
 import authoringEnvironment.DataFormatException;
 import authoringEnvironment.MissingInformationException;
-import authoringEnvironment.ProjectReader;
 
 
 /**
@@ -43,10 +41,6 @@ public class WaveStrip extends FlowStrip {
         for (FlowView unit : myComponents) {
             partFileNames.addAll(unit.getFileNames());
             delays.addAll(unit.getDelays());
-            // Get rid of potential last element due to extra arrow/input space
-            if (partFileNames.size() != delays.size()) {
-                delays.remove(delays.size() - 1);
-            }
         }
 
         for (Double d : delays) {
@@ -55,6 +49,12 @@ public class WaveStrip extends FlowStrip {
                 all += t;
             times.add(all + d);
         }
+        
+        // Get rid of potential last element due to extra arrow/input space
+        if (partFileNames.size() != times.size()) {
+            times.remove(times.size() - 1);
+        }
+        
         List<String> params = new ArrayList<String>();
         params.add(ENEMIES_KEY);
         params.add(TIMES_KEY);
