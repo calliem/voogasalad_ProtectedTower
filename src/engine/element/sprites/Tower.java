@@ -107,4 +107,8 @@ public class Tower extends GameSprite {
         return spawnMap;
     }
 
+	public double getRange() {
+		return attackRange;
+	}
+
 }
