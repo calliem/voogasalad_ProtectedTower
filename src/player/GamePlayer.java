@@ -95,7 +95,7 @@ public class GamePlayer extends Application{
                     new GameController(gameFile.getParent(), displayList);
         }
         catch (InsufficientParametersException e) {
-            return;
+            e.printStackTrace();
         }
         displayList.addListener((ListChangeListener<Sprite>) change-> {
                 while (change.next()) {
@@ -111,6 +111,7 @@ public class GamePlayer extends Application{
                     }
                 }
         });
+        myInfoBox = makeInfoBox();
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
         Image myImage = new Image(".\\images\\liltower.jpg");
@@ -217,7 +218,8 @@ public class GamePlayer extends Application{
         // makeSpriteInfoBox();
         mySidebar.getChildren().add(makeTowerScrollBox());
         VBox.setMargin(myTowerDisplay, new Insets(0));
-        mySidebar.getChildren().add(makeInfoBox());
+        if (myInfoBox == null) myInfoBox = new VBox();
+        mySidebar.getChildren().add(myInfoBox);
         VBox.setMargin(myInfoBox, new Insets(0));
         return mySidebar;
     }
