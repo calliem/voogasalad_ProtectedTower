@@ -1,6 +1,8 @@
 package testing;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import authoringEnvironment.InstanceManager;
 
@@ -38,7 +40,10 @@ public class ExampleGameMap {
         gameMap.put("Tags", "none");
         gameMap.put("BoundingHeight", 10.0);
         gameMap.put("BoundingWidth", 10.0);
-        
+        List<String> paths = new ArrayList<String>();
+        paths.add("ExampleGame_Path0.Path");
+        gameMap.put("Paths", paths);
+
         part.put("DesktopTestGameMap_Part0.GameMap", gameMap);
         return part;
     }

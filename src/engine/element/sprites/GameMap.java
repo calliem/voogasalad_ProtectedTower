@@ -2,8 +2,8 @@ package engine.element.sprites;
 
 import java.util.List;
 import java.util.Map;
-import javafx.scene.image.ImageView;
 import annotations.parameter;
+import authoringEnvironment.objects.Coordinate;
 import engine.Reflectable;
 import engine.factories.GameElementFactory;
 
@@ -44,9 +44,9 @@ public class GameMap extends Sprite implements Reflectable {
         rows = (Integer) parameters.get("Rows");
         columns = (Integer) parameters.get("Columns");
         tileSize = (Integer) parameters.get("TileSize");
+        myPaths = (List<String>) parameters.get("Paths");
     }
 
-    // TODO add method to load paths
 
     /**
      * Creates an instance of the map made of GridCells and stores it as an instance variable

@@ -1,6 +1,6 @@
 package engine.element;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import annotations.parameter;
@@ -87,6 +87,9 @@ public class Level implements UpdateAndReturnable, Endable, Reflectable, Compara
 
     @Override
     public Map<Object, List<String>> update (int counter) {
+        if (myActiveRound == null) {
+            return new HashMap<Object, List<String>>();
+        }
         return myActiveRound.update(counter);
     }
 

@@ -53,7 +53,7 @@ public class Round implements UpdateAndReturnable, Endable {
 
     @Override
     public Map<Object, List<String>> update (int counter) {
-        Map<Object, List<String>> tempReturnMap = null;
+        Map<Object, List<String>> tempReturnMap = new HashMap<>();
 
         while (myTimer == mySendTimes.get(myCurrentWaveIndex) && !hasEnded()) {
             String waveGUID = myWaves.get(myCurrentWaveIndex);
@@ -89,11 +89,6 @@ public class Round implements UpdateAndReturnable, Endable {
         if (from == null) {
             return;
         }
-
-        if (to == null) {
-            to = new HashMap<>();
-        }
-
         for (Object obj : from.keySet()) {
             if (to.containsKey(obj)) {
                 to.get(obj).addAll(from.get(obj));
