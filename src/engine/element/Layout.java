@@ -32,6 +32,7 @@ import engine.factories.GameElementFactory;
  * @author Michael Yang
  * @author Qian Wang
  * @author Bojia Chen
+ * @author Sean Scott
  *
  */
 public class Layout implements Updateable {

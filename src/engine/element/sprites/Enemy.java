@@ -122,7 +122,7 @@ public class Enemy extends GameSprite {
         wrap.initializeGraph(grid, new ObstacleFunction() {
             @Override
             public boolean isObstacle (Object o) {
-                GridCell cell = (GridCell) o;
+            	GridCell cell = (GridCell) o;
                 return false;
             }
         });
