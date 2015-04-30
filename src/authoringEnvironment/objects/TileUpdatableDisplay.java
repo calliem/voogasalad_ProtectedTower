@@ -31,7 +31,7 @@ public class TileUpdatableDisplay extends UpdatableDisplay {
     protected void objectClicked (GameObject object, StackPane objectView) {
         super.objectClicked(object, objectView);
         //mySidebar.changeMap((TileMap) object);
-         myMapWorkspace.setActiveColor(Color.BLUE); //TODO: test
+         //myMapWorkspace.setActiveColor(object.); //TODO: test
 
         // mySidebar.getMapWorkspace().updateWithNewMap(object);
         // mySidebar.setMapNameTextField(object.getName());

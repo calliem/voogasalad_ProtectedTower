@@ -1,25 +1,19 @@
 package authoringEnvironment.map;
 
 import imageselector.GraphicFileChooser;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
@@ -278,7 +272,26 @@ public class MapSidebar extends Sidebar {
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
         }
+        
+        Map<String, Object> mapSettings = activeMap.save();
+        String key = activeMap.getKey();
+        try {
+            if (key == null) {
+                key = myController.addPartToGame(mapSettings);
+                activeMap.setKey(key);
+            }
+            else {
+                myController.addPartToGame(key, mapSettings);
+            }
+        }
+        catch (MissingInformationException e) {
+            e.printStackTrace();
+        }
+        myController.specifyPartImage(key, activeMap.getImageView().getImage()); //TODO: check
+        
         getMapWorkspace().displayMessage(getResources().getString("MapSaved"), Color.GREEN);
+        
+     
 
         // saves the map to a specific key
         // checks to see if the current map already exists
