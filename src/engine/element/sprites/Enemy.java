@@ -48,7 +48,6 @@ public class Enemy extends GameSprite {
 
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
-
         CanHurtPlayer = (Boolean) parameters.get("CanHurtPlayer");
     }
 

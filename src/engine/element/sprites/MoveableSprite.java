@@ -31,7 +31,7 @@ public abstract class MoveableSprite extends Sprite {
 
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
-        speed = (Double) parameters.get("speed");
+        speed = (Double) parameters.get("Speed");
     }
 
     // private double myRange;

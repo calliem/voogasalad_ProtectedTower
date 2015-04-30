@@ -48,12 +48,12 @@ public class Tower extends GameSprite {
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
 
-        attackSpeed = (Double) parameters.get("attackSpeed");
-        attackRange = (Double) parameters.get("attackRange");
-        attackPriority = (String) parameters.get("attackPriority");
-        projectiles = (List<String>) parameters.get("projectiles");
-        cost = (Double) parameters.get("cost");
-        buildTime = (Double) parameters.get("buildTime");
+        attackSpeed = (Double) parameters.get("AttackSpeed");
+        attackRange = (Double) parameters.get("AttackRange");
+        attackPriority = (String) parameters.get("AttackPriority");
+        projectiles = (List<String>) parameters.get("Projectiles");
+        cost = (Double) parameters.get("Cost");
+        buildTime = (Double) parameters.get("BuildTime");
     }    // TODO remove once testing is over
 
     /**

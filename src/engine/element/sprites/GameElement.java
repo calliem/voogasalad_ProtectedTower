@@ -33,6 +33,7 @@ public abstract class GameElement implements Collidable, Reflectable {
      */
     @parameter(settable = false, playerDisplay = true)
     private Point2D myLocation;
+    private String guid;
 
     public final static String ALIVE_STATE = "alive";
     public final static String DEAD_STATE = "dead";
@@ -45,10 +46,11 @@ public abstract class GameElement implements Collidable, Reflectable {
     }
 
     public void addInstanceVariables (Map<String, Object> parameters) {
-        name = (String) parameters.get("name");
-        tags = (List<String>) parameters.get("tags");
-        boundingHeight = (Double) parameters.get("boundingHeight");
-        boundingWidth = (Double) parameters.get("boundingWidth");
+        name = (String) parameters.get("Name");
+        tags = (List<String>) parameters.get("Tags");
+        boundingHeight = (Double) parameters.get("BoundingHeight");
+        boundingWidth = (Double) parameters.get("BoundingWidth");
+        guid = (String) parameters.get("PartKey");
     }
 
     // Getters and setters
@@ -147,5 +149,9 @@ public abstract class GameElement implements Collidable, Reflectable {
     @Override
     public double getLocationY () {
         return myLocation.getY();
+    }
+
+    public String getGUID () {
+        return guid;
     }
 }

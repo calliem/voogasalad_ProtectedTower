@@ -22,7 +22,7 @@ public class Projectile extends MoveableSprite {
 
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
-        damage = (Integer) parameters.get("damage");
+        damage = (Integer) parameters.get("Damage");
     }
 
     // Getters and setters

@@ -98,7 +98,9 @@ public class GameController {
         for (Map<String, Object> obj : allDataObjects.values()) {
             String partType = (String) obj.get(PARAMETER_PARTTYPE);
             myObjects.get(partType).put((String) obj.get(PARAMETER_GUID), obj);
+            System.out.println(obj.get("Image"));
         }
+        System.out.println("===================================================");
 
         return initializeGame(nodes, myObjects, possibleTowers);
     }
@@ -148,11 +150,13 @@ public class GameController {
         myGame.addGameElement("Round", ExampleRound.generateExampleRound());
         myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
 
+        System.out.println("===================================================");
         // TODO: POPULATING TOWER MANAGER
         myTowerManager.add(myObjects.get("Tower"));
 
         possibleTowers.addAll(myGame.getAllTowerObjects(myObjects.get("Tower").keySet()));
 
+        System.out.println("===================================================");
         return myGame;
     }
 

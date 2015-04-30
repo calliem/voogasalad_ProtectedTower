@@ -32,8 +32,8 @@ public abstract class GameSprite extends MoveableSprite {
 
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
-        health = (Integer) parameters.get("health");
-        nextSprites = (List<String>) parameters.get("nextSprites");
+        health = (Integer) parameters.get("Health");
+        nextSprites = (List<String>) parameters.get("NextSprites");
     }
 
     // Getters and setters
