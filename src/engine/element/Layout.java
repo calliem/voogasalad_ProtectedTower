@@ -338,8 +338,8 @@ public class Layout implements Updateable {
     public void update () {
         updateSpriteTargeting();
         updateSpriteLocations();
-        updateSpriteCollisions();
-        removeDeadSprites();
+//        updateSpriteCollisions();
+//        removeDeadSprites();
     }
 
 	/**
@@ -348,8 +348,8 @@ public class Layout implements Updateable {
 
     private void removeDeadSprites () {
         for (GameElement g : this.getSprites()) {
-            if (g.getState().equals(GameElement.DEAD_STATE))
-                this.removeSprite(g);
+            if (g.getState().equals(GameElement.DEAD_STATE)){
+                this.removeSprite(g);}
         }
     }
 
@@ -479,6 +479,6 @@ public class Layout implements Updateable {
 
     // TODO remove
     public void updateBackgroundTest (String key) {
-        this.setMap(key);
+//        this.setMap(key);
     }
 }

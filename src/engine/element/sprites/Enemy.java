@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import annotations.parameter;
-import authoringEnvironment.objects.Coordinate;
 import javafx.animation.PathTransition;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
@@ -53,9 +51,9 @@ public class Enemy extends GameSprite {
         super.addInstanceVariables(parameters);
         CanHurtPlayer = (Boolean) parameters.get("CanHurtPlayer");
     }
-    
-    public GridCell getGoal(){
-    	return myGridPath.get(myGridPath.size()-1);
+
+    public GridCell getGoal () {
+        return myGridPath.get(myGridPath.size() - 1);
     }
 
     @Override
@@ -69,10 +67,12 @@ public class Enemy extends GameSprite {
         // TODO write collide methods
         // super.decreaseHealth(sprite.getDamage());
     }
+
     @Override
-    public Double getSpeed(){
-        return super.getSpeed()*.1;
+    public Double getSpeed () {
+        return super.getSpeed() * .1;
     }
+
     /**
      * Adds a poison modifier to the enemy so it loses health for a set duration
      * 
@@ -96,14 +96,12 @@ public class Enemy extends GameSprite {
 
     @Override
     public void move () {
-         
-         PathTransition pathTransition = new PathTransition();
-         pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength /
-         getSpeed()));
-         pathTransition.setPath(myPath);
-         pathTransition.setNode(super.getImageView());
-         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-         pathTransition.play();
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength / getSpeed()));
+        pathTransition.setPath(myPath);
+        pathTransition.setNode(super.getImageView());
+        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition.play();
     }
 
     /**
@@ -117,15 +115,13 @@ public class Enemy extends GameSprite {
         initial.setX(curveCoords.get(0).getX());
         initial.setY(curveCoords.get(0).getY());
         path.getElements().add(initial);
-        for (int i = 1; i < curveCoords.size()-2; i+=3) {
-            path.getElements().add(
-                                   new CubicCurveTo(curveCoords.get(i).getX(), curveCoords.get(i)
-
-                                           .getY(),
-                                                    curveCoords.get(i + 1).getX(), curveCoords
-                                                            .get(i + 1).getY(),
-                                                    curveCoords.get(i + 2).getX(), curveCoords
-                                                            .get(i + 2).getY()));
+        for (int i = 1; i < curveCoords.size() - 2; i += 3) {
+            path.getElements().add(new CubicCurveTo(curveCoords.get(i).getX(),
+                                                    curveCoords.get(i).getY(),
+                                                    curveCoords.get(i + 1).getX(),
+                                                    curveCoords.get(i + 1).getY(),
+                                                    curveCoords.get(i + 2).getX(),
+                                                    curveCoords.get(i + 2).getY()));
         }
         myPath = path;
         myPathLength = (curveCoords.size() - 1) / 3;

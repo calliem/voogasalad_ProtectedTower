@@ -2,10 +2,10 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
 import engine.AttackPriority;
@@ -42,7 +42,7 @@ public class Tower extends GameSprite {
     private int myTimer = 0;
 
     private List<GameElement> myTargets = new ArrayList<>();
-    private AttackPriority myPriority;
+    private AttackPriority myPriority = new AttackPriority(new Point2D(500, 0));
 
     public Tower () {
 
@@ -53,6 +53,12 @@ public class Tower extends GameSprite {
         super.setImageView(test);
     }
 
+    @Override
+    public void setLocation (Point2D location) {
+        super.setLocation(location);
+        myPriority = new AttackPriority(location);
+    }
+    
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
 
@@ -61,7 +67,7 @@ public class Tower extends GameSprite {
         attackPriority = (String) parameters.get("AttackPriority");
         projectiles = new ArrayList<String>();
         projectiles.add((String) parameters.get("Projectile"));
-        System.out.println(this +" has this many projectiles "+projectiles.size());
+        System.out.println(this + " has this many projectiles " + projectiles.size());
         cost = (Double) parameters.get("Cost");
         buildTime = (Double) parameters.get("BuildTime");
     }    // TODO remove once testing is over
@@ -80,12 +86,12 @@ public class Tower extends GameSprite {
      * @param sprites Set<GameElement> object of sprites
      */
     public void addTargets (Set<GameElement> sprites) {
-    	myTargets.clear();
+        myTargets.clear();
         sprites.forEach(s -> myTargets.add(s));
     }
-    
-    public GameElement getTarget(){
-    	return myPriority.getTarget(attackPriority, myTargets);
+
+    public GameElement getTarget () {
+        return myPriority.getTarget(attackPriority.toLowerCase(), myTargets);
     }
 
     @Override
