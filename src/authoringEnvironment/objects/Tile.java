@@ -2,6 +2,7 @@ package authoringEnvironment.objects;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -24,7 +25,7 @@ public class Tile extends Rectangle {
 
     // TODO: maybe make this a game object?
 
-    private ArrayList<String> myTags;
+    private List<String> myTags;
     private Color myColor;
     private String myKey;
     private String myName;
@@ -114,7 +115,7 @@ public class Tile extends Rectangle {
      * }
      */
 
-    public ArrayList<String> getTags () {
+    public List<String> getTags () {
         return myTags;
     }
 

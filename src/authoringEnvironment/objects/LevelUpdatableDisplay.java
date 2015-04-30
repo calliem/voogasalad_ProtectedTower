@@ -17,7 +17,6 @@ public class LevelUpdatableDisplay extends UpdatableDisplay {
     public LevelUpdatableDisplay (ObservableList<GameObject> observableList, int rowSize, double thumbnailSizeMultiplier, MapWorkspace mapWorkspace) {
         super(observableList, rowSize, thumbnailSizeMultiplier);
         myMapWorkspace = mapWorkspace;
-        // TODO Auto-generated constructor stub
     }
     
     public LevelUpdatableDisplay (Controller c,

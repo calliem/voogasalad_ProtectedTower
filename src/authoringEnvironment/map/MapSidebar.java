@@ -70,6 +70,7 @@ public class MapSidebar extends Sidebar {
     private TextField pathNameTextField;
     private Controller myController;
     private UpdatableDisplay mapDisplay;
+    private int counter;
     private static final int INPUT_HBOX_SPACING = 4;
     private static final int VGAP_PADDING = 5;
     private static final int HGAP_PADDING = 20;
@@ -83,6 +84,7 @@ public class MapSidebar extends Sidebar {
          * getChildren().add(createListView(pathList, 300));
          */
         myController = c;
+        counter = 1;
         createMapSettings();
     }
 
@@ -482,7 +484,10 @@ public class MapSidebar extends Sidebar {
     }
 
     private void savePath (PathView activePath) {
-        activePath.setName(pathNameTextField.getText());
+        if (pathNameTextField.getText().equals(""))
+            activePath.setName("UnnamedPath" + counter++);
+        else
+            activePath.setName(pathNameTextField.getText());
 
         Map<String, Object> mapSettings = activePath.save();
 
