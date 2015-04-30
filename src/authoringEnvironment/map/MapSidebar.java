@@ -450,9 +450,12 @@ public class MapSidebar extends Sidebar {
         container.add(pathNameTextField, 1, 1);
 
         pathDisplay =
-                new PathUpdatableDisplay(myController, Variables.PARTNAME_PATH,
+          /*      new PathUpdatableDisplay(myController, Variables.PARTNAME_PATH,
                                          UPDATABLEDISPLAY_ELEMENTS,
-                                         Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
+                                         Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test */
+                new PathUpdatableDisplay(myPaths, UPDATABLEDISPLAY_ELEMENTS,
+                                 Variables.THUMBNAIL_SIZE_MULTIPLIER,
+                                 getMapWorkspace());
 
         /*
          * UpdatableDisplay pathDisplay =

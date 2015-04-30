@@ -93,7 +93,6 @@ public abstract class UpdatableDisplay extends VBox {
     }
 
     private void displayValues () {
-        System.out.println("displayValues");
         ScrollPane container = new ScrollPane();
 
         container.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -103,7 +102,7 @@ public abstract class UpdatableDisplay extends VBox {
         objectsDisplay = new VBox(SPACING);
         setCurrentRow();
 
-        if (myObjects.isEmpty()) {
+        if (myObjects == null | myObjects.isEmpty()) {
             Text isEmpty = new Text("This list is empty.");
             // TODO: set text in center of scrollpane
             objectsDisplay.getChildren().add(isEmpty);
