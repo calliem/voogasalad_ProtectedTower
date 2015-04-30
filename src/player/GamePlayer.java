@@ -140,7 +140,7 @@ public class GamePlayer extends Application {
     }
 
     @Override
-    public void start (Stage primaryStage) throws Exception {
+    public void start (Stage primaryStage) {
         myPlayerStage = primaryStage;
         setScreenBounds(primaryStage);
         myPlayerStage.setMaximized(true);
@@ -155,7 +155,11 @@ public class GamePlayer extends Application {
         myPlayerStage.show();
     }
 
-    private MenuBar setUpMenu () throws InsufficientParametersException {
+    public Scene getScene(){
+        return myMainScene;
+    }
+    
+    private MenuBar setUpMenu () {
         MenuBar myMenu = new MenuBar();
         Menu file = new Menu("File");
         MenuItem openGame = new MenuItem("Open Game");

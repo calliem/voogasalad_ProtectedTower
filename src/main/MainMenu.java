@@ -89,18 +89,20 @@ public class MainMenu {
         
         authoring.setOnMouseClicked(e -> {
             //TODO: re-enable this;
-//            if(!mainContent.getChildren().contains(test)){
-//                mainContent.getChildren().add(1, test);
-//                entryAnimation(mainContent, test, go);
-//            }
+            if(!mainContent.getChildren().contains(test)){
+                mainContent.getChildren().add(1, test);
+                entryAnimation(mainContent, test, go);
+            }
             sceneSelected = Main.getScenes()[1];
-            myStage.setScene(sceneSelected);
-            myStage.show();
+        });
+        
+        player.setOnMouseClicked(e -> {
+            sceneSelected = Main.getScenes()[2];
+            setupScene();
         });
 
         go.setOnMouseClicked(e -> {
-            myStage.setScene(sceneSelected);
-            myStage.show();
+            setupScene();
         });
         
         splashContent.getChildren().addAll(background, title, mainContent);
@@ -110,6 +112,11 @@ public class MainMenu {
 
         myScene = new Scene(myRoot, myDimensions.getWidth(), myDimensions.getHeight(), Color.WHITE); 
         return myScene;
+    }
+    
+    private void setupScene(){
+        myStage.setScene(sceneSelected);
+        myStage.show();
     }
 
     private StackPane makeGoButton () {

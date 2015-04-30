@@ -5,7 +5,7 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>/ImageData/Game1DeathMap_Part2Image.png</string>
   </entry>
   <entry>
     <string>attackRange</string>
@@ -41,21 +41,21 @@
   </entry>
   <entry>
     <string>attackSpeed</string>
-    <double>1.0</double>
+    <double>5.0</double>
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed1</string>
+    <string>BasicShooter</string>
   </entry>
   <entry>
     <string>projectileList</string>
     <list>
-      <string>ExampleGame_Part0.Projectile</string>
+      <string>Game1DeathMap_Part1.Projectile</string>
     </list>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part1.Tower</string>
+    <string>Game1DeathMap_Part2.Tower</string>
   </entry>
   <entry>
     <string>Tags</string>
