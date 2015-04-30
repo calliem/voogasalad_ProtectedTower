@@ -112,6 +112,7 @@ public class Enemy extends GameSprite {
     public void bezierPath (List<Coordinate> curveCoords) {
         Path path = new Path();
         MoveTo initial = new MoveTo();
+        System.out.println("ran "+this);
         initial.setX(curveCoords.get(0).getX());
         initial.setY(curveCoords.get(0).getY());
         path.getElements().add(initial);
