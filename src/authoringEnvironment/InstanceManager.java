@@ -34,6 +34,7 @@ public class InstanceManager {
     public static final String NAME_KEY = "name";
     public static final String TAGS_KEY = "Tags";
     public static final String IMAGE_KEY = "image";
+    public static final String COLOR_KEY = "Color";
 
     private static final String NO_KEYS_MISSING = "no keys missing";
 

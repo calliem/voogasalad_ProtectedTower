@@ -1,14 +1,12 @@
 package engine.element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
-
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
 import util.pathsearch.pathalgorithms.NoPathExistsException;
@@ -21,7 +19,6 @@ import engine.element.sprites.GameElement;
 import engine.element.sprites.GameMap;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.MapPath;
-import engine.element.sprites.MoveableSprite;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
@@ -176,7 +173,7 @@ public class Layout implements Updateable {
         // loc param can probably be removed because the tower can just hold its location to be
         // placed at
         Tower temp = (Tower) myGameElementFactory.getGameElement("Tower", towerID);
-        System.out.println("towertest "+temp.getProjectile());
+        System.out.println("towertest " + temp.getProjectile());
         temp.setLocation(location);
         if (canPlace(temp, location)) {
             myNodeList.add(temp);
@@ -338,18 +335,19 @@ public class Layout implements Updateable {
     public void update () {
         updateSpriteTargeting();
         updateSpriteLocations();
-//        updateSpriteCollisions();
-//        removeDeadSprites();
+        // updateSpriteCollisions();
+        // removeDeadSprites();
     }
 
-	/**
+    /**
      * Removes all GameElements that have a statetag of dead.
      */
 
     private void removeDeadSprites () {
         for (GameElement g : this.getSprites()) {
-            if (g.getState().equals(GameElement.DEAD_STATE)){
-                this.removeSprite(g);}
+            if (g.getState().equals(GameElement.DEAD_STATE)) {
+                this.removeSprite(g);
+            }
         }
     }
 
@@ -361,13 +359,14 @@ public class Layout implements Updateable {
 
         myTowerList.forEach(p -> {
             Map<Object, List<String>> spawnMap = p.update();
-            spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q, p.getTarget()));
+            spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q,
+                                                           p.getTarget()));
         });
 
-         myEnemyList.forEach(p -> {
-         Map<Object, List<String>> spawnMap = p.update();
-         spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-         });
+        myEnemyList.forEach(p -> {
+            Map<Object, List<String>> spawnMap = p.update();
+            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+        });
 
     }
 
@@ -406,9 +405,9 @@ public class Layout implements Updateable {
                                                                  tower.getProjectile());
         Set<GameElement> targetables = new HashSet<>();
         for (GameElement g : targetable)
-//            if (myActionManager.isAction(g, tester)){
-                targetables.add(g);
-//        }
+            // if (myActionManager.isAction(g, tester)){
+            targetables.add(g);
+        // }
         return targetables;
     }
 
@@ -479,6 +478,6 @@ public class Layout implements Updateable {
 
     // TODO remove
     public void updateBackgroundTest (String key) {
-//        this.setMap(key);
+        // this.setMap(key);
     }
 }

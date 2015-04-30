@@ -25,6 +25,7 @@ public class ImageViewSetting extends Setting {
     
     @Override
     public void setParameterValue(Object value){
+        System.out.println("type of: " + value);
         dataAsString = (String) value;
         selector.setSelectedImageFile((String) value);
     }

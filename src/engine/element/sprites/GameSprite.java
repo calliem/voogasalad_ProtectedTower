@@ -1,13 +1,8 @@
 package engine.element.sprites;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import engine.UpdateAndReturnable;
 import annotations.parameter;
+import engine.UpdateAndReturnable;
 
 
 /**
@@ -21,13 +16,6 @@ public abstract class GameSprite extends MoveableSprite implements UpdateAndRetu
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "100")
     private Double health;
-    /**
-     * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
-     */
-    @parameter(settable = false, playerDisplay = true, defaultValue = "null")
-    private List<String> nextSprites;
-    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
-    private Sprite nextSpritesList;
 
     public GameSprite () {
 
@@ -36,8 +24,6 @@ public abstract class GameSprite extends MoveableSprite implements UpdateAndRetu
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
         health = (Double) parameters.get("Health");
-        nextSprites = new ArrayList<String>();
-        nextSprites.add((String) parameters.get("NextSprites"));
     }
 
     // Getters and setters
@@ -50,12 +36,11 @@ public abstract class GameSprite extends MoveableSprite implements UpdateAndRetu
         health -= amount;
     }
 
-    /**
-     * @return List<String> of the next Sprites
-     */
-    public List<String> getNextSprites () {
-        return Collections.unmodifiableList(nextSprites);
-    }
-
+    // /**
+    // * @return List<String> of the next Sprites
+    // */
+    // public List<String> getNextSprites () {
+    // return Collections.unmodifiableList(nextSprites);
+    // }
 
 }

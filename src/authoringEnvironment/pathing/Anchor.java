@@ -53,18 +53,18 @@ public class Anchor extends Circle {
             @Override
             public void handle (MouseEvent mouseEvent) {
                 // record a delta distance for the drag and drop operation.
-                System.out.println("anchor pressed!");
+
                 isPressed = true;
                 dragDelta.x = getCenterX() - mouseEvent.getX();
                 dragDelta.y = getCenterY() - mouseEvent.getY();
                 getScene().setCursor(Cursor.MOVE);
-                System.out.println("end of anchor pressed method " + isPressed + this);
+
             }
         });
         setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
-                System.out.println("anchor released!");
+
                 getScene().setCursor(Cursor.HAND);
                 // PauseTransition pause = new PauseTransition(Duration.millis(10000));
                 // pause.play();
@@ -79,7 +79,7 @@ public class Anchor extends Circle {
         setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
-                System.out.println("anchor dragged!");
+
                 isPressed = true;
                 double newX = mouseEvent.getX() + dragDelta.x;
                 if (newX > 0 + RADIUS && newX < parentWidth - RADIUS) {
@@ -110,11 +110,11 @@ public class Anchor extends Circle {
     }
 
     public boolean isSelected () {
-        System.out.println("Get is selected " + isPressed);
+
         return isPressed;
     }
 
-    // records relative x and y co-ordinates.
+    // records relative x and y coordinates.
     private class Delta {
         double x, y;
     }

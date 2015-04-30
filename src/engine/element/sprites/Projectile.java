@@ -1,7 +1,7 @@
 package engine.element.sprites;
 
-import java.lang.reflect.Field;
 import java.util.Map;
+import javafx.geometry.Point2D;
 import annotations.parameter;
 import engine.Updateable;
 
@@ -66,13 +66,12 @@ public class Projectile extends MoveableSprite implements Updateable {
         if (homing) {
             updateHeading();
         }
-        this.move();
     }
 
     private void updateHeading () {
-        if (!target.getState().equals(DEAD_STATE)) {
-            this.setHeading(target.getLocation());
-        }
+        if (!target.getState().equals(DEAD_STATE))
+            this.setHeading(new Point2D(target.getLocationX() - this.getLocationX(), target
+                    .getLocationY() - this.getLocationY()));
     }
 
     @Override

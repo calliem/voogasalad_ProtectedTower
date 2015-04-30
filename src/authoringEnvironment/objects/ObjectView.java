@@ -1,5 +1,6 @@
 package authoringEnvironment.objects;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -60,6 +61,10 @@ public class ObjectView extends StackPane{
     
     public BooleanProperty isExisting () {
         return exists;
+    }
+    
+    public void loadFromFile(Map<String, Object> partData){
+
     }
     
     public void initiateEditableState () {

@@ -167,9 +167,9 @@ public class Enemy extends GameSprite {
     public Map<Object, List<String>> update () {
         move();
         Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
-        if (this.getHealth() == 0) {
-            spawnMap.put(this.getLocation(), this.getNextSprites());
-        }
+//        if (this.getHealth() == 0) {
+//            spawnMap.put(this.getLocation(), this.getNextSprites());
+//        }
         return spawnMap;
     }
 
