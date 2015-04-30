@@ -89,9 +89,9 @@
         <entry>
           <string>Enemies</string>
           <list>
-            <string></string>
-            <string></string>
-            <string></string>
+            <string>Game1DeathMap_Part0.Enemy</string>
+            <string>Game1DeathMap_Part0.Enemy</string>
+            <string>Game1DeathMap_Part0.Enemy</string>
           </list>
         </entry>
         <entry>
