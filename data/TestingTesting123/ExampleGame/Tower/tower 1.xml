@@ -45,17 +45,18 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed1</string>
+    <string>tower 1</string>
   </entry>
   <entry>
     <string>projectileList</string>
     <list>
+      <string>ExampleGame_Part2.Projectile</string>
       <string>ExampleGame_Part1.Projectile</string>
     </list>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part4.Tower</string>
+    <string>ExampleGame_Part3.Tower</string>
   </entry>
   <entry>
     <string>Tags</string>
