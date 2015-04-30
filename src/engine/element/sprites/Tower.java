@@ -84,7 +84,9 @@ public class Tower extends GameSprite {
      */
     @Override
     public void move () {
-        return;
+        ImageView current = super.getImageView();
+        super.setLocation(super.getLocationX()+10, super.getLocationY());
+        System.out.println(super.getLocationX()+" "+super.getLocationY());
     }
 
     @Override

@@ -107,8 +107,8 @@ public class GamePlayer extends Application {
             return;
         }
 
-        // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
-        // availableTowers);
+        myGameController.startGame(1);
+        
     }
 
     private TableView updateInfoBox (Sprite placeSprite) {

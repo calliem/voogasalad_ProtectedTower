@@ -50,9 +50,9 @@ public class Layout implements Updateable {
     private GameMap myGameMap;
     private double[] myGoalCoordinates;
     // Lists of game elements
-    private List<Tower> myTowerList;
-    private List<Enemy> myEnemyList;
-    private List<Projectile> myProjectileList;
+    private List<Tower> myTowerList = new ArrayList<>();
+    private List<Enemy> myEnemyList = new ArrayList<>();
+    private List<Projectile> myProjectileList = new ArrayList<>();
     // Factories to create game elements
     private GameElementFactory myGameElementFactory;
     /**
@@ -220,7 +220,9 @@ public class Layout implements Updateable {
     private boolean tagsInCommon (GameElement cell, GameElement tower) {
         List<String> cellTags = cell.getTags();
         for (String tag : tower.getTags()) {
-            if (cellTags.contains(tag)) { return true; }
+            if (cellTags.contains(tag)) {
+                return true;
+            }
         }
         return false;
     }
@@ -259,7 +261,7 @@ public class Layout implements Updateable {
      */
     public void spawnEnemy (String enemyID, String pathID) {
         Enemy e = (Enemy) myGameElementFactory.getGameElement("Enemy", enemyID);
-        Point2D location = null; // TODO: Lookup spawn point given pathID
+        Point2D location = new Point2D(700, 200); // TODO: Lookup spawn point given pathID
         e.setLocation(location);
         myEnemyList.add(e);
     }
@@ -298,9 +300,9 @@ public class Layout implements Updateable {
     @Override
     public void update (int counter) {
         updateSpriteLocations();
-        updateSpriteCollisions();
-        updateSpriteTargeting();
-        removeDeadSprites();
+        // updateSpriteCollisions();
+        // updateSpriteTargeting();
+        // removeDeadSprites();
     }
 
     /**
@@ -321,7 +323,11 @@ public class Layout implements Updateable {
         // Move enemies
         // myEnemyList.forEach(e -> e.move());
         // Move projectiles
-        myProjectileList.forEach(p -> p.move());
+        // myProjectileList.forEach(p -> p.move());
+//        if (!myTowerList.isEmpty()) {
+            myTowerList.forEach(t -> t.move());
+//        }
+
     }
 
     /**
