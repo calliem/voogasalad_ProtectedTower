@@ -14,22 +14,24 @@ public class ExampleWave {
     private static Map<String, Object> generateExampleWave () {
         Map<String, Object> wave = new HashMap<String, Object>();
 
-        List<Integer> delay = new ArrayList<Integer>();
-        delay.add(0);
-        delay.add(1);
-        delay.add(2);
-        delay.add(3);
-        delay.add(10);
-        List<String> unitKeys = new ArrayList<String>();
-        unitKeys.add("TestGame_Part1.Enemy");
-        unitKeys.add("TestGame_Part2.Enemy");
-        unitKeys.add("TestGame_Part3.Enemy");
-        unitKeys.add("TestGame_Part4.Enemy");
-        unitKeys.add("TestGame_Part5.Enemy");
-        unitKeys.add("TestGame_Part6.Enemy");
+        List<Double> mySendTimes = new ArrayList<Double>();
+        mySendTimes.add(0.0);
+        mySendTimes.add(1.0);
+        mySendTimes.add(2.0);
+        mySendTimes.add(3.0);
+        mySendTimes.add(10.0);
+        List<String> myEnemies = new ArrayList<String>();
+        myEnemies.add("Part0.Enemy");
+        myEnemies.add("Part1.Enemy");
+        myEnemies.add("Part2.Enemy");
+        myEnemies.add("Part1.Enemy");
+        myEnemies.add("Part2.Enemy");
+        
         wave.put(InstanceManager.NAME_KEY, "TestWave");
         wave.put(InstanceManager.PART_TYPE_KEY, "Wave");
-        wave.put(InstanceManager.PART_KEY_KEY, "TestGame_Part7.Wave");
+        wave.put(InstanceManager.PART_KEY_KEY, "TestWavePart0.Wave");
+        wave.put("mySendTimes",mySendTimes);
+        wave.put("myEnemies",myEnemies);
         return wave;
     }
 }

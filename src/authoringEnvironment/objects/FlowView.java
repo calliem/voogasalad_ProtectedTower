@@ -71,6 +71,7 @@ public class FlowView extends HBox {
         myController = c;
         myHeight = height;
         fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(myController.getDirectoryToPartFolder("Wave"));
         partFileNames = new ArrayList<String>();
         delays = new ArrayList<Double>();
 
@@ -133,6 +134,7 @@ public class FlowView extends HBox {
                 .getAbsolutePath());
         try {
             delays = (List<Double>) waveInfo.get(Variables.PARAMETER_TIMES);
+            delays.add(Double.parseDouble(delayTextField.getText()));
             partFileNames = (List<String>) waveInfo.get(Variables.PARTNAME_ENEMIES);
         }
         catch (NullPointerException e) {
@@ -162,6 +164,14 @@ public class FlowView extends HBox {
      * @return List<Double> of delay times between units in the wave
      */
     public List<Double> getDelays () {
+        ArrayList<Double> unitDelay = new ArrayList<Double>();
+        System.out.println("delayTextField: " + delayTextField.getText());
+        try {
+            unitDelay.add(Double.parseDouble(delayTextField.getText()));
+            delays = unitDelay;
+        } catch(NumberFormatException e) {
+        }
+
         return delays;
     }
 

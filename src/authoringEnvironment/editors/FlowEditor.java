@@ -32,7 +32,7 @@ public abstract class FlowEditor extends Editor {
 
     private static final int PADDING = 10;
     private static final int BUTTON_HEIGHT = 24;
-    private static final int STRIP_PANEL_HEIGHT = 105;
+    public static final int STRIP_PANEL_HEIGHT = 205;
     private static final Color EDITOR_BACKGROUND_COLOR = Color.GRAY;
     private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";

@@ -45,7 +45,7 @@ public abstract class SpriteView extends ObjectView {
     private VBox display;
     private VBox editableContent;
     private StackPane overlayContent;
-    
+
     private Text overlayErrorMessage;
 
     private String spriteName;
@@ -128,8 +128,8 @@ public abstract class SpriteView extends ObjectView {
         setupOverlayContent();
         setupTooltipText(getSpriteInfo());
     }
-    
-    public StackPane getSpriteBody(){
+
+    public StackPane getSpriteBody () {
         return displayPane;
     }
 
@@ -153,7 +153,7 @@ public abstract class SpriteView extends ObjectView {
         overlayErrorMessage = new Text("Please check your parameters for errors.");
         overlayErrorMessage.setFill(Color.RED);
         overlayErrorMessage.setVisible(false);
-        
+
         editableContent.getChildren().addAll(overlaySpriteNameDisplay, overlayErrorMessage);
         
         ScrollPane settingsDisplayPane = new ScrollPane();
@@ -168,7 +168,6 @@ public abstract class SpriteView extends ObjectView {
 
         VBox settingsObjects = new VBox(PADDING);
         settingsObjects.setMaxWidth(DISPLAY_PANE_WIDTH);
-        
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
         // move the image to be first in the settings list
         for (int i = 0; i < settings.size(); i++) {
@@ -277,6 +276,7 @@ public abstract class SpriteView extends ObjectView {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            tagGroup.setKey(myKey);
             myController.specifyPartImage(myKey, imageFile);
             displaySavedMessage();
         }
