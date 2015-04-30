@@ -41,7 +41,7 @@ public class Tower extends GameSprite {
     private Double buildTime;
     private int myTimer = 0;
 
-    private Set<GameElement> myTargets = new HashSet<>();
+    private List<GameElement> myTargets = new ArrayList<>();
     private AttackPriority myPriority;
 
     public Tower () {
@@ -80,7 +80,12 @@ public class Tower extends GameSprite {
      * @param sprites Set<GameElement> object of sprites
      */
     public void addTargets (Set<GameElement> sprites) {
+    	myTargets.clear();
         sprites.forEach(s -> myTargets.add(s));
+    }
+    
+    public GameElement getTarget(){
+    	return myPriority.getTarget(attackPriority, myTargets);
     }
 
     @Override

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
+
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
 import util.pathsearch.pathalgorithms.NoPathExistsException;
@@ -307,8 +308,8 @@ public class Layout implements Updateable {
      * @param projectileIDs List<String> of IDs of Projectile objects to place
      * @param location Point2D representing location on grid
      */
-    public void spawnProjectile (List<String> projectileIDs, Point2D location) {
-        projectileIDs.forEach(i -> spawnProjectile(i, location));
+    public void spawnProjectile (List<String> projectileIDs, Point2D location, GameElement target) {
+        projectileIDs.forEach(i -> spawnProjectile(i, location, target));
     }
 
     /**
@@ -317,10 +318,11 @@ public class Layout implements Updateable {
      * @param projectileID String ID of Projectile object to place
      * @param location Point2D representing location on grid
      */
-    public void spawnProjectile (String projectileID, Point2D location) {
+    public void spawnProjectile (String projectileID, Point2D location, GameElement target) {
         Projectile proj =
                 (Projectile) myGameElementFactory.getGameElement("Projectile", projectileID);
         proj.setLocation(location);
+        proj.setTarget(target);
         myNodeList.add(proj);
         myProjectileList.add(proj);
     }
@@ -336,11 +338,11 @@ public class Layout implements Updateable {
     public void update () {
         updateSpriteTargeting();
         updateSpriteLocations();
-        // updateSpriteCollisions();
-        // removeDeadSprites();
+        updateSpriteCollisions();
+        removeDeadSprites();
     }
 
-    /**
+	/**
      * Removes all GameElements that have a statetag of dead.
      */
 
@@ -359,13 +361,13 @@ public class Layout implements Updateable {
 
         myTowerList.forEach(p -> {
             Map<Object, List<String>> spawnMap = p.update();
-            spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q));
+            spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q, p.getTarget()));
         });
 
-        // myEnemyList.forEach(p -> {
-        // Map<Object, List<String>> spawnMap = p.update();
-        // spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-        // });
+         myEnemyList.forEach(p -> {
+         Map<Object, List<String>> spawnMap = p.update();
+         spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+         });
 
     }
 

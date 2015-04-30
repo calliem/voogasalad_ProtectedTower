@@ -1,8 +1,8 @@
 package engine.element.sprites;
 
 import java.util.Map;
-import engine.Updateable;
 import annotations.parameter;
+import engine.Updateable;
 
 
 /**
@@ -16,6 +16,10 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1")
     private Double damage;
+    @parameter(settable = true, playerDisplay = true)
+    private boolean homing = true;
+
+    private GameElement target;
 
     public Projectile () {
 
@@ -30,6 +34,14 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     public Double getDamage () {
         return damage;
+    }
+
+    public GameElement getTarget () {
+        return target;
+    }
+
+    public void setTarget (GameElement g) {
+        target = g;
     }
 
     @Override
@@ -50,7 +62,15 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     @Override
     public void update () {
+        if (homing) {
+            updateHeading();
+        }
         this.move();
+    }
+
+    private void updateHeading () {
+        if (!target.getState().equals(DEAD_STATE))
+            this.setHeading(target.getLocation());
     }
 
 }
