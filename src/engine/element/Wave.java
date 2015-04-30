@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import annotations.parameter;
 import engine.Endable;
+import engine.Reflectable;
 import engine.UpdateAndReturnable;
 
 
@@ -17,7 +18,7 @@ import engine.UpdateAndReturnable;
  * @author Bojia Chen
  *
  */
-public class Wave implements UpdateAndReturnable, Endable {
+public class Wave implements UpdateAndReturnable, Endable, Reflectable {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "null")
     private List<String> myEnemies;
@@ -28,7 +29,11 @@ public class Wave implements UpdateAndReturnable, Endable {
     private int myTimer = 0;
     private String myPath;
 
-    public Wave (Map<String, Object> parameters) {
+    public Wave () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
         // TODO: make sure that myEnemies and mySendTimes are same size
         myEnemies = (List<String>) parameters.get("myEnemies");
         mySendTimes = (List<Double>) parameters.get("mySendTimes");
