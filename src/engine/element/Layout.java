@@ -111,7 +111,7 @@ public class Layout implements Updateable {
         Map<String[], List<Integer>[]> collisionMap = new HashMap<String[], List<Integer>[]>();
         collisionMap.put(spritePair, actionPair);
         collisionMap.put(spritePairPath, actionPairPath);
-        setActionManager(new ActionManager(collisionMap, actionList));
+        myActionManager = new ActionManager(collisionMap, actionList);
     }
 
     private void updatePathTest (GameElement e) {
@@ -127,10 +127,6 @@ public class Layout implements Updateable {
         catch (NoPathExistsException e1) {
             e1.printStackTrace();
         }
-    }
-
-    public void setActionManager (ActionManager table) {
-        myActionManager = table;
     }
 
     /**
@@ -339,16 +335,9 @@ public class Layout implements Updateable {
     }
 
     /**
-     * Updates the positions of all sprites and spawns all new projectiles.
+     * Updates the positions of all sprites and spawns all new projectiles and enemies.
      */
-    private void updateSpriteLocations (int counter) {
-        // Move enemies
-        // myEnemyList.forEach(e -> e.move());
-        // Move projectiles
-//        updateSpriteLocations(counter,myProjectileList);
-    }
-    
-    private void updateSpriteLocations(int counter, List<MoveableSprite> spriteList){
+    private void updateSpriteLocations(int counter){
         myProjectileList.forEach(p->p.update(counter));
         
         myTowerList.forEach(p -> {
@@ -356,7 +345,7 @@ public class Layout implements Updateable {
             spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q));
         });
         
-        myTowerList.forEach(p -> {
+        myEnemyList.forEach(p -> {
             Map<Object, List<String>> spawnMap = p.update();
             spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
         });
