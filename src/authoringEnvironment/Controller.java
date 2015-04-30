@@ -399,11 +399,9 @@ public class Controller {
         return myMaps;
     }
 
-<<<<<<< HEAD
-=======
+
     public String getNameForPart (String key) {
         return (String) currentGame.getAllPartData().get(key).get(InstanceManager.NAME_KEY);
     }
->>>>>>> origin/master
 
 }
