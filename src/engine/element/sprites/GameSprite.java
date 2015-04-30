@@ -1,9 +1,9 @@
 package engine.element.sprites;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import annotations.parameter;
 
 
@@ -17,7 +17,7 @@ import annotations.parameter;
 public abstract class GameSprite extends MoveableSprite {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "100")
-    private Integer health;
+    private Double health;
     /**
      * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
      */
@@ -32,17 +32,18 @@ public abstract class GameSprite extends MoveableSprite {
 
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
-//        health = (Integer) parameters.get("Health");
-//        nextSprites = (List<String>) parameters.get("NextSprites");
+        health = (Double) parameters.get("Health");
+        nextSprites = new ArrayList<String>();
+        nextSprites.add((String) parameters.get("NextSprites"));
     }
 
     // Getters and setters
 
-    protected Integer getHealth () {
+    protected Double getHealth () {
         return health;
     }
 
-    protected void decreaseHealth (Integer amount) {
+    protected void decreaseHealth (Double amount) {
         health -= amount;
     }
 

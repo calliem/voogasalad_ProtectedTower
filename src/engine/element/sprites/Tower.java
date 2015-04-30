@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -51,7 +52,8 @@ public class Tower extends GameSprite {
         attackSpeed = (Double) parameters.get("AttackSpeed");
         attackRange = (Double) parameters.get("AttackRange");
         attackPriority = (String) parameters.get("AttackPriority");
-        projectiles = (List<String>) parameters.get("Projectiles");
+        projectiles = new ArrayList<String>();
+        projectiles.add((String) parameters.get("Projectiles"));
         cost = (Double) parameters.get("Cost");
         buildTime = (Double) parameters.get("BuildTime");
     }    // TODO remove once testing is over

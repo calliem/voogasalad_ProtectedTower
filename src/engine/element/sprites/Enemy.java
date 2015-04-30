@@ -69,7 +69,7 @@ public class Enemy extends GameSprite {
      * @param damage the amount of damage the enemy should lose
      * @param duration the amount of time damage should be lost
      */
-    public void poison (int damage, int duration) {
+    public void poison (double damage, double duration) {
         Timer timer = new Timer();
         TimerTask poison = new TimerTask() {
             @Override
@@ -80,7 +80,7 @@ public class Enemy extends GameSprite {
         timer.schedule(poison, MOVE_DELAY, (long) (MOVE_DURATION * duration));
     }
 
-    protected void decreaseHealth (Integer amount) {
+    protected void decreaseHealth (Double amount) {
         super.decreaseHealth(amount);
     }
 

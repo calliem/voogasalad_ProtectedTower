@@ -14,7 +14,7 @@ import annotations.parameter;
 public class Projectile extends MoveableSprite {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1")
-    private Integer damage;
+    private Double damage;
 
     public Projectile () {
 
@@ -22,12 +22,12 @@ public class Projectile extends MoveableSprite {
 
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
-        damage = (Integer) parameters.get("Damage");
+        damage = (Double) parameters.get("Damage");
     }
 
     // Getters and setters
 
-    public Integer getDamage () {
+    public Double getDamage () {
         return damage;
     }
 
