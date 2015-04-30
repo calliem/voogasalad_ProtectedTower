@@ -16,7 +16,6 @@ public class PathUpdatableDisplay extends UpdatableDisplay {
                                  MapWorkspace mapWorkspace) {
         super(list, rowSize, thumbnailSize);
         myMapWorkspace = mapWorkspace;
-        // TODO Auto-generated constructor stub
     }
 
     public PathUpdatableDisplay (Controller c,
@@ -25,14 +24,12 @@ public class PathUpdatableDisplay extends UpdatableDisplay {
                                  double thumbnailSizeMultiplier, MapWorkspace mapWorkspace) {
         super(c, partType, rowSize, thumbnailSizeMultiplier);
         myMapWorkspace = mapWorkspace;
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     protected void objectClicked (GameObject object, StackPane objectView) {
-        super.objectClicked(object, objectView);        // create a new map
+        super.objectClicked(object, objectView);      
         myMapWorkspace.updateWithNewPath(object);
-
     }
 
 }

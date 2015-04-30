@@ -5,7 +5,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>test</string>
+    <string>testsdasdfa</string>
   </entry>
   <entry>
     <string>PartKey</string>
@@ -19,20 +19,32 @@
     <string>Curves</string>
     <list>
       <authoringEnvironment.objects.Coordinate>
-        <myX>559.5</myX>
-        <myY>222.5</myY>
+        <myX>446.5</myX>
+        <myY>271.5</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>494.1</myX>
-        <myY>262.3</myY>
+        <myX>396.9</myX>
+        <myY>307.7</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>297.9</myX>
-        <myY>381.7</myY>
+        <myX>248.1</myX>
+        <myY>416.3</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>232.5</myX>
-        <myY>421.5</myY>
+        <myX>198.5</myX>
+        <myY>452.5</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>275.1</myX>
+        <myY>427.5</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>504.9</myX>
+        <myY>352.5</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>581.5</myX>
+        <myY>327.5</myY>
       </authoringEnvironment.objects.Coordinate>
     </list>
   </entry>

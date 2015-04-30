@@ -1,9 +1,11 @@
 package authoringEnvironment.editors;
 
+import java.util.List;
 import java.util.ResourceBundle;
 import authoringEnvironment.Controller;
 import authoringEnvironment.map.MapSidebar;
 import authoringEnvironment.objects.Sidebar;
+import authoringEnvironment.pathing.PathView;
 
 
 /**
@@ -32,6 +34,7 @@ public class MapEditor extends MainEditor {
     
     // private List<GameObject> myMaps;
     private Sidebar mySidebar;  // TODO: maybe move this into the superclass?
+    
 
     // TODO: remove the dimensions parameter because we apparently can ust get that form the main
     // enviornment?
@@ -41,7 +44,6 @@ public class MapEditor extends MainEditor {
         // add a Rectangle by accident and then someone else's code is screwed up if they try to use
         // a rectangle that they think is a tilemap
         // myMaps.add(getMapWorkspace().getActiveMap());
-        System.out.println("myMapWorkspace in mapeditor" + getMapWorkspace());
         mySidebar = new MapSidebar(myResources, getMaps(), getMapWorkspace(), c); // now don't need
                                                                                   // to pass in so
                                                                                   // much stuff

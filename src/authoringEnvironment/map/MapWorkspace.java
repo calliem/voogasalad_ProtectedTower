@@ -86,61 +86,36 @@ public class MapWorkspace extends StackPane {
     }
 
     public void remove (Node node) {
+        System.out.println("REMOVEEEE" + node);
         if (node == null)
             return;
         if (getChildren().contains(node)) {
             getChildren().remove(node);
-            node = null; // this prob wil lnot work
         }
     }
+   
 
-    private void update (GameObject object) {
-        if (myActiveMap != null && myActiveMap.getRoot() != null) {
-            getChildren().remove(myActiveMap.getRoot());
+    private void update (GameObject oldObject, GameObject object) {
+        if (oldObject != null) {
+            getChildren().remove(oldObject.getRoot());
         }
         StackPane.setAlignment(object.getRoot(), Pos.CENTER);
         getChildren().add(object.getRoot());
     }
 
     public void updateWithNewMap (GameObject object) {
-        update(object);
-
+        update(myActiveMap, object);
         myActiveMap = (TileMap) object;
-        // if (getChildren().contains(myActiveMap.getRoot())){
-        // System.out.println("active map already exists");
-
-        // scaler....
-
-        // TODO:
-        /*
-         * ScaleTransition scale =
-         * Scaler.scaleOverlay(0.0, 1.0, myActiveMap.getRoot());
-         * scale.setOnFinished( (e) -> {
-         */
-        // });
-
         myActiveMap.setActiveColor(myActiveColor);
 
     }
+    
+    
 
     // TODO: duplicated
     public void updateWithNewPath (GameObject object) {
-        update(object);
-
-        //myActivePath = (PathView) object;
-        // if (getChildren().contains(myActiveMap.getRoot())){
-        // System.out.println("active map already exists");
-
-        // scaler....
-
-        // TODO:
-        /*
-         * ScaleTransition scale =
-         * Scaler.scaleOverlay(0.0, 1.0, myActiveMap.getRoot());
-         * scale.setOnFinished( (e) -> {
-         */
-        // });
-
+        update(myActivePath, object);
+        myActivePath = (PathView) object;
     }
 
     public void createNewPath () {
@@ -180,10 +155,19 @@ public class MapWorkspace extends StackPane {
     public Color getActiveColor () {
         return myActiveColor;
     }
+    
+    public void setActivePath(PathView path){
+        myActivePath = null;
+    }
+    
+    public void setActiveMap(TileMap map){
+        myActiveMap = null;
+    }
 
     public void setActiveColor (Color color) {
         myActiveMap.setActiveColor(color);
         myActiveColor = color;
     }
+
 
 }

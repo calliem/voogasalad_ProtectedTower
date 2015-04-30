@@ -5,11 +5,11 @@
   </entry>
   <entry>
     <string>name</string>
-    <string></string>
+    <string>testsd</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part1.Path</string>
+    <string>ExampleGame_Part0.Path</string>
   </entry>
   <entry>
     <string>Tags</string>
@@ -19,20 +19,20 @@
     <string>Curves</string>
     <list>
       <authoringEnvironment.objects.Coordinate>
-        <myX>702.5</myX>
-        <myY>279.5</myY>
+        <myX>446.5</myX>
+        <myY>271.5</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>662.7</myX>
-        <myY>267.9</myY>
+        <myX>396.9</myX>
+        <myY>307.7</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>543.3</myX>
-        <myY>233.1</myY>
+        <myX>248.1</myX>
+        <myY>416.3</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>503.5</myX>
-        <myY>221.5</myY>
+        <myX>198.5</myX>
+        <myY>452.5</myY>
       </authoringEnvironment.objects.Coordinate>
     </list>
   </entry>

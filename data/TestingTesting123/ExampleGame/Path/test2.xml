@@ -9,7 +9,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part2.Path</string>
+    <string>ExampleGame_Part1.Path</string>
   </entry>
   <entry>
     <string>Tags</string>
@@ -17,6 +17,23 @@
   </entry>
   <entry>
     <string>Curves</string>
-    <list/>
+    <list>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>194.5</myX>
+        <myY>121.5</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>290.9</myX>
+        <myY>185.7</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>580.1</myX>
+        <myY>378.3</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>676.5</myX>
+        <myY>442.5</myY>
+      </authoringEnvironment.objects.Coordinate>
+    </list>
   </entry>
 </map>

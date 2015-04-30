@@ -1,6 +1,7 @@
 package authoringEnvironment.map;
 
 import imageselector.GraphicFileChooser;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
@@ -202,10 +203,11 @@ public class MapSidebar extends Sidebar {
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, object.getRoot());
         scale.setOnFinished( (e) -> {
-            if (super.getMaps().contains(object)) {
-                super.getMaps().remove(object);
+            if (observableList.contains(object)) {
+                observableList.remove(object);
                 updateDisplay.updateDisplay(observableList);
             }
+            System.out.println("object.getRoot" + object.getRoot());
             getMapWorkspace().remove(object.getRoot());
         });
     }
@@ -344,8 +346,11 @@ public class MapSidebar extends Sidebar {
         saveMapButton.setOnMouseClicked(e -> saveMap(getMapWorkspace().getActiveMap()));
 
         Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
-        deleteMapButton.setOnMouseClicked(e -> remove(getMapWorkspace().getActiveMap(), mapDisplay,
-                                                      super.getMaps()));
+        deleteMapButton.setOnMouseClicked(e -> {
+            remove(getMapWorkspace().getActiveMap(), mapDisplay,
+                   super.getMaps());
+            getMapWorkspace().setActiveMap(null);
+        });
 
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
         container.add(editMapbuttons, 0, 0, 2, 1);
@@ -399,9 +404,10 @@ public class MapSidebar extends Sidebar {
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton
                 .setOnMouseClicked(e -> {
-                    // remove(getMapWorkspace().getActivePath(), null, null); //TODO: add gameobject
-                    // interface
+                    remove(getMapWorkspace().getActivePath(), null, null); // TODO: add gameobject
+                // interface
                 getMapWorkspace().deactivatePathMode();
+                getMapWorkspace().setActivePath(null);
             });
 
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
@@ -415,8 +421,9 @@ public class MapSidebar extends Sidebar {
         container.add(pathNameTextField, 1, 1);
 
         pathDisplay =
-                new PathUpdatableDisplay(myController, Variables.PARTNAME_PATH, UPDATABLEDISPLAY_ELEMENTS,
-                                        Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
+                new PathUpdatableDisplay(myController, Variables.PARTNAME_PATH,
+                                         UPDATABLEDISPLAY_ELEMENTS,
+                                         Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
 
         /*
          * UpdatableDisplay pathDisplay =
@@ -453,11 +460,11 @@ public class MapSidebar extends Sidebar {
         catch (MissingInformationException e) {
             e.printStackTrace();
         }
-        System.out.println("key from mapsidebar: " + key);
-      //  myController.addImageToPart(key, activePath.getImageView().getImage());
-
+        // myController.addImageToPart(key, activePath.getImageView().getImage());
         pathDisplay.updateDisplay();
-        System.out.println(myController.getKeysForPartType(Variables.PARTNAME_PATH));
+        getMapWorkspace().remove(activePath.getRoot());
+        System.out.println("keys for part type =======: " +
+                           myController.getKeysForPartType(Variables.PARTNAME_PATH));
     }
 
 }

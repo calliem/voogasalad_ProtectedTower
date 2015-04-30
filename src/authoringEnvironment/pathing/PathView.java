@@ -192,7 +192,7 @@ public class PathView extends GameObject {
     @Override
     public Group getRoot () {
         // TODO Auto-generated method stub
-        return myParent.getRoot();
+        return myRoot;
     }
 
     @Override

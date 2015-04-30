@@ -29,7 +29,7 @@ public abstract class UpdatableDisplay extends VBox {
     private double thumbnailSizeMultiplier;
     private int numObjsPerRow;
     private StackPane selectedView;
-    private Controller myController; 
+    private Controller myController;
     private String myPartType;
     private static final int SPACING = 15;
 
@@ -57,19 +57,19 @@ public abstract class UpdatableDisplay extends VBox {
         populateObjects(keys);
         displayValues();
     }
-    
-    public void populateObjects(ObservableList<String> keys){
+
+    public void populateObjects (ObservableList<String> keys) {
         for (String key : keys) {
             Map<String, Object> partParameters = myController.getPartCopy(key);
             Image image = null;
-//            try {
-//                //image = myController.getImageForKey(key);
-//                //test image below:
-//            }
-//            catch (NoImageFoundException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
+            // try {
+            // //image = myController.getImageForKey(key);
+            // //test image below:
+            // }
+            // catch (NoImageFoundException e) {
+            // // TODO Auto-generated catch block
+            // e.printStackTrace();
+            // }
             image = new Image("images/white_square.png");
 
             ImageView thumbnail = setThumbnailSize(new ImageView(image));
@@ -134,17 +134,7 @@ public abstract class UpdatableDisplay extends VBox {
             Text mapName = new Text(object.getName());
             mapName.setTranslateY(AuthoringEnvironment.getEnvironmentHeight() *
                                   Variables.THUMBNAIL_SIZE_MULTIPLIER / 1.8);
-            /*
-             * mapName.setTranslateX(AuthoringEnvironment.getEnvironmentWidth() *
-             * Variables.THUMBNAIL_SIZE_MULTIPLIER / 2);
-             */
-            // mapName.setFont(new Font(10));
 
-            // TODO: set wrapping
-            /*
-             * mapName.setWrappingWidth(AuthoringEnvironment.getEnvironmentWidth() *
-             * Variables.THUMBNAIL_SIZE_MULTIPLIER);
-             */
             StackPane.setAlignment(mapName, Pos.CENTER);
 
             objectView.getChildren().addAll(thumbnail, mapName);
@@ -188,12 +178,13 @@ public abstract class UpdatableDisplay extends VBox {
         myObjects = list;
         displayValues();
     }
-    
-    public void updateDisplay(){
+
+    public void updateDisplay () {
         if (!getChildren().isEmpty()) {
             getChildren().clear();
         }
         ObservableList<String> keys = myController.getKeysForPartType(myPartType);
+        myObjects.clear();
         populateObjects(keys);
         displayValues();
     }
