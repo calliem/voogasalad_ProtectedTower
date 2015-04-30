@@ -84,29 +84,13 @@ public class ModifierStrip extends VBox {
         type.getSelectionModel()
                 .selectedIndexProperty()
                 .addListener( (Observe, numb1, numb2) -> {
-                                 ObservableList<String> myList =
-                                         myController.getKeysForPartType(possibleTypes
-                                                 .get((int) numb2));
-                                 ObservableList<String> nameList =
-                                         FXCollections.observableArrayList(new ArrayList<String>());
-                                 for (String s : myList) {
-                                     nameList.add(myController.getNameForPart(s));
-                                 }
-                                 authoringObjects.setItems(nameList);
+                                 authoringObjects.setItems(myController.getTagsList());
                              });
         type2.setItems(possibleTypes);
         type2.getSelectionModel()
                 .selectedIndexProperty()
                 .addListener( (Observe, numb1, numb2) -> {
-                                 ObservableList<String> myList =
-                                         myController.getKeysForPartType(possibleTypes
-                                                 .get((int) numb2));
-                                 ObservableList<String> nameList =
-                                         FXCollections.observableArrayList(new ArrayList<String>());
-                                 for (String s : myList) {
-                                     nameList.add(myController.getNameForPart(s));
-                                 }
-                                 objects2.setItems(nameList);
+                                 objects2.setItems(myController.getTagsList());
                                  try {
                                      fields.setItems(generateFieldsList(possibleTypes
                                              .get((int) numb2)));
@@ -143,6 +127,7 @@ public class ModifierStrip extends VBox {
     }
     private void save() throws MissingInformationException{
         Map<String, Object> myMap = new HashMap<>();
+        //myMap.put(key, value)
         if(myKey.equals(Controller.KEY_BEFORE_CREATION)){
             myKey = myController.addPartToGame(myMap);
         }
