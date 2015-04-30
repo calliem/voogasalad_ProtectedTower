@@ -124,6 +124,7 @@ public class TileMap extends GameObject {
         // this method is used instead of tileClicked to allow for easier "coloring" of large groups
         // of tiles
         myTileDisplay[i][j].setOnMouseDragEntered(e -> myTileKeys[i][j].setValue(myActiveTile));
+        myTileDisplay[i][j].setOnMouseDragReleased(e -> {});
     }
 
     private void tileClicked (int i, int j) {
