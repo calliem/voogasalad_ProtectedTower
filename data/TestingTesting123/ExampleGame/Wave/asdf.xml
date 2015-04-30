@@ -1,0 +1,30 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Wave</string>
+  </entry>
+  <entry>
+    <string>Enemies</string>
+    <list>
+      <string></string>
+      <string></string>
+      <string></string>
+    </list>
+  </entry>
+  <entry>
+    <string>Times</string>
+    <list/>
+  </entry>
+  <entry>
+    <string>name</string>
+    <string>asdf</string>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>ExampleGame_Part3.Wave</string>
+  </entry>
+  <entry>
+    <string>Tags</string>
+    <list/>
+  </entry>
+</map>
