@@ -15,10 +15,10 @@ import engine.Updateable;
 
 public class Projectile extends MoveableSprite implements Updateable {
 
-    @parameter(settable = true, playerDisplay = true, defaultValue = "1")
+    @parameter(settable = true, playerDisplay = true, defaultValue = "10.0")
     private Double damage;
     @parameter(settable = true, playerDisplay = true)
-    private boolean homing = true;
+    private Boolean homing = true;
 
     private GameElement target;
 
@@ -66,12 +66,14 @@ public class Projectile extends MoveableSprite implements Updateable {
         if (homing) {
             updateHeading();
         }
+        this.move();
     }
 
     private void updateHeading () {
-        if (!target.getState().equals(DEAD_STATE))
+        if (!target.getState().equals(DEAD_STATE)) {
             this.setHeading(new Point2D(target.getLocationX() - this.getLocationX(), target
                     .getLocationY() - this.getLocationY()));
+        }
     }
 
     @Override
