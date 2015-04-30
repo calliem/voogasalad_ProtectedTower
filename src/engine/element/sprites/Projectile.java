@@ -17,7 +17,7 @@ public class Projectile extends MoveableSprite implements Updateable {
     @parameter(settable = true, playerDisplay = true, defaultValue = "1")
     private Integer damage;
     @parameter(settable = true, playerDisplay = true)
-    private boolean homing = true;
+    private Boolean homing = true;
     private GameElement target;
     
     // Getters and setters
