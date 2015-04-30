@@ -32,7 +32,7 @@ public class MapWorkspace extends StackPane {
 
     private static final Color MAP_BACKGROUND_COLOR = Color.web("2A2A29");
 
-    private static final double MAP_OPACITY_ACTIVATED = 0.2;
+    
     private static final int DEFAULT_MAP_ROWS =
             (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);
     private static final int DEFAULT_MAP_COLS =
@@ -63,12 +63,7 @@ public class MapWorkspace extends StackPane {
         StackPane.setAlignment(background, Pos.CENTER);
 
         createDefaultMap();
-        pathModeOverlay =
-                // new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS,
-                // myActiveMap.getHeight()+2*Anchor.RADIUS);
-                new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
-        pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
-        StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
+        
 
     }
 
@@ -164,12 +159,12 @@ public class MapWorkspace extends StackPane {
 
     public void activatePathMode () {
         myActiveMap.removeTileListeners();
-        myActiveMap.getRoot().getChildren().add(pathModeOverlay);
+       // myActiveMap.getRoot().getChildren().add(pathModeOverlay);
     }
 
     public void deactivatePathMode () {
         myActiveMap.attachTileListeners();
-        myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
+       // myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
         myActiveMap.getRoot().getChildren().remove(myActivePath);
     }
 

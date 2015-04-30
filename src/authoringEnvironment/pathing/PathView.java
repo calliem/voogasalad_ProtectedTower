@@ -7,12 +7,15 @@ import java.util.Map;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
 import authoringEnvironment.InstanceManager;
@@ -26,6 +29,7 @@ import authoringEnvironment.util.Screenshot;
 public class PathView extends GameObject {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private static final int DEFAULT_STROKE_WIDTH = 4;
+    private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private TileMap myParent;
     private int numPoints;
     private Anchor mostRecentPoint;
@@ -37,9 +41,15 @@ public class PathView extends GameObject {
         myAnchors = new ArrayList<Anchor>();
         myParent = parent;
 
+       
         numPoints = 0;
         myRoot = new Group();
-        myParent.getRoot().getChildren().add(myRoot);
+        Rectangle pathModeOverlay =
+                new Rectangle(parent.getWidth(), parent.getHeight());
+        pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
+        StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
+        myRoot.getChildren().add(pathModeOverlay);
+        myParent.getRoot().getChildren().addAll(myRoot);
     }
 
     public int getNumPoints () {

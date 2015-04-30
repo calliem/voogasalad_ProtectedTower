@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -53,8 +54,6 @@ public class MapSidebar extends Sidebar {
     private static final int NAME_COL = 0;
     private static final int NAME_ROW = 1;
     // TODO: ^ similar magic values in the gridpane (is this necessary)?
-
-    
 
     // private MapWorkspace getMapWorkspace();
     // private Color myActiveColor;
@@ -403,16 +402,18 @@ public class MapSidebar extends Sidebar {
 
         Button saveMapButton = new Button(getResources().getString("SavePath"));
         saveMapButton.setOnMouseClicked(e -> {
-            savePath();
+            clickSavePath();
             // getMapWorkspace().getChildren().remove(getMapWorkspace().getActivePath());
             });
 
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton
                 .setOnMouseClicked(e -> {
-                    if (getMapWorkspace().getActiveMap().getPaths().contains(getMapWorkspace().getActivePath()))
-                        getMapWorkspace().getActiveMap().getPaths().remove(getMapWorkspace().getActivePath());
-                    
+                    if (getMapWorkspace().getActiveMap().getPaths()
+                            .contains(getMapWorkspace().getActivePath()))
+                        getMapWorkspace().getActiveMap().getPaths()
+                                .remove(getMapWorkspace().getActivePath());
+
                     remove(getMapWorkspace().getActivePath(), null, null); // TODO: add gameobject
                 // interface
                 getMapWorkspace().deactivatePathMode();
@@ -437,11 +438,12 @@ public class MapSidebar extends Sidebar {
          * UPDATABLEDISPLAY_ELEMENTS,
          * Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
          */
-        
 
-        pathDisplay = new PathUpdatableDisplay(getMapWorkspace().getActiveMap().getPaths(), UPDATABLEDISPLAY_ELEMENTS,
-                                               Variables.THUMBNAIL_SIZE_MULTIPLIER,
-                                               getMapWorkspace());
+        pathDisplay =
+                new PathUpdatableDisplay(getMapWorkspace().getActiveMap().getPaths(),
+                                         UPDATABLEDISPLAY_ELEMENTS,
+                                         Variables.THUMBNAIL_SIZE_MULTIPLIER,
+                                         getMapWorkspace());
 
         /*
          * UpdatableDisplay pathDisplay =
@@ -453,26 +455,28 @@ public class MapSidebar extends Sidebar {
     }
 
     private void createPath () {
+        if (getMapWorkspace().getActivePath() != null)
+            remove(getMapWorkspace().getActivePath(), null, null);
         getMapWorkspace().activatePathMode();
         getMapWorkspace().createNewPath();
     }
 
-    private void savePath () {
+    private void clickSavePath () {
         getMapWorkspace().deactivatePathMode();
-        getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
-                                         Color.GREEN);
-
+        
         PathView activePath = getMapWorkspace().getActivePath();
-        // TODO: don't have an active path when save twice in a row without reselecting the path
-        activePath.setName(pathNameTextField.getText());
 
-        /*
-         * double transX = activePath.getRoot().getTranslateX();
-         * double transY = activePath.getRoot().getTranslateY();
-         * System.out.println("transX" + transX);
-         * System.out.println("transY" + transY);
-         * activePath.setTranslation(transX, transY);
-         */
+        if (!getMaps().contains(getMapWorkspace().getActiveMap()))
+            getMapWorkspace().displayMessage("Save or select a map first", Color.RED);
+
+        // TODO: don't have an active path when save twice in a row without reselecting the path
+        else {
+            savePath(activePath);
+        }
+    }
+    
+    private void savePath (PathView activePath){
+        activePath.setName(pathNameTextField.getText());
 
         Map<String, Object> mapSettings = activePath.save();
 
@@ -504,6 +508,8 @@ public class MapSidebar extends Sidebar {
         getMapWorkspace().getChildren().add(activePath.getRoot());
 
         getMapWorkspace().setActivePath(null);
+        getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
+                                         Color.GREEN);
     }
 
     public void updateTileDisplay () {
@@ -511,10 +517,10 @@ public class MapSidebar extends Sidebar {
         // tileDisplay.updateDisplay(myPaths);
     }
 
-    public void updatePathDisplay(TileMap object){
+    public void updatePathDisplay (TileMap object) {
         pathDisplay.updateDisplay(object.getPaths());
     }
-    
+
     /*
      * public UpdatableDisplay getTileDisplay(){
      * return tileDisplay;
