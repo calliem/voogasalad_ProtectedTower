@@ -1,6 +1,7 @@
 package engine.element;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -78,10 +79,12 @@ public class Layout implements Updateable {
         // TODO: Get environment map from front end to load into GroovyEngine, current map is empty
         // TODO: Get groovy scripts for user defined
         // TODO: Get interaction map from front end
+        // TODO: Get modifiables from front end
         myNodeList = myNodes;
         myCollisionChecker = new CollisionChecker();
         myGroovyEngine = new GroovyEngine(new HashMap<String, Object>());
-        makeCollisionTable(new HashMap<String, String>(), new HashMap<String[], List<Integer>[]>());
+        makeActionManager(new HashMap<String, String>(), new HashMap<String[], List<Integer>[]>());
+        modifiableHandler(new ArrayList<Modifier>());
     }
 
     /**
@@ -108,11 +111,33 @@ public class Layout implements Updateable {
     }
 
     /**
-     * Method to create collision table from front-end user defined scripts and an interactionMap
+     * Method for taking a collection of modifier maps from front end and translating them
+     * into lambda functions accessible by actionManager
+     * 
+     * @param modifiers Modifier map from ModiferStrip.java frontEnd in authoring environment
+     */
+    public void modifiableHandler (Collection<Modifier> modifiers) {
+        for (Modifier modifier : modifiers) {
+            String[] tagPair = {modifier.getActor(),modifier.getActee() };
+            Collection<BiConsumer<GameElement, GameElement>>[] actions =
+                    (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[2];
+            Collection<BiConsumer<GameElement, GameElement>> action1 =
+                    new ArrayList<BiConsumer<GameElement, GameElement>>();
+            Collection<BiConsumer<GameElement, GameElement>> action2 =
+                    new ArrayList<BiConsumer<GameElement, GameElement>>();
+            action2.add( (s1, s2) -> s1.fixField(modifier.getFieldName(),
+                                                 modifier.getAmount()));
+
+            myActionManager.addEntryToManager(tagPair, actions);
+        }
+    }
+
+    /**
+     * Method to create action manager from front-end user defined scripts and an interactionMap
      * based on those scripts
      */
-    public void makeCollisionTable (Map<String, String> definedScripts,
-                                    Map<String[], List<Integer>[]> interactionMap) {
+    public void makeActionManager (Map<String, String> definedScripts,
+                                   Map<String[], List<Integer>[]> interactionMap) {
         List<BiConsumer<GameElement, GameElement>> actionList =
                 new ArrayList<BiConsumer<GameElement, GameElement>>();
         definedScripts.keySet()
