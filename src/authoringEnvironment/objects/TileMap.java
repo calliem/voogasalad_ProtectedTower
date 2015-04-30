@@ -26,6 +26,7 @@ public class TileMap extends GameObject {
     private Tile[][] newMap;
     private int myTileSize;
     private ImageView myBackground;
+    private String myBackgroundFilePath;
     private Color myActiveColor;
     private String imgFilePath;
 
@@ -62,6 +63,7 @@ public class TileMap extends GameObject {
        // imgFilePath = DEFAULT_BACKGROUND_PATH;
         imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
+        myBackgroundFilePath = DEFAULT_BACKGROUND_PATH;
         setImageView(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
@@ -107,6 +109,7 @@ public class TileMap extends GameObject {
         imgFilePath = filepath;
         myRoot.getChildren().remove(myBackground);
         Image image = new Image(filepath);
+        myBackgroundFilePath = filepath;
         myBackground = new ImageView(image);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(0, myBackground);
@@ -288,7 +291,8 @@ public class TileMap extends GameObject {
     public Map<String, Object> save () {
         Map<String, Object> mapSettings = super.save(); 
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
-        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
+        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackgroundFilePath);
+        mapSettings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_MAP);
 
         String[][] tileKeyArray = new String[newMap.length][newMap[0].length];
         for (int i = 0; i < newMap.length; i++) {

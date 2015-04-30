@@ -278,7 +278,26 @@ public class MapSidebar extends Sidebar {
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
         }
+        
+        Map<String, Object> mapSettings = activeMap.save();
+        String key = activeMap.getKey();
+        try {
+            if (key == null) {
+                key = myController.addPartToGame(mapSettings);
+                activeMap.setKey(key);
+            }
+            else {
+                myController.addPartToGame(key, mapSettings);
+            }
+        }
+        catch (MissingInformationException e) {
+            e.printStackTrace();
+        }
+        myController.specifyPartImage(key, activeMap.getImageView().getImage()); //TODO: check
+        
         getMapWorkspace().displayMessage(getResources().getString("MapSaved"), Color.GREEN);
+        
+     
 
         // saves the map to a specific key
         // checks to see if the current map already exists
