@@ -177,6 +177,9 @@ public class FlowView extends HBox {
         return "null";
     }
 
+    public String getPathKey () {
+        return "null";
+    }
 
     public Double getDelay () {
         return Double.parseDouble(delayTextField.getText());
