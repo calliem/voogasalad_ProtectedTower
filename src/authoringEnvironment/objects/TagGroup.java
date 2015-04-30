@@ -2,6 +2,7 @@ package authoringEnvironment.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -36,8 +37,18 @@ public class TagGroup extends Group{
     private static final int PADDING = 5;
     private static final int TAG_WIDTH = 75;
     private static final int TAG_HEIGHT = 20;
+    private static final int ARC_SIZE = 20;
     private static final int OVERLAY_HEIGHT = 200;
     private static final int OVERLAY_WIDTH = 100;
+    private static final double EXPANDED_RATIO = 1.3;
+    private static final double REGULAR_RATIO = 1.0;
+    private static final int SCALE_DURATION = 100;
+    private static final int COUNT_FONT_SIZE = 12;
+    private static final int CLOSE_BUTTON_FONT = 10;
+    private static final double OVERLAY_BACKGROUND_OPACITY = 0.8;
+    
+    private static final String INTERFACE_TEXT = "resources/display/interface_text";
+    private static final ResourceBundle displayText = ResourceBundle.getBundle(INTERFACE_TEXT);
     
     public TagGroup(Controller controller, String partKey){
         myKey = partKey;
@@ -50,12 +61,12 @@ public class TagGroup extends Group{
         
         countDisplay = new StackPane();
         Rectangle countDisplayBody = new Rectangle(TAG_WIDTH, TAG_HEIGHT, Color.DARKGRAY);
-        countDisplayBody.setArcWidth(10);
-        countDisplayBody.setArcHeight(10);
+        countDisplayBody.setArcWidth(ARC_SIZE/2);
+        countDisplayBody.setArcHeight(ARC_SIZE/2);
         
         tagCountDisplay = new Text(tagCount+"");
         tagCountDisplay.setFill(Color.WHITE);
-        tagCountDisplay.setFont(new Font(12));
+        tagCountDisplay.setFont(new Font(COUNT_FONT_SIZE));
         
         Tooltip tooltip = new Tooltip("Click here to see all tags...");
         tooltip.setTextAlignment(TextAlignment.LEFT);
@@ -67,14 +78,14 @@ public class TagGroup extends Group{
         
         StackPane overlayContent = new StackPane();
         overlayBackground = new Rectangle(OVERLAY_WIDTH, OVERLAY_HEIGHT);
-        overlayBackground.setOpacity(0.8);
+        overlayBackground.setOpacity(OVERLAY_BACKGROUND_OPACITY);
         
         closeButton = new StackPane();
-        Rectangle button = new Rectangle(75, 20, Color.RED);
-        button.setArcWidth(20);
-        button.setArcHeight(20);
-        Text close = new Text("Close");
-        close.setFont(new Font(10));
+        Rectangle button = new Rectangle(TAG_WIDTH, TAG_HEIGHT, Color.RED);
+        button.setArcWidth(ARC_SIZE);
+        button.setArcHeight(ARC_SIZE);
+        Text close = new Text(displayText.getString("Close"));
+        close.setFont(new Font(CLOSE_BUTTON_FONT));
         close.setFill(Color.WHITE);
         closeButton.getChildren().addAll(button, close);
         closeButton.setOnMouseEntered(e -> button.setFill(Color.DARKRED));
@@ -87,7 +98,7 @@ public class TagGroup extends Group{
         overlayView.setContent(overlayContent);
         overlayView.setVbarPolicy(ScrollBarPolicy.NEVER);
         overlayView.setHbarPolicy(ScrollBarPolicy.NEVER);
-        overlayView.setMaxWidth(100);
+        overlayView.setMaxWidth(OVERLAY_WIDTH);
         overlayView.setMaxHeight(OVERLAY_HEIGHT);
         
         this.getChildren().add(countDisplay);
@@ -165,11 +176,11 @@ public class TagGroup extends Group{
     }
     
     private void animateCountChange(){
-        ScaleTransition scale = new ScaleTransition(Duration.millis(100), tagCountDisplay);
-        scale.setFromX(1.0);
-        scale.setFromY(1.0);
-        scale.setToX(1.3);
-        scale.setToY(1.3);
+        ScaleTransition scale = new ScaleTransition(Duration.millis(SCALE_DURATION), tagCountDisplay);
+        scale.setFromX(REGULAR_RATIO);
+        scale.setFromY(REGULAR_RATIO);
+        scale.setToX(EXPANDED_RATIO);
+        scale.setToY(EXPANDED_RATIO);
         scale.setAutoReverse(true);
         scale.setCycleCount(2);
         scale.play();
