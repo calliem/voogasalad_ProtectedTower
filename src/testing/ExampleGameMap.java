@@ -33,8 +33,12 @@ public class ExampleGameMap {
         gameMap.put("Columns", columns);
         gameMap.put("TileSize", tileSize);
         gameMap.put("TileNames", myTileNames);
-        gameMap.put("BackgroundImage", "images/Capture.PNG");
+        gameMap.put("Image", "images/Capture.PNG");
 
+        gameMap.put("Tags", "none");
+        gameMap.put("BoundingHeight", 10.0);
+        gameMap.put("BoundingWidth", 10.0);
+        
         part.put("DesktopTestGameMap_Part0.GameMap", gameMap);
         return part;
     }

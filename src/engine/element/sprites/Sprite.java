@@ -34,7 +34,6 @@ public abstract class Sprite extends GameElement implements Updateable {
     }
 
     public ImageView getImageView () {
-        System.out.println("src/"+imagepath);
         return image;
     }
 

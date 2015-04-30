@@ -17,6 +17,7 @@ import engine.CollisionChecker;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.GameElement;
+import engine.element.sprites.GameMap;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
@@ -148,7 +149,14 @@ public class Layout implements Updateable {
      */
     public void setMap (String mapID) {
         myGameMap = (GameMap) myGameElementFactory.getGameElement("GameMap", mapID);
-        myBackgroundNode.getChildren().add(myGameMap.getBackgroundImage());
+        // myBackgroundNode.getChildren().add(myGameMap.getBackgroundImage());
+        if (myNodeList.size() == 0) {
+            myNodeList.add(myGameMap);
+        }
+        else {
+            myNodeList.add(0, myGameMap);
+        }
+        System.out.println("Background set!");
         Rectangle bounds =
                 new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
         myCollisionChecker.initializeQuadtree(bounds);
