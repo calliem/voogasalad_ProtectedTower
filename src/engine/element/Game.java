@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 import javafx.geometry.Point2D;
 import util.reflection.Reflection;
 import annotations.parameter;
@@ -14,6 +14,8 @@ import engine.Updateable;
 import engine.conditions.Condition;
 import engine.element.sprites.Shop;
 import engine.element.sprites.Sprite;
+import engine.element.sprites.Tower;
+import engine.factories.GameElementFactory;
 
 
 /**
@@ -27,14 +29,9 @@ import engine.element.sprites.Sprite;
 public class Game implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
-
     @parameter(settable = true, playerDisplay = true, defaultValue = "20")
     private Integer lives;
 
-    /**
-     * List of Javafx objects so that new nodes can be added for the player to display
-     */
-    private List<Sprite> myNodes;
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
@@ -42,14 +39,22 @@ public class Game implements Updateable, Endable {
     private Bank myBank;
     private Shop myShop;
     private int myPoints;
+    private GameElementFactory myGameElementFactory;
 
-    public Game (List<Sprite> nodes) {
+
+
+    public Game (List<Sprite> nodes, Map<String, Object> parameters) {
+    myLayout = new Layout(nodes);
+    myGameElementFactory = new GameElementFactory();
+    myLayout.setFactory(myGameElementFactory);
+
+    lives = (Integer) parameters.get("Lives");
         myConditions = new ArrayList<Condition>();
         myConditions.add(new Condition(this, e -> e.lives == 0, e -> e.lose()));
         myConditions.add(new Condition(this, e -> e.myActiveLevelIndex >= myLevels.size(), e -> e.win()));
         myLevels = new ArrayList<>();
-        myNodes = nodes;
-        myLayout = new Layout(myNodes);
+        myConditions = new ArrayList<Condition>();
+
         myActiveLevelIndex = 0;
         myBank = new Bank(0);
         myShop = new Shop(myLayout, myBank, new ArrayList<>());
@@ -71,16 +76,17 @@ public class Game implements Updateable, Endable {
      * 
      * @see Updateable#update(int)
      */
-    @Override
-    public void update (int counter) {
-        System.out.println("Beginning cycle " + counter);
+    public void update () {
+
+        System.out.println("Beginning cycle ");
         myConditions.forEach(c -> c.check());
         Map<Object, List<String>> enemiesToSpawn =
                 myLevels.get(myActiveLevelIndex).update();
         for (Object loc : enemiesToSpawn.keySet()) {
             myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
         }
-        myLayout.update(counter);
+        myLayout.update();
+
     }
 
     /**
@@ -90,12 +96,14 @@ public class Game implements Updateable, Endable {
      * @param levels Map<String, Map<String, Object>> mapping GUID to parameters map for each level
      */
     public void addLevels (Map<String, Map<String, Object>> levels) {
-        levels.keySet().forEach(l -> {
+        for (String key : levels.keySet()) {
             Level tempLevel = (Level) Reflection.createInstance(PACKAGE_LOCATION_LEVEL);
-            // TODO maybe need to add levels factory
+            tempLevel.addInstanceVariables(levels.get(key));
+            tempLevel.setGameElementFactory(myGameElementFactory);
             myLevels.add(tempLevel);
-        });
+        }
         Collections.sort(myLevels);
+        System.out.println("Levels added to game");
     }
 
     /**
@@ -110,7 +118,21 @@ public class Game implements Updateable, Endable {
     }
 
     public void placeTower (String id, double sceneX, double sceneY) {
-        myLayout.placeTower(id, new Point2D(sceneX, sceneY));
+        Point2D loc = new Point2D(sceneX, sceneY);
+        myLayout.placeTower(id, loc);
+    }
+
+    public List<Tower> getAllTowerObjects (Set<String> towerIDs) {
+        List<Tower> towers = new ArrayList<>();
+        for (String id : towerIDs) {
+            towers.add((Tower) myGameElementFactory.getGameElement("Tower", id));
+        }
+        return towers;
+    }
+
+    public void updateBackgroundTest (String key) {
+        myLayout.setMap(key);
+        myLevels.get(0).startNextRound();
     }
     
     public void win() {

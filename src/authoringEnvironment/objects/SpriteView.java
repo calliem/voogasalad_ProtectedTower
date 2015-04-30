@@ -204,7 +204,7 @@ public abstract class SpriteView extends ObjectView {
                 parameterFields.add(IMAGE_INDEX, settings.get(i));
                 editableContent.getChildren().add(settings.get(i));
                 break;
-            }
+            }   
         }
         int spriteSettingCounter = 0; // For background scaling purposes
         for (int j = 0; j < settings.size(); j++) {
@@ -222,6 +222,7 @@ public abstract class SpriteView extends ObjectView {
                 spriteSettingCounter++;
             }
             parameterFields.add(settings.get(j));
+            System.out.println("setting was " +settings.get(j));
             settingsObjects.getChildren().add(settings.get(j));
         }
         

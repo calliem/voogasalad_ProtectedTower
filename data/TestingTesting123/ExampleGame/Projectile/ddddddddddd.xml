@@ -5,11 +5,11 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>/ImageData/ExampleGame_Part0Image.png</string>
   </entry>
   <entry>
     <string>damage</string>
-    <int>1</int>
+    <double>1.0</double>
   </entry>
   <entry>
     <string>boundingWidth</string>
@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>gag</string>
+    <string>ddddddddddd</string>
   </entry>
   <entry>
     <string>PartKey</string>
@@ -33,6 +33,8 @@
   </entry>
   <entry>
     <string>Tags</string>
-    <list/>
+    <list>
+      <string>s</string>
+    </list>
   </entry>
 </map>

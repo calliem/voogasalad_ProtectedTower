@@ -1,6 +1,6 @@
 package engine;
 
-import engine.element.sprites.Modifier;
+import engine.element.Modifier;
 
 /**
  * an item that the player can use in-game

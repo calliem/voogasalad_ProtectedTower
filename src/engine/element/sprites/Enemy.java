@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import annotations.parameter;
-import authoringEnvironment.objects.Coordinate;
 import javafx.animation.PathTransition;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -17,6 +16,8 @@ import util.pathsearch.graph.PathCell;
 import util.pathsearch.pathalgorithms.NoPathExistsException;
 import util.pathsearch.pathalgorithms.ObstacleFunction;
 import util.pathsearch.wrappers.GridWrapper;
+import annotations.parameter;
+import authoringEnvironment.objects.Coordinate;
 import engine.InsufficientParametersException;
 
 
@@ -42,13 +43,19 @@ public class Enemy extends GameSprite {
     private double myPathLength;
     private List<GridCell> myGridPath;
     private static final double MOVE_DURATION = 1000;
+    private ImageView invisView = new ImageView();
 
     public Enemy () {
-        super();
+
     }
-    
-    public GridCell getGoal(){
-    	return myGridPath.get(myGridPath.size()-1);
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
+        CanHurtPlayer = (Boolean) parameters.get("CanHurtPlayer");
+    }
+
+    public GridCell getGoal () {
+        return myGridPath.get(myGridPath.size() - 1);
     }
 
     @Override
@@ -63,13 +70,18 @@ public class Enemy extends GameSprite {
         // super.decreaseHealth(sprite.getDamage());
     }
 
+    @Override
+    public Double getSpeed () {
+        return super.getSpeed() * .1;
+    }
+
     /**
      * Adds a poison modifier to the enemy so it loses health for a set duration
      * 
      * @param damage the amount of damage the enemy should lose
      * @param duration the amount of time damage should be lost
      */
-    public void poison (int damage, int duration) {
+    public void poison (double damage, double duration) {
         Timer timer = new Timer();
         TimerTask poison = new TimerTask() {
             @Override
@@ -80,15 +92,14 @@ public class Enemy extends GameSprite {
         timer.schedule(poison, MOVE_DELAY, (long) (MOVE_DURATION * duration));
     }
 
-    protected void decreaseHealth (Integer amount) {
+    protected void decreaseHealth (Double amount) {
         super.decreaseHealth(amount);
     }
 
     @Override
     public void move () {
         PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength /
-                                                   super.getSpeed()));
+        pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength / getSpeed()));
         pathTransition.setPath(myPath);
         pathTransition.setNode(super.getImageView());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -102,13 +113,18 @@ public class Enemy extends GameSprite {
      */
     public void bezierPath (List<Coordinate> curveCoords) {
         Path path = new Path();
-        for (int i = 1; i < curveCoords.size(); i++) {
-            path.getElements().add(new CubicCurveTo(curveCoords.get(i).getX(), curveCoords.get(i)
-                                           .getY(),
-                                                    curveCoords.get(i + 1).getX(), curveCoords
-                                                            .get(i + 1).getY(),
-                                                    curveCoords.get(i + 2).getX(), curveCoords
-                                                            .get(i + 2).getY()));
+        MoveTo initial = new MoveTo();
+        System.out.println("ran " + this);
+        initial.setX(curveCoords.get(0).getX());
+        initial.setY(curveCoords.get(0).getY());
+        path.getElements().add(initial);
+        for (int i = 1; i < curveCoords.size() - 2; i += 3) {
+            path.getElements().add(new CubicCurveTo(curveCoords.get(i).getX(),
+                                                    curveCoords.get(i).getY(),
+                                                    curveCoords.get(i + 1).getX(),
+                                                    curveCoords.get(i + 1).getY(),
+                                                    curveCoords.get(i + 2).getX(),
+                                                    curveCoords.get(i + 2).getY()));
         }
         myPath = path;
         myPathLength = (curveCoords.size() - 1) / 3;
@@ -152,12 +168,31 @@ public class Enemy extends GameSprite {
 
     @Override
     public Map<Object, List<String>> update () {
-        move();
+//        move();
         Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
-//        if (this.getHealth() == 0) {
-//            spawnMap.put(this.getLocation(), this.getNextSprites());
-//        }
+        super.setLocation(super.getImageView().getTranslateX(), super.getImageView().getTranslateY());
+        // if (this.getHealth() == 0) {
+        // spawnMap.put(this.getLocation(), this.getNextSprites());
+        // }
         return spawnMap;
+    }
+
+    @Override
+    public void fixField (String fieldToModify, Object value) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void changeField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+
     }
 
 }

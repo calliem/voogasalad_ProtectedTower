@@ -30,6 +30,15 @@ public class ScaleImage {
         image.setFitHeight(originalHeight*scaleAll);
         image.setFitWidth(originalWidth*scaleAll);
     }
+    
+    public static void scaleNoPreserve(ImageView image, double fitWidth, double fitHeight){
+        double originalHeight = image.getImage().getHeight();
+        double originalWidth = image.getImage().getWidth();
+        double scaleHeight = fitHeight/originalHeight;
+        double scaleWidth = fitWidth/originalWidth;
+        image.setFitHeight(originalHeight*scaleHeight);
+        image.setFitWidth(originalWidth*scaleWidth);
+    }
 
     private static void preserveImageRatio (ImageView image) {
         image.setPreserveRatio(true);

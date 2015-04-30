@@ -21,10 +21,10 @@ import java.util.Set;
 
 public class TowerManager {
 
-    private final static String PARAMETER_NEXT_TOWER = "NextTower";
+    private final static String PARAMETER_NEXT_TOWER = "NextSprite";
     private final static String PARAMETER_TOWER_GROUP = "Group";
     private Map<String, TowerNode> myTowerMap;
-    private Map<String, TowerNode> myTreeRoots;
+    private Map<String, TowerNode> myTreeRoots = new HashMap<String, TowerNode>();
 
     // private Map<String, TowerNode> myTreeHeads;
 
@@ -58,9 +58,10 @@ public class TowerManager {
         }
 
         // TODO find way to do this without casting
-        for (String n : (List<String>) towerProperties.get(PARAMETER_NEXT_TOWER)) {
-            myTowerMap.get(guid).addNextNode(myTowerMap.get(n));
-        }
+        // for (String n : (List<String>) towerProperties.get(PARAMETER_NEXT_TOWER)) {
+        // myTowerMap.get(guid).addNextNode(myTowerMap.get(n));
+        // }
+        myTowerMap.get(guid).addNextNode(myTowerMap.get(towerProperties.get(PARAMETER_NEXT_TOWER)));
     }
 
     /**

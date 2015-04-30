@@ -8,9 +8,11 @@ import authoringEnvironment.InstanceManager;
 
 
 public class ExampleRound {
-    public static final Map<String, Object> ROUND = generateExampleRound();
+    public static final Map<String,Map<String, Object>> ROUND = generateExampleRound();
 
-    private static Map<String, Object> generateExampleRound () {
+    public static Map<String, Map<String, Object>> generateExampleRound () {
+        Map<String,Map<String,Object>> part = new HashMap<String,Map<String,Object>>();
+        
         Map<String, Object> round = new HashMap<String, Object>();
 
         List<String> myWaves = new ArrayList<String>();
@@ -21,9 +23,10 @@ public class ExampleRound {
         myWaves.add("TestWavePart0.Wave");
         
         mySendTimes.add(0.0);
-        mySendTimes.add(60.0);
-        
-        myWavePaths.add("testTODOPleaseRemove");
+        mySendTimes.add(10.0);
+
+        myWavePaths.add("ExampleGame_Path0.Path");
+        myWavePaths.add("ExampleGame_Path0.Path");
         
         
 
@@ -33,6 +36,7 @@ public class ExampleRound {
         round.put("myWaves", myWaves);
         round.put("mySendTimes", mySendTimes);
         round.put("myWavePaths", myWavePaths);
-        return round;
+        part.put("DesktopTestRound_Part0.Round", round);
+        return part;
     }
 }

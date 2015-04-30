@@ -1,12 +1,8 @@
 package engine.element.sprites;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import engine.UpdateAndReturnable;
 import annotations.parameter;
+import engine.UpdateAndReturnable;
 
 
 /**
@@ -19,25 +15,32 @@ import annotations.parameter;
 public abstract class GameSprite extends MoveableSprite implements UpdateAndReturnable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "100")
-    private Integer health;
-    
+    private Double health;
+
+    public GameSprite () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
+        health = (Double) parameters.get("Health");
+    }
 
     // Getters and setters
 
-    public Integer getHealth () {
+    public Double getHealth () {
         return health;
     }
 
-    protected void decreaseHealth (Integer amount) {
+    protected void decreaseHealth (Double amount) {
         health -= amount;
     }
 
-//    /**
-//     * @return List<String> of the next Sprites
-//     */
-//    public List<String> getNextSprites () {
-//        return Collections.unmodifiableList(nextSprites);
-//    }
-
+    // /**
+    // * @return List<String> of the next Sprites
+    // */
+    // public List<String> getNextSprites () {
+    // return Collections.unmodifiableList(nextSprites);
+    // }
 
 }

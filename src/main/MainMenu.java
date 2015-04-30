@@ -1,5 +1,6 @@
 package main;
 
+import player.GamePlayer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
@@ -96,9 +97,11 @@ public class MainMenu {
             sceneSelected = Main.getScenes()[1];
         });
         
+        GamePlayer gamePlayer = new GamePlayer();
         player.setOnMouseClicked(e -> {
-            sceneSelected = Main.getScenes()[2];
-            setupScene();
+//            sceneSelected = Main.getScenes()[2];
+            gamePlayer.start(myStage);
+//            setupScene();
         });
 
         go.setOnMouseClicked(e -> {

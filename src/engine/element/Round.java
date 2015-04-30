@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import annotations.parameter;
 import engine.Endable;
+import engine.Reflectable;
 import engine.UpdateAndReturnable;
 import engine.factories.GameElementFactory;
 
@@ -18,7 +19,7 @@ import engine.factories.GameElementFactory;
  * @author Bojia Chen
  *
  */
-public class Round implements UpdateAndReturnable, Endable {
+public class Round implements UpdateAndReturnable, Endable, Reflectable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
     private List<String> myWaves;
@@ -29,13 +30,18 @@ public class Round implements UpdateAndReturnable, Endable {
 
     private static final String PARAMETER_WAVE = "Wave";
 
-    private List<Wave> myActiveWaves;
+    private List<Wave> myActiveWaves = new ArrayList<>();
     private GameElementFactory myGameElementFactory;
     private int myCurrentWaveIndex = 0;
     private int myTimer = 0;
 
     public Round () {
-        myActiveWaves = new ArrayList<>();
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        myWaves = (List<String>) parameters.get("myWaves");
+        mySendTimes = (List<Double>) parameters.get("mySendTimes");
+        myWavePaths = (List<String>) parameters.get("myWavePaths");
         // TODO: Make sure that waves, quantities, sendRate, and spawnLocation are same size
     }
 
@@ -50,19 +56,21 @@ public class Round implements UpdateAndReturnable, Endable {
 
     @Override
     public Map<Object, List<String>> update () {
-        Map<Object, List<String>> tempReturnMap = null;
+        Map<Object, List<String>> tempReturnMap = new HashMap<>();
 
-        while (myTimer == mySendTimes.get(myCurrentWaveIndex) && !hasEnded()) {
+        while (myCurrentWaveIndex < myWaves.size() &&
+               myTimer == mySendTimes.get(myCurrentWaveIndex)) {
             String waveGUID = myWaves.get(myCurrentWaveIndex);
             String wavePath = myWavePaths.get(myCurrentWaveIndex++);
             Wave waveToAdd = (Wave) myGameElementFactory.getGameElement(PARAMETER_WAVE, waveGUID);
             waveToAdd.setPath(wavePath);
             myActiveWaves.add(waveToAdd);
-            // myActiveWave = myWaves.get(++myActiveWaveIndex);
+            // myActiveWave = myWaves.get(myActiveWaveIndex++);
         }
-
-        for (Wave activeWave : myActiveWaves) {
+        List<Wave> copyActiveWave = new ArrayList<>(myActiveWaves);
+        for (Wave activeWave : copyActiveWave) {
             if (activeWave.hasEnded()) {
+
                 myActiveWaves.remove(activeWave);
             }
             else {
@@ -86,11 +94,6 @@ public class Round implements UpdateAndReturnable, Endable {
         if (from == null) {
             return;
         }
-
-        if (to == null) {
-            to = new HashMap<>();
-        }
-
         for (Object obj : from.keySet()) {
             if (to.containsKey(obj)) {
                 to.get(obj).addAll(from.get(obj));

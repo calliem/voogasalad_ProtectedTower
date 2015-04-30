@@ -1,8 +1,15 @@
 package player;
 
+import groovy.ui.Console;
+import imageselector.util.ScaleImage;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import annotations.parameter;
+import authoringEnvironment.objects.Sidebar;
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -18,8 +25,9 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -33,6 +41,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import engine.GameController;
 import engine.InsufficientParametersException;
 import engine.element.sprites.Sprite;
@@ -48,7 +57,7 @@ public class GamePlayer extends Application {
     private Stage myPlayerStage;
     private Group myEngineRoot = new Group();
     private Scene myMainScene;
-    private VBox mySidebar;
+    private Pane mySidebar;
     private GridPane myTowerGrid = new GridPane();
     private double myScreenWidth = 0;
     private double myScreenHeight = 0;
@@ -56,10 +65,10 @@ public class GamePlayer extends Application {
     private ScrollPane myTowerDisplay;
     private GameController myGameController;
     private VBox myInfoBox;
+    private Group background;
 
     // find and open .game file
     public void loadGame () {
-
         myEngineRoot.getChildren().clear();
         myTowerGrid.getChildren().clear();
         File gameFile = getGameFile();
@@ -72,66 +81,103 @@ public class GamePlayer extends Application {
                 makeTowerGrid(change.getList());
             }
         });
+
         ObservableList<Sprite> displayList = FXCollections.observableArrayList(new ArrayList<>());
+        displayList.addListener((ListChangeListener<Sprite>) change -> {
+            while (change.next()) {
+                for (Sprite obj : change.getAddedSubList()) {
+
+              
+                    ImageView myView = obj.getImageView();
+                    if (displayList.size() == 1) {
+                        ScaleImage.scaleNoPreserve(myView, myMainArea.getWidth()*0.7,
+                                                   myMainArea.getHeight()*0.7);
+                        myMainArea.getChildren().add(myView);
+                        break;
+                    }
+                    myView.setOnMouseClicked(m -> updateInfoBox(obj));
+                    myMainArea.getChildren().add(myView);
+                }
+                for (Sprite obj : change.getRemoved()) {
+                    
+                    System.err.println(myMainArea.getChildren().remove(obj.getImageView()));
+                    
+                }
+            }
+        });
         try {
             myGameController =
-                    new GameController(gameFile.getParent(), displayList);
+                    new GameController(
+                                       gameFile.getAbsolutePath(),
+                                       displayList, availableTowers);
         }
         catch (InsufficientParametersException e) {
             return;
         }
-        displayList.addListener((ListChangeListener<Sprite>) change-> {
-                while (change.next()) {
-                    for (Object obj : change.getAddedSubList()) {
-                        Sprite placeSprite = (Sprite) obj;
-                        ImageView myView = placeSprite.getImageView();
-                        myView.setOnMouseClicked( m-> updateInfoBox(placeSprite));
-                        myMainArea.getChildren().add(myView);
-                    }
-                    for (Object obj : change.getRemoved()) {
-                        Node placeSprite = (Node) obj;
-                        myMainArea.getChildren().remove(placeSprite);
-                    }
-                }
-        });
-        // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
-        // availableTowers);
-        Image myImage = new Image(".\\images\\liltower.jpg");
-        // ImageView test3 = new ImageView(myImage);
-        // ImageView test4 = new ImageView(myImage);
-        // ImageView test5 = new ImageView(myImage);
-        // test5.setTranslateX(300);
-        // test5.setTranslateY(300);
-        // availableTowers.add(new Tower(test2));
-        // availableTowers.add(new Tower(test3));
-        // availableTowers.add(new Tower(test4));
-        // displayList.add(new Tower(test5));
-        //myGameController.startGame(60);
+
+        myGameController.startGame(3);
+
     }
 
-    private TableView updateInfoBox (Sprite placeSprite) {
-        return null;
-        // TODO Auto-generated method stub
-//        TableView<String> infoBox = new TableView<>();
-//        
-//        
-//        TableColumn<String, String> name = new TableColumn<>();
-//        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().get));
-//        TableColumn<String, String> value = new TableColumn<>();
-//        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>();
-//        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue()
-//                .getUsername()));
-//        Class currentClass = placeSprite.getClass();
-//        while(currentClass!=Object.class){
-//            for(Field field:currentClass.getFields()){
-//                if(field.getAnnotation(parameter.class)!=null&&field.getAnnotation(parameter.class).playerDisplay()){
-//                    
-//                }
-//            }
-//            // Make a new row
-//            currentClass = currentClass.getSuperclass();
-//        }
-//        return null;
+    private void updateInfoBox (Sprite placeSprite) {
+        System.out.println(placeSprite + " WASCLICK");
+        infoBox = new TableView<>();
+        infoBox.setPrefHeight(myScreenHeight / 2);
+        infoBox.setPrefWidth(myScreenWidth / 4);
+        TableColumn<Field, String> name = new TableColumn<>("Field Name");
+        TableColumn<Field, String> value = new TableColumn<>("Value");
+        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getName()));
+        value.setCellValueFactory(new Callback<CellDataFeatures<Field, String>, ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call (CellDataFeatures<Field, String> param) {
+                // TODO Auto-generated method stub
+                String obj = null;
+                try {
+                    return new ReadOnlyObjectWrapper<String>(param.getValue().getName());
+                }
+                catch (IllegalArgumentException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+
+        myFields = FXCollections.observableArrayList(new ArrayList<>());
+        infoBox.getColumns().add(name);
+        infoBox.getColumns().add(value);
+        myFields = FXCollections.observableArrayList(new ArrayList<>());
+        Class<?> currentClass = placeSprite.getClass();
+        while (currentClass != Object.class) {
+            for (Field field : currentClass.getDeclaredFields()) {
+                field.setAccessible(true);
+                if (field.getAnnotation(parameter.class) != null &&
+                    field.getAnnotation(parameter.class).playerDisplay()) {
+                    myFields.add(field);
+                }
+            }
+            // Make a new row
+            currentClass = currentClass.getSuperclass();
+        }
+        infoBox.setItems(myFields);
+        mySidebar.getChildren().add(infoBox);
+    }
+
+    ObservableList<Field> myFields;
+    TableView<Field> infoBox;
+
+    private TableView<Field> makeInfoBox () {
+        TableColumn<Field, String> name = new TableColumn<>("Field Name");
+        TableColumn<Field, String> value = new TableColumn<>("Value");
+        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getName()));
+        value.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().toString()));
+        myFields = FXCollections.observableArrayList(new ArrayList<>());
+        infoBox = new TableView<>();
+        infoBox.getColumns().add(name);
+        infoBox.getColumns().add(value);
+        System.out.println("made table");
+        return infoBox;
     }
 
     public static void main (String[] args) {
@@ -175,7 +221,7 @@ public class GamePlayer extends Application {
         FileChooser fileOpener = new FileChooser();
         fileOpener.setTitle("Select a Game");
         fileOpener.setInitialDirectory(new File("."));
-        fileOpener.getExtensionFilters().add(new ExtensionFilter("Game Files", "*.game"));
+        fileOpener.getExtensionFilters().add(new ExtensionFilter("Game Files", "*.gamefile"));
         return fileOpener.showOpenDialog(myPlayerStage);
     }
 
@@ -191,19 +237,23 @@ public class GamePlayer extends Application {
         return bounds;
     }
 
-    private VBox makeSideBar () {
-        mySidebar = new VBox();
+    private Pane makeSideBar () {
+        mySidebar = new Pane();
         // TODO: prop file
         mySidebar.setPrefWidth(myScreenWidth * 1 / 4);
         mySidebar.setPrefHeight(myScreenHeight);
         // TODO: prop
         mySidebar.setTranslateX(myScreenWidth * 3 / 4);
         // TODO: prop
-        mySidebar.setStyle("-fx-border-style: solid outside; -fx-border-size: 0 0 0 2; -fx-border-color: transparent transparent transparent black; -fx-padding: 0; -fx-background-color: #00fb10");
+        mySidebar
+                .setStyle("-fx-border-style: solid outside; -fx-border-size: 0 0 0 2; -fx-border-color: transparent transparent transparent black; -fx-padding: 0; -fx-background-color: #00fb10");
         // makeGameVarBox();
         // makeSpriteInfoBox();
+        infoBox = makeInfoBox();
+        infoBox.setPrefHeight(myScreenHeight * 1 / 2);
+        infoBox.setPrefWidth(myScreenWidth * 1 / 4);
         myTowerDisplay = makeTowerScrollBox();
-        mySidebar.getChildren().add(myTowerDisplay);
+        mySidebar.getChildren().addAll(infoBox, myTowerDisplay);
         VBox.setMargin(myTowerDisplay, new Insets(0));
         return mySidebar;
     }
@@ -231,11 +281,14 @@ public class GamePlayer extends Application {
             }
         }
         int numCols = (int) Math.floor((myTowerDisplay.getPrefWidth() - 40) / (maxWidth));
-        if (numCols > towerList.size()) {
+        if (numCols > towerList.size() && towerList.size() > 0) {
             numCols = towerList.size();
         }
-        System.out.println(numCols);
-        myTowerGrid.setHgap((myTowerDisplay.getPrefWidth() - 40 - numCols * maxWidth) / (numCols - 1));
+        if (numCols == 0) {
+            numCols = 1;
+        }
+        myTowerGrid.setHgap((myTowerDisplay.getPrefWidth() - 40 - numCols * maxWidth) /
+                            (numCols - 1));
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints currCol = new ColumnConstraints();
             currCol.setMaxWidth(maxWidth);
@@ -245,15 +298,16 @@ public class GamePlayer extends Application {
         // }
         for (int i = 0; i < towerList.size(); i++) {
             ImageView myView = towerList.get(i).getImageView();
+            myView.setId(towerList.get(i).getGUID());
             myView.setOnDragDetected(new EventHandler<MouseEvent>() {
 
                 @Override
                 public void handle (MouseEvent event) {
-                    Dragboard db = myView.startDragAndDrop(TransferMode.COPY);
+                    Dragboard db = myView.startDragAndDrop(TransferMode.COPY_OR_MOVE);
 
                     /* Put a string on a dragboard */
                     ClipboardContent content = new ClipboardContent();
-                    myView.setId("tower");
+
                     content.putImage(myView.getImage());
                     content.putString(myView.getId());
                     db.setContent(content);
@@ -274,37 +328,33 @@ public class GamePlayer extends Application {
         mainArea.setPrefWidth(myScreenWidth - myScreenWidth / 4);
         mainArea.setPrefHeight(myScreenHeight);
         mainArea.setStyle("-fx-background-color: #00dbc1");
-        mainArea.setOnDragOver(event ->{
-                Dragboard db = event.getDragboard();
-                if (db.hasString()) {
-                    event.acceptTransferModes(TransferMode.COPY);
-                }
-                event.consume();
+        mainArea.setOnDragOver(event -> {
+            Dragboard db = event.getDragboard();
+            if (db.hasString()) {
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            event.consume();
         });
         mainArea.setOnDragDropped(event -> {
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if (db.hasString()) {
-                    // ImageView place = new ImageView(db.getImage());
-                    System.out.println(db.getString());
-                    myGameController.addPlaceable(db.getString(), event.getSceneX(),
-                                                  event.getSceneY());
-                    // place.setTranslateX(event.getSceneX() -
-                    // Math.floor(db.getImage().getWidth() / 2));
-                    // place.setTranslateY(event.getSceneY() -
-                    // Math.floor(db.getImage().getHeight() / 2));
-                    // TODO: tell engine about this
-                    // game.addTower(place,);
-                    // mainArea.getChildren().add(place);
-                    success = true;
-                }
-                /*
-                 * let the source know whether the string was successfully
-                 * transferred and used
-                 */
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if (db.hasString()) {
+                myGameController.addPlaceable(db.getString(),
+                                              event.getSceneX() -
+                                                      Math.floor(db.getImage().getWidth() / 2),
+                                              event.getSceneY() -
+                                                      Math.floor(db.getImage().getHeight() / 2));
+                success = true;
+            }
+            /*
+             * // * let the source know whether the string was successfully
+             * // * transferred and used
+             * //
+             */
                 event.setDropCompleted(success);
                 event.consume();
-        });
+            });
+
         return mainArea;
     }
 

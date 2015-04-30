@@ -33,7 +33,7 @@
   </entry>
   <entry>
     <string>Health</string>
-    <integer>100</integer>
+    <double>100</double>
   </entry>
   <entry>
     <string>CanHurtPlayer</string>
@@ -41,6 +41,10 @@
   </entry>
   <entry>
     <string>PartKey</string>
+    <string>Part0.Enemy</string>
+  </entry>
+  <entry>
+    <string>NextSprite</string>
     <string>Part0.Enemy</string>
   </entry>
 </map>
