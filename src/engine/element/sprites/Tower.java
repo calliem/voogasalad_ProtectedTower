@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import engine.AttackPriority;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -39,7 +40,8 @@ public class Tower extends GameSprite {
     private Double buildTime;
 
     private List<GameElement> myTargets;
-
+    private AttackPriority myPriority;
+    
     // TODO remove once testing is over
     public Tower (ImageView test) {
         super.setImageView(test);
@@ -50,6 +52,10 @@ public class Tower extends GameSprite {
     		return projectiles.get(0);
     	}
     	return projectiles.get(0);
+    }
+    
+    public void setPriority(String priority){
+    	attackPriority = priority;
     }
     /**
      * Adds new sprites for the tower to target

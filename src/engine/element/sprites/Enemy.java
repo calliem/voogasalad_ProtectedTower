@@ -38,14 +38,13 @@ public class Enemy extends GameSprite {
 
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
-    private GridCell goalCell;
 
     public Enemy () {
         super();
     }
     
     public GridCell getGoal(){
-    	return goalCell;
+    	return myPath.get(myPath.size()-1);
     }
 
     @Override
