@@ -256,6 +256,10 @@ public class Controller {
     public File getDirectoryToPartFolder(String partType){
         return new File(currentGame.getRootDirectory() + "/" + partType);
     }
+    
+    public boolean deletePart(String partKey){
+        return currentGame.deletePart(partKey);
+    }
 
     // /**
     // * Removes a part from the game file.

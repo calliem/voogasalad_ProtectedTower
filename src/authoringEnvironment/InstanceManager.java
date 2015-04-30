@@ -1,5 +1,6 @@
 package authoringEnvironment;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -148,6 +149,14 @@ public class InstanceManager {
         return missingKey;
     }
 
+    protected boolean deletePart (String partKey) {
+        if (userParts.keySet().contains(partKey)) {
+            userParts.remove(partKey);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Writes the part, passed as a Map, into an XML file in:
      * rootDirectory/partType/partName.xml, for example:
@@ -181,12 +190,19 @@ public class InstanceManager {
      * @return the directory where the InstanceManager object was saved
      */
     public String saveGame () {
+        clearGameFolders();
         writeAllPartsToXML();
-        // XMLWriter.toXML(userParts, partFileName, rootDirectory +
-        // partsFileDir);
         System.out.println("writing to xml manager");
         return XMLWriter.toXML(this, INSTANCE_MANAGER_FILE_NAME, rootDirectory +
                                                                  PARTS_FILE_DIRECTORY);
+    }
+
+    private void clearGameFolders () {
+        for (String subFolder : GameCreator.gameDirectories()) {
+            File[] files = new File(rootDirectory + "/" + subFolder).listFiles();
+            for (File f : files)
+                f.delete();
+        }
     }
 
     /**
@@ -308,8 +324,8 @@ public class InstanceManager {
     public String getName () {
         return gameName;
     }
-    
-    public String getRootDirectory(){
+
+    public String getRootDirectory () {
         return rootDirectory;
     }
     /*
