@@ -74,7 +74,12 @@ public class Tower extends GameSprite {
      * @param sprites Set<GameElement> object of sprites
      */
     public void addTargets (Set<GameElement> sprites) {
+    	myTargets.clear();
         sprites.forEach(s -> myTargets.add(s));
+    }
+    
+    public GameElement getTarget(){
+    	return myPriority.getTarget(attackPriority, myTargets);
     }
 
     @Override
@@ -112,5 +117,9 @@ public class Tower extends GameSprite {
     public double getCost(){
     	return cost;
     }
+
+	public double getRange() {
+		return attackRange;
+	}
 
 }
