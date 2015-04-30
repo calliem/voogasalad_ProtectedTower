@@ -37,8 +37,12 @@ public class Tower extends GameSprite {
     // super.setImageView(test);
     // }
 
-    public Tower (Map<String, Object> parameters) {
-        super(parameters);
+    public Tower () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
 
         attackSpeed = (Double) parameters.get("attackSpeed");
         attackRange = (Double) parameters.get("attackRange");

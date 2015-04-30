@@ -13,8 +13,12 @@ import java.util.Map;
 public class Modifier extends GameElement {
 
 
-    public Modifier (Map<String, Object> parameters) {
-        super(parameters);
+    public Modifier() {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
     }
 
     @Override

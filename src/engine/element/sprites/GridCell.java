@@ -14,8 +14,12 @@ import javafx.geometry.Point2D;
  */
 public class GridCell extends GameElement {
 
-    public GridCell (Map<String, Object> parameters) {
-        super(parameters);
+    public GridCell () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
     }
 
     private Point2D centerLocation;

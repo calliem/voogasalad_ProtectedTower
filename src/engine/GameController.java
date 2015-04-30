@@ -65,6 +65,7 @@ public class GameController {
         throws InsufficientParametersException {
         myTowerManager = new TowerManager();
         myGame = this.loadGame(filepath, nodes);
+        // TODO remove this next testing code
         
     }
 
@@ -114,65 +115,44 @@ public class GameController {
      * @param myObjects Map<String, Map<String, Map<String, Object>>> representing mapping of part
      *        name to the specific objects of that type
      * @return Game object which has been instantiated with given objects
-     * @throws InsufficientParametersException if inputted objects do not fulfill game requirements
+     * @throws InsufficientParametersException if inputed objects do not fulfill game requirements
      */
     private Game initializeGame (List<Sprite> nodes,
                                  Map<String, Map<String, Map<String, Object>>> myObjects)
                                                                                          throws InsufficientParametersException {
         // store game parameters
-        Game myGame = new Game(nodes, ExampleGame.generateExampleGame());// = new Game(nodes);
+        Game myGame = new Game(nodes, ExampleGame.generateExampleGame());
 
         // TODO test for errors for 0 data files, or too many
-        
-        
-        /**
-        if (myObjects.get("Game").size() != 1) {
-            throw new InsufficientParametersException("Zero or multiple game data files created");
-        }
-        else {
-            for (Map<String, Object> map : myObjects.get("Game").values()) {
-                // TODO need game factory or something to initialize it
-            }
-        }
-        **/
-        
-        // if (myObjects.get("Layout").size() != 1) {
-        // throw new InsufficientParametersException("Zero or multiple game layouts created");
+        // if (myObjects.get("Game").size() != 1) {
+        // throw new InsufficientParametersException("Zero or multiple game data files created");
         // }
         // else {
-        // for (Map<String, Object> map : myObjects.get("Layout").values()) {
-        // myGame.addLayoutParameters(map);
+        // for (Map<String, Object> map : myObjects.get("Game").values()) {
+        // // TODO need game factory or something to initialize it
         // }
         // }
-        
-        /**
-        if (myObjects.get("Level").size() < 1) {
-            throw new InsufficientParametersException("No game levels created");
-        }
-        else {
-            myGame.addLevels(myObjects.get("Level"));
-        }
-        
-        ADDING LEVELS
-        **/
+
+        // if (myObjects.get("Level").size() < 1) {
+        // throw new InsufficientParametersException("No game levels created");
+        // }
+        // else {
+        // myGame.addLevels(myObjects.get("Level"));
+        // }
+
+        // TODO: ADDING LEVELS
         myGame.addLevels(ExampleLevel.generateExampleLevel());
-        
 
         // Send right sets of objects to the right objects
-        /**
         for (String partName : FACTORY_PART_NAMES) {
             myGame.addGameElement(partName, myObjects.get(partName));
         }
-        **/
-        
+
         myGame.addGameElement("Round", ExampleRound.generateExampleRound());
         myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
-        
-        /**
-        myTowerManager.add(myObjects.get("Tower"));
-        
-        TODO: POPULATING TOWER MANAGER
-        **/
+
+        // TODO: POPULATING TOWER MANAGER
+        // myTowerManager.add(myObjects.get("Tower"));
 
         return myGame;
     }

@@ -6,6 +6,7 @@ import java.util.Map;
 import javafx.geometry.Point2D;
 import annotations.parameter;
 import engine.Collidable;
+import engine.Reflectable;
 
 
 /**
@@ -16,7 +17,7 @@ import engine.Collidable;
  * @author Greg McKeon
  *
  */
-public abstract class GameElement implements Collidable {
+public abstract class GameElement implements Collidable, Reflectable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String name;
@@ -32,7 +33,11 @@ public abstract class GameElement implements Collidable {
     @parameter(settable = false, playerDisplay = true)
     private Point2D myLocation;
 
-    public GameElement (Map<String, Object> parameters) {
+    public GameElement(){
+        
+    }
+    
+    public void addInstanceVariables (Map<String, Object> parameters) {
         name = (String) parameters.get("name");
         tags = (List<String>) parameters.get("tags");
         boundingHeight = (Double) parameters.get("boundingHeight");

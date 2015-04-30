@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import annotations.parameter;
-import authoringEnvironment.pathing.CurveCoordinates;
 import javafx.animation.PathTransition;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
@@ -16,6 +14,8 @@ import util.pathsearch.graph.PathCell;
 import util.pathsearch.pathalgorithms.NoPathExistsException;
 import util.pathsearch.pathalgorithms.ObstacleFunction;
 import util.pathsearch.wrappers.GridWrapper;
+import annotations.parameter;
+import authoringEnvironment.pathing.CurveCoordinates;
 import engine.InsufficientParametersException;
 
 
@@ -32,12 +32,6 @@ import engine.InsufficientParametersException;
 
 public class Enemy extends GameSprite {
 
-    public Enemy (Map<String, Object> parameters) {
-        super(parameters);
-
-        CanHurtPlayer = (Boolean) parameters.get("CanHurtPlayer");
-    }
-
     private static final int MOVE_DELAY = 1000;
 
     @parameter(settable = false, playerDisplay = true, defaultValue = "false")
@@ -45,6 +39,16 @@ public class Enemy extends GameSprite {
 
     private List<GridCell> myPath;
     private static final double MOVE_DURATION = 1000;
+
+    public Enemy () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
+
+        CanHurtPlayer = (Boolean) parameters.get("CanHurtPlayer");
+    }
 
     @Override
     public void target (Sprite sprite) {

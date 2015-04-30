@@ -21,11 +21,14 @@ public abstract class Sprite extends GameElement implements Updateable {
     @parameter(settable = true, playerDisplay = false, defaultValue = "")
     private ImageView image;
 
-    public Sprite(Map<String, Object> parameters){
-        super(parameters);
+    public Sprite () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
         image = (ImageView) parameters.get("image");
     }
-    
 
     public ImageView getImageView () {
         return image;

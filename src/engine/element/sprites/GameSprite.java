@@ -23,8 +23,12 @@ public abstract class GameSprite extends MoveableSprite {
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
     private Set<String> nextSprites;
 
-    public GameSprite (Map<String, Object> parameters) {
-        super(parameters);
+    public GameSprite () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
         health = (Integer) parameters.get("health");
         nextSprites = (Set<String>) parameters.get("nextSprites");
     }

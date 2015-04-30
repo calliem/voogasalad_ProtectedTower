@@ -16,8 +16,12 @@ public class Projectile extends MoveableSprite {
     @parameter(settable = true, playerDisplay = true, defaultValue = "1")
     private Integer damage;
 
-    public Projectile(Map<String, Object> parameters){
-        super(parameters);
+    public Projectile () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
         damage = (Integer) parameters.get("damage");
     }
 
@@ -41,7 +45,7 @@ public class Projectile extends MoveableSprite {
     @Override
     public void move () {
         super.setLocation(super.getLocation()
-                          .add(super.getHeading().multiply(super.getSpeed())));
+                .add(super.getHeading().multiply(super.getSpeed())));
     }
 
     @Override
