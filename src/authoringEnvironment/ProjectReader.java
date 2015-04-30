@@ -258,7 +258,7 @@ public class ProjectReader {
      * @return The List<String> of tab names in order
      */
     public static List<String> getOrderedTabList () {
-        ArrayList<String> tabList = new ArrayList<String>();
+        List<String> tabList = new ArrayList<String>();
         try {
             Scanner s = new Scanner(new File(tabOrder));
             String nextEditor = "nothing";

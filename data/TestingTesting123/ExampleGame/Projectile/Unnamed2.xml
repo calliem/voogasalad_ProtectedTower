@@ -4,39 +4,35 @@
     <string>Projectile</string>
   </entry>
   <entry>
-    <string>Speed</string>
-    <double>1.0</double>
+    <string>image</string>
+    <string>imageselector/img_not_available.png</string>
   </entry>
   <entry>
-    <string>Group</string>
-    <string>null</string>
+    <string>damage</string>
+    <int>1</int>
   </entry>
   <entry>
-    <string>Type</string>
-    <string>Basic</string>
+    <string>boundingWidth</string>
+    <double>0.0</double>
   </entry>
   <entry>
-    <string>BoundingWidth</string>
-    <double>10.0</double>
+    <string>boundingHeight</string>
+    <double>0.0</double>
+  </entry>
+  <entry>
+    <string>name</string>
+    <string>Unnamed2</string>
   </entry>
   <entry>
     <string>PartKey</string>
     <string>ExampleGame_Part1.Projectile</string>
   </entry>
   <entry>
-    <string>Image</string>
-    <string>imageselectorTEMP/img_not_available.png</string>
+    <string>speed</string>
+    <double>1.0</double>
   </entry>
   <entry>
-    <string>Damage</string>
-    <double>100.0</double>
-  </entry>
-  <entry>
-    <string>BoundingHeight</string>
-    <double>10.0</double>
-  </entry>
-  <entry>
-    <string>Name</string>
-    <string>Unnamed2</string>
+    <string>Tags</string>
+    <list/>
   </entry>
 </map>

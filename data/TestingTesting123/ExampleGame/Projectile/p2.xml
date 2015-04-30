@@ -29,14 +29,10 @@
   </entry>
   <entry>
     <string>speed</string>
-    <double>500.0</double>
+    <double>1.0</double>
   </entry>
   <entry>
     <string>Tags</string>
     <list/>
-  </entry>
-  <entry>
-    <string>group</string>
-    <string>null</string>
   </entry>
 </map>
