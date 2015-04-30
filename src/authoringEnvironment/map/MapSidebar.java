@@ -217,7 +217,7 @@ public class MapSidebar extends Sidebar {
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, object.getRoot());
         scale.setOnFinished( (e) -> {
-            if (observableList.contains(object)) {
+            if (observableList != null && observableList.contains(object)) {
                 observableList.remove(object);
                 updateDisplay.updateDisplay(observableList);
             }
@@ -476,7 +476,7 @@ public class MapSidebar extends Sidebar {
         catch (MissingInformationException e) {
             e.printStackTrace();
         }
-        // myController.addImageToPart(key, activePath.getImageView().getImage());
+        myController.specifyPartImage(key, activePath.getImageView().getImage());
         pathDisplay.updateDisplay();
         // getMapWorkspace().remove(getMapWorkspace().getActivePath().getRoot());
         remove(getMapWorkspace().getActivePath(), null, null);

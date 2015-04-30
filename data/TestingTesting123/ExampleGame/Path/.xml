@@ -19,20 +19,44 @@
     <string>Curves</string>
     <list>
       <authoringEnvironment.objects.Coordinate>
-        <myX>556.5</myX>
-        <myY>348.5</myY>
+        <myX>525.5</myX>
+        <myY>198.5</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>495.3</myX>
-        <myY>365.9</myY>
+        <myX>476.9</myX>
+        <myY>231.9</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>311.7</myX>
-        <myY>418.1</myY>
+        <myX>331.1</myX>
+        <myY>332.1</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>250.5</myX>
-        <myY>435.5</myY>
+        <myX>282.5</myX>
+        <myY>365.5</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>267.1</myX>
+        <myY>333.1</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>220.9</myX>
+        <myY>235.9</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>205.5</myX>
+        <myY>203.5</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>295.5</myX>
+        <myY>168.7</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>565.5</myX>
+        <myY>64.30000000000001</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>655.5</myX>
+        <myY>29.5</myY>
       </authoringEnvironment.objects.Coordinate>
     </list>
   </entry>

@@ -62,15 +62,15 @@ public abstract class UpdatableDisplay extends VBox {
         for (String key : keys) {
             Map<String, Object> partParameters = myController.getPartCopy(key);
             Image image = null;
-            // try {
-            // //image = myController.getImageForKey(key);
-            // //test image below:
-            // }
-            // catch (NoImageFoundException e) {
-            // // TODO Auto-generated catch block
-            // e.printStackTrace();
-            // }
-            image = new Image("images/white_square.png");
+            try {
+                image = myController.getImageForKey(key);
+                // test image below:
+            }
+            catch (NoImageFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            // image = new Image("images/white_square.png");
 
             ImageView thumbnail = setThumbnailSize(new ImageView(image));
             String name = (String) partParameters.get(InstanceManager.NAME_KEY);

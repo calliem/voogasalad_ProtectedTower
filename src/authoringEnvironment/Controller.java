@@ -332,6 +332,15 @@ public class Controller {
         }      
     }
 
+    public void specifyPartImage (String partKey, String imageFilePath) {
+        System.out.println("partkey " + partKey + " space " + imageFilePath);
+        currentGame.specifyPartImage(partKey, imageFilePath);
+    }
+    
+    public void specifyPartImage (String partKey, Image image) {
+        currentGame.specifyPartImage(partKey, image);
+    }
+    
     /**
      * Gets a copy of the part of key partKey. All data is present, but
      * modifying the data won't change the actual data stored in the game.
