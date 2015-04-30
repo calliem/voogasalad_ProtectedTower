@@ -1,7 +1,7 @@
 <map>
   <entry>
     <string>Name</string>
-    <string>BasicTower</string>
+    <string>FasterShootingTower</string>
   </entry>
   <entry>
     <string>PartType</string>
@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>images/tower.png</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -37,7 +37,7 @@
   </entry>
   <entry>
     <string>AttackSpeed</string>
-    <double>1.0</double>
+    <double>5.0</double>
   </entry>
   <entry>
     <string>AttackRange</string>
@@ -61,10 +61,6 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part0.Tower</string>
-  </entry>
-  <entry>
-    <string>NextSprite</string>
-    <string>Part0.Tower</string>
+    <string>Part2.Tower</string>
   </entry>
 </map>

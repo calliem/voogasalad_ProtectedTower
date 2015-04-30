@@ -1,7 +1,7 @@
 <map>
   <entry>
     <string>Name</string>
-    <string>BasicTower</string>
+    <string>FurtherRangeTower</string>
   </entry>
   <entry>
     <string>PartType</string>
@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>images/tower.png</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -41,7 +41,7 @@
   </entry>
   <entry>
     <string>AttackRange</string>
-    <double>10.0</double>
+    <double>30.0</double>
   </entry>
   <entry>
     <string>AttackPriority</string>
@@ -61,10 +61,6 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part0.Tower</string>
-  </entry>
-  <entry>
-    <string>NextSprite</string>
-    <string>Part0.Tower</string>
+    <string>Part1.Tower</string>
   </entry>
 </map>
