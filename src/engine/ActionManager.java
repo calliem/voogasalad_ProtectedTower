@@ -146,8 +146,8 @@ public class ActionManager {
     private String[] getTagPair (GameElement spriteOne, GameElement spriteTwo) {
         String[] spriteTagPair = new String[REQUIRED_KEY_LENGTH];
         // TODO takes the first tag for now, make work for multiple tags
-        spriteTagPair[0] = spriteOne.getTags().get(0);
-        spriteTagPair[1] = spriteTwo.getTags().get(0);
+        spriteTagPair[0] = spriteOne.getGUID();
+        spriteTagPair[1] = spriteTwo.getGUID();
         return spriteTagPair;
     }
 
