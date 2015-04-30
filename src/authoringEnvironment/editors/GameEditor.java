@@ -50,26 +50,26 @@ public class GameEditor extends Editor {
         framework.setHgap(10);
         framework.setPadding(new Insets(10));
 
-        // setConstraints(framework);
-//        Text gameName = new Text(myResources.getString("GameName"));
-//        gameNameEntry = new TextField();
-//        gameNameEntry.setPromptText(myResources.getString("EnterGameName"));
-//        Text gameDescription = new Text(myResources.getString("GameDescription"));
-//        gameDescriptionEntry = new TextArea();
-//        gameDescriptionEntry.setPromptText(myResources.getString("EnterGameDescription"));
-//        gameDescriptionEntry.setPrefHeight(300);
-//
-//        Text totalLives = new Text(myResources.getString("TotalLives"));
-//        totalLivesEntry = new TextField();
-//        totalLivesEntry
-//                .setPromptText(myResources.getString("EnterLivesDescription"));
-//
-//        framework.add(gameName, 0, 0);
-//        framework.add(gameNameEntry, 1, 0);
-//        framework.add(gameDescription, 0, 1);
-//        framework.add(gameDescriptionEntry, 1, 1);
-//        framework.add(totalLives, 0, 2);
-//        framework.add(totalLivesEntry, 1, 2);
+     //   setConstraints(framework);
+        Text gameName = new Text(myResources.getString("GameName"));
+        gameNameEntry = new TextField();
+        gameNameEntry.setPromptText(myResources.getString("EnterGameName"));
+        Text gameDescription = new Text(myResources.getString("GameDescription"));
+        gameDescriptionEntry = new TextArea();
+        gameDescriptionEntry.setPromptText(myResources.getString("EnterGameDescription"));
+        gameDescriptionEntry.setPrefHeight(300);
+
+        Text totalLives = new Text(myResources.getString("TotalLives"));
+        totalLivesEntry = new TextField();
+        totalLivesEntry
+                .setPromptText(myResources.getString("EnterLivesDescription"));
+
+        framework.add(gameName, 0, 0);
+        framework.add(gameNameEntry, 1, 0);
+        framework.add(gameDescription, 0, 1);
+        framework.add(gameDescriptionEntry, 1, 1);
+        framework.add(totalLives, 0, 2);
+        framework.add(totalLivesEntry, 1, 2);
 
         visuals.getChildren().add(framework);
         return visuals;
@@ -89,5 +89,11 @@ public class GameEditor extends Editor {
         int lives = Integer.parseInt(totalLivesEntry.getText());
         settings.put(Variables.LIVES, lives);
 
+    }
+
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
     }
 }

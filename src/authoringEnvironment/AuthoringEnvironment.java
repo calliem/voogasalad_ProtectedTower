@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import authoringEnvironment.editors.Editor;
+import authoringEnvironment.InstanceManager;
 
 
 /**
@@ -119,6 +120,13 @@ public class AuthoringEnvironment {
         for (Editor e : editorsToAdd) {
             myTabPane.getTabs().add(e);
         }
+        
+        for (Tab tab : myTabPane.getTabs()){
+            Editor editor = (Editor) tab;
+            System.out.println("loop " + tab.getText());
+            tab.setOnSelectionChanged(e -> update(editor)); //is this updating the old tab?
+        }
+        myCurrentTab = myTabPane.getSelectionModel().getSelectedItem();
         grid.add(myTabPane, 0, 1);
     }
 
@@ -156,4 +164,84 @@ public class AuthoringEnvironment {
         myStage.setScene(Main.getScenes()[MAIN_MENU_SCENE_INDEX]);
         myStage.show();
     }
+
+    /**
+     * old code:
+     * 
+     * private void createTabs(){
+     * ProjectReader.populateTabBar(this, myDimensions, myResources, myStage);
+     * 
+     * //Tab selectedTab = myTabPane.getSelectionModel().getSelectedItem();
+     * for (Tab tab : myTabPane.getTabs()){
+     * System.out.println("loop " + tab.getText());
+     * tab.setOnSelectionChanged(e -> update(tab)); //is this updating the old tab?
+     * }
+     * myCurrentTab = myTabPane.getSelectionModel().getSelectedItem();
+     * }
+     * 
+     * @param selectedTab
+     */
+
+    private void update (Editor selectedTab) {
+        System.out.println("UPDATETAB()---------");
+        
+        if (myCurrentTab != selectedTab){
+            //Editor editor = (Editor) myCurrentTab.getContent();
+          //  Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the controller
+            
+            //myCurrentTab = selectedTab;
+            //Editor editor2 = (Editor) myCurrentTab.getContent();
+            //editor2.update();
+            selectedTab.update();
+    }
+        /*
+         * System.out.println("previousTab" + previousTab);
+         * System.out.println("selectedTab" + selectedTab);
+         * Editor editor = (Editor) selectedTab.getContent();
+         * System.out.println("changed selection to this selected tab: " + selectedTab.getText());
+         * 
+         * //if (previousTab != newTab)
+         * editor.update();
+         * //update the previous tab, not the current tab below!
+         * // Controller.updateEditor(selectedTab.getText(), editor); //this is dependent on the
+         * tab's name not changing, which may not be optimal design
+         * //why does this printout twice????
+         * //TODO: alternatively: use reflection to update the tab. unnecessary use of
+         * reflection....but might not be able to do anything else because of javafx limitations.
+         * that's also bad becasue of dependencies...
+         * //can i get the index of the tab and then match it to the one in the properties file?
+         * that's bad because of dependencies...brainstorm more ways
+         * 
+         * //below is just to allow for testing of the LevelEditor right now:
+         */
+
+        /*
+         * if (myCurrentTab != selectedTab){
+         * System.out.println("pls printout only once for tab " + myCurrentTab.getText());
+         * Editor editor = (Editor) myCurrentTab.getContent();
+         * //System.out.println("changed selection to this selected tab: " + selectedTab.getText());
+         * // editor.update(); //this should be editor.save
+         * Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the
+         * controller
+         * 
+         * myCurrentTab = selectedTab;
+         * Editor editor2 = (Editor) myCurrentTab.getContent();
+         * editor2.update();
+         * }
+         */
+
+        /*
+         * System.out.println("before" + myCurrentTab.getText());
+         * myCurrentTab = selectedTab;
+         * System.out.println("after" + myCurrentTab.getText());
+         * if (myCurrentTab == selectedTab){
+         * System.out.println("Update" + myCurrentTab.getText());
+         * Editor editor = (Editor) myCurrentTab.getContent();
+         * editor.update();
+         * }
+         */
+
+        // this should be editor.update
+    }
+
 }

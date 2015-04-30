@@ -8,6 +8,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
+import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 
 
@@ -50,7 +51,7 @@ public class Tile extends Rectangle {
         t.setTextAlignment(TextAlignment.LEFT);
         Tooltip.install(this, t);
     }
-
+    
     public void positionTile (int tileSize, int i, int j) {
         setTranslateX(j * tileSize);
         setTranslateY(i * tileSize);
@@ -74,6 +75,7 @@ public class Tile extends Rectangle {
      * }
      */
     public String getToolTipInfo () {
+        //TODO: String info = super.getToolTipInfo();
         String info = "";
         info += "Name: " + myName;
         if (myTags.size() > 0) {
@@ -127,6 +129,8 @@ public class Tile extends Rectangle {
      * }
      */
 
+    //public void saveThumbnail ()
+    
     public void setFill (Color color) {
         super.setFill(color);
         myColor = color;
@@ -140,7 +144,7 @@ public class Tile extends Rectangle {
         myKey = key;
     }
 
-    public Map<String, Object> saveToXML () {
+    public Map<String, Object> save () {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.NAME_KEY, myName);
         mapSettings.put(TAGS, myTags);
