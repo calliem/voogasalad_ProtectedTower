@@ -175,6 +175,7 @@ public class Layout implements Updateable {
         // loc param can probably be removed because the tower can just hold its location to be
         // placed at
         Tower temp = (Tower) myGameElementFactory.getGameElement("Tower", towerID);
+        System.out.println("towertest "+temp.getProjectile());
         temp.setLocation(location);
         if (canPlace(temp, location)) {
             myNodeList.add(temp);
