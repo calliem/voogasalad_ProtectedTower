@@ -46,6 +46,10 @@ public class TagGroup extends Group{
     private static final int COUNT_FONT_SIZE = 12;
     private static final int CLOSE_BUTTON_FONT = 10;
     private static final double OVERLAY_BACKGROUND_OPACITY = 0.8;
+    private static final double START_VALUE = 0.0;
+    private static final double END_VALUE = 1.0;
+    private static final int SCALE_CYCLES = 2;
+    private static final String TOOLTIP_MESSAGE = "Click here to see all tags...";
     
     private static final String INTERFACE_TEXT = "resources/display/interface_text";
     private static final ResourceBundle displayText = ResourceBundle.getBundle(INTERFACE_TEXT);
@@ -68,7 +72,7 @@ public class TagGroup extends Group{
         tagCountDisplay.setFill(Color.WHITE);
         tagCountDisplay.setFont(new Font(COUNT_FONT_SIZE));
         
-        Tooltip tooltip = new Tooltip("Click here to see all tags...");
+        Tooltip tooltip = new Tooltip(TOOLTIP_MESSAGE);
         tooltip.setTextAlignment(TextAlignment.LEFT);
         Tooltip.install(countDisplay, tooltip);
         
@@ -106,12 +110,12 @@ public class TagGroup extends Group{
     
     public void setupListeners (StackPane object) {
         this.setOnMousePressed(e -> {
-            Scaler.scaleOverlay(0.0, 1.0, overlayView);
+            Scaler.scaleOverlay(START_VALUE, END_VALUE, overlayView);
             object.getChildren().add(overlayView);
         });
         
         this.getCloseButton().setOnMousePressed(e -> {
-            Scaler.scaleOverlay(1.0, 0.0, overlayView);
+            Scaler.scaleOverlay(END_VALUE, START_VALUE, overlayView);
             object.getChildren().remove(overlayView);
         });
     }
@@ -182,7 +186,7 @@ public class TagGroup extends Group{
         scale.setToX(EXPANDED_RATIO);
         scale.setToY(EXPANDED_RATIO);
         scale.setAutoReverse(true);
-        scale.setCycleCount(2);
+        scale.setCycleCount(SCALE_CYCLES);
         scale.play();
     }
     

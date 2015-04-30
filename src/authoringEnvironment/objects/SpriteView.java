@@ -84,6 +84,7 @@ public abstract class SpriteView extends ObjectView {
     private static final int SETTING_HEIGHT = 24;
     private static final int SPRITE_SETTING_HEIGHT = 79;
     private static final int DISPLAY_SAVED_DURATION = 1000;
+    private static final int FIRST_ELEMENT = 0;
     
     /**
      * Creates visual representation of a sprite created by
@@ -302,8 +303,8 @@ public abstract class SpriteView extends ObjectView {
         imageFile = parameterFields.get(IMAGE_INDEX).getDataAsString();
         previewImage = new ImageView(new Image(imageFile));
         ScaleImage.scale(previewImage, SCALE_IMAGE_WIDTH, SCALE_IMAGE_HEIGHT);
-        display.getChildren().remove(0);
-        display.getChildren().add(0, previewImage);
+        display.getChildren().remove(FIRST_ELEMENT);
+        display.getChildren().add(FIRST_ELEMENT, previewImage);
     }
 
     private void updateSpriteName () {

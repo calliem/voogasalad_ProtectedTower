@@ -52,7 +52,8 @@ public class TagDisplay extends HBox{
     private static final String TAG_EXISTS_ERROR = "That tag already exists!";
     
     private static final int TEXT_HEIGHT = 19;
-    
+    private static final double START_VALUE = 0.0;
+    private static final double END_VALUE = 1.0;
     
     private Controller myController;
     private StackPane myContent;

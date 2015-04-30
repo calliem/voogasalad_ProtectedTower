@@ -66,6 +66,8 @@ public abstract class SpriteEditor extends Editor {
     private static final int INITIAL_NUM_SPRITES = 0;
     private static final double EMPTY_TEXT_SIZE = CONTENT_WIDTH / 40;
     private static final int MOVE_BUTTON_DURATION = 100;
+    
+    
 
     private static final String SPRITE_REQUIRED_ERROR = "Please create %ss first!";
     private static final String NAME_EXISTS_ERROR = "A %s with that name already exists!";
@@ -260,7 +262,7 @@ public abstract class SpriteEditor extends Editor {
         String type = partNames.getString(editorType);
         try {
             String needed = spriteNeeded.getString(type);
-            if (myController.getKeysForPartType(needed).size() == 0 && !needed.equals(type)) {
+            if (myController.getKeysForPartType(needed).isEmpty() && !needed.equals(type)) {
                 prompt.displayPermanentError(String.format(SPRITE_REQUIRED_ERROR,
                                                            needed.toLowerCase()));
             }
@@ -408,7 +410,6 @@ public abstract class SpriteEditor extends Editor {
         TranslateTransition moveButton = new TranslateTransition(Duration.millis(MOVE_BUTTON_DURATION), add);
         moveButton.setFromX(from);
         moveButton.setToX(to);
-        moveButton.setCycleCount(1);
         moveButton.play();
 
         return moveButton;

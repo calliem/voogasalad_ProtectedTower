@@ -25,6 +25,9 @@ public class Tag extends Group {
     private static final int TEXT_SIZE = 10;
     private static final int ARC_SIZE = 10;
     private static final int BUTTON_SIZE = 10;
+    private static final int INITIAL_X = 0;
+    private static final double START_VALUE = 0.0;
+    private static final double END_VALUE = 1.0;
     private static final Color TAG_COLOR = Color.DARKGRAY;
 
     private double xCoordinate;
@@ -58,12 +61,12 @@ public class Tag extends Group {
 
     public ParallelTransition playDeleteAnimation () {
         TranslateTransition move = new TranslateTransition(Duration.millis(MOVE_DURATION), this);
-        move.setFromX(0);
+        move.setFromX(INITIAL_X);
         move.setToX(TAG_WIDTH);
 
         FadeTransition fade = new FadeTransition(Duration.millis(FADE_DURATION), this);
-        fade.setFromValue(1.0);
-        fade.setToValue(0.0);
+        fade.setFromValue(END_VALUE);
+        fade.setToValue(START_VALUE);
 
         ParallelTransition delete = new ParallelTransition(move, fade);
         delete.play();
