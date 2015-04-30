@@ -75,6 +75,7 @@ public class RoundStrip extends FlowStrip {
         VBox rowContainer = new VBox(PADDING);
 
         ObservableList<String> mapKeys = myController.getKeysForPartType("Map");
+        System.out.println("maps: " + mapKeys);
         HBox row = new HBox(PADDING);
         int mapsPlacedInRow = 0;
         for (String mapKey : mapKeys) {
