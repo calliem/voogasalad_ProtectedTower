@@ -118,7 +118,7 @@ public class Layout implements Updateable {
      */
     public void modifiableHandler (Collection<Modifier> modifiers) {
         for (Modifier modifier : modifiers) {
-            String[] tagPair = {modifier.getActor(),modifier.getActee() };
+            String[] tagPair = { modifier.getActor(), modifier.getActee() };
             Collection<BiConsumer<GameElement, GameElement>>[] actions =
                     (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[2];
             Collection<BiConsumer<GameElement, GameElement>> action1 =
@@ -387,10 +387,10 @@ public class Layout implements Updateable {
                                                            p.getTarget()));
         });
 
-//        myEnemyList.forEach(p -> {
-//            Map<Object, List<String>> spawnMap = p.update();
-//            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-//        });
+         myEnemyList.forEach(p -> {
+         Map<Object, List<String>> spawnMap = p.update();
+         spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+         });
 
     }
 
@@ -417,7 +417,7 @@ public class Layout implements Updateable {
      */
     private void updateSpriteTargeting () {
         if (myTowerList.isEmpty()) { return; }
-        myCollisionChecker.createQuadTree(this.getSprites());
+        myCollisionChecker.createQuadTree(myEnemyList);
         for (Tower tower : myTowerList) {
             Set<GameElement> setOfTargetables = myCollisionChecker.findTargetable(tower);
             setOfTargetables.remove(tower);
@@ -432,9 +432,9 @@ public class Layout implements Updateable {
                                                                  tower.getProjectile());
         Set<GameElement> targetables = new HashSet<>();
         for (GameElement g : targetable)
-            // if (myActionManager.isAction(g, tester)){
-            targetables.add(g);
-        // }
+//            if (myActionManager.isAction(g, tester)) {
+                targetables.add(g);
+//            }
         return targetables;
     }
 
