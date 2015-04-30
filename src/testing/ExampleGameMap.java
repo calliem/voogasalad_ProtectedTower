@@ -31,10 +31,10 @@ public class ExampleGameMap {
         gameMap.put(InstanceManager.NAME_KEY, "DesktopTestGameMap");
         gameMap.put(InstanceManager.PART_TYPE_KEY, "GameMap");
         gameMap.put(InstanceManager.PART_KEY_KEY, "DesktopTestGameMap_Part0.GameMap");
-        gameMap.put("rows", rows);
-        gameMap.put("columns", columns);
-        gameMap.put("tileSize", tileSize);
-        gameMap.put("myTileNames", myTileNames);
+        gameMap.put("Rows", rows);
+        gameMap.put("Columns", columns);
+        gameMap.put("TileSize", tileSize);
+        gameMap.put("TileNames", myTileNames);
         gameMap.put("BackgroundImage", "images/Capture.PNG");
 
         part.put("DesktopTestGameMap_Part0.GameMap", gameMap);

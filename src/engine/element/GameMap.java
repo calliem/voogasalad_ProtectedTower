@@ -39,10 +39,10 @@ public class GameMap {
     private GridCell[][] myMap;
 
     public GameMap (Map<String, Object> parameters) {
-        myTileNames = (String[][]) parameters.get("myTileNames");
-        rows = (Integer) parameters.get("rows");
-        columns = (Integer) parameters.get("columns");
-        tileSize = (Integer) parameters.get("tileSize");
+        myTileNames = (String[][]) parameters.get("TileNames");
+        rows = (Integer) parameters.get("Rows");
+        columns = (Integer) parameters.get("Columns");
+        tileSize = (Integer) parameters.get("TileSize");
         backgroundImageLocation = (String) parameters.get("BackgroundImage");
         backgroundImage = new ImageView(backgroundImageLocation);
     }

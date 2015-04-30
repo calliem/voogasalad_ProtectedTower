@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import util.reflection.Reflection;
 import annotations.parameter;
 import engine.Bank;
@@ -40,8 +41,8 @@ public class Game implements Updateable, Endable {
     private int myPoints;
     private GameElementFactory myGameElementFactory;
 
-    public Game (List<Sprite> nodes, Map<String, Object> parameters) {
-        myLayout = new Layout(nodes);
+    public Game (List<Sprite> nodes, Group background, Map<String, Object> parameters) {
+        myLayout = new Layout(nodes, background);
         myGameElementFactory = new GameElementFactory();
         myLayout.setFactory(myGameElementFactory);
 
@@ -119,5 +120,9 @@ public class Game implements Updateable, Endable {
             towers.add((Tower) myGameElementFactory.getGameElement("Tower", id));
         }
         return towers;
+    }
+    
+    public void updateBackgroundTest (String key) {
+        myLayout.setMap(key);
     }
 }
