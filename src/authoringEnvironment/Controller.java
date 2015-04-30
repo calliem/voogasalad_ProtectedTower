@@ -285,9 +285,10 @@ public class Controller {
      */
     public ObservableList<String> getKeysForPartType (String partType) {
         System.out.println(partTypeToKeyList);
-        if (!partTypeToKeyList.keySet().contains(partType))
-            return FXCollections.observableArrayList(new ArrayList<String>());
-        return FXCollections.observableList(partTypeToKeyList.get(partType));
+        if (!partTypeToKeyList.keySet().contains(partType)){
+            partTypeToKeyList.put(partType, FXCollections.observableArrayList(new ArrayList<String>()));
+        }
+        return partTypeToKeyList.get(partType);
     }
 
     /**
