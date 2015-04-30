@@ -59,7 +59,6 @@ public class GamePlayer extends Application {
 
     // find and open .game file
     public void loadGame () {
-
         myEngineRoot.getChildren().clear();
         myTowerGrid.getChildren().clear();
         File gameFile = getGameFile();
@@ -75,7 +74,9 @@ public class GamePlayer extends Application {
         ObservableList<Sprite> displayList = FXCollections.observableArrayList(new ArrayList<>());
         try {
             myGameController =
-                    new GameController(gameFile.getParent(), displayList);
+                    new GameController(
+                                       gameFile.getAbsolutePath(),
+                                       displayList, availableTowers);
         }
         catch (InsufficientParametersException e) {
             return;
@@ -96,17 +97,6 @@ public class GamePlayer extends Application {
         });
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
-        Image myImage = new Image(".\\images\\liltower.jpg");
-        // ImageView test3 = new ImageView(myImage);
-        // ImageView test4 = new ImageView(myImage);
-        // ImageView test5 = new ImageView(myImage);
-        // test5.setTranslateX(300);
-        // test5.setTranslateY(300);
-        // availableTowers.add(new Tower(test2));
-        // availableTowers.add(new Tower(test3));
-        // availableTowers.add(new Tower(test4));
-        // displayList.add(new Tower(test5));
-        // myGameController.startGame(60);
     }
 
     private TableView updateInfoBox (Sprite placeSprite) {
@@ -171,7 +161,7 @@ public class GamePlayer extends Application {
         FileChooser fileOpener = new FileChooser();
         fileOpener.setTitle("Select a Game");
         fileOpener.setInitialDirectory(new File("."));
-        fileOpener.getExtensionFilters().add(new ExtensionFilter("Game Files", "*.game"));
+        fileOpener.getExtensionFilters().add(new ExtensionFilter("Game Files", "*.gamefile"));
         return fileOpener.showOpenDialog(myPlayerStage);
     }
 
@@ -228,10 +218,12 @@ public class GamePlayer extends Application {
             }
         }
         int numCols = (int) Math.floor((myTowerDisplay.getPrefWidth() - 40) / (maxWidth));
-        if (numCols > towerList.size()) {
+        if (numCols > towerList.size()&&towerList.size()>0) {
             numCols = towerList.size();
         }
-        System.out.println(numCols);
+        if(numCols==0){
+            numCols=1;
+        }
         myTowerGrid.setHgap((myTowerDisplay.getPrefWidth() - 40 - numCols * maxWidth) /
                             (numCols - 1));
         for (int i = 0; i < numCols; i++) {
@@ -243,16 +235,17 @@ public class GamePlayer extends Application {
         // }
         for (int i = 0; i < towerList.size(); i++) {
             ImageView myView = towerList.get(i).getImageView();
+            myView.setId(towerList.get(i).getGUID());
             myView.setOnDragDetected(new EventHandler<MouseEvent>() {
 
                 @Override
                 public void handle (MouseEvent event) {
-                    Dragboard db = myView.startDragAndDrop(TransferMode.COPY);
+                    Dragboard db = myView.startDragAndDrop(TransferMode.COPY_OR_MOVE);
 
                     /* Put a string on a dragboard */
                     ClipboardContent content = new ClipboardContent();
-                    myView.setId("tower");
-                    content.putImage(myView.getImage());
+
+                    //content.putImage(myView.getImage());
                     content.putString(myView.getId());
                     db.setContent(content);
 
@@ -275,7 +268,7 @@ public class GamePlayer extends Application {
         mainArea.setOnDragOver(event -> {
             Dragboard db = event.getDragboard();
             if (db.hasString()) {
-                event.acceptTransferModes(TransferMode.COPY);
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             event.consume();
         });
@@ -284,16 +277,15 @@ public class GamePlayer extends Application {
             boolean success = false;
             if (db.hasString()) {
                 // ImageView place = new ImageView(db.getImage());
-                System.out.println(db.getString());
+//                System.out.println(db.getString());
+//                System.out.println(event.getSceneX());
+//                System.out.println(event.getSceneY());
                 myGameController.addPlaceable(db.getString(), event.getSceneX(),
                                               event.getSceneY());
                 // place.setTranslateX(event.getSceneX() -
                 // Math.floor(db.getImage().getWidth() / 2));
                 // place.setTranslateY(event.getSceneY() -
                 // Math.floor(db.getImage().getHeight() / 2));
-                // TODO: tell engine about this
-                // game.addTower(place,);
-                // mainArea.getChildren().add(place);
                 success = true;
             }
             /*
@@ -303,6 +295,7 @@ public class GamePlayer extends Application {
                 event.setDropCompleted(success);
                 event.consume();
             });
+      
         return mainArea;
     }
 

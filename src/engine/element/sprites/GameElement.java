@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -47,10 +48,13 @@ public abstract class GameElement implements Collidable, Reflectable {
 
     public void addInstanceVariables (Map<String, Object> parameters) {
         name = (String) parameters.get("Name");
-        tags = (List<String>) parameters.get("Tags");
+        //TODO: fix
+        tags = new ArrayList<String>();
+        tags.add((String) parameters.get("Tags"));
         boundingHeight = (Double) parameters.get("BoundingHeight");
         boundingWidth = (Double) parameters.get("BoundingWidth");
         guid = (String) parameters.get("PartKey");
+        //tags = (List<String>) parameters.get("Tags");
     }
 
     // Getters and setters

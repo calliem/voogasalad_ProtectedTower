@@ -65,6 +65,7 @@ public class Layout implements Updateable {
     private final int COLUMN_INDEX = 1;
 
     public Layout (List<Sprite> myNodes) {
+        System.out.println("nodes is "+myNodes);
         myNodeList = myNodes;
         myCollisionChecker = new CollisionChecker();
     }
@@ -159,6 +160,7 @@ public class Layout implements Updateable {
         Tower temp = (Tower) myGameElementFactory.getGameElement("Tower", towerID);
         temp.setLocation(location);
         if (canPlace(temp, location)) {
+            myNodeList.add(temp);
             myTowerList.add(temp);
         }
     }
@@ -175,20 +177,21 @@ public class Layout implements Updateable {
     public boolean canPlace (GameElement tower, Point2D location) {
         // collision checking and tag checking
         // collision checking
-        boolean collisions = true;
-        myCollisionChecker.createQuadTree(myTowerList);
-        Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
-        if (possibleInteractions.size() == 0)
-            collisions = false;
-        // tag checking
-        boolean tags = true;
-        myCollisionChecker.createQuadTree(this.getGridCells());
-        Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
-        for (GameElement c : possibleGridCells) {
-            if (!tagsInCommon(c, tower))
-                tags = false;
-        }
-        return !collisions && tags;
+//        boolean collisions = true;
+//        myCollisionChecker.createQuadTree(myTowerList);
+//        Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
+//        if (possibleInteractions.size() == 0)
+//            collisions = false;
+//        // tag checking
+//        boolean tags = true;
+//        myCollisionChecker.createQuadTree(this.getGridCells());
+//        Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
+//        for (GameElement c : possibleGridCells) {
+//            if (!tagsInCommon(c, tower))
+//                tags = false;
+//        }
+//        return !collisions && tags;
+        return true;
     }
 
     /**
