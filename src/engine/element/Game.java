@@ -120,4 +120,8 @@ public class Game implements Updateable, Endable {
     public void lose() {
     	
     }
+    
+    public Level getActiveLevel(){
+    	return myLevels.get(myActiveLevelIndex);
+    }
 }

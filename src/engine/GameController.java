@@ -175,6 +175,10 @@ public class GameController {
         // TODO Auto-generated method stub
         myGame.placeTower(id, sceneX, sceneY);
     }
+    
+    public Game getGame(){
+    	return myGame;
+    }
 
     public static void main (String[] args) throws InsufficientParametersException {
         GameController test =
