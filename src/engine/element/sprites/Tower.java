@@ -67,6 +67,7 @@ public class Tower extends GameSprite {
      * @param sprites Set<GameElement> object of sprites
      */
     public void addTargets (Set<GameElement> sprites) {
+    	myTargets.clear();
         sprites.forEach(s -> myTargets.add(s));
     }
     
