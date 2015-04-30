@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 import engine.Updateable;
 import annotations.parameter;
@@ -51,6 +52,24 @@ public class Projectile extends MoveableSprite implements Updateable {
     @Override
     public void update () {
         this.move();
+    }
+
+    @Override
+    public void fixField (String fieldToModify, Object value) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void changeField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+        
     }
 
 }
