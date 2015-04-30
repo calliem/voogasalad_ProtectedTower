@@ -116,7 +116,7 @@ public class Layout implements Updateable {
         int[] endIndices =
                 myGameMap.getRowColAtCoordinates(myGoalCoordinates[1], myGoalCoordinates[0]);
         try {
-            enemy.updatePath(grid, startIndices[0], startIndices[1], endIndices[0], endIndices[1]);
+            enemy.planPath(grid, startIndices[0], startIndices[1], endIndices[0], endIndices[1]);
         }
         catch (NoPathExistsException e1) {
             e1.printStackTrace();

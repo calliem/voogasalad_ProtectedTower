@@ -103,6 +103,7 @@ public class Enemy extends GameSprite {
         }
         myPath = path;
         myPathLength = (curveCoords.size()-1)/3;
+        move();
     }
 
     /**
@@ -137,6 +138,7 @@ public class Enemy extends GameSprite {
         }
         myPath = path;
         myPathLength = myGridPath.size();
+        move();
     }
 
     @Override
