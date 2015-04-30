@@ -36,7 +36,7 @@ public class InstanceManager {
     public static final String ROUNDS_KEY = "Rounds";
     public static final String IMAGE_KEY = "image";
     public static final String COLOR_KEY = "Color";
-    
+
     public static final String GAMEMAP_PARTNAME = "GameMap";
     public static final String TILE_PARTNAME = "Tile";
     public static final String PATH_PARTNAME = "Path";
@@ -51,7 +51,7 @@ public class InstanceManager {
     private Map<String, Map<String, Object>> userParts;
     private String gameName;
     private String rootDirectory;
-    
+
     private static int partID;
 
     /**
@@ -175,7 +175,7 @@ public class InstanceManager {
         String partType = (String) part.get(PART_TYPE_KEY);
         String partFileName = (String) part.get(NAME_KEY) + ".xml";
         String directory = rootDirectory + "/" + partType;
-        
+
         return XMLWriter.toXML(part, partFileName, directory);
     }
 
