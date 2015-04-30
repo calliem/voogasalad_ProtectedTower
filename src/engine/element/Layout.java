@@ -335,14 +335,13 @@ public class Layout implements Updateable {
     public void update () {
         updateSpriteTargeting();
         updateSpriteLocations();
-        // updateSpriteCollisions();
-        // removeDeadSprites();
+        updateSpriteCollisions();
+        removeDeadSprites();
     }
 
     /**
      * Removes all GameElements that have a statetag of dead.
      */
-
     private void removeDeadSprites () {
         for (GameElement g : this.getSprites()) {
             if (g.getState().equals(GameElement.DEAD_STATE)) {
@@ -363,10 +362,10 @@ public class Layout implements Updateable {
                                                            p.getTarget()));
         });
 
-        myEnemyList.forEach(p -> {
-            Map<Object, List<String>> spawnMap = p.update();
-            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-        });
+//        myEnemyList.forEach(p -> {
+//            Map<Object, List<String>> spawnMap = p.update();
+//            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+//        });
 
     }
 
@@ -395,7 +394,10 @@ public class Layout implements Updateable {
         if (myTowerList.isEmpty()) { return; }
         myCollisionChecker.createQuadTree(this.getSprites());
         for (Tower tower : myTowerList) {
-            tower.addTargets(filterTargets(myCollisionChecker.findTargetable(tower), tower));
+            Set<GameElement> setOfTargetables = myCollisionChecker.findTargetable(tower);
+            setOfTargetables.remove(tower);
+            System.out.println(setOfTargetables.size());
+            tower.addTargets(filterTargets(setOfTargetables, tower));
         }
     }
 
