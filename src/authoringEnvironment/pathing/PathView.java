@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Map;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
 import authoringEnvironment.InstanceManager;
@@ -25,24 +29,43 @@ import authoringEnvironment.util.Screenshot;
 public class PathView extends GameObject {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private static final int DEFAULT_STROKE_WIDTH = 4;
+    private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private TileMap myParent;
-   // private List<CurveCoordinates> myPaths;
     private int numPoints;
     private Anchor mostRecentPoint;
     private List<Anchor> myAnchors;
     private Group myRoot;
+//    private Coordinate myAverageCenterPoint;
 
     public PathView (TileMap parent) {
         myAnchors = new ArrayList<Anchor>();
         myParent = parent;
-    //    myPaths = new ArrayList<CurveCoordinates>();
+
+       
         numPoints = 0;
         myRoot = new Group();
-        myParent.getRoot().getChildren().add(myRoot);
+        Rectangle pathModeOverlay =
+                new Rectangle(parent.getWidth(), parent.getHeight());
+        pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
+        StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
+        myRoot.getChildren().add(pathModeOverlay);
+        myParent.getRoot().getChildren().addAll(myRoot);
     }
 
     public int getNumPoints () {
         return numPoints;
+    }
+    
+    public Coordinate getAverageCenterPoint(){
+        double x = 0;
+        double y = 0;
+        for (int i = 0 ; i < myAnchors.size(); i ++){
+            x += myAnchors.get(i).getCenterX();
+            y += myAnchors.get(i).getCenterX();
+        }
+        x = x / myAnchors.size();
+        y = y / myAnchors.size();
+        return new Coordinate(x, y);
     }
 
     public boolean areAnchorsSelected () {
@@ -64,7 +87,7 @@ public class PathView extends GameObject {
         myParent.getRoot().getChildren().add(anchor);
 
         if (numPoints > 0) {
-            // Anchor mostRecentAnchor = myAnchorsandControls.get(myAnchorsandControls.size()-1);
+
             createCurve(mostRecentPoint, anchor);
         }
 
@@ -72,10 +95,9 @@ public class PathView extends GameObject {
         num.xProperty().bind(anchor.centerXProperty());
         num.yProperty().bind(anchor.centerYProperty());
         myRoot.getChildren().add(num);
-        // myParent.getRoot().getChildren().add(num);
+
         mostRecentPoint = anchor;
         myAnchors.add(anchor);
-        System.out.println("add " + anchor);
 
         numPoints++;
 
@@ -105,27 +127,10 @@ public class PathView extends GameObject {
         curve.startYProperty().bind(start.centerYProperty());
         curve.endYProperty().bind(end.centerYProperty());
 
-        Coordinate startCoordinates = start.getCoordinates();
-        Coordinate endCoordinates = end.getCoordinates();
-        Coordinate ctrl1Coordinates = control1.getCoordinates();
-        Coordinate ctrl2Coordinates = control2.getCoordinates();
-
-        /*
-         * Curve pathView =
-         * new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
-         * myPaths.add(pathView);
-         */
-
-        /*CurveCoordinates curveCoordinates =
-                new CurveCoordinates(startCoordinates, endCoordinates, ctrl1Coordinates,
-                                     ctrl2Coordinates);*/
-
-       // myPaths.add(curveCoordinates);
-
         myAnchors.add(control1);
-        System.out.println("add control " + control1);
+
         myAnchors.add(control2);
-        System.out.println("add control " + control2);
+
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
         myRoot.getChildren().add(path);
@@ -134,7 +139,6 @@ public class PathView extends GameObject {
     private CubicCurve createStartingCurve (double startX, double startY, double endX, double endY) {
         CubicCurve curve = new CubicCurve();
 
-        // double lineLength = Math.sqrt(Math.pow(startX-endX, 2) + Math.pow(startY-endY, 2));
         double xDiff = endX - startX;
         double yDiff = endY - startY;
 
@@ -160,28 +164,24 @@ public class PathView extends GameObject {
         return curve;
     }
 
-
     public Map<String, Object> save () {
         List<Coordinate> anchorCoordinates = new ArrayList<Coordinate>();
-        for (Anchor anchor: myAnchors){
+        for (Anchor anchor : myAnchors) {
             anchorCoordinates.add(anchor.getCoordinates());
         }
-        
-        
+
         ImageView image = Screenshot.snap(myParent);
-        //Image thumbnail = image.getImage();
         setImageView(image);
-        
+
         Map<String, Object> settings = new HashMap<String, Object>();
         settings.put(InstanceManager.NAME_KEY, getName());
-       // settings.put(Variables.PARAMETER_IMAGE, image);
         settings.put(Variables.PARAMETER_CURVES_COORDINATES, anchorCoordinates);
         settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
 
-      //  settings.put(Variables.PARAMETER_IMAGE, thumbnail);
+        // settings.put(Variables.PARAMETER_IMAGE, thumbnail);
         return settings;
     }
-        
+
     protected String getToolTipInfo () {
         String info = "";
         info += "Name: " + getName();
@@ -191,7 +191,6 @@ public class PathView extends GameObject {
 
     @Override
     public Group getRoot () {
-        // TODO Auto-generated method stub
         return myRoot;
     }
 
@@ -204,6 +203,5 @@ public class PathView extends GameObject {
     public double getHeight () {
         return myParent.getHeight();
     }
-
 
 }

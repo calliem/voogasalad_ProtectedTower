@@ -1,7 +1,11 @@
 package authoringEnvironment.objects;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
+import authoringEnvironment.pathing.PathView;
 
 
 /**
@@ -29,6 +34,7 @@ public class TileMap extends GameObject {
     private String myBackgroundFilePath;
     private Color myActiveColor;
     private String imgFilePath;
+    private ObservableList<GameObject> myPaths;
 
 
     private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
@@ -52,7 +58,22 @@ public class TileMap extends GameObject {
         
     }
     
+    public void addPath(PathView path){
+        myPaths.add(path);
+    }
+    
+    public void removePath(PathView path){
+        if (myPaths.contains(path))
+            myPaths.remove(path);
+    }
+    
+    public ObservableList<GameObject> getPaths(){
+        return myPaths;
+    }
+    
     public TileMap (int mapRows, int mapCols, int tileSize) {
+        myPaths = FXCollections.observableArrayList();
+
         myRoot = new Group();
         myRoot.setOnDragDetected(e -> myRoot.startFullDrag());
         myMapRows = mapRows;
@@ -301,6 +322,13 @@ public class TileMap extends GameObject {
             }
         }
         mapSettings.put(TILE_KEY_ARRAY, tileKeyArray);
+        
+        List<String> pathKeys = new ArrayList<String>();
+        for (GameObject path : myPaths){
+            pathKeys.add(path.getKey());
+            
+        }
+        mapSettings.put(Variables.PARAMETER_PATH_KEYS, pathKeys);
         return mapSettings;
     }
 
@@ -319,5 +347,7 @@ public class TileMap extends GameObject {
         info += "\nTile Size: " + myTileSize;
         return info;
     }
+
+
 
 }

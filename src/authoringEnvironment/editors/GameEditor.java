@@ -42,7 +42,7 @@ public class GameEditor extends Editor {
 
     @Override
     protected Group configureUI () {
-
+        this.setStyle(MainEditor.DARK_TAB_CSS);
         // TODO: put everything into a StringSetting object
         Group visuals = new Group();
         GridPane framework = new GridPane();
