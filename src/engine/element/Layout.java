@@ -65,12 +65,12 @@ public class Layout implements Updateable {
     private final int COLUMN_INDEX = 1;
 
     public Layout (List<Sprite> myNodes) {
-        System.out.println("nodes is "+myNodes);
+        System.out.println("nodes is " + myNodes);
         myNodeList = myNodes;
         myCollisionChecker = new CollisionChecker();
     }
-    
-    public void setFactory(GameElementFactory factory) {
+
+    public void setFactory (GameElementFactory factory) {
         myGameElementFactory = factory;
     }
 
@@ -162,6 +162,7 @@ public class Layout implements Updateable {
         if (canPlace(temp, location)) {
             myNodeList.add(temp);
             myTowerList.add(temp);
+            System.out.println(temp.getGUID() + " added to the node list in Layout");
         }
     }
 
@@ -177,20 +178,20 @@ public class Layout implements Updateable {
     public boolean canPlace (GameElement tower, Point2D location) {
         // collision checking and tag checking
         // collision checking
-//        boolean collisions = true;
-//        myCollisionChecker.createQuadTree(myTowerList);
-//        Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
-//        if (possibleInteractions.size() == 0)
-//            collisions = false;
-//        // tag checking
-//        boolean tags = true;
-//        myCollisionChecker.createQuadTree(this.getGridCells());
-//        Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
-//        for (GameElement c : possibleGridCells) {
-//            if (!tagsInCommon(c, tower))
-//                tags = false;
-//        }
-//        return !collisions && tags;
+        // boolean collisions = true;
+        // myCollisionChecker.createQuadTree(myTowerList);
+        // Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
+        // if (possibleInteractions.size() == 0)
+        // collisions = false;
+        // // tag checking
+        // boolean tags = true;
+        // myCollisionChecker.createQuadTree(this.getGridCells());
+        // Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
+        // for (GameElement c : possibleGridCells) {
+        // if (!tagsInCommon(c, tower))
+        // tags = false;
+        // }
+        // return !collisions && tags;
         return true;
     }
 
@@ -243,7 +244,7 @@ public class Layout implements Updateable {
      */
     public void spawnEnemy (String enemyID, String pathID) {
         Enemy e = (Enemy) myGameElementFactory.getGameElement("Enemy", enemyID);
-        Point2D location = null; //TODO: Lookup spawn point given pathID
+        Point2D location = null; // TODO: Lookup spawn point given pathID
         e.setLocation(location);
         myEnemyList.add(e);
     }
@@ -290,15 +291,15 @@ public class Layout implements Updateable {
     /**
      * Removes all GameElements that have a statetag of dead.
      */
-    
-    private void removeDeadSprites() {
-    	for (GameElement g: this.getSprites()){
-    		if (g.getState().equals(GameElement.DEAD_STATE))
-    			this.removeSprite(g);
-    	}
-	}
 
-	/**
+    private void removeDeadSprites () {
+        for (GameElement g : this.getSprites()) {
+            if (g.getState().equals(GameElement.DEAD_STATE))
+                this.removeSprite(g);
+        }
+    }
+
+    /**
      * Updates the positions of all sprites.
      */
     private void updateSpriteLocations () {

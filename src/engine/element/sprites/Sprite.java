@@ -30,11 +30,12 @@ public abstract class Sprite extends GameElement implements Updateable {
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
         imagepath = (String) parameters.get("Image");
+        image = new ImageView(imagepath);
     }
 
     public ImageView getImageView () {
         System.out.println("src/"+imagepath);
-        return new ImageView(imagepath);
+        return image;
     }
 
     // TODO remove these once testing is over

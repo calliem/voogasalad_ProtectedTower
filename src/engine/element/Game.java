@@ -109,7 +109,8 @@ public class Game implements Updateable, Endable {
     }
 
     public void placeTower (String id, double sceneX, double sceneY) {
-        myLayout.placeTower(id, new Point2D(sceneX, sceneY));
+        Point2D loc = new Point2D(sceneX, sceneY);
+        myLayout.placeTower(id, loc);
     }
 
     public List<Tower> getAllTowerObjects (Set<String> towerIDs) {
