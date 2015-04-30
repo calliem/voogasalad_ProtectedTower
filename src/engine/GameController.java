@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import testing.ExampleGame;
-import testing.ExampleLevel;
-import testing.ExampleRound;
-import testing.ExampleWave;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
+import testing.ExampleGame;
+import testing.ExampleGameMap;
+import testing.ExampleLevel;
+import testing.ExampleRound;
+import testing.ExampleWave;
 import authoringEnvironment.GameCreator;
 import authoringEnvironment.InstanceManager;
 import engine.element.Game;
@@ -157,6 +158,7 @@ public class GameController {
 
         myGame.addGameElement("Round", ExampleRound.generateExampleRound());
         myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
+        myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap());
 
         System.out.println("===================================================");
         // TODO: POPULATING TOWER MANAGER

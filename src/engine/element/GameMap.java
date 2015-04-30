@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
+import engine.Reflectable;
 import engine.element.sprites.GridCell;
 import engine.factories.GameElementFactory;
 
@@ -16,7 +17,7 @@ import engine.factories.GameElementFactory;
  * @author Sean Scott
  *
  */
-public class GameMap {
+public class GameMap implements Reflectable {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "20")
     private String[][] myTileNames;
@@ -38,7 +39,11 @@ public class GameMap {
      */
     private GridCell[][] myMap;
 
-    public GameMap (Map<String, Object> parameters) {
+    public GameMap () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
         myTileNames = (String[][]) parameters.get("TileNames");
         rows = (Integer) parameters.get("Rows");
         columns = (Integer) parameters.get("Columns");

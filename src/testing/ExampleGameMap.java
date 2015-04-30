@@ -7,9 +7,7 @@ import authoringEnvironment.InstanceManager;
 
 public class ExampleGameMap {
 
-    public static final Map<String, Map<String, Object>> MAP = generateExampleMap();
-
-    private static Map<String, Map<String, Object>> generateExampleMap () {
+    public static Map<String, Map<String, Object>> generateExampleMap () {
         Map<String, Object> gameMap = new HashMap<String, Object>();
         Map<String, Map<String, Object>> part = new HashMap<String, Map<String, Object>>();
 
