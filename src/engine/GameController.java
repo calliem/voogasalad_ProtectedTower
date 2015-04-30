@@ -156,6 +156,7 @@ public class GameController {
 
         myGame.addGameElement("Round", ExampleRound.generateExampleRound());
         myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
+        myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap());
         myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap2());
 
         System.out.println("===================================================");

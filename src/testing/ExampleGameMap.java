@@ -30,7 +30,7 @@ public class ExampleGameMap {
 
         gameMap.put(InstanceManager.NAME_KEY, "DesktopTestGameMap");
         gameMap.put(InstanceManager.PART_TYPE_KEY, "GameMap");
-        gameMap.put(InstanceManager.PART_KEY_KEY, "DesktopTestGameMap_Part0.GameMap");
+        gameMap.put(InstanceManager.PART_KEY_KEY, "DesktopTestGameMap_Part1.GameMap");
         gameMap.put("Rows", rows);
         gameMap.put("Columns", columns);
         gameMap.put("TileSize", tileSize);
@@ -44,7 +44,7 @@ public class ExampleGameMap {
         paths.add("ExampleGame_Path0.Path");
         gameMap.put("Paths", paths);
 
-        part.put("DesktopTestGameMap_Part0.GameMap", gameMap);
+        part.put("DesktopTestGameMap_Part1.GameMap", gameMap);
         return part;
     }
     
