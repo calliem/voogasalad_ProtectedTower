@@ -3,6 +3,8 @@ package engine.element;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+
 import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
@@ -19,7 +21,7 @@ import engine.factories.GameElementFactory;
  * @author Qian Wang
  */
 
-public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
+public class Level extends Observable implements UpdateAndReturnable, Endable, Comparable<Level> {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "20")
     private Integer myLives;
@@ -73,6 +75,16 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
     private void setActiveRound () {
         String roundGUID = myRounds.get(myActiveRoundIndex);
         myActiveRound = (Round) myGameElementFactory.getGameElement(PARAMETER_ROUND, roundGUID);
+    }
+    
+    public int getLives(){
+    	return myLives;
+    }
+    
+    public void decrementLives(int lives){
+    	myLives -= lives;
+    	setChanged();
+    	notifyObservers(myLives);
     }
 
     @Override

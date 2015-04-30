@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 import javafx.geometry.Point2D;
 import util.reflection.Reflection;
@@ -24,7 +25,7 @@ import engine.element.sprites.Sprite;
  * @author Bojia Chen
  *
  */
-public class Game implements Updateable, Endable {
+public class Game extends Observable implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
 
@@ -123,5 +124,15 @@ public class Game implements Updateable, Endable {
     
     public Level getActiveLevel(){
     	return myLevels.get(myActiveLevelIndex);
+    }
+    
+    public int getActiveLevelIndex(){
+    	return myActiveLevelIndex;
+    }
+    
+    public void incrementLevel(){
+    	myActiveLevelIndex++;
+    	setChanged();
+    	notifyObservers(myActiveLevelIndex);
     }
 }

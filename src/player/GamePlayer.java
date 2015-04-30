@@ -1,10 +1,9 @@
 package player;
 
-import java.awt.TextArea;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -42,6 +41,7 @@ import javafx.stage.Stage;
 import engine.GameController;
 import engine.InsufficientParametersException;
 import engine.element.Game;
+import engine.element.Level;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 
@@ -54,7 +54,7 @@ import engine.element.sprites.Tower;
  * @author Greg McKeon
  * @author Sean Scott
  */
-public class GamePlayer extends Application {
+public class GamePlayer extends Application{
     private Stage myPlayerStage;
     private Group myEngineRoot = new Group();
     private Scene myMainScene;
@@ -66,6 +66,8 @@ public class GamePlayer extends Application {
     private ScrollPane myTowerDisplay;
     private GameController myGameController;
     private VBox myInfoBox;
+    private LevelObserver myLevelObserver = new LevelObserver();
+    private GameObserver myGameObserver = new GameObserver();
 
     // find and open .game file
     public void loadGame () {
@@ -221,15 +223,20 @@ public class GamePlayer extends Application {
     	myInfoBox.setStyle("-fx-background-color:transparent");
     	myInfoBox.setTranslateY(-myScreenHeight/2);
     	myInfoBox.setAlignment(Pos.CENTER_LEFT);
-    	Text lives = new Text();
-    	lives.setFont(Font.font(24));
-    	lives.setText("LIVES: ");
-    	Text level = new Text();
-    	level.setFont(Font.font(24));
-    	level.setText("LEVEL: ");
-    	myInfoBox.getChildren().addAll(lives, level);
-    	VBox.setMargin(lives, new Insets(24));
-    	VBox.setMargin(level, new Insets(24));
+    	Game game = myGameController.getGame();
+    	game.addObserver(myGameObserver);
+    	Level level = game.getActiveLevel();
+    	level.addObserver(myLevelObserver);
+    	Text levelText = new Text();
+    	levelText.setFont(Font.font(24));
+    	levelText.setText("LEVEL: " + String.valueOf(game.getActiveLevelIndex()));
+    	String lives = String.valueOf(level.getLives());
+    	Text livesText = new Text();
+    	livesText.setFont(Font.font(24));
+    	livesText.setText("LIVES: " + lives + " / " + lives);
+    	myInfoBox.getChildren().addAll(levelText, livesText);
+    	VBox.setMargin(livesText, new Insets(24));
+    	VBox.setMargin(levelText, new Insets(24));
 		return myInfoBox;
     }
 
@@ -332,5 +339,25 @@ public class GamePlayer extends Application {
         });
         return mainArea;
     }
+	
+	private class LevelObserver implements Observer{
+
+		@Override
+		public void update(Observable o, Object arg) {
+			
+			
+		}
+		
+	}
+	
+	private class GameObserver implements Observer{
+
+		@Override
+		public void update(Observable o, Object arg) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 
 }
