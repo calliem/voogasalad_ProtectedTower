@@ -67,6 +67,10 @@
     <string>PartKey</string>
     <string>Part0.Tower</string>
   </entry>
+  <entry>
+    <string>NextSprite</string>
+    <string>ExampleGame_Part1.Tower</string>
+  </entry>
 </map>
     </entry>
     <entry>
@@ -136,6 +140,10 @@
     <string>PartKey</string>
     <string>Part1.Tower</string>
   </entry>
+  <entry>
+    <string>NextSprite</string>
+    <string>ExampleGame_Part2.Tower</string>
+  </entry>
 </map>
     </entry>
     <entry>
@@ -204,6 +212,10 @@
   <entry>
     <string>PartKey</string>
     <string>Part2.Tower</string>
+  </entry>
+  <entry>
+    <string>NextSprite</string>
+    <string>ExampleGame_Part2.Tower</string>
   </entry>
 </map>
     </entry>
@@ -389,6 +401,10 @@
     <string>PartKey</string>
     <string>Part0.Enemy</string>
   </entry>
+  <entry>
+    <string>NextSprite</string>
+    <string>ExampleGame_Part1.Enemy</string>
+  </entry>
 </map>
     </entry>
     <entry>
@@ -438,6 +454,10 @@
     <string>PartKey</string>
     <string>Part1.Enemy</string>
   </entry>
+  <entry>
+    <string>NextSprite</string>
+    <string>ExampleGame_Part1.Enemy</string>
+  </entry>
 </map>
     </entry>
     <entry>
@@ -486,6 +506,10 @@
   <entry>
     <string>PartKey</string>
     <string>Part2.Enemy</string>
+  </entry>
+  <entry>
+    <string>NextSprite</string>
+    <string>ExampleGame_Part1.Enemy</string>
   </entry>
 </map>
     </entry>

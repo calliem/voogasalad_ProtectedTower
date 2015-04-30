@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javafx.geometry.Point2D;
 import util.reflection.Reflection;
 import annotations.parameter;
@@ -12,6 +13,7 @@ import engine.Endable;
 import engine.Updateable;
 import engine.conditions.Condition;
 import engine.element.sprites.Sprite;
+import engine.element.sprites.Tower;
 import engine.factories.GameElementFactory;
 
 
@@ -112,5 +114,13 @@ public class Game implements Updateable, Endable {
 
     public void placeTower (String id, double sceneX, double sceneY) {
         myLayout.placeTower(id, new Point2D(sceneX, sceneY));
+    }
+
+    public List<Tower> getAllTowerObjects (Set<String> towerIDs) {
+        List<Tower> towers = new ArrayList<>();
+        for (String id : towerIDs) {
+            towers.add((Tower) myGameElementFactory.getGameElement("Tower", id));
+        }
+        return towers;
     }
 }

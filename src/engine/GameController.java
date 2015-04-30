@@ -59,21 +59,15 @@ public class GameController {
      * 
      * @param filepath String to the main directory holding the game
      * @param nodes List<Sprite> reference to that used in the Player class to display the game
+     * @param possibleTower List<Tower> reference that is used in Player class to display all towers
+     *        to place
      * @throws InsufficientParametersException when filepath does not point to a well defined game
      *         file
      */
-    public GameController (String filepath, List<Sprite> nodes)
-        throws InsufficientParametersException {
-        myTowerManager = new TowerManager();
-        myGame = this.loadGame(filepath, nodes);
-        // TODO remove this next testing code
-        
-    }
-
     public GameController (String filepath, List<Sprite> nodes, List<Tower> possibleTowers)
         throws InsufficientParametersException {
-        this(filepath, nodes);
-        // TODO what to do with possibleTowers?
+        myTowerManager = new TowerManager();
+        myGame = this.loadGame(filepath, nodes, possibleTowers);
     }
 
     /**
@@ -84,11 +78,12 @@ public class GameController {
      * 
      * @param filepath String of location of the game file
      * @param nodes List<Sprite> list of sprites that the game can update
+     * @param possibleTowers
      * @throws InsufficientParametersException when multiple games/layouts are created, or when no
      *         game elements are specified
      */
-    private Game loadGame (String filepath, List<Sprite> nodes)
-                                                               throws InsufficientParametersException {
+    private Game loadGame (String filepath, List<Sprite> nodes,
+                           List<Tower> possibleTowers) throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String partName : PART_NAMES) {
             myObjects.put(partName, new HashMap<>());
@@ -105,7 +100,7 @@ public class GameController {
             myObjects.get(partType).put((String) obj.get(PARAMETER_GUID), obj);
         }
 
-        return initializeGame(nodes, myObjects);
+        return initializeGame(nodes, myObjects, possibleTowers);
     }
 
     /**
@@ -115,12 +110,13 @@ public class GameController {
      * @param nodes List<Node> list of javafx nodes that the game can update
      * @param myObjects Map<String, Map<String, Map<String, Object>>> representing mapping of part
      *        name to the specific objects of that type
+     * @param possibleTowers
      * @return Game object which has been instantiated with given objects
      * @throws InsufficientParametersException if inputed objects do not fulfill game requirements
      */
     private Game initializeGame (List<Sprite> nodes,
-                                 Map<String, Map<String, Map<String, Object>>> myObjects)
-                                                                                         throws InsufficientParametersException {
+                                 Map<String, Map<String, Map<String, Object>>> myObjects,
+                                 List<Tower> possibleTowers) throws InsufficientParametersException {
         // store game parameters
         Game myGame = new Game(nodes, ExampleGame.generateExampleGame());
 
@@ -153,7 +149,9 @@ public class GameController {
         myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
 
         // TODO: POPULATING TOWER MANAGER
-        // myTowerManager.add(myObjects.get("Tower"));
+        myTowerManager.add(myObjects.get("Tower"));
+
+        possibleTowers.addAll(myGame.getAllTowerObjects(myObjects.get("Tower").keySet()));
 
         return myGame;
     }
@@ -186,6 +184,6 @@ public class GameController {
         GameController test =
                 new GameController(
                                    "data//DesktopTDTest//DesktopTD//DesktopTD.gamefile",
-                                   new ArrayList<Sprite>());
+                                   new ArrayList<Sprite>(), new ArrayList<Tower>());
     }
 }
