@@ -32,10 +32,6 @@ public class Game implements Updateable, Endable {
     @parameter(settable = true, playerDisplay = true, defaultValue = "20")
     private Integer lives;
 
-    /**
-     * List of Javafx objects so that new nodes can be added for the player to display
-     */
-    private List<Sprite> myNodes;
     private List<Condition> myConditions;
     private List<Level> myLevels;
     private Layout myLayout;
@@ -45,14 +41,14 @@ public class Game implements Updateable, Endable {
     private GameElementFactory myGameElementFactory;
 
     public Game (List<Sprite> nodes, Map<String, Object> parameters) {
+        myLayout = new Layout(nodes);
         myGameElementFactory = new GameElementFactory();
-
-        lives = (Integer) parameters.get("lives");
-        myConditions = new ArrayList<Condition>();
-        myLevels = new ArrayList<>();
-        myNodes = nodes;
-        myLayout = new Layout(myNodes);
         myLayout.setFactory(myGameElementFactory);
+
+        lives = (Integer) parameters.get("Lives");
+        myLevels = new ArrayList<>();
+        myConditions = new ArrayList<Condition>();
+
         myActiveLevelIndex = 0;
         myBank = new Bank();
         myPoints = 0;

@@ -185,6 +185,7 @@ public class GameController {
     }
 
     public static void main (String[] args) throws InsufficientParametersException {
+        System.out.println(new ArrayList<Sprite>());
         GameController test =
                 new GameController(
                                    "data//DesktopTDTest//DesktopTD//DesktopTD.gamefile",
