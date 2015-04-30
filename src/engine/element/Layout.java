@@ -313,13 +313,23 @@ public class Layout implements Updateable {
     private void updateSpriteTargeting () {
         myCollisionChecker.createQuadTree(this.getSprites());
         for (Tower tower : myTowerList) {
-            tower.addTargets(myCollisionChecker.findTargetable(tower));
+            tower.addTargets(filterTargets(myCollisionChecker.findTargetable(tower), tower));
         }
     }
+    
+    private Set<GameElement> filterTargets(Set<GameElement> targetable, Tower tower) {
+		Projectile tester = (Projectile) myGameElementFactory.getGameElement("Projectile", tower.getProjectile());
+		Set<GameElement> targetables = new HashSet<>();
+		for (GameElement g: targetable)
+			if (myActionManager.isAction(g, tester))
+				targetables.add(g);
+		return targetables;
+	}
+    
 
     // Collision checking methods
 
-    /**
+	/**
      * Returns a list of all sprites in the map
      * 
      * @return List<Sprite> of all active sprites on the map

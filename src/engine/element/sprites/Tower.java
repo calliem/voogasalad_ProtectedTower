@@ -1,7 +1,10 @@
 package engine.element.sprites;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
@@ -35,13 +38,19 @@ public class Tower extends GameSprite {
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double buildTime;
 
-    private Set<GameElement> myTargets;
+    private List<GameElement> myTargets;
 
     // TODO remove once testing is over
     public Tower (ImageView test) {
         super.setImageView(test);
     }
 
+    public String getProjectile(){
+    	if (projectiles.size() == 1){
+    		return projectiles.get(0);
+    	}
+    	return projectiles.get(0);
+    }
     /**
      * Adds new sprites for the tower to target
      * 
@@ -56,7 +65,7 @@ public class Tower extends GameSprite {
         // TODO Auto-generated method stub
 
     }
-
+    
     @Override
     public void onCollide (GameElement element) {
         // TODO Auto-generated method stub

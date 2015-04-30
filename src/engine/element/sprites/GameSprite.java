@@ -25,7 +25,7 @@ public abstract class GameSprite extends MoveableSprite {
 
     // Getters and setters
 
-    protected Integer getHealth () {
+    public Integer getHealth () {
         return health;
     }
 

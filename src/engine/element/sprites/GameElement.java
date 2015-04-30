@@ -55,7 +55,7 @@ public abstract class GameElement implements Collidable {
     /**
      * @return Point2D representing coordinate location of object
      */
-    protected Point2D getLocation () {
+    public Point2D getLocation () {
         return new Point2D(myLocation.getX(), myLocation.getY());
     }
 
