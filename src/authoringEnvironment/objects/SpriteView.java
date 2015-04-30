@@ -4,10 +4,7 @@ import imageselector.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.PauseTransition;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tooltip;
@@ -30,7 +27,6 @@ import authoringEnvironment.setting.ImageViewSetting;
 import authoringEnvironment.setting.Setting;
 import authoringEnvironment.setting.SpriteSetting;
 import authoringEnvironment.setting.StringSetting;
-import authoringEnvironment.util.Scaler;
 
 
 /**
@@ -178,6 +174,7 @@ public abstract class SpriteView extends ObjectView {
         settingsDisplayPane.setMaxWidth(DISPLAY_PANE_WIDTH);
         settingsDisplayPane.setHbarPolicy(ScrollBarPolicy.NEVER);
         settingsDisplayPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+        settingsDisplayPane.setPannable(true);
         
         StackPane settingsDisplay = new StackPane();
         Rectangle displayBackground = new Rectangle(DISPLAY_PANE_WIDTH, DISPLAY_PANE_HEIGHT);

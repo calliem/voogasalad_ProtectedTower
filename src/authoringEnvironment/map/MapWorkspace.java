@@ -2,7 +2,6 @@ package authoringEnvironment.map;
 
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -12,10 +11,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.pathing.PathView;
 import authoringEnvironment.objects.TileMap;
-import authoringEnvironment.pathing.Anchor;
+import authoringEnvironment.pathing.PathView;
 
 
 /**
@@ -41,16 +40,19 @@ public class MapWorkspace extends StackPane {
     private static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
     private static final double MESSAGE_DISPLAY_DURATION = 1000;
     private static final int MESSAGE_FONT_SIZE = 20;
+    private static final String EMPTY_KEY = "";
 
     private TileMap myActiveMap;
     private PathView myActivePath;
-    private Color myActiveColor;
+    private String myActiveTile;
     private Rectangle pathModeOverlay;
+    private Controller myController;
 
     // TODO: fix all of these constants so there are no more replicates
 
-    public MapWorkspace () {
+    public MapWorkspace (Controller controller) {
         super();
+        myController = controller;
         Rectangle background =
                 new Rectangle(AuthoringEnvironment.getEnvironmentWidth() *
                               WORKSPACE_WIDTH_MULTIPLIER,
@@ -66,13 +68,10 @@ public class MapWorkspace extends StackPane {
                 new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
         pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
         StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
-
-        
-
     }
 
     public TileMap createDefaultMap () {
-        TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
+        TileMap defaultMap = new TileMap(myController, DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
         updateWithNewMap(defaultMap);
         return defaultMap;
     }
@@ -106,21 +105,7 @@ public class MapWorkspace extends StackPane {
         update(object);
 
         myActiveMap = (TileMap) object;
-        // if (getChildren().contains(myActiveMap.getRoot())){
-        // System.out.println("active map already exists");
-
-        // scaler....
-
-        // TODO:
-        /*
-         * ScaleTransition scale =
-         * Scaler.scaleOverlay(0.0, 1.0, myActiveMap.getRoot());
-         * scale.setOnFinished( (e) -> {
-         */
-        // });
-
-        myActiveMap.setActiveColor(myActiveColor);
-
+        myActiveMap.setActiveTile(EMPTY_KEY);
     }
 
     // TODO: duplicated
@@ -176,13 +161,13 @@ public class MapWorkspace extends StackPane {
         myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
     }
 
-    public Color getActiveColor () {
-        return myActiveColor;
+    public String getActiveTile () {
+        return myActiveTile;
     }
 
-    public void setActiveColor (Color color) {
-        myActiveMap.setActiveColor(color);
-        myActiveColor = color;
+    public void setActiveColor (String tileKey) {
+        myActiveMap.setActiveTile(tileKey);
+        myActiveTile = tileKey;
     }
 
 }
