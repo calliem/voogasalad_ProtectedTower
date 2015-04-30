@@ -33,7 +33,7 @@ public abstract class GameElement implements Collidable, Reflectable {
      * Holds the current location of the object
      */
     @parameter(settable = false, playerDisplay = true)
-    private Point2D myLocation;
+    private Point2D myLocation = new Point2D(0,0);
     private String guid;
 
     public final static String ALIVE_STATE = "alive";

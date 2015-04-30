@@ -276,22 +276,16 @@ public class GamePlayer extends Application {
             Dragboard db = event.getDragboard();
             boolean success = false;
             if (db.hasString()) {
-                // ImageView place = new ImageView(db.getImage());
-//                System.out.println(db.getString());
-//                System.out.println(event.getSceneX());
-//                System.out.println(event.getSceneY());
-                myGameController.addPlaceable(db.getString(), event.getSceneX(),
-                                              event.getSceneY());
-                // place.setTranslateX(event.getSceneX() -
-                // Math.floor(db.getImage().getWidth() / 2));
-                // place.setTranslateY(event.getSceneY() -
-                // Math.floor(db.getImage().getHeight() / 2));
+                myGameController.addPlaceable(db.getString(), event.getSceneX() -
+                                              Math.floor(db.getImage().getWidth() / 2),
+                                              event.getSceneY() -
+                                              Math.floor(db.getImage().getHeight() / 2));
                 success = true;
             }
             /*
-             * let the source know whether the string was successfully
-             * transferred and used
-             */
+//             * let the source know whether the string was successfully
+//             * transferred and used
+//             */
                 event.setDropCompleted(success);
                 event.consume();
             });
