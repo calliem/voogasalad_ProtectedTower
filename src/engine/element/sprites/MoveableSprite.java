@@ -5,6 +5,7 @@ import javafx.geometry.Point2D;
 import annotations.parameter;
 
 
+
 /**
  * This class represents game elements that move around the game space. Required abstract methods
  * include those to control movement. A variable representing velocity can be used to move.
@@ -19,6 +20,11 @@ public abstract class MoveableSprite extends Sprite {
     private Double speed;
     @parameter(settable = false, playerDisplay = true)
     private String group = null;
+    
+    
+    
+    
+    
     /**
      * Holds the current heading of the sprite
      */
@@ -75,5 +81,5 @@ public abstract class MoveableSprite extends Sprite {
      * method should be used to define how this object moves and changes coordinates on the screen.
      */
     public abstract void move ();
-
+    
 }

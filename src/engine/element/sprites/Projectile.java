@@ -1,6 +1,7 @@
 package engine.element.sprites;
 
 import java.util.Map;
+import engine.Updateable;
 import annotations.parameter;
 
 
@@ -11,7 +12,7 @@ import annotations.parameter;
  *
  */
 
-public class Projectile extends MoveableSprite {
+public class Projectile extends MoveableSprite implements Updateable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1")
     private Double damage;
@@ -50,8 +51,8 @@ public class Projectile extends MoveableSprite {
 
     @Override
     public void update (int counter) {
-        // TODO Auto-generated method stub
-
+        this.move();
     }
+
 
 }

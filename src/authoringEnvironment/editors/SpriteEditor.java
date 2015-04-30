@@ -26,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.ObjectView;
 import authoringEnvironment.objects.SpriteView;
@@ -54,16 +55,31 @@ public abstract class SpriteEditor extends Editor {
     protected List<TagGroup> tagGroupsList;
     protected IntegerProperty numSprites;
     protected NamePrompt prompt;
+    private Node activeOverlay;
 
     private static final int ROW_SIZE = 7;
     private static final int BUTTON_OFFSET = -10;
     private static final int BUTTON_WIDTH = 100;
+    private static final int SPRITE_SIZE = 100;
     private static final Color BACKGROUND_COLOR = Color.GRAY;
+    private static final int PADDING = 20;
+    private static final int INITIAL_NUM_SPRITES = 0;
+    private static final double EMPTY_TEXT_SIZE = CONTENT_WIDTH / 40;
+    private static final int MOVE_BUTTON_DURATION = 100;
+    
+    private static final double START_VALUE = 0.0;
+    private static final double END_VALUE = 1.0;
 
-    private Node activeOverlay;
-
+    private static final String SPRITE_REQUIRED_ERROR = "Please create %ss first!";
+    private static final String NAME_EXISTS_ERROR = "A %s with that name already exists!";
+    private static final String EMPTY_MESSAGE = "No %s yet...";
+    private static final String ADD_SPRITE = "+ %s";
+    private static final String SPRITE_PACKAGE_PATH = "authoringEnvironment.objects.%sView";
+    
     private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
+    private static final String INTERFACE_TEXT = "resources/display/interface_text";
+    private static final ResourceBundle displayText = ResourceBundle.getBundle(INTERFACE_TEXT);
 
     /**
      * Creates a tower object.
@@ -92,34 +108,32 @@ public abstract class SpriteEditor extends Editor {
         prompt = new NamePrompt(partNames.getString(editorType).toLowerCase());
         prompt.setImageChooser(true);
 
-        // TODO remove magic number
         Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, BACKGROUND_COLOR);
 
-        VBox spriteDisplay = new VBox(20);
-        spriteDisplay.setTranslateY(10);
+        VBox spriteDisplay = new VBox(PADDING);
+        spriteDisplay.setTranslateY(PADDING / 2);
 
         HBox editControls = setupEditControls();
         spriteDisplay.getChildren().add(editControls);
 
         ArrayList<HBox> rows = new ArrayList<>();
 
-        // TODO remove magic numbers
-        HBox row = new HBox(20);
+        HBox row = new HBox(PADDING);
         currentRow = row;
         spriteDisplay.getChildren().add(row);
         rows.add(row);
 
-        numSprites = new SimpleIntegerProperty(0);
+        numSprites = new SimpleIntegerProperty(INITIAL_NUM_SPRITES);
         numSprites.addListener( (obs, oldValue, newValue) -> {
             handleSpritePlacement(spriteDisplay, rows, oldValue, newValue);
         });
 
-        empty = new Text("No " + tabNames.getString(editorType).toLowerCase() + " yet...");
-        empty.setFont(new Font(30));
+        empty = new Text(String.format(EMPTY_MESSAGE, tabNames.getString(editorType).toLowerCase()));
+        empty.setFont(new Font(EMPTY_TEXT_SIZE));
         empty.setFill(Color.WHITE);
 
         currentRow.setAlignment(Pos.TOP_CENTER);
-        currentRow.setMaxHeight(100);
+        currentRow.setMaxHeight(SPRITE_SIZE);
 
         tagGroupsList = new ArrayList<>();
 
@@ -127,9 +141,9 @@ public abstract class SpriteEditor extends Editor {
         ObservableList<Tag> list = tags.getTagsList();
         list.addListener(new ListChangeListener<Tag>() {
             @Override
-            public void onChanged(ListChangeListener.Change change){
+            public void onChanged (ListChangeListener.Change change) {
                 tags.setupDraggableTags(visuals);
-                for(TagGroup group : tagGroupsList){
+                for (TagGroup group : tagGroupsList) {
                     group.update();
                 }
             }
@@ -155,13 +169,13 @@ public abstract class SpriteEditor extends Editor {
             myContent.getChildren().add(empty);
         }
         else if ((int) newValue > 0
-                && myContent.getChildren().contains(empty)) {
+                 && myContent.getChildren().contains(empty)) {
             myContent.getChildren().remove(empty);
         }
 
         // if there's 2 on a row already
         else if (currentRow.getChildren().size() == ROW_SIZE) {
-            HBox newRow = new HBox(20);
+            HBox newRow = new HBox(PADDING);
             newRow.setAlignment(Pos.TOP_CENTER);
             currentRow = newRow;
             rows.add(newRow);
@@ -169,27 +183,26 @@ public abstract class SpriteEditor extends Editor {
         }
 
         else if ((int) newValue < (int) oldValue) {
-            System.out.println("rows: " + rows.size());
+//            System.out.println("rows: " + rows.size());
         }
     }
 
     private HBox setupEditControls () {
-        HBox editControls = new HBox(10);
-//        editControls.setTranslateX(-10);
+        HBox editControls = new HBox(PADDING / 2);
+        // editControls.setTranslateX(-10);
         editControls.setAlignment(Pos.CENTER_RIGHT);
-        Button edit = new Button("Edit");
+        Button edit = new Button(displayText.getString("Edit"));
         edit.setPrefWidth(BUTTON_WIDTH);
         edit.setTranslateX(BUTTON_OFFSET);
 
-        Button load = new Button("Load...");
+        Button load = new Button(displayText.getString("Load"));
         load.setPrefWidth(BUTTON_WIDTH);
         load.setTranslateX(BUTTON_OFFSET);
         load.setOnAction(e -> {
             loadSprite();
         });
-        
-        Button add = new Button("+ "
-                + partNames.getString(editorType));
+
+        Button add = new Button(String.format(ADD_SPRITE, partNames.getString(editorType)));
         add.setPrefWidth(BUTTON_WIDTH);
         add.setTranslateX(BUTTON_OFFSET);
         add.setOnMousePressed( (e) -> {
@@ -200,16 +213,16 @@ public abstract class SpriteEditor extends Editor {
             if (!editing) {
                 startEditing(editControls, edit, add, load);
             }
-            else {
-                finishEditing(editControls, edit, add, load);
-            }
-            editing = !editing;
-        });
+                else {
+                    finishEditing(editControls, edit, add, load);
+                }
+                editing = !editing;
+            });
         editControls.getChildren().add(edit);
         return editControls;
     }
-    
-    protected void loadSprite(){
+
+    protected void loadSprite () {
         ErrorAlert test = new ErrorAlert("This is coming soon!");
         test.showError();
         myContent.getChildren().add(test);
@@ -225,13 +238,13 @@ public abstract class SpriteEditor extends Editor {
         create.setOnAction( (e) -> {
             if (myController.nameAlreadyExists(partNames.getString(editorType),
                                                prompt.getCurrentText()))
-                prompt.displayError("A " + partNames.getString(editorType).toLowerCase() +
-                        " with that name already exists!");
-            else {
-                addPart();
-                hideOverlay();
-            }
-        });
+                prompt.displayError(String.format(NAME_EXISTS_ERROR, partNames
+                        .getString(editorType).toLowerCase()));
+                else {
+                    addPart();
+                    hideOverlay();
+                }
+            });
 
         Button cancel = prompt.getCancelButton();
         cancel.setOnAction( (e) -> {
@@ -250,40 +263,38 @@ public abstract class SpriteEditor extends Editor {
         String type = partNames.getString(editorType);
         try {
             String needed = spriteNeeded.getString(type);
-            System.out.println("projectiles present: " + myController.getKeysForPartType("Projectile"));
-            if (myController.getKeysForPartType(needed).size() == 0 && !needed.equals(type)) {
-                prompt.displayPermanentError(String.format("Please create %ss first!",
+            if (myController.getKeysForPartType(needed).isEmpty() && !needed.equals(type)) {
+                prompt.displayPermanentError(String.format(SPRITE_REQUIRED_ERROR,
                                                            needed.toLowerCase()));
             }
         }
         catch (MissingResourceException e) {
         }
     }
-    
-    protected void addPart(){
-        try{
+
+    protected void addPart () {
+        try {
             addSprite(prompt.getEnteredName(), prompt.getSelectedImageFile());
         }
-        catch(Exception e){
+        catch (Exception e) {
         }
     }
 
-    private void addSprite (String name, String imageFile){
-        String className = "authoringEnvironment.objects."
-                + partNames.getString(editorType) + "View";
+    private void addSprite (String name, String imageFile) {
+        String className = String.format(SPRITE_PACKAGE_PATH, partNames.getString(editorType));
         SpriteView sprite = generateSpriteView(myController, name, imageFile, className);
         sprite.initiateEditableState();
         setupSpriteAction(sprite);
         updateOnExists(sprite);
-        
+
         sprite.saveParameterFields(true);
     }
-    
+
     protected void updateOnExists (ObjectView sprite) {
         BooleanProperty spriteExists = new SimpleBooleanProperty(true);
         spriteExists.bind(sprite.isExisting());
         spriteExists.addListener( (obs, oldValue, newValue) -> {
-            if(!newValue){
+            if (!newValue) {
                 deleteSpriteFromRow(sprite);
             }
         });
@@ -303,10 +314,10 @@ public abstract class SpriteEditor extends Editor {
                 | NoSuchMethodException | SecurityException
                 | ClassNotFoundException e1) {
             System.err
-            .println("Class: "
-                    + className
-                    +
-                    "\nCouldn't be created with constructor (Controller, String, String)");
+                    .println("Class: "
+                             + className
+                             +
+                             "\nCouldn't be created with constructor (Controller, String, String)");
             e1.printStackTrace();
         }
         return sprite;
@@ -324,11 +335,13 @@ public abstract class SpriteEditor extends Editor {
         spritesCreated.remove(sprite);
         tagGroupsList.remove(sprite.getTagGroup());
         numSprites.setValue(spritesCreated.size());
+        
+        //TODO: delete from controller
     }
 
     private void setupSpriteAction (SpriteView sprite) {
         sprite.getSpriteBody().setOnMousePressed( (e) -> {
-            if (sprite.isExisting().getValue() && editing){
+            if (sprite.isExisting().getValue() && editing) {
                 showOverlay(sprite.getEditorOverlay());
                 setActiveOverlay(sprite.getEditorOverlay());
             }
@@ -344,7 +357,7 @@ public abstract class SpriteEditor extends Editor {
     private void showOverlay (StackPane overlay) {
         if (!isOverlayActive) {
             visuals.getChildren().add(overlay);
-            Scaler.scaleOverlay(0.0, 1.0, overlay);
+            Scaler.scaleOverlay(START_VALUE, END_VALUE, overlay);
             isOverlayActive = true;
         }
     }
@@ -352,10 +365,11 @@ public abstract class SpriteEditor extends Editor {
     @Override
     public void hideOverlay () {
         if (isOverlayActive) {
-            ScaleTransition scale = Scaler.scaleOverlay(1.0, 0.0, getActiveOverlay());
+            ScaleTransition scale = Scaler.scaleOverlay(END_VALUE, START_VALUE, getActiveOverlay());
             scale.setOnFinished(e -> {
                 visuals.getChildren().remove(getActiveOverlay());
-                myContent.getChildren().remove(getActiveOverlay()); // in case I added overlay to the
+                myContent.getChildren().remove(getActiveOverlay()); // in case I added overlay to
+                                                                    // the
                 // StackPane (prompt)
                 isOverlayActive = false;
             });
@@ -363,23 +377,25 @@ public abstract class SpriteEditor extends Editor {
     }
 
     private void finishEditing (HBox editControls, Button edit, Button add, Button load) {
-        TranslateTransition moveAdd = transitionButton(add, BUTTON_OFFSET, BUTTON_WIDTH+BUTTON_OFFSET);
-        TranslateTransition moveLoad = transitionButton(load, BUTTON_OFFSET, BUTTON_WIDTH+BUTTON_OFFSET);
+        TranslateTransition moveAdd =
+                transitionButton(add, BUTTON_OFFSET, BUTTON_WIDTH + BUTTON_OFFSET);
+        TranslateTransition moveLoad =
+                transitionButton(load, BUTTON_OFFSET, BUTTON_WIDTH + BUTTON_OFFSET);
         moveAdd.setOnFinished(e -> editControls.getChildren().remove(add));
         moveLoad.setOnFinished(e -> editControls.getChildren().remove(load));
-        edit.setText("Edit");
+        edit.setText(displayText.getString("Edit"));
         makeSpritesUneditable();
     }
 
     private void startEditing (HBox editControls, Button edit, Button add, Button load) {
         editControls.getChildren().add(0, add);
         editControls.getChildren().add(1, load);
-        transitionButton(load, BUTTON_WIDTH+BUTTON_OFFSET, BUTTON_OFFSET);
-        transitionButton(add, 2*BUTTON_WIDTH+BUTTON_OFFSET, BUTTON_OFFSET);
-        edit.setText("Done");
+        transitionButton(load, BUTTON_WIDTH + BUTTON_OFFSET, BUTTON_OFFSET);
+        transitionButton(add, 2 * BUTTON_WIDTH + BUTTON_OFFSET, BUTTON_OFFSET);
+        edit.setText(displayText.getString("Done"));
         makeSpritesEditable();
     }
-    
+
     protected void makeSpritesUneditable () {
         for (Node sprite : spritesCreated) {
             ((ObjectView) sprite).exitEditableState();
@@ -394,10 +410,9 @@ public abstract class SpriteEditor extends Editor {
 
     private TranslateTransition transitionButton (Button add, double from,
                                                   double to) {
-        TranslateTransition moveButton = new TranslateTransition(Duration.millis(100), add);
+        TranslateTransition moveButton = new TranslateTransition(Duration.millis(MOVE_BUTTON_DURATION), add);
         moveButton.setFromX(from);
         moveButton.setToX(to);
-        moveButton.setCycleCount(1);
         moveButton.play();
 
         return moveButton;
@@ -410,4 +425,6 @@ public abstract class SpriteEditor extends Editor {
     public void setActiveOverlay (Node activeOverlay) {
         this.activeOverlay = activeOverlay;
     }
+    
+    public void update(){}
 }

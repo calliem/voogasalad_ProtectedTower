@@ -55,7 +55,7 @@ public class Round implements UpdateAndReturnable, Endable, Reflectable {
     }
 
     @Override
-    public Map<Object, List<String>> update (int counter) {
+    public Map<Object, List<String>> update () {
         Map<Object, List<String>> tempReturnMap = new HashMap<>();
 
         while (myCurrentWaveIndex < myWaves.size() &&
@@ -70,11 +70,11 @@ public class Round implements UpdateAndReturnable, Endable, Reflectable {
         List<Wave> copyActiveWave = new ArrayList<>(myActiveWaves);
         for (Wave activeWave : copyActiveWave) {
             if (activeWave.hasEnded()) {
-                
+
                 myActiveWaves.remove(activeWave);
             }
             else {
-                mergeMaps(activeWave.update(counter), tempReturnMap);
+                mergeMaps(activeWave.update(), tempReturnMap);
             }
         }
 

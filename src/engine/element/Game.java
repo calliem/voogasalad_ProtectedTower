@@ -12,6 +12,7 @@ import engine.Bank;
 import engine.Endable;
 import engine.Updateable;
 import engine.conditions.Condition;
+import engine.element.sprites.Shop;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 import engine.factories.GameElementFactory;
@@ -36,22 +37,27 @@ public class Game implements Updateable, Endable {
     private Layout myLayout;
     private int myActiveLevelIndex;
     private Bank myBank;
+    private Shop myShop;
     private int myPoints;
     private GameElementFactory myGameElementFactory;
 
-    private int counter = 0;
+
 
     public Game (List<Sprite> nodes, Map<String, Object> parameters) {
-        myLayout = new Layout(nodes);
-        myGameElementFactory = new GameElementFactory();
-        myLayout.setFactory(myGameElementFactory);
+    myLayout = new Layout(nodes);
+    myGameElementFactory = new GameElementFactory();
+    myLayout.setFactory(myGameElementFactory);
 
-        lives = (Integer) parameters.get("Lives");
+    lives = (Integer) parameters.get("Lives");
+        myConditions = new ArrayList<Condition>();
+        myConditions.add(new Condition(this, e -> e.lives == 0, e -> e.lose()));
+        myConditions.add(new Condition(this, e -> e.myActiveLevelIndex >= myLevels.size(), e -> e.win()));
         myLevels = new ArrayList<>();
         myConditions = new ArrayList<Condition>();
 
         myActiveLevelIndex = 0;
-        myBank = new Bank();
+        myBank = new Bank(0);
+        myShop = new Shop(myLayout, myBank, new ArrayList<>());
         myPoints = 0;
     }
 
@@ -72,14 +78,14 @@ public class Game implements Updateable, Endable {
      */
     public void update () {
 
-        System.out.println("Beginning cycle " + counter);
-        // myConditions.forEach(c -> c.act(lives));
-        Map<Object, List<String>> enemiesToSpawn = myLevels.get(myActiveLevelIndex).update(counter);
+        System.out.println("Beginning cycle ");
+        myConditions.forEach(c -> c.check());
+        Map<Object, List<String>> enemiesToSpawn =
+                myLevels.get(myActiveLevelIndex).update();
         for (Object loc : enemiesToSpawn.keySet()) {
             myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
         }
-        myLayout.update(counter);
-        counter++;
+        myLayout.update();
 
     }
 
@@ -133,5 +139,13 @@ public class Game implements Updateable, Endable {
     public void update (int counter) {
         // TODO Auto-generated method stub
 
+    }
+    
+    public void win() {
+    	
+    }
+    
+    public void lose() {
+    	
     }
 }

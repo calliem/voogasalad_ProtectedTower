@@ -16,6 +16,7 @@ import javafx.util.Duration;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.MissingInformationException;
+import authoringEnvironment.Variables;
 
 public class TileView extends ObjectView{
     private String myName;
@@ -28,7 +29,6 @@ public class TileView extends ObjectView{
     private static final String COLOR_KEY = "Color";
     private static final Color SAVED_COLOR = Color.YELLOW;
     private static final Color ERROR_COLOR = Color.RED;
-    private static final String TILE = "Tile";
     private static final String SAVED_MESSAGE = "Tile saved!";
     private static final String ERROR_MESSAGE = "Already exists!";
     private static final int PAUSE_TIME = 1000;
@@ -60,7 +60,7 @@ public class TileView extends ObjectView{
         HBox buttons = new HBox(PADDING);
         buttons.setAlignment(Pos.CENTER);
         saveButton.setOnAction(e -> {
-            if(!myController.nameAlreadyExists(TILE, nameField.getText()) || nameField.getText().equals(myName)){
+            if(!myController.nameAlreadyExists(Variables.PARTNAME_TILE, nameField.getText()) || nameField.getText().equals(myName)){
                 myName = nameField.getText();
                 tile.setFill(tileColor);
                 saveTile();
@@ -119,7 +119,7 @@ public class TileView extends ObjectView{
     
     public Map<String, Object> getTileInfo(){
         Map<String, Object> info = new HashMap<>();
-        info.put(InstanceManager.PART_TYPE_KEY, TILE);
+        info.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_TILE);
         info.put(InstanceManager.NAME_KEY, myName);
         info.put(COLOR_KEY, tileColor);
         return info;

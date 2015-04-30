@@ -78,17 +78,21 @@ public class ActionManager {
      */
     public boolean applyAction (GameElement spriteOne, GameElement spriteTwo) {
         String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
-        if (myDecisionMap.containsKey(spriteTagPair)) {
+        if (isAction(spriteOne, spriteTwo)) {
             for (BiConsumer<GameElement, GameElement> action : myDecisionMap.get(spriteTagPair)[0]) {
                 action.accept(spriteOne, spriteTwo);
             }
-
             for (BiConsumer<GameElement, GameElement> action : myDecisionMap.get(spriteTagPair)[1]) {
                 action.accept(spriteTwo, spriteOne);
             }
             return true;
         }
         return false;
+    }
+    
+    public boolean isAction(GameElement spriteOne, GameElement spriteTwo){
+    	String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
+    	return myDecisionMap.containsKey(spriteTagPair);
     }
 
     /**

@@ -1,10 +1,13 @@
 package engine.element.sprites;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import annotations.parameter;
+import authoringEnvironment.objects.Coordinate;
 import javafx.animation.PathTransition;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
@@ -49,6 +52,10 @@ public class Enemy extends GameSprite {
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
         CanHurtPlayer = (Boolean) parameters.get("CanHurtPlayer");
+    }
+    
+    public GridCell getGoal(){
+    	return myGridPath.get(myGridPath.size()-1);
     }
 
     @Override
@@ -113,6 +120,7 @@ public class Enemy extends GameSprite {
         for (int i = 1; i < curveCoords.size()-2; i+=3) {
             path.getElements().add(
                                    new CubicCurveTo(curveCoords.get(i).getX(), curveCoords.get(i)
+
                                            .getY(),
                                                     curveCoords.get(i + 1).getX(), curveCoords
                                                             .get(i + 1).getY(),
@@ -160,7 +168,13 @@ public class Enemy extends GameSprite {
     }
 
     @Override
-    public void update (int counter) {
+    public Map<Object, List<String>> update () {
+        move();
+        Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
+        if (this.getHealth() == 0) {
+            spawnMap.put(this.getLocation(), this.getNextSprites());
+        }
+        return spawnMap;
     }
 
 }

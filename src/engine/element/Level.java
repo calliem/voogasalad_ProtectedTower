@@ -91,11 +91,11 @@ public class Level implements UpdateAndReturnable, Endable, Reflectable, Compara
     }
 
     @Override
-    public Map<Object, List<String>> update (int counter) {
+    public Map<Object, List<String>> update () {
         if (myActiveRound == null) {
             return new HashMap<Object, List<String>>();
         }
-        return myActiveRound.update(counter);
+        return myActiveRound.update();
     }
 
     @Override

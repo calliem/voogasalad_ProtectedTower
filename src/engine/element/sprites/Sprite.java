@@ -4,7 +4,6 @@ import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
-import engine.Updateable;
 
 
 /**
@@ -16,12 +15,13 @@ import engine.Updateable;
  *
  */
 
-public abstract class Sprite extends GameElement implements Updateable {
+public abstract class Sprite extends GameElement {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "")
     private ImageView image;
     @parameter(settable = false, playerDisplay = false, defaultValue = "")
     private String imagepath;
+
 
     public Sprite () {
 
@@ -67,6 +67,7 @@ public abstract class Sprite extends GameElement implements Updateable {
         image.setTranslateX(super.getLocationX());
         image.setTranslateY(super.getLocationY());
     }
+
 
     // Abstract methods
 

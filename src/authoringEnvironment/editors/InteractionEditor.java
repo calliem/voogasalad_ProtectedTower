@@ -20,4 +20,10 @@ public class InteractionEditor extends Editor {
         return new Group();
     }
 
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

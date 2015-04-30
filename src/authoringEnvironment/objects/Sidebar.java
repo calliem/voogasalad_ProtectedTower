@@ -1,7 +1,6 @@
 package authoringEnvironment.objects;
 
 import java.util.ResourceBundle;
-import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -11,10 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.map.MapWorkspace;
 
@@ -48,11 +45,11 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
     private Accordion accordionContext;
 
     public Sidebar (ResourceBundle resources,
-                    ObservableList<GameObject> dependency,
+                    ObservableList<GameObject> observableList,
                     MapWorkspace mapWorkspace) {
 
         myResources = resources;
-        myMaps = FXCollections.observableList(dependency);
+        myMaps = FXCollections.observableList(observableList);
         myMapWorkspace = mapWorkspace;
 
         setDimensionRestrictions();
@@ -61,15 +58,9 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         this.getChildren().add(topContext);
         this.getChildren().add(accordionContext);
         setContent(topContext);
-        // setSpacing(10);
-        // createMapSettings();
     }
 
     protected abstract void setContent (GridPane container);
-
-    // protected GridPane getTopContext(){
-    // return topContext;
-    // }
 
     protected MapWorkspace getMapWorkspace () {
         return myMapWorkspace;
@@ -94,19 +85,6 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         accordionContext.getPanes().add(organizer);
         return context;
     }
-    
-    protected void displayWorkspaceMessage(String text, Color color){
-        Text saved = new Text(text);
-        saved.setFill(color);
-        saved.setFont(new Font(30));
-        //saved.setVisible(false);
-        myMapWorkspace.getChildren().add(saved);
-        
-        //saved.setVisible(true);
-        PauseTransition pause = new PauseTransition(Duration.millis(1000));
-        pause.play();
-        pause.setOnFinished(e ->getMapWorkspace().getChildren().remove(saved));
-    }
 
     protected ListView<Node> createListView (ObservableList<Node> items, int height) {
         ListView<Node> list = new ListView<Node>();
@@ -121,5 +99,7 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         setSpacing(3);
         setMaxWidth(Double.MAX_VALUE);
     }
+
+
 
 }

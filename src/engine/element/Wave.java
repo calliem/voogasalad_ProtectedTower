@@ -50,7 +50,7 @@ public class Wave implements UpdateAndReturnable, Endable, Reflectable {
     }
 
     @Override
-    public Map<Object, List<String>> update (int counter) {
+    public Map<Object, List<String>> update () {
         Map<Object, List<String>> tempReturnMap = new HashMap<>();
 
         List<String> enemiesToReturn = new ArrayList<>();

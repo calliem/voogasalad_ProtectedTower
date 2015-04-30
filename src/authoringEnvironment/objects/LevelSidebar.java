@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoringEnvironment.Variables;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.map.MapWorkspace;
 
@@ -31,13 +32,13 @@ public class LevelSidebar extends Sidebar {
     private static final int LISTVIEW_HEIGHT = 200;
 
     public LevelSidebar (ResourceBundle resources,
-                         ObservableList<GameObject> maps,
+                         ObservableList<GameObject> observableList,
                          MapWorkspace mapWorkspace) {
-        super(resources, maps, mapWorkspace);
-        myMapList = FXCollections.observableList(maps);
-        mapDisplay = new LevelUpdatableDisplay(maps, 3, mapWorkspace); // remove default values TODO
+        super(resources, observableList, mapWorkspace);
+        myMapList = FXCollections.observableList(observableList);
+        mapDisplay = new LevelUpdatableDisplay(observableList, 3, Variables.THUMBNAIL_SIZE_MULTIPLIER, mapWorkspace); // remove default values TODO
 
-        maps.addListener(new ListChangeListener<GameObject>() {
+        observableList.addListener(new ListChangeListener<GameObject>() {
             @Override
             public void onChanged (javafx.collections.ListChangeListener.Change<? extends GameObject> change) {
                 mapDisplay.updateDisplay((List<GameObject>) change.getList());
@@ -73,7 +74,7 @@ public class LevelSidebar extends Sidebar {
         // getChildren().add(mapList);
 
         mapDisplay =
-                new LevelUpdatableDisplay(myMapList, UPDATABLEDISPLAY_ELEMENTS, getMapWorkspace());
+                new LevelUpdatableDisplay(myMapList, UPDATABLEDISPLAY_ELEMENTS, Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace());
         // temp.getChildren().add(mapDisplay);
         selectMap.getChildren().add(mapDisplay);
 

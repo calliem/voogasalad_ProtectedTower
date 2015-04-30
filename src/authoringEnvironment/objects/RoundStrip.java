@@ -17,10 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import util.misc.SetHandler;
 import authoringEnvironment.Controller;
-import authoringEnvironment.DataFormatException;
 import authoringEnvironment.InstanceManager;
-import authoringEnvironment.MissingInformationException;
-import authoringEnvironment.ProjectReader;
 
 
 /**
@@ -36,7 +33,10 @@ public class RoundStrip extends FlowStrip {
     private static final int MAP_SELECTOR_WIDTH = 205;
     private static final int PADDING = 10;
     private static final int ROW_SIZE = 3;
-    private static final String ROUND= "Round";
+    private static final String ROUND = "Round";
+    private static final String WAVES_KEY = "Waves";
+    private static final String TIMES_KEY = "Times";
+    private static final String PATHS_KEY = "Paths";
 
     private VBox rowContainer;
     private StackPane mapsAndBackground;
@@ -58,7 +58,6 @@ public class RoundStrip extends FlowStrip {
         scrollingMapSelector.setMaxWidth(MAP_SELECTOR_WIDTH);
         scrollingMapSelector.setHbarPolicy(ScrollBarPolicy.NEVER);
 
-
         StackPane mapsAndBackground = new StackPane();
         Rectangle background =
                 new Rectangle(MAP_SELECTOR_HEIGHT, MAP_SELECTOR_WIDTH, Color.LIGHTYELLOW);
@@ -76,6 +75,7 @@ public class RoundStrip extends FlowStrip {
         VBox rowContainer = new VBox(PADDING);
 
         ObservableList<String> mapKeys = myController.getKeysForPartType("Map");
+        System.out.println("maps: " + mapKeys);
         HBox row = new HBox(PADDING);
         int mapsPlacedInRow = 0;
         for (String mapKey : mapKeys) {
@@ -110,7 +110,7 @@ public class RoundStrip extends FlowStrip {
     }
 
     private void replaceMapSelectorWithMap (Map<String, Object> mapData, ImageView map) {
-        List<String> pathsInMapClicked = (List<String>) mapData.get("paths");
+        List<String> pathsInMapClicked = (List<String>) mapData.get(PATHS_KEY);
         // if the map has no paths
         if (pathsInMapClicked.size() == 0) {
             // TODO: display error
@@ -125,7 +125,11 @@ public class RoundStrip extends FlowStrip {
             ScaleImage.scale(map, MAP_SELECTOR_WIDTH, MAP_SELECTOR_HEIGHT);
             mapsAndBackground.getChildren().add(map);
             mapsAndBackground.getChildren()
-                    .add(changeMapButton((List<String>) mapData.get("paths")));
+                    .add(changeMapButton((List<String>) mapData.get(PATHS_KEY)));
+            
+            for (FlowView component : myComponents) {
+                ((RoundFlowView) component).changePathSelection(currentPaths);
+            }
         }
         // tell the user the paths don't match
         else {
@@ -159,23 +163,26 @@ public class RoundStrip extends FlowStrip {
 
     @Override
     protected void saveData (String componentName) {
-        
-        
-        List<Object> data = new ArrayList<Object>();
-        //data.addAll();
-        try {
-            if (myKey.equals(Controller.KEY_BEFORE_CREATION))
-                myKey = myController.addPartToGame(ROUND, componentName,
-                                                   ProjectReader.getParamsNoTypeOrName(ROUND), data);
-            else
-                myKey =
-                        myController.addPartToGame(myKey, ROUND, componentName,
-                                                   ProjectReader.getParamsNoTypeOrName(ROUND), data);
-        }
-        catch (MissingInformationException | DataFormatException | ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+        List<String> partKeyNames = new ArrayList<String>();
+        List<String> pathKeyNames = new ArrayList<String>();
+        List<Double> delays = new ArrayList<Double>();
 
+        for (FlowView unit : myComponents) {
+            partKeyNames.addAll(unit.getFileNames());
+            pathKeyNames.addAll(((RoundFlowView) unit).getPaths());
+            delays.addAll(unit.getDelays());
+        }
+
+        List<Double> times = getTimesFromZero(pathKeyNames, delays);
+
+        List<Object> data = new ArrayList<Object>();
+        data.add(partKeyNames);
+        data.add(times);
+        List<String> params = new ArrayList<String>();
+        params.add(WAVES_KEY);
+        params.add(PATHS_KEY);
+        params.add(TIMES_KEY);
+        
+        saveToGame(ROUND, componentName, params, data);
+    }
 }
