@@ -36,11 +36,18 @@ public class Tower extends GameSprite {
     // Use above projectile to read from data file
     // Use below projectile in front end to assign sprite objects
     @parameter(settable = true, playerDisplay = false, defaultValue = "null")
-    private Sprite projectileList;
+    private Projectile projectileList;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double cost;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double buildTime;
+    /**
+     * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
+     */
+    @parameter(settable = false, playerDisplay = true, defaultValue = "null")
+    private List<String> nextSprites;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private Tower nextSpritesList;
     private int myTimer = 0;
 
     private List<GameElement> myTargets;
@@ -67,7 +74,12 @@ public class Tower extends GameSprite {
      * @param sprites Set<GameElement> object of sprites
      */
     public void addTargets (Set<GameElement> sprites) {
+    	myTargets.clear();
         sprites.forEach(s -> myTargets.add(s));
+    }
+    
+    public GameElement getTarget(){
+    	return myPriority.getTarget(attackPriority, myTargets);
     }
 
     @Override
@@ -95,7 +107,7 @@ public class Tower extends GameSprite {
         move();
         Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
         if(myTimer >= attackSpeed && !myTargets.isEmpty()){
-            spawnMap.put(this.getLocation(), this.getNextSprites());
+            spawnMap.put(this.getLocation(), nextSprites);
             myTimer = 0;
         }
         myTimer++;
@@ -105,5 +117,9 @@ public class Tower extends GameSprite {
     public double getCost(){
     	return cost;
     }
+
+	public double getRange() {
+		return attackRange;
+	}
 
 }

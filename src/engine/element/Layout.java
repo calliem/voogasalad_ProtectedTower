@@ -109,7 +109,7 @@ public class Layout implements Updateable {
         definedScripts.keySet()
                 .forEach(s -> myGroovyEngine.addScriptToEngine(s, definedScripts.get(s)));
         definedScripts.keySet().forEach(t -> actionList.add( (s1, s2) -> myGroovyEngine
-                                                .applyScript(t, s1, s2)));
+                .applyScript(t, s1, s2)));
         myActionManager = new ActionManager(interactionMap, actionList);
     }
 
@@ -288,8 +288,8 @@ public class Layout implements Updateable {
      * @param projectileIDs List<String> of IDs of Projectile objects to place
      * @param location Point2D representing location on grid
      */
-    public void spawnProjectile (List<String> projectileIDs, Point2D location) {
-        projectileIDs.forEach(i -> spawnProjectile(i, location));
+    public void spawnProjectile (List<String> projectileIDs, Point2D location, GameElement target) {
+        projectileIDs.forEach(i -> spawnProjectile(i, location, target));
     }
 
     /**
@@ -298,10 +298,11 @@ public class Layout implements Updateable {
      * @param projectileID String ID of Projectile object to place
      * @param location Point2D representing location on grid
      */
-    public void spawnProjectile (String projectileID, Point2D location) {
+    public void spawnProjectile (String projectileID, Point2D location, GameElement target) {
         Projectile proj =
                 (Projectile) myGameElementFactory.getGameElement("Projectile", projectileID);
         proj.setLocation(location);
+        proj.setTarget(target);
         myProjectileList.add(proj);
     }
 
@@ -314,9 +315,9 @@ public class Layout implements Updateable {
      */
     @Override
     public void update (int counter) {
+        updateSpriteTargeting();
         updateSpriteLocations(counter);
         updateSpriteCollisions();
-        updateSpriteTargeting();
         removeDeadSprites();
     }
 
@@ -339,7 +340,8 @@ public class Layout implements Updateable {
 
         myTowerList.forEach(p -> {
             Map<Object, List<String>> spawnMap = p.update();
-            spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q));
+            spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q,
+                                                           p.getTarget()));
         });
 
         myEnemyList.forEach(p -> {

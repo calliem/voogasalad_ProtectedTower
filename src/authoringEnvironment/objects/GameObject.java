@@ -87,7 +87,8 @@ public class GameObject {
     };
 
     public Group getRoot (){
-        return null;}; //TODO:
+        return null;
+    };
 
     protected String getToolTipInfo (){
         String info = "";

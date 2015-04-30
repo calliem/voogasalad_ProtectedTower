@@ -130,7 +130,7 @@ public class MapSidebar extends Sidebar {
         tileSizeDisplay = new TextField(Integer.toString(getMapWorkspace().getActiveMap()
                 .getTileSize()));
         Button button = new Button(getResources().getString("Update"));
-        button.setOnMouseClicked(e -> getMapWorkspace().getActiveMap()
+        button.setOnAction(e -> getMapWorkspace().getActiveMap()
                 .changeTileSize(
                                 Integer.parseInt(tileSizeDisplay.getText())));
         tileSizeDisplay.setPrefWidth(TEXT_FIELD_WIDTH);
@@ -156,9 +156,7 @@ public class MapSidebar extends Sidebar {
 
         // TODO: this is duplicated from Kevin's class
         GraphicFileChooser imgSelector = new GraphicFileChooser("Select background");
-        imgSelector.addExtensionFilter("gif");
-        imgSelector.addExtensionFilter("png");
-        imgSelector.addExtensionFilter("jpg");
+        imgSelector.addExtensionFilterByType("Image");
 
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener( (obs, oldValue, newValue) -> {

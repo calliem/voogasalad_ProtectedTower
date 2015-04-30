@@ -21,15 +21,11 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed1</string>
+    <string>pee</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.Projectile</string>
-  </entry>
-  <entry>
-    <string>homing</string>
-    <boolean>true</boolean>
+    <string>ExampleGame_Part2.Projectile</string>
   </entry>
   <entry>
     <string>speed</string>

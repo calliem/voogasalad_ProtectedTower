@@ -11,7 +11,6 @@ public class BooleanSetting extends Setting{
 
     public BooleanSetting (Controller controller, String part, String label, String value) {
         super(controller, part, label, value);
-        System.out.println("Tried");
         selected = Boolean.parseBoolean(value);
     }
 
@@ -20,6 +19,7 @@ public class BooleanSetting extends Setting{
         checkbox.setSelected(true);
         
         basicLayout.getChildren().addAll(checkbox, error);
+        basicLayout.setAlignment(Pos.CENTER);
     }
     
     @Override
@@ -29,7 +29,7 @@ public class BooleanSetting extends Setting{
     }
     
     public void setParameterValue(Object value){
-        dataAsString = (String) value;
+        dataAsString = value.toString();
         checkbox.setSelected((Boolean) value);
     }
 
