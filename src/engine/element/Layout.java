@@ -61,6 +61,10 @@ public class Layout implements Updateable {
      * Table which contains interactions between game elements
      */
     private ActionManager myActionManager;
+    /**
+     * tower to be placed by user
+     */
+    private Tower myHeldTower;
 
     private final int ROW_INDEX = 0;
     private final int COLUMN_INDEX = 1;
@@ -155,10 +159,39 @@ public class Layout implements Updateable {
         // loc param can probably be removed because the tower can just hold its location to be
         // placed at
         Tower temp = (Tower) myGameElementFactory.getGameElement("Tower", towerID);
-        temp.setLocation(location);
-        if (canPlace(temp, location)) {
-            myTowerList.add(temp);
+        placeTower(temp, location);
+    }
+    
+    /**
+     * place held tower
+     * 
+     * @param location
+     */
+    public void placeTower(Point2D location){
+    	placeTower(myHeldTower, location);
+    	myHeldTower = null;
+    }
+    
+    /**
+     * places an instantiated tower at a location
+     * 
+     * @param tower
+     * @param location
+     */
+    public void placeTower (Tower tower, Point2D location) {
+    	tower.setLocation(location);
+    	if (canPlace(tower, location)) {
+            myTowerList.add(tower);
         }
+    }
+    
+    /**
+     * prepares tower for placement
+     * 
+     * @param tower
+     */
+    public void pickUpTower(Tower tower){
+    	myHeldTower = tower;
     }
 
     /**

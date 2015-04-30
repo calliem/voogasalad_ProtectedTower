@@ -101,5 +101,9 @@ public class Tower extends GameSprite {
         myTimer++;
         return spawnMap;
     }
+    
+    public double getCost(){
+    	return cost;
+    }
 
 }
