@@ -53,7 +53,7 @@ public abstract class MainEditor extends Editor {
     protected Group configureUI () {
         Group visuals = new Group();
         createGridPane();
-        myMapWorkspace = new MapWorkspace();
+        myMapWorkspace = new MapWorkspace(myController);
         System.out.println("MAP WORKSPACE CREATED");
         myPane.add(myMapWorkspace, 0, 0);
         visuals.getChildren().add(myPane);
@@ -96,28 +96,4 @@ public abstract class MainEditor extends Editor {
     }
 
     public abstract void update();
-        /*MapEditor mapEditor = (MapEditor)
-                Controller.getEditor(Controller.MAPS);
-        if (!getMapWorkspace().getChildren().contains(mapEditor.getActiveMap())) {
-            getMapWorkspace().updateWithNewMap(mapEditor.getActiveMap());
-        }*/
-        //mySidebar.updateTileDisplay();
-    
-
-    /*
-     * in level editor
-     * 
-     * @Override
-     * public void update() {
-     * System.out.println("level editor updated"); // TODO Auto-generated method stub
-     * MapEditor mapEditor = (MapEditor) Controller.getEditor("Maps"); //TODO: find a way to get
-     * sthe same resource file but to also use myResources.getString() on the proper resource file
-     * //how to avoid this issue of more dependencies on this string name. lots of code will have to
-     * change in order to change this; maybe use indexes instead?
-     * getMapWorkspace().getChildren().add(mapEditor.getActiveMap().getMap());
-     * super.update();
-     * getMapWorkspace().getActiveMap().removeTileListeners();
-     * mySidebar.update();
-     * }
-     */
 }

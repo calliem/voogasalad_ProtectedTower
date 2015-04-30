@@ -45,7 +45,7 @@
   </entry>
   <entry>
     <string>AttackRange</string>
-    <double>10.0</double>
+    <double>1000.0</double>
   </entry>
   <entry>
     <string>AttackPriority</string>
@@ -61,7 +61,7 @@
   </entry>
   <entry>
     <string>Projectile</string>
-    <string>ExampleGame_Part1.Projectile</string>
+    <string>ExampleGame_Part2.Projectile</string>
   </entry>
   <entry>
     <string>PartKey</string>
@@ -118,7 +118,7 @@
   </entry>
   <entry>
     <string>AttackRange</string>
-    <double>30.0</double>
+    <double>300.0</double>
   </entry>
   <entry>
     <string>AttackPriority</string>
@@ -134,7 +134,7 @@
   </entry>
   <entry>
     <string>Projectile</string>
-    <string>ExampleGame_Part0.Projectile</string>
+    <string>ExampleGame_Part1.Projectile</string>
   </entry>
   <entry>
     <string>PartKey</string>
@@ -207,7 +207,7 @@
   </entry>
   <entry>
     <string>Projectile</string>
-    <string>ExampleGame_Part2.Projectile</string>
+    <string>ExampleGame_Part0.Projectile</string>
   </entry>
   <entry>
     <string>PartKey</string>

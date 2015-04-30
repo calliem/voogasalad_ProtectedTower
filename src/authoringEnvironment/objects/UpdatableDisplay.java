@@ -76,9 +76,7 @@ public abstract class UpdatableDisplay extends VBox {
             String name = (String) partParameters.get(InstanceManager.NAME_KEY);
             GameObject displayObject = new GameObject(key, name, thumbnail);
             myObjects.add(displayObject);
-            System.out.println("displayobj " + displayObject);
         }
-        System.out.println("myobjects " + myObjects);
     }
 
     private ImageView setThumbnailSize (ImageView thumbnail) {
@@ -202,6 +200,10 @@ public abstract class UpdatableDisplay extends VBox {
 
     public void setSelectedView (StackPane view) {
         selectedView = view;
+    }
+    
+    public List<GameObject> getObjects(){
+        return myObjects;
     }
 
 }

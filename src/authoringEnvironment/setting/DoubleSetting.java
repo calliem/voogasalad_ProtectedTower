@@ -27,6 +27,12 @@ public class DoubleSetting extends Setting{
             return false;
         }
     }
+    
+    @Override
+    public void setParameterValue(Object value){
+        dataAsDouble = (Double) value;
+        textBox().setText(dataAsDouble+"");
+    }
 
     public Double getParameterValue(){
         return dataAsDouble;

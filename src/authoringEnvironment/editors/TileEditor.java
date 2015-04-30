@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import authoringEnvironment.Controller;
+import authoringEnvironment.objects.ObjectView;
 import authoringEnvironment.objects.TileView;
 import authoringEnvironment.util.Scaler;
 
@@ -33,11 +34,11 @@ public class TileEditor extends SpriteEditor {
     }
     
     @Override
-    protected void addPart(){
-        createTile(prompt.getEnteredName(), prompt.getColorChosen());
+    protected ObjectView addPart(){
+        return createTile(prompt.getEnteredName(), prompt.getColorChosen());
     }
     
-    private void createTile(String name, Color color){
+    private ObjectView createTile(String name, Color color){
         TileView tile = new TileView(myController, name, color);
         tile.initiateEditableState();
         tile.getTileBody().setOnMousePressed(e -> {
@@ -51,6 +52,7 @@ public class TileEditor extends SpriteEditor {
         updateOnExists(tile);
         
         tile.saveTile();
+        return tile;
     }
     
     private void showOverlay(TileView tile){

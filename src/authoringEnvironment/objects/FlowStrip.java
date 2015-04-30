@@ -100,7 +100,7 @@ public abstract class FlowStrip extends HBox {
 
     protected abstract void saveData (String componentName);
 
-    private void addComponentToRow (ScrollPane displayPane, HBox content, String name) {
+    protected void addComponentToRow (ScrollPane displayPane, HBox content, String name) {
         String toCreate = AUTHORING_OBJECTS_PACKAGE + editorType + "FlowView";
         FlowView flow = null;
         try {

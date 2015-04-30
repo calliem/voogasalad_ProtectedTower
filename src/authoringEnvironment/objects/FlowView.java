@@ -42,7 +42,7 @@ import authoringEnvironment.setting.SpriteSetting;
 
 public class FlowView extends HBox {
     protected TextField delayTextField;
-    private FileChooser fileChooser;
+    protected FileChooser fileChooser;
     protected Controller myController;
     private int myHeight;
     protected List<String> partFileNames;
@@ -65,7 +65,7 @@ public class FlowView extends HBox {
      * @param height
      *        Height of the hbox display
      */
-    public FlowView (int height, Controller c) {
+    public FlowView (int height, Controller c, List<String> data) {
         super(PADDING);
         this.setAlignment(Pos.CENTER);
         myController = c;
@@ -78,7 +78,7 @@ public class FlowView extends HBox {
         selector = new VBox(VBOX_PADDING_MULTIPLIER * PADDING);
         selector.setAlignment(Pos.CENTER);
 
-        final List<Node> partSelectorBox = createOptionSelector();
+        final List<Node> partSelectorBox = createOptionSelector(data);
 
         selector.getChildren().addAll(partSelectorBox);
         this.getChildren().add(selector);
@@ -88,7 +88,7 @@ public class FlowView extends HBox {
         this.setPrefHeight(myHeight);
     }
 
-    protected List<Node> createOptionSelector () {
+    protected List<Node> createOptionSelector (List<String> data) {
         List<Node> options = new ArrayList<Node>();
         Button waveButton = new Button("Choose Wave");
         waveButton.setOnAction(e -> selectWave());
@@ -164,7 +164,7 @@ public class FlowView extends HBox {
      * @return List<Double> of delay times between units in the wave
      */
     public List<Double> getDelays () {
-        ArrayList<Double> unitDelay = new ArrayList<Double>();
+        List<Double> unitDelay = new ArrayList<Double>();
         System.out.println("delayTextField: " + delayTextField.getText());
         try {
             unitDelay.add(Double.parseDouble(delayTextField.getText()));
@@ -173,6 +173,18 @@ public class FlowView extends HBox {
         }
 
         return delays;
+    }
+    
+    public String getWaveKey(){
+        return "null";
+    }
+    
+    public String getPathKey(){
+        return "penis";
+    }
+    
+    public Double getDelay(){
+        return Double.parseDouble(delayTextField.getText());
     }
 
 }

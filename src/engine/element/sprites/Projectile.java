@@ -1,9 +1,9 @@
 package engine.element.sprites;
 
-import java.lang.reflect.Field;
 import java.util.Map;
-import engine.Updateable;
+import javafx.geometry.Point2D;
 import annotations.parameter;
+import engine.Updateable;
 
 
 /**
@@ -17,6 +17,10 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1")
     private Double damage;
+    @parameter(settable = true, playerDisplay = true)
+    private boolean homing = true;
+
+    private GameElement target;
 
     public Projectile () {
 
@@ -31,6 +35,14 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     public Double getDamage () {
         return damage;
+    }
+
+    public GameElement getTarget () {
+        return target;
+    }
+
+    public void setTarget (GameElement g) {
+        target = g;
     }
 
     @Override
@@ -51,25 +63,33 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     @Override
     public void update () {
-        this.move();
+        if (homing) {
+            updateHeading();
+        }
+    }
+
+    private void updateHeading () {
+        if (!target.getState().equals(DEAD_STATE))
+            this.setHeading(new Point2D(target.getLocationX() - this.getLocationX(), target
+                    .getLocationY() - this.getLocationY()));
     }
 
     @Override
     public void fixField (String fieldToModify, Object value) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void setField (String fieldToModify, String value, Double duration) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void changeField (String fieldToModify, String value, Double duration) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }

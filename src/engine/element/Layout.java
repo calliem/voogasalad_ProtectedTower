@@ -1,7 +1,6 @@
 package engine.element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,7 +20,6 @@ import engine.element.sprites.GameElement;
 import engine.element.sprites.GameMap;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.MapPath;
-import engine.element.sprites.MoveableSprite;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
@@ -332,8 +330,8 @@ public class Layout implements Updateable {
      * @param projectileIDs List<String> of IDs of Projectile objects to place
      * @param location Point2D representing location on grid
      */
-    public void spawnProjectile (List<String> projectileIDs, Point2D location) {
-        projectileIDs.forEach(i -> spawnProjectile(i, location));
+    public void spawnProjectile (List<String> projectileIDs, Point2D location, GameElement target) {
+        projectileIDs.forEach(i -> spawnProjectile(i, location, target));
     }
 
     /**
@@ -342,10 +340,11 @@ public class Layout implements Updateable {
      * @param projectileID String ID of Projectile object to place
      * @param location Point2D representing location on grid
      */
-    public void spawnProjectile (String projectileID, Point2D location) {
+    public void spawnProjectile (String projectileID, Point2D location, GameElement target) {
         Projectile proj =
                 (Projectile) myGameElementFactory.getGameElement("Projectile", projectileID);
         proj.setLocation(location);
+        proj.setTarget(target);
         myNodeList.add(proj);
         myProjectileList.add(proj);
     }
@@ -371,8 +370,9 @@ public class Layout implements Updateable {
 
     private void removeDeadSprites () {
         for (GameElement g : this.getSprites()) {
-            if (g.getState().equals(GameElement.DEAD_STATE))
+            if (g.getState().equals(GameElement.DEAD_STATE)) {
                 this.removeSprite(g);
+            }
         }
     }
 
@@ -384,13 +384,14 @@ public class Layout implements Updateable {
 
         myTowerList.forEach(p -> {
             Map<Object, List<String>> spawnMap = p.update();
-            spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q));
+            spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q,
+                                                           p.getTarget()));
         });
 
-        // myEnemyList.forEach(p -> {
-        // Map<Object, List<String>> spawnMap = p.update();
-        // spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-        // });
+        myEnemyList.forEach(p -> {
+            Map<Object, List<String>> spawnMap = p.update();
+            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+        });
 
     }
 
@@ -502,6 +503,6 @@ public class Layout implements Updateable {
 
     // TODO remove
     public void updateBackgroundTest (String key) {
-        this.setMap(key);
+        // this.setMap(key);
     }
 }

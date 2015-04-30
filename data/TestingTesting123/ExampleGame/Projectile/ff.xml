@@ -5,11 +5,11 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>/ImageData/ExampleGame_Part0Image.png</string>
+    <string>images/bluefire.png</string>
   </entry>
   <entry>
     <string>damage</string>
-    <double>1.0</double>
+    <int>1</int>
   </entry>
   <entry>
     <string>boundingWidth</string>
@@ -25,7 +25,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.Projectile</string>
+    <string>ExampleGame_Part1.Projectile</string>
   </entry>
   <entry>
     <string>speed</string>
@@ -33,9 +33,6 @@
   </entry>
   <entry>
     <string>Tags</string>
-    <list>
-      <string>e</string>
-      <string>d</string>
-    </list>
+    <list/>
   </entry>
 </map>
