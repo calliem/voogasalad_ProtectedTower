@@ -1,8 +1,11 @@
 package engine.element.sprites;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import engine.UpdateAndReturnable;
 import annotations.parameter;
 
 
@@ -13,7 +16,7 @@ import annotations.parameter;
  * @author Qian Wang
  *
  */
-public abstract class GameSprite extends MoveableSprite {
+public abstract class GameSprite extends MoveableSprite implements UpdateAndReturnable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "100")
     private Integer health;
@@ -27,7 +30,7 @@ public abstract class GameSprite extends MoveableSprite {
 
     // Getters and setters
 
-    protected Integer getHealth () {
+    public Integer getHealth () {
         return health;
     }
 
@@ -41,5 +44,6 @@ public abstract class GameSprite extends MoveableSprite {
     public List<String> getNextSprites () {
         return Collections.unmodifiableList(nextSprites);
     }
+
 
 }

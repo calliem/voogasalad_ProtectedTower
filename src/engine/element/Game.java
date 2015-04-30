@@ -45,6 +45,8 @@ public class Game implements Updateable, Endable {
 
     public Game (List<Sprite> nodes) {
         myConditions = new ArrayList<Condition>();
+        myConditions.add(new Condition(this, e -> e.lives == 0, e -> e.lose()));
+        myConditions.add(new Condition(this, e -> e.myActiveLevelIndex >= myLevels.size(), e -> e.win()));
         myLevels = new ArrayList<>();
         myNodes = nodes;
         myLayout = new Layout(myNodes);
@@ -72,9 +74,9 @@ public class Game implements Updateable, Endable {
     @Override
     public void update (int counter) {
         System.out.println("Beginning cycle " + counter);
-        myConditions.forEach(c -> c.act(lives));
+        myConditions.forEach(c -> c.check());
         Map<Object, List<String>> enemiesToSpawn =
-                myLevels.get(myActiveLevelIndex).update(counter);
+                myLevels.get(myActiveLevelIndex).update();
         for (Object loc : enemiesToSpawn.keySet()) {
             myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
         }
@@ -109,5 +111,13 @@ public class Game implements Updateable, Endable {
 
     public void placeTower (String id, double sceneX, double sceneY) {
         myLayout.placeTower(id, new Point2D(sceneX, sceneY));
+    }
+    
+    public void win() {
+    	
+    }
+    
+    public void lose() {
+    	
     }
 }
