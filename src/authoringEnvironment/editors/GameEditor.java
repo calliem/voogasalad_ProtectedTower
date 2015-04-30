@@ -25,16 +25,14 @@ import authoringEnvironment.Variables;
 
 public class GameEditor extends Editor {
 
-    // private String myName;
-    // private String myDescription;
-    // private int myLives;
     private TextField gameNameEntry;
     private TextArea gameDescriptionEntry;
     private TextField totalLivesEntry;
 
     private static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
-    private static final ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +
-                                                                  "game_editor_english");
+    private static final ResourceBundle myResources = ResourceBundle
+            .getBundle(DEFAULT_RESOURCE_PACKAGE +
+                       "game_editor_english");
 
     public GameEditor (Controller controller, String name) {
         super(controller, name);
@@ -43,14 +41,12 @@ public class GameEditor extends Editor {
     @Override
     protected Group configureUI () {
         this.setStyle(MainEditor.DARK_TAB_CSS);
-        // TODO: put everything into a StringSetting object
         Group visuals = new Group();
         GridPane framework = new GridPane();
         framework.setVgap(10);
         framework.setHgap(10);
         framework.setPadding(new Insets(10));
 
-     //   setConstraints(framework);
         Text gameName = new Text(myResources.getString("GameName"));
         gameNameEntry = new TextField();
         gameNameEntry.setPromptText(myResources.getString("EnterGameName"));
@@ -75,16 +71,14 @@ public class GameEditor extends Editor {
         return visuals;
     }
 
-
     private void save () {
-
         Map<String, Object> settings = new HashMap<String, Object>();
 
         String name = gameNameEntry.getText();
         settings.put(InstanceManager.NAME_KEY, name);
 
         String description = gameDescriptionEntry.getText();
-        settings.put(Variables.DESCRIPTION, name);
+        settings.put(Variables.DESCRIPTION, description);
 
         int lives = Integer.parseInt(totalLivesEntry.getText());
         settings.put(Variables.LIVES, lives);
@@ -94,6 +88,6 @@ public class GameEditor extends Editor {
     @Override
     public void update () {
         // TODO Auto-generated method stub
-        
+
     }
 }

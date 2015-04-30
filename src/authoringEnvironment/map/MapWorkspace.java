@@ -14,34 +14,32 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.pathing.PathView;
-import authoringEnvironment.pathing.Anchor;
 import authoringEnvironment.util.Scaler;
 
 
 /**
- * Houses the stackpane that holds the currently active tilemap, paths, messages, etc. that may be
+ * Houses the Stackpane that holds the currently active Tilemap, paths, messages, etc. that may be
  * displayed on it. Updates the currently active objects accordingly based upon changes called from
  * other classes.
  * 
- * @author callie
+ * @author Callie Mao
  *
  */
 public class MapWorkspace extends StackPane {
 
     private static final Color MAP_BACKGROUND_COLOR = Color.web("2A2A29");
 
-    
     private static final int DEFAULT_MAP_ROWS =
             (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);
     private static final int DEFAULT_MAP_COLS =
-            (int) (AuthoringEnvironment.getEnvironmentHeight() * .9 / 25); // getHeight();
+            (int) (AuthoringEnvironment.getEnvironmentHeight() * .9 / 25);
     private static final int DEFAULT_TILE_SIZE = 30; // based on height since monitor height < width
                                                      // and that is usually the limiting factor
-    private static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
-    private static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
+
     private static final double MESSAGE_DISPLAY_DURATION = 1500;
     private static final int MESSAGE_FONT_SIZE = 20;
     private static final String EMPTY_KEY = "";
@@ -49,39 +47,28 @@ public class MapWorkspace extends StackPane {
     private TileMap myActiveMap;
     private PathView myActivePath;
     private String myActiveTile;
-    private Rectangle pathModeOverlay;
-    private Controller myController;
     private ImageView myActiveImg;
-
-    // TODO: fix all of these constants so there are no more replicates
+    private Controller myController;
 
     public MapWorkspace (Controller controller) {
         super();
         myController = controller;
         Rectangle background =
                 new Rectangle(AuthoringEnvironment.getEnvironmentWidth() *
-                              WORKSPACE_WIDTH_MULTIPLIER,
-                              WORKSPACE_HEIGHT_MULTIPLIER *
+                              Variables.WORKSPACE_WIDTH_MULTIPLIER,
+                              Variables.WORKSPACE_HEIGHT_MULTIPLIER *
                                       AuthoringEnvironment.getEnvironmentHeight(),
                               MAP_BACKGROUND_COLOR);
         getChildren().add(background);
         StackPane.setAlignment(background, Pos.CENTER);
 
         createDefaultMap();
-//<<<<<<< HEAD
-//        pathModeOverlay =
-//                // new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS,
-//                // myActiveMap.getHeight()+2*Anchor.RADIUS);
-//                new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
-//        pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
-//        StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
-//=======
-//        
 
     }
 
     public TileMap createDefaultMap () {
-        TileMap defaultMap = new TileMap(myController, DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
+        TileMap defaultMap =
+                new TileMap(myController, DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
         updateWithNewMap(defaultMap);
         return defaultMap;
     }
@@ -110,8 +97,8 @@ public class MapWorkspace extends StackPane {
         if (!getChildren().contains(object.getRoot()))
             getChildren().add(object.getRoot());
     }
-    
-    public void updateWorkspaceWithImg(ImageView imgView){
+
+    public void updateWorkspaceWithImg (ImageView imgView) {
         if (myActiveImg != null)
             remove(imgView);
         getChildren().add(imgView);
@@ -124,36 +111,13 @@ public class MapWorkspace extends StackPane {
         myActiveMap.setActiveTile(EMPTY_KEY);
     }
 
-    // TODO: duplicated
     public void updateWithNewPath (PathView object) {
         ScaleTransition scale =
                 Scaler.scaleOverlay(0.0, 1.0, object.getRoot());
         scale.setOnFinished( (e) -> {
-            //TODO: figure out math placement
-         /*   double centerX =  AuthoringEnvironment.getEnvironmentWidth()*WORKSPACE_WIDTH_MULTIPLIER/2;
-            double centerY = AuthoringEnvironment.getEnvironmentHeight()*WORKSPACE_HEIGHT_MULTIPLIER/2;
-            double avgX = object.getAverageCenterPoint().getX();
-            double avgY = object.getAverageCenterPoint().getY();
-            
-            double diffX = avgX - centerX;
-            double diffY = avgY - centerY;
-            
-            if (diffX >= 0)
-                object.getRoot().setTranslateX(diffX);
-            else 
-                object.getRoot().setTranslateX(-1* diffX);
-            
-            if (diffY >= 0)
-                object.getRoot().setTranslateY(-1 * diffY);
-            else 
-                object.getRoot().setTranslateY(diffY);*/
             update(myActivePath, object);
-
-            
             myActivePath = object;
-
         });
-
     }
 
     public void createNewPath () {
@@ -179,12 +143,10 @@ public class MapWorkspace extends StackPane {
 
     public void activatePathMode () {
         myActiveMap.removeTileListeners();
-       // myActiveMap.getRoot().getChildren().add(pathModeOverlay);
     }
 
     public void deactivatePathMode () {
         myActiveMap.attachTileListeners();
-       // myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
         myActiveMap.getRoot().getChildren().remove(myActivePath);
     }
 
@@ -196,7 +158,7 @@ public class MapWorkspace extends StackPane {
         myActiveMap.setActiveTile(tileKey);
         myActiveTile = tileKey;
     }
-    
+
     public void setActivePath (PathView path) {
         myActivePath = null;
     }

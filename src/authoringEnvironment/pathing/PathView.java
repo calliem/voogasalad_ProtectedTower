@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -26,22 +24,27 @@ import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.util.Screenshot;
 
 
+/**
+ * PathView displays the path consisting of anchors, curves (bound lines), and adds them to the parent
+ * 
+ * @author Callie Mao
+ *
+ */
 public class PathView extends GameObject {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private static final int DEFAULT_STROKE_WIDTH = 4;
     private static final double MAP_OPACITY_ACTIVATED = 0.2;
+    private static final String NUMBER_ANCHOR_POINTS = "\nNumber of anchor points: ";
     private TileMap myParent;
     private int numPoints;
     private Anchor mostRecentPoint;
     private List<Anchor> myAnchors;
     private Group myRoot;
-//    private Coordinate myAverageCenterPoint;
 
     public PathView (TileMap parent) {
         myAnchors = new ArrayList<Anchor>();
         myParent = parent;
 
-       
         numPoints = 0;
         myRoot = new Group();
         Rectangle pathModeOverlay =
@@ -54,18 +57,6 @@ public class PathView extends GameObject {
 
     public int getNumPoints () {
         return numPoints;
-    }
-    
-    public Coordinate getAverageCenterPoint(){
-        double x = 0;
-        double y = 0;
-        for (int i = 0 ; i < myAnchors.size(); i ++){
-            x += myAnchors.get(i).getCenterX();
-            y += myAnchors.get(i).getCenterX();
-        }
-        x = x / myAnchors.size();
-        y = y / myAnchors.size();
-        return new Coordinate(x, y);
     }
 
     public boolean areAnchorsSelected () {
@@ -176,16 +167,14 @@ public class PathView extends GameObject {
         Map<String, Object> settings = new HashMap<String, Object>();
         settings.put(InstanceManager.NAME_KEY, getName());
         settings.put(Variables.PARAMETER_CURVES_COORDINATES, anchorCoordinates);
-        settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
-
-        // settings.put(Variables.PARAMETER_IMAGE, thumbnail);
+        settings.put(InstanceManager.PART_TYPE_KEY, InstanceManager.PATH_PARTNAME);
         return settings;
     }
 
     protected String getToolTipInfo () {
-        String info = "";
-        info += "Name: " + getName();
-        info += "\nNumber of anchor points: " + numPoints;
+        String info = Variables.EMPTY_STRING;
+        info += Variables.NAME_HEADER + getName();
+        info += NUMBER_ANCHOR_POINTS + numPoints;
         return info;
     }
 

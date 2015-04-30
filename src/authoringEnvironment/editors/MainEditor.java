@@ -7,6 +7,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.Variables;
 import authoringEnvironment.map.MapWorkspace;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
@@ -27,11 +28,7 @@ public abstract class MainEditor extends Editor {
     private ObservableList<GameObject> myMaps;
 
     private static final double SIDEBAR_WIDTH_MULTIPLIER = .25;
-    private static final double MAP_WIDTH_MULTIPLIER = .75; // THIS IS REPLICATED
-    // WITH THOSE
-    // VARIABLES IN MAP
-    // WORKSPACE
-    private static final double MAP_HEIGHT_PERCENT = 100; // THIS IS REPLICATED
+
     protected static final String DARK_TAB_CSS = "-fx-base: #3c3c3c;";
 
     // WITH THOSE
@@ -79,11 +76,11 @@ public abstract class MainEditor extends Editor {
 
     private void setGridPaneConstraints (GridPane pane) {
         RowConstraints row0 = new RowConstraints();
-        row0.setPercentHeight(MAP_HEIGHT_PERCENT);
+        row0.setPercentHeight(Variables.WORKSPACE_HEIGHT_MULTIPLIER);
         pane.getRowConstraints().add(row0);
         ColumnConstraints col0 = new ColumnConstraints();
         col0.setPrefWidth(AuthoringEnvironment.getEnvironmentWidth()
-                          * MAP_WIDTH_MULTIPLIER);
+                          * Variables.WORKSPACE_WIDTH_MULTIPLIER);
         ColumnConstraints col1 = new ColumnConstraints();
         // col1.setPrefWidth((MainEnvironment.getEnvironmentWidth() *
         // SIDEBAR_WIDTH_MULTIPLIER); TODO: add this back
@@ -95,5 +92,5 @@ public abstract class MainEditor extends Editor {
         return myPane;
     }
 
-    public abstract void update();
+    public abstract void update ();
 }

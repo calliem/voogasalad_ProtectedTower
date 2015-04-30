@@ -42,13 +42,11 @@ public class FlowView extends HBox {
     protected List<Double> delays;
 
     private VBox selector;
-
-    // TODO: take back all the instance variables that belong in this class only
-
     private static final double VBOX_PADDING_MULTIPLIER = 0.5;
     private static final int PADDING = 10;
     private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
+    private static final String CHOOSE_WAVE = "Choose Wave";
 
     /**
      * Creates the visual and input elements for the "timeline" in the
@@ -82,10 +80,6 @@ public class FlowView extends HBox {
     }
 
     protected List<Node> createOptionSelector (List<String> data) {
-//        List<Node> options = new ArrayList<Node>();
-//        Button waveButton = new Button("Choose Wave");
-//        waveButton.setOnAction(e -> selectWave());
-//        options.add(waveButton);
         return null;
     }
 
@@ -158,15 +152,16 @@ public class FlowView extends HBox {
      */
     public List<Double> getDelays () {
         List<Double> unitDelay = new ArrayList<Double>();
-        System.out.println("delayTextField: " + delayTextField.getText());
         try {
             unitDelay.add(Double.parseDouble(delayTextField.getText()));
             delays = unitDelay;
-        } catch(NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
         }
 
         return delays;
     }
+
     
     public String getWaveKey(){
         return null;
@@ -174,9 +169,10 @@ public class FlowView extends HBox {
     
     public String getPathKey(){
         return null;
+
     }
-    
-    public Double getDelay(){
+
+    public Double getDelay () {
         return Double.parseDouble(delayTextField.getText());
     }
 

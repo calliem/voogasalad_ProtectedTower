@@ -1,8 +1,8 @@
 package authoringEnvironment;
 
-public class DataFormatException extends Exception{
-    
-    public DataFormatException(String message){
+public class DataFormatException extends Exception {
+
+    public DataFormatException (String message) {
         super(message);
     }
 
