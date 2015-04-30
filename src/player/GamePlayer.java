@@ -55,6 +55,9 @@ import engine.element.sprites.Tower;
  * @author Sean Scott
  */
 public class GamePlayer extends Application{
+	private final int LEVEL_INDEX = 0;
+	private final int LIVES_INDEX = 1;
+	
     private Stage myPlayerStage;
     private Group myEngineRoot = new Group();
     private Scene myMainScene;
@@ -234,7 +237,8 @@ public class GamePlayer extends Application{
     	Text livesText = new Text();
     	livesText.setFont(Font.font(24));
     	livesText.setText("LIVES: " + lives + " / " + lives);
-    	myInfoBox.getChildren().addAll(levelText, livesText);
+    	myInfoBox.getChildren().add(LEVEL_INDEX, levelText);
+    	myInfoBox.getChildren().add(LIVES_INDEX, livesText);
     	VBox.setMargin(livesText, new Insets(24));
     	VBox.setMargin(levelText, new Insets(24));
 		return myInfoBox;
@@ -339,13 +343,23 @@ public class GamePlayer extends Application{
         });
         return mainArea;
     }
+    
+    private void replaceStringInText(int index, Object arg){
+    	Text text = (Text) myInfoBox.getChildren().get(index);
+    	String[] spaceSplit = text.getText().split(" ");
+		spaceSplit[1] = String.valueOf(arg);
+		String newString = "";
+		for (String piece: spaceSplit){
+			newString += piece;
+		}
+		text.setText(newString);
+    }
 	
 	private class LevelObserver implements Observer{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			
-			
+			replaceStringInText(LIVES_INDEX, arg);
 		}
 		
 	}
@@ -354,8 +368,9 @@ public class GamePlayer extends Application{
 
 		@Override
 		public void update(Observable o, Object arg) {
-			// TODO Auto-generated method stub
-			
+			replaceStringInText(LEVEL_INDEX, arg);			
+			Game game = (Game) o;
+			game.getActiveLevel().addObserver(myLevelObserver);
 		}
 		
 	}
