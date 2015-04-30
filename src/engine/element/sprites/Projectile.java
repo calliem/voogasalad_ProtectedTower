@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import engine.Updateable;
 import annotations.parameter;
 
 
@@ -10,7 +11,7 @@ import annotations.parameter;
  *
  */
 
-public class Projectile extends MoveableSprite {
+public class Projectile extends MoveableSprite implements Updateable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1")
     private Integer damage;
@@ -40,8 +41,8 @@ public class Projectile extends MoveableSprite {
 
     @Override
     public void update (int counter) {
-        // TODO Auto-generated method stub
-
+        this.move();
     }
+
 
 }

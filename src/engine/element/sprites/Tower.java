@@ -1,7 +1,11 @@
 package engine.element.sprites;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
@@ -24,6 +28,7 @@ public class Tower extends GameSprite {
     private Double attackRange;
     @parameter(settable = true, playerDisplay = true, defaultValue = "Close")
     private String attackPriority;
+    
     @parameter(settable = false, playerDisplay = true, defaultValue = "null")
     private List<String> projectiles;
     // Use above projectile to read from data file
@@ -34,6 +39,7 @@ public class Tower extends GameSprite {
     private Double cost;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double buildTime;
+    private int myTimer = 0;
 
     private Set<GameElement> myTargets;
 
@@ -72,8 +78,15 @@ public class Tower extends GameSprite {
     }
 
     @Override
-    public void update (int counter) {
-        // TODO Auto-generated method stub
-        System.out.println("Tower updated");
+    public Map<Object, List<String>> update () {
+        move();
+        Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
+        if(myTimer >= attackSpeed && !myTargets.isEmpty()){
+            spawnMap.put(this.getLocation(), this.getNextSprites());
+            myTimer = 0;
+        }
+        myTimer++;
+        return spawnMap;
     }
+
 }

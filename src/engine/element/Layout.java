@@ -17,6 +17,7 @@ import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.GameElement;
 import engine.element.sprites.GridCell;
+import engine.element.sprites.MoveableSprite;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
@@ -229,6 +230,12 @@ public class Layout implements Updateable {
         enemyIDs.forEach(i -> spawnEnemy(i, pathID));
     }
 
+    
+    public void spawnEnemy (List<String> enemyIDs, Point2D location) {
+        enemyIDs.forEach(i -> spawnEnemy(i, location));
+    }
+
+    
     /**
      * Creates a new Enemy object and adds it to the map at the specified location
      * 
@@ -237,7 +244,13 @@ public class Layout implements Updateable {
      */
     public void spawnEnemy (String enemyID, String pathID) {
         Enemy e = (Enemy) myGameElementFactory.getGameElement("Enemy", enemyID);
-        Point2D location = null; //TODO: Lookup spawn point given pathID
+        Point2D location = null; // TODO: Lookup spawn point given pathID
+        e.setLocation(location);
+        myEnemyList.add(e);
+    }
+    
+    public void spawnEnemy (String enemyID, Point2D location) {
+        Enemy e = (Enemy) myGameElementFactory.getGameElement("Enemy", enemyID);
         e.setLocation(location);
         myEnemyList.add(e);
     }
@@ -275,7 +288,7 @@ public class Layout implements Updateable {
      */
     @Override
     public void update (int counter) {
-        updateSpriteLocations();
+        updateSpriteLocations(counter);
         updateSpriteCollisions();
         updateSpriteTargeting();
         removeDeadSprites();
@@ -284,22 +297,37 @@ public class Layout implements Updateable {
     /**
      * Removes all GameElements that have a statetag of dead.
      */
-    
-    private void removeDeadSprites() {
-    	for (GameElement g: this.getSprites()){
-    		if (g.getState().equals(GameElement.DEAD_STATE))
-    			this.removeSprite(g);
-    	}
-	}
 
-	/**
-     * Updates the positions of all sprites.
+    private void removeDeadSprites () {
+        for (GameElement g : this.getSprites()) {
+            if (g.getState().equals(GameElement.DEAD_STATE))
+                this.removeSprite(g);
+        }
+    }
+
+    /**
+     * Updates the positions of all sprites and spawns all new projectiles.
      */
-    private void updateSpriteLocations () {
+    private void updateSpriteLocations (int counter) {
         // Move enemies
         // myEnemyList.forEach(e -> e.move());
         // Move projectiles
-        myProjectileList.forEach(p -> p.move());
+//        updateSpriteLocations(counter,myProjectileList);
+    }
+    
+    private void updateSpriteLocations(int counter, List<MoveableSprite> spriteList){
+        myProjectileList.forEach(p->p.update(counter));
+        
+        myTowerList.forEach(p -> {
+            Map<Object, List<String>> spawnMap = p.update();
+            spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q));
+        });
+        
+        myTowerList.forEach(p -> {
+            Map<Object, List<String>> spawnMap = p.update();
+            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+        });
+        
     }
 
     /**
