@@ -17,7 +17,7 @@ public class ExampleGame {
         game.put(InstanceManager.NAME_KEY, "DesktopTestGame");
         game.put(InstanceManager.PART_TYPE_KEY, "Game");
         game.put(InstanceManager.PART_KEY_KEY, "DesktopTestGame_Part0.Game");
-        game.put("lives", lives);
+        game.put("Lives", lives);
 
         return game;
     }

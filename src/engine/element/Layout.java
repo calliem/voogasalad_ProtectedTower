@@ -120,7 +120,7 @@ public class Layout implements Updateable {
         definedScripts.keySet()
                 .forEach(s -> myGroovyEngine.addScriptToEngine(s, definedScripts.get(s)));
         definedScripts.keySet().forEach(t -> actionList.add( (s1, s2) -> myGroovyEngine
-                                                .applyScript(t, s1, s2)));
+                .applyScript(t, s1, s2)));
         myActionManager = new ActionManager(interactionMap, actionList);
     }
 
@@ -193,7 +193,6 @@ public class Layout implements Updateable {
         placeTower(myHeldTower.getGUID(), location);
         myHeldTower = null;
     }
-
 
     /**
      * prepares tower for placement
@@ -298,7 +297,7 @@ public class Layout implements Updateable {
         e.setLocation(location);
         myEnemyList.add(e);
         myNodeList.add(e);
-       
+
     }
 
     /**
@@ -335,9 +334,9 @@ public class Layout implements Updateable {
      */
     @Override
     public void update () {
+        updateSpriteTargeting();
         updateSpriteLocations();
-//         updateSpriteCollisions();
-         updateSpriteTargeting();
+        // updateSpriteCollisions();
         // removeDeadSprites();
     }
 
@@ -363,10 +362,10 @@ public class Layout implements Updateable {
             spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q));
         });
 
-//        myEnemyList.forEach(p -> {
-//            Map<Object, List<String>> spawnMap = p.update();
-//            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-//        });
+        // myEnemyList.forEach(p -> {
+        // Map<Object, List<String>> spawnMap = p.update();
+        // spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+        // });
 
     }
 
@@ -392,6 +391,7 @@ public class Layout implements Updateable {
      * Updates the targeting of towers.
      */
     private void updateSpriteTargeting () {
+        if (myTowerList.isEmpty()) { return; }
         myCollisionChecker.createQuadTree(this.getSprites());
         for (Tower tower : myTowerList) {
             tower.addTargets(filterTargets(myCollisionChecker.findTargetable(tower), tower));

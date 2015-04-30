@@ -22,11 +22,11 @@ public class ExampleWave {
         mySendTimes.add(3.0);
         mySendTimes.add(10.0);
         List<String> myEnemies = new ArrayList<String>();
-        myEnemies.add("Part0.Enemy");
-        myEnemies.add("Part1.Enemy");
-        myEnemies.add("Part2.Enemy");
-        myEnemies.add("Part1.Enemy");
-        myEnemies.add("Part2.Enemy");
+        myEnemies.add("ExampleGame_Part0.Enemy");
+        myEnemies.add("ExampleGame_Part1.Enemy");
+        myEnemies.add("ExampleGame_Part2.Enemy");
+        myEnemies.add("ExampleGame_Part1.Enemy");
+        myEnemies.add("ExampleGame_Part2.Enemy");
         
         wave.put(InstanceManager.NAME_KEY, "TestWave");
         wave.put(InstanceManager.PART_TYPE_KEY, "Wave");

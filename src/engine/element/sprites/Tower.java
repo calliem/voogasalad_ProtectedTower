@@ -30,7 +30,7 @@ public class Tower extends GameSprite {
     private String attackPriority;
 
     @parameter(settable = false, playerDisplay = true, defaultValue = "null")
-    private List<String> projectiles;
+    private List<String> projectiles = new ArrayList<String>();
     // Use above projectile to read from data file
     // Use below projectile in front end to assign sprite objects
     @parameter(settable = true, playerDisplay = false, defaultValue = "null")
@@ -60,7 +60,7 @@ public class Tower extends GameSprite {
         attackRange = (Double) parameters.get("AttackRange");
         attackPriority = (String) parameters.get("AttackPriority");
         projectiles = new ArrayList<String>();
-        projectiles.add((String) parameters.get("Projectiles"));
+        projectiles.add((String) parameters.get("Projectile"));
         System.out.println(this +" has this many projectiles "+projectiles.size());
         cost = (Double) parameters.get("Cost");
         buildTime = (Double) parameters.get("BuildTime");
@@ -107,7 +107,6 @@ public class Tower extends GameSprite {
         // System.out.println(myTimer +" time before, as after "+ attackSpeed
         // +"I have "+projectiles.size());
         if (myTimer >= attackSpeed && !myTargets.isEmpty()) {
-
             spawnMap.put(this.getLocation(), projectiles);
             myTimer = 0;
         }

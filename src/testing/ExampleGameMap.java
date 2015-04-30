@@ -20,10 +20,10 @@ public class ExampleGameMap {
         for (int row = 0; row < rows; row++) {
             for (String cell : myTileNames[row]) {
                 if (row < rows / 2) {
-                    cell = "Part0.GridCell";
+                    cell = "ExampleGame_Part0.GridCell";
                 }
                 else {
-                    cell = "Part1.GridCell";
+                    cell = "ExampleGame_Part1.GridCell";
                 }
             }
         }
@@ -59,10 +59,10 @@ public class ExampleGameMap {
         for (int row = 0; row < rows; row++) {
             for (String cell : myTileNames[row]) {
                 if (row < rows / 2) {
-                    cell = "Part0.GridCell";
+                    cell = "ExampleGame_Part0.GridCell";
                 }
                 else {
-                    cell = "Part1.GridCell";
+                    cell = "ExampleGame_Part1.GridCell";
                 }
             }
         }
