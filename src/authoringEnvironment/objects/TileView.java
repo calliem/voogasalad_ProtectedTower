@@ -123,7 +123,7 @@ public class TileView extends ObjectView{
         Map<String, Object> info = new HashMap<>();
         info.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_TILE);
         info.put(InstanceManager.NAME_KEY, myName);
-        info.put(COLOR_KEY, tileColor);
+        info.put(InstanceManager.COLOR_KEY, tileColor);
         return info;
     }
 }

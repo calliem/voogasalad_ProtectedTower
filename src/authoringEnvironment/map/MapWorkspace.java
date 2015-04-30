@@ -3,7 +3,6 @@ package authoringEnvironment.map;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -14,11 +13,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.Controller;
 import authoringEnvironment.objects.GameObject;
-import authoringEnvironment.pathing.PathView;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.pathing.Anchor;
 import authoringEnvironment.util.Scaler;
+import authoringEnvironment.pathing.PathView;
 
 
 /**
@@ -44,17 +44,20 @@ public class MapWorkspace extends StackPane {
     private static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
     private static final double MESSAGE_DISPLAY_DURATION = 1500;
     private static final int MESSAGE_FONT_SIZE = 20;
+    private static final String EMPTY_KEY = "";
 
     private TileMap myActiveMap;
     private PathView myActivePath;
-    private Color myActiveColor;
+    private String myActiveTile;
     private Rectangle pathModeOverlay;
     private ImageView myActiveImg;
+    private Controller myController;
 
     // TODO: fix all of these constants so there are no more replicates
 
-    public MapWorkspace () {
+    public MapWorkspace (Controller controller) {
         super();
+        myController = controller;
         Rectangle background =
                 new Rectangle(AuthoringEnvironment.getEnvironmentWidth() *
                               WORKSPACE_WIDTH_MULTIPLIER,
@@ -65,12 +68,11 @@ public class MapWorkspace extends StackPane {
         StackPane.setAlignment(background, Pos.CENTER);
 
         createDefaultMap();
-        
 
     }
 
     public TileMap createDefaultMap () {
-        TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
+        TileMap defaultMap = new TileMap(myController, DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
         updateWithNewMap(defaultMap);
         return defaultMap;
     }
@@ -110,7 +112,7 @@ public class MapWorkspace extends StackPane {
     public void updateWithNewMap (GameObject object) {
         update(myActiveMap, object);
         myActiveMap = (TileMap) object;
-        myActiveMap.setActiveColor(myActiveColor);
+        myActiveMap.setActiveTile(EMPTY_KEY);
     }
 
     // TODO: duplicated
@@ -177,21 +179,21 @@ public class MapWorkspace extends StackPane {
         myActiveMap.getRoot().getChildren().remove(myActivePath);
     }
 
-    public Color getActiveColor () {
-        return myActiveColor;
+    public String getActiveTile () {
+        return myActiveTile;
     }
 
+    public void setActiveColor (String tileKey) {
+        myActiveMap.setActiveTile(tileKey);
+        myActiveTile = tileKey;
+    }
+    
     public void setActivePath (PathView path) {
         myActivePath = null;
     }
 
     public void setActiveMap (TileMap map) {
         myActiveMap = null;
-    }
-
-    public void setActiveColor (Color color) {
-        myActiveMap.setActiveColor(color);
-        myActiveColor = color;
     }
 
 }

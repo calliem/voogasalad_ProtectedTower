@@ -128,7 +128,7 @@ public class MapSidebar extends Sidebar {
         tileSizeDisplay = new TextField(Integer.toString(getMapWorkspace().getActiveMap()
                 .getTileSize()));
         Button button = new Button(getResources().getString("Update"));
-        button.setOnMouseClicked(e -> getMapWorkspace().getActiveMap()
+        button.setOnAction(e -> getMapWorkspace().getActiveMap()
                 .changeTileSize(
                                 Integer.parseInt(tileSizeDisplay.getText())));
         tileSizeDisplay.setPrefWidth(TEXT_FIELD_WIDTH);

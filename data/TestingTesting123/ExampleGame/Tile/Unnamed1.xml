@@ -7,17 +7,17 @@
     <string>Color</string>
     <javafx.scene.paint.Color>
       <red>1.0</red>
-      <green>1.0</green>
-      <blue>1.0</blue>
+      <green>0.5019608</green>
+      <blue>0.5019608</blue>
       <opacity>1.0</opacity>
       <platformPaint class="com.sun.prism.paint.Color">
         <type>COLOR</type>
         <proportional>false</proportional>
         <isMutable>false</isMutable>
-        <argb>-1</argb>
+        <argb>-32640</argb>
         <r>1.0</r>
-        <g>1.0</g>
-        <b>1.0</b>
+        <g>0.5019608</g>
+        <b>0.5019608</b>
         <a>1.0</a>
       </platformPaint>
     </javafx.scene.paint.Color>

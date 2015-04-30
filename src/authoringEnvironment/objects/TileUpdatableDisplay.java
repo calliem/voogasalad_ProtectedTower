@@ -30,6 +30,8 @@ public class TileUpdatableDisplay extends UpdatableDisplay {
     @Override
     protected void objectClicked (GameObject object, StackPane objectView) {
         super.objectClicked(object, objectView);
+        
+     //   myMapWorkspace.setActive
         //mySidebar.changeMap((TileMap) object);
          //myMapWorkspace.setActiveColor(object.); //TODO: test
 

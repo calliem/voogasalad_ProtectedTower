@@ -91,7 +91,6 @@ public abstract class UpdatableDisplay extends VBox {
     }
 
     private void displayValues () {
-        System.out.println("displayValues");
         ScrollPane container = new ScrollPane();
 
         container.setHbarPolicy(ScrollBarPolicy.NEVER);
