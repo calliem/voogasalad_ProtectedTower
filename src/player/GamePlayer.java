@@ -1,7 +1,11 @@
 package player;
 
+import java.awt.TextArea;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -29,6 +33,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Screen;
@@ -211,8 +217,18 @@ public class GamePlayer extends Application {
     private VBox makeInfoBox() {
     	myInfoBox = new VBox();
     	myInfoBox.setPrefSize(myScreenWidth/4, myScreenHeight/4);
-    	myInfoBox.setStyle("-fx-background-color:transparent");
+    	myInfoBox.setStyle("-fx-background-color:red");
     	myInfoBox.setTranslateY(-myScreenHeight/2);
+    	myInfoBox.setAlignment(Pos.CENTER_LEFT);
+    	Text lives = new Text();
+    	lives.setFont(Font.font(24));
+    	lives.setText("LIVES: ");
+    	Text level = new Text();
+    	level.setFont(Font.font(24));
+    	level.setText("LEVEL: ");
+    	myInfoBox.getChildren().addAll(lives, level);
+    	VBox.setMargin(lives, new Insets(24));
+    	VBox.setMargin(level, new Insets(24));
 		return myInfoBox;
     }
 
