@@ -4,6 +4,10 @@
     <string>Tower</string>
   </entry>
   <entry>
+    <string>image</string>
+    <string>imageselector/img_not_available.png</string>
+  </entry>
+  <entry>
     <string>attackRange</string>
     <double>1.0</double>
   </entry>
@@ -36,10 +40,6 @@
   <entry>
     <string>speed</string>
     <double>1.0</double>
-  </entry>
-  <entry>
-    <string>myImage</string>
-    <string>imageselector/img_not_available.png</string>
   </entry>
   <entry>
     <string>attackSpeed</string>

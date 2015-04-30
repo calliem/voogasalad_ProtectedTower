@@ -176,6 +176,10 @@ public class SpriteSetting extends Setting {
 
     @Override
     public String getDataAsString() {
+        return dataAsString;
+    }
+    
+    private String convertDataToString(){
         String result = "";
         for(String file : selectedFiles){
             if(selectedFiles.indexOf(file) < selectedFiles.size()-1){
@@ -196,6 +200,7 @@ public class SpriteSetting extends Setting {
             displayErrorAlert("Select at least one!");
             return false;
         }
+        dataAsString = convertDataToString();
         hideErrorAlert();
         return true;
     }

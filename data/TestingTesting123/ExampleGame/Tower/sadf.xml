@@ -47,7 +47,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>asdf</string>
+    <string>sadf</string>
   </entry>
   <entry>
     <string>projectileList</string>
@@ -57,7 +57,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part1.Tower</string>
+    <string>ExampleGame_Part4.Tower</string>
   </entry>
   <entry>
     <string>Tags</string>
