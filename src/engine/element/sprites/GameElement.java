@@ -46,6 +46,10 @@ public abstract class GameElement implements Collidable, Reflectable,Modifiable 
 
     }
 
+    public String getPartType(){
+        return this.guid;
+    }
+    
     public void addInstanceVariables (Map<String, Object> parameters) {
         name = (String) parameters.get("Name");
         //TODO: fix

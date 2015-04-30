@@ -74,8 +74,12 @@ public class Layout implements Updateable {
 
     private final int ROW_INDEX = 0;
     private final int COLUMN_INDEX = 1;
+    private final Collection<BiConsumer<GameElement, GameElement>>[] nullActions =
+            (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[2];
 
     public Layout (List<Sprite> myNodes) {
+        nullActions[0] = new ArrayList<BiConsumer<GameElement, GameElement>>();
+        nullActions[1] = new ArrayList<BiConsumer<GameElement, GameElement>>();
         // TODO: Get environment map from front end to load into GroovyEngine, current map is empty
         // TODO: Get groovy scripts for user defined
         // TODO: Get interaction map from front end
@@ -85,6 +89,26 @@ public class Layout implements Updateable {
         myGroovyEngine = new GroovyEngine(new HashMap<String, Object>());
         makeActionManager(new HashMap<String, String>(), new HashMap<String[], List<Integer>[]>());
         modifiableHandler(new ArrayList<Modifier>());
+
+        Set<String> towerTags = new HashSet<String>();
+        Set<String> enemyTags = new HashSet<String>();
+        Set<String> projectileTags = new HashSet<String>();
+        myTowerList.forEach(t -> towerTags.add(t.getGUID()));
+        myEnemyList.forEach(t -> enemyTags.add(t.getGUID()));
+        myProjectileList.forEach(t -> projectileTags.add(t.getGUID()));
+
+        towerTags.forEach(t -> enemyTags.forEach(e ->
+        {
+            String[] pair = {t,e};
+            myActionManager.addEntryToManager( pair , nullActions);
+        }));
+        
+        projectileTags.forEach(t -> enemyTags.forEach(e ->
+        {
+            String[] pair = {t,e};
+            myActionManager.addEntryToManager( pair , nullActions);
+        }));
+
     }
 
     /**
@@ -118,7 +142,7 @@ public class Layout implements Updateable {
      */
     public void modifiableHandler (Collection<Modifier> modifiers) {
         for (Modifier modifier : modifiers) {
-            String[] tagPair = {modifier.getActor(),modifier.getActee() };
+            String[] tagPair = { modifier.getActor(), modifier.getActee() };
             Collection<BiConsumer<GameElement, GameElement>>[] actions =
                     (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[2];
             Collection<BiConsumer<GameElement, GameElement>> action1 =
