@@ -10,6 +10,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
+import authoringEnvironment.Variables;
+import authoringEnvironment.util.Screenshot;
 
 
 /**

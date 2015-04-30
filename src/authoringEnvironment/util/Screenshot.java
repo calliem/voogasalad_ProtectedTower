@@ -11,14 +11,23 @@ import javafx.scene.image.WritableImage;
 
 public class Screenshot {
     
+    public static ImageView snap (Node group, int width, int height){
+        WritableImage snapImage = new WritableImage(width, height); // TODO
+        return createSnap(snapImage, group, width, height);
+    }
+    
     public static ImageView snap (GameObject group){
-        WritableImage snapImage = new WritableImage((int) group.getWidth(), (int) group.getHeight()); // TODO
-        snapImage = group.getRoot().snapshot(new SnapshotParameters(), snapImage);
+        int width = (int) group.getWidth();
+        int height = (int) group.getHeight();
+        WritableImage snapImage = new WritableImage(width, height); // TODO
+        return createSnap(snapImage, group.getRoot(), width, height);
+    }
+    
+    private static ImageView createSnap(WritableImage snapImage, Node node, int width, int height){
+        snapImage = node.snapshot(new SnapshotParameters(), snapImage);
         ImageView snapView = new ImageView();
         snapView.setImage(snapImage);
-        
-        
-        return snapView;    
+        return snapView;
     }
     
     /*public static String snapAndSave(GameObject group, String fileName){
