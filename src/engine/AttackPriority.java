@@ -70,7 +70,7 @@ public class AttackPriority {
     
     private GameElement first(){
     	//get smallest distance from goal
-    	ArrayList<Double> list = new ArrayList<>();
+    	List<Double> list = new ArrayList<Double>();
     	for (GameElement g: myTargets){
     		list.add(myTargets.indexOf(g), distanceFromGoal(g));
     	}
@@ -84,7 +84,7 @@ public class AttackPriority {
     
     private GameElement last(){
     	//get largest distance from goal
-    	ArrayList<Double> list = new ArrayList<>();
+    	List<Double> list = new ArrayList<Double>();
     	for (GameElement g: myTargets){
     		list.add(myTargets.indexOf(g), distanceFromGoal(g));
     	}
@@ -97,7 +97,7 @@ public class AttackPriority {
      */
     
 	private GameElement weakest(){
-		ArrayList<Double> list = new ArrayList<>();
+		List<Double> list = new ArrayList<Double>();
     	for (GameElement g: myTargets){
     		list.add(myTargets.indexOf(g), ((Enemy) g).getHealth().doubleValue());
     	}
@@ -110,7 +110,7 @@ public class AttackPriority {
 	 */
 	
     private GameElement healthiest(){
-		ArrayList<Double> list = new ArrayList<>();
+		List<Double> list = new ArrayList<Double>();
     	for (GameElement g: myTargets){
     		list.add(myTargets.indexOf(g), ((Enemy) g).getHealth().doubleValue());
     	}
@@ -123,7 +123,7 @@ public class AttackPriority {
      */
     
     private GameElement fastest(){
-    	ArrayList<Double> list = new ArrayList<>();
+    	List<Double> list = new ArrayList<Double>();
     	for (GameElement g: myTargets){
     		list.add(myTargets.indexOf(g), ((Enemy) g).getSpeed());
     	}
@@ -136,7 +136,7 @@ public class AttackPriority {
      */
     
     private GameElement slowest(){
-    	ArrayList<Double> list = new ArrayList<>();
+    	List<Double> list = new ArrayList<Double>();
     	for (GameElement g: myTargets){
     		list.add(myTargets.indexOf(g), ((Enemy) g).getSpeed());
     	}
@@ -150,7 +150,7 @@ public class AttackPriority {
      */
     
 	private GameElement closestFrom(Point2D source){
-		ArrayList<Double> list = new ArrayList<>();
+		List<Double> list = new ArrayList<Double>();
     	for (GameElement g: myTargets){
     		list.add(myTargets.indexOf(g), distanceBetweenLocs(g.getLocation(), source));
     	}
@@ -164,7 +164,7 @@ public class AttackPriority {
 	 */
 	
     private GameElement farthestFrom(Point2D source){
-    	ArrayList<Double> list = new ArrayList<>();
+    	List<Double> list = new ArrayList<Double>();
     	for (GameElement g: myTargets){
     		list.add(myTargets.indexOf(g), distanceBetweenLocs(g.getLocation(), source));
     	}
