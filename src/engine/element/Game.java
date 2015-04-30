@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 import javafx.geometry.Point2D;
 import util.reflection.Reflection;
 import annotations.parameter;
@@ -11,6 +12,7 @@ import engine.Bank;
 import engine.Endable;
 import engine.Updateable;
 import engine.conditions.Condition;
+import engine.element.sprites.Shop;
 import engine.element.sprites.Sprite;
 
 
@@ -38,6 +40,7 @@ public class Game implements Updateable, Endable {
     private Layout myLayout;
     private int myActiveLevelIndex;
     private Bank myBank;
+    private Shop myShop;
     private int myPoints;
 
     public Game (List<Sprite> nodes) {
@@ -46,7 +49,8 @@ public class Game implements Updateable, Endable {
         myNodes = nodes;
         myLayout = new Layout(myNodes);
         myActiveLevelIndex = 0;
-        myBank = new Bank();
+        myBank = new Bank(0);
+        myShop = new Shop(myBank, new ArrayList<>(), new ArrayList<>());
         myPoints = 0;
     }
 
