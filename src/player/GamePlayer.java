@@ -1,5 +1,6 @@
 package player;
 
+import imageselector.util.ScaleImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -73,14 +74,20 @@ public class GamePlayer extends Application {
                 makeTowerGrid(change.getList());
             }
         });
-        
+
         ObservableList<Sprite> displayList = FXCollections.observableArrayList(new ArrayList<>());
         displayList.addListener((ListChangeListener<Sprite>) change -> {
             while (change.next()) {
                 for (Object obj : change.getAddedSubList()) {
-                    System.out.println("obj" +obj);
+
                     Sprite placeSprite = (Sprite) obj;
+
                     ImageView myView = placeSprite.getImageView();
+                    if (displayList.size() == 1) {
+                          ScaleImage.scaleNoPreserve(myView, myMainArea.getWidth(), myMainArea.getHeight());
+                          myMainArea.getChildren().add(myView);
+                          break;
+                    }
                     myView.setOnMouseClicked(m -> updateInfoBox(placeSprite));
                     myMainArea.getChildren().add(myView);
                 }
@@ -94,12 +101,12 @@ public class GamePlayer extends Application {
             myGameController =
                     new GameController(
                                        gameFile.getAbsolutePath(),
-                                       displayList, availableTowers, background );
+                                       displayList, availableTowers, background);
         }
         catch (InsufficientParametersException e) {
             return;
         }
-        
+
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
     }
@@ -223,11 +230,11 @@ public class GamePlayer extends Application {
             }
         }
         int numCols = (int) Math.floor((myTowerDisplay.getPrefWidth() - 40) / (maxWidth));
-        if (numCols > towerList.size()&&towerList.size()>0) {
+        if (numCols > towerList.size() && towerList.size() > 0) {
             numCols = towerList.size();
         }
-        if(numCols==0){
-            numCols=1;
+        if (numCols == 0) {
+            numCols = 1;
         }
         myTowerGrid.setHgap((myTowerDisplay.getPrefWidth() - 40 - numCols * maxWidth) /
                             (numCols - 1));
@@ -281,20 +288,22 @@ public class GamePlayer extends Application {
             Dragboard db = event.getDragboard();
             boolean success = false;
             if (db.hasString()) {
-                myGameController.addPlaceable(db.getString(), event.getSceneX() -
-                                              Math.floor(db.getImage().getWidth() / 2),
+                myGameController.addPlaceable(db.getString(),
+                                              event.getSceneX() -
+                                                      Math.floor(db.getImage().getWidth() / 2),
                                               event.getSceneY() -
-                                              Math.floor(db.getImage().getHeight() / 2));
+                                                      Math.floor(db.getImage().getHeight() / 2));
                 success = true;
             }
             /*
-//             * let the source know whether the string was successfully
-//             * transferred and used
-//             */
+             * // * let the source know whether the string was successfully
+             * // * transferred and used
+             * //
+             */
                 event.setDropCompleted(success);
                 event.consume();
             });
-      
+
         return mainArea;
     }
 
