@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>asdf</string>
+    <string>rrr</string>
   </entry>
   <entry>
     <string>PartKey</string>
@@ -33,10 +33,12 @@
   </entry>
   <entry>
     <string>Tags</string>
-    <list/>
+    <list>
+      <string>qqq</string>
+    </list>
   </entry>
   <entry>
     <string>group</string>
-    <string>null</string>
+    <string>44</string>
   </entry>
 </map>

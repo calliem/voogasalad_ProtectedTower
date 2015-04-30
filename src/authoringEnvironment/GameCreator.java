@@ -49,7 +49,7 @@ public class GameCreator {
         Set<String> name = new HashSet<String>();
         name.add(gameName);
         XMLWriter.createDirectories(rootDir, name);
-        XMLWriter.createDirectories(rootDir + "/" + gameName, directoriesToCreate());
+        XMLWriter.createDirectories(rootDir + "/" + gameName, gameDirectories());
     }
 
     /**
@@ -58,7 +58,7 @@ public class GameCreator {
      * 
      * @return
      */
-    private static Set<String> directoriesToCreate () {
+    protected static Set<String> gameDirectories () {
         Set<String> toAdd = CLASS_LIST.keySet();
         toAdd.add(InstanceManager.PARTS_FILE_DIRECTORY);
         return toAdd;
