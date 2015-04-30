@@ -18,6 +18,9 @@ public class Variables {
     public static final String NAME_HEADER = "Names: ";
     public static final String EMPTY_STRING = "";
     public static final String COMMA_DELIMITER = ", ";
+    
+    
+    
 
     public static final String PARTNAME_TOWER = "Tower";
     public final static String PARTNAME_ENEMIES = "Enemies";
@@ -33,5 +36,6 @@ public class Variables {
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/display/";
 
     public static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
+
 
 }

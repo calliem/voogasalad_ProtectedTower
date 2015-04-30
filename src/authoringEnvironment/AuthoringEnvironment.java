@@ -123,7 +123,7 @@ public class AuthoringEnvironment {
         
         for (Tab tab : myTabPane.getTabs()){
             Editor editor = (Editor) tab;
-            tab.setOnSelectionChanged(e -> update(editor)); //is this updating the old tab?
+            tab.setOnSelectionChanged(e -> update(editor)); 
         }
         myCurrentTab = myTabPane.getSelectionModel().getSelectedItem();
         grid.add(myTabPane, 0, 1);

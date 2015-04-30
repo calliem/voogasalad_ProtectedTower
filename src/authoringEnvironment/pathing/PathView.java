@@ -24,26 +24,27 @@ import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.util.Screenshot;
 
 
+/**
+ * PathView displays the path consisting of anchors, curves (bound lines), and adds them to the parent
+ * 
+ * @author Callie Mao
+ *
+ */
 public class PathView extends GameObject {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private static final int DEFAULT_STROKE_WIDTH = 4;
     private static final double MAP_OPACITY_ACTIVATED = 0.2;
+    private static final String NUMBER_ANCHOR_POINTS = "\nNumber of anchor points: ";
     private TileMap myParent;
     private int numPoints;
     private Anchor mostRecentPoint;
     private List<Anchor> myAnchors;
     private Group myRoot;
-//    private Coordinate myAverageCenterPoint;
 
-    private static final String EMPTY_STRING = "";
-    private static final String NAME = "Name: ";
-    private static final String NUMBER_ANCHOR_POINTS = "\nNumber of anchor points: ";
-           
     public PathView (TileMap parent) {
         myAnchors = new ArrayList<Anchor>();
         myParent = parent;
 
-       
         numPoints = 0;
         myRoot = new Group();
         Rectangle pathModeOverlay =
@@ -56,18 +57,6 @@ public class PathView extends GameObject {
 
     public int getNumPoints () {
         return numPoints;
-    }
-    
-    public Coordinate getAverageCenterPoint(){
-        double x = 0;
-        double y = 0;
-        for (int i = 0 ; i < myAnchors.size(); i ++){
-            x += myAnchors.get(i).getCenterX();
-            y += myAnchors.get(i).getCenterX();
-        }
-        x = x / myAnchors.size();
-        y = y / myAnchors.size();
-        return new Coordinate(x, y);
     }
 
     public boolean areAnchorsSelected () {
@@ -183,9 +172,9 @@ public class PathView extends GameObject {
     }
 
     protected String getToolTipInfo () {
-        String info = "";
-        info += "Name: " + getName();
-        info += "\nNumber of anchor points: " + numPoints;
+        String info = Variables.EMPTY_STRING;
+        info += Variables.NAME_HEADER + getName();
+        info += NUMBER_ANCHOR_POINTS + numPoints;
         return info;
     }
 

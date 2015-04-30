@@ -5454,11 +5454,11 @@
   </entry>
   <entry>
     <string>Background</string>
-    <string>images/white_square.png</string>
+    <string>images/BFjwi.png</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part4.GameMap</string>
+    <string>ExampleGame_Part0.GameMap</string>
   </entry>
   <entry>
     <string>TileSize</string>
@@ -5470,6 +5470,6 @@
   </entry>
   <entry>
     <string>Name</string>
-    <null/>
+    <string>StraightMap</string>
   </entry>
 </map>

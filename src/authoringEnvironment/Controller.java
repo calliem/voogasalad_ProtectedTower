@@ -37,7 +37,6 @@ import authoringEnvironment.setting.Setting;
  */
 
 public class Controller {
-    // TODO: ADD TAG TO KEY
 
     private static final int PARTTYPE_INDEX_IN_KEY = 1;
 

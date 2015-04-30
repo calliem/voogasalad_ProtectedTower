@@ -36,10 +36,10 @@ public class MapWorkspace extends StackPane {
     private static final int DEFAULT_MAP_ROWS =
             (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);
     private static final int DEFAULT_MAP_COLS =
-            (int) (AuthoringEnvironment.getEnvironmentHeight() * .9 / 25); // getHeight();
+            (int) (AuthoringEnvironment.getEnvironmentHeight() * .9 / 25);
     private static final int DEFAULT_TILE_SIZE = 30; // based on height since monitor height < width
                                                      // and that is usually the limiting factor
-    
+
     private static final double MESSAGE_DISPLAY_DURATION = 1500;
     private static final int MESSAGE_FONT_SIZE = 20;
     private static final String EMPTY_KEY = "";
@@ -47,11 +47,8 @@ public class MapWorkspace extends StackPane {
     private TileMap myActiveMap;
     private PathView myActivePath;
     private String myActiveTile;
-    private Rectangle pathModeOverlay;
     private ImageView myActiveImg;
     private Controller myController;
-
-    // TODO: fix all of these constants so there are no more replicates
 
     public MapWorkspace (Controller controller) {
         super();

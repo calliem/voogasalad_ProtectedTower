@@ -48,7 +48,7 @@ import authoringEnvironment.util.Scaler;
  * @author Callie Mao
  */
 
-public abstract class SpriteEditor extends Editor {
+public class SpriteEditor extends Editor {
     private Group visuals;
     protected StackPane myContent;
     protected HBox currentRow;
