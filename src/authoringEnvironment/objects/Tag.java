@@ -22,13 +22,14 @@ public class Tag extends Group {
 
     private static final int TAG_WIDTH = 75;
     private static final int TAG_HEIGHT = 20;
-    private static final int TEXT_SIZE = 10;
+    private static final int TEXT_SIZE = 12;
     private static final int ARC_SIZE = 10;
     private static final int BUTTON_SIZE = 10;
     private static final int INITIAL_X = 0;
     private static final double START_VALUE = 0.0;
     private static final double END_VALUE = 1.0;
     private static final Color TAG_COLOR = Color.DARKGRAY;
+    private static final Color TEXT_COLOR = Color.WHITE;
 
     private double xCoordinate;
     private double yCoordinate;
@@ -49,7 +50,7 @@ public class Tag extends Group {
 
         Text label = new Text(tagLabel);
         label.setFont(new Font(TEXT_SIZE));
-        label.setFill(Color.WHITE);
+        label.setFill(TEXT_COLOR);
         label.setWrappingWidth(TAG_WIDTH);
         label.setTextAlignment(TextAlignment.CENTER);
 
