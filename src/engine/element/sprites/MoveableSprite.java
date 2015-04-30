@@ -13,7 +13,7 @@ import annotations.parameter;
  * @author Greg McKeon
  *
  */
-public abstract class MoveableSprite extends Sprite {
+public abstract class MoveableSprite extends Sprite implements Modifiable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
     private Double speed;

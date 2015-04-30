@@ -168,6 +168,7 @@ public class InstanceManager {
         String partType = (String) part.get(PART_TYPE_KEY);
         String partFileName = (String) part.get(NAME_KEY) + ".xml";
         String directory = rootDirectory + "/" + partType;
+        
         return XMLWriter.toXML(part, partFileName, directory);
     }
 

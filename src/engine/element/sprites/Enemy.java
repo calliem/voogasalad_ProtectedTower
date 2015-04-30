@@ -173,4 +173,22 @@ public class Enemy extends GameSprite {
         return spawnMap;
     }
 
+    @Override
+    public void fixField (String fieldToModify, Object value) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void changeField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
