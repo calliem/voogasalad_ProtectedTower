@@ -3,7 +3,7 @@
     <entry>
       <string>ExampleGame_Part0.Tower</string>
       <map>
-  <entry>
+    <entry>
     <string>Name</string>
     <string>BasicTower</string>
   </entry>
@@ -25,7 +25,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>images/liltower.jpg</string>
+    <string>images/liltower.png</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -244,7 +244,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>images/bluefire.png</string>
+    <string>images/greenbullet.png</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -289,7 +289,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>images/bluefire.png</string>
+    <string>images/redbullet.png</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -379,7 +379,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>images/enemy1.png</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -432,7 +432,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>images/enemy2.png</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -485,7 +485,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>images/enemy3.png</string>
   </entry>
   <entry>
     <string>Group</string>
