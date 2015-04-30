@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import engine.element.sprites.Sprite;
+import engine.element.sprites.GameElement;
 
 
 public class GroovyEngine {
@@ -45,7 +45,7 @@ public class GroovyEngine {
 
     }
 
-    public void applyScript (String scriptTag, Sprite elementOne, Sprite elementTwo) {
+    public void applyScript (String scriptTag, GameElement elementOne, GameElement elementTwo) {
         if (myCurrentScripts.contains(scriptTag)) {
             myEngine.put(ELEMENT_ONE_BINDING, elementOne);
             myEngine.put(ELEMENT_TWO_BINDING, elementTwo);
