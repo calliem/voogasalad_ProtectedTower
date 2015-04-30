@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -61,7 +62,7 @@ public class Tower extends GameSprite {
         attackPriority = (String) parameters.get("AttackPriority");
         projectiles = new ArrayList<String>();
         projectiles.add((String) parameters.get("Projectile"));
-        System.out.println(this +" has this many projectiles "+projectiles.size());
+        System.out.println(this + " has this many projectiles " + projectiles.size());
         cost = (Double) parameters.get("Cost");
         buildTime = (Double) parameters.get("BuildTime");
     }    // TODO remove once testing is over
@@ -116,6 +117,34 @@ public class Tower extends GameSprite {
 
     public double getCost () {
         return cost;
+    }
+
+    @Override
+    public void fixField (String fieldToModify, Object value) {
+        Field[] possibleFields = this.getClass().getDeclaredFields();
+        for (Field field : possibleFields){
+            if(field.getName()==fieldToModify){
+                try {
+                    field.set(field.getType(), field.getType().getClass().cast(value));
+                }
+                catch (IllegalArgumentException | IllegalAccessException e) {
+                    // TODO Auto-generated catch block
+                    System.err.print("Modifier application failed");
+                }
+            }
+        }
+    }
+
+    @Override
+    public void setField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void changeField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+
     }
 
 }

@@ -51,9 +51,14 @@ public class XMLWriter {
     public static String toXML (Object o, String fileName, String dir) {
         if (fileName.indexOf(".") == -1)
             fileName = fileName + ".xml";
+        File dirCheck = new File(dir);
+        if(!dirCheck.exists()){
+            dirCheck.mkdir();
+        }
         File partFile = new File(dir, fileName);
         System.out.println("dir: " + dir);
         System.out.println("filename: " + fileName);
+        
         try {
             PrintStream out = new PrintStream(partFile);
             out.println(stream.toXML(o));

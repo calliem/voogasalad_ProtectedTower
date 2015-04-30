@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>wwww</string>
+    <string>ff</string>
   </entry>
   <entry>
     <string>PartKey</string>
@@ -34,7 +34,8 @@
   <entry>
     <string>Tags</string>
     <list>
-      <string>q</string>
+      <string>e</string>
+      <string>d</string>
     </list>
   </entry>
 </map>
