@@ -57,6 +57,8 @@ import engine.element.sprites.Tower;
 public class GamePlayer extends Application{
 	private final int LEVEL_INDEX = 0;
 	private final int LIVES_INDEX = 1;
+	private final int TOWER_GRID_PADDING = 20;
+	private final int INFO_PADDING = 24;
 	
     private Stage myPlayerStage;
     private Group myEngineRoot = new Group();
@@ -231,16 +233,16 @@ public class GamePlayer extends Application{
     	Level level = game.getActiveLevel();
     	level.addObserver(myLevelObserver);
     	Text levelText = new Text();
-    	levelText.setFont(Font.font(24));
+    	levelText.setFont(Font.font(INFO_PADDING));
     	levelText.setText("LEVEL: " + String.valueOf(game.getActiveLevelIndex()));
     	String lives = String.valueOf(level.getLives());
     	Text livesText = new Text();
-    	livesText.setFont(Font.font(24));
+    	livesText.setFont(Font.font(INFO_PADDING));
     	livesText.setText("LIVES: " + lives + " / " + lives);
     	myInfoBox.getChildren().add(LEVEL_INDEX, levelText);
     	myInfoBox.getChildren().add(LIVES_INDEX, livesText);
-    	VBox.setMargin(livesText, new Insets(24));
-    	VBox.setMargin(levelText, new Insets(24));
+    	VBox.setMargin(livesText, new Insets(INFO_PADDING));
+    	VBox.setMargin(levelText, new Insets(INFO_PADDING));
 		return myInfoBox;
     }
 
@@ -257,7 +259,7 @@ public class GamePlayer extends Application{
 
     private void makeTowerGrid (ObservableList<Tower> towerList) {
         myTowerGrid = new GridPane();
-        myTowerGrid.setPadding(new Insets(20));
+        myTowerGrid.setPadding(new Insets(TOWER_GRID_PADDING));
         myTowerGrid.setAlignment(Pos.CENTER);
         double maxWidth = 0;
         for (Tower tower : towerList) {
@@ -266,12 +268,12 @@ public class GamePlayer extends Application{
                 maxWidth = towerWidth;
             }
         }
-        int numCols = (int) Math.floor((myTowerDisplay.getPrefWidth() - 40) / (maxWidth));
+        int numCols = (int) Math.floor((myTowerDisplay.getPrefWidth() - 2*TOWER_GRID_PADDING) / (maxWidth));
         if (numCols > towerList.size()) {
             numCols = towerList.size();
         }
         System.out.println(numCols);
-        myTowerGrid.setHgap((myTowerDisplay.getPrefWidth() - 40 - numCols * maxWidth) / (numCols - 1));
+        myTowerGrid.setHgap((myTowerDisplay.getPrefWidth() - 2*TOWER_GRID_PADDING - numCols * maxWidth) / (numCols - 1));
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints currCol = new ColumnConstraints();
             currCol.setMaxWidth(maxWidth);
