@@ -81,7 +81,7 @@ public class Layout implements Updateable {
         myGameElementFactory = new GameElementFactory();
         myCollisionChecker = new CollisionChecker();
         myGroovyEngine = new GroovyEngine(new HashMap<String, Object>());
-        makeCollisionTable(new HashMap<String,String>(), new HashMap<String[], List<Integer>[]>());
+        makeCollisionTable(new HashMap<String, String>(), new HashMap<String[], List<Integer>[]>());
     }
 
     /**
@@ -99,13 +99,17 @@ public class Layout implements Updateable {
     }
 
     /**
-     * Method to create collision table from front-end user defined scripts and an interactionMap based on those scripts
+     * Method to create collision table from front-end user defined scripts and an interactionMap
+     * based on those scripts
      */
-    public void makeCollisionTable (Map<String,String> definedScripts, Map<String[], List<Integer>[]> interactionMap) {
+    public void makeCollisionTable (Map<String, String> definedScripts,
+                                    Map<String[], List<Integer>[]> interactionMap) {
         List<BiConsumer<GameElement, GameElement>> actionList =
                 new ArrayList<BiConsumer<GameElement, GameElement>>();
-        definedScripts.keySet().forEach(s -> myGroovyEngine.addScriptToEngine(s, definedScripts.get(s)));
-        definedScripts.keySet().forEach(t -> actionList.add((s1,s2) -> myGroovyEngine.applyScript(t, s1, s2)));
+        definedScripts.keySet()
+                .forEach(s -> myGroovyEngine.addScriptToEngine(s, definedScripts.get(s)));
+        definedScripts.keySet().forEach(t -> actionList.add( (s1, s2) -> myGroovyEngine
+                                                .applyScript(t, s1, s2)));
         myActionManager = new ActionManager(interactionMap, actionList);
     }
 
@@ -328,16 +332,9 @@ public class Layout implements Updateable {
     }
 
     /**
-     * Updates the positions of all sprites and spawns all new projectiles.
+     * Updates the positions of all sprites and spawns all new projectiles and enemies.
      */
     private void updateSpriteLocations (int counter) {
-        // Move enemies
-        // myEnemyList.forEach(e -> e.move());
-        // Move projectiles
-        // updateSpriteLocations(counter,myProjectileList);
-    }
-
-    private void updateSpriteLocations (int counter, List<MoveableSprite> spriteList) {
         myProjectileList.forEach(p -> p.update(counter));
 
         myTowerList.forEach(p -> {
@@ -345,7 +342,7 @@ public class Layout implements Updateable {
             spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q));
         });
 
-        myTowerList.forEach(p -> {
+        myEnemyList.forEach(p -> {
             Map<Object, List<String>> spawnMap = p.update();
             spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
         });
