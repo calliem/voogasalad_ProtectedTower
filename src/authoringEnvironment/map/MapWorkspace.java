@@ -29,7 +29,7 @@ import authoringEnvironment.util.Scaler;
  * @author callie
  *
  */
-public class MapWorkspace extends StackPane {
+public class MapWorkspace extends AnchorPane {
 
     private static final Color MAP_BACKGROUND_COLOR = Color.web("2A2A29");
 
@@ -73,7 +73,11 @@ public class MapWorkspace extends StackPane {
 
     public TileMap createDefaultMap () {
         TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
-        AnchorPane.setAlignment(v,Pos.CENTER_LEFT);
+        defaultMap.getRoot().setTranslateX(AuthoringEnvironment.getEnvironmentWidth() *
+                                           WORKSPACE_WIDTH_MULTIPLIER/12);
+        defaultMap.getRoot().setTranslateY(AuthoringEnvironment.getEnvironmentHeight() *
+                                           WORKSPACE_WIDTH_MULTIPLIER/12);
+      //  AnchorPane.setAlignment(v,Pos.CENTER_LEFT);
         updateWithNewMap(defaultMap);
         return defaultMap;
     }
@@ -115,8 +119,8 @@ public class MapWorkspace extends StackPane {
         scale.setOnFinished( (e) -> {
             update(myActivePath, object);
             
-            object.getRoot().setTranslateX(object.getTranslation().getX());
-            object.getRoot().setTranslateY(object.getTranslation().getY());
+           // object.getRoot().setTranslateX(object.getTranslation().getX());
+           // object.getRoot().setTranslateY(object.getTranslation().getY());
             myActivePath = object;    
             
         });
@@ -138,7 +142,10 @@ public class MapWorkspace extends StackPane {
         Text saved = new Text(text);
         saved.setFill(color);
         saved.setFont(new Font(MESSAGE_FONT_SIZE));
-        StackPane.setAlignment(saved, Pos.BOTTOM_CENTER);
+        saved.setTranslateX(AuthoringEnvironment.getEnvironmentWidth() *
+                            WORKSPACE_WIDTH_MULTIPLIER/12);
+        saved.setTranslateY(AuthoringEnvironment.getEnvironmentHeight() *
+                                           WORKSPACE_WIDTH_MULTIPLIER*.9);
         getChildren().add(saved);
         PauseTransition pause = new PauseTransition(Duration.millis(MESSAGE_DISPLAY_DURATION));
         pause.play();

@@ -179,12 +179,13 @@ public class MapSidebar extends Sidebar {
     private void remove (GameObject object,
                          UpdatableDisplay updateDisplay,
                          ObservableList<GameObject> observableList) {
+        observableList.remove(object);
+        updateDisplay.updateDisplay(observableList);
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, object.getRoot());
         scale.setOnFinished( (e) -> {
             if (observableList != null && observableList.contains(object)) {
-                observableList.remove(object);
-                updateDisplay.updateDisplay(observableList);
+                
                 getMapWorkspace().remove(object.getRoot());
             }
          
@@ -465,9 +466,11 @@ public class MapSidebar extends Sidebar {
         //TODO: don't have an active path when save twice in a row without reselecting the path
         activePath.setName(pathNameTextField.getText());
         
-        double transX = activePath.getRoot().getTranslateX();
+/*        double transX = activePath.getRoot().getTranslateX();
         double transY = activePath.getRoot().getTranslateY();
-        activePath.setTranslation(transX, transY);
+        System.out.println("transX" + transX);
+        System.out.println("transY" + transY);
+        activePath.setTranslation(transX, transY);*/
         
         Map<String, Object> mapSettings = activePath.save();
         
@@ -502,8 +505,6 @@ public class MapSidebar extends Sidebar {
     }
     
     public void updateTileDisplay(){
-        System.out.println("UPDATE TILEDISPLAY WITH THESE: " +
-                myController.getKeysForPartType(Variables.PARTNAME_TILE));
         tileDisplay.updateDisplay();
         //tileDisplay.updateDisplay(myPaths);
     }

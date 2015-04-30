@@ -165,14 +165,6 @@ public class PathView extends GameObject {
         info += "\nNumber of anchor points: " + numPoints;
         return info;
     }
-    
-    public void setTranslation(double x, double y){
-        paneTranslation = new Coordinate(x, y);
-    }
-    
-    public Coordinate getTranslation(){
-        return paneTranslation;
-    }
 
     @Override
     public Group getRoot () {

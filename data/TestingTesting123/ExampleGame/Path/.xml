@@ -19,32 +19,56 @@
     <string>Curves</string>
     <list>
       <authoringEnvironment.objects.Coordinate>
-        <myX>414.5</myX>
-        <myY>305.5</myY>
+        <myX>421.25</myX>
+        <myY>144.4375</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>395.5</myX>
-        <myY>273.3</myY>
+        <myX>437.85</myX>
+        <myY>133.2375</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>338.5</myX>
-        <myY>176.7</myY>
+        <myX>487.65</myX>
+        <myY>99.6375</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>319.5</myX>
-        <myY>144.5</myY>
+        <myX>504.25</myX>
+        <myY>88.4375</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>399.3</myX>
-        <myY>130.7</myY>
+        <myX>511.45</myX>
+        <myY>101.6375</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>638.7</myX>
-        <myY>89.3</myY>
+        <myX>533.05</myX>
+        <myY>141.2375</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>718.5</myX>
-        <myY>75.5</myY>
+        <myX>540.25</myX>
+        <myY>154.4375</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>517.25</myX>
+        <myY>142.4375</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>448.25</myX>
+        <myY>106.4375</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>425.25</myX>
+        <myY>94.4375</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>452.65</myX>
+        <myY>87.8375</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>534.85</myX>
+        <myY>68.0375</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>562.25</myX>
+        <myY>61.4375</myY>
       </authoringEnvironment.objects.Coordinate>
     </list>
   </entry>
