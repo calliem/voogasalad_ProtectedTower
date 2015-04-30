@@ -1,9 +1,13 @@
 package authoringEnvironment.objects;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
+import authoringEnvironment.pathing.PathView;
 
 
 /**
@@ -39,8 +44,10 @@ public class TileMap extends GameObject {
     private static final String DEFAULT_BACKGROUND_PATH = "images/white_square.png";
     private static final String TILE_KEY_ARRAY = "TileArrayKeys";
     private static final int LINE_START_COORDINATE = 0;
+    private ObservableList<GameObject> myPaths;
 
-    private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
+
+    private Map<String, Integer> myTags; // maps a string to the number of elements with that
                                              // tag
 
     // allowing both width and height gives greater flexibility in map creation
@@ -75,6 +82,27 @@ public class TileMap extends GameObject {
         createMap(myMapRows, myMapCols);
         createGridLines();
         changeTileSize(myTileSize);
+    }
+    
+    protected TileMap(){
+        
+    }
+    
+    public void addPath(PathView path){
+        myPaths.add(path);
+    }
+    
+    public void removePath(PathView path){
+        if (myPaths.contains(path))
+            myPaths.remove(path);
+    }
+    
+    public ObservableList<GameObject> getPaths(){
+        return myPaths;
+    }
+    
+    public TileMap (int mapRows, int mapCols, int tileSize) {
+        myPaths = FXCollections.observableArrayList();
     }
     
 //    public void setTiles(Tile[][] tiles){
@@ -292,6 +320,13 @@ public class TileMap extends GameObject {
         mapSettings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_MAP);
 
         mapSettings.put(TILE_KEY_ARRAY, myTileKeys);
+        
+        List<String> pathKeys = new ArrayList<String>();
+        for (GameObject path : myPaths){
+            pathKeys.add(path.getKey());
+            
+        }
+        mapSettings.put(Variables.PARAMETER_PATH_KEYS, pathKeys);
         return mapSettings;
     }
 
@@ -310,5 +345,7 @@ public class TileMap extends GameObject {
         info += "\nTile Size: " + myTileSize;
         return info;
     }
+
+
 
 }

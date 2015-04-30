@@ -119,7 +119,7 @@ public abstract class SpriteEditor extends Editor {
         HBox editControls = setupEditControls();
         spriteDisplay.getChildren().add(editControls);
 
-        ArrayList<HBox> rows = new ArrayList<>();
+        List<HBox> rows = new ArrayList<HBox>();
 
         HBox row = new HBox(PADDING);
         currentRow = row;
@@ -165,7 +165,7 @@ public abstract class SpriteEditor extends Editor {
     }
 
     private void handleSpritePlacement (VBox spriteDisplay,
-                                        ArrayList<HBox> rows,
+                                        List<HBox> rows,
                                         Number oldValue,
                                         Number newValue) {
         if ((int) newValue == 0) {

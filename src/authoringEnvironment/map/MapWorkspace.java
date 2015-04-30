@@ -1,8 +1,10 @@
 package authoringEnvironment.map;
 
 import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -15,6 +17,8 @@ import authoringEnvironment.Controller;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.pathing.PathView;
+import authoringEnvironment.pathing.Anchor;
+import authoringEnvironment.util.Scaler;
 
 
 /**
@@ -29,7 +33,7 @@ public class MapWorkspace extends StackPane {
 
     private static final Color MAP_BACKGROUND_COLOR = Color.web("2A2A29");
 
-    private static final double MAP_OPACITY_ACTIVATED = 0.2;
+    
     private static final int DEFAULT_MAP_ROWS =
             (int) (AuthoringEnvironment.getEnvironmentWidth() * .8 / 50);
     private static final int DEFAULT_MAP_COLS =
@@ -47,6 +51,7 @@ public class MapWorkspace extends StackPane {
     private String myActiveTile;
     private Rectangle pathModeOverlay;
     private Controller myController;
+    private ImageView myActiveImg;
 
     // TODO: fix all of these constants so there are no more replicates
 
@@ -63,12 +68,16 @@ public class MapWorkspace extends StackPane {
         StackPane.setAlignment(background, Pos.CENTER);
 
         createDefaultMap();
-        pathModeOverlay =
-                // new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS,
-                // myActiveMap.getHeight()+2*Anchor.RADIUS);
-                new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
-        pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
-        StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
+//<<<<<<< HEAD
+//        pathModeOverlay =
+//                // new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS,
+//                // myActiveMap.getHeight()+2*Anchor.RADIUS);
+//                new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
+//        pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
+//        StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
+//=======
+//        
+
     }
 
     public TileMap createDefaultMap () {
@@ -86,7 +95,6 @@ public class MapWorkspace extends StackPane {
     }
 
     public void remove (Node node) {
-        System.out.println("REMOVEEEE" + node);
         if (node == null)
             return;
         if (getChildren().contains(node)) {
@@ -99,7 +107,15 @@ public class MapWorkspace extends StackPane {
             remove(oldObject.getRoot());
         }
         StackPane.setAlignment(object.getRoot(), Pos.CENTER);
-        getChildren().add(object.getRoot());
+        if (!getChildren().contains(object.getRoot()))
+            getChildren().add(object.getRoot());
+    }
+    
+    public void updateWorkspaceWithImg(ImageView imgView){
+        if (myActiveImg != null)
+            remove(imgView);
+        getChildren().add(imgView);
+        myActiveImg = imgView;
     }
 
     public void updateWithNewMap (GameObject object) {
@@ -109,9 +125,35 @@ public class MapWorkspace extends StackPane {
     }
 
     // TODO: duplicated
-    public void updateWithNewPath (GameObject object) {
-        update(myActivePath, object);
-        myActivePath = (PathView) object;
+    public void updateWithNewPath (PathView object) {
+        ScaleTransition scale =
+                Scaler.scaleOverlay(0.0, 1.0, object.getRoot());
+        scale.setOnFinished( (e) -> {
+            //TODO: figure out math placement
+         /*   double centerX =  AuthoringEnvironment.getEnvironmentWidth()*WORKSPACE_WIDTH_MULTIPLIER/2;
+            double centerY = AuthoringEnvironment.getEnvironmentHeight()*WORKSPACE_HEIGHT_MULTIPLIER/2;
+            double avgX = object.getAverageCenterPoint().getX();
+            double avgY = object.getAverageCenterPoint().getY();
+            
+            double diffX = avgX - centerX;
+            double diffY = avgY - centerY;
+            
+            if (diffX >= 0)
+                object.getRoot().setTranslateX(diffX);
+            else 
+                object.getRoot().setTranslateX(-1* diffX);
+            
+            if (diffY >= 0)
+                object.getRoot().setTranslateY(-1 * diffY);
+            else 
+                object.getRoot().setTranslateY(diffY);*/
+            update(myActivePath, object);
+
+            
+            myActivePath = object;
+
+        });
+
     }
 
     public void createNewPath () {
@@ -137,14 +179,13 @@ public class MapWorkspace extends StackPane {
 
     public void activatePathMode () {
         myActiveMap.removeTileListeners();
-        myActiveMap.getRoot().getChildren().add(pathModeOverlay);
+       // myActiveMap.getRoot().getChildren().add(pathModeOverlay);
     }
 
     public void deactivatePathMode () {
         myActiveMap.attachTileListeners();
-        myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
+       // myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
         myActiveMap.getRoot().getChildren().remove(myActivePath);
-
     }
 
     public String getActiveTile () {

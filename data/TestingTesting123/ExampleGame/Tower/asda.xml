@@ -34,7 +34,7 @@
   <entry>
     <string>nextSpritesList</string>
     <list>
-      <string>ExampleGame_Part3.Tower</string>
+      <string>ExampleGame_Part0.Projectile</string>
     </list>
   </entry>
   <entry>
@@ -47,7 +47,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>asdf</string>
+    <string>asda</string>
   </entry>
   <entry>
     <string>projectileList</string>
@@ -57,7 +57,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part4.Tower</string>
+    <string>ExampleGame_Part2.Tower</string>
   </entry>
   <entry>
     <string>Tags</string>
