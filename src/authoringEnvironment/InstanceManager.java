@@ -99,10 +99,6 @@ public class InstanceManager {
         String missingKey = checkMissingInformation(fullPartMap);
         if (!missingKey.equals(NO_KEYS_MISSING))
             throw new MissingInformationException(missingKeyErrorMessage(missingKey));
-        if(fullPartMap.keySet().contains(TAGS_KEY))
-            fullPartMap.put(TAGS_KEY, userParts.get(key).get(TAGS_KEY));
-        else
-            fullPartMap.put(TAGS_KEY, new ArrayList<String>());
         System.out.println("~~~~~~Part: " + fullPartMap + "\n~~~~~~added at: " + key);
         userParts.put(key, fullPartMap);
         writePartToXML(fullPartMap);
@@ -249,13 +245,8 @@ public class InstanceManager {
         return new HashMap<String, Map<String, Object>>(userParts);
     }
 
-<<<<<<< HEAD
     public void specifyPartImage (String partKey, int[][] image) {
         userParts.get(partKey).put(IMAGE_KEY, image);
-=======
-    protected void specifyPartImage (String partKey, String imageFilePath) {
-        userParts.get(partKey).put(IMAGE_KEY, imageFilePath);
->>>>>>> 1b0919c31abb291fe7f38cfbd7996d382821b3d5
     }
 
     protected void addTagToPart (String partKey, String tag) {

@@ -443,10 +443,8 @@ public class MapSidebar extends Sidebar {
         String key = activePath.getKey();
         try {
             if (key == null) {
-
                 key = myController.addPartToGame(mapSettings);
                 activePath.setKey(key);
-
             }
             else {
                 myController.addPartToGame(key, mapSettings);
@@ -456,7 +454,7 @@ public class MapSidebar extends Sidebar {
             e.printStackTrace();
         }
         System.out.println("key from mapsidebar: " + key);
-        myController.addImageToPart(key, activePath.getImageView().getImage());
+      //  myController.addImageToPart(key, activePath.getImageView().getImage());
 
         pathDisplay.updateDisplay();
         System.out.println(myController.getKeysForPartType(Variables.PARTNAME_PATH));

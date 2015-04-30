@@ -52,6 +52,8 @@ public abstract class UpdatableDisplay extends VBox {
         myObjects = new ArrayList<GameObject>();
         myController = c;
         myPartType = partType;
+        numObjsPerRow = rowSize;
+
         populateObjects(keys);
         displayValues();
     }
@@ -60,18 +62,23 @@ public abstract class UpdatableDisplay extends VBox {
         for (String key : keys) {
             Map<String, Object> partParameters = myController.getPartCopy(key);
             Image image = null;
-            try {
-                image = myController.getImageForKey(key);
-            }
-            catch (NoImageFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+//            try {
+//                //image = myController.getImageForKey(key);
+//                //test image below:
+//            }
+//            catch (NoImageFoundException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+            image = new Image("images/white_square.png");
+
             ImageView thumbnail = setThumbnailSize(new ImageView(image));
             String name = (String) partParameters.get(InstanceManager.NAME_KEY);
             GameObject displayObject = new GameObject(key, name, thumbnail);
             myObjects.add(displayObject);
+            System.out.println("displayobj " + displayObject);
         }
+        System.out.println("myobjects " + myObjects);
     }
 
     private ImageView setThumbnailSize (ImageView thumbnail) {
@@ -86,6 +93,7 @@ public abstract class UpdatableDisplay extends VBox {
     }
 
     private void displayValues () {
+        System.out.println("displayValues");
         ScrollPane container = new ScrollPane();
 
         container.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -187,6 +195,7 @@ public abstract class UpdatableDisplay extends VBox {
         }
         ObservableList<String> keys = myController.getKeysForPartType(myPartType);
         populateObjects(keys);
+        displayValues();
     }
 
     protected void objectClicked (GameObject object, StackPane objectView) {

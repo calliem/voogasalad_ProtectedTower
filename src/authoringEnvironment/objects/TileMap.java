@@ -142,7 +142,6 @@ public class TileMap extends GameObject {
 
     private void tileClicked (Tile tile) {
         if (tile.getColor() == myActiveColor) {
-            System.out.println("colors are equal!");
             tile.setFill(Color.TRANSPARENT);
         }
         else {

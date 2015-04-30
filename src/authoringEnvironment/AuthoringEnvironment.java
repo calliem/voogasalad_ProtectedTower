@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import authoringEnvironment.editors.Editor;
+import authoringEnvironment.InstanceManager;
 
 
 /**
