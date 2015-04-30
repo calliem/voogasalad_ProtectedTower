@@ -9,8 +9,8 @@ public class BooleanSetting extends Setting{
     private CheckBox checkbox;
     private boolean selected;
 
-    public BooleanSetting (Controller controller, String part, String label, String parameterName, String value) {
-        super(controller, part, label, parameterName, value);
+    public BooleanSetting (Controller controller, String part, String label, String value) {
+        super(controller, part, label, value);
         System.out.println("Tried");
         selected = Boolean.parseBoolean(value);
     }

@@ -33,7 +33,7 @@ public class Enemy extends GameSprite {
 
     private static final int MOVE_DELAY = 1000;
 
-    @parameter(settable = false, playerDisplay = true, defaultValue = "false")
+    @parameter(settable = true, playerDisplay = true, defaultValue = "false")
     private Boolean CanHurtPlayer;
 
     private List<GridCell> myPath;

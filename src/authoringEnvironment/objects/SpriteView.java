@@ -28,6 +28,7 @@ import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.ImageViewSetting;
 import authoringEnvironment.setting.Setting;
+import authoringEnvironment.setting.SpriteSetting;
 import authoringEnvironment.setting.StringSetting;
 import authoringEnvironment.util.Scaler;
 
@@ -66,7 +67,12 @@ public abstract class SpriteView extends ObjectView {
     private ImageView previewImage;
     private StackPane displayPane;
     
+    private static final int HALF_PADDING = 5;
     private static final int PADDING = 10;
+    private static final int SCALE_IMAGE_WIDTH = 90;
+    private static final int SCALE_IMAGE_HEIGHT = 70;
+    private static final int DISPLAY_PANE_WIDTH = 300;
+    private static final int DISPLAY_PANE_HEIGHT = 300;
     
     /**
      * Creates visual representation of a sprite created by
@@ -86,12 +92,12 @@ public abstract class SpriteView extends ObjectView {
         spriteName = name;
         imageFile = image;
         previewImage = new ImageView(new Image(imageFile));
-        ScaleImage.scale(previewImage, 90, 70);
+        ScaleImage.scale(previewImage, SCALE_IMAGE_WIDTH, SCALE_IMAGE_HEIGHT);
 
         parameterFields = new ArrayList<>();
 
         displayPane = new StackPane();
-        display = new VBox(5);
+        display = new VBox(HALF_PADDING);
         display.setAlignment(Pos.CENTER);
 
         Rectangle spriteBackground = new Rectangle(100, 100, Color.WHITE);
@@ -136,7 +142,7 @@ public abstract class SpriteView extends ObjectView {
 
     private void setupEditableContent () throws ClassNotFoundException, IllegalArgumentException,
                                         IllegalAccessException {
-        editableContent = new VBox(10);
+        editableContent = new VBox(PADDING);
         editableContent.setAlignment(Pos.CENTER);
         editableContent.setMaxWidth(300);
 
@@ -150,13 +156,18 @@ public abstract class SpriteView extends ObjectView {
         
         editableContent.getChildren().addAll(overlaySpriteNameDisplay, overlayErrorMessage);
         
-        ScrollPane settingsDisplay = new ScrollPane();
-        settingsDisplay.setPrefHeight(300);
-        settingsDisplay.setPrefWidth(200);
-        settingsDisplay.setHbarPolicy(ScrollBarPolicy.NEVER);
+        ScrollPane settingsDisplayPane = new ScrollPane();
+        settingsDisplayPane.setPrefHeight(DISPLAY_PANE_HEIGHT);
+        settingsDisplayPane.setMaxWidth(DISPLAY_PANE_WIDTH);
+        settingsDisplayPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+        settingsDisplayPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+        
+        StackPane settingsDisplay = new StackPane();
+        Rectangle displayBackground = new Rectangle(DISPLAY_PANE_WIDTH, DISPLAY_PANE_HEIGHT);
+        displayBackground.setOpacity(OVERLAY_OPACITY);
 
         VBox settingsObjects = new VBox(PADDING);
-        settingsObjects.setMaxWidth(200);
+        settingsObjects.setMaxWidth(DISPLAY_PANE_WIDTH);
         
         List<Setting> settings = ProjectReader.generateSettingsList(myController, getSpriteType());
         // move the image to be first in the settings list
@@ -167,24 +178,35 @@ public abstract class SpriteView extends ObjectView {
                 break;
             }
         }
-        
+        int spriteSettingCounter = 0; // For background scaling purposes
         for (int j = 0; j < settings.size(); j++) {
             if (settings.get(j) instanceof ImageViewSetting) {
                 continue;
             }
             if (settings.get(j) instanceof StringSetting &&
                 settings.get(j).getParameterName().equals("name")) {
+                ((StringSetting) settings.get(j)).setCheckName(true);
                 parameterFields.add(1, settings.get(j));
                 editableContent.getChildren().add(settings.get(j));
                 continue;
             }
+            if(settings.get(j) instanceof SpriteSetting){
+                spriteSettingCounter++;
+            }
             parameterFields.add(settings.get(j));
             settingsObjects.getChildren().add(settings.get(j));
         }
-        settingsDisplay.setContent(settingsObjects);
+        
+        settingsObjects.setTranslateY(PADDING);
+        
+        int numSettings = settings.size();
+        adjustBackground(displayBackground, spriteSettingCounter, numSettings);
+        
+        settingsDisplay.getChildren().addAll(displayBackground, settingsObjects);
+        settingsDisplayPane.setContent(settingsDisplay);
         initializeSpriteInfo();
 
-        HBox buttons = new HBox(10);
+        HBox buttons = new HBox(PADDING);
 
         saved = new Text(getSpriteType() + " saved!");
         saved.setFill(Color.YELLOW);
@@ -199,7 +221,24 @@ public abstract class SpriteView extends ObjectView {
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(saveButton, cancelButton);
 
-        editableContent.getChildren().addAll(settingsDisplay, buttons, saved);
+        editableContent.getChildren().addAll(settingsDisplayPane, buttons, saved);
+    }
+
+    /**
+     * Adjusts the height of the background for the ScrollPane that displays the settings objects
+     * @param displayBackground the Rectangle object that is the background
+     * @param spriteSettingCounter      the number of spriteSettings that are being displayed
+     * @param numSettings       the number of settings objects that are being displayed
+     */
+    private void adjustBackground (Rectangle displayBackground,
+                                   int spriteSettingCounter,
+                                   int numSettings) {
+        int settingHeight = 24;
+        int spriteSettingHeight = 79;
+        int newHeight = (numSettings - spriteSettingCounter) * settingHeight + spriteSettingCounter * spriteSettingHeight + numSettings*PADDING + PADDING;
+        if(newHeight > DISPLAY_PANE_HEIGHT){
+            displayBackground.setHeight(newHeight);
+        }
     }
 
     private void initializeSpriteInfo () {
@@ -278,7 +317,7 @@ public abstract class SpriteView extends ObjectView {
     private void setupOverlayContent () {
         overlayContent = new StackPane();
         Rectangle overlayBackground = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT);
-        overlayBackground.setOpacity(0.8);
+        overlayBackground.setOpacity(OVERLAY_OPACITY);
         overlayContent.getChildren().addAll(overlayBackground, editableContent);
     }
 

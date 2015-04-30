@@ -20,8 +20,10 @@ public abstract class GameSprite extends MoveableSprite {
     /**
      * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
      */
-    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    @parameter(settable = false, playerDisplay = true, defaultValue = "null")
     private List<String> nextSprites;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private Sprite nextSpritesList;
 
     // Getters and setters
 
