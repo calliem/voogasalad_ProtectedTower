@@ -73,17 +73,8 @@ public class GamePlayer extends Application {
                 makeTowerGrid(change.getList());
             }
         });
+        
         ObservableList<Sprite> displayList = FXCollections.observableArrayList(new ArrayList<>());
-        background = new Group();
-        try {
-            myGameController =
-                    new GameController(
-                                       gameFile.getAbsolutePath(),
-                                       displayList, availableTowers, background );
-        }
-        catch (InsufficientParametersException e) {
-            return;
-        }
         displayList.addListener((ListChangeListener<Sprite>) change -> {
             while (change.next()) {
                 for (Object obj : change.getAddedSubList()) {
@@ -99,6 +90,16 @@ public class GamePlayer extends Application {
                 }
             }
         });
+        try {
+            myGameController =
+                    new GameController(
+                                       gameFile.getAbsolutePath(),
+                                       displayList, availableTowers, background );
+        }
+        catch (InsufficientParametersException e) {
+            return;
+        }
+        
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
     }
