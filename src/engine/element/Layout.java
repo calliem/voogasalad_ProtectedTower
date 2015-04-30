@@ -1,14 +1,12 @@
 package engine.element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
-
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
 import util.pathsearch.pathalgorithms.NoPathExistsException;
@@ -21,7 +19,6 @@ import engine.element.sprites.GameElement;
 import engine.element.sprites.GameMap;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.MapPath;
-import engine.element.sprites.MoveableSprite;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
@@ -364,10 +361,10 @@ public class Layout implements Updateable {
             spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q, p.getTarget()));
         });
 
-         myEnemyList.forEach(p -> {
-         Map<Object, List<String>> spawnMap = p.update();
-         spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-         });
+//         myEnemyList.forEach(p -> {
+//         Map<Object, List<String>> spawnMap = p.update();
+//         spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+//         });
 
     }
 
