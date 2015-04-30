@@ -1,11 +1,11 @@
 <map>
   <entry>
     <string>Name</string>
-    <string>Unnamed</string>
+    <string>MoreDamagingProjectile</string>
   </entry>
   <entry>
     <string>PartType</string>
-    <string>GameSprite</string>
+    <string>Projectile</string>
   </entry>
   <entry>
     <string>Tags</string>
@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>images/bluefire.png</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -32,15 +32,11 @@
     <double>1.0</double>
   </entry>
   <entry>
-    <string>Health</string>
-    <integer>100</integer>
+    <string>Damage</string>
+    <integer>30</integer>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part0.GameSprite</string>
-  </entry>
-  <entry>
-    <string>NextSprite</string>
-    <string>Part0.GameSprite</string>
+    <string>Part2.Projectile</string>
   </entry>
 </map>

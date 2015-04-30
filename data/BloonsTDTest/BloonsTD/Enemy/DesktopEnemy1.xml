@@ -1,11 +1,11 @@
 <map>
   <entry>
     <string>Name</string>
-    <string>BasicTower</string>
+    <string>BasicEnemy</string>
   </entry>
   <entry>
     <string>PartType</string>
-    <string>Tower</string>
+    <string>Enemy</string>
   </entry>
   <entry>
     <string>Tags</string>
@@ -33,38 +33,14 @@
   </entry>
   <entry>
     <string>Health</string>
-    <integer>100</integer>
+    <double>100</double>
   </entry>
   <entry>
-    <string>AttackSpeed</string>
-    <double>1.0</double>
-  </entry>
-  <entry>
-    <string>AttackRange</string>
-    <double>10.0</double>
-  </entry>
-  <entry>
-    <string>AttackPriority</string>
-    <string>Close</string>
-  </entry>
-  <entry>
-    <string>Cost</string>
-    <double>100.0</double>
-  </entry>
-  <entry>
-    <string>BuildTime</string>
-    <double>5.0</double>
-  </entry>
-  <entry>
-    <string>Projectile</string>
-    <string>BasicProjectile</string>
+    <string>CanHurtPlayer</string>
+    <boolean>true</boolean>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part0.Tower</string>
-  </entry>
-  <entry>
-    <string>NextSprite</string>
-    <string>Part0.Tower</string>
+    <string>Part0.Enemy</string>
   </entry>
 </map>

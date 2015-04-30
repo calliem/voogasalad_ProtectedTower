@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>Image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>images/tower.png</string>
   </entry>
   <entry>
     <string>Group</string>
@@ -61,10 +61,6 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part0.Tower</string>
-  </entry>
-  <entry>
-    <string>NextSprite</string>
     <string>Part0.Tower</string>
   </entry>
 </map>
