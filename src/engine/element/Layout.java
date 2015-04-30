@@ -71,6 +71,7 @@ public class Layout implements Updateable {
         myNodeList = myNodes;
         myBackgroundNode = background;
         myCollisionChecker = new CollisionChecker();
+        
     }
 
     /**
@@ -321,7 +322,12 @@ public class Layout implements Updateable {
      */
     private void updateSpriteLocations () {
         // Move enemies
-        // myEnemyList.forEach(e -> e.move());
+        Enemy temp = (Enemy) myGameElementFactory.getGameElement("Enemy", "Part0.Enemy");
+        System.out.println(temp);
+        myEnemyList.add(temp);
+        myNodeList.add(temp);
+        myEnemyList.get(0).setLocation(400, 400);
+         myEnemyList.forEach(e -> e.move());
         // Move projectiles
         // myProjectileList.forEach(p -> p.move());
 //        if (!myTowerList.isEmpty()) {
