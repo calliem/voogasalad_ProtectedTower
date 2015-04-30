@@ -155,7 +155,7 @@ public class MapWorkspace extends StackPane {
             path.addAnchor(e.getX(), e.getY());
     }
 
-    protected void displayMessage (String text, Color color) {
+    public void displayMessage (String text, Color color) {
         Text saved = new Text(text);
         saved.setFill(color);
         saved.setFont(new Font(MESSAGE_FONT_SIZE));
