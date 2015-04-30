@@ -33,7 +33,7 @@
   </entry>
   <entry>
     <string>Health</string>
-    <integer>300</integer>
+    <double>300</double>
   </entry>
   <entry>
     <string>CanHurtPlayer</string>
