@@ -300,7 +300,7 @@ public class Layout implements Updateable {
      */
     @Override
     public void update (int counter) {
-        updateSpriteLocations();
+        updateSpriteLocations(counter);
         // updateSpriteCollisions();
         // updateSpriteTargeting();
         // removeDeadSprites();
@@ -320,13 +320,14 @@ public class Layout implements Updateable {
     /**
      * Updates the positions of all sprites.
      */
-    private void updateSpriteLocations () {
+    private void updateSpriteLocations (int counter) {
         // Move enemies
+        if(counter==1){
         Enemy temp = (Enemy) myGameElementFactory.getGameElement("Enemy", "Part0.Enemy");
-        System.out.println(temp);
         myEnemyList.add(temp);
         myNodeList.add(temp);
         myEnemyList.get(0).setLocation(400, 400);
+        }
          myEnemyList.forEach(e -> e.move());
         // Move projectiles
         // myProjectileList.forEach(p -> p.move());

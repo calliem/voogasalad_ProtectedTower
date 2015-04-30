@@ -86,8 +86,6 @@ public class Enemy extends GameSprite {
 
     @Override
     public void move () {
-        System.out.println(super.getLocationX());
-        super.setLocation(super.getLocationX(), super.getLocationY()+1);
 //        PathTransition pathTransition = new PathTransition();
 //        pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength /
 //                                                   super.getSpeed()));

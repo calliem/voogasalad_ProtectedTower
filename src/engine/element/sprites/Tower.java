@@ -69,8 +69,6 @@ public class Tower extends GameSprite {
 
     @Override
     public void target (Sprite sprite) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -84,8 +82,6 @@ public class Tower extends GameSprite {
      */
     @Override
     public void move () {
-        ImageView current = super.getImageView();
-        super.setLocation(super.getLocationX()+10, super.getLocationY());
     }
 
     @Override
