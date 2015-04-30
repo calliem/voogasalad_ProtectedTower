@@ -5,7 +5,7 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>images/alert.png</string>
+    <string>images/expand.png</string>
   </entry>
   <entry>
     <string>damage</string>
@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>aaa</string>
+    <string>tt</string>
   </entry>
   <entry>
     <string>PartKey</string>
