@@ -70,7 +70,7 @@ public class ModifierStrip extends VBox {
                         row.getChildren().remove(seconds);
                         return;
                     }
-                    if ((int) numb1 == 2) {
+                    if ((int) numb1 == 2||(int) numb1 == -1) {
                         row.getChildren().addAll(forText, amountSecs, seconds);
                     }
 
@@ -112,7 +112,6 @@ public class ModifierStrip extends VBox {
                                              .get((int) numb2)));
                                  }
                                  catch (Exception e) {
-                                     // TODO Auto-generated catch block
                                      System.err
                                              .print("Error Finding Fields! Update Properties File!");
                                  }
