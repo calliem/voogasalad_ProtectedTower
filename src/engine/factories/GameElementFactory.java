@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import util.reflection.Reflection;
+import engine.Reflectable;
 
 
 /**
@@ -81,6 +82,7 @@ public class GameElementFactory {
      */
     public void add (String className, String guid, Map<String, Object> properties) {
         myGameElements.get(className).put(guid, properties);
+        System.out.println(String.format("%s %s was added", className, guid));
     }
 
     /**
@@ -91,10 +93,12 @@ public class GameElementFactory {
      * @param guid String of the GUID of the game element
      * @return New instance of sprite with same parameters as template sprite
      */
-    public Object getGameElement (String className, String guid) {
+    public Reflectable getGameElement (String className, String guid) {
         if (myGameElements.get(className).containsKey(guid)) {
-            Object element = Reflection.createInstance(MY_CLASS_LOCATION);
-            // TODO set up instance variables with reflection
+            Reflectable element =
+                    (Reflectable) Reflection.createInstance(myPartTypeToPackage.get(className));
+            element.addInstanceVariables(myGameElements.get(className).get(guid));
+            System.out.println(String.format("%s %s created", className, guid));
             return element;
         }
         else {

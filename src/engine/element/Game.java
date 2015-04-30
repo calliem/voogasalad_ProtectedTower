@@ -12,6 +12,7 @@ import engine.Endable;
 import engine.Updateable;
 import engine.conditions.Condition;
 import engine.element.sprites.Sprite;
+import engine.factories.GameElementFactory;
 
 
 /**
@@ -39,12 +40,17 @@ public class Game implements Updateable, Endable {
     private int myActiveLevelIndex;
     private Bank myBank;
     private int myPoints;
+    private GameElementFactory myGameElementFactory;
 
-    public Game (List<Sprite> nodes) {
+    public Game (List<Sprite> nodes, Map<String, Object> parameters) {
+        myGameElementFactory = new GameElementFactory();
+
+        lives = (Integer) parameters.get("lives");
         myConditions = new ArrayList<Condition>();
         myLevels = new ArrayList<>();
         myNodes = nodes;
         myLayout = new Layout(myNodes);
+        myLayout.setFactory(myGameElementFactory);
         myActiveLevelIndex = 0;
         myBank = new Bank();
         myPoints = 0;
@@ -84,12 +90,13 @@ public class Game implements Updateable, Endable {
      * @param levels Map<String, Map<String, Object>> mapping GUID to parameters map for each level
      */
     public void addLevels (Map<String, Map<String, Object>> levels) {
-        levels.keySet().forEach(l -> {
+        for (String key : levels.keySet()) {
             Level tempLevel = (Level) Reflection.createInstance(PACKAGE_LOCATION_LEVEL);
-            // TODO maybe need to add levels factory
+            tempLevel.addInstanceVariables(levels.get(key));
             myLevels.add(tempLevel);
-        });
+        }
         Collections.sort(myLevels);
+        System.out.println("Levels added to game");
     }
 
     /**

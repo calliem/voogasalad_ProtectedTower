@@ -66,8 +66,11 @@ public class Layout implements Updateable {
 
     public Layout (List<Sprite> myNodes) {
         myNodeList = myNodes;
-        myGameElementFactory = new GameElementFactory();
         myCollisionChecker = new CollisionChecker();
+    }
+    
+    public void setFactory(GameElementFactory factory) {
+        myGameElementFactory = factory;
     }
 
     /**

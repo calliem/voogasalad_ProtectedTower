@@ -1,7 +1,8 @@
 package engine.element.sprites;
 
-import annotations.parameter;
+import java.util.Map;
 import javafx.geometry.Point2D;
+import annotations.parameter;
 
 
 /**
@@ -23,6 +24,15 @@ public abstract class MoveableSprite extends Sprite {
      */
     @parameter(playerDisplay = true)
     private Point2D heading;
+
+    public MoveableSprite () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
+        speed = (Double) parameters.get("speed");
+    }
 
     // private double myRange;
 

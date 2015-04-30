@@ -1,11 +1,8 @@
 package player;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import annotations.parameter;
 import javafx.application.Application;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -21,12 +18,10 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -50,7 +45,6 @@ import engine.element.sprites.Tower;
  * the GameLoop which then runs the game.
  */
 public class GamePlayer extends Application {
-    private GameController myGame;
     private Stage myPlayerStage;
     private Group myEngineRoot = new Group();
     private Scene myMainScene;
@@ -86,19 +80,19 @@ public class GamePlayer extends Application {
         catch (InsufficientParametersException e) {
             return;
         }
-        displayList.addListener((ListChangeListener<Sprite>) change-> {
-                while (change.next()) {
-                    for (Object obj : change.getAddedSubList()) {
-                        Sprite placeSprite = (Sprite) obj;
-                        ImageView myView = placeSprite.getImageView();
-                        myView.setOnMouseClicked( m-> updateInfoBox(placeSprite));
-                        myMainArea.getChildren().add(myView);
-                    }
-                    for (Object obj : change.getRemoved()) {
-                        Node placeSprite = (Node) obj;
-                        myMainArea.getChildren().remove(placeSprite);
-                    }
+        displayList.addListener((ListChangeListener<Sprite>) change -> {
+            while (change.next()) {
+                for (Object obj : change.getAddedSubList()) {
+                    Sprite placeSprite = (Sprite) obj;
+                    ImageView myView = placeSprite.getImageView();
+                    myView.setOnMouseClicked(m -> updateInfoBox(placeSprite));
+                    myMainArea.getChildren().add(myView);
                 }
+                for (Object obj : change.getRemoved()) {
+                    Node placeSprite = (Node) obj;
+                    myMainArea.getChildren().remove(placeSprite);
+                }
+            }
         });
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
@@ -112,32 +106,32 @@ public class GamePlayer extends Application {
         // availableTowers.add(new Tower(test3));
         // availableTowers.add(new Tower(test4));
         // displayList.add(new Tower(test5));
-        //myGameController.startGame(60);
+        // myGameController.startGame(60);
     }
 
     private TableView updateInfoBox (Sprite placeSprite) {
         return null;
         // TODO Auto-generated method stub
-//        TableView<String> infoBox = new TableView<>();
-//        
-//        
-//        TableColumn<String, String> name = new TableColumn<>();
-//        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().get));
-//        TableColumn<String, String> value = new TableColumn<>();
-//        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>();
-//        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue()
-//                .getUsername()));
-//        Class currentClass = placeSprite.getClass();
-//        while(currentClass!=Object.class){
-//            for(Field field:currentClass.getFields()){
-//                if(field.getAnnotation(parameter.class)!=null&&field.getAnnotation(parameter.class).playerDisplay()){
-//                    
-//                }
-//            }
-//            // Make a new row
-//            currentClass = currentClass.getSuperclass();
-//        }
-//        return null;
+        // TableView<String> infoBox = new TableView<>();
+        //
+        //
+        // TableColumn<String, String> name = new TableColumn<>();
+        // name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().get));
+        // TableColumn<String, String> value = new TableColumn<>();
+        // name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>();
+        // name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue()
+        // .getUsername()));
+        // Class currentClass = placeSprite.getClass();
+        // while(currentClass!=Object.class){
+        // for(Field field:currentClass.getFields()){
+        // if(field.getAnnotation(parameter.class)!=null&&field.getAnnotation(parameter.class).playerDisplay()){
+        //
+        // }
+        // }
+        // // Make a new row
+        // currentClass = currentClass.getSuperclass();
+        // }
+        // return null;
     }
 
     public static void main (String[] args) {
@@ -201,7 +195,8 @@ public class GamePlayer extends Application {
         // TODO: prop
         mySidebar.setTranslateX(myScreenWidth * 3 / 4);
         // TODO: prop
-        mySidebar.setStyle("-fx-border-style: solid outside; -fx-border-size: 0 0 0 2; -fx-border-color: transparent transparent transparent black; -fx-padding: 0; -fx-background-color: #00fb10");
+        mySidebar
+                .setStyle("-fx-border-style: solid outside; -fx-border-size: 0 0 0 2; -fx-border-color: transparent transparent transparent black; -fx-padding: 0; -fx-background-color: #00fb10");
         // makeGameVarBox();
         // makeSpriteInfoBox();
         myTowerDisplay = makeTowerScrollBox();
@@ -237,7 +232,8 @@ public class GamePlayer extends Application {
             numCols = towerList.size();
         }
         System.out.println(numCols);
-        myTowerGrid.setHgap((myTowerDisplay.getPrefWidth() - 40 - numCols * maxWidth) / (numCols - 1));
+        myTowerGrid.setHgap((myTowerDisplay.getPrefWidth() - 40 - numCols * maxWidth) /
+                            (numCols - 1));
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints currCol = new ColumnConstraints();
             currCol.setMaxWidth(maxWidth);
@@ -276,37 +272,37 @@ public class GamePlayer extends Application {
         mainArea.setPrefWidth(myScreenWidth - myScreenWidth / 4);
         mainArea.setPrefHeight(myScreenHeight);
         mainArea.setStyle("-fx-background-color: #00dbc1");
-        mainArea.setOnDragOver(event ->{
-                Dragboard db = event.getDragboard();
-                if (db.hasString()) {
-                    event.acceptTransferModes(TransferMode.COPY);
-                }
-                event.consume();
+        mainArea.setOnDragOver(event -> {
+            Dragboard db = event.getDragboard();
+            if (db.hasString()) {
+                event.acceptTransferModes(TransferMode.COPY);
+            }
+            event.consume();
         });
         mainArea.setOnDragDropped(event -> {
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if (db.hasString()) {
-                    // ImageView place = new ImageView(db.getImage());
-                    System.out.println(db.getString());
-                    myGameController.addPlaceable(db.getString(), event.getSceneX(),
-                                                  event.getSceneY());
-                    // place.setTranslateX(event.getSceneX() -
-                    // Math.floor(db.getImage().getWidth() / 2));
-                    // place.setTranslateY(event.getSceneY() -
-                    // Math.floor(db.getImage().getHeight() / 2));
-                    // TODO: tell engine about this
-                    // game.addTower(place,);
-                    // mainArea.getChildren().add(place);
-                    success = true;
-                }
-                /*
-                 * let the source know whether the string was successfully
-                 * transferred and used
-                 */
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if (db.hasString()) {
+                // ImageView place = new ImageView(db.getImage());
+                System.out.println(db.getString());
+                myGameController.addPlaceable(db.getString(), event.getSceneX(),
+                                              event.getSceneY());
+                // place.setTranslateX(event.getSceneX() -
+                // Math.floor(db.getImage().getWidth() / 2));
+                // place.setTranslateY(event.getSceneY() -
+                // Math.floor(db.getImage().getHeight() / 2));
+                // TODO: tell engine about this
+                // game.addTower(place,);
+                // mainArea.getChildren().add(place);
+                success = true;
+            }
+            /*
+             * let the source know whether the string was successfully
+             * transferred and used
+             */
                 event.setDropCompleted(success);
                 event.consume();
-        });
+            });
         return mainArea;
     }
 

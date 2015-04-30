@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
@@ -22,6 +23,11 @@ public abstract class Sprite extends GameElement implements Updateable {
 
     public Sprite () {
 
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
+        image = (ImageView) parameters.get("image");
     }
 
     public ImageView getImageView () {

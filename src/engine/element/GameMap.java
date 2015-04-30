@@ -1,6 +1,7 @@
 package engine.element;
 
 import java.util.List;
+import java.util.Map;
 import annotations.parameter;
 import engine.element.sprites.GridCell;
 import engine.factories.GameElementFactory;
@@ -32,8 +33,11 @@ public class GameMap {
      */
     private GridCell[][] myMap;
 
-    public GameMap () {
-
+    public GameMap (Map<String, Object> parameters) {
+        myTileNames = (String[][]) parameters.get("myTileNames");
+        rows = (Integer) parameters.get("rows");
+        columns = (Integer) parameters.get("columns");
+        tileSize = (Integer) parameters.get("tileSize");
     }
 
     // TODO add method to load paths

@@ -3,10 +3,11 @@ package engine.element.sprites;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.Map;
 import javafx.geometry.Point2D;
 import annotations.parameter;
 import engine.Collidable;
+import engine.Reflectable;
 
 
 /**
@@ -17,7 +18,7 @@ import engine.Collidable;
  * @author Greg McKeon
  *
  */
-public abstract class GameElement implements Collidable {
+public abstract class GameElement implements Collidable, Reflectable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String name;
@@ -35,10 +36,20 @@ public abstract class GameElement implements Collidable {
 
     public final static String ALIVE_STATE = "alive";
     public final static String DEAD_STATE = "dead";
-    public final static String[] possibleStates = {ALIVE_STATE, DEAD_STATE};
+    public final static String[] possibleStates = { ALIVE_STATE, DEAD_STATE };
     @parameter(settable = false, playerDisplay = false)
     private String stateTag = ALIVE_STATE;
-    
+
+    public GameElement () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        name = (String) parameters.get("name");
+        tags = (List<String>) parameters.get("tags");
+        boundingHeight = (Double) parameters.get("boundingHeight");
+        boundingWidth = (Double) parameters.get("boundingWidth");
+    }
 
     // Getters and setters
 
@@ -71,18 +82,18 @@ public abstract class GameElement implements Collidable {
     protected String getName () {
         return name;
     }
-    
+
     public String getState () {
-    	return stateTag;
+        return stateTag;
     }
-    
-    public void setState(String state) {
-    	if (Arrays.asList(possibleStates).contains(state))
-    		stateTag = state;
+
+    public void setState (String state) {
+        if (Arrays.asList(possibleStates).contains(state))
+            stateTag = state;
     }
-    
-    public void setDead() {
-    	stateTag = DEAD_STATE;
+
+    public void setDead () {
+        stateTag = DEAD_STATE;
     }
 
     /**

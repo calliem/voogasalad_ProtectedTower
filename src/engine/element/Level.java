@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import annotations.parameter;
 import engine.Endable;
+import engine.Reflectable;
 import engine.UpdateAndReturnable;
 import engine.factories.GameElementFactory;
 
@@ -19,7 +20,9 @@ import engine.factories.GameElementFactory;
  * @author Qian Wang
  */
 
-public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
+public class Level implements UpdateAndReturnable, Endable, Reflectable, Comparable<Level> {
+
+    private static final String PARAMETER_ROUND = "Round";
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "20")
     private Integer myLives;
@@ -27,14 +30,11 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
     private List<String> myRounds;
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
     private List<String> myConditions;
-
     /**
      * Identifies the level number. Used to determine order.
      */
     @parameter(settable = true, playerDisplay = true, defaultValue = "0")
     private Integer myNumber;
-
-    private static final String PARAMETER_ROUND = "Round";
 
     private int myActiveRoundIndex = 0;
     private Round myActiveRound;
@@ -43,8 +43,14 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
     // TODO: Win/Lose Conditions
 
     public Level () {
-        myRounds = new ArrayList<>();
-        setActiveRound();
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        myLives = (Integer) parameters.get("myLives");
+        myRounds = (List<String>) parameters.get("myRounds");
+        myConditions = (List<String>) parameters.get("myConditions");
+        myNumber = (Integer) parameters.get("myNumber");
     }
 
     public void setGameElementFactory (GameElementFactory factory) {
@@ -56,7 +62,6 @@ public class Level implements UpdateAndReturnable, Endable, Comparable<Level> {
      * 
      * @return True if able to start next round
      */
-
     public boolean startNextRound () {
         if (myActiveRound.hasEnded()) {
             myActiveRoundIndex++;

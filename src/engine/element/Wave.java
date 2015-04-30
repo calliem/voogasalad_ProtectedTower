@@ -28,8 +28,11 @@ public class Wave implements UpdateAndReturnable, Endable {
     private int myTimer = 0;
     private String myPath;
 
-    public Wave () {
+    public Wave (Map<String,Object> parameters) {
         // TODO: make sure that myEnemies and mySendTimes are same size
+        myEnemies = (List<String>) parameters.get("myEnemies");
+        mySendTimes = (List<Double>) parameters.get("mySendTimes");
+        
     }
 
     public void setPath (String pathGUID) {
