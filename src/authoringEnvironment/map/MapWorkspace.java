@@ -39,7 +39,7 @@ public class MapWorkspace extends StackPane {
                                                      // and that is usually the limiting factor
     private static final double WORKSPACE_WIDTH_MULTIPLIER = .75;
     private static final double WORKSPACE_HEIGHT_MULTIPLIER = .89;
-    private static final double MESSAGE_DISPLAY_DURATION = 1000;
+    private static final double MESSAGE_DISPLAY_DURATION = 1500;
     private static final int MESSAGE_FONT_SIZE = 20;
 
     private TileMap myActiveMap;
@@ -172,7 +172,6 @@ public class MapWorkspace extends StackPane {
 
     public void deactivatePathMode () {
         myActiveMap.attachTileListeners();
-        System.out.println(myActivePath);
         myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
         myActiveMap.getRoot().getChildren().remove(myActivePath);
 

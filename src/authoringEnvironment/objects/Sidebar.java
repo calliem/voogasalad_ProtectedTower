@@ -45,11 +45,11 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
     private Accordion accordionContext;
 
     public Sidebar (ResourceBundle resources,
-                    ObservableList<GameObject> dependency,
+                    ObservableList<GameObject> observableList,
                     MapWorkspace mapWorkspace) {
 
         myResources = resources;
-        myMaps = FXCollections.observableList(dependency);
+        myMaps = FXCollections.observableList(observableList);
         myMapWorkspace = mapWorkspace;
 
         setDimensionRestrictions();

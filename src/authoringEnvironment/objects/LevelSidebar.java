@@ -32,13 +32,13 @@ public class LevelSidebar extends Sidebar {
     private static final int LISTVIEW_HEIGHT = 200;
 
     public LevelSidebar (ResourceBundle resources,
-                         ObservableList<GameObject> maps,
+                         ObservableList<GameObject> observableList,
                          MapWorkspace mapWorkspace) {
-        super(resources, maps, mapWorkspace);
-        myMapList = FXCollections.observableList(maps);
-        mapDisplay = new LevelUpdatableDisplay(maps, 3, Variables.THUMBNAIL_SIZE_MULTIPLIER, mapWorkspace); // remove default values TODO
+        super(resources, observableList, mapWorkspace);
+        myMapList = FXCollections.observableList(observableList);
+        mapDisplay = new LevelUpdatableDisplay(observableList, 3, Variables.THUMBNAIL_SIZE_MULTIPLIER, mapWorkspace); // remove default values TODO
 
-        maps.addListener(new ListChangeListener<GameObject>() {
+        observableList.addListener(new ListChangeListener<GameObject>() {
             @Override
             public void onChanged (javafx.collections.ListChangeListener.Change<? extends GameObject> change) {
                 mapDisplay.updateDisplay((List<GameObject>) change.getList());

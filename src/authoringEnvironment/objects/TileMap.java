@@ -62,7 +62,7 @@ public class TileMap extends GameObject {
        // imgFilePath = DEFAULT_BACKGROUND_PATH;
         imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
-        setImagePreview(myBackground);
+        setImageView(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
         // TODO: sethover x, y coordinate, tile size, etc.
@@ -81,11 +81,11 @@ public class TileMap extends GameObject {
         image.setFitHeight(myMapRows * myTileSize);
     }
 
-    public int getWidth () {
+    public double getWidth () {
         return myTileSize * myMapCols;
     }
 
-    public int getHeight () {
+    public double getHeight () {
         return myTileSize * myMapRows;
     }
 
@@ -110,7 +110,7 @@ public class TileMap extends GameObject {
         myBackground = new ImageView(image);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(0, myBackground);
-        setImagePreview(myBackground);
+        setImageView(myBackground);
     }
 
     // TODO:duplicated tile listeners being added/deleted?
@@ -287,27 +287,7 @@ public class TileMap extends GameObject {
     }
 
     public Map<String, Object> save () {
-        /*
-         * List<String> partFileKeys = new ArrayList<String>();
-         * List<Color> colors = new ArrayList<Color>();
-         * List<List<String>> tags = new ArrayList<List<String>>();
-         * 
-         * for (Tile tile: myTiles){
-         * partFileNames.add(tile.getKey());
-         * colors.add(tile.getColor());
-         * tags.add(tile.getTags());
-         * }
-         * 
-         * List<Object> data = new ArrayList<Object>();
-         * // data.add(partFileNames);
-         * data.add(colors);
-         * data.add(tags);
-         * myController.addPartToGame(TILE_PART_NAME, waveName,
-         * ProjectReader.getParamsNoTypeOrName(WAVE), data);
-         */
-
-        Map<String, Object> mapSettings = new HashMap<String, Object>();
-        mapSettings.put(InstanceManager.NAME_KEY, getName());
+        Map<String, Object> mapSettings = super.save(); 
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
         mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
 
@@ -331,8 +311,7 @@ public class TileMap extends GameObject {
 
     @Override
     protected String getToolTipInfo () {
-        String info = "";
-        info += "Name: " + getName();
+        String info = super.getToolTipInfo();
         info += "\nNumber of Tiles: " + myMapRows + " x " + myMapCols;
         info += "\nTile Size: " + myTileSize;
         return info;

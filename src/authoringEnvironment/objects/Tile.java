@@ -77,6 +77,7 @@ public class Tile extends Rectangle {
      * }
      */
     public String getToolTipInfo () {
+        //TODO: String info = super.getToolTipInfo();
         String info = "";
         info += "Name: " + myName;
         if (myTags.size() > 0) {

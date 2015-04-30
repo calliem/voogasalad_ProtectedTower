@@ -27,7 +27,6 @@ public class PathView extends GameObject {
     private static final int DEFAULT_STROKE_WIDTH = 4;
     private TileMap myParent;
    // private List<CurveCoordinates> myPaths;
-    private String myName;
     private int numPoints;
     private Anchor mostRecentPoint;
     private List<Anchor> myAnchors;
@@ -161,23 +160,20 @@ public class PathView extends GameObject {
         return curve;
     }
 
-    public void setName (String name) {
-        myName = name;
-    }
 
     public Map<String, Object> save () {
         List<Coordinate> anchorCoordinates = new ArrayList<Coordinate>();
         for (Anchor anchor: myAnchors){
             anchorCoordinates.add(anchor.getCoordinates());
         }
-        System.out.println(anchorCoordinates);
-        // TODO: getName
+        
+        
         ImageView image = Screenshot.snap(myParent);
         //Image thumbnail = image.getImage();
-        setImagePreview(image);
+        setImageView(image);
         
         Map<String, Object> settings = new HashMap<String, Object>();
-        settings.put(InstanceManager.NAME_KEY, myName);
+        settings.put(InstanceManager.NAME_KEY, getName());
         settings.put(Variables.PARAMETER_CURVES_COORDINATES, anchorCoordinates);
         settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
 
@@ -201,13 +197,14 @@ public class PathView extends GameObject {
     }
 
     @Override
-    public int getWidth () {
+    public double getWidth () {
         return myParent.getWidth();
     }
 
     @Override
-    public int getHeight () {
+    public double getHeight () {
         return myParent.getHeight();
     }
+
 
 }

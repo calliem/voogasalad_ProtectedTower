@@ -9,7 +9,7 @@ import javafx.scene.image.WritableImage;
 public class Screenshot {
     
     public static ImageView snap (GameObject group){
-        WritableImage snapImage = new WritableImage(group.getWidth(), group.getHeight()); // TODO
+        WritableImage snapImage = new WritableImage((int) group.getWidth(), (int) group.getHeight()); // TODO
         snapImage = group.getRoot().snapshot(new SnapshotParameters(), snapImage);
         ImageView snapView = new ImageView();
         snapView.setImage(snapImage);

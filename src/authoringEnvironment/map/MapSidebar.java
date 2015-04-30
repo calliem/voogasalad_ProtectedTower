@@ -51,11 +51,10 @@ public class MapSidebar extends Sidebar {
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
     private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment.getEnvironmentWidth() / 32;
-    
-    
+
     private static final int NAME_COL = 0;
     private static final int NAME_ROW = 1;
-    //TODO: ^ similar magic values in the gridpane (is this necessary)?
+    // TODO: ^ similar magic values in the gridpane (is this necessary)?
 
     private ObservableList<GameObject> myPaths;
 
@@ -69,15 +68,16 @@ public class MapSidebar extends Sidebar {
     private VBox tileSettings;
     private GraphicFileChooser fileChooser;
     private TextField mapNameTextField;
+    private TextField pathNameTextField;
     private Controller myController;
     private UpdatableDisplay mapDisplay;
     private static final int INPUT_HBOX_SPACING = 4;
     private static final int VGAP_PADDING = 5;
     private static final int HGAP_PADDING = 20;
 
-    public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
+    public MapSidebar (ResourceBundle resources, ObservableList<GameObject> observableList,
                        MapWorkspace mapWorkspace, Controller c) {
-        super(resources, maps, mapWorkspace);
+        super(resources, observableList, mapWorkspace);
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -196,13 +196,13 @@ public class MapSidebar extends Sidebar {
 
     private void remove (GameObject object,
                          UpdatableDisplay updateDisplay,
-                         ObservableList<GameObject> updateList) {
+                         ObservableList<GameObject> observableList) {
         ScaleTransition scale =
                 Scaler.scaleOverlay(1.0, 0.0, object.getRoot());
         scale.setOnFinished( (e) -> {
             if (super.getMaps().contains(object)) {
                 super.getMaps().remove(object);
-                updateDisplay.updateDisplay(updateList);
+                updateDisplay.updateDisplay(observableList);
             }
             getMapWorkspace().remove(object.getRoot());
         });
@@ -242,15 +242,17 @@ public class MapSidebar extends Sidebar {
      */
     private TileMap saveMap (TileMap activeMap) {
         activeMap.setName(mapNameTextField.getText());
-        
-        ImageView snapView = Screenshot.snap(activeMap);
-       /* WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
-        snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
-        ImageView snapView = new ImageView();
-        snapView.setImage(snapImage);*/
-        activeMap.setImagePreview(snapView);
 
-        
+        ImageView snapView = Screenshot.snap(activeMap);
+        /*
+         * WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight());
+         * // TODO
+         * snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
+         * ImageView snapView = new ImageView();
+         * snapView.setImage(snapImage);
+         */
+        activeMap.setImageView(snapView);
+
         if (!super.getMaps().contains(activeMap)) {
             super.getMaps().add(activeMap);
         }
@@ -377,7 +379,8 @@ public class MapSidebar extends Sidebar {
 
         // display maps
         mapDisplay =
-                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, Variables.THUMBNAIL_SIZE_MULTIPLIER, this); // test
+                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS,
+                                        Variables.THUMBNAIL_SIZE_MULTIPLIER, this); // test
         container.add(mapDisplay, 0, 5, 2, 1);
 
         // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
@@ -398,9 +401,10 @@ public class MapSidebar extends Sidebar {
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton
                 .setOnMouseClicked(e -> {
-                 //   remove(getMapWorkspace().getActivePath(), null, null); //TODO: add gameobject interface
-                    getMapWorkspace().deactivatePathMode();
-                });
+                    // remove(getMapWorkspace().getActivePath(), null, null); //TODO: add gameobject
+                    // interface
+                getMapWorkspace().deactivatePathMode();
+            });
 
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
 
@@ -409,7 +413,7 @@ public class MapSidebar extends Sidebar {
         Text name = new Text(getResources().getString("Name"));
         // Setting name = new StringSetting("label", "hi");
         container.add(name, NAME_COL, NAME_ROW);
-        TextField pathNameTextField = new TextField();
+        pathNameTextField = new TextField();
         container.add(pathNameTextField, 1, 1);
 
         /*
@@ -428,23 +432,31 @@ public class MapSidebar extends Sidebar {
 
     private void savePath () {
         // getMapWorkspace().getActiveMap()
+
         getMapWorkspace().deactivatePathMode();
         getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
                                          Color.GREEN);
-        
+
         PathView activePath = getMapWorkspace().getActivePath();
+        activePath.setName(pathNameTextField.getText());
         Map<String, Object> mapSettings = activePath.save();
-        
+        String key = activePath.getKey();
         try {
-            String partKey = myController.addPartToGame(mapSettings);
-            activePath.setKey(partKey);
-            myController.addImageToPart (partKey, activePath.getImagePreview().getImage());
+            if (key != null) {
+
+                key = myController.addPartToGame(mapSettings);
+                activePath.setKey(key);
+
+            }
+            else {
+                myController.addPartToGame(key, mapSettings);
+            }
         }
         catch (MissingInformationException e) {
             e.printStackTrace();
         }
-        
-    }
+        myController.addImageToPart(key, activePath.getImageView().getImage());
 
+    }
 
 }

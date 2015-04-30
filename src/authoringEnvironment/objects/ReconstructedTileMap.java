@@ -29,7 +29,7 @@ public class ReconstructedTileMap extends TileMap {
 
         int[][] thumbnailArray = (int[][]) params.get(Variables.PARAMETER_IMAGE);
         Image thumbnail = IntArray2DToImageConverter.convert2DIntArrayToImage(thumbnailArray, 1);
-        setImagePreview(new ImageView(thumbnail));
+        setImageView(new ImageView(thumbnail));
         // setFilePath()
 
         createMap(params);

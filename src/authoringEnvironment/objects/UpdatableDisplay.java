@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.InstanceManager;
 import authoringEnvironment.NoImageFoundException;
 import authoringEnvironment.Variables;
 
@@ -31,7 +32,9 @@ public abstract class UpdatableDisplay extends VBox {
 
     private static final int SPACING = 15;
 
-    public UpdatableDisplay (List<GameObject> list, int rowSize, double thumbnailMultiplier) {
+    public UpdatableDisplay (List<GameObject> list,
+                             int rowSize,
+                             double thumbnailMultiplier) {
         myObjects = list;
         displayValues();
         numObjsPerRow = rowSize;
@@ -48,35 +51,30 @@ public abstract class UpdatableDisplay extends VBox {
         myObjects = new ArrayList<GameObject>();
         for (String key : keys) {
             Map<String, Object> partParameters = c.getPartCopy(key);
-            ImageView thumbnail;
-            if (partParameters.containsKey(Variables.PARAMETER_IMAGE)) {
-                Image img = (Image) partParameters.get(Variables.PARAMETER_IMAGE);
-                thumbnail = new ImageView(img);
+            Image image = null;
+            try {
+                image = c.getImageForKey(key);
             }
-            else {
-            //    String thumbnailFilePath = (String) c.getImageForKey(key);
-              //  thumbnail = new ImageView(new Image(thumbnailFilePath));
-                //TODO
-                System.out.println("does not contain an image");
-                thumbnail = null;
+            catch (NoImageFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-            setThumbnailSize(thumbnail); //TODO
+            ImageView thumbnail = setThumbnailSize(new ImageView(image));
+            String name = (String) partParameters.get(InstanceManager.NAME_KEY);
+            GameObject displayObject = new GameObject(key, name, thumbnail);
+            myObjects.add(displayObject);
         }
     }
 
-    // TODO: create object method abstract
-    protected void createObject(String s){
-        
-    }
-
-    private void setThumbnailSize (ImageView thumbnail) {
-        if (thumbnailSizeMultiplier == 0){
+    private ImageView setThumbnailSize (ImageView thumbnail) {
+        if (thumbnailSizeMultiplier == 0) {
             thumbnail.setVisible(false);
         }
         thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
                               thumbnailSizeMultiplier);
         thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
                                thumbnailSizeMultiplier);
+        return thumbnail;
     }
 
     private void displayValues () {
@@ -106,10 +104,12 @@ public abstract class UpdatableDisplay extends VBox {
             // TODO; write if statement: if has thumbnail then get it, if not then get the image and
             // resize it
             setThumbnailSize(thumbnail);
-            /*thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
-                                  Variables.THUMBNAIL_SIZE_MULTIPLIER);
-            thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
-                                   Variables.THUMBNAIL_SIZE_MULTIPLIER);*/
+            /*
+             * thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
+             * Variables.THUMBNAIL_SIZE_MULTIPLIER);
+             * thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
+             * Variables.THUMBNAIL_SIZE_MULTIPLIER);
+             */
             if (objectView == selectedView) { // TODO: this doesn't work since we're making a new
                                               // objectview each time. have to check something else
                 selectObject(objectView);
