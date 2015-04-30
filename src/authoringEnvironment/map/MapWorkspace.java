@@ -1,10 +1,12 @@
 package authoringEnvironment.map;
 
 import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,6 +18,7 @@ import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.pathing.PathView;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.pathing.Anchor;
+import authoringEnvironment.util.Scaler;
 
 
 /**
@@ -62,8 +65,6 @@ public class MapWorkspace extends StackPane {
 
         createDefaultMap();
         pathModeOverlay =
-                // new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS,
-                // myActiveMap.getHeight()+2*Anchor.RADIUS);
                 new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
         pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
         StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
@@ -72,6 +73,7 @@ public class MapWorkspace extends StackPane {
 
     public TileMap createDefaultMap () {
         TileMap defaultMap = new TileMap(DEFAULT_MAP_ROWS, DEFAULT_MAP_COLS, DEFAULT_TILE_SIZE);
+        AnchorPane.setAlignment(v,Pos.CENTER_LEFT);
         updateWithNewMap(defaultMap);
         return defaultMap;
     }
@@ -85,7 +87,6 @@ public class MapWorkspace extends StackPane {
     }
 
     public void remove (Node node) {
-        System.out.println("REMOVEEEE" + node);
         if (node == null)
             return;
         if (getChildren().contains(node)) {
@@ -105,13 +106,22 @@ public class MapWorkspace extends StackPane {
         update(myActiveMap, object);
         myActiveMap = (TileMap) object;
         myActiveMap.setActiveColor(myActiveColor);
-
     }
 
     // TODO: duplicated
-    public void updateWithNewPath (GameObject object) {
-        update(myActivePath, object);
-        myActivePath = (PathView) object;
+    public void updateWithNewPath (PathView object) {
+        ScaleTransition scale =
+                Scaler.scaleOverlay(0.0, 1.0, object.getRoot());
+        scale.setOnFinished( (e) -> {
+            update(myActivePath, object);
+            
+            object.getRoot().setTranslateX(object.getTranslation().getX());
+            object.getRoot().setTranslateY(object.getTranslation().getY());
+            myActivePath = object;    
+            
+        });
+        
+        
     }
 
     public void createNewPath () {
@@ -144,7 +154,6 @@ public class MapWorkspace extends StackPane {
         myActiveMap.attachTileListeners();
         myActiveMap.getRoot().getChildren().remove(pathModeOverlay);
         myActiveMap.getRoot().getChildren().remove(myActivePath);
-
     }
 
     public Color getActiveColor () {

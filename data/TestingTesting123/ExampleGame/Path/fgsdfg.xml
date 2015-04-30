@@ -1,0 +1,22 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Path</string>
+  </entry>
+  <entry>
+    <string>name</string>
+    <string>fgsdfg</string>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>ExampleGame_Part1.Path</string>
+  </entry>
+  <entry>
+    <string>Tags</string>
+    <list/>
+  </entry>
+  <entry>
+    <string>Curves</string>
+    <list/>
+  </entry>
+</map>

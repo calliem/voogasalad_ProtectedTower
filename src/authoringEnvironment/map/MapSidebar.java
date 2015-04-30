@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -109,6 +110,7 @@ public class MapSidebar extends Sidebar {
 
     protected void createMapSettings () {
         // mapSettings = createAccordionTitleText(getResources().getString("MapSettings"));
+
         tileSettings = createAccordionTitleText(getResources().getString("TileSettings"));
         pathSettings = createAccordionTitleText(getResources().getString("PathSettings"));
 
@@ -147,37 +149,6 @@ public class MapSidebar extends Sidebar {
 
     }
 
-    /*
-     * private void selectTile () {
-     * HBox selectTile = new HBox();
-     * selectTile.setSpacing(30); // remove hardcoding
-     * 
-     * VBox selection = new VBox();
-     * Text selectTileColor = new Text(getResources().getString("TileColor")); // TODO:
-     * // fix
-     * ColorPicker picker = new ColorPicker();
-     * selection.getChildren().addAll(selectTileColor, picker);
-     * 
-     * Rectangle rectangleDisplay =
-     * new Rectangle(DEFAULT_TILE_DISPLAY_SIZE,
-     * DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_COLOR);
-     * selectTile.getChildren().addAll(selection, rectangleDisplay);
-     * 
-     * tileSettings.getChildren().add(selectTile);
-     * picker.setOnAction(e -> getMapWorkspace().setActiveColor(picker.getValue()));//
-     * changeActiveTileColor(picker.getValue(),
-     * // rectangleDisplay));
-     * }
-     */
-
-    /*
-     * private void changeActiveTileColor (Color color, Rectangle display) {
-     * myActiveColor = color;
-     * // display.setFill(color);
-     * getMapWorkspace().getActiveMap().setActiveColor(color);
-     * }
-     */
-
     private GraphicFileChooser setImage () {
         HBox selection = new HBox();
         selection.setSpacing(PADDING);
@@ -214,9 +185,21 @@ public class MapSidebar extends Sidebar {
             if (observableList != null && observableList.contains(object)) {
                 observableList.remove(object);
                 updateDisplay.updateDisplay(observableList);
+                getMapWorkspace().remove(object.getRoot());
             }
-            getMapWorkspace().remove(object.getRoot());
+         
+         //   object.getRoot().setVisible(false);
+         //     object.getRoot().setOpacity(0);
+
+            
+          //  getMapWorkspace().add(object.getRoot());
         });
+        
+    
+        
+
+        //object.getRoot().setVisible(true);
+
     }
 
     protected void createMap () {
@@ -237,7 +220,6 @@ public class MapSidebar extends Sidebar {
             changeMap(getMapWorkspace().getActiveMap());
             mapDisplay.setSelectedView(null);
             mapDisplay.updateDisplay(super.getMaps());
-
         });
         // TODO: textField.setText to update it
     }
@@ -336,6 +318,7 @@ public class MapSidebar extends Sidebar {
      * 
      * @throws MissingInformationException
      */
+    
     private void saveToXML () throws MissingInformationException {
         /*
          * for (Node map : super.getMaps()) {
@@ -449,10 +432,15 @@ public class MapSidebar extends Sidebar {
         pathNameTextField = new TextField();
         container.add(pathNameTextField, 1, 1);
 
-        pathDisplay =
+      /*  pathDisplay =
                 new PathUpdatableDisplay(myController, Variables.PARTNAME_PATH,
                                          UPDATABLEDISPLAY_ELEMENTS,
-                                         Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
+                                         Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test*/
+        myPaths = FXCollections.observableArrayList();
+
+        pathDisplay = new PathUpdatableDisplay(myPaths, UPDATABLEDISPLAY_ELEMENTS,
+                                                                  Variables.THUMBNAIL_SIZE_MULTIPLIER,
+                                                                  getMapWorkspace());
 
         /*
          * UpdatableDisplay pathDisplay =
@@ -474,8 +462,24 @@ public class MapSidebar extends Sidebar {
                                          Color.GREEN);
 
         PathView activePath = getMapWorkspace().getActivePath();
+        //TODO: don't have an active path when save twice in a row without reselecting the path
         activePath.setName(pathNameTextField.getText());
+        
+        double transX = activePath.getRoot().getTranslateX();
+        double transY = activePath.getRoot().getTranslateY();
+        activePath.setTranslation(transX, transY);
+        
         Map<String, Object> mapSettings = activePath.save();
+        
+        if (!myPaths.contains(activePath)) {
+            myPaths.add(activePath);
+        }
+        else {
+            int existingIndex = myPaths.indexOf(activePath);
+            myPaths.remove(activePath);
+            myPaths.add(existingIndex, activePath);
+        }
+        
         String key = activePath.getKey();
         try {
             if (key == null) {
@@ -490,22 +494,21 @@ public class MapSidebar extends Sidebar {
             e.printStackTrace();
         }
         myController.specifyPartImage(key, activePath.getImageView().getImage());
-        pathDisplay.updateDisplay();
-        // getMapWorkspace().remove(getMapWorkspace().getActivePath().getRoot());
-        remove(getMapWorkspace().getActivePath(), null, null);
-        getMapWorkspace().setActivePath(null);
+        pathDisplay.updateDisplay(myPaths);
+        remove(activePath, null, null);
+        getMapWorkspace().getChildren().add(activePath.getRoot());
         
-
-
-        System.out.println("keys for part type tiles =======: " +
-                           myController.getKeysForPartType(Variables.PARTNAME_TILE));
+        getMapWorkspace().setActivePath(null);
     }
     
     public void updateTileDisplay(){
         System.out.println("UPDATE TILEDISPLAY WITH THESE: " +
                 myController.getKeysForPartType(Variables.PARTNAME_TILE));
         tileDisplay.updateDisplay();
+        //tileDisplay.updateDisplay(myPaths);
     }
+    
+    
     
    /* public UpdatableDisplay getTileDisplay(){
         return tileDisplay;

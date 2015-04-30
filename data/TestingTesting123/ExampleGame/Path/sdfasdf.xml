@@ -5,11 +5,11 @@
   </entry>
   <entry>
     <string>name</string>
-    <string></string>
+    <string>sdfasdf</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part1.Path</string>
+    <string>ExampleGame_Part2.Path</string>
   </entry>
   <entry>
     <string>Tags</string>
@@ -19,32 +19,32 @@
     <string>Curves</string>
     <list>
       <authoringEnvironment.objects.Coordinate>
-        <myX>414.5</myX>
-        <myY>305.5</myY>
+        <myX>677.5</myX>
+        <myY>379.5</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>395.5</myX>
-        <myY>273.3</myY>
+        <myX>601.7</myX>
+        <myY>349.1</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>338.5</myX>
-        <myY>176.7</myY>
+        <myX>374.3</myX>
+        <myY>257.9</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>319.5</myX>
-        <myY>144.5</myY>
+        <myX>298.5</myX>
+        <myY>227.5</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>399.3</myX>
-        <myY>130.7</myY>
+        <myX>267.9</myX>
+        <myY>257.1</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>638.7</myX>
-        <myY>89.3</myY>
+        <myX>176.1</myX>
+        <myY>345.9</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>718.5</myX>
-        <myY>75.5</myY>
+        <myX>145.5</myX>
+        <myY>375.5</myY>
       </authoringEnvironment.objects.Coordinate>
     </list>
   </entry>

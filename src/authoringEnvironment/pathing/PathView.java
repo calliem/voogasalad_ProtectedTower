@@ -26,16 +26,16 @@ public class PathView extends GameObject {
     private static final double CONTROL_POINT_LOCATION_MULTIPLIER = 0.2;
     private static final int DEFAULT_STROKE_WIDTH = 4;
     private TileMap myParent;
-   // private List<CurveCoordinates> myPaths;
     private int numPoints;
     private Anchor mostRecentPoint;
     private List<Anchor> myAnchors;
     private Group myRoot;
+    private Coordinate paneTranslation;
 
     public PathView (TileMap parent) {
         myAnchors = new ArrayList<Anchor>();
         myParent = parent;
-    //    myPaths = new ArrayList<CurveCoordinates>();
+
         numPoints = 0;
         myRoot = new Group();
         myParent.getRoot().getChildren().add(myRoot);
@@ -64,7 +64,7 @@ public class PathView extends GameObject {
         myParent.getRoot().getChildren().add(anchor);
 
         if (numPoints > 0) {
-            // Anchor mostRecentAnchor = myAnchorsandControls.get(myAnchorsandControls.size()-1);
+
             createCurve(mostRecentPoint, anchor);
         }
 
@@ -72,10 +72,9 @@ public class PathView extends GameObject {
         num.xProperty().bind(anchor.centerXProperty());
         num.yProperty().bind(anchor.centerYProperty());
         myRoot.getChildren().add(num);
-        // myParent.getRoot().getChildren().add(num);
+
         mostRecentPoint = anchor;
         myAnchors.add(anchor);
-        System.out.println("add " + anchor);
 
         numPoints++;
 
@@ -105,27 +104,10 @@ public class PathView extends GameObject {
         curve.startYProperty().bind(start.centerYProperty());
         curve.endYProperty().bind(end.centerYProperty());
 
-        Coordinate startCoordinates = start.getCoordinates();
-        Coordinate endCoordinates = end.getCoordinates();
-        Coordinate ctrl1Coordinates = control1.getCoordinates();
-        Coordinate ctrl2Coordinates = control2.getCoordinates();
-
-        /*
-         * Curve pathView =
-         * new Curve(startCoordinates, endCoordinates, ctrl1Coordinates, ctrl2Coordinates);
-         * myPaths.add(pathView);
-         */
-
-        /*CurveCoordinates curveCoordinates =
-                new CurveCoordinates(startCoordinates, endCoordinates, ctrl1Coordinates,
-                                     ctrl2Coordinates);*/
-
-       // myPaths.add(curveCoordinates);
-
         myAnchors.add(control1);
-        System.out.println("add control " + control1);
+
         myAnchors.add(control2);
-        System.out.println("add control " + control2);
+
         Group path = new Group(controlLine1, controlLine2, curve, start, control1,
                                control2, end);
         myRoot.getChildren().add(path);
@@ -134,7 +116,6 @@ public class PathView extends GameObject {
     private CubicCurve createStartingCurve (double startX, double startY, double endX, double endY) {
         CubicCurve curve = new CubicCurve();
 
-        // double lineLength = Math.sqrt(Math.pow(startX-endX, 2) + Math.pow(startY-endY, 2));
         double xDiff = endX - startX;
         double yDiff = endY - startY;
 
@@ -160,38 +141,41 @@ public class PathView extends GameObject {
         return curve;
     }
 
-
     public Map<String, Object> save () {
         List<Coordinate> anchorCoordinates = new ArrayList<Coordinate>();
-        for (Anchor anchor: myAnchors){
+        for (Anchor anchor : myAnchors) {
             anchorCoordinates.add(anchor.getCoordinates());
         }
-        
-        
+
         ImageView image = Screenshot.snap(myParent);
-        //Image thumbnail = image.getImage();
         setImageView(image);
-        
+
         Map<String, Object> settings = new HashMap<String, Object>();
         settings.put(InstanceManager.NAME_KEY, getName());
-       // settings.put(Variables.PARAMETER_IMAGE, image);
         settings.put(Variables.PARAMETER_CURVES_COORDINATES, anchorCoordinates);
         settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
 
-      //  settings.put(Variables.PARAMETER_IMAGE, thumbnail);
+        // settings.put(Variables.PARAMETER_IMAGE, thumbnail);
         return settings;
     }
-        
+
     protected String getToolTipInfo () {
         String info = "";
         info += "Name: " + getName();
         info += "\nNumber of anchor points: " + numPoints;
         return info;
     }
+    
+    public void setTranslation(double x, double y){
+        paneTranslation = new Coordinate(x, y);
+    }
+    
+    public Coordinate getTranslation(){
+        return paneTranslation;
+    }
 
     @Override
     public Group getRoot () {
-        // TODO Auto-generated method stub
         return myRoot;
     }
 
@@ -204,6 +188,5 @@ public class PathView extends GameObject {
     public double getHeight () {
         return myParent.getHeight();
     }
-
 
 }
