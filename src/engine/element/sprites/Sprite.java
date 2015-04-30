@@ -20,6 +20,8 @@ public abstract class Sprite extends GameElement implements Updateable {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "")
     private ImageView image;
+    @parameter(settable = false, playerDisplay = false, defaultValue = "")
+    private String imagepath;
 
     public Sprite () {
 
@@ -27,11 +29,11 @@ public abstract class Sprite extends GameElement implements Updateable {
 
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
-        image = (ImageView) parameters.get("image");
+        imagepath = (String) parameters.get("image");
     }
 
     public ImageView getImageView () {
-        return image;
+        return new ImageView(imagepath);
     }
 
     // TODO remove these once testing is over
