@@ -174,6 +174,7 @@ public class PathView extends GameObject {
         
         Map<String, Object> settings = new HashMap<String, Object>();
         settings.put(InstanceManager.NAME_KEY, getName());
+       // settings.put(Variables.PARAMETER_IMAGE, image);
         settings.put(Variables.PARAMETER_CURVES_COORDINATES, anchorCoordinates);
         settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
 
@@ -181,8 +182,6 @@ public class PathView extends GameObject {
         return settings;
     }
         
-        
-
     protected String getToolTipInfo () {
         String info = "";
         info += "Name: " + getName();

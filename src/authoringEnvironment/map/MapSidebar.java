@@ -26,6 +26,7 @@ import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.MapUpdatableDisplay;
+import authoringEnvironment.objects.PathUpdatableDisplay;
 import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
 import authoringEnvironment.objects.UpdatableDisplay;
@@ -63,6 +64,7 @@ public class MapSidebar extends Sidebar {
 
     private TextField tileRowDisplay;
     private TextField tileColDisplay;
+    private UpdatableDisplay pathDisplay;
     private TextField tileSizeDisplay;
     private VBox pathSettings;
     private VBox tileSettings;
@@ -382,10 +384,6 @@ public class MapSidebar extends Sidebar {
                 new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS,
                                         Variables.THUMBNAIL_SIZE_MULTIPLIER, this); // test
         container.add(mapDisplay, 0, 5, 2, 1);
-
-        // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
-        // mapSettings.getChildren().add(container);
-
     }
 
     private void setPaths () {
@@ -416,12 +414,16 @@ public class MapSidebar extends Sidebar {
         pathNameTextField = new TextField();
         container.add(pathNameTextField, 1, 1);
 
+        pathDisplay =
+                new PathUpdatableDisplay(myController, Variables.PARTNAME_PATH, UPDATABLEDISPLAY_ELEMENTS,
+                                        Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
+
         /*
          * UpdatableDisplay pathDisplay =
          * new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
          * container.add(pathDisplay, 0, 5, 2, 1);
          */
-
+        container.add(pathDisplay, 0, 2, 2, 1);
         pathSettings.getChildren().add(container);
     }
 
@@ -431,8 +433,6 @@ public class MapSidebar extends Sidebar {
     }
 
     private void savePath () {
-        // getMapWorkspace().getActiveMap()
-
         getMapWorkspace().deactivatePathMode();
         getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
                                          Color.GREEN);
@@ -442,7 +442,7 @@ public class MapSidebar extends Sidebar {
         Map<String, Object> mapSettings = activePath.save();
         String key = activePath.getKey();
         try {
-            if (key != null) {
+            if (key == null) {
 
                 key = myController.addPartToGame(mapSettings);
                 activePath.setKey(key);
@@ -455,8 +455,11 @@ public class MapSidebar extends Sidebar {
         catch (MissingInformationException e) {
             e.printStackTrace();
         }
+        System.out.println("key from mapsidebar: " + key);
         myController.addImageToPart(key, activePath.getImageView().getImage());
 
+        pathDisplay.updateDisplay();
+        System.out.println(myController.getKeysForPartType(Variables.PARTNAME_PATH));
     }
 
 }

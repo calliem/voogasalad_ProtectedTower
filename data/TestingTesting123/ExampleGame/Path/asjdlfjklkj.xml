@@ -5,7 +5,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string></string>
+    <string>asjdlfjklkj</string>
   </entry>
   <entry>
     <string>PartKey</string>
@@ -19,20 +19,20 @@
     <string>Curves</string>
     <list>
       <authoringEnvironment.objects.Coordinate>
-        <myX>552.5</myX>
-        <myY>185.5</myY>
+        <myX>582.5</myX>
+        <myY>246.5</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>494.5</myX>
-        <myY>241.7</myY>
+        <myX>517.3</myX>
+        <myY>276.7</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>460.5</myX>
-        <myY>514.3</myY>
+        <myX>455.7</myX>
+        <myY>570.3</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>262.5</myX>
-        <myY>466.5</myY>
+        <myX>256.5</myX>
+        <myY>397.5</myY>
       </authoringEnvironment.objects.Coordinate>
     </list>
   </entry>

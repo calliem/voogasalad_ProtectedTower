@@ -29,7 +29,8 @@ public abstract class UpdatableDisplay extends VBox {
     private double thumbnailSizeMultiplier;
     private int numObjsPerRow;
     private StackPane selectedView;
-
+    private Controller myController; 
+    private String myPartType;
     private static final int SPACING = 15;
 
     public UpdatableDisplay (List<GameObject> list,
@@ -45,15 +46,22 @@ public abstract class UpdatableDisplay extends VBox {
     public UpdatableDisplay (Controller c,
                              String partType,
                              int rowSize,
-                             int thumbnailMultiplier) {
+                             double thumbnailMultiplier) {
         thumbnailSizeMultiplier = thumbnailMultiplier;
         ObservableList<String> keys = c.getKeysForPartType(partType);
         myObjects = new ArrayList<GameObject>();
+        myController = c;
+        myPartType = partType;
+        populateObjects(keys);
+        displayValues();
+    }
+    
+    public void populateObjects(ObservableList<String> keys){
         for (String key : keys) {
-            Map<String, Object> partParameters = c.getPartCopy(key);
+            Map<String, Object> partParameters = myController.getPartCopy(key);
             Image image = null;
             try {
-                image = c.getImageForKey(key);
+                image = myController.getImageForKey(key);
             }
             catch (NoImageFoundException e) {
                 // TODO Auto-generated catch block
@@ -171,6 +179,14 @@ public abstract class UpdatableDisplay extends VBox {
         }
         myObjects = list;
         displayValues();
+    }
+    
+    public void updateDisplay(){
+        if (!getChildren().isEmpty()) {
+            getChildren().clear();
+        }
+        ObservableList<String> keys = myController.getKeysForPartType(myPartType);
+        populateObjects(keys);
     }
 
     protected void objectClicked (GameObject object, StackPane objectView) {
