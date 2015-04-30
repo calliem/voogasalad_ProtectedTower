@@ -1,5 +1,6 @@
 package engine.element.sprites;
 
+import javafx.geometry.Point2D;
 import engine.Updateable;
 import annotations.parameter;
 
@@ -15,11 +16,22 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1")
     private Integer damage;
-
+    @parameter(settable = true, playerDisplay = true)
+    private boolean homing = true;
+    private GameElement target;
+    
     // Getters and setters
 
     public Integer getDamage () {
         return damage;
+    }
+    
+    public GameElement getTarget(){
+    	return target;
+    }
+    
+    public void setTarget(GameElement g){
+    	target = g;
     }
 
     @Override
@@ -35,11 +47,18 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     @Override
     public void move () {
+    	if (homing)
+    		updateHeading();
         super.setLocation(super.getLocation()
                 .add(super.getHeading().multiply(super.getSpeed())));
     }
 
-    @Override
+    private void updateHeading() {
+    	if(!target.getState().equals(DEAD_STATE))
+   			this.setHeading(new Point2D(target.getLocationX()-this.getLocationX() , target.getLocationY() - this.getLocationY()));
+	}
+
+	@Override
     public void update (int counter) {
         this.move();
     }
