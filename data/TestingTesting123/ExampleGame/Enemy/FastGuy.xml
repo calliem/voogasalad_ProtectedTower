@@ -1,15 +1,11 @@
 <map>
   <entry>
     <string>PartType</string>
-    <string>Projectile</string>
+    <string>Enemy</string>
   </entry>
   <entry>
     <string>image</string>
-    <string>imageselector/img_not_available.png</string>
-  </entry>
-  <entry>
-    <string>damage</string>
-    <int>1</int>
+    <string>images/refresh.png</string>
   </entry>
   <entry>
     <string>boundingWidth</string>
@@ -21,19 +17,23 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed1</string>
+    <string>FastGuy</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.Projectile</string>
+    <string>ExampleGame_Part2.Enemy</string>
   </entry>
   <entry>
-    <string>homing</string>
+    <string>health</string>
+    <int>100</int>
+  </entry>
+  <entry>
+    <string>CanHurtPlayer</string>
     <boolean>true</boolean>
   </entry>
   <entry>
     <string>speed</string>
-    <double>1.0</double>
+    <double>10.0</double>
   </entry>
   <entry>
     <string>Tags</string>

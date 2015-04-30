@@ -5,11 +5,11 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>images/bluefire.png</string>
   </entry>
   <entry>
     <string>damage</string>
-    <int>1</int>
+    <int>500</int>
   </entry>
   <entry>
     <string>boundingWidth</string>
@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed1</string>
+    <string>BlueFireBaby</string>
   </entry>
   <entry>
     <string>PartKey</string>

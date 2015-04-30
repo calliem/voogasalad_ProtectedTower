@@ -19,6 +19,7 @@ public class BooleanSetting extends Setting{
         checkbox.setSelected(true);
         
         basicLayout.getChildren().addAll(checkbox, error);
+        basicLayout.setAlignment(Pos.CENTER);
     }
     
     @Override
