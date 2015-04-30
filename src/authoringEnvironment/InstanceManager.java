@@ -31,10 +31,15 @@ public class InstanceManager {
 
     public static final String PART_KEY_KEY = "PartKey";
     public static final String PART_TYPE_KEY = "PartType";
-    public static final String NAME_KEY = "name";
+    public static final String NAME_KEY = "Name";
     public static final String TAGS_KEY = "Tags";
+    public static final String ROUNDS_KEY = "Rounds";
     public static final String IMAGE_KEY = "image";
     public static final String COLOR_KEY = "Color";
+    
+    public static final String GAMEMAP_PARTNAME = "GameMap";
+    public static final String TILE_PARTNAME = "Tile";
+    public static final String PATH_PARTNAME = "Path";
 
     private static final String NO_KEYS_MISSING = "no keys missing";
 
@@ -46,6 +51,7 @@ public class InstanceManager {
     private Map<String, Map<String, Object>> userParts;
     private String gameName;
     private String rootDirectory;
+    
     private static int partID;
 
     /**
@@ -350,13 +356,4 @@ public class InstanceManager {
     protected String getRootDirectory () {
         return rootDirectory;
     }
-    /*
-     * public static void main (String[] args) {
-     * Map<String, Map<String, Object>> data =
-     * InstanceManager
-     * .loadGameData(System.getProperty("user.dir") +
-     * "/data/TestingTesting123/ExampleGame/ExampleGame.gamefile");
-     * System.out.println("data: " + data);
-     * }
-     */
 }

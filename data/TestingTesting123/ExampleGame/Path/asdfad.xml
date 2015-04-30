@@ -5,11 +5,11 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>UnnamedPath1</string>
+    <string>asdfad</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part1.Path</string>
+    <string>ExampleGame_Part2.Path</string>
   </entry>
   <entry>
     <string>Tags</string>
@@ -19,20 +19,20 @@
     <string>Curves</string>
     <list>
       <authoringEnvironment.objects.Coordinate>
-        <myX>513.5</myX>
-        <myY>234.5</myY>
+        <myX>561.5</myX>
+        <myY>300.5</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>441.3</myX>
-        <myY>281.9</myY>
+        <myX>513.9</myX>
+        <myY>292.9</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>224.7</myX>
-        <myY>424.1</myY>
+        <myX>371.1</myX>
+        <myY>270.1</myY>
       </authoringEnvironment.objects.Coordinate>
       <authoringEnvironment.objects.Coordinate>
-        <myX>152.5</myX>
-        <myY>471.5</myY>
+        <myX>323.5</myX>
+        <myY>262.5</myY>
       </authoringEnvironment.objects.Coordinate>
     </list>
   </entry>

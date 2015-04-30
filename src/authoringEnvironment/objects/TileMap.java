@@ -291,7 +291,7 @@ public class TileMap extends GameObject {
         mapSettings.put(InstanceManager.NAME_KEY, getName());
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
         mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackgroundFilePath);
-        mapSettings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_MAP);
+        mapSettings.put(InstanceManager.PART_TYPE_KEY, InstanceManager.GAMEMAP_PARTNAME);
 
         mapSettings.put(TILE_KEY_ARRAY, myTileKeys);
 

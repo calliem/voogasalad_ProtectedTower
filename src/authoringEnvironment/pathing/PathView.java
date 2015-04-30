@@ -178,7 +178,7 @@ public class PathView extends GameObject {
         Map<String, Object> settings = new HashMap<String, Object>();
         settings.put(InstanceManager.NAME_KEY, getName());
         settings.put(Variables.PARAMETER_CURVES_COORDINATES, anchorCoordinates);
-        settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
+        settings.put(InstanceManager.PART_TYPE_KEY, InstanceManager.PATH_PARTNAME);
         return settings;
     }
 
