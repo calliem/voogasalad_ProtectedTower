@@ -1,30 +1,34 @@
 package engine.conditions;
 
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
+import engine.element.Game;
+
 /**
- * This abstract class is used as a base class for objects which hold code to check a condition
- * during the game, such as a win condition, lose condition, or condition which triggers an event
- * like hitting a certain score.
+ * This class holds user-defined conditions and responses to be checked every iteration of the game loop
  * 
- * @author Qian Wang
+ * @author Sean Scott
  *
  */
-public abstract class Condition {
+public class Condition {
 
-    // Abstract methods
+	private Game myGame;
+	private Predicate<Game> myCondition;
+	private Consumer<Game> myResponse;
+	
+	public Condition(Game game, Predicate<Game> condition, Consumer<Game> response){
+		myGame = game;
+		myCondition = condition;
+		myResponse = response;
+	}
 
     /**
-     * This method contains the code which checks the specific condition this class implements.
-     * 
-     * @param livesRemaining the current health/score/etc of the game
-     * @return true if the condition is reached
+     * checks whether the condition has been satisfied and performs action
      */
-    public abstract boolean checkCondition (int livesRemaining);
-
-    /**
-     * Performs the action that will occur when a condition is reached. This is done by calling on
-     * methods in other classes which need to be updated.
-     * 
-     * @param livesRemaining the current health/score/etc of the game
-     */
-    public abstract void act (int livesRemaining);
+    public void check(){
+    	if (myCondition.test(myGame)){
+    		myResponse.accept(myGame);
+    	}
+    }
 }

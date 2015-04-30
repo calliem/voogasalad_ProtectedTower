@@ -133,7 +133,6 @@ public class Controller {
         }
         // addPartToGame(partType, partToAdd);
         partToAdd.put(InstanceManager.PART_TYPE_KEY, partType);
-        System.out.println("toadd: " + partToAdd);
         return partToAdd;
     }
 
@@ -387,6 +386,7 @@ public class Controller {
         addKey(partKey);
         return part;
     }
+   
 
     private void populateKeyList () {
         for (String key : currentGame.getAllPartData().keySet()) {

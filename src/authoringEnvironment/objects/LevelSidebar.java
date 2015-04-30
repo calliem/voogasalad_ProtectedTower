@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import authoringEnvironment.Controller;
 import authoringEnvironment.Variables;
 import authoringEnvironment.editors.Editor;
 import authoringEnvironment.map.MapWorkspace;
@@ -33,15 +34,15 @@ public class LevelSidebar extends Sidebar {
 
     public LevelSidebar (ResourceBundle resources,
                          ObservableList<GameObject> observableList,
-                         MapWorkspace mapWorkspace) {
+                         MapWorkspace mapWorkspace, Controller c) {
         super(resources, observableList, mapWorkspace);
         myMapList = FXCollections.observableList(observableList);
-        mapDisplay = new LevelUpdatableDisplay(observableList, 3, Variables.THUMBNAIL_SIZE_MULTIPLIER, mapWorkspace); // remove default values TODO
+        mapDisplay = new LevelUpdatableDisplay(c, Variables.PARTNAME_MAP, UPDATABLEDISPLAY_ELEMENTS, Variables.THUMBNAIL_SIZE_MULTIPLIER, mapWorkspace); // remove default values TODO
 
         observableList.addListener(new ListChangeListener<GameObject>() {
             @Override
             public void onChanged (javafx.collections.ListChangeListener.Change<? extends GameObject> change) {
-                mapDisplay.updateDisplay((List<GameObject>) change.getList());
+                mapDisplay.updateDisplay();
             }
         });
 
@@ -73,8 +74,8 @@ public class LevelSidebar extends Sidebar {
 
         // getChildren().add(mapList);
 
-        mapDisplay =
-                new LevelUpdatableDisplay(myMapList, UPDATABLEDISPLAY_ELEMENTS, Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace());
+        //mapDisplay =
+         //       new LevelUpdatableDisplay(myMapList, UPDATABLEDISPLAY_ELEMENTS, Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace());
         // temp.getChildren().add(mapDisplay);
         selectMap.getChildren().add(mapDisplay);
 

@@ -17,6 +17,7 @@ import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.Variables;
+import authoringEnvironment.util.Screenshot;
 
 public class TileView extends ObjectView{
     private String myName;
@@ -95,6 +96,7 @@ public class TileView extends ObjectView{
         }
         catch(MissingInformationException exception){
         }
+        myController.specifyPartImage(myKey, Screenshot.snap(tile, (int) tile.getWidth(), (int) tile.getHeight()).getImage());
         displaySaveMessage();
     }
     

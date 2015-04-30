@@ -19,6 +19,7 @@
     <string>Curves</string>
     <list>
       <authoringEnvironment.objects.Coordinate>
+<<<<<<< HEAD
         <myX>613.5</myX>
         <myY>418.5</myY>
       </authoringEnvironment.objects.Coordinate>
@@ -33,6 +34,22 @@
       <authoringEnvironment.objects.Coordinate>
         <myX>147.5</myX>
         <myY>220.5</myY>
+=======
+        <myX>569.5</myX>
+        <myY>201.5</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>553.7</myX>
+        <myY>219.9</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>506.3</myX>
+        <myY>275.1</myY>
+      </authoringEnvironment.objects.Coordinate>
+      <authoringEnvironment.objects.Coordinate>
+        <myX>490.5</myX>
+        <myY>293.5</myY>
+>>>>>>> 960d71dc004d9862c2b86e08beebb1706874edda
       </authoringEnvironment.objects.Coordinate>
     </list>
   </entry>

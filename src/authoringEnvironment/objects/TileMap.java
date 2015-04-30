@@ -1,7 +1,11 @@
 package authoringEnvironment.objects;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
+import authoringEnvironment.pathing.PathView;
 
 
 /**
@@ -26,8 +31,10 @@ public class TileMap extends GameObject {
     private Tile[][] newMap;
     private int myTileSize;
     private ImageView myBackground;
+    private String myBackgroundFilePath;
     private Color myActiveColor;
     private String imgFilePath;
+    private ObservableList<GameObject> myPaths;
 
 
     private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
@@ -51,7 +58,22 @@ public class TileMap extends GameObject {
         
     }
     
+    public void addPath(PathView path){
+        myPaths.add(path);
+    }
+    
+    public void removePath(PathView path){
+        if (myPaths.contains(path))
+            myPaths.remove(path);
+    }
+    
+    public ObservableList<GameObject> getPaths(){
+        return myPaths;
+    }
+    
     public TileMap (int mapRows, int mapCols, int tileSize) {
+        myPaths = FXCollections.observableArrayList();
+
         myRoot = new Group();
         myRoot.setOnDragDetected(e -> myRoot.startFullDrag());
         myMapRows = mapRows;
@@ -62,6 +84,7 @@ public class TileMap extends GameObject {
        // imgFilePath = DEFAULT_BACKGROUND_PATH;
         imgFilePath = null;
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));
+        myBackgroundFilePath = DEFAULT_BACKGROUND_PATH;
         setImageView(myBackground);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(myBackground);
@@ -107,6 +130,7 @@ public class TileMap extends GameObject {
         imgFilePath = filepath;
         myRoot.getChildren().remove(myBackground);
         Image image = new Image(filepath);
+        myBackgroundFilePath = filepath;
         myBackground = new ImageView(image);
         setImageDimensions(myBackground);
         myRoot.getChildren().add(0, myBackground);
@@ -288,7 +312,8 @@ public class TileMap extends GameObject {
     public Map<String, Object> save () {
         Map<String, Object> mapSettings = super.save(); 
         mapSettings.put(Variables.PARAMETER_TILESIZE, myTileSize);
-        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackground);
+        mapSettings.put(Variables.PARAMETER_BACKGROUND, myBackgroundFilePath);
+        mapSettings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_MAP);
 
         String[][] tileKeyArray = new String[newMap.length][newMap[0].length];
         for (int i = 0; i < newMap.length; i++) {
@@ -297,6 +322,13 @@ public class TileMap extends GameObject {
             }
         }
         mapSettings.put(TILE_KEY_ARRAY, tileKeyArray);
+        
+        List<String> pathKeys = new ArrayList<String>();
+        for (GameObject path : myPaths){
+            pathKeys.add(path.getKey());
+            
+        }
+        mapSettings.put(Variables.PARAMETER_PATH_KEYS, pathKeys);
         return mapSettings;
     }
 
@@ -315,5 +347,7 @@ public class TileMap extends GameObject {
         info += "\nTile Size: " + myTileSize;
         return info;
     }
+
+
 
 }
