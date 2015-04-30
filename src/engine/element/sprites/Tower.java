@@ -76,4 +76,8 @@ public class Tower extends GameSprite {
         // TODO Auto-generated method stub
         System.out.println("Tower updated");
     }
+    
+    public double getCost(){
+    	return cost;
+    }
 }

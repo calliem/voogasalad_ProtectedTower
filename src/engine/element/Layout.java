@@ -60,6 +60,10 @@ public class Layout implements Updateable {
      * Table which contains interactions between game elements
      */
     private ActionManager myActionManager;
+    /**
+     * tower to be placed by user
+     */
+    private Tower myHeldTower;
 
     private final int ROW_INDEX = 0;
     private final int COLUMN_INDEX = 1;
@@ -158,6 +162,15 @@ public class Layout implements Updateable {
         if (canPlace(temp, location)) {
             myTowerList.add(temp);
         }
+    }
+    
+    /**
+     * prepares tower for placement
+     * 
+     * @param tower
+     */
+    public void pickUpTower(Tower tower){
+    	myHeldTower = tower;
     }
 
     /**

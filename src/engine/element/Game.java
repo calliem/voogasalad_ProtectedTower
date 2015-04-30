@@ -50,7 +50,7 @@ public class Game implements Updateable, Endable {
         myLayout = new Layout(myNodes);
         myActiveLevelIndex = 0;
         myBank = new Bank(0);
-        myShop = new Shop(myBank, new ArrayList<>(), new ArrayList<>());
+        myShop = new Shop(myLayout, myBank, new ArrayList<>());
         myPoints = 0;
     }
 
