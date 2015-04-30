@@ -9,11 +9,11 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <null/>
+    <string>ExampleGame_Path0.Path</string>
   </entry>
   <entry>
     <string>Tags</string>
-    <list/>
+    <string>Basic</string>
   </entry>
   <entry>
     <string>Curves</string>

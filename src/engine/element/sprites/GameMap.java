@@ -1,8 +1,10 @@
-package engine.element;
+package engine.element.sprites;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import annotations.parameter;
-import engine.element.sprites.GridCell;
+import engine.Reflectable;
 import engine.factories.GameElementFactory;
 
 
@@ -14,7 +16,7 @@ import engine.factories.GameElementFactory;
  * @author Sean Scott
  *
  */
-public class GameMap {
+public class GameMap extends Sprite implements Reflectable {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "20")
     private String[][] myTileNames;
@@ -36,7 +38,14 @@ public class GameMap {
 
     }
 
-    // TODO add method to load paths
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
+        myTileNames = (String[][]) parameters.get("TileNames");
+        rows = (Integer) parameters.get("Rows");
+        columns = (Integer) parameters.get("Columns");
+        tileSize = (Integer) parameters.get("TileSize");
+        myPaths = (List<String>) parameters.get("Paths");
+    }
 
     /**
      * Creates an instance of the map made of GridCells and stores it as an instance variable
@@ -75,5 +84,32 @@ public class GameMap {
         { (int) (rows * y / getCoordinateHeight()),
          (int) (columns * x / getCoordinateWidth()) };
         return rowCol;
+    }
+
+    public List<String> getPathNames () {
+        return Collections.unmodifiableList(myPaths);
+    }
+
+    @Override
+    public void onCollide (GameElement element) {
+
+    }
+
+    @Override
+    public void fixField (String fieldToModify, Object value) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void changeField (String fieldToModify, String value, Double duration) {
+        // TODO Auto-generated method stub
+        
     }
 }

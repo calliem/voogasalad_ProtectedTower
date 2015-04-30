@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
+import testing.ExampleGame;
+import testing.ExampleGameMap;
+import testing.ExampleLevel;
+import testing.ExampleRound;
+import testing.ExampleWave;
 import authoringEnvironment.GameCreator;
 import authoringEnvironment.InstanceManager;
 import engine.element.Game;
@@ -55,19 +61,18 @@ public class GameController {
      * 
      * @param filepath String to the main directory holding the game
      * @param nodes List<Sprite> reference to that used in the Player class to display the game
+     * @param possibleTower List<Tower> reference that is used in Player class to display all towers
+     *        to place
      * @throws InsufficientParametersException when filepath does not point to a well defined game
      *         file
      */
-    public GameController (String filepath, List<Sprite> nodes)
+    public GameController (String filepath,
+                           List<Sprite> nodes,
+                           List<Tower> possibleTowers)
         throws InsufficientParametersException {
-        myGame = this.loadGame(filepath, nodes);
         myTowerManager = new TowerManager();
-    }
-
-    public GameController (String filepath, List<Sprite> nodes, List<Tower> possibleTowers)
-        throws InsufficientParametersException {
-        this(filepath, nodes);
-        // TODO what to do with possibleTowers?
+        myGame = this.loadGame(filepath, nodes, possibleTowers);
+        myGame.updateBackgroundTest("DesktopTestGameMap_Part0.GameMap");
     }
 
     /**
@@ -78,11 +83,13 @@ public class GameController {
      * 
      * @param filepath String of location of the game file
      * @param nodes List<Sprite> list of sprites that the game can update
+     * @param possibleTowers
+     * @param background
      * @throws InsufficientParametersException when multiple games/layouts are created, or when no
      *         game elements are specified
      */
-    private Game loadGame (String filepath, List<Sprite> nodes)
-                                                               throws InsufficientParametersException {
+    private Game loadGame (String filepath, List<Sprite> nodes, List<Tower> possibleTowers
+            ) throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String partName : PART_NAMES) {
             myObjects.put(partName, new HashMap<>());
@@ -97,9 +104,11 @@ public class GameController {
         for (Map<String, Object> obj : allDataObjects.values()) {
             String partType = (String) obj.get(PARAMETER_PARTTYPE);
             myObjects.get(partType).put((String) obj.get(PARAMETER_GUID), obj);
+            System.out.println(obj.get("Image"));
         }
+        System.out.println("===================================================");
 
-        return initializeGame(nodes, myObjects);
+        return initializeGame(nodes, myObjects, possibleTowers);
     }
 
     /**
@@ -109,56 +118,64 @@ public class GameController {
      * @param nodes List<Node> list of javafx nodes that the game can update
      * @param myObjects Map<String, Map<String, Map<String, Object>>> representing mapping of part
      *        name to the specific objects of that type
+     * @param possibleTowers
+     * @param background
      * @return Game object which has been instantiated with given objects
-     * @throws InsufficientParametersException if inputted objects do not fulfill game requirements
+     * @throws InsufficientParametersException if inputed objects do not fulfill game requirements
      */
     private Game initializeGame (List<Sprite> nodes,
-                                 Map<String, Map<String, Map<String, Object>>> myObjects)
-                                                                                         throws InsufficientParametersException {
+                                 Map<String, Map<String, Map<String, Object>>> myObjects,
+                                 List<Tower> possibleTowers) throws InsufficientParametersException {
         // store game parameters
-        Game myGame = new Game(nodes);
+        Game myGame = new Game(nodes, ExampleGame.generateExampleGame());
 
         // TODO test for errors for 0 data files, or too many
-        if (myObjects.get("Game").size() != 1) {
-            throw new InsufficientParametersException("Zero or multiple game data files created");
-        }
-        else {
-            for (Map<String, Object> map : myObjects.get("Game").values()) {
-                // TODO need game factory or something to initialize it
-            }
-        }
-        // if (myObjects.get("Layout").size() != 1) {
-        // throw new InsufficientParametersException("Zero or multiple game layouts created");
+        // if (myObjects.get("Game").size() != 1) {
+        // throw new InsufficientParametersException("Zero or multiple game data files created");
         // }
         // else {
-        // for (Map<String, Object> map : myObjects.get("Layout").values()) {
-        // myGame.addLayoutParameters(map);
+        // for (Map<String, Object> map : myObjects.get("Game").values()) {
+        // // TODO need game factory or something to initialize it
         // }
         // }
-        if (myObjects.get("Level").size() < 1) {
-            throw new InsufficientParametersException("No game levels created");
-        }
-        else {
-            myGame.addLevels(myObjects.get("Level"));
-        }
+
+        // if (myObjects.get("Level").size() < 1) {
+        // throw new InsufficientParametersException("No game levels created");
+        // }
+        // else {
+        // myGame.addLevels(myObjects.get("Level"));
+        // }
+
+        // TODO: ADDING LEVELS
+        myGame.addLevels(ExampleLevel.generateExampleLevel());
 
         // Send right sets of objects to the right objects
         for (String partName : FACTORY_PART_NAMES) {
             myGame.addGameElement(partName, myObjects.get(partName));
         }
 
+        myGame.addGameElement("Round", ExampleRound.generateExampleRound());
+        myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
+        myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap());
+        myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap2());
+
+        System.out.println("===================================================");
+        // TODO: POPULATING TOWER MANAGER
         myTowerManager.add(myObjects.get("Tower"));
 
+        possibleTowers.addAll(myGame.getAllTowerObjects(myObjects.get("Tower").keySet()));
+
+        System.out.println("===================================================");
         return myGame;
     }
 
     public void startGame (long frameRate) {
         Timeline gameTimeline = new Timeline();
         KeyFrame game =
-                new KeyFrame(Duration.millis(1 / frameRate),
-                             e -> myGame.update((int) (Integer.parseInt(gameTimeline
-                                     .currentTimeProperty().toString()) / (1 / frameRate))));
+                new KeyFrame(Duration.millis(1000 / frameRate),
+                             e -> myGame.update());
         gameTimeline.getKeyFrames().add(game);
+        gameTimeline.setCycleCount(Animation.INDEFINITE);
         gameTimeline.play();
     }
 
@@ -177,9 +194,10 @@ public class GameController {
     }
 
     public static void main (String[] args) throws InsufficientParametersException {
+        System.out.println(new ArrayList<Sprite>());
         GameController test =
                 new GameController(
-                                   "data//TestingTesting123//ExampleGame//ExampleGame.gamefile",
-                                   new ArrayList<Sprite>());
+                                   "data//DesktopTDTest//DesktopTD//DesktopTD.gamefile",
+                                   new ArrayList<Sprite>(), new ArrayList<Tower>());
     }
 }

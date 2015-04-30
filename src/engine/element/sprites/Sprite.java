@@ -1,13 +1,9 @@
 package engine.element.sprites;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
-import engine.UpdateAndReturnable;
-import engine.Updateable;
 
 
 /**
@@ -23,10 +19,18 @@ public abstract class Sprite extends GameElement {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "")
     private ImageView image;
+    @parameter(settable = false, playerDisplay = false, defaultValue = "")
+    private String imagepath;
 
 
     public Sprite () {
 
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
+        imagepath = (String) parameters.get("Image");
+        image = new ImageView(imagepath);
     }
 
     public ImageView getImageView () {

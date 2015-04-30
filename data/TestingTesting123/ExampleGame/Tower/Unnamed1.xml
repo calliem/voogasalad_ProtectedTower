@@ -50,12 +50,12 @@
   <entry>
     <string>projectileList</string>
     <list>
-      <string>ExampleGame_Part1.Projectile</string>
+      <string>ExampleGame_Part0.Projectile</string>
     </list>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part4.Tower</string>
+    <string>ExampleGame_Part1.Tower</string>
   </entry>
   <entry>
     <string>Tags</string>

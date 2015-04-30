@@ -63,4 +63,8 @@
     <string>PartKey</string>
     <string>Part0.Tower</string>
   </entry>
+  <entry>
+    <string>NextSprite</string>
+    <string>Part0.Tower</string>
+  </entry>
 </map>

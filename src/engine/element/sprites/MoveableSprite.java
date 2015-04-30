@@ -1,11 +1,8 @@
 package engine.element.sprites;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import engine.UpdateAndReturnable;
-import annotations.parameter;
 import javafx.geometry.Point2D;
+import annotations.parameter;
 
 
 /**
@@ -16,22 +13,27 @@ import javafx.geometry.Point2D;
  * @author Greg McKeon
  *
  */
-public abstract class MoveableSprite extends Sprite {
+public abstract class MoveableSprite extends Sprite implements Modifiable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
     private Double speed;
     @parameter(settable = false, playerDisplay = true)
     private String group = null;
-    
-    
-    
-    
-    
+
     /**
      * Holds the current heading of the sprite
      */
     @parameter(playerDisplay = true)
-    private Point2D heading;
+    private Point2D heading = new Point2D(-1, 0);
+
+    public MoveableSprite () {
+
+    }
+
+    public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
+        speed = (Double) parameters.get("Speed");
+    }
 
     // private double myRange;
 
@@ -74,5 +76,5 @@ public abstract class MoveableSprite extends Sprite {
      * method should be used to define how this object moves and changes coordinates on the screen.
      */
     public abstract void move ();
-    
+
 }

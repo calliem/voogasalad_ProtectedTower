@@ -5,11 +5,11 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>imageselector/img_not_available.png</string>
+    <string>/ImageData/Game1DeathMap_Part1Image.png</string>
   </entry>
   <entry>
     <string>damage</string>
-    <int>1</int>
+    <int>5</int>
   </entry>
   <entry>
     <string>boundingWidth</string>
@@ -21,11 +21,15 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed2</string>
+    <string>BlueFia</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part1.Projectile</string>
+    <string>Game1DeathMap_Part1.Projectile</string>
+  </entry>
+  <entry>
+    <string>homing</string>
+    <boolean>true</boolean>
   </entry>
   <entry>
     <string>speed</string>

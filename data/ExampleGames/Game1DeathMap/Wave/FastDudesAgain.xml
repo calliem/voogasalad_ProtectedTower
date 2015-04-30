@@ -5,7 +5,9 @@
   </entry>
   <entry>
     <string>Enemies</string>
-    <list/>
+    <list>
+      <string></string>
+    </list>
   </entry>
   <entry>
     <string>Times</string>
@@ -14,11 +16,15 @@
     </list>
   </entry>
   <entry>
-    <string>PartKey</string>
-    <string>ExampleGame_Part0.Wave</string>
+    <string>name</string>
+    <string>FastDudesAgain</string>
   </entry>
   <entry>
-    <string>Name</string>
-    <string>Unnamed1</string>
+    <string>PartKey</string>
+    <string>Game1DeathMap_Part9.Wave</string>
+  </entry>
+  <entry>
+    <string>Tags</string>
+    <list/>
   </entry>
 </map>

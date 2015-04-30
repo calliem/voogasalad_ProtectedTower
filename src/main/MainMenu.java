@@ -1,5 +1,6 @@
 package main;
 
+import player.GamePlayer;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
@@ -89,18 +90,22 @@ public class MainMenu {
         
         authoring.setOnMouseClicked(e -> {
             //TODO: re-enable this;
-//            if(!mainContent.getChildren().contains(test)){
-//                mainContent.getChildren().add(1, test);
-//                entryAnimation(mainContent, test, go);
-//            }
+            if(!mainContent.getChildren().contains(test)){
+                mainContent.getChildren().add(1, test);
+                entryAnimation(mainContent, test, go);
+            }
             sceneSelected = Main.getScenes()[1];
-            myStage.setScene(sceneSelected);
-            myStage.show();
+        });
+        
+        GamePlayer gamePlayer = new GamePlayer();
+        player.setOnMouseClicked(e -> {
+//            sceneSelected = Main.getScenes()[2];
+            gamePlayer.start(myStage);
+//            setupScene();
         });
 
         go.setOnMouseClicked(e -> {
-            myStage.setScene(sceneSelected);
-            myStage.show();
+            setupScene();
         });
         
         splashContent.getChildren().addAll(background, title, mainContent);
@@ -110,6 +115,11 @@ public class MainMenu {
 
         myScene = new Scene(myRoot, myDimensions.getWidth(), myDimensions.getHeight(), Color.WHITE); 
         return myScene;
+    }
+    
+    private void setupScene(){
+        myStage.setScene(sceneSelected);
+        myStage.show();
     }
 
     private StackPane makeGoButton () {

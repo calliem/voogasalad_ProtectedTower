@@ -14,7 +14,7 @@ public interface Updateable {
      * use it to set events in action, depending on if the counter has reached a certain value or is
      * a multiple of a certain number.
      * 
-     * @param counter int that counts up for each frame that is updated
+     * 
      */
-    public void update (int counter);
+    public void update ();
 }
