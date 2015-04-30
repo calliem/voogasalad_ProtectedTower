@@ -254,6 +254,10 @@ public class Controller {
         return false;
     }
     
+    public String getNameForPart(String partKey){
+        return (String) getPartCopy(partKey).get(InstanceManager.NAME_KEY);
+    }
+    
     
 
     public boolean removeTagFromPart (String partKey, String tag) {

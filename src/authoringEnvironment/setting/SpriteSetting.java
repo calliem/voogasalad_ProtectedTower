@@ -30,7 +30,8 @@ public class SpriteSetting extends Setting {
     private static final int DISPLAY_WIDTH = 200;
     private static final int PADDING = 15;
     private static final int IMAGE_SIZE = 50;
-    private static final int IMAGES_DISPLAYED = 3; // the amount of images displayed at once in the scrollpane
+    private static final int IMAGES_DISPLAYED = 3; // the amount of images displayed at once in the
+                                                   // scrollpane
 
     private List<ImageView> images;
     private ObservableList<String> filePaths;
@@ -39,7 +40,7 @@ public class SpriteSetting extends Setting {
     private static final double SELECTED = 1.0;
     private static final double UNSELECTED = 0.3;
     private static final int INITIAL = 0;
-    
+
     private Rectangle graphicSelectorBackground;
     private ScrollPane graphicSelectorPane;
     private List<String> selectedFiles;
@@ -47,7 +48,7 @@ public class SpriteSetting extends Setting {
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
 
     private boolean singularChoice = false;
-    
+
     public SpriteSetting (Controller controller, String part, String label, String value) {
         super(controller, part, label, value);
     }
@@ -55,15 +56,15 @@ public class SpriteSetting extends Setting {
     @Override
     protected void setupInteractionLayout () {
         basicLayout.setAlignment(Pos.CENTER);
-        
+
         selectedFiles = new ArrayList<>();
-       
+
         HBox graphicLayout = new HBox(PADDING);
         graphicLayout.setAlignment(Pos.CENTER_RIGHT);
-        
+
         imageLayout = new HBox(PADDING);
         imageLayout.setAlignment(Pos.CENTER);
-        
+
         images = new ArrayList<>();
         filePaths = FXCollections.observableList(new ArrayList<String>());
         setupScrollPane();
@@ -71,19 +72,19 @@ public class SpriteSetting extends Setting {
 
         filePaths.addListener(new ListChangeListener<String>() {
             @Override
-            public void onChanged(ListChangeListener.Change change){
+            public void onChanged (ListChangeListener.Change change) {
                 setupSelectionPane();
             }
         });
-        
-        images.get(INITIAL).setOpacity(SELECTED);
-        selectedFiles.add(filePaths.get(INITIAL));
-        
+        if (images.size() > 0) {
+            images.get(INITIAL).setOpacity(SELECTED);
+            selectedFiles.add(filePaths.get(INITIAL));
+        }
         graphicLayout.getChildren().addAll(graphicSelectorPane, error);
         this.getChildren().addAll(graphicLayout);
     }
-    
-    private void setupSelectionPane(){
+
+    private void setupSelectionPane () {
         retrieveSprites();
         try {
             layoutSprites();
@@ -103,40 +104,42 @@ public class SpriteSetting extends Setting {
     private void layoutSprites () throws NoImageFoundException {
         imageLayout.getChildren().removeAll(imageLayout.getChildren());
         adjustBackground();
-        
+
         images = new ArrayList<>();
         for (String path : filePaths) {
             System.out.println("trying to get image at: " + myController.getImageForKey(path));
             ImageView image = new ImageView(myController.getImageForKey(path));
             ScaleImage.scale(image, IMAGE_SIZE, IMAGE_SIZE);
             image.setOnMousePressed( (e) -> {
-                if(image.getOpacity() == SELECTED && !singularChoice){
+                if (image.getOpacity() == SELECTED && !singularChoice) {
                     image.setOpacity(UNSELECTED);
                     selectedFiles.remove(path);
                 }
-                else if(image.getOpacity() == UNSELECTED && !singularChoice){
-                    image.setOpacity(SELECTED);
-                    selectedFiles.add(path);
-                }
-                else if(image.getOpacity() == UNSELECTED && singularChoice){
-                    makeSingleSelection(filePaths.indexOf(path));
-                }
-            });
+                    else if (image.getOpacity() == UNSELECTED && !singularChoice) {
+                        image.setOpacity(SELECTED);
+                        selectedFiles.add(path);
+                    }
+                    else if (image.getOpacity() == UNSELECTED && singularChoice) {
+                        makeSingleSelection(filePaths.indexOf(path));
+                    }
+                });
             imageLayout.getChildren().add(image);
             images.add(image);
-            
-            Tooltip tooltip = new Tooltip((String)myController.getPartCopy(path).get(InstanceManager.NAME_KEY));
+
+            Tooltip tooltip =
+                    new Tooltip((String) myController.getPartCopy(path)
+                            .get(InstanceManager.NAME_KEY));
             Tooltip.install(image, tooltip);
         }
     }
-    
-    private void makeSingleSelection(int index){
-        for(Node node : imageLayout.getChildren()){
-            if(imageLayout.getChildren().indexOf(node) != index){
+
+    private void makeSingleSelection (int index) {
+        for (Node node : imageLayout.getChildren()) {
+            if (imageLayout.getChildren().indexOf(node) != index) {
                 node.setOpacity(UNSELECTED);
                 selectedFiles.remove(filePaths.get(imageLayout.getChildren().indexOf(node)));
             }
-            else{
+            else {
                 node.setOpacity(SELECTED);
                 selectedFiles.add(filePaths.get(index));
             }
@@ -157,7 +160,7 @@ public class SpriteSetting extends Setting {
 
     private void retrieveSprites () {
         filePaths = myController.getKeysForPartType(spriteNeeded
-                                                      .getString(partType));
+                .getString(partType));
     }
 
     private void setupScrollPane () {
@@ -167,7 +170,7 @@ public class SpriteSetting extends Setting {
         adjustBackground();
 
         graphicSelector.getChildren().addAll(graphicSelectorBackground, imageLayout);
-        
+
         graphicSelectorPane.setContent(graphicSelector);
         graphicSelectorPane.setPannable(true);
         graphicSelectorPane.setMaxWidth(200);
@@ -176,20 +179,20 @@ public class SpriteSetting extends Setting {
     }
 
     @Override
-    public String getDataAsString() {
+    public String getDataAsString () {
         return dataAsString;
     }
-    
-    private String convertDataToString(){
+
+    private String convertDataToString () {
         String result = "";
-        for(String file : selectedFiles){
-            if(selectedFiles.indexOf(file) < selectedFiles.size()-1){
+        for (String file : selectedFiles) {
+            if (selectedFiles.indexOf(file) < selectedFiles.size() - 1) {
                 result += String.format("%s, ", file);
             }
         }
         return result;
     }
-    
+
     @Override
     public Object getParameterValue () {
         return selectedFiles;
@@ -197,7 +200,7 @@ public class SpriteSetting extends Setting {
 
     @Override
     public boolean parseField () {
-        if(selectedFiles.size() == 0){
+        if (selectedFiles.size() == 0) {
             displayErrorAlert("Select at least one!");
             return false;
         }
@@ -208,8 +211,8 @@ public class SpriteSetting extends Setting {
 
     @Override
     public void displaySavedValue () {
-        for(Node node : imageLayout.getChildren()){
-            if(selectedFiles.contains(filePaths.get(imageLayout.getChildren().indexOf(node)))){
+        for (Node node : imageLayout.getChildren()) {
+            if (selectedFiles.contains(filePaths.get(imageLayout.getChildren().indexOf(node)))) {
                 node.setOpacity(SELECTED);
             }
             else {
@@ -218,10 +221,10 @@ public class SpriteSetting extends Setting {
         }
     }
 
-    public void setSingularChoice(boolean singular){
+    public void setSingularChoice (boolean singular) {
         singularChoice = singular;
     }
-    
+
     @Override
     public boolean processData () {
         return parseField();
