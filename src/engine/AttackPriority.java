@@ -70,7 +70,7 @@ public class AttackPriority {
     
     private GameElement first(){
     	//get smallest distance from goal
-    	ArrayList<Double> list = new ArrayList<>();
+    	List<Double> list = new ArrayList<Double>();
     	for (GameElement g: myTargets){
     		list.add(myTargets.indexOf(g), distanceFromGoal(g));
     	}
