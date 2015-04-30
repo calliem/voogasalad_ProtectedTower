@@ -240,12 +240,12 @@ public class TagDisplay extends HBox{
     }
     
     private void showTagPrompt(){
-        fadePrompt(0.0, 1.0);
+        fadePrompt(START_VALUE, END_VALUE);
         this.getChildren().add(myPrompt);
     }
     
     private void hideTagPrompt(TextField field){
-        fadePrompt(1.0, 0.0).setOnFinished(e -> {
+        fadePrompt(END_VALUE, START_VALUE).setOnFinished(e -> {
             promptActive = false;
             field.setText("");
             this.getChildren().remove(myPrompt);

@@ -189,7 +189,7 @@ public abstract class SpriteView extends ObjectView {
         // move the image to be first in the settings list
         for (int i = 0; i < settings.size(); i++) {
             if (settings.get(i) instanceof ImageViewSetting) {
-                parameterFields.add(settings.get(i));
+                parameterFields.add(IMAGE_INDEX, settings.get(i));
                 editableContent.getChildren().add(settings.get(i));
                 break;
             }
@@ -202,7 +202,7 @@ public abstract class SpriteView extends ObjectView {
             if (settings.get(j) instanceof StringSetting &&
                 settings.get(j).getParameterName().equals("name")) {
                 ((StringSetting) settings.get(j)).setCheckName(true);
-                parameterFields.add(settings.get(j));
+                parameterFields.add(NAME_INDEX, settings.get(j));
                 editableContent.getChildren().add(settings.get(j));
                 continue;
             }
@@ -292,8 +292,8 @@ public abstract class SpriteView extends ObjectView {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            tagGroup.setKey(myKey);
             myController.specifyPartImage(myKey, imageFile);
+            tagGroup.setKey(myKey);
             displaySavedMessage();
         }
         return correctFormat && save;

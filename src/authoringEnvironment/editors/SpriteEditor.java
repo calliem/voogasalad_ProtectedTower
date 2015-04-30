@@ -67,7 +67,8 @@ public abstract class SpriteEditor extends Editor {
     private static final double EMPTY_TEXT_SIZE = CONTENT_WIDTH / 40;
     private static final int MOVE_BUTTON_DURATION = 100;
     
-    
+    private static final double START_VALUE = 0.0;
+    private static final double END_VALUE = 1.0;
 
     private static final String SPRITE_REQUIRED_ERROR = "Please create %ss first!";
     private static final String NAME_EXISTS_ERROR = "A %s with that name already exists!";
@@ -334,6 +335,8 @@ public abstract class SpriteEditor extends Editor {
         spritesCreated.remove(sprite);
         tagGroupsList.remove(sprite.getTagGroup());
         numSprites.setValue(spritesCreated.size());
+        
+        //TODO: delete from controller
     }
 
     private void setupSpriteAction (SpriteView sprite) {
@@ -354,7 +357,7 @@ public abstract class SpriteEditor extends Editor {
     private void showOverlay (StackPane overlay) {
         if (!isOverlayActive) {
             visuals.getChildren().add(overlay);
-            Scaler.scaleOverlay(0.0, 1.0, overlay);
+            Scaler.scaleOverlay(START_VALUE, END_VALUE, overlay);
             isOverlayActive = true;
         }
     }
@@ -362,7 +365,7 @@ public abstract class SpriteEditor extends Editor {
     @Override
     public void hideOverlay () {
         if (isOverlayActive) {
-            ScaleTransition scale = Scaler.scaleOverlay(1.0, 0.0, getActiveOverlay());
+            ScaleTransition scale = Scaler.scaleOverlay(END_VALUE, START_VALUE, getActiveOverlay());
             scale.setOnFinished(e -> {
                 visuals.getChildren().remove(getActiveOverlay());
                 myContent.getChildren().remove(getActiveOverlay()); // in case I added overlay to
@@ -422,4 +425,6 @@ public abstract class SpriteEditor extends Editor {
     public void setActiveOverlay (Node activeOverlay) {
         this.activeOverlay = activeOverlay;
     }
+    
+    public void update(){}
 }

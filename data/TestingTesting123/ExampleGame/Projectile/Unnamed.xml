@@ -5,7 +5,7 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>images/alert.png</string>
+    <string>imageselector/img_not_available.png</string>
   </entry>
   <entry>
     <string>damage</string>
@@ -21,7 +21,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>PENIS</string>
+    <string>Unnamed</string>
   </entry>
   <entry>
     <string>PartKey</string>
