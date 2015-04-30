@@ -45,14 +45,12 @@ public class Projectile extends MoveableSprite implements Updateable {
 
     @Override
     public void move () {
-        super.setLocation(super.getLocation()
-                .add(super.getHeading().multiply(super.getSpeed())));
+        super.setLocation(super.getLocation().add(super.getHeading().multiply(super.getSpeed())));
     }
 
     @Override
     public void update () {
         this.move();
     }
-
 
 }

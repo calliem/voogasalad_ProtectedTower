@@ -106,7 +106,7 @@ public class GamePlayer extends Application {
             return;
         }
 
-        myGameController.startGame(1);
+        myGameController.startGame(30);
 
     }
 
