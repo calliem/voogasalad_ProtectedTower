@@ -1,5 +1,6 @@
 package engine.element;
 
+import java.util.List;
 import annotations.parameter;
 import engine.element.sprites.GridCell;
 import engine.factories.GameElementFactory;
@@ -22,6 +23,8 @@ public class GameMap {
     private Integer columns;
     @parameter(settable = true, playerDisplay = false, defaultValue = "5")
     private Integer tileSize;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private List<String> myPaths;
 
     /**
      * Holds the actual grid of cells, showing which cells have which tags
@@ -31,6 +34,8 @@ public class GameMap {
     public GameMap () {
 
     }
+
+    // TODO add method to load paths
 
     /**
      * Creates an instance of the map made of GridCells and stores it as an instance variable
@@ -63,9 +68,11 @@ public class GameMap {
     public double getCoordinateWidth () {
         return columns * tileSize;
     }
-    
-    public int[] getRowColAtCoordinates(double x, double y){    	
-    	int[] rowCol = { (int) (rows*y/getCoordinateHeight()), (int) (columns*x/getCoordinateWidth()) };
-    	return rowCol;
+
+    public int[] getRowColAtCoordinates (double x, double y) {
+        int[] rowCol =
+        { (int) (rows * y / getCoordinateHeight()),
+         (int) (columns * x / getCoordinateWidth()) };
+        return rowCol;
     }
 }

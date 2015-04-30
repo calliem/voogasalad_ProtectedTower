@@ -34,14 +34,15 @@ public class GameController {
      */
     private static final String[] PART_NAMES = new String[] { "Tower", "Enemy", "Projectile",
                                                              "GridCell", "GameMap", "Round",
-                                                             "Wave", "Game", "Level" };
+                                                             "Wave", "Game", "Level", "MapPath" };
     // TODO do we pull in a Layout object map?
     /**
      * Holds a subset of part names to give to the game element factory
      */
     private static final String[] FACTORY_PART_NAMES = new String[] { "Tower", "Enemy",
                                                                      "Projectile", "GridCell",
-                                                                     "GameMap", "Round", "Wave" };
+                                                                     "GameMap", "Round", "Wave",
+                                                                     "MapPath" };
 
     /**
      * Holds an instance of an entire game
