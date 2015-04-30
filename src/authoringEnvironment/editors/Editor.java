@@ -87,4 +87,6 @@ public abstract class Editor extends Tab {
         return isOverlayActive;
     }
 
+    public abstract void update ();
+
 }

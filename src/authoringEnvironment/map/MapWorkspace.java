@@ -62,12 +62,11 @@ public class MapWorkspace extends StackPane {
 
         createDefaultMap();
         pathModeOverlay =
-                //new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS, myActiveMap.getHeight()+2*Anchor.RADIUS);
+                // new Rectangle(myActiveMap.getWidth()+2*Anchor.RADIUS,
+                // myActiveMap.getHeight()+2*Anchor.RADIUS);
                 new Rectangle(myActiveMap.getWidth(), myActiveMap.getHeight());
         pathModeOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
         StackPane.setAlignment(pathModeOverlay, Pos.CENTER);
-
-        
 
     }
 
@@ -93,11 +92,10 @@ public class MapWorkspace extends StackPane {
             getChildren().remove(node);
         }
     }
-   
 
     private void update (GameObject oldObject, GameObject object) {
         if (oldObject != null) {
-            getChildren().remove(oldObject.getRoot());
+            remove(oldObject.getRoot());
         }
         StackPane.setAlignment(object.getRoot(), Pos.CENTER);
         getChildren().add(object.getRoot());
@@ -109,8 +107,6 @@ public class MapWorkspace extends StackPane {
         myActiveMap.setActiveColor(myActiveColor);
 
     }
-    
-    
 
     // TODO: duplicated
     public void updateWithNewPath (GameObject object) {
@@ -127,7 +123,6 @@ public class MapWorkspace extends StackPane {
         if (!path.areAnchorsSelected())
             path.addAnchor(e.getX(), e.getY());
     }
-
 
     protected void displayMessage (String text, Color color) {
         Text saved = new Text(text);
@@ -155,12 +150,12 @@ public class MapWorkspace extends StackPane {
     public Color getActiveColor () {
         return myActiveColor;
     }
-    
-    public void setActivePath(PathView path){
+
+    public void setActivePath (PathView path) {
         myActivePath = null;
     }
-    
-    public void setActiveMap(TileMap map){
+
+    public void setActiveMap (TileMap map) {
         myActiveMap = null;
     }
 
@@ -168,6 +163,5 @@ public class MapWorkspace extends StackPane {
         myActiveMap.setActiveColor(color);
         myActiveColor = color;
     }
-
 
 }

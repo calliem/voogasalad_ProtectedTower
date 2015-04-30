@@ -33,7 +33,7 @@ public class MapEditor extends MainEditor {
             .getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
     
     // private List<GameObject> myMaps;
-    private Sidebar mySidebar;  // TODO: maybe move this into the superclass?
+    private MapSidebar mySidebar;  // TODO: maybe move this into the superclass? Change this back to a normal Sidebar
     
 
     // TODO: remove the dimensions parameter because we apparently can ust get that form the main
@@ -48,5 +48,12 @@ public class MapEditor extends MainEditor {
                                                                                   // to pass in so
                                                                                   // much stuff
         getPane().add(mySidebar, 1, 0);
+    }
+
+
+    @Override
+    public void update () {
+        mySidebar.updateTileDisplay();
+        
     }
 }

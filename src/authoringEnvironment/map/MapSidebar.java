@@ -30,6 +30,7 @@ import authoringEnvironment.objects.MapUpdatableDisplay;
 import authoringEnvironment.objects.PathUpdatableDisplay;
 import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.objects.TileUpdatableDisplay;
 import authoringEnvironment.objects.UpdatableDisplay;
 import authoringEnvironment.pathing.PathView;
 import authoringEnvironment.util.Scaler;
@@ -66,6 +67,7 @@ public class MapSidebar extends Sidebar {
     private TextField tileRowDisplay;
     private TextField tileColDisplay;
     private UpdatableDisplay pathDisplay;
+    private UpdatableDisplay tileDisplay;
     private TextField tileSizeDisplay;
     private VBox pathSettings;
     private VBox tileSettings;
@@ -117,9 +119,10 @@ public class MapSidebar extends Sidebar {
         pathSettings = createAccordionTitleText(getResources().getString("PathSettings"));
 
         // createGeneralSettings();
-
-        selectTile();
         setTileSize();
+        selectTile();
+        
+
         setPaths();
 
     }
@@ -142,25 +145,36 @@ public class MapSidebar extends Sidebar {
     }
 
     private void selectTile () {
-        Text text = new Text(getResources().getString("SelectTile"));
-        HBox selectTile = new HBox();
-        selectTile.setSpacing(30); // remove hardcoding
+        tileDisplay = new TileUpdatableDisplay(myController, Variables.PARTNAME_TILE,
+                                         UPDATABLEDISPLAY_ELEMENTS,
+                                         Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace());
 
-        VBox selection = new VBox();
-        Text selectTileColor = new Text(getResources().getString("TileColor")); // TODO:
-                                                                                // fix
-        ColorPicker picker = new ColorPicker();
-        selection.getChildren().addAll(selectTileColor, picker);
+        tileSettings.getChildren().add(tileDisplay);
 
-        Rectangle rectangleDisplay =
-                new Rectangle(DEFAULT_TILE_DISPLAY_SIZE,
-                              DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_COLOR);
-        selectTile.getChildren().addAll(selection, rectangleDisplay);
-
-        tileSettings.getChildren().add(selectTile);
-        picker.setOnAction(e -> getMapWorkspace().setActiveColor(picker.getValue()));// changeActiveTileColor(picker.getValue(),
-                                                                                     // rectangleDisplay));
     }
+
+    /*
+     * private void selectTile () {
+     * HBox selectTile = new HBox();
+     * selectTile.setSpacing(30); // remove hardcoding
+     * 
+     * VBox selection = new VBox();
+     * Text selectTileColor = new Text(getResources().getString("TileColor")); // TODO:
+     * // fix
+     * ColorPicker picker = new ColorPicker();
+     * selection.getChildren().addAll(selectTileColor, picker);
+     * 
+     * Rectangle rectangleDisplay =
+     * new Rectangle(DEFAULT_TILE_DISPLAY_SIZE,
+     * DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_COLOR);
+     * selectTile.getChildren().addAll(selection, rectangleDisplay);
+     * 
+     * tileSettings.getChildren().add(selectTile);
+     * picker.setOnAction(e -> getMapWorkspace().setActiveColor(picker.getValue()));//
+     * changeActiveTileColor(picker.getValue(),
+     * // rectangleDisplay));
+     * }
+     */
 
     /*
      * private void changeActiveTileColor (Color color, Rectangle display) {
@@ -207,7 +221,6 @@ public class MapSidebar extends Sidebar {
                 observableList.remove(object);
                 updateDisplay.updateDisplay(observableList);
             }
-            System.out.println("object.getRoot" + object.getRoot());
             getMapWorkspace().remove(object.getRoot());
         });
     }
@@ -399,7 +412,10 @@ public class MapSidebar extends Sidebar {
         createMapButton.setOnMouseClicked(e -> createPath());
 
         Button saveMapButton = new Button(getResources().getString("SavePath"));
-        saveMapButton.setOnMouseClicked(e -> savePath());
+        saveMapButton.setOnMouseClicked(e -> {
+            savePath();
+            // getMapWorkspace().getChildren().remove(getMapWorkspace().getActivePath());
+            });
 
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton
@@ -462,9 +478,24 @@ public class MapSidebar extends Sidebar {
         }
         // myController.addImageToPart(key, activePath.getImageView().getImage());
         pathDisplay.updateDisplay();
-        getMapWorkspace().remove(activePath.getRoot());
-        System.out.println("keys for part type =======: " +
-                           myController.getKeysForPartType(Variables.PARTNAME_PATH));
+        // getMapWorkspace().remove(getMapWorkspace().getActivePath().getRoot());
+        remove(getMapWorkspace().getActivePath(), null, null);
+        getMapWorkspace().setActivePath(null);
+        
+
+
+        System.out.println("keys for part type tiles =======: " +
+                           myController.getKeysForPartType(Variables.PARTNAME_TILE));
     }
+    
+    public void updateTileDisplay(){
+        System.out.println("UPDATE TILEDISPLAY WITH THESE: " +
+                myController.getKeysForPartType(Variables.PARTNAME_TILE));
+        tileDisplay.updateDisplay();
+    }
+    
+   /* public UpdatableDisplay getTileDisplay(){
+        return tileDisplay;
+    }*/
 
 }

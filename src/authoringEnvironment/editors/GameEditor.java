@@ -90,4 +90,10 @@ public class GameEditor extends Editor {
         settings.put(Variables.LIVES, lives);
 
     }
+
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
+    }
 }

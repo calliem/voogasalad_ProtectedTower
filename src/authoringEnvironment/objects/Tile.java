@@ -52,8 +52,6 @@ public class Tile extends Rectangle {
         Tooltip.install(this, t);
     }
     
-
-
     public void positionTile (int tileSize, int i, int j) {
         setTranslateX(j * tileSize);
         setTranslateY(i * tileSize);
@@ -131,6 +129,8 @@ public class Tile extends Rectangle {
      * }
      */
 
+    //public void saveThumbnail ()
+    
     public void setFill (Color color) {
         super.setFill(color);
         myColor = color;

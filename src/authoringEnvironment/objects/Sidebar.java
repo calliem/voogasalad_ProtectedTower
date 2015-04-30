@@ -100,4 +100,6 @@ public abstract class Sidebar extends VBox { // extend gridpane pls
         setMaxWidth(Double.MAX_VALUE);
     }
 
+
+
 }

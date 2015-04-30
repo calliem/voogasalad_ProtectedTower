@@ -35,6 +35,8 @@ public class GameObject {
 
     }
 
+    //convert to node and then use get color for tiles
+    
     public GameObject (String key, String name, ImageView image) {
         myKey = key;
         myName = name;

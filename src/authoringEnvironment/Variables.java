@@ -26,6 +26,7 @@ public class Variables {
     
     public static final String PARTNAME_MAP = "GameMap";
     public static final String PARTNAME_PATH = "Path";
+    public static final String PARTNAME_TILE = "Tile";
 
     public static final Color DEFAULT_TILE_COLOR = Color.TRANSPARENT;
 
