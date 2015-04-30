@@ -133,11 +133,13 @@ public class SpriteSetting extends Setting {
                 if (image.getOpacity() == SELECTED && !singularChoice) {
                     image.setOpacity(UNSELECTED);
                     selectedFiles.remove(path);
+                    dataAsString = convertDataToString();
                     System.out.println("SELECTED FILES: " + selectedFiles);
                 }
                 else if(image.getOpacity() == UNSELECTED && !singularChoice){
                     image.setOpacity(SELECTED);
                     selectedFiles.add(path);
+                    dataAsString = convertDataToString();
                     System.out.println("SELECTED FILES: " + selectedFiles);
                 }
                 else if(image.getOpacity() == UNSELECTED && singularChoice){
@@ -165,6 +167,7 @@ public class SpriteSetting extends Setting {
                 selectedFiles.add(filePaths.get(index));
             }
         }
+        dataAsString = convertDataToString();
     }
 
     /**

@@ -27,7 +27,7 @@ public class ExampleLevel {
         
         level.put(InstanceManager.NAME_KEY, "DesktopTestlevel");
         level.put(InstanceManager.PART_TYPE_KEY, "level");
-        level.put(InstanceManager.PART_KEY_KEY, "DesktopTestlevel_Part0.Level");
+        level.put(InstanceManager.PART_KEY_KEY, "DesktopTestlevel_Part1.Level");
         level.put("myLives", myLives);
         level.put("myRounds",myRounds);
         level.put("myConditions",myConditions);

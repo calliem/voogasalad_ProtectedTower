@@ -118,7 +118,7 @@
   </entry>
   <entry>
     <string>AttackRange</string>
-    <double>300.0</double>
+    <double>500.0</double>
   </entry>
   <entry>
     <string>AttackPriority</string>
@@ -191,7 +191,7 @@
   </entry>
   <entry>
     <string>AttackRange</string>
-    <double>10.0</double>
+    <double>800.0</double>
   </entry>
   <entry>
     <string>AttackPriority</string>
@@ -371,11 +371,11 @@
   </entry>
   <entry>
     <string>BoundingWidth</string>
-    <double>100.0</double>
+    <double>20.0</double>
   </entry>
   <entry>
     <string>BoundingHeight</string>
-    <double>100.0</double>
+    <double>20.0</double>
   </entry>
   <entry>
     <string>Image</string>
@@ -424,11 +424,11 @@
   </entry>
   <entry>
     <string>BoundingWidth</string>
-    <double>100.0</double>
+    <double>30.0</double>
   </entry>
   <entry>
     <string>BoundingHeight</string>
-    <double>100.0</double>
+    <double>30.0</double>
   </entry>
   <entry>
     <string>Image</string>
@@ -477,11 +477,11 @@
   </entry>
   <entry>
     <string>BoundingWidth</string>
-    <double>100.0</double>
+    <double>20.0</double>
   </entry>
   <entry>
     <string>BoundingHeight</string>
-    <double>100.0</double>
+    <double>20.0</double>
   </entry>
   <entry>
     <string>Image</string>

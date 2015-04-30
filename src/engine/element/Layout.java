@@ -131,6 +131,7 @@ public class Layout implements Updateable {
         myProjectileList.remove(sprite);
         myEnemyList.remove(sprite);
         myTowerList.remove(sprite);
+        System.out.println(myNodeList.contains(sprite));
         myNodeList.remove(sprite);
     }
 

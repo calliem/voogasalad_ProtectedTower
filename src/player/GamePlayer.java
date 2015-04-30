@@ -1,9 +1,15 @@
 package player;
 
+import groovy.ui.Console;
 import imageselector.util.ScaleImage;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import annotations.parameter;
+import authoringEnvironment.objects.Sidebar;
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -19,6 +25,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -33,6 +41,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import engine.GameController;
 import engine.InsufficientParametersException;
 import engine.element.sprites.Sprite;
@@ -48,7 +57,7 @@ public class GamePlayer extends Application {
     private Stage myPlayerStage;
     private Group myEngineRoot = new Group();
     private Scene myMainScene;
-    private VBox mySidebar;
+    private Pane mySidebar;
     private GridPane myTowerGrid = new GridPane();
     private double myScreenWidth = 0;
     private double myScreenHeight = 0;
@@ -76,23 +85,23 @@ public class GamePlayer extends Application {
         ObservableList<Sprite> displayList = FXCollections.observableArrayList(new ArrayList<>());
         displayList.addListener((ListChangeListener<Sprite>) change -> {
             while (change.next()) {
-                for (Object obj : change.getAddedSubList()) {
+                for (Sprite obj : change.getAddedSubList()) {
 
-                    Sprite placeSprite = (Sprite) obj;
-
-                    ImageView myView = placeSprite.getImageView();
+              
+                    ImageView myView = obj.getImageView();
                     if (displayList.size() == 1) {
-                        ScaleImage.scaleNoPreserve(myView, myMainArea.getWidth(),
-                                                   myMainArea.getHeight());
+                        ScaleImage.scaleNoPreserve(myView, myMainArea.getWidth()*0.7,
+                                                   myMainArea.getHeight()*0.7);
                         myMainArea.getChildren().add(myView);
                         break;
                     }
-                    myView.setOnMouseClicked(m -> updateInfoBox(placeSprite));
+                    myView.setOnMouseClicked(m -> updateInfoBox(obj));
                     myMainArea.getChildren().add(myView);
                 }
-                for (Object obj : change.getRemoved()) {
-                    Node placeSprite = (Node) obj;
-                    myMainArea.getChildren().remove(placeSprite);
+                for (Sprite obj : change.getRemoved()) {
+                    
+                    System.err.println(myMainArea.getChildren().remove(obj.getImageView()));
+                    
                 }
             }
         });
@@ -106,33 +115,69 @@ public class GamePlayer extends Application {
             return;
         }
 
-        myGameController.startGame(30);
+        myGameController.startGame(3);
 
     }
 
-    private TableView updateInfoBox (Sprite placeSprite) {
-        return null;
-        // TODO Auto-generated method stub
-        // TableView<String> infoBox = new TableView<>();
-        //
-        //
-        // TableColumn<String, String> name = new TableColumn<>();
-        // name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().get));
-        // TableColumn<String, String> value = new TableColumn<>();
-        // name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>();
-        // name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue()
-        // .getUsername()));
-        // Class currentClass = placeSprite.getClass();
-        // while(currentClass!=Object.class){
-        // for(Field field:currentClass.getFields()){
-        // if(field.getAnnotation(parameter.class)!=null&&field.getAnnotation(parameter.class).playerDisplay()){
-        //
-        // }
-        // }
-        // // Make a new row
-        // currentClass = currentClass.getSuperclass();
-        // }
-        // return null;
+    private void updateInfoBox (Sprite placeSprite) {
+        System.out.println(placeSprite + " WASCLICK");
+        infoBox = new TableView<>();
+        infoBox.setPrefHeight(myScreenHeight / 2);
+        infoBox.setPrefWidth(myScreenWidth / 4);
+        TableColumn<Field, String> name = new TableColumn<>("Field Name");
+        TableColumn<Field, String> value = new TableColumn<>("Value");
+        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getName()));
+        value.setCellValueFactory(new Callback<CellDataFeatures<Field, String>, ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call (CellDataFeatures<Field, String> param) {
+                // TODO Auto-generated method stub
+                String obj = null;
+                try {
+                    return new ReadOnlyObjectWrapper<String>(param.getValue().getName());
+                }
+                catch (IllegalArgumentException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+
+        myFields = FXCollections.observableArrayList(new ArrayList<>());
+        infoBox.getColumns().add(name);
+        infoBox.getColumns().add(value);
+        myFields = FXCollections.observableArrayList(new ArrayList<>());
+        Class<?> currentClass = placeSprite.getClass();
+        while (currentClass != Object.class) {
+            for (Field field : currentClass.getDeclaredFields()) {
+                field.setAccessible(true);
+                if (field.getAnnotation(parameter.class) != null &&
+                    field.getAnnotation(parameter.class).playerDisplay()) {
+                    myFields.add(field);
+                }
+            }
+            // Make a new row
+            currentClass = currentClass.getSuperclass();
+        }
+        infoBox.setItems(myFields);
+        mySidebar.getChildren().add(infoBox);
+    }
+
+    ObservableList<Field> myFields;
+    TableView<Field> infoBox;
+
+    private TableView<Field> makeInfoBox () {
+        TableColumn<Field, String> name = new TableColumn<>("Field Name");
+        TableColumn<Field, String> value = new TableColumn<>("Value");
+        name.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().getName()));
+        value.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue().toString()));
+        myFields = FXCollections.observableArrayList(new ArrayList<>());
+        infoBox = new TableView<>();
+        infoBox.getColumns().add(name);
+        infoBox.getColumns().add(value);
+        System.out.println("made table");
+        return infoBox;
     }
 
     public static void main (String[] args) {
@@ -140,7 +185,7 @@ public class GamePlayer extends Application {
     }
 
     @Override
-    public void start (Stage primaryStage) throws Exception {
+    public void start (Stage primaryStage) {
         myPlayerStage = primaryStage;
         setScreenBounds(primaryStage);
         myPlayerStage.setMaximized(true);
@@ -155,7 +200,11 @@ public class GamePlayer extends Application {
         myPlayerStage.show();
     }
 
-    private MenuBar setUpMenu () throws InsufficientParametersException {
+    public Scene getScene(){
+        return myMainScene;
+    }
+    
+    private MenuBar setUpMenu () {
         MenuBar myMenu = new MenuBar();
         Menu file = new Menu("File");
         MenuItem openGame = new MenuItem("Open Game");
@@ -188,8 +237,8 @@ public class GamePlayer extends Application {
         return bounds;
     }
 
-    private VBox makeSideBar () {
-        mySidebar = new VBox();
+    private Pane makeSideBar () {
+        mySidebar = new Pane();
         // TODO: prop file
         mySidebar.setPrefWidth(myScreenWidth * 1 / 4);
         mySidebar.setPrefHeight(myScreenHeight);
@@ -200,8 +249,11 @@ public class GamePlayer extends Application {
                 .setStyle("-fx-border-style: solid outside; -fx-border-size: 0 0 0 2; -fx-border-color: transparent transparent transparent black; -fx-padding: 0; -fx-background-color: #00fb10");
         // makeGameVarBox();
         // makeSpriteInfoBox();
+        infoBox = makeInfoBox();
+        infoBox.setPrefHeight(myScreenHeight * 1 / 2);
+        infoBox.setPrefWidth(myScreenWidth * 1 / 4);
         myTowerDisplay = makeTowerScrollBox();
-        mySidebar.getChildren().add(myTowerDisplay);
+        mySidebar.getChildren().addAll(infoBox, myTowerDisplay);
         VBox.setMargin(myTowerDisplay, new Insets(0));
         return mySidebar;
     }
