@@ -30,6 +30,7 @@ public class RoundFlowView extends FlowView {
     private List<String> pathKeys;
     private String waveSelectedKey;
     private String pathSelectedKey;
+    
 
     public RoundFlowView (int height, Controller c) {
         super(height, c, new ArrayList<String>());
@@ -43,9 +44,9 @@ public class RoundFlowView extends FlowView {
     protected List<Node> createOptionSelector (List<String> pathKeys) {
         List<Node> options = new ArrayList<Node>();
         Button waveButton = new Button("Choose Wave");
-        waveButton.setOnAction(e -> selectWave());
+        waveButton.setOnAction(e -> selectWave(options));
         options.add(waveButton);
-
+        options.add(new Text(""));
         Map<String, String> pathNameToKey = new HashMap<String, String>();
         for (String key : pathKeys)
             pathNameToKey.put(myController.getNameForPart(key), key);
@@ -63,19 +64,14 @@ public class RoundFlowView extends FlowView {
         Tooltip.install(pathSelectorBox, tooltip);
 
         pathSelectorBox.setPromptText("...");
-        /*
-         * pathSelectorBox.valueProperty().addListener( (obs, oldValue, newValue) -> {
-         * pathKeys = new ArrayList<String>();
-         * pathKeys.add("pathstartnameidk " + newValue); //TODO: get the keys
-         * });
-         */
+       
         options.add(pathSelectorBox);
 
         return options;
     }
 
-    @Override
-    protected void selectWave () {
+    
+    protected void selectWave (List<Node> options) {
         File file = fileChooser.showOpenDialog(null);
         Text waveNameDisplay = new Text(file.getName());
         insertElement(waveNameDisplay);

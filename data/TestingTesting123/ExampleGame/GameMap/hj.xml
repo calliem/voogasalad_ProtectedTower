@@ -5512,7 +5512,9 @@
   </entry>
   <entry>
     <string>PathKeys</string>
-    <list/>
+    <list>
+      <string>ExampleGame_Part1.Path</string>
+    </list>
   </entry>
   <entry>
     <string>Background</string>
@@ -5520,7 +5522,7 @@
   </entry>
   <entry>
     <string>name</string>
-    <string></string>
+    <string>hj</string>
   </entry>
   <entry>
     <string>PartKey</string>
