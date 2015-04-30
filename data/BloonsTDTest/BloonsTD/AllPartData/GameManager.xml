@@ -33,7 +33,7 @@
   </entry>
   <entry>
     <string>Speed</string>
-    <double>1.0</double>
+    <double>10.0</double>
   </entry>
   <entry>
     <string>Health</string>
@@ -41,7 +41,7 @@
   </entry>
   <entry>
     <string>AttackSpeed</string>
-    <double>1.0</double>
+    <double>30.0</double>
   </entry>
   <entry>
     <string>AttackRange</string>
@@ -106,7 +106,7 @@
   </entry>
   <entry>
     <string>Speed</string>
-    <double>1.0</double>
+    <double>20.0</double>
   </entry>
   <entry>
     <string>Health</string>
@@ -114,7 +114,7 @@
   </entry>
   <entry>
     <string>AttackSpeed</string>
-    <double>1.0</double>
+    <double>20.0</double>
   </entry>
   <entry>
     <string>AttackRange</string>
@@ -187,7 +187,7 @@
   </entry>
   <entry>
     <string>AttackSpeed</string>
-    <double>5.0</double>
+    <double>30.0</double>
   </entry>
   <entry>
     <string>AttackRange</string>
@@ -252,7 +252,7 @@
   </entry>
   <entry>
     <string>Speed</string>
-    <double>1.0</double>
+    <double>10.0</double>
   </entry>
   <entry>
     <string>Damage</string>
@@ -297,7 +297,7 @@
   </entry>
   <entry>
     <string>Speed</string>
-    <double>3.0</double>
+    <double>30.0</double>
   </entry>
   <entry>
     <string>Damage</string>
@@ -342,7 +342,7 @@
   </entry>
   <entry>
     <string>Speed</string>
-    <double>1.0</double>
+    <double>20.0</double>
   </entry>
   <entry>
     <string>Damage</string>

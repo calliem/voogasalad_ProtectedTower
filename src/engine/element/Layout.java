@@ -404,8 +404,9 @@ public class Layout implements Updateable {
                                                                  tower.getProjectile());
         Set<GameElement> targetables = new HashSet<>();
         for (GameElement g : targetable)
-            if (myActionManager.isAction(g, tester))
+//            if (myActionManager.isAction(g, tester)){
                 targetables.add(g);
+//        }
         return targetables;
     }
 
