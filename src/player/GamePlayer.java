@@ -84,6 +84,7 @@ public class GamePlayer extends Application {
         displayList.addListener((ListChangeListener<Sprite>) change -> {
             while (change.next()) {
                 for (Object obj : change.getAddedSubList()) {
+                    System.out.println(obj);
                     Sprite placeSprite = (Sprite) obj;
                     ImageView myView = placeSprite.getImageView();
                     myView.setOnMouseClicked(m -> updateInfoBox(placeSprite));
