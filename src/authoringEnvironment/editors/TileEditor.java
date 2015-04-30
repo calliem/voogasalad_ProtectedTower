@@ -1,7 +1,5 @@
 package authoringEnvironment.editors;
 
-import javafx.scene.Group;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.ObjectView;
@@ -21,28 +19,28 @@ import authoringEnvironment.util.Scaler;
  */
 public class TileEditor extends SpriteEditor {
     private static final int TILE_SIZE = 100;
-    
+
     public TileEditor (Controller c, String name) {
         super(c, name);
         prompt.setImageChooser(false);
         prompt.setColorPicker(true);
     }
-    
+
     @Override
-    protected void checkNeededParts(){
-        
+    protected void checkNeededParts () {
+
     }
-    
+
     @Override
-    protected ObjectView addPart(){
+    protected ObjectView addPart () {
         return createTile(prompt.getEnteredName(), prompt.getColorChosen());
     }
-    
-    private ObjectView createTile(String name, Color color){
+
+    private ObjectView createTile (String name, Color color) {
         TileView tile = new TileView(myController, name, color);
         tile.initiateEditableState();
         tile.getTileBody().setOnMousePressed(e -> {
-            if(editing){
+            if (editing) {
                 showOverlay(tile);
             }
         });
@@ -50,17 +48,18 @@ public class TileEditor extends SpriteEditor {
             hideTileOverlay(tile);
         });
         updateOnExists(tile);
-        
+
         tile.saveTile();
         return tile;
     }
-    
-    private void showOverlay(TileView tile){
+
+    private void showOverlay (TileView tile) {
         Scaler.scaleOverlay(0.0, 1.0, tile.getOverlay());
         myContent.getChildren().add(tile.getOverlay());
     }
-    
-    private void hideTileOverlay(TileView tile){
-        Scaler.scaleOverlay(1.0, 0.0, tile.getOverlay()).setOnFinished(e -> myContent.getChildren().remove(tile.getOverlay()));
+
+    private void hideTileOverlay (TileView tile) {
+        Scaler.scaleOverlay(1.0, 0.0, tile.getOverlay())
+                .setOnFinished(e -> myContent.getChildren().remove(tile.getOverlay()));
     }
 }

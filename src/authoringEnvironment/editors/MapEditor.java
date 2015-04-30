@@ -18,8 +18,7 @@ public class MapEditor extends MainEditor {
     private static final ResourceBundle myResources = ResourceBundle
             .getBundle(DEFAULT_RESOURCE_PACKAGE + "map_editor_english");
 
-    private MapSidebar mySidebar;  // TODO: maybe move this into the superclass? Change this back to
-                                  // a normal Sidebar
+    private MapSidebar mySidebar;
 
     public MapEditor (Controller c, String name) {
         super(c, name);

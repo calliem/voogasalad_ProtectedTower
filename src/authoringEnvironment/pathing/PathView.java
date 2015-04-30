@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -37,6 +35,10 @@ public class PathView extends GameObject {
     private Group myRoot;
 //    private Coordinate myAverageCenterPoint;
 
+    private static final String EMPTY_STRING = "";
+    private static final String NAME = "Name: ";
+    private static final String NUMBER_ANCHOR_POINTS = "\nNumber of anchor points: ";
+           
     public PathView (TileMap parent) {
         myAnchors = new ArrayList<Anchor>();
         myParent = parent;
@@ -177,8 +179,6 @@ public class PathView extends GameObject {
         settings.put(InstanceManager.NAME_KEY, getName());
         settings.put(Variables.PARAMETER_CURVES_COORDINATES, anchorCoordinates);
         settings.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_PATH);
-
-        // settings.put(Variables.PARAMETER_IMAGE, thumbnail);
         return settings;
     }
 

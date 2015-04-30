@@ -1,6 +1,5 @@
 package authoringEnvironment.objects;
 
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -37,7 +36,12 @@ public class LevelSidebar extends Sidebar {
                          MapWorkspace mapWorkspace, Controller c) {
         super(resources, observableList, mapWorkspace);
         myMapList = FXCollections.observableList(observableList);
-        mapDisplay = new LevelUpdatableDisplay(c, Variables.PARTNAME_MAP, UPDATABLEDISPLAY_ELEMENTS, Variables.THUMBNAIL_SIZE_MULTIPLIER, mapWorkspace); // remove default values TODO
+        mapDisplay =
+                new LevelUpdatableDisplay(c, Variables.PARTNAME_MAP, UPDATABLEDISPLAY_ELEMENTS,
+                                          Variables.THUMBNAIL_SIZE_MULTIPLIER, mapWorkspace); // remove
+                                                                                              // default
+                                                                                              // values
+                                                                                              // TODO
 
         observableList.addListener(new ListChangeListener<GameObject>() {
             @Override
@@ -54,33 +58,8 @@ public class LevelSidebar extends Sidebar {
         VBox selectMap = createAccordionTitleText(getResources().getString("SelectMap"));
         createAccordionTitleText(getResources().getString("PlaceWave"));
         Button createRound = new Button(getResources().getString("CreateRound"));
-
-        // Editor mapEditor = Controller.getEditor(Controller.MAPS);
-
-        // ListView mapList = createListView(FXCollections.observableArrayList(myMapList),
-        // LISTVIEW_HEIGHT);
-        // myRounds = FXCollections.observableArrayList();
-        /*
-         * mapList.setCellFactory(new Callback<ListView<String>,
-         * ListCell<String>>() {
-         * 
-         * @Override
-         * public ListCell<String> call(ListView<String> list) {
-         * return new ColorRectCell();
-         * }
-         * }
-         * );
-         */
-
-        // getChildren().add(mapList);
-
-        //mapDisplay =
-         //       new LevelUpdatableDisplay(myMapList, UPDATABLEDISPLAY_ELEMENTS, Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace());
-        // temp.getChildren().add(mapDisplay);
         selectMap.getChildren().add(mapDisplay);
-
         createAccordionTitleText(getResources().getString("RoundOrder"));
-        // getChildren().add(createListView(myRounds, LISTVIEW_HEIGHT));
     }
 
     protected void setContent (GridPane container) {
