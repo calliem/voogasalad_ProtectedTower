@@ -93,6 +93,7 @@ public class Game implements Updateable, Endable {
         for (String key : levels.keySet()) {
             Level tempLevel = (Level) Reflection.createInstance(PACKAGE_LOCATION_LEVEL);
             tempLevel.addInstanceVariables(levels.get(key));
+            tempLevel.setGameElementFactory(myGameElementFactory);
             myLevels.add(tempLevel);
         }
         Collections.sort(myLevels);

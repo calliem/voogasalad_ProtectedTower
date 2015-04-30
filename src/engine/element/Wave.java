@@ -54,7 +54,7 @@ public class Wave implements UpdateAndReturnable, Endable, Reflectable {
         Map<Object, List<String>> tempReturnMap = new HashMap<>();
 
         List<String> enemiesToReturn = new ArrayList<>();
-        while (myTimer == mySendTimes.get(myEnemyIndex) && !hasEnded()) {
+        while (!hasEnded() && myTimer == mySendTimes.get(myEnemyIndex) ) {
             enemiesToReturn.add(myEnemies.get(myEnemyIndex++));
         }
         tempReturnMap.put(myPath, enemiesToReturn);

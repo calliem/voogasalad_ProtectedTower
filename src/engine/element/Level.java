@@ -63,7 +63,11 @@ public class Level implements UpdateAndReturnable, Endable, Reflectable, Compara
      * @return True if able to start next round
      */
     public boolean startNextRound () {
-        if (myActiveRound.hasEnded()) {
+        if (myActiveRound==null){
+            setActiveRound();
+            return true;
+        }
+        if ((myActiveRound.hasEnded())) {
             myActiveRoundIndex++;
         }
         if (hasEnded()) {
@@ -78,6 +82,7 @@ public class Level implements UpdateAndReturnable, Endable, Reflectable, Compara
     private void setActiveRound () {
         String roundGUID = myRounds.get(myActiveRoundIndex);
         myActiveRound = (Round) myGameElementFactory.getGameElement(PARAMETER_ROUND, roundGUID);
+        myActiveRound.setGameElementFactory(myGameElementFactory);
     }
 
     @Override

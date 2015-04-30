@@ -264,6 +264,7 @@ public class Layout implements Updateable {
         Point2D location = myPaths.get(pathID).getStartingPoint2D();
         e.setLocation(location);
         myEnemyList.add(e);
+        myNodeList.add(e);
         e.bezierPath(myPaths.get(pathID).getCoordinateList());
     }
 
@@ -322,7 +323,7 @@ public class Layout implements Updateable {
      */
     private void updateSpriteLocations (int counter) {
         // Move enemies
-         myEnemyList.forEach(e -> e.move());
+//         myEnemyList.forEach(e -> e.move());
         // Move projectiles
         // myProjectileList.forEach(p -> p.move());
         // if (!myTowerList.isEmpty()) {

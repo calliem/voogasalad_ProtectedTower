@@ -58,7 +58,7 @@ public class GameElementFactory {
         myPartTypeToPackage.put("GameMap", "engine.element.sprites.GameMap");
         myPartTypeToPackage.put("Round", "engine.element.Round");
         myPartTypeToPackage.put("Wave", "engine.element.Wave");
-        myPartTypeToPackage.put("MapPath", "engine.element.sprite.MapPath");
+        myPartTypeToPackage.put("MapPath", "engine.element.sprites.MapPath");
     }
 
     /**

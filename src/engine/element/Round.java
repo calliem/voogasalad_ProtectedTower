@@ -58,17 +58,19 @@ public class Round implements UpdateAndReturnable, Endable, Reflectable {
     public Map<Object, List<String>> update (int counter) {
         Map<Object, List<String>> tempReturnMap = new HashMap<>();
 
-        while (myTimer == mySendTimes.get(myCurrentWaveIndex) && !hasEnded()) {
+        while (myCurrentWaveIndex < myWaves.size() &&
+               myTimer == mySendTimes.get(myCurrentWaveIndex)) {
             String waveGUID = myWaves.get(myCurrentWaveIndex);
             String wavePath = myWavePaths.get(myCurrentWaveIndex++);
             Wave waveToAdd = (Wave) myGameElementFactory.getGameElement(PARAMETER_WAVE, waveGUID);
             waveToAdd.setPath(wavePath);
             myActiveWaves.add(waveToAdd);
-            // myActiveWave = myWaves.get(++myActiveWaveIndex);
+            // myActiveWave = myWaves.get(myActiveWaveIndex++);
         }
-
-        for (Wave activeWave : myActiveWaves) {
+        List<Wave> copyActiveWave = new ArrayList<>(myActiveWaves);
+        for (Wave activeWave : copyActiveWave) {
             if (activeWave.hasEnded()) {
+                
                 myActiveWaves.remove(activeWave);
             }
             else {
@@ -89,7 +91,9 @@ public class Round implements UpdateAndReturnable, Endable, Reflectable {
      * @param to Destination map
      */
     private void mergeMaps (Map<Object, List<String>> from, Map<Object, List<String>> to) {
-        if (from == null) { return; }
+        if (from == null) {
+            return;
+        }
         for (Object obj : from.keySet()) {
             if (to.containsKey(obj)) {
                 to.get(obj).addAll(from.get(obj));
