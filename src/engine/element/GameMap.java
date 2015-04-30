@@ -2,6 +2,7 @@ package engine.element;
 
 import java.util.List;
 import java.util.Map;
+import javafx.scene.image.ImageView;
 import annotations.parameter;
 import engine.element.sprites.GridCell;
 import engine.factories.GameElementFactory;
@@ -27,6 +28,10 @@ public class GameMap {
     private Integer tileSize;
     @parameter(settable = true, playerDisplay = false, defaultValue = "null")
     private List<String> myPaths;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private ImageView backgroundImage;
+    @parameter(settable = false, playerDisplay = false, defaultValue = "null")
+    private String backgroundImageLocation;
 
     /**
      * Holds the actual grid of cells, showing which cells have which tags
@@ -38,6 +43,12 @@ public class GameMap {
         rows = (Integer) parameters.get("rows");
         columns = (Integer) parameters.get("columns");
         tileSize = (Integer) parameters.get("tileSize");
+        backgroundImageLocation = (String) parameters.get("BackgroundImage");
+        backgroundImage = new ImageView(backgroundImageLocation);
+    }
+
+    public ImageView getBackgroundImage () {
+        return backgroundImage;
     }
 
     // TODO add method to load paths
