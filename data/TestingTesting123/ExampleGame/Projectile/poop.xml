@@ -4,24 +4,24 @@
     <string>Projectile</string>
   </entry>
   <entry>
+    <string>image</string>
+    <string>images/expand.png</string>
+  </entry>
+  <entry>
     <string>damage</string>
-    <int>1</int>
+    <int>69</int>
   </entry>
   <entry>
     <string>boundingWidth</string>
-    <double>0.0</double>
+    <double>69.0</double>
   </entry>
   <entry>
     <string>boundingHeight</string>
-    <double>0.0</double>
-  </entry>
-  <entry>
-    <string>myImage</string>
-    <string>imageselector/img_not_available.png</string>
+    <double>69.0</double>
   </entry>
   <entry>
     <string>name</string>
-    <string>asdfzxcv</string>
+    <string>poop</string>
   </entry>
   <entry>
     <string>PartKey</string>
@@ -29,14 +29,10 @@
   </entry>
   <entry>
     <string>speed</string>
-    <double>1.0</double>
+    <double>69.0</double>
   </entry>
   <entry>
     <string>Tags</string>
     <list/>
-  </entry>
-  <entry>
-    <string>group</string>
-    <string>null</string>
   </entry>
 </map>
