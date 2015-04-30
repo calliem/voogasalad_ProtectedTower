@@ -33,7 +33,7 @@ public class WaveFlowView extends FlowView {
 
     @Override
     protected List<Node> createOptionSelector () {
-        ArrayList<String> comboSelections = new ArrayList<>();
+        List<String> comboSelections = new ArrayList<String>();
         List<Node> options = new ArrayList<Node>();
         comboSelections.add(UNIT);
         comboSelections.add(WAVE);

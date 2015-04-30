@@ -164,7 +164,7 @@ public class FlowView extends HBox {
      * @return List<Double> of delay times between units in the wave
      */
     public List<Double> getDelays () {
-        ArrayList<Double> unitDelay = new ArrayList<Double>();
+        List<Double> unitDelay = new ArrayList<Double>();
         System.out.println("delayTextField: " + delayTextField.getText());
         try {
             unitDelay.add(Double.parseDouble(delayTextField.getText()));

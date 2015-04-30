@@ -37,7 +37,7 @@ public class TileMap extends GameObject {
     private ObservableList<GameObject> myPaths;
 
 
-    private HashMap<String, Integer> myTags; // maps a string to the number of elements with that
+    private Map<String, Integer> myTags; // maps a string to the number of elements with that
                                              // tag
 
     // allowing both width and height gives greater flexibility in map creation
