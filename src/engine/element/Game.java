@@ -29,7 +29,7 @@ import engine.factories.GameElementFactory;
 public class Game implements Updateable, Endable {
 
     private static final String PACKAGE_LOCATION_LEVEL = "engine.element.Level";
-
+    private int counter = 0;
     @parameter(settable = true, playerDisplay = true, defaultValue = "20")
     private Integer lives;
 
@@ -70,16 +70,17 @@ public class Game implements Updateable, Endable {
      * 
      * @see Updateable#update(int)
      */
-    @Override
-    public void update (int counter) {
+    public void update () {
+        
         System.out.println("Beginning cycle " + counter);
-        myConditions.forEach(c -> c.act(lives));
-        Map<Object, List<String>> enemiesToSpawn =
-                myLevels.get(myActiveLevelIndex).update(counter);
-        for (Object loc : enemiesToSpawn.keySet()) {
-            myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
-        }
+//        myConditions.forEach(c -> c.act(lives));
+//        Map<Object, List<String>> enemiesToSpawn =
+//                myLevels.get(myActiveLevelIndex).update(counter);
+//        for (Object loc : enemiesToSpawn.keySet()) {
+//            myLayout.spawnEnemy(enemiesToSpawn.get(loc), (String) loc);
+//        }
         myLayout.update(counter);
+        counter++;
     }
 
     /**
@@ -124,5 +125,11 @@ public class Game implements Updateable, Endable {
     
     public void updateBackgroundTest (String key) {
         myLayout.setMap(key);
+    }
+
+    @Override
+    public void update (int counter) {
+        // TODO Auto-generated method stub
+        
     }
 }

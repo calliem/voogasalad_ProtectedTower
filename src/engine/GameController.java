@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -173,10 +174,10 @@ public class GameController {
     public void startGame (long frameRate) {
         Timeline gameTimeline = new Timeline();
         KeyFrame game =
-                new KeyFrame(Duration.millis(1 / frameRate),
-                             e -> myGame.update((int) (Integer.parseInt(gameTimeline
-                                     .currentTimeProperty().toString()) / (1 / frameRate))));
+                new KeyFrame(Duration.millis(1000/frameRate),
+                             e -> myGame.update());
         gameTimeline.getKeyFrames().add(game);
+        gameTimeline.setCycleCount(Animation.INDEFINITE);
         gameTimeline.play();
     }
 

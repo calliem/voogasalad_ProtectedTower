@@ -28,11 +28,11 @@ public class Wave implements UpdateAndReturnable, Endable {
     private int myTimer = 0;
     private String myPath;
 
-    public Wave (Map<String,Object> parameters) {
+    public Wave (Map<String, Object> parameters) {
         // TODO: make sure that myEnemies and mySendTimes are same size
         myEnemies = (List<String>) parameters.get("myEnemies");
         mySendTimes = (List<Double>) parameters.get("mySendTimes");
-        
+
     }
 
     public void setPath (String pathGUID) {
@@ -46,19 +46,16 @@ public class Wave implements UpdateAndReturnable, Endable {
 
     @Override
     public Map<Object, List<String>> update (int counter) {
-        Map<Object, List<String>> tempReturnMap = null;
+        Map<Object, List<String>> tempReturnMap = new HashMap<>();
 
-        if (myTimer == mySendTimes.get(myEnemyIndex)) {
-            tempReturnMap = new HashMap<>();
-            List<String> enemiesToReturn = new ArrayList<>();
-            while (myTimer == mySendTimes.get(myEnemyIndex) && !hasEnded()) {
-                enemiesToReturn.add(myEnemies.get(myEnemyIndex++));
-            }
-            tempReturnMap.put(myPath, enemiesToReturn);
+        List<String> enemiesToReturn = new ArrayList<>();
+        while (myTimer == mySendTimes.get(myEnemyIndex) && !hasEnded()) {
+            enemiesToReturn.add(myEnemies.get(myEnemyIndex++));
         }
+        tempReturnMap.put(myPath, enemiesToReturn);
 
         myTimer++;
-        return tempReturnMap; // Null if no enemies to return
+        return tempReturnMap;
     }
 
 }
