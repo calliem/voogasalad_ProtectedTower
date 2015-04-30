@@ -321,6 +321,7 @@ public class Layout implements Updateable {
         Projectile proj =
                 (Projectile) myGameElementFactory.getGameElement("Projectile", projectileID);
         proj.setLocation(location);
+        myNodeList.add(proj);
         myProjectileList.add(proj);
     }
 
@@ -332,10 +333,10 @@ public class Layout implements Updateable {
      * @see Updateable#update(int)
      */
     @Override
-    public void update (int counter) {
-        updateSpriteLocations(counter);
-        // updateSpriteCollisions();
-        // updateSpriteTargeting();
+    public void update () {
+        updateSpriteLocations();
+//         updateSpriteCollisions();
+         updateSpriteTargeting();
         // removeDeadSprites();
     }
 
@@ -353,18 +354,18 @@ public class Layout implements Updateable {
     /**
      * Updates the positions of all sprites and spawns all new projectiles and enemies.
      */
-    private void updateSpriteLocations (int counter) {
-        myProjectileList.forEach(p -> p.update(counter));
+    private void updateSpriteLocations () {
+        myProjectileList.forEach(p -> p.update());
 
         myTowerList.forEach(p -> {
             Map<Object, List<String>> spawnMap = p.update();
             spawnMap.keySet().forEach(q -> spawnProjectile(spawnMap.get(q), (Point2D) q));
         });
 
-        myEnemyList.forEach(p -> {
-            Map<Object, List<String>> spawnMap = p.update();
-            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
-        });
+//        myEnemyList.forEach(p -> {
+//            Map<Object, List<String>> spawnMap = p.update();
+//            spawnMap.keySet().forEach(q -> spawnEnemy(spawnMap.get(q), (Point2D) q));
+//        });
 
     }
 

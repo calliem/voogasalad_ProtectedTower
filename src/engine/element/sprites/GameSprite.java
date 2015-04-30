@@ -42,7 +42,7 @@ public abstract class GameSprite extends MoveableSprite implements UpdateAndRetu
 
     // Getters and setters
 
-    protected Double getHealth () {
+    public Double getHealth () {
         return health;
     }
 

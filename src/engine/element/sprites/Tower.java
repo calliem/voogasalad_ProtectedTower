@@ -2,6 +2,7 @@ package engine.element.sprites;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class Tower extends GameSprite {
     private Double attackRange;
     @parameter(settable = true, playerDisplay = true, defaultValue = "Close")
     private String attackPriority;
-    
+
     @parameter(settable = false, playerDisplay = true, defaultValue = "null")
     private List<String> projectiles;
     // Use above projectile to read from data file
@@ -40,14 +41,13 @@ public class Tower extends GameSprite {
     private Double buildTime;
     private int myTimer = 0;
 
-    private Set<GameElement> myTargets;
+    private Set<GameElement> myTargets = new HashSet<>();
     private AttackPriority myPriority;
 
     public Tower () {
 
     }
 
-    
     // TODO remove once testing is over
     public Tower (ImageView test) {
         super.setImageView(test);
@@ -61,20 +61,19 @@ public class Tower extends GameSprite {
         attackPriority = (String) parameters.get("AttackPriority");
         projectiles = new ArrayList<String>();
         projectiles.add((String) parameters.get("Projectiles"));
+        System.out.println(this +" has this many projectiles "+projectiles.size());
         cost = (Double) parameters.get("Cost");
         buildTime = (Double) parameters.get("BuildTime");
     }    // TODO remove once testing is over
 
-    public String getProjectile(){
-    	if (projectiles.size() == 1){
-    		return projectiles.get(0);
-    	}
-    	return projectiles.get(0);
+    public String getProjectile () {
+        return projectiles.get(0);
     }
-    
-    public void setPriority(String priority){
-    	attackPriority = priority;
+
+    public void setPriority (String priority) {
+        attackPriority = priority;
     }
+
     /**
      * Adds new sprites for the tower to target
      * 
@@ -87,7 +86,7 @@ public class Tower extends GameSprite {
     @Override
     public void target (Sprite sprite) {
     }
-    
+
     @Override
     public void onCollide (GameElement element) {
         // TODO Auto-generated method stub
@@ -105,16 +104,19 @@ public class Tower extends GameSprite {
     public Map<Object, List<String>> update () {
         move();
         Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
-        if(myTimer >= attackSpeed && !myTargets.isEmpty()){
-            spawnMap.put(this.getLocation(), this.getNextSprites());
+        // System.out.println(myTimer +" time before, as after "+ attackSpeed
+        // +"I have "+projectiles.size());
+        if (myTimer >= attackSpeed && !myTargets.isEmpty()) {
+
+            spawnMap.put(this.getLocation(), projectiles);
             myTimer = 0;
         }
         myTimer++;
         return spawnMap;
     }
-    
-    public double getCost(){
-    	return cost;
+
+    public double getCost () {
+        return cost;
     }
 
 }

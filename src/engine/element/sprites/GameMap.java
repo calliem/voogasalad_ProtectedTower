@@ -91,10 +91,6 @@ public class GameMap extends Sprite implements Reflectable {
     }
 
     @Override
-    public void update (int counter) {
-    }
-
-    @Override
     public void onCollide (GameElement element) {
 
     }

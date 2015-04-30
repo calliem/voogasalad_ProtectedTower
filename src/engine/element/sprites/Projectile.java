@@ -50,7 +50,7 @@ public class Projectile extends MoveableSprite implements Updateable {
     }
 
     @Override
-    public void update (int counter) {
+    public void update () {
         this.move();
     }
 

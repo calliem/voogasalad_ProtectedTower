@@ -102,7 +102,7 @@ public class GameElementFactory {
             return element;
         }
         else {
-            throw new InvalidParameterException(guid + "is not defined as an element of type " +
+            throw new InvalidParameterException(guid + " is not defined as an element of type " +
                                                 className);
         }
     }

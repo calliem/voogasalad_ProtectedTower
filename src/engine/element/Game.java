@@ -134,12 +134,6 @@ public class Game implements Updateable, Endable {
         myLayout.setMap(key);
         myLevels.get(0).startNextRound();
     }
-
-    @Override
-    public void update (int counter) {
-        // TODO Auto-generated method stub
-
-    }
     
     public void win() {
     	
