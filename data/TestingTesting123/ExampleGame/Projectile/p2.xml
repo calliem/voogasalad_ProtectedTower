@@ -5,11 +5,7 @@
   </entry>
   <entry>
     <string>image</string>
-<<<<<<< HEAD
     <string>imageselector/img_not_available.png</string>
-=======
-    <string>images/alert.png</string>
->>>>>>> e3267f0bf526392c6240bd1dcf700cd60ad5525c
   </entry>
   <entry>
     <string>damage</string>
@@ -25,15 +21,11 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>Unnamed1</string>
+    <string>p2</string>
   </entry>
   <entry>
     <string>PartKey</string>
-<<<<<<< HEAD
-    <string>ExampleGame_Part0.Projectile</string>
-=======
     <string>ExampleGame_Part1.Projectile</string>
->>>>>>> e3267f0bf526392c6240bd1dcf700cd60ad5525c
   </entry>
   <entry>
     <string>speed</string>

@@ -5,7 +5,7 @@
   </entry>
   <entry>
     <string>image</string>
-    <string>images/arrow_icon.png</string>
+    <string>imageselector/img_not_available.png</string>
   </entry>
   <entry>
     <string>attackRange</string>
@@ -34,7 +34,7 @@
   <entry>
     <string>nextSpritesList</string>
     <list>
-      <string>ExampleGame_Part3.Tower</string>
+      <string>ExampleGame_Part2.Tower</string>
     </list>
   </entry>
   <entry>
@@ -47,21 +47,15 @@
   </entry>
   <entry>
     <string>name</string>
-    <string>asdfasf</string>
+    <string>tower1</string>
   </entry>
   <entry>
     <string>projectileList</string>
-    <list>
-      <string>ExampleGame_Part0.Projectile</string>
-    </list>
+    <list/>
   </entry>
   <entry>
     <string>PartKey</string>
-<<<<<<< HEAD:data/TestingTesting123/ExampleGame/Tower/asdf.xml
-    <string>ExampleGame_Part4.Tower</string>
-=======
     <string>ExampleGame_Part2.Tower</string>
->>>>>>> e3267f0bf526392c6240bd1dcf700cd60ad5525c:data/TestingTesting123/ExampleGame/Tower/asdfasf.xml
   </entry>
   <entry>
     <string>Tags</string>

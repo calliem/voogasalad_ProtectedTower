@@ -113,7 +113,7 @@ public class NamePrompt extends StackPane{
         return Scaler.scaleOverlay(0.0, 1.0, this);
     }
 
-    private void reset () {
+    public void reset () {
         promptField.setText("");
         if(imgSelector!=null){
             imgSelector.clear();

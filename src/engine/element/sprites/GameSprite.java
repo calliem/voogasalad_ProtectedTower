@@ -20,13 +20,7 @@ public abstract class GameSprite extends MoveableSprite implements UpdateAndRetu
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "100")
     private Integer health;
-    /**
-     * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
-     */
-    @parameter(settable = false, playerDisplay = true, defaultValue = "null")
-    private List<String> nextSprites;
-    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
-    private Sprite nextSpritesList;
+    
 
     // Getters and setters
 
@@ -38,12 +32,12 @@ public abstract class GameSprite extends MoveableSprite implements UpdateAndRetu
         health -= amount;
     }
 
-    /**
-     * @return List<String> of the next Sprites
-     */
-    public List<String> getNextSprites () {
-        return Collections.unmodifiableList(nextSprites);
-    }
+//    /**
+//     * @return List<String> of the next Sprites
+//     */
+//    public List<String> getNextSprites () {
+//        return Collections.unmodifiableList(nextSprites);
+//    }
 
 
 }
