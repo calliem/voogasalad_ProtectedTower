@@ -109,6 +109,10 @@ public class TagGroup extends Group{
         return closeButton;
     }
     
+    public void setKey(String key){
+        myKey = key;
+    }
+    
     public void update(){
         for(Tag tag : tagObjects){
             if(!myController.tagExists(tag.getLabel())){
