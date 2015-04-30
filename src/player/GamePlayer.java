@@ -39,10 +39,13 @@ import engine.element.sprites.Sprite;
 import engine.element.sprites.Tower;
 
 
-/*
+/**
  * This class represents the Player that will be used to play created games. This class instantiates
  * a view, and passes it to
  * the GameLoop which then runs the game.
+ * 
+ * @author Greg McKeon
+ * @author Sean Scott
  */
 public class GamePlayer extends Application {
     private Stage myPlayerStage;
@@ -198,10 +201,19 @@ public class GamePlayer extends Application {
         mySidebar.setStyle("-fx-border-style: solid outside; -fx-border-size: 0 0 0 2; -fx-border-color: transparent transparent transparent black; -fx-padding: 0; -fx-background-color: #00fb10");
         // makeGameVarBox();
         // makeSpriteInfoBox();
-        myTowerDisplay = makeTowerScrollBox();
-        mySidebar.getChildren().add(myTowerDisplay);
+        mySidebar.getChildren().add(makeTowerScrollBox());
         VBox.setMargin(myTowerDisplay, new Insets(0));
+        mySidebar.getChildren().add(makeInfoBox());
+        VBox.setMargin(myInfoBox, new Insets(0));
         return mySidebar;
+    }
+    
+    private VBox makeInfoBox() {
+    	myInfoBox = new VBox();
+    	myInfoBox.setPrefSize(myScreenWidth/4, myScreenHeight/4);
+    	myInfoBox.setStyle("-fx-background-color:transparent");
+    	myInfoBox.setTranslateY(-myScreenHeight/2);
+		return myInfoBox;
     }
 
     private ScrollPane makeTowerScrollBox () {
