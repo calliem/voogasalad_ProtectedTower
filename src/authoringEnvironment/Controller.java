@@ -1,5 +1,6 @@
 package authoringEnvironment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -250,6 +251,10 @@ public class Controller {
             return currentGame.removeTagFromPart(partKey, tag);
         }
         return false;
+    }
+    
+    public File getDirectoryToPartFolder(String partType){
+        return new File(currentGame.getRootDirectory() + "/" + partType);
     }
 
     // /**

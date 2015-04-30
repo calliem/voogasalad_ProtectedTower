@@ -103,7 +103,6 @@ public class InstanceManager {
         String missingKey = checkMissingInformation(fullPartMap);
         if (!missingKey.equals(NO_KEYS_MISSING))
             throw new MissingInformationException(missingKeyErrorMessage(missingKey));
-
         System.out.println("~~~~~~Part: " + fullPartMap + "\n~~~~~~added at: " + key);
         userParts.put(key, fullPartMap);
         writePartToXML(fullPartMap);
@@ -308,6 +307,10 @@ public class InstanceManager {
 
     public String getName () {
         return gameName;
+    }
+    
+    public String getRootDirectory(){
+        return rootDirectory;
     }
     /*
      * public static void main (String[] args) {
