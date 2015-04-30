@@ -63,8 +63,6 @@ public class WaveFlowView extends FlowView {
         List<Double> unitDelay = new ArrayList<Double>();
         List<String> fileNames = new ArrayList<String>();
         try {
-            unitDelay.add(Double.parseDouble(delayTextField.getText()));
-            delays = unitDelay;
             fileNames.add(chooseUnit.getDataAsString());
             partFileNames = fileNames;
         }
