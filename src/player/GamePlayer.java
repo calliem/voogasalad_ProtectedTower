@@ -78,7 +78,7 @@ public class GamePlayer extends Application {
         displayList.addListener((ListChangeListener<Sprite>) change -> {
             while (change.next()) {
                 for (Object obj : change.getAddedSubList()) {
-                    System.out.println(obj);
+                    System.out.println("obj" +obj);
                     Sprite placeSprite = (Sprite) obj;
                     ImageView myView = placeSprite.getImageView();
                     myView.setOnMouseClicked(m -> updateInfoBox(placeSprite));
@@ -266,9 +266,6 @@ public class GamePlayer extends Application {
 
     private Pane makeMainPane () {
         Pane mainArea = new Pane(myEngineRoot);
-        if(background!=null){
-        mainArea.getChildren().add(0, background);
-        }
         // TODO: property file this
         mainArea.setPrefWidth(myScreenWidth - myScreenWidth / 4);
         mainArea.setPrefHeight(myScreenHeight);

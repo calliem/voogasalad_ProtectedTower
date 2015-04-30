@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import testing.ExampleGame;
-import testing.ExampleLevel;
-import testing.ExampleRound;
-import testing.ExampleWave;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
+import testing.ExampleGame;
+import testing.ExampleGameMap;
+import testing.ExampleLevel;
+import testing.ExampleRound;
+import testing.ExampleWave;
 import authoringEnvironment.GameCreator;
 import authoringEnvironment.InstanceManager;
 import engine.element.Game;
@@ -65,10 +66,14 @@ public class GameController {
      * @throws InsufficientParametersException when filepath does not point to a well defined game
      *         file
      */
-    public GameController (String filepath, List<Sprite> nodes, List<Tower> possibleTowers, Group background)
+    public GameController (String filepath,
+                           List<Sprite> nodes,
+                           List<Tower> possibleTowers,
+                           Group background)
         throws InsufficientParametersException {
         myTowerManager = new TowerManager();
-        myGame = this.loadGame(filepath, nodes, possibleTowers);
+        myGame = this.loadGame(filepath, nodes, possibleTowers, background);
+        myGame.updateBackgroundTest("DesktopTestGameMap_Part0.GameMap");
     }
 
     /**
@@ -80,11 +85,12 @@ public class GameController {
      * @param filepath String of location of the game file
      * @param nodes List<Sprite> list of sprites that the game can update
      * @param possibleTowers
+     * @param background
      * @throws InsufficientParametersException when multiple games/layouts are created, or when no
      *         game elements are specified
      */
-    private Game loadGame (String filepath, List<Sprite> nodes,
-                           List<Tower> possibleTowers) throws InsufficientParametersException {
+    private Game loadGame (String filepath, List<Sprite> nodes, List<Tower> possibleTowers,
+                           Group background) throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String partName : PART_NAMES) {
             myObjects.put(partName, new HashMap<>());
@@ -103,7 +109,7 @@ public class GameController {
         }
         System.out.println("===================================================");
 
-        return initializeGame(nodes, myObjects, possibleTowers);
+        return initializeGame(nodes, myObjects, possibleTowers, background);
     }
 
     /**
@@ -114,14 +120,16 @@ public class GameController {
      * @param myObjects Map<String, Map<String, Map<String, Object>>> representing mapping of part
      *        name to the specific objects of that type
      * @param possibleTowers
+     * @param background
      * @return Game object which has been instantiated with given objects
      * @throws InsufficientParametersException if inputed objects do not fulfill game requirements
      */
     private Game initializeGame (List<Sprite> nodes,
                                  Map<String, Map<String, Map<String, Object>>> myObjects,
-                                 List<Tower> possibleTowers) throws InsufficientParametersException {
+                                 List<Tower> possibleTowers,
+                                 Group background) throws InsufficientParametersException {
         // store game parameters
-        Game myGame = new Game(nodes, ExampleGame.generateExampleGame());
+        Game myGame = new Game(nodes, background, ExampleGame.generateExampleGame());
 
         // TODO test for errors for 0 data files, or too many
         // if (myObjects.get("Game").size() != 1) {
@@ -150,6 +158,7 @@ public class GameController {
 
         myGame.addGameElement("Round", ExampleRound.generateExampleRound());
         myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
+        myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap());
 
         System.out.println("===================================================");
         // TODO: POPULATING TOWER MANAGER
@@ -190,6 +199,6 @@ public class GameController {
         GameController test =
                 new GameController(
                                    "data//DesktopTDTest//DesktopTD//DesktopTD.gamefile",
-                                   new ArrayList<Sprite>(), new ArrayList<Tower>(), null);
+                                   new ArrayList<Sprite>(), new ArrayList<Tower>(), new Group());
     }
 }

@@ -1,11 +1,10 @@
-package engine.element;
+package engine.element.sprites;
 
 import java.util.List;
 import java.util.Map;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
 import engine.Reflectable;
-import engine.element.sprites.GridCell;
 import engine.factories.GameElementFactory;
 
 
@@ -17,7 +16,7 @@ import engine.factories.GameElementFactory;
  * @author Sean Scott
  *
  */
-public class GameMap implements Reflectable {
+public class GameMap extends Sprite implements Reflectable {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "20")
     private String[][] myTileNames;
@@ -29,10 +28,6 @@ public class GameMap implements Reflectable {
     private Integer tileSize;
     @parameter(settable = true, playerDisplay = false, defaultValue = "null")
     private List<String> myPaths;
-    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
-    private ImageView backgroundImage;
-    @parameter(settable = false, playerDisplay = false, defaultValue = "null")
-    private String backgroundImageLocation;
 
     /**
      * Holds the actual grid of cells, showing which cells have which tags
@@ -44,16 +39,11 @@ public class GameMap implements Reflectable {
     }
 
     public void addInstanceVariables (Map<String, Object> parameters) {
+        super.addInstanceVariables(parameters);
         myTileNames = (String[][]) parameters.get("TileNames");
         rows = (Integer) parameters.get("Rows");
         columns = (Integer) parameters.get("Columns");
         tileSize = (Integer) parameters.get("TileSize");
-        backgroundImageLocation = (String) parameters.get("BackgroundImage");
-        backgroundImage = new ImageView(backgroundImageLocation);
-    }
-
-    public ImageView getBackgroundImage () {
-        return backgroundImage;
     }
 
     // TODO add method to load paths
@@ -95,5 +85,14 @@ public class GameMap implements Reflectable {
         { (int) (rows * y / getCoordinateHeight()),
          (int) (columns * x / getCoordinateWidth()) };
         return rowCol;
+    }
+
+    @Override
+    public void update (int counter) {
+    }
+
+    @Override
+    public void onCollide (GameElement element) {
+
     }
 }

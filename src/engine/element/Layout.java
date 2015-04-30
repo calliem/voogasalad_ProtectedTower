@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import util.pathsearch.pathalgorithms.NoPathExistsException;
 import engine.ActionManager;
@@ -16,6 +17,7 @@ import engine.CollisionChecker;
 import engine.Updateable;
 import engine.element.sprites.Enemy;
 import engine.element.sprites.GameElement;
+import engine.element.sprites.GameMap;
 import engine.element.sprites.GridCell;
 import engine.element.sprites.Projectile;
 import engine.element.sprites.Sprite;
@@ -41,6 +43,7 @@ public class Layout implements Updateable {
      * List of Javafx objects so that new nodes can be added for the player to display
      */
     private List<Sprite> myNodeList;
+    private Group myBackgroundNode;
     /**
      * Contains the map of the current game
      */
@@ -64,12 +67,17 @@ public class Layout implements Updateable {
     private final int ROW_INDEX = 0;
     private final int COLUMN_INDEX = 1;
 
-    public Layout (List<Sprite> myNodes) {
-        System.out.println("nodes is " + myNodes);
+    public Layout (List<Sprite> myNodes, Group background) {
         myNodeList = myNodes;
+        myBackgroundNode = background;
         myCollisionChecker = new CollisionChecker();
     }
 
+    /**
+     * Sets the factory used to produce all game objects
+     * 
+     * @param factory GameElementFactory object
+     */
     public void setFactory (GameElementFactory factory) {
         myGameElementFactory = factory;
     }
@@ -141,7 +149,14 @@ public class Layout implements Updateable {
      */
     public void setMap (String mapID) {
         myGameMap = (GameMap) myGameElementFactory.getGameElement("GameMap", mapID);
-        // myGameMap.loadMap(myGameElementFactory);
+        // myBackgroundNode.getChildren().add(myGameMap.getBackgroundImage());
+        if (myNodeList.size() == 0) {
+            myNodeList.add(myGameMap);
+        }
+        else {
+            myNodeList.add(0, myGameMap);
+        }
+        System.out.println("Background set!");
         Rectangle bounds =
                 new Rectangle(myGameMap.getCoordinateHeight(), myGameMap.getCoordinateWidth());
         myCollisionChecker.initializeQuadtree(bounds);
@@ -176,22 +191,22 @@ public class Layout implements Updateable {
      */
     // TODO implement from map class
     public boolean canPlace (GameElement tower, Point2D location) {
-//         collision checking and tag checking
-//         collision checking
-//         boolean collisions = true;
-//         myCollisionChecker.createQuadTree(myTowerList);
-//         Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
-//         if (possibleInteractions.size() == 0)
-//         collisions = false;
-//         // tag checking
-//         boolean tags = true;
-//         myCollisionChecker.createQuadTree(this.getGridCells());
-//         Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
-//         for (GameElement c : possibleGridCells) {
-//         if (!tagsInCommon(c, tower))
-//         tags = false;
-//         }
-//         return !collisions && tags;
+        // collision checking and tag checking
+        // collision checking
+        // boolean collisions = true;
+        // myCollisionChecker.createQuadTree(myTowerList);
+        // Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
+        // if (possibleInteractions.size() == 0)
+        // collisions = false;
+        // // tag checking
+        // boolean tags = true;
+        // myCollisionChecker.createQuadTree(this.getGridCells());
+        // Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
+        // for (GameElement c : possibleGridCells) {
+        // if (!tagsInCommon(c, tower))
+        // tags = false;
+        // }
+        // return !collisions && tags;
         return true;
     }
 
@@ -395,11 +410,15 @@ public class Layout implements Updateable {
      */
     public void initializeGameElement (String className, Map<String, Map<String, Object>> allObjects) {
         myGameElementFactory.add(className, allObjects);
-        System.out.println("Layout node list is " + myNodeList);
     }
 
     // TODO implement this
     public void addToScene (Sprite s) {
         myNodeList.add(s);
+    }
+
+    // TODO remove
+    public void updateBackgroundTest (String key) {
+        this.setMap(key);
     }
 }
