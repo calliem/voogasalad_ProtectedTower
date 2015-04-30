@@ -54,7 +54,7 @@ public class MapSidebar extends Sidebar {
     private static final int NAME_ROW = 1;
     // TODO: ^ similar magic values in the gridpane (is this necessary)?
 
-    private ObservableList<GameObject> myPaths;
+    
 
     // private MapWorkspace getMapWorkspace();
     // private Color myActiveColor;
@@ -410,14 +410,14 @@ public class MapSidebar extends Sidebar {
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
         deleteMapButton
                 .setOnMouseClicked(e -> {
-                    if (myPaths.contains(getMapWorkspace().getActivePath()))
-                        myPaths.remove(getMapWorkspace().getActivePath());
+                    if (getMapWorkspace().getActiveMap().getPaths().contains(getMapWorkspace().getActivePath()))
+                        getMapWorkspace().getActiveMap().getPaths().remove(getMapWorkspace().getActivePath());
                     
                     remove(getMapWorkspace().getActivePath(), null, null); // TODO: add gameobject
                 // interface
                 getMapWorkspace().deactivatePathMode();
                 getMapWorkspace().setActivePath(null);
-                pathDisplay.updateDisplay(myPaths);
+                pathDisplay.updateDisplay(getMapWorkspace().getActiveMap().getPaths());
 
             });
 
@@ -437,9 +437,9 @@ public class MapSidebar extends Sidebar {
          * UPDATABLEDISPLAY_ELEMENTS,
          * Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
          */
-        myPaths = FXCollections.observableArrayList();
+        
 
-        pathDisplay = new PathUpdatableDisplay(myPaths, UPDATABLEDISPLAY_ELEMENTS,
+        pathDisplay = new PathUpdatableDisplay(getMapWorkspace().getActiveMap().getPaths(), UPDATABLEDISPLAY_ELEMENTS,
                                                Variables.THUMBNAIL_SIZE_MULTIPLIER,
                                                getMapWorkspace());
 
@@ -476,13 +476,13 @@ public class MapSidebar extends Sidebar {
 
         Map<String, Object> mapSettings = activePath.save();
 
-        if (!myPaths.contains(activePath)) {
-            myPaths.add(activePath);
+        if (!getMapWorkspace().getActiveMap().getPaths().contains(activePath)) {
+            getMapWorkspace().getActiveMap().getPaths().add(activePath);
         }
         else {
-            int existingIndex = myPaths.indexOf(activePath);
-            myPaths.remove(activePath);
-            myPaths.add(existingIndex, activePath);
+            int existingIndex = getMapWorkspace().getActiveMap().getPaths().indexOf(activePath);
+            getMapWorkspace().getActiveMap().getPaths().remove(activePath);
+            getMapWorkspace().getActiveMap().getPaths().add(existingIndex, activePath);
         }
 
         String key = activePath.getKey();
@@ -499,7 +499,7 @@ public class MapSidebar extends Sidebar {
             e.printStackTrace();
         }
         myController.specifyPartImage(key, activePath.getImageView().getImage());
-        pathDisplay.updateDisplay(myPaths);
+        pathDisplay.updateDisplay(getMapWorkspace().getActiveMap().getPaths());
         remove(activePath, null, null);
         getMapWorkspace().getChildren().add(activePath.getRoot());
 
@@ -511,6 +511,10 @@ public class MapSidebar extends Sidebar {
         // tileDisplay.updateDisplay(myPaths);
     }
 
+    public void updatePathDisplay(TileMap object){
+        pathDisplay.updateDisplay(object.getPaths());
+    }
+    
     /*
      * public UpdatableDisplay getTileDisplay(){
      * return tileDisplay;

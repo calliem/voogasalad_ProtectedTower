@@ -4,16 +4,20 @@
     <string>GameMap</string>
   </entry>
   <entry>
+    <string>PathKeys</string>
+    <list/>
+  </entry>
+  <entry>
     <string>Background</string>
     <string>images/white_square.png</string>
   </entry>
   <entry>
     <string>name</string>
-    <string>sadfasdf</string>
+    <string>Test2</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>ExampleGame_Part0.GameMap</string>
+    <string>ExampleGame_Part1.GameMap</string>
   </entry>
   <entry>
     <string>TileSize</string>
