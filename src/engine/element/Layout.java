@@ -176,22 +176,22 @@ public class Layout implements Updateable {
      */
     // TODO implement from map class
     public boolean canPlace (GameElement tower, Point2D location) {
-        // collision checking and tag checking
-        // collision checking
-        // boolean collisions = true;
-        // myCollisionChecker.createQuadTree(myTowerList);
-        // Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
-        // if (possibleInteractions.size() == 0)
-        // collisions = false;
-        // // tag checking
-        // boolean tags = true;
-        // myCollisionChecker.createQuadTree(this.getGridCells());
-        // Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
-        // for (GameElement c : possibleGridCells) {
-        // if (!tagsInCommon(c, tower))
-        // tags = false;
-        // }
-        // return !collisions && tags;
+//         collision checking and tag checking
+//         collision checking
+//         boolean collisions = true;
+//         myCollisionChecker.createQuadTree(myTowerList);
+//         Set<GameElement> possibleInteractions = myCollisionChecker.findCollisionsFor(tower);
+//         if (possibleInteractions.size() == 0)
+//         collisions = false;
+//         // tag checking
+//         boolean tags = true;
+//         myCollisionChecker.createQuadTree(this.getGridCells());
+//         Set<GameElement> possibleGridCells = myCollisionChecker.findCollisionsFor(tower);
+//         for (GameElement c : possibleGridCells) {
+//         if (!tagsInCommon(c, tower))
+//         tags = false;
+//         }
+//         return !collisions && tags;
         return true;
     }
 

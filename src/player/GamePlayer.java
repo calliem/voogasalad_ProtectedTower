@@ -2,6 +2,7 @@ package player;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Observable;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -56,6 +57,7 @@ public class GamePlayer extends Application {
     private ScrollPane myTowerDisplay;
     private GameController myGameController;
     private VBox myInfoBox;
+    private Group background;
 
     // find and open .game file
     public void loadGame () {
@@ -72,11 +74,12 @@ public class GamePlayer extends Application {
             }
         });
         ObservableList<Sprite> displayList = FXCollections.observableArrayList(new ArrayList<>());
+        background = new Group();
         try {
             myGameController =
                     new GameController(
                                        gameFile.getAbsolutePath(),
-                                       displayList, availableTowers);
+                                       displayList, availableTowers, background );
         }
         catch (InsufficientParametersException e) {
             return;
@@ -246,7 +249,7 @@ public class GamePlayer extends Application {
                     /* Put a string on a dragboard */
                     ClipboardContent content = new ClipboardContent();
 
-                    //content.putImage(myView.getImage());
+                    content.putImage(myView.getImage());
                     content.putString(myView.getId());
                     db.setContent(content);
 
@@ -262,6 +265,7 @@ public class GamePlayer extends Application {
 
     private Pane makeMainPane () {
         Pane mainArea = new Pane(myEngineRoot);
+        mainArea.getChildren().add(0, background);
         // TODO: property file this
         mainArea.setPrefWidth(myScreenWidth - myScreenWidth / 4);
         mainArea.setPrefHeight(myScreenHeight);
