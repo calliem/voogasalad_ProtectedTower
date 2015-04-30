@@ -23,9 +23,10 @@ public class ExampleRound {
         myWaves.add("TestWavePart0.Wave");
         
         mySendTimes.add(0.0);
-        mySendTimes.add(60.0);
-        
-        myWavePaths.add("testTODOPleaseRemove");
+        mySendTimes.add(10.0);
+
+        myWavePaths.add("ExampleGame_Path0.Path");
+        myWavePaths.add("ExampleGame_Path0.Path");
         
         
 
