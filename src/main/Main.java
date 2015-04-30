@@ -1,7 +1,7 @@
 package main;
 
 import java.util.ResourceBundle;
-
+import player.GamePlayer;
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
@@ -33,10 +33,13 @@ public class Main extends Application {
         AuthoringEnvironment myView = new AuthoringEnvironment(stage, "ExampleGame", defaultSaveLocation);
         Scene authoring = myView.initScene(myDimensions);
         
+        GamePlayer myPlayer = new GamePlayer();
+        Scene player = myPlayer.getScene();
+        
         MainMenu myMainMenu = new MainMenu(stage);
         Scene menu = myMainMenu.initScene(myDimensions);
         
-        scenes = new Scene[]{menu, authoring};
+        scenes = new Scene[]{menu, authoring, player};
         
         setupStage(menu);
     }
