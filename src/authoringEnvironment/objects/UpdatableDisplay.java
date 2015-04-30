@@ -32,6 +32,7 @@ public abstract class UpdatableDisplay extends VBox {
     private Controller myController;
     private String myPartType;
     private static final int SPACING = 15;
+    private static final String EMPTY_LIST = "This list is empty.";
 
     public UpdatableDisplay (List<GameObject> list,
                              int rowSize,
@@ -101,7 +102,7 @@ public abstract class UpdatableDisplay extends VBox {
         setCurrentRow();
 
         if (myObjects.isEmpty()) {
-            Text isEmpty = new Text("This list is empty.");
+            Text isEmpty = new Text(EMPTY_LIST);
             // TODO: set text in center of scrollpane
             objectsDisplay.getChildren().add(isEmpty);
         }

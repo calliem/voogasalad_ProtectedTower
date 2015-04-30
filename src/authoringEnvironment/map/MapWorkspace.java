@@ -16,6 +16,7 @@ import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.TileMap;
+
 import authoringEnvironment.pathing.Anchor;
 import authoringEnvironment.util.Scaler;
 import authoringEnvironment.pathing.PathView;
@@ -183,7 +184,7 @@ public class MapWorkspace extends StackPane {
         return myActiveTile;
     }
 
-    public void setActiveColor (String tileKey) {
+    public void setActiveTile (String tileKey) {
         myActiveMap.setActiveTile(tileKey);
         myActiveTile = tileKey;
     }

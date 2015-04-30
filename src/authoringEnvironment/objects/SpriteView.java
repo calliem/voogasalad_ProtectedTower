@@ -3,6 +3,7 @@ package authoringEnvironment.objects;
 import imageselector.util.ScaleImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -21,6 +22,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.InstanceManager;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.ProjectReader;
 import authoringEnvironment.setting.ImageViewSetting;
@@ -142,6 +144,19 @@ public abstract class SpriteView extends ObjectView {
         setupTooltipText(getSpriteInfo());
     }
 
+    @Override
+    public void loadFromFile(Map<String, Object> partData){
+        for(Setting parameter : parameterFields){
+            Object data = partData.get(parameter.getParameterName());
+            parameter.setParameterValue(data);
+        }
+        updateImageFile();
+        updateSpriteName();
+        myKey = (String) partData.get(InstanceManager.PART_KEY_KEY);
+        saveParameterFields(true);
+        setupTooltipText(getSpriteInfo());
+    }
+    
     public StackPane getSpriteBody () {
         return displayPane;
     }

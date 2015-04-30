@@ -34,7 +34,7 @@
   <entry>
     <string>nextSpritesList</string>
     <list>
-      <string>ExampleGame_Part0.Projectile</string>
+      <string>ExampleGame_Part3.Tower</string>
     </list>
   </entry>
   <entry>
@@ -57,7 +57,11 @@
   </entry>
   <entry>
     <string>PartKey</string>
+<<<<<<< HEAD:data/TestingTesting123/ExampleGame/Tower/asdf.xml
+    <string>ExampleGame_Part4.Tower</string>
+=======
     <string>ExampleGame_Part2.Tower</string>
+>>>>>>> e3267f0bf526392c6240bd1dcf700cd60ad5525c:data/TestingTesting123/ExampleGame/Tower/asdfasf.xml
   </entry>
   <entry>
     <string>Tags</string>

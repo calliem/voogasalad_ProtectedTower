@@ -156,9 +156,7 @@ public class MapSidebar extends Sidebar {
 
         // TODO: this is duplicated from Kevin's class
         GraphicFileChooser imgSelector = new GraphicFileChooser("Select background");
-        imgSelector.addExtensionFilter("gif");
-        imgSelector.addExtensionFilter("png");
-        imgSelector.addExtensionFilter("jpg");
+        imgSelector.addExtensionFilterByType("Image");
 
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener( (obs, oldValue, newValue) -> {
@@ -446,7 +444,7 @@ public class MapSidebar extends Sidebar {
          * UPDATABLEDISPLAY_ELEMENTS,
          * Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
          */
-
+        System.out.println("getpaths " + getMapWorkspace().getActiveMap().getPaths());
         pathDisplay =
                 new PathUpdatableDisplay(getMapWorkspace().getActiveMap().getPaths(),
                                          UPDATABLEDISPLAY_ELEMENTS,
