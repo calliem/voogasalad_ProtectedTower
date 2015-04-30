@@ -61,11 +61,11 @@
   </entry>
   <entry>
     <string>Projectile</string>
-    <string>BasicProjectile</string>
+    <string>ExampleGame_Part1.Projectile</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part0.Tower</string>
+    <string>ExampleGame_Part0.Tower</string>
   </entry>
   <entry>
     <string>NextSprite</string>
@@ -134,11 +134,11 @@
   </entry>
   <entry>
     <string>Projectile</string>
-    <string>BasicProjectile</string>
+    <string>ExampleGame_Part0.Projectile</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part1.Tower</string>
+    <string>ExampleGame_Part1.Tower</string>
   </entry>
   <entry>
     <string>NextSprite</string>
@@ -207,11 +207,11 @@
   </entry>
   <entry>
     <string>Projectile</string>
-    <string>BasicProjectile</string>
+    <string>ExampleGame_Part2.Projectile</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part2.Tower</string>
+    <string>ExampleGame_Part2.Tower</string>
   </entry>
   <entry>
     <string>NextSprite</string>
@@ -260,7 +260,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part0.Projectile</string>
+    <string>ExampleGame_Part0.Projectile</string>
   </entry>
 </map>
     </entry>
@@ -305,7 +305,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part1.Projectile</string>
+    <string>ExampleGame_Part1.Projectile</string>
   </entry>
 </map>
     </entry>
@@ -350,7 +350,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part2.Projectile</string>
+    <string>ExampleGame_Part2.Projectile</string>
   </entry>
 </map>
     </entry>
@@ -399,7 +399,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part0.Enemy</string>
+    <string>ExampleGame_Part0.Enemy</string>
   </entry>
   <entry>
     <string>NextSprite</string>
@@ -452,7 +452,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part1.Enemy</string>
+    <string>ExampleGame_Part1.Enemy</string>
   </entry>
   <entry>
     <string>NextSprite</string>
@@ -505,7 +505,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part2.Enemy</string>
+    <string>ExampleGame_Part2.Enemy</string>
   </entry>
   <entry>
     <string>NextSprite</string>
@@ -538,7 +538,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part0.GridCell</string>
+    <string>ExampleGame_Part0.GridCell</string>
   </entry>
 </map>
     </entry>
@@ -567,7 +567,7 @@
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Part1.GridCell</string>
+    <string>ExampleGame_Part1.GridCell</string>
   </entry>
 </map>
 </entry>
@@ -576,7 +576,7 @@
     <map>
       <entry>
         <string>PartType</string>
-        <string>Path</string>
+        <string>MapPath</string>
       </entry>
       <entry>
         <string>Name</string>
@@ -584,7 +584,7 @@
       </entry>
       <entry>
         <string>PartKey</string>
-        <string>ExampleGame_Part1.Path</string>
+        <string>ExampleGame_Path0.Path</string>
       </entry>
       <entry>
         <string>Tags</string>
