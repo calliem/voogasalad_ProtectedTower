@@ -62,6 +62,7 @@ public class TileMap extends GameObject {
         myMapCols = mapCols;
         myTileSize = tileSize;
         myGridLines = new Group();
+        myPaths = FXCollections.observableArrayList();
         myActiveTile = EMPTY_KEY;
         myPaths = FXCollections.observableArrayList();
         myBackground = new ImageView(new Image(DEFAULT_BACKGROUND_PATH));

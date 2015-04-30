@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.Variables;
+import authoringEnvironment.setting.EnemySetting;
 import authoringEnvironment.setting.SpriteSetting;
 
 
@@ -57,7 +58,7 @@ public class WaveFlowView extends FlowView {
 
     private void selectUnit () {
         SpriteSetting chooseUnit =
-                new SpriteSetting(myController, WAVE, Variables.PARTNAME_ENEMIES,
+                new EnemySetting(myController, WAVE, Variables.PARTNAME_ENEMIES,
                                   Variables.PARTNAME_ENEMIES);
         chooseUnit.setSingularChoice(true);
         chooseUnit.getChildren().remove(0);
