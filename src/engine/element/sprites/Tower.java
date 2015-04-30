@@ -3,6 +3,7 @@ package engine.element.sprites;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javafx.scene.image.ImageView;
 import annotations.parameter;
 
 
@@ -23,8 +24,12 @@ public class Tower extends GameSprite {
     private Double attackRange;
     @parameter(settable = true, playerDisplay = true, defaultValue = "Close")
     private String attackPriority;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    @parameter(settable = false, playerDisplay = true, defaultValue = "null")
     private List<String> projectiles;
+    // Use above projectile to read from data file
+    // Use below projectile in front end to assign sprite objects
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private Sprite projectileList;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double cost;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
@@ -32,13 +37,12 @@ public class Tower extends GameSprite {
 
     private Set<GameElement> myTargets;
 
-    // // TODO remove once testing is over
-    // public Tower (Map<String,Object> parameters, ImageView test) {
-    // super.setImageView(test);
-    // }
-
     public Tower () {
 
+    }
+
+    public Tower (ImageView test) {
+        super.setImageView(test);
     }
 
     public void addInstanceVariables (Map<String, Object> parameters) {
@@ -50,7 +54,7 @@ public class Tower extends GameSprite {
         projectiles = (List<String>) parameters.get("projectiles");
         cost = (Double) parameters.get("cost");
         buildTime = (Double) parameters.get("buildTime");
-    }
+    }    // TODO remove once testing is over
 
     /**
      * Adds new sprites for the tower to target

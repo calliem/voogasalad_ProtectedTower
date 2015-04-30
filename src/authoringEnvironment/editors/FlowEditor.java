@@ -32,7 +32,7 @@ public abstract class FlowEditor extends Editor {
 
     private static final int PADDING = 10;
     private static final int BUTTON_HEIGHT = 24;
-    private static final int STRIP_PANEL_HEIGHT = 105;
+    public static final int STRIP_PANEL_HEIGHT = 205;
     private static final Color EDITOR_BACKGROUND_COLOR = Color.GRAY;
     private static final Color DISPLAY_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
@@ -45,15 +45,13 @@ public abstract class FlowEditor extends Editor {
     private StackPane editor;
     private String myKey;
     private int rows = 0;
-    private NamePrompt prompt = new NamePrompt(editorName.toLowerCase());
+    private NamePrompt prompt = new NamePrompt(partNames.getString(editorType).toLowerCase());
 
-    public FlowEditor (Controller controller, String name, String nameWithoutEditor) {
-        super(controller, name, nameWithoutEditor);
+    public FlowEditor (Controller controller, String name) {
+        super(controller, name);
         this.setStyle(MainEditor.DARK_TAB_CSS);
         myComponents = new HashMap<String, ArrayList<FlowView>>();
     }
-
-    protected abstract String returnEditorTypeName ();
 
     /**
      * Overrides the configureUI() method in Editor. Sets up visual content and data storage for
@@ -65,7 +63,7 @@ public abstract class FlowEditor extends Editor {
     public Group configureUI () {
         Group visuals = new Group();
         // TODO remove dependency
-        NOTHING_CREATED = "No " + editorName.toLowerCase() + "s yet...";
+        NOTHING_CREATED = "No " + partNames.getString(editorType).toLowerCase() + "s yet...";
         editor = new StackPane();
         Rectangle editorBackground =
                 new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, EDITOR_BACKGROUND_COLOR);
@@ -88,8 +86,8 @@ public abstract class FlowEditor extends Editor {
         contentScrollPane.setMaxHeight(CONTENT_HEIGHT - (BUTTON_HEIGHT + 2 * PADDING));
         contentScrollPane.setMaxWidth(CONTENT_WIDTH);
 
-        // System.out.println("Editor Name = " + editorName);
-        Button makeNewRow = new Button("Create New " + editorName);
+        // System.out.println("Editor Name = " + partNames.getString(editorType));
+        Button makeNewRow = new Button("Create New " + partNames.getString(editorType));
         makeNewRow.setMaxHeight(BUTTON_HEIGHT);
         makeNewRow.setOnAction(e -> {
             promptName(contents, wavesDisplayBackground);
@@ -139,12 +137,12 @@ public abstract class FlowEditor extends Editor {
     }
 
     private void makeNewRow (VBox contents, String componentName) {
-        String toCreate = AUTHORING_OBJECTS_PACKAGE + editorName + "Strip";
+        String toCreate = AUTHORING_OBJECTS_PACKAGE + partNames.getString(editorType) + "Strip";
         FlowStrip display = null;
         try {
             display = (FlowStrip) Class.forName(toCreate)
                     .getConstructor(String.class, String.class, Controller.class)
-                    .newInstance(editorName, componentName, myController);
+                    .newInstance(partNames.getString(editorType), componentName, myController);
         }
         catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException | NoSuchMethodException | SecurityException

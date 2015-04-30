@@ -1,5 +1,6 @@
 package authoringEnvironment;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +43,6 @@ public class InstanceManager {
     public static final String PART_TYPE_KEY = "PartType";
     public static final String NAME_KEY = "name";
     public static final String TAGS_KEY = "Tags";
-
 
     public static final String IMAGE_KEY = "imagePath";
     public static final String SAVE_PATH_KEY = "SavePath";
@@ -99,15 +99,34 @@ public class InstanceManager {
 
     public String addPart (String key, Map<String, Object> fullPartMap)
                                                                        throws MissingInformationException {
+        fullPartMap.put(TAGS_KEY, getTagList(key));
         fullPartMap.put(PART_KEY_KEY, key);
         String missingKey = checkMissingInformation(fullPartMap);
         if (!missingKey.equals(NO_KEYS_MISSING))
             throw new MissingInformationException(missingKeyErrorMessage(missingKey));
-        //keep the tags
-        fullPartMap.put(TAGS_KEY, userParts.get(key).get(TAGS_KEY));
+        System.out.println("~~~~~~Part: " + fullPartMap + "\n~~~~~~added at: " + key);
         userParts.put(key, fullPartMap);
         writePartToXML(fullPartMap);
         return key;
+    }
+
+    private List<String> getTagList (String key) {
+        try {
+            Map<String, Object> oldPart = userParts.get(key);
+            if (oldPart.keySet().contains(TAGS_KEY)) {
+                System.out.println(key + " tags preserved as " + userParts.get(key).get(TAGS_KEY));
+                return (List<String>) oldPart.get(TAGS_KEY);
+
+            }
+            else {
+                System.out.println("tags not preserved for " + key);
+                return new ArrayList<String>();
+            }
+        }
+        catch (NullPointerException e) {
+            System.out.println("key didn't exist yet");
+            return new ArrayList<String>();
+        }
     }
 
     private String missingKeyErrorMessage (String missingKey) {
@@ -128,6 +147,14 @@ public class InstanceManager {
             if (!partToCheck.keySet().contains(key))
                 missingKey = key;
         return missingKey;
+    }
+
+    protected boolean deletePart (String partKey) {
+        if (userParts.keySet().contains(partKey)) {
+            userParts.remove(partKey);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -163,12 +190,19 @@ public class InstanceManager {
      * @return the directory where the InstanceManager object was saved
      */
     public String saveGame () {
+        clearGameFolders();
         writeAllPartsToXML();
-        // XMLWriter.toXML(userParts, partFileName, rootDirectory +
-        // partsFileDir);
         System.out.println("writing to xml manager");
         return XMLWriter.toXML(this, INSTANCE_MANAGER_FILE_NAME, rootDirectory +
                                                                  PARTS_FILE_DIRECTORY);
+    }
+
+    private void clearGameFolders () {
+        for (String subFolder : GameCreator.gameDirectories()) {
+            File[] files = new File(rootDirectory + "/" + subFolder).listFiles();
+            for (File f : files)
+                f.delete();
+        }
     }
 
     /**
@@ -220,23 +254,45 @@ public class InstanceManager {
     public void specifyPartImage (String partKey, String imageFilePath) {
         userParts.get(partKey).put(IMAGE_KEY, imageFilePath);
     }
-    
-    protected void addTagToPart(String partKey, String tag){
+
+    protected void addTagToPart (String partKey, String tag) {
         Map<String, Object> addTagTo = userParts.get(partKey);
-        if(addTagTo.containsKey(TAGS_KEY)){
-           List<String> tagList =  (List<String>) userParts.get(TAGS_KEY);
-           tagList.add(tag);
-           addTagTo.put(TAGS_KEY, tagList);
+        System.out.println("addTagTo: " + addTagTo);
+        if (addTagTo.containsKey(TAGS_KEY)) {
+            List<String> tagList = (List<String>) userParts.get(partKey).get(TAGS_KEY);
+            System.out.println("taglist: " + tagList);
+            System.out.println("tag: " + tag);
+            tagList.add(tag);
+            addTagTo.put(TAGS_KEY, tagList);
+            System.out.println("new tag list: " + tagList);
         }
-        else{
+        else {
             List<String> tagList = new ArrayList<String>();
             tagList.add(tag);
             addTagTo.put(TAGS_KEY, tagList);
+            System.out.println("else new tag list: " + tagList);
         }
-        
+        try {
+            addPart(partKey, addTagTo);
+        }
+        catch (MissingInformationException e) {
+            System.err.println("Something's gone terribly wrong.");
+        }
+
     }
-    
-    public boolean containsKey(String key){
+
+    protected boolean removeTagFromPart (String partKey, String tag) {
+        Map<String, Object> removeFrom = userParts.get(partKey);
+        if (removeFrom.containsKey(TAGS_KEY)) {
+            List<String> tagList = (List<String>) userParts.get(partKey).get(TAGS_KEY);
+            boolean removed = tagList.remove(tag);
+            removeFrom.put(TAGS_KEY, tagList);
+            return removed;
+        }
+        return false;
+    }
+
+    public boolean containsKey (String key) {
         return userParts.containsKey(key);
     }
 
@@ -269,11 +325,16 @@ public class InstanceManager {
         return gameName;
     }
 
-    public static void main (String[] args) {
-        Map<String, Map<String, Object>> data =
-                InstanceManager
-                        .loadGameData(System.getProperty("user.dir") +
-                                      "/data/TestingTesting123/ExampleGame/ExampleGame.gamefile");
-        System.out.println("data: " + data);
+    public String getRootDirectory () {
+        return rootDirectory;
     }
+    /*
+     * public static void main (String[] args) {
+     * Map<String, Map<String, Object>> data =
+     * InstanceManager
+     * .loadGameData(System.getProperty("user.dir") +
+     * "/data/TestingTesting123/ExampleGame/ExampleGame.gamefile");
+     * System.out.println("data: " + data);
+     * }
+     */
 }

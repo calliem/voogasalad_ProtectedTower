@@ -71,6 +71,7 @@ public class FlowView extends HBox {
         myController = c;
         myHeight = height;
         fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(myController.getDirectoryToPartFolder("Wave"));
         partFileNames = new ArrayList<String>();
         delays = new ArrayList<Double>();
 

@@ -1,6 +1,7 @@
 package engine.element.sprites;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import annotations.parameter;
@@ -21,7 +22,7 @@ public abstract class GameSprite extends MoveableSprite {
      * Holds the ID's of the next sprites that may be spawned or upgraded from the current sprite
      */
     @parameter(settable = true, playerDisplay = true, defaultValue = "null")
-    private Set<String> nextSprites;
+    private List<String> nextSprites;
 
     public GameSprite () {
 
@@ -30,7 +31,7 @@ public abstract class GameSprite extends MoveableSprite {
     public void addInstanceVariables (Map<String, Object> parameters) {
         super.addInstanceVariables(parameters);
         health = (Integer) parameters.get("health");
-        nextSprites = (Set<String>) parameters.get("nextSprites");
+        nextSprites = (List<String>) parameters.get("nextSprites");
     }
 
     // Getters and setters
@@ -44,10 +45,10 @@ public abstract class GameSprite extends MoveableSprite {
     }
 
     /**
-     * @return the nextSprites
+     * @return List<String> of the next Sprites
      */
-    public Set<String> getNextSprites () {
-        return Collections.unmodifiableSet(nextSprites);
+    public List<String> getNextSprites () {
+        return Collections.unmodifiableList(nextSprites);
     }
 
 }
