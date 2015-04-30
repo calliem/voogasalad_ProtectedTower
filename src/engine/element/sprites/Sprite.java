@@ -1,8 +1,12 @@
 package engine.element.sprites;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
+import engine.UpdateAndReturnable;
 import engine.Updateable;
 
 
@@ -15,23 +19,24 @@ import engine.Updateable;
  *
  */
 
-public abstract class Sprite extends GameElement implements Updateable {
+public abstract class Sprite extends GameElement {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "")
-    private ImageView myImage;
+    private ImageView image;
+
 
     public Sprite () {
 
     }
 
     public ImageView getImageView () {
-        return myImage;
+        return image;
     }
 
     // TODO remove these once testing is over
     @Deprecated
-    protected void setImageView (ImageView image) {
-        myImage = image;
+    protected void setImageView (ImageView imageview) {
+        image = imageview;
     }
 
     // Setters and getters
@@ -55,9 +60,10 @@ public abstract class Sprite extends GameElement implements Updateable {
      * @param sprite Sprite object that this object collides with
      */
     private void updateImageView () {
-        myImage.setTranslateX(super.getLocationX());
-        myImage.setTranslateY(super.getLocationY());
+        image.setTranslateX(super.getLocationX());
+        image.setTranslateY(super.getLocationY());
     }
+
 
     // Abstract methods
 

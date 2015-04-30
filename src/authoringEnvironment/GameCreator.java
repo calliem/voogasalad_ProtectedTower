@@ -18,6 +18,7 @@ public class GameCreator {
     private static final String GAME_EXTENSION = ".gamefile";
     public static final ResourceBundle CLASS_LIST =
             ResourceBundle.getBundle(CLASS_LIST_FILE);
+    public static final String IMAGE_DATA_FOLDER = "/ImageData";
 
     // private static InstanceManager currentGame = new InstanceManager();
 
@@ -49,18 +50,22 @@ public class GameCreator {
         Set<String> name = new HashSet<String>();
         name.add(gameName);
         XMLWriter.createDirectories(rootDir, name);
-        XMLWriter.createDirectories(rootDir + "/" + gameName, directoriesToCreate());
+        XMLWriter.createDirectories(rootDir + "/" + gameName, foldersToCreate());
     }
 
     /**
-     * creates a folder for each kind of part the user can make, as well as a folder in
-     * which the list of all the parts will be stored
+     * creates a folder for each kind of part the user can make
      * 
      * @return
      */
-    private static Set<String> directoriesToCreate () {
-        Set<String> toAdd = CLASS_LIST.keySet();
+    protected static Set<String> gameDirectories () {
+        return CLASS_LIST.keySet();
+    }
+    
+    protected static Set<String> foldersToCreate(){
+        Set<String> toAdd = gameDirectories();
         toAdd.add(InstanceManager.PARTS_FILE_DIRECTORY);
+        toAdd.add(IMAGE_DATA_FOLDER);
         return toAdd;
     }
 

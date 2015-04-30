@@ -3,8 +3,12 @@ package authoringEnvironment.objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
+import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 
 
@@ -16,9 +20,8 @@ import authoringEnvironment.InstanceManager;
  */
 public class Tile extends Rectangle {
 
-    
-    //TODO: maybe make this a game object?
-    
+    // TODO: maybe make this a game object?
+
     private ArrayList<String> myTags;
     private Color myColor;
     private String myKey;
@@ -26,30 +29,32 @@ public class Tile extends Rectangle {
 
     private static final String COLOR = "Color";
     private static final String TAGS = "Tag";
-    
-    //TODO: when have tag object, just store key and then make it work here 
+
+    // TODO: when have tag object, just store key and then make it work here
 
     // will have the same image for a path?
     // TODO: create a text box to set grid size and a slider to set tile size
     // that would only allow numbers in correct increments that would fit
     private static final Color DEFAULT_COLOR = Color.TRANSPARENT;
+    private static final double DEFAULT_OPACITY = 0.4;
 
     public Tile () {
         // TODO: fix tile to make it more general and not have col nums and x/y generated here
         // TODO: store part keys in the xml file for tilemap
-        new Rectangle();
+        //new Rectangle();
         myColor = DEFAULT_COLOR;
         setFill(DEFAULT_COLOR);
-        setOpacity(0.4);
+        setOpacity(DEFAULT_OPACITY);
         myName = null;
         myTags = new ArrayList<String>();
+        Tooltip t = new Tooltip(getToolTipInfo());
+        t.setTextAlignment(TextAlignment.LEFT);
+        Tooltip.install(this, t);
     }
-
+    
     public void positionTile (int tileSize, int i, int j) {
         setTranslateX(j * tileSize);
         setTranslateY(i * tileSize);
-        // System.out.print(" | " + i*tileSize + " ");
-        // System.out.print(j*tileSize + " ");
     }
 
     /*
@@ -59,18 +64,27 @@ public class Tile extends Rectangle {
      * }
      */
 
-  /*  public void addTag (String tag) {
-        myTags.add(tag);
-    }
-
-    // should only be able to remove already existing tags
-    public void removeTag (String tag) {
-        myTags.remove(tag);
-    }*/
-    
-    public void setTags (String tag){
-        tag.split(", ");
-        tag.split("; ");
+    /*
+     * public void addTag (String tag) {
+     * myTags.add(tag);
+     * }
+     * 
+     * // should only be able to remove already existing tags
+     * public void removeTag (String tag) {
+     * myTags.remove(tag);
+     * }
+     */
+    public String getToolTipInfo () {
+        //TODO: String info = super.getToolTipInfo();
+        String info = "";
+        info += "Name: " + myName;
+        if (myTags.size() > 0) {
+            info += "\nTags: ";
+            for (String tag : myTags) {
+                info += ", " + tag;
+            }
+        }
+        return info;
     }
 
     public void setTileSize (double size, int rowNum, int colNum) {
@@ -82,19 +96,21 @@ public class Tile extends Rectangle {
 
     // selection stuff is all for pathing. Need separate methods for updating the tile
     // active refers to if it is selected as part of a path
-   /* public void select () {
-        if (!isSelected) {
-            setOpacity(0.2); // change image entirely
-        }
-        else {
-            setOpacity(1);
-        }
-        isSelected = !isSelected;
-    }
-
-    public boolean isSelected () {
-        return isSelected;
-    }*/
+    /*
+     * public void select () {
+     * if (!isSelected) {
+     * setOpacity(0.2); // change image entirely
+     * }
+     * else {
+     * setOpacity(1);
+     * }
+     * isSelected = !isSelected;
+     * }
+     * 
+     * public boolean isSelected () {
+     * return isSelected;
+     * }
+     */
 
     public ArrayList<String> getTags () {
         return myTags;
@@ -103,7 +119,7 @@ public class Tile extends Rectangle {
     public Color getColor () {
         return myColor;
     }
-    
+
     /*
      * public Node getThumbnail () {
      * Rectangle thumbnail = this;
@@ -112,21 +128,23 @@ public class Tile extends Rectangle {
      * return null;
      * }
      */
+
+    //public void saveThumbnail ()
     
-    public void setFill(Color color){
+    public void setFill (Color color) {
         super.setFill(color);
         myColor = color;
     }
-    
-    public String getKey(){
+
+    public String getKey () {
         return myKey;
     }
-    
-    public void setKey(String key){
+
+    public void setKey (String key) {
         myKey = key;
     }
 
-    public Map<String, Object> saveToXML () {
+    public Map<String, Object> save () {
         Map<String, Object> mapSettings = new HashMap<String, Object>();
         mapSettings.put(InstanceManager.NAME_KEY, myName);
         mapSettings.put(TAGS, myTags);

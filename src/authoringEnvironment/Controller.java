@@ -1,11 +1,21 @@
 package authoringEnvironment;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.imageio.ImageIO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.setting.Setting;
 
@@ -27,23 +37,25 @@ import authoringEnvironment.setting.Setting;
  */
 
 public class Controller {
+    // TODO: ADD TAG TO KEY
 
     private static final int PARTTYPE_INDEX_IN_KEY = 1;
 
     private static final String DIFFERENT_LIST_SIZE_MESSAGE =
             "Lists passed must contain same number of elements.";
+    public static final String KEY_BEFORE_CREATION = "Key not initialized yet";
 
     private InstanceManager currentGame;
     private Map<String, ObservableList<String>> partTypeToKeyList;
     private ObservableList<GameObject> myMaps;
+    private ObservableList<String> gameTags;
 
-    public static final String KEY_BEFORE_CREATION = "Key not initialized yet";
-
-    protected Controller (InstanceManager IM) {
-        currentGame = IM;
+    protected Controller (InstanceManager instance) {
+        currentGame = instance;
         partTypeToKeyList = new HashMap<String, ObservableList<String>>();
         populateKeyList();
         myMaps = FXCollections.observableArrayList();
+        gameTags = FXCollections.observableArrayList();
     }
 
     protected Controller (String gameName, String rootDir) {
@@ -110,15 +122,49 @@ public class Controller {
     /**
      * Takes a list of settings and a part type and creates an appropriate Map<String, Object> from
      * that.
+     * 
+     * @throws MissingInformationException
      */
-    private Map<String, Object> generateMapFromSettings (String partType, List<Setting> settings) {
+    private Map<String, Object> generateMapFromSettings (String partType, List<Setting> settings)
+                                                                                                 throws MissingInformationException {
         Map<String, Object> partToAdd = new HashMap<String, Object>();
         for (Setting s : settings) {
             partToAdd.put(s.getParameterName(), s.getParameterValue());
         }
+        // addPartToGame(partType, partToAdd);
         partToAdd.put(InstanceManager.PART_TYPE_KEY, partType);
         System.out.println("toadd: " + partToAdd);
         return partToAdd;
+    }
+
+    // /**
+    // * Removes a part from the game file.
+    // *
+    // * @param partType the type of part that is being removed
+    // * @param partName the name of the part that is being removed
+    // * @return true if the list of parts contained the specified part
+    // */
+    // public boolean removePartFromGame(String partType, String partName){
+    // return partTypeToKeyList.get(partType).remove(partName);
+    // }
+
+    public boolean addNewTag (String tag) {
+        if (!gameTags.contains(tag)) {
+            return gameTags.add(tag);
+        }
+        return false;
+    }
+
+    public boolean tagExists (String tag) {
+        return gameTags.contains(tag);
+    }
+
+    public boolean removeTag (String tag) {
+        return gameTags.remove(tag);
+    }
+
+    public ObservableList<String> getTagsList () {
+        return gameTags;
     }
 
     /**
@@ -173,8 +219,10 @@ public class Controller {
                                                       String partName,
                                                       List<String> params,
                                                       List<Object> data) throws DataFormatException {
-        if (params.size() != data.size()) { throw new DataFormatException(
-                                                                          DIFFERENT_LIST_SIZE_MESSAGE); }
+        if (params.size() != data.size()) {
+            throw new DataFormatException(
+                                          DIFFERENT_LIST_SIZE_MESSAGE);
+        }
         Map<String, Object> toAdd = new HashMap<String, Object>();
         for (int i = 0; i < params.size(); i++) {
             toAdd.put(params.get(i), data.get(i));
@@ -189,12 +237,39 @@ public class Controller {
      * in the game.
      */
     private String addKey (String key) {
-        String partType = key.substring(key.indexOf(".") + 1);
+        String partType = key.substring(key.indexOf('.') + 1);
         if (!partTypeToKeyList.keySet().contains(partType))
             partTypeToKeyList.put(partType, FXCollections.observableList(new ArrayList<String>()));
-        partTypeToKeyList.get(partType).add(key);
+        if (!partTypeToKeyList.get(partType).contains(key))
+            partTypeToKeyList.get(partType).add(key);
         System.out.println("key added: " + key);
         return key;
+    }
+
+    public boolean addTagToPart (String partKey, String tag) {
+        if (currentGame.containsKey(partKey)) {
+            currentGame.addTagToPart(partKey, tag);
+            return true;
+        }
+        System.out.println(partKey + " part not found");
+        return false;
+    }
+    
+    
+
+    public boolean removeTagFromPart (String partKey, String tag) {
+        if (currentGame.containsKey(partKey)) {
+            return currentGame.removeTagFromPart(partKey, tag);
+        }
+        return false;
+    }
+
+    public File getDirectoryToPartFolder (String partType) {
+        return new File(currentGame.getRootDirectory() + "/" + partType);
+    }
+
+    public boolean deletePart (String partKey) {
+        return currentGame.deletePart(partKey);
     }
 
     // /**
@@ -220,9 +295,12 @@ public class Controller {
      *         the editor.
      */
     public ObservableList<String> getKeysForPartType (String partType) {
-        if (!partTypeToKeyList.keySet().contains(partType))
-            return FXCollections.observableArrayList(new ArrayList<String>());
-        return FXCollections.observableList(partTypeToKeyList.get(partType));
+        System.out.println(partTypeToKeyList);
+        if (!partTypeToKeyList.keySet().contains(partType)) {
+            partTypeToKeyList.put(partType,
+                                  FXCollections.observableArrayList(new ArrayList<String>()));
+        }
+        return partTypeToKeyList.get(partType);
     }
 
     /**
@@ -235,19 +313,34 @@ public class Controller {
      * @return The full file path of the image for the part at that key
      * @throws NoImageFoundException
      */
-    public String getImageForKey (String key) throws NoImageFoundException {
+    public Image getImageForKey (String key) throws NoImageFoundException {
         Map<String, Object> partCopy = getPartCopy(key);
         if (!partCopy.keySet().contains(InstanceManager.IMAGE_KEY))
-            throw new NoImageFoundException("No image is specified for part: "
-                                            + key);
-        return (String) partCopy.get(InstanceManager.IMAGE_KEY);
+            throw new NoImageFoundException("No image is specified for part");
+        String absoluteImageFilePath = currentGame.getRootDirectory() +
+                (String) partCopy.get(InstanceManager.IMAGE_KEY);
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            RenderedImage toWrite = ImageIO.read(new File(absoluteImageFilePath));
+            ImageIO.write(toWrite,"png", os);
+            InputStream imageInputStream = new ByteArrayInputStream(os.toByteArray());
+            return new Image(imageInputStream);
+        }
+        catch (IOException e1) {
+            e1.printStackTrace();
+            throw new NoImageFoundException("something went wrong"); 
+        }      
     }
 
     public void specifyPartImage (String partKey, String imageFilePath) {
         System.out.println("partkey " + partKey + " space " + imageFilePath);
         currentGame.specifyPartImage(partKey, imageFilePath);
     }
-
+    
+    public void specifyPartImage (String partKey, Image image) {
+        currentGame.specifyPartImage(partKey, image);
+    }
+    
     /**
      * Gets a copy of the part of key partKey. All data is present, but
      * modifying the data won't change the actual data stored in the game.
@@ -308,6 +401,7 @@ public class Controller {
     public ObservableList<GameObject> getMaps () {
         return myMaps;
     }
+
 
     /*
      * public void setMaps (ObservableList<GameObject> maps) {

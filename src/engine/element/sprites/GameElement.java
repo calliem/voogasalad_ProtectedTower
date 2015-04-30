@@ -1,7 +1,9 @@
 package engine.element.sprites;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import javafx.geometry.Point2D;
 import annotations.parameter;
 import engine.Collidable;
@@ -19,7 +21,7 @@ public abstract class GameElement implements Collidable {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "Unnamed")
     private String name;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "Basic")
+    @parameter(settable = false, playerDisplay = true, defaultValue = "Basic")
     private List<String> tags;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double boundingHeight;
@@ -28,8 +30,15 @@ public abstract class GameElement implements Collidable {
     /**
      * Holds the current location of the object
      */
-    @parameter(playerDisplay = true)
+    @parameter(settable = false, playerDisplay = true)
     private Point2D myLocation;
+
+    public final static String ALIVE_STATE = "alive";
+    public final static String DEAD_STATE = "dead";
+    public final static String[] possibleStates = {ALIVE_STATE, DEAD_STATE};
+    @parameter(settable = false, playerDisplay = false)
+    private String stateTag = ALIVE_STATE;
+    
 
     // Getters and setters
 
@@ -55,12 +64,25 @@ public abstract class GameElement implements Collidable {
     /**
      * @return Point2D representing coordinate location of object
      */
-    protected Point2D getLocation () {
+    public Point2D getLocation () {
         return new Point2D(myLocation.getX(), myLocation.getY());
     }
 
     protected String getName () {
         return name;
+    }
+    
+    public String getState () {
+    	return stateTag;
+    }
+    
+    public void setState(String state) {
+    	if (Arrays.asList(possibleStates).contains(state))
+    		stateTag = state;
+    }
+    
+    public void setDead() {
+    	stateTag = DEAD_STATE;
     }
 
     /**

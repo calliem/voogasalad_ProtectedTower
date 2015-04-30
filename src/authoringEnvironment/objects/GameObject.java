@@ -1,8 +1,13 @@
 package authoringEnvironment.objects;
 
+import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.Group;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.TextAlignment;
 import authoringEnvironment.AuthoringEnvironment;
+import authoringEnvironment.InstanceManager;
 import authoringEnvironment.Variables;
 
 
@@ -19,11 +24,24 @@ import authoringEnvironment.Variables;
  *
  */
 
-public abstract class GameObject {
+// TODO: make this into an interface
+public class GameObject {
 
     private String myKey;
     private String myName;
-    private ImageView myThumbnail;
+    private ImageView myImageView;
+
+    protected GameObject () {
+
+    }
+
+    //convert to node and then use get color for tiles
+    
+    public GameObject (String key, String name, ImageView image) {
+        myKey = key;
+        myName = name;
+        myImageView = image;
+    }
 
     public String getName () {
         return myName;
@@ -40,68 +58,43 @@ public abstract class GameObject {
     public String getKey () {
         return myKey;
     }
-
-    public ImageView getThumbnail () {
-        return myThumbnail;
+    
+    public void setImageView(ImageView image){
+        myImageView = image;
+    }
+    
+    public ImageView getImageView(){
+        return myImageView;
     }
 
     public ImageView getUniqueThumbnail () {
-        ImageView uniqueNode = new ImageView(myThumbnail.getImage());
+        ImageView uniqueNode = new ImageView(myImageView.getImage());
         return uniqueNode;
     }
 
-    // TODO: spriteviews do not have thumbnails....they simply have images. Create thumbnails for
-    // them or ensure that an if statement is added to updateable display to check if thumbnails are
-    // stored in the hasmap or not. if not then get the image
-    // TODO: jk they do need thumbnails. JavaFX won't let you have two of the same node (can't have
-    // both a small and a large one - you have to make the small one directly)
-    // TODO: use the stored imagepath in the hashmap for normal spriteviews and create one normal
-    // large image and also one normal small thumbnail
+    public double getWidth (){
+        return myImageView.getFitWidth();
+    };
 
-    /**
-     * Creates a thumbnail from a filepath. This method is ideal for duplicating and resizing an
-     * already existing ImageView (as this
-     * allows for cloning an image which can sidestep JavaFX's node limitations)
-     * 
-     * @param imagePath
-     */
-    /*
-     * public void setThumbnail (String imagePath) {
-     * 
-     * ImageView thumbnail = new ImageView(new Image(imagePath));
-     * 
-     * thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
-     * Variables.THUMBNAIL_SIZE_MULTIPLIER);
-     * thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
-     * Variables.THUMBNAIL_SIZE_MULTIPLIER);
-     * myThumbnail = thumbnail;
-     * 
-     * // setting thm
-     * /*
-     * myImage.resize(AuthoringEnvironment.getEnvironmentWidth() *
-     * Variables.THUMBNAIL_SIZE_MULTIPLIER,
-     * AuthoringEnvironment.getEnvironmentHeight() *
-     * Variables.THUMBNAIL_SIZE_MULTIPLIER);
-     * 
-     * }
-     */
+    public double getHeight (){
+        return myImageView.getFitHeight();
+    };
 
-    /**
-     * Sets the thumbnail to be the image resized to the given standards. This can only be used on
-     * images that are not utilized/displayed elsewhere in the program, since JavaFX only allows for
-     * one node to exist at once
-     * 
-     * @param image
-     */
-    public void setThumbnail (ImageView image) {
-        ImageView thumbnail = new ImageView(image.getImage());
-        thumbnail.setFitWidth(AuthoringEnvironment.getEnvironmentWidth() *
-                              Variables.THUMBNAIL_SIZE_MULTIPLIER);
-        thumbnail.setFitHeight(AuthoringEnvironment.getEnvironmentHeight() *
-                               Variables.THUMBNAIL_SIZE_MULTIPLIER);
-        myThumbnail = thumbnail;
-    }
+    public Map<String, Object> save (){
+        Map<String, Object> mapSettings = new HashMap<String, Object>();
+        mapSettings.put(InstanceManager.NAME_KEY, myName);
+        return mapSettings;
+    };
 
-    public abstract Map<String, Object> saveToXML ();
+    public Group getRoot (){
+        return null;}; //TODO:
+
+    protected String getToolTipInfo (){
+        String info = "";
+        info += "Name: " + myName;
+        return info;
+        
+    }; // TODO: items to be displayed on the tooltip store
+                                                 // within a properties file
 
 }

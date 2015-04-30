@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import authoringEnvironment.GameCreator;
@@ -35,14 +34,15 @@ public class GameController {
      */
     private static final String[] PART_NAMES = new String[] { "Tower", "Enemy", "Projectile",
                                                              "GridCell", "GameMap", "Round",
-                                                             "Wave", "Game", "Level" };
+                                                             "Wave", "Game", "Level", "MapPath" };
     // TODO do we pull in a Layout object map?
     /**
      * Holds a subset of part names to give to the game element factory
      */
     private static final String[] FACTORY_PART_NAMES = new String[] { "Tower", "Enemy",
                                                                      "Projectile", "GridCell",
-                                                                     "GameMap", "Round", "Wave" };
+                                                                     "GameMap", "Round", "Wave",
+                                                                     "MapPath" };
 
     /**
      * Holds an instance of an entire game
@@ -82,24 +82,21 @@ public class GameController {
      *         game elements are specified
      */
     private Game loadGame (String filepath, List<Sprite> nodes)
-                                                             throws InsufficientParametersException {
+                                                               throws InsufficientParametersException {
         Map<String, Map<String, Map<String, Object>>> myObjects = new HashMap<>();
         for (String partName : PART_NAMES) {
             myObjects.put(partName, new HashMap<>());
         }
 
         // Get list of parameters maps for all objects
+        // Map<GUID, Map<ParamType, ParamValue>>
         // TODO change to collection or set
         Map<String, Map<String, Object>> allDataObjects = InstanceManager.loadGameData(filepath);
 
         // Organize parameters maps
-        for (String key : allDataObjects.keySet()) {
-            Map<String, Object> obj = allDataObjects.get(key);
+        for (Map<String, Object> obj : allDataObjects.values()) {
             String partType = (String) obj.get(PARAMETER_PARTTYPE);
-
-            // System.out.println(obj);
             myObjects.get(partType).put((String) obj.get(PARAMETER_GUID), obj);
-            System.out.println((String) obj.get(PARAMETER_GUID));
         }
 
         return initializeGame(nodes, myObjects);
@@ -130,14 +127,14 @@ public class GameController {
                 // TODO need game factory or something to initialize it
             }
         }
-//        if (myObjects.get("Layout").size() != 1) {
-//            throw new InsufficientParametersException("Zero or multiple game layouts created");
-//        }
-//        else {
-//            for (Map<String, Object> map : myObjects.get("Layout").values()) {
-//                myGame.addLayoutParameters(map);
-//            }
-//        }
+        // if (myObjects.get("Layout").size() != 1) {
+        // throw new InsufficientParametersException("Zero or multiple game layouts created");
+        // }
+        // else {
+        // for (Map<String, Object> map : myObjects.get("Layout").values()) {
+        // myGame.addLayoutParameters(map);
+        // }
+        // }
         if (myObjects.get("Level").size() < 1) {
             throw new InsufficientParametersException("No game levels created");
         }
@@ -182,7 +179,7 @@ public class GameController {
     public static void main (String[] args) throws InsufficientParametersException {
         GameController test =
                 new GameController(
-                                   "src\\exampleUserData\\TestingManagerGame\\TestingManagerGame.gamefile",
+                                   "data//TestingTesting123//ExampleGame//ExampleGame.gamefile",
                                    new ArrayList<Sprite>());
     }
 }

@@ -1,7 +1,9 @@
 package engine.element;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import annotations.parameter;
 import engine.Endable;
 import engine.UpdateAndReturnable;
@@ -18,15 +20,20 @@ import engine.UpdateAndReturnable;
 public class Wave implements UpdateAndReturnable, Endable {
 
     @parameter(settable = true, playerDisplay = false, defaultValue = "null")
-    private List<List<String>> myEnemies;
-    @parameter(settable = true, playerDisplay = false, defaultValue = "1.0")
-    private double mySendRate;
+    private List<String> myEnemies;
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private List<Double> mySendTimes;
 
     private int myEnemyIndex = 0;
     private int myTimer = 0;
+    private String myPath;
 
     public Wave () {
-        myEnemies = new ArrayList<>();
+        // TODO: make sure that myEnemies and mySendTimes are same size
+    }
+
+    public void setPath (String pathGUID) {
+        myPath = pathGUID;
     }
 
     @Override
@@ -35,12 +42,20 @@ public class Wave implements UpdateAndReturnable, Endable {
     }
 
     @Override
-    public List<String> update (int counter) {
-        if (++myTimer == mySendRate && !hasEnded()) {
-            myTimer = 0;
-            return myEnemies.get(myEnemyIndex++);
+    public Map<Object, List<String>> update () {
+        Map<Object, List<String>> tempReturnMap = null;
+
+        if (myTimer == mySendTimes.get(myEnemyIndex)) {
+            tempReturnMap = new HashMap<>();
+            List<String> enemiesToReturn = new ArrayList<>();
+            while (myTimer == mySendTimes.get(myEnemyIndex) && !hasEnded()) {
+                enemiesToReturn.add(myEnemies.get(myEnemyIndex++));
+            }
+            tempReturnMap.put(myPath, enemiesToReturn);
         }
-        return null; // No enemies to return
+
+        myTimer++;
+        return tempReturnMap; // Null if no enemies to return
     }
 
 }

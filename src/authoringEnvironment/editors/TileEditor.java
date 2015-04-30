@@ -1,14 +1,11 @@
 package authoringEnvironment.editors;
 
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import authoringEnvironment.Controller;
-import authoringEnvironment.objects.Tag;
-import authoringEnvironment.objects.TagGroup;
 import authoringEnvironment.objects.TileView;
+import authoringEnvironment.util.Scaler;
 
 
 /**
@@ -21,36 +18,47 @@ import authoringEnvironment.objects.TileView;
  * @author Kevin He
  *
  */
-public class TileEditor extends Editor {
-    private Group myRoot;
-    private static final Color BACKGROUND_COLOR = Color.GRAY;
-    private static final int PADDING = 10;
-
+public class TileEditor extends SpriteEditor {
+    private static final int TILE_SIZE = 100;
+    
     public TileEditor (Controller c, String name) {
         super(c, name);
+        prompt.setImageChooser(false);
+        prompt.setColorPicker(true);
     }
-
+    
     @Override
-    protected Group configureUI () {
-        // TODO Auto-generated method stub
-        myRoot = new Group();
-        HBox test = new HBox(PADDING);
-        test.setAlignment(Pos.CENTER);
-        Rectangle background = new Rectangle(CONTENT_WIDTH, CONTENT_HEIGHT, BACKGROUND_COLOR);
-
-        TileView tile = new TileView(Color.BLUE);
-
-        Tag tag = new Tag("POISON");
-        Tag tag2 = new Tag("GROUND");
-        Tag tag3 = new Tag("AIR");
-
-        TagGroup group = new TagGroup();
-        group.addTag(tag2);
-        group.addTag(tag3);
-
-        test.getChildren().addAll(tile, tag, group);
-
-        myRoot.getChildren().addAll(background, test);
-        return myRoot;
+    protected void checkNeededParts(){
+        
+    }
+    
+    @Override
+    protected void addPart(){
+        createTile(prompt.getEnteredName(), prompt.getColorChosen());
+    }
+    
+    private void createTile(String name, Color color){
+        TileView tile = new TileView(myController, name, color);
+        tile.initiateEditableState();
+        tile.getTileBody().setOnMousePressed(e -> {
+            if(editing){
+                showOverlay(tile);
+            }
+        });
+        tile.getCloseButton().setOnAction(e -> {
+            hideTileOverlay(tile);
+        });
+        updateOnExists(tile);
+        
+        tile.saveTile();
+    }
+    
+    private void showOverlay(TileView tile){
+        Scaler.scaleOverlay(0.0, 1.0, tile.getOverlay());
+        myContent.getChildren().add(tile.getOverlay());
+    }
+    
+    private void hideTileOverlay(TileView tile){
+        Scaler.scaleOverlay(1.0, 0.0, tile.getOverlay()).setOnFinished(e -> myContent.getChildren().remove(tile.getOverlay()));
     }
 }

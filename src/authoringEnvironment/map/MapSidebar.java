@@ -1,53 +1,34 @@
 package authoringEnvironment.map;
 
-import imageselectorTEMP.GraphicFileChooser;
+import imageselector.GraphicFileChooser;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.CubicCurve;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeType;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
 import authoringEnvironment.objects.MapUpdatableDisplay;
+import authoringEnvironment.objects.PathUpdatableDisplay;
 import authoringEnvironment.objects.Sidebar;
 import authoringEnvironment.objects.TileMap;
+import authoringEnvironment.objects.TileUpdatableDisplay;
 import authoringEnvironment.objects.UpdatableDisplay;
-import authoringEnvironment.pathing.Anchor;
-import authoringEnvironment.pathing.Anchor;
 import authoringEnvironment.pathing.PathView;
 import authoringEnvironment.util.Scaler;
+import authoringEnvironment.util.Screenshot;
 
 
 /**
@@ -60,53 +41,42 @@ import authoringEnvironment.util.Scaler;
  */
 
 // TODO: abstract further
-public class MapSidebar extends Sidebar { // add a gridpane later on. but a
-                                          // gridpane is hard to edit to set
-                                          // things in between other things...
-
-    // TODO: display sidebar with a gridpane not an HBox to keep everything
-    // aligned and beautiful
+public class MapSidebar extends Sidebar {
 
     private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128;
-
-    private static final int MAP_OPACITY_DEACTIVATED = 1;
-    private Rectangle myMapOverlay;
-    private static final double MAP_OPACITY_ACTIVATED = 0.2;
     private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
     private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
             .getEnvironmentWidth() / 32;
-    // TODO: is importing the main environment bad design? is this an added
-    // dependency?
     private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment.getEnvironmentWidth() / 32;
-    // TODO: how to get this number
-    // from Johnny
-    private static final int DEFAULT_LIVES = 20;
 
-    private int myLives;
+    private static final int NAME_COL = 0;
+    private static final int NAME_ROW = 1;
+    // TODO: ^ similar magic values in the gridpane (is this necessary)?
+
+    private ObservableList<GameObject> myPaths;
+
     // private MapWorkspace getMapWorkspace();
-    private Color myActiveColor;
+    // private Color myActiveColor;
 
     private TextField tileRowDisplay;
     private TextField tileColDisplay;
+    private UpdatableDisplay pathDisplay;
+    private UpdatableDisplay tileDisplay;
     private TextField tileSizeDisplay;
     private VBox pathSettings;
     private VBox tileSettings;
     private GraphicFileChooser fileChooser;
     private TextField mapNameTextField;
+    private TextField pathNameTextField;
     private Controller myController;
     private UpdatableDisplay mapDisplay;
     private static final int INPUT_HBOX_SPACING = 4;
     private static final int VGAP_PADDING = 5;
     private static final int HGAP_PADDING = 20;
 
-    public MapSidebar (ResourceBundle resources, ObservableList<GameObject> maps,
+    public MapSidebar (ResourceBundle resources, ObservableList<GameObject> observableList,
                        MapWorkspace mapWorkspace, Controller c) {
-        super(resources, maps, mapWorkspace);
-        myLives = DEFAULT_LIVES;
-        myMapOverlay =
-                new Rectangle(getMapWorkspace().getActiveMap().getWidth(), getMapWorkspace()
-                        .getActiveMap().getHeight());
-        myMapOverlay.setOpacity(MAP_OPACITY_ACTIVATED);
+        super(resources, observableList, mapWorkspace);
         /*
          * ObservableList<PathView> pathList =
          * FXCollections.observableArrayList();
@@ -117,7 +87,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     public void changeMap (TileMap map) {
-        getMapWorkspace().updateWithNewMap(map, myActiveColor);
+        getMapWorkspace().updateWithNewMap(map);
 
         mapNameTextField.setText(map.getName());
         tileRowDisplay.setText(Integer.toString(map.getNumRows()));
@@ -143,9 +113,10 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         pathSettings = createAccordionTitleText(getResources().getString("PathSettings"));
 
         // createGeneralSettings();
-
-        selectTile();
         setTileSize();
+        selectTile();
+        
+
         setPaths();
 
     }
@@ -168,29 +139,44 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
     }
 
     private void selectTile () {
-        HBox selectTile = new HBox();
-        selectTile.setSpacing(30); // remove hardcoding
+        tileDisplay = new TileUpdatableDisplay(myController, Variables.PARTNAME_TILE,
+                                         UPDATABLEDISPLAY_ELEMENTS,
+                                         Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace());
 
-        VBox selection = new VBox();
-        Text selectTileColor = new Text(getResources().getString("TileColor")); // TODO:
-                                                                                // fix
-        ColorPicker picker = new ColorPicker();
-        selection.getChildren().addAll(selectTileColor, picker);
+        tileSettings.getChildren().add(tileDisplay);
 
-        Rectangle rectangleDisplay =
-                new Rectangle(DEFAULT_TILE_DISPLAY_SIZE,
-                              DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_COLOR);
-        selectTile.getChildren().addAll(selection, rectangleDisplay);
-
-        tileSettings.getChildren().add(selectTile);
-        picker.setOnAction(e -> changeActiveTileColor(picker.getValue(), rectangleDisplay));
     }
 
-    private void changeActiveTileColor (Color color, Rectangle display) {
-        myActiveColor = color;
-        display.setFill(color);
-        getMapWorkspace().getActiveMap().setActiveColor(color);
-    }
+    /*
+     * private void selectTile () {
+     * HBox selectTile = new HBox();
+     * selectTile.setSpacing(30); // remove hardcoding
+     * 
+     * VBox selection = new VBox();
+     * Text selectTileColor = new Text(getResources().getString("TileColor")); // TODO:
+     * // fix
+     * ColorPicker picker = new ColorPicker();
+     * selection.getChildren().addAll(selectTileColor, picker);
+     * 
+     * Rectangle rectangleDisplay =
+     * new Rectangle(DEFAULT_TILE_DISPLAY_SIZE,
+     * DEFAULT_TILE_DISPLAY_SIZE, DEFAULT_TILE_DISPLAY_COLOR);
+     * selectTile.getChildren().addAll(selection, rectangleDisplay);
+     * 
+     * tileSettings.getChildren().add(selectTile);
+     * picker.setOnAction(e -> getMapWorkspace().setActiveColor(picker.getValue()));//
+     * changeActiveTileColor(picker.getValue(),
+     * // rectangleDisplay));
+     * }
+     */
+
+    /*
+     * private void changeActiveTileColor (Color color, Rectangle display) {
+     * myActiveColor = color;
+     * // display.setFill(color);
+     * getMapWorkspace().getActiveMap().setActiveColor(color);
+     * }
+     */
 
     private GraphicFileChooser setImage () {
         HBox selection = new HBox();
@@ -204,7 +190,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         StringProperty imgFile = imgSelector.getSelectedFileNameProperty();
         imgFile.addListener( (obs, oldValue, newValue) -> {
-            // System.out.println(newValue);
             getMapWorkspace().getActiveMap().setBackground(newValue);
         });
         return imgSelector;
@@ -220,23 +205,26 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         return mapButtons;
     }
 
-    private void removeMap () {
-        // TODO: move this to map workspace
+    private void remove (GameObject object,
+                         UpdatableDisplay updateDisplay,
+                         ObservableList<GameObject> observableList) {
         ScaleTransition scale =
-                Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
+                Scaler.scaleOverlay(1.0, 0.0, object.getRoot());
         scale.setOnFinished( (e) -> {
-            if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
-                super.getMaps().remove(getMapWorkspace().getActiveMap());
-                mapDisplay.updateDisplay(super.getMaps());
+            if (observableList != null && observableList.contains(object)) {
+                observableList.remove(object);
+                updateDisplay.updateDisplay(observableList);
             }
-            getMapWorkspace().removeMap();
+            getMapWorkspace().remove(object.getRoot());
         });
-
     }
 
     protected void createMap () {
-        getMapWorkspace().removeMap();
-        TileMap newMap = getMapWorkspace().createDefaultMap(myActiveColor);
+        if (getMapWorkspace().getActiveMap() != null) {
+            Group activeMapGroup = getMapWorkspace().getActiveMap().getRoot();
+            getMapWorkspace().remove(activeMapGroup);
+        }
+        TileMap newMap = getMapWorkspace().createDefaultMap();
         ScaleTransition scale = Scaler.scaleOverlay(0.0, 1.0, newMap.getRoot());
         scale.setOnFinished( (e) -> {
             tileRowDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
@@ -245,7 +233,6 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
                     .getNumCols()));
             tileSizeDisplay.setText(Integer.toString(getMapWorkspace().getActiveMap()
                     .getTileSize()));
-            getMapWorkspace().getActiveMap().setActiveColor(myActiveColor);
             // TODO: setTileSize();
             changeMap(getMapWorkspace().getActiveMap());
             mapDisplay.setSelectedView(null);
@@ -264,13 +251,18 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
      * 
      * @param activeMap
      */
-    private void saveMap (TileMap activeMap) {
+    private TileMap saveMap (TileMap activeMap) {
         activeMap.setName(mapNameTextField.getText());
-        WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight()); // TODO
-        snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
-        ImageView snapView = new ImageView();
-        snapView.setImage(snapImage);
-        activeMap.setThumbnail(snapView);
+
+        ImageView snapView = Screenshot.snap(activeMap);
+        /*
+         * WritableImage snapImage = new WritableImage(activeMap.getWidth(), activeMap.getHeight());
+         * // TODO
+         * snapImage = activeMap.getRoot().snapshot(new SnapshotParameters(), snapImage);
+         * ImageView snapView = new ImageView();
+         * snapView.setImage(snapImage);
+         */
+        activeMap.setImageView(snapView);
 
         if (!super.getMaps().contains(activeMap)) {
             super.getMaps().add(activeMap);
@@ -280,7 +272,26 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
             super.getMaps().remove(activeMap);
             super.getMaps().add(existingIndex, activeMap);
         }
-        displayWorkspaceMessage(getResources().getString("MapSaved"), Color.GREEN);
+        
+        Map<String, Object> mapSettings = activeMap.save();
+        String key = activeMap.getKey();
+        try {
+            if (key == null) {
+                key = myController.addPartToGame(mapSettings);
+                activeMap.setKey(key);
+            }
+            else {
+                myController.addPartToGame(key, mapSettings);
+            }
+        }
+        catch (MissingInformationException e) {
+            e.printStackTrace();
+        }
+        myController.specifyPartImage(key, activeMap.getImageView().getImage()); //TODO: check
+        
+        getMapWorkspace().displayMessage(getResources().getString("MapSaved"), Color.GREEN);
+        
+     
 
         // saves the map to a specific key
         // checks to see if the current map already exists
@@ -306,7 +317,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          * // part.get(MapEditor.TILE_MAP);
          */
         mapDisplay.updateDisplay(super.getMaps());
-
+        return activeMap;
     }
 
     private void updateMapDim (String numRows, String numCols) {
@@ -344,7 +355,7 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
          */
 
         for (GameObject map : super.getMaps()) {
-            Map<String, Object> mapSettings = map.saveToXML();
+            Map<String, Object> mapSettings = map.save();
             String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
             map.setKey(key);
         }
@@ -361,7 +372,11 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
         saveMapButton.setOnMouseClicked(e -> saveMap(getMapWorkspace().getActiveMap()));
 
         Button deleteMapButton = new Button(getResources().getString("DeleteMap"));
-        deleteMapButton.setOnMouseClicked(e -> removeMap());
+        deleteMapButton.setOnMouseClicked(e -> {
+            remove(getMapWorkspace().getActiveMap(), mapDisplay,
+                   super.getMaps());
+            getMapWorkspace().setActiveMap(null);
+        });
 
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
         container.add(editMapbuttons, 0, 0, 2, 1);
@@ -397,96 +412,103 @@ public class MapSidebar extends Sidebar { // add a gridpane later on. but a
 
         // display maps
         mapDisplay =
-                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
+                new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS,
+                                        Variables.THUMBNAIL_SIZE_MULTIPLIER, this); // test
         container.add(mapDisplay, 0, 5, 2, 1);
-
-        // mapSettings.getChildren().addAll(nameHBox, selection, textFields, setGridDimButton);
-        // mapSettings.getChildren().add(container);
-
     }
 
     private void setPaths () {
+        GridPane container = new GridPane();
+        container.setVgap(VGAP_PADDING);
+        container.setHgap(HGAP_PADDING);
         Button createMapButton = new Button(getResources().getString("CreatePath"));
         createMapButton.setOnMouseClicked(e -> createPath());
 
         Button saveMapButton = new Button(getResources().getString("SavePath"));
-        saveMapButton.setOnMouseClicked(e -> savePath());
+        saveMapButton.setOnMouseClicked(e -> {
+            savePath();
+            // getMapWorkspace().getChildren().remove(getMapWorkspace().getActivePath());
+            });
 
         Button deleteMapButton = new Button(getResources().getString("DeletePath"));
-        deleteMapButton.setOnMouseClicked(e -> deletePath());
+        deleteMapButton
+                .setOnMouseClicked(e -> {
+                    remove(getMapWorkspace().getActivePath(), null, null); // TODO: add gameobject
+                // interface
+                getMapWorkspace().deactivatePathMode();
+                getMapWorkspace().setActivePath(null);
+            });
 
         HBox editMapbuttons = setEditButtons(createMapButton, saveMapButton, deleteMapButton);
-        pathSettings.getChildren().add(editMapbuttons);
+
+        container.add(editMapbuttons, 0, 0, 2, 1);
+
+        Text name = new Text(getResources().getString("Name"));
+        // Setting name = new StringSetting("label", "hi");
+        container.add(name, NAME_COL, NAME_ROW);
+        pathNameTextField = new TextField();
+        container.add(pathNameTextField, 1, 1);
+
+        pathDisplay =
+                new PathUpdatableDisplay(myController, Variables.PARTNAME_PATH,
+                                         UPDATABLEDISPLAY_ELEMENTS,
+                                         Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
+
+        /*
+         * UpdatableDisplay pathDisplay =
+         * new MapUpdatableDisplay(super.getMaps(), UPDATABLEDISPLAY_ELEMENTS, this); // test
+         * container.add(pathDisplay, 0, 5, 2, 1);
+         */
+        container.add(pathDisplay, 0, 2, 2, 1);
+        pathSettings.getChildren().add(container);
     }
 
     private void createPath () {
-        activatePathMode();
-
+        getMapWorkspace().activatePathMode();
+        getMapWorkspace().createNewPath();
     }
 
     private void savePath () {
-        // getMapWorkspace().getActiveMap()
-        deactivatePathMode();
-        displayWorkspaceMessage(getResources().getString("PathSaved"), Color.GREEN); // TODO: make
-                                                                                     // this a part
-                                                                                     // of the
-                                                                                     // workspace
-                                                                                     // class so
-                                                                                     // that the
-                                                                                     // pathsettings
-                                                                                     // class can
-                                                                                     // access this
-                                                                                     // too
+        getMapWorkspace().deactivatePathMode();
+        getMapWorkspace().displayMessage(getResources().getString("PathSaved"),
+                                         Color.GREEN);
+
+        PathView activePath = getMapWorkspace().getActivePath();
+        activePath.setName(pathNameTextField.getText());
+        Map<String, Object> mapSettings = activePath.save();
+        String key = activePath.getKey();
+        try {
+            if (key == null) {
+                key = myController.addPartToGame(mapSettings);
+                activePath.setKey(key);
+            }
+            else {
+                myController.addPartToGame(key, mapSettings);
+            }
+        }
+        catch (MissingInformationException e) {
+            e.printStackTrace();
+        }
+        myController.specifyPartImage(key, activePath.getImageView().getImage());
+        pathDisplay.updateDisplay();
+        // getMapWorkspace().remove(getMapWorkspace().getActivePath().getRoot());
+        remove(getMapWorkspace().getActivePath(), null, null);
+        getMapWorkspace().setActivePath(null);
+        
+
+
+        System.out.println("keys for part type tiles =======: " +
+                           myController.getKeysForPartType(Variables.PARTNAME_TILE));
     }
-
-    private void deletePath () {
-        /*
-         * ScaleTransition scale =
-         * Scaler.scaleOverlay(1.0, 0.0, getMapWorkspace().getActiveMap().getRoot());
-         * scale.setOnFinished( (e) -> {
-         * if (super.getMaps().contains(getMapWorkspace().getActiveMap())) {
-         * super.getMaps().remove(getMapWorkspace().getActiveMap());
-         * mapDisplay.updateDisplay(super.getMaps());
-         * }
-         * getMapWorkspace().removeMap();
-         * });
-         */
-
-        deactivatePathMode();
+    
+    public void updateTileDisplay(){
+        System.out.println("UPDATE TILEDISPLAY WITH THESE: " +
+                myController.getKeysForPartType(Variables.PARTNAME_TILE));
+        tileDisplay.updateDisplay();
     }
+    
+   /* public UpdatableDisplay getTileDisplay(){
+        return tileDisplay;
+    }*/
 
-    private void activatePathMode () {
-        getMapWorkspace().getActiveMap().removeTileListeners();
-        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_ACTIVATED);
-        getMapWorkspace().getActiveMap().getRoot().getChildren().add(myMapOverlay);
-
-        // TODO: set this as the active path in the workspace so that it can be easily deleted
-        PathView path = new PathView(getMapWorkspace().getActiveMap());
-
-        getMapWorkspace().getActiveMap().getRoot().setOnMousePressed(e -> setAnchorPoint(path, e));
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseDragged(e -> {
-        });
-        getMapWorkspace().getActiveMap().getRoot().setOnMouseReleased(e -> {
-        });
-
-    }
-
-    private void setAnchorPoint (PathView path, MouseEvent e) {
-        System.out.println("path.areAnchorsSelected()" + path.areAnchorsSelected());
-        if (!path.areAnchorsSelected())
-            path.addAnchor(e.getX(), e.getY());
-        /*
-         * if (path.getNumAnchors() == 0)
-         * path.createRootAnchor(e.getX(), e.getY());
-         * else
-         * path.addAnchor(e.get);
-         */
-
-    }
-
-    private void deactivatePathMode () {
-        getMapWorkspace().getActiveMap().attachTileListeners();
-        // getMapWorkspace().getActiveMap().getRoot().setOpacity(MAP_OPACITY_DEACTIVATED);
-        getMapWorkspace().getActiveMap().getRoot().getChildren().remove(myMapOverlay);
-    }
 }

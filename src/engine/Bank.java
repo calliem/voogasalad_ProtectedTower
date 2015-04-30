@@ -13,8 +13,8 @@ package engine;
 public class Bank {
     private double myBalance;
 
-    public Bank () {
-        myBalance = 0;
+    public Bank (double balance) {
+        myBalance = balance;
     }
 
     /**

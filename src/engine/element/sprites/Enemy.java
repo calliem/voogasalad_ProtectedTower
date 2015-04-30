@@ -1,9 +1,15 @@
 package engine.element.sprites;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import annotations.parameter;
+import authoringEnvironment.objects.Coordinate;
 import javafx.animation.PathTransition;
+import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
@@ -27,14 +33,22 @@ import engine.InsufficientParametersException;
 
 public class Enemy extends GameSprite {
 
-    @parameter(settable = false, playerDisplay = true, defaultValue = "false")
+    private static final int MOVE_DELAY = 1000;
+
+    @parameter(settable = true, playerDisplay = true, defaultValue = "false")
     private Boolean CanHurtPlayer;
 
-    private List<GridCell> myPath;
+    private Path myPath;
+    private double myPathLength;
+    private List<GridCell> myGridPath;
     private static final double MOVE_DURATION = 1000;
 
     public Enemy () {
         super();
+    }
+    
+    public GridCell getGoal(){
+    	return myGridPath.get(myGridPath.size()-1);
     }
 
     @Override
@@ -49,19 +63,56 @@ public class Enemy extends GameSprite {
         // super.decreaseHealth(sprite.getDamage());
     }
 
+    /**
+     * Adds a poison modifier to the enemy so it loses health for a set duration
+     * 
+     * @param damage the amount of damage the enemy should lose
+     * @param duration the amount of time damage should be lost
+     */
+    public void poison (int damage, int duration) {
+        Timer timer = new Timer();
+        TimerTask poison = new TimerTask() {
+            @Override
+            public void run () {
+                decreaseHealth(damage);
+            }
+        };
+        timer.schedule(poison, MOVE_DELAY, (long) (MOVE_DURATION * duration));
+    }
+
+    protected void decreaseHealth (Integer amount) {
+        super.decreaseHealth(amount);
+    }
+
     @Override
     public void move () {
-        Path path = new Path();
-        for (GridCell cell : myPath) {
-            path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));
-        }
         PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(MOVE_DURATION * (myPath.size()) /
+        pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength /
                                                    super.getSpeed()));
-        pathTransition.setPath(path);
+        pathTransition.setPath(myPath);
         pathTransition.setNode(super.getImageView());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.play();
+    }
+
+    /**
+     * Takes a predefined path using Bezier curves
+     * 
+     * @param curveCoords
+     */
+    public void bezierPath (List<Coordinate> curveCoords) {
+        Path path = new Path();
+        for (int i = 1; i < curveCoords.size(); i++) {
+            path.getElements().add(new CubicCurveTo(curveCoords.get(i).getX(), curveCoords.get(i)
+                                           .getY(),
+                                                    curveCoords.get(i + 1).getX(), curveCoords
+                                                            .get(i + 1).getY(),
+                                                    curveCoords.get(i + 2).getX(), curveCoords
+                                                            .get(i + 2).getY()));
+        }
+        myPath = path;
+        myPathLength = (curveCoords.size() - 1) / 3;
+        move();
     }
 
     /**
@@ -71,12 +122,11 @@ public class Enemy extends GameSprite {
      * @throws NoPathExistsException
      * @throws InsufficientParametersException
      */
-    public void updatePath (GridCell[][] grid,
-                            String type,
-                            int startRow,
-                            int startCol,
-                            int goalRow,
-                            int goalCol) throws NoPathExistsException {
+    public void planPath (GridCell[][] grid,
+                          int startRow,
+                          int startCol,
+                          int goalRow,
+                          int goalCol) throws NoPathExistsException {
         GridWrapper wrap = new GridWrapper();
         wrap.initializeGraph(grid, new ObstacleFunction() {
             @Override
@@ -90,11 +140,24 @@ public class Enemy extends GameSprite {
         for (PathCell coord : coordPath) {
             gridPath.add(grid[coord.getRow()][coord.getCol()]);
         }
-        myPath = gridPath;
+        myGridPath = gridPath;
+        Path path = new Path();
+        for (GridCell cell : myGridPath) {
+            path.getElements().add(new MoveTo(cell.getCenterX(), cell.getCenterY()));
+        }
+        myPath = path;
+        myPathLength = myGridPath.size();
+        move();
     }
 
     @Override
-    public void update (int counter) {
+    public Map<Object, List<String>> update () {
+        move();
+        Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
+        if (this.getHealth() == 0) {
+            spawnMap.put(this.getLocation(), this.getNextSprites());
+        }
+        return spawnMap;
     }
 
 }

@@ -1,13 +1,10 @@
 package authoringEnvironment.objects;
 
-import imageselectorTEMP.util.ScaleImage;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,25 +15,37 @@ import javafx.util.Duration;
 
 
 public class Tag extends Group {
+    private static final int FADE_DURATION = 300;
+    private static final int MOVE_DURATION = 300;
     private String tagLabel;
-    private ImageView closeButton;
+    private DeleteButton closeButton;
 
     private static final int TAG_WIDTH = 75;
     private static final int TAG_HEIGHT = 20;
     private static final int TEXT_SIZE = 10;
+    private static final int ARC_SIZE = 10;
     private static final int BUTTON_SIZE = 10;
-    private static final Color TAG_COLOR = Color.LIGHTGRAY;
+    private static final int INITIAL_X = 0;
+    private static final double START_VALUE = 0.0;
+    private static final double END_VALUE = 1.0;
+    private static final Color TAG_COLOR = Color.DARKGRAY;
+
+    private double xCoordinate;
+    private double yCoordinate;
+
+    private StackPane tagDisplay;
 
     public Tag (String tagName) {
         tagLabel = tagName;
 
-        StackPane tagDisplay = new StackPane();
-        closeButton = new ImageView(new Image("images/close.png"));
-        ScaleImage.scale(closeButton, BUTTON_SIZE, BUTTON_SIZE);
-        closeButton.setTranslateX(TAG_WIDTH);
-        // closeButton.setVisible(false);
+        tagDisplay = new StackPane();
+        closeButton = new DeleteButton(BUTTON_SIZE);
+        closeButton.setTranslateX(TAG_WIDTH-BUTTON_SIZE/2);
+        closeButton.setTranslateY(-BUTTON_SIZE/2);
 
         Rectangle tagBody = new Rectangle(TAG_WIDTH, TAG_HEIGHT, TAG_COLOR);
+        tagBody.setArcWidth(ARC_SIZE);
+        tagBody.setArcHeight(ARC_SIZE);
 
         Text label = new Text(tagLabel);
         label.setFont(new Font(TEXT_SIZE));
@@ -51,15 +60,18 @@ public class Tag extends Group {
     }
 
     public ParallelTransition playDeleteAnimation () {
-        TranslateTransition move = new TranslateTransition(Duration.millis(300), this);
-        move.setFromX(0);
+        TranslateTransition move = new TranslateTransition(Duration.millis(MOVE_DURATION), this);
+        move.setFromX(INITIAL_X);
         move.setToX(TAG_WIDTH);
 
-        FadeTransition fade = new FadeTransition(Duration.millis(300), this);
-        fade.setFromValue(1.0);
-        fade.setToValue(0.0);
+        FadeTransition fade = new FadeTransition(Duration.millis(FADE_DURATION), this);
+        fade.setFromValue(END_VALUE);
+        fade.setToValue(START_VALUE);
 
-        return new ParallelTransition(move, fade);
+        ParallelTransition delete = new ParallelTransition(move, fade);
+        delete.play();
+        return delete;
+
     }
 
     public void updateTooltip () {
@@ -80,7 +92,28 @@ public class Tag extends Group {
         closeButton.setVisible(false);
     }
 
-    public ImageView getButton () {
+    public DeleteButton getButton () {
         return closeButton;
+    }
+
+    public StackPane getTagBody () {
+        return tagDisplay;
+    }
+
+    public void setLocation (double x, double y) {
+        xCoordinate = x;
+        yCoordinate = y;
+    }
+
+    public double getX () {
+        return xCoordinate;
+    }
+
+    public double getY () {
+        return yCoordinate;
+    }
+
+    public String toString () {
+        return tagLabel;
     }
 }

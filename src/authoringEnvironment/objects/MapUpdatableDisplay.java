@@ -9,8 +9,8 @@ public class MapUpdatableDisplay extends UpdatableDisplay {
 
     private MapSidebar mySidebar;
 
-    public MapUpdatableDisplay (List<GameObject> list, int rowSize, MapSidebar sidebar) {
-        super(list, rowSize);
+    public MapUpdatableDisplay (List<GameObject> list, int rowSize, double thumbnailSizeMultiplier, MapSidebar sidebar) {
+        super(list, rowSize, thumbnailSizeMultiplier);
         mySidebar = sidebar;
     }
 
@@ -18,7 +18,6 @@ public class MapUpdatableDisplay extends UpdatableDisplay {
     protected void objectClicked (GameObject object, StackPane objectView) {
         super.objectClicked(object, objectView);
         mySidebar.changeMap((TileMap) object);
-        System.out.println("change map");
 
         // mySidebar.getMapWorkspace().updateWithNewMap(object);
         // mySidebar.setMapNameTextField(object.getName());

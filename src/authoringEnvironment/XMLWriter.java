@@ -1,12 +1,10 @@
 package authoringEnvironment;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Collection;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-
 
 /**
  * @author Johnny Kumpf
@@ -15,6 +13,8 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 public class XMLWriter {
 
     private static XStream stream = new XStream(new DomDriver());
+    
+//    FXConverters.configure(stream);
 
     /**
      * Specify a root directory, and create all directories necessary for that to exist.
@@ -29,6 +29,7 @@ public class XMLWriter {
      *         folders: Towers, Units, and Maps
      */
     public static String createDirectories (String root, Collection<String> newDirectories) {
+        
         File f = new File(root);
         f.mkdirs();
         for (String s : newDirectories) {

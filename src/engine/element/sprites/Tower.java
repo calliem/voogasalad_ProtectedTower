@@ -1,7 +1,14 @@
 package engine.element.sprites;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import engine.AttackPriority;
+import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import annotations.parameter;
 
@@ -23,20 +30,37 @@ public class Tower extends GameSprite {
     private Double attackRange;
     @parameter(settable = true, playerDisplay = true, defaultValue = "Close")
     private String attackPriority;
-    @parameter(settable = true, playerDisplay = true, defaultValue = "null")
+    
+    @parameter(settable = false, playerDisplay = true, defaultValue = "null")
     private List<String> projectiles;
+    // Use above projectile to read from data file
+    // Use below projectile in front end to assign sprite objects
+    @parameter(settable = true, playerDisplay = false, defaultValue = "null")
+    private Sprite projectileList;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double cost;
     @parameter(settable = true, playerDisplay = true, defaultValue = "0.0")
     private Double buildTime;
+    private int myTimer = 0;
 
-    private Set<GameElement> myTargets;
-
+    private List<GameElement> myTargets;
+    private AttackPriority myPriority;
+    
     // TODO remove once testing is over
     public Tower (ImageView test) {
         super.setImageView(test);
     }
 
+    public String getProjectile(){
+    	if (projectiles.size() == 1){
+    		return projectiles.get(0);
+    	}
+    	return projectiles.get(0);
+    }
+    
+    public void setPriority(String priority){
+    	attackPriority = priority;
+    }
     /**
      * Adds new sprites for the tower to target
      * 
@@ -51,7 +75,7 @@ public class Tower extends GameSprite {
         // TODO Auto-generated method stub
 
     }
-
+    
     @Override
     public void onCollide (GameElement element) {
         // TODO Auto-generated method stub
@@ -67,8 +91,19 @@ public class Tower extends GameSprite {
     }
 
     @Override
-    public void update (int counter) {
-        // TODO Auto-generated method stub
-        System.out.println("Tower updated");
+    public Map<Object, List<String>> update () {
+        move();
+        Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
+        if(myTimer >= attackSpeed && !myTargets.isEmpty()){
+            spawnMap.put(this.getLocation(), this.getNextSprites());
+            myTimer = 0;
+        }
+        myTimer++;
+        return spawnMap;
     }
+    
+    public double getCost(){
+    	return cost;
+    }
+
 }

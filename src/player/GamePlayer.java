@@ -1,11 +1,8 @@
 package player;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import annotations.parameter;
 import javafx.application.Application;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -21,12 +18,10 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -50,7 +45,6 @@ import engine.element.sprites.Tower;
  * the GameLoop which then runs the game.
  */
 public class GamePlayer extends Application {
-    private GameController myGame;
     private Stage myPlayerStage;
     private Group myEngineRoot = new Group();
     private Scene myMainScene;
@@ -103,16 +97,11 @@ public class GamePlayer extends Application {
         // game.loadGame(gameFile.getParent(), engineRoot, screenWidth*3/4, screenHeight,
         // availableTowers);
         Image myImage = new Image(".\\images\\liltower.jpg");
-        ImageView test = new ImageView(myImage);
-        ImageView test1 = new ImageView(myImage);
-        ImageView test2 = new ImageView(myImage);
         // ImageView test3 = new ImageView(myImage);
         // ImageView test4 = new ImageView(myImage);
         // ImageView test5 = new ImageView(myImage);
         // test5.setTranslateX(300);
         // test5.setTranslateY(300);
-        availableTowers.add(new Tower(test));
-        availableTowers.add(new Tower(test1));
         // availableTowers.add(new Tower(test2));
         // availableTowers.add(new Tower(test3));
         // availableTowers.add(new Tower(test4));

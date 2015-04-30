@@ -1,10 +1,15 @@
 package authoringEnvironment;
 
+import java.awt.image.RenderedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javax.imageio.ImageIO;
 
 
 /**
@@ -21,8 +26,16 @@ public class InstanceManager {
     private static final String GAME_ROOT_DIRECTORY =
             System.getProperty("user.dir").concat("/gamedata/exampleUserData");
 
-    private static final String PARTS_FILE_NAME = "GameParts.xml";
     private static final String INSTANCE_MANAGER_FILE_NAME = "GameManager.xml";
+    public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
+
+    public static final String PART_KEY_KEY = "PartKey";
+    public static final String PART_TYPE_KEY = "PartType";
+    public static final String NAME_KEY = "name";
+    public static final String TAGS_KEY = "Tags";
+    public static final String IMAGE_KEY = "image";
+
+    private static final String NO_KEYS_MISSING = "no keys missing";
 
     /**
      * a map of all the parts the user has created each part is represented by a map mapping the
@@ -33,19 +46,6 @@ public class InstanceManager {
     private String gameName;
     private String rootDirectory;
     private static int partID;
-
-    public static final String PART_KEY_KEY = "PartKey";
-    private static final String MISSING_NAME_KEY_MESSAGE =
-            "Map passed must contain a \"Name\" key. Key is case sensitive.";
-
-    public static final String PARTS_FILE_DIRECTORY = "/AllPartData";
-    public static final String PART_TYPE_KEY = "PartType";
-    public static final String NAME_KEY = "name";
-
-    public static final String IMAGE_KEY = "imagePath";
-    public static final String SAVE_PATH_KEY = "SavePath";
-
-    private static final String NO_KEYS_MISSING = "no keys missing";
 
     /**
      * Generates an instance manager for a game. An InstanceManager has a name
@@ -89,21 +89,42 @@ public class InstanceManager {
         this(name, partData, DEFAULT_SAVE_LOCATION + "/" + name);
     }
 
-    public String addPart (Map<String, Object> fullPartMap) throws MissingInformationException {
+    protected String addPart (Map<String, Object> fullPartMap) throws MissingInformationException {
         String key = generateKey(fullPartMap);
         fullPartMap.put(PART_KEY_KEY, key);
         return addPart(key, fullPartMap);
     }
 
-    public String addPart (String key, Map<String, Object> fullPartMap)
-                                                                       throws MissingInformationException {
+    protected String addPart (String key, Map<String, Object> fullPartMap)
+                                                                          throws MissingInformationException {
+        fullPartMap.put(TAGS_KEY, getTagList(key));
         fullPartMap.put(PART_KEY_KEY, key);
         String missingKey = checkMissingInformation(fullPartMap);
         if (!missingKey.equals(NO_KEYS_MISSING))
             throw new MissingInformationException(missingKeyErrorMessage(missingKey));
+        System.out.println("~~~~~~Part: " + fullPartMap + "\n~~~~~~added at: " + key);
         userParts.put(key, fullPartMap);
         writePartToXML(fullPartMap);
         return key;
+    }
+
+    private List<String> getTagList (String key) {
+        try {
+            Map<String, Object> oldPart = userParts.get(key);
+            if (oldPart.keySet().contains(TAGS_KEY)) {
+                System.out.println(key + " tags preserved as " + userParts.get(key).get(TAGS_KEY));
+                return (List<String>) oldPart.get(TAGS_KEY);
+
+            }
+            else {
+                System.out.println("tags not preserved for " + key);
+                return new ArrayList<String>();
+            }
+        }
+        catch (NullPointerException e) {
+            System.out.println("key didn't exist yet");
+            return new ArrayList<String>();
+        }
     }
 
     private String missingKeyErrorMessage (String missingKey) {
@@ -126,6 +147,14 @@ public class InstanceManager {
         return missingKey;
     }
 
+    protected boolean deletePart (String partKey) {
+        if (userParts.keySet().contains(partKey)) {
+            userParts.remove(partKey);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Writes the part, passed as a Map, into an XML file in:
      * rootDirectory/partType/partName.xml, for example:
@@ -145,7 +174,7 @@ public class InstanceManager {
     /**
      * Writes all parts of the current game into their respective files
      */
-    public void writeAllPartsToXML () {
+    private void writeAllPartsToXML () {
         for (String key : userParts.keySet())
             writePartToXML(userParts.get(key));
     }
@@ -158,20 +187,26 @@ public class InstanceManager {
      * 
      * @return the directory where the InstanceManager object was saved
      */
-    public String saveGame () {
+    protected String saveGame () {
+        clearGameFolders();
         writeAllPartsToXML();
-        // XMLWriter.toXML(userParts, partFileName, rootDirectory +
-        // partsFileDir);
         System.out.println("writing to xml manager");
         return XMLWriter.toXML(this, INSTANCE_MANAGER_FILE_NAME, rootDirectory +
                                                                  PARTS_FILE_DIRECTORY);
     }
 
+    private void clearGameFolders () {
+        for (String subFolder : GameCreator.gameDirectories()) {
+            File[] files = new File(rootDirectory + "/" + subFolder).listFiles();
+            for (File f : files)
+                f.delete();
+        }
+    }
+
     /**
-     * Loads the InstanceManager object that's stored in a data file. The path
-     * to this data file is found in the file that the String argument leads to.
-     * This path will lead to a .game file. This method can only be called by
-     * the authoring environment.
+     * Loads the InstanceManager object that's stored in a data file. In order
+     * to get the root directory of this game, simply remove the filename of
+     * the .gamefile file.
      * 
      * @param pathToRootDirFile
      *        The location of the file that holds the path to the root
@@ -213,8 +248,73 @@ public class InstanceManager {
         return new HashMap<String, Map<String, Object>>(userParts);
     }
 
-    public void specifyPartImage (String partKey, String imageFilePath) {
-        userParts.get(partKey).put(IMAGE_KEY, imageFilePath);
+    protected void specifyPartImage (String partKey, String imageFilePath) {
+        String realFilePath = "src/" + imageFilePath;
+        String locationAfterRootDirectory =
+                GameCreator.IMAGE_DATA_FOLDER + "/" +
+                        partKey.substring(0, partKey.indexOf(".")) + "Image.png";
+        String writeLocation = rootDirectory + locationAfterRootDirectory;
+        try {
+            File imageToSave = new File(realFilePath);
+            RenderedImage toWrite = ImageIO.read(imageToSave);
+            System.out.println(ImageIO.write(toWrite, "png", new File(writeLocation)));
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        userParts.get(partKey).put(IMAGE_KEY, locationAfterRootDirectory);
+    }
+
+    protected void specifyPartImage (String partKey, Image image) {
+        String locationAfterRootDirectory =
+                GameCreator.IMAGE_DATA_FOLDER + "/" +
+                        partKey.substring(0, partKey.indexOf(".")) + "Image.png";
+        String writeLocation = rootDirectory + locationAfterRootDirectory;
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", new File(writeLocation));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        userParts.get(partKey).put(IMAGE_KEY, locationAfterRootDirectory);
+
+    }
+
+    protected void addTagToPart (String partKey, String tag) {
+        Map<String, Object> addTagTo = userParts.get(partKey);
+        if (addTagTo.containsKey(TAGS_KEY)) {
+            List<String> tagList = (List<String>) userParts.get(partKey).get(TAGS_KEY);
+            tagList.add(tag);
+            addTagTo.put(TAGS_KEY, tagList);
+        }
+        else {
+            List<String> tagList = new ArrayList<String>();
+            tagList.add(tag);
+            addTagTo.put(TAGS_KEY, tagList);
+        }
+        try {
+            addPart(partKey, addTagTo);
+        }
+        catch (MissingInformationException e) {
+            System.err.println("Something's gone terribly wrong.");
+        }
+
+    }
+
+    protected boolean removeTagFromPart (String partKey, String tag) {
+        Map<String, Object> removeFrom = userParts.get(partKey);
+        if (removeFrom.containsKey(TAGS_KEY)) {
+            List<String> tagList = (List<String>) userParts.get(partKey).get(TAGS_KEY);
+            boolean removed = tagList.remove(tag);
+            removeFrom.put(TAGS_KEY, tagList);
+            return removed;
+        }
+        return false;
+    }
+
+    protected boolean containsKey (String key) {
+        return userParts.containsKey(key);
     }
 
     /**
@@ -227,8 +327,8 @@ public class InstanceManager {
      * @throws IOException
      */
 
-    public Map<String, Object> getPartFromXML (String fileLocation)
-                                                                   throws IOException {
+    protected Map<String, Object> getPartFromXML (String fileLocation)
+                                                                      throws IOException {
 
         return (Map<String, Object>) XMLWriter.fromXML(fileLocation);
     }
@@ -242,15 +342,20 @@ public class InstanceManager {
         return toPrint.toString();
     }
 
-    public String getName () {
+    protected String getName () {
         return gameName;
     }
 
-    public static void main (String[] args) {
-        Map<String, Map<String, Object>> data =
-                InstanceManager
-                        .loadGameData(System.getProperty("user.dir") +
-                                      "/data/TestingTesting123/ExampleGame/ExampleGame.gamefile");
-        System.out.println("data: " + data);
+    protected String getRootDirectory () {
+        return rootDirectory;
     }
+    /*
+     * public static void main (String[] args) {
+     * Map<String, Map<String, Object>> data =
+     * InstanceManager
+     * .loadGameData(System.getProperty("user.dir") +
+     * "/data/TestingTesting123/ExampleGame/ExampleGame.gamefile");
+     * System.out.println("data: " + data);
+     * }
+     */
 }

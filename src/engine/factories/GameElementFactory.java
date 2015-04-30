@@ -57,6 +57,7 @@ public class GameElementFactory {
         myPartTypeToPackage.put("GameMap", "engine.element.GameMap");
         myPartTypeToPackage.put("Round", "engine.element.Round");
         myPartTypeToPackage.put("Wave", "engine.element.Wave");
+        myPartTypeToPackage.put("MapPath", "engine.element.sprite.MapPath");
     }
 
     /**
@@ -97,7 +98,8 @@ public class GameElementFactory {
             return element;
         }
         else {
-            throw new InvalidParameterException(guid + "is not defined as a type of " + className);
+            throw new InvalidParameterException(guid + "is not defined as an element of type " +
+                                                className);
         }
     }
 

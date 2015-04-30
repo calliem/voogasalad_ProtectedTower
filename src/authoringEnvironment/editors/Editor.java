@@ -50,34 +50,12 @@ public abstract class Editor extends Tab {
         this.setContent(contentRoot);
         this.setText(tabNames.getString(editorType));
         this.setClosable(false);
-
     }
 
     protected abstract Group configureUI ();
 
     public String getName () {
         return editorType;
-    }
-
-    // to be used by backend
-    public void displayError (String s) {
-        Stage stage = new Stage();
-        VBox root = new VBox();
-        root.setAlignment(Pos.CENTER);
-        Text text = new Text(s);
-        Button button = new Button("Ok");
-        button.setOnMouseClicked(e -> stage.hide()); // this doesn't seem to
-                                                     // work.... also hide()
-                                                     // doesn't actually
-                                                     // close() it right..?
-        root.getChildren().addAll(text, button);
-
-        Scene scene = new Scene(root, 400, 200);// getWidth() / 4, getHeight() /
-                                                // 6);
-
-        stage.setTitle("Error");
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void hideOverlay () {
@@ -87,5 +65,7 @@ public abstract class Editor extends Tab {
     public boolean isOverlayActive () {
         return isOverlayActive;
     }
+
+    public abstract void update ();
 
 }

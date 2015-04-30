@@ -1,5 +1,9 @@
 package engine.element.sprites;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import engine.UpdateAndReturnable;
 import annotations.parameter;
 import javafx.geometry.Point2D;
 
@@ -16,8 +20,13 @@ public abstract class MoveableSprite extends Sprite {
 
     @parameter(settable = true, playerDisplay = true, defaultValue = "1.0")
     private Double speed;
-    @parameter(settable = true, playerDisplay = true)
+    @parameter(settable = false, playerDisplay = true)
     private String group = null;
+    
+    
+    
+    
+    
     /**
      * Holds the current heading of the sprite
      */
@@ -65,5 +74,5 @@ public abstract class MoveableSprite extends Sprite {
      * method should be used to define how this object moves and changes coordinates on the screen.
      */
     public abstract void move ();
-
+    
 }
