@@ -7,7 +7,7 @@ import javafx.scene.shape.StrokeLineCap;
 
 
 /**
- * Dashed line that binds to the start and end points
+ * Dashed line that binds (and thus follows and is attached to) to the start and end points 
  * 
  * @author Callie Mao, jewelsea (StackOverflow)
  *

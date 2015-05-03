@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
+import authoringEnvironment.InstanceManager;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.Variables;
 import authoringEnvironment.objects.GameObject;
@@ -142,7 +143,7 @@ public class MapSidebar extends Sidebar {
 
     private void selectTile () {
         tileDisplay =
-                new TileUpdatableDisplay(myController, Variables.PARTNAME_TILE,
+                new TileUpdatableDisplay(myController, InstanceManager.TILE_PARTNAME,
                                          UPDATABLEDISPLAY_ELEMENTS,
                                          Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace());
 
@@ -332,7 +333,7 @@ public class MapSidebar extends Sidebar {
 
         for (GameObject map : super.getMaps()) {
             Map<String, Object> mapSettings = map.save();
-            String key = myController.addPartToGame(Variables.PARTNAME_MAP, mapSettings);
+            String key = myController.addPartToGame(InstanceManager.GAMEMAP_PARTNAME, mapSettings);
             map.setKey(key);
         }
     }
@@ -444,7 +445,7 @@ public class MapSidebar extends Sidebar {
          * UPDATABLEDISPLAY_ELEMENTS,
          * Variables.THUMBNAIL_SIZE_MULTIPLIER, getMapWorkspace()); // test
          */
-
+        System.out.println("getpaths " + getMapWorkspace().getActiveMap().getPaths());
         pathDisplay =
                 new PathUpdatableDisplay(getMapWorkspace().getActiveMap().getPaths(),
                                          UPDATABLEDISPLAY_ELEMENTS,

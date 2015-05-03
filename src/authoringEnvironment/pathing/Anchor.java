@@ -1,16 +1,13 @@
 package authoringEnvironment.pathing;
 
-import authoringEnvironment.objects.Coordinate;
-import javafx.animation.PauseTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
-import javafx.util.Duration;
+import authoringEnvironment.objects.Coordinate;
 
 
 /**

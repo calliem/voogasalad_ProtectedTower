@@ -16,7 +16,6 @@ import javafx.util.Duration;
 import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.MissingInformationException;
-import authoringEnvironment.Variables;
 import authoringEnvironment.util.Screenshot;
 
 public class TileView extends ObjectView{
@@ -61,7 +60,7 @@ public class TileView extends ObjectView{
         HBox buttons = new HBox(PADDING);
         buttons.setAlignment(Pos.CENTER);
         saveButton.setOnAction(e -> {
-            if(!myController.nameAlreadyExists(Variables.PARTNAME_TILE, nameField.getText()) || nameField.getText().equals(myName)){
+            if(!myController.nameAlreadyExists(InstanceManager.TILE_PARTNAME, nameField.getText()) || nameField.getText().equals(myName)){
                 myName = nameField.getText();
                 tile.setFill(tileColor);
                 saveTile();
@@ -121,7 +120,7 @@ public class TileView extends ObjectView{
     
     public Map<String, Object> getTileInfo(){
         Map<String, Object> info = new HashMap<>();
-        info.put(InstanceManager.PART_TYPE_KEY, Variables.PARTNAME_TILE);
+        info.put(InstanceManager.PART_TYPE_KEY, InstanceManager.TILE_PARTNAME);
         info.put(InstanceManager.NAME_KEY, myName);
         info.put(InstanceManager.COLOR_KEY, tileColor);
         return info;
