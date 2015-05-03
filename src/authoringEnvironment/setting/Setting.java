@@ -33,6 +33,8 @@ public abstract class Setting extends VBox{
     private static final int FIELD_WIDTH = 125;
     private static final int PADDING = 10;
     private static final int MESSAGE_SIZE = 20;
+    private static final String IMAGE_FILE_FORMAT = "images/%s.png";
+    private static final String ERROR_IMAGE_FILE = "error"; 
     
     public Setting(Controller controller, String part, String label, String value){
         //TODO: remove magic number
@@ -45,7 +47,7 @@ public abstract class Setting extends VBox{
         basicLayout = new HBox(PADDING);
         basicLayout.setAlignment(Pos.CENTER_RIGHT);
         
-        error = new ImageView(new Image(String.format("images/%s.png", "error")));
+        error = new ImageView(new Image(String.format(IMAGE_FILE_FORMAT, ERROR_IMAGE_FILE)));
         ScaleImage.scale(error, MESSAGE_SIZE, MESSAGE_SIZE);
         error.setVisible(false);
         

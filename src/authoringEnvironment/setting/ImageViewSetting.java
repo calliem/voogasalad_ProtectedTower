@@ -6,6 +6,8 @@ import authoringEnvironment.Controller;
 
 public class ImageViewSetting extends Setting {
     private ImageSelector selector;
+    private static final int PREVIEW_IMAGE_HEIGHT = 100;
+    private static final int LABEL_INDEX = 0;
 
     public ImageViewSetting (Controller controller, String part, String label, String value) {
         super(controller, part, label, value);
@@ -14,10 +16,10 @@ public class ImageViewSetting extends Setting {
     
     @Override
     protected void setupInteractionLayout(){
-        basicLayout.getChildren().remove(0);
+        basicLayout.getChildren().remove(LABEL_INDEX);
         
         selector = new ImageSelector();
-        selector.setPreviewImageHeight(100);
+        selector.setPreviewImageHeight(PREVIEW_IMAGE_HEIGHT);
         
         error.setVisible(false);
         basicLayout.getChildren().addAll(selector, error);

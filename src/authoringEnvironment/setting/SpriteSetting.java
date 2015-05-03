@@ -28,6 +28,7 @@ import authoringEnvironment.NoImageFoundException;
 
 public class SpriteSetting extends Setting {
     private static final int DISPLAY_WIDTH = 200;
+    private static final int DISPLAY_HEIGHT = 70;
     private static final int PADDING = 15;
     private static final int IMAGE_SIZE = 50;
     private static final int IMAGES_DISPLAYED = 3; // the amount of images displayed at once in the
@@ -46,7 +47,8 @@ public class SpriteSetting extends Setting {
     private List<String> selectedFiles;
     private static final String SPRITE_TYPES = "resources/sprite_parameter_type";
     private static final ResourceBundle spriteNeeded = ResourceBundle.getBundle(SPRITE_TYPES);
-
+    private static final int REFRESH_SIZE = 20;
+    
     private boolean singularChoice = false;
     protected String spriteDisplayed;
     
@@ -58,7 +60,7 @@ public class SpriteSetting extends Setting {
     protected void setupInteractionLayout () {
         basicLayout.setAlignment(Pos.CENTER);
         ImageView refresh = new ImageView(new Image("images/refresh.png"));
-        ScaleImage.scale(refresh, 20, 20);
+        ScaleImage.scale(refresh, REFRESH_SIZE, REFRESH_SIZE);
         basicLayout.getChildren().add(refresh);
         
         setSpriteDisplayed();
@@ -175,7 +177,7 @@ public class SpriteSetting extends Setting {
      * 
      */
     private void adjustBackground () {
-        if (filePaths.size() > 3) {
+        if (filePaths.size() > IMAGES_DISPLAYED) {
             graphicSelectorBackground.setWidth(DISPLAY_WIDTH +
                                                (filePaths.size() - IMAGES_DISPLAYED) *
                                                (IMAGE_SIZE + PADDING));
@@ -196,8 +198,8 @@ public class SpriteSetting extends Setting {
 
         graphicSelectorPane.setContent(graphicSelector);
         graphicSelectorPane.setPannable(true);
-        graphicSelectorPane.setMaxWidth(200);
-        graphicSelectorPane.setMaxHeight(70);
+        graphicSelectorPane.setMaxWidth(DISPLAY_WIDTH);
+        graphicSelectorPane.setMaxHeight(DISPLAY_HEIGHT);
         graphicSelectorPane.setHbarPolicy(ScrollBarPolicy.NEVER);
     }
 

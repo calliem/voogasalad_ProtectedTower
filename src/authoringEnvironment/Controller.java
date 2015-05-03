@@ -253,12 +253,11 @@ public class Controller {
         System.out.println(partKey + " part not found");
         return false;
     }
-    
-    public String getNameForPart(String partKey){
-        return (String) getPartCopy(partKey).get(InstanceManager.NAME_KEY);
-    }
-    
-    
+//    
+//    public String getNameForPart(String partKey){
+//        return (String) getPartCopy(partKey).get(InstanceManager.NAME_KEY);
+//    }
+//    
 
     public boolean removeTagFromPart (String partKey, String tag) {
         if (currentGame.containsKey(partKey)) {
