@@ -250,7 +250,6 @@ public class Controller {
         System.out.println(partKey + " part not found");
         return false;
     }
-    
 
     public boolean removeTagFromPart (String partKey, String tag) {
         if (currentGame.containsKey(partKey)) {
@@ -313,30 +312,30 @@ public class Controller {
         if (!partCopy.keySet().contains(InstanceManager.IMAGE_KEY))
             throw new NoImageFoundException("No image is specified for part");
         String absoluteImageFilePath = currentGame.getRootDirectory() +
-                (String) partCopy.get(InstanceManager.IMAGE_KEY);
+                                       (String) partCopy.get(InstanceManager.IMAGE_KEY);
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             System.out.println("DOES THE IMAGE EXIST? " + new File(absoluteImageFilePath).exists());
             RenderedImage toWrite = ImageIO.read(new File(absoluteImageFilePath));
-            ImageIO.write(toWrite,"png", os);
+            ImageIO.write(toWrite, "png", os);
             InputStream imageInputStream = new ByteArrayInputStream(os.toByteArray());
             return new Image(imageInputStream);
         }
         catch (IOException e1) {
             e1.printStackTrace();
-            throw new NoImageFoundException("something went wrong"); 
-        }      
+            throw new NoImageFoundException("something went wrong");
+        }
     }
 
     public void specifyPartImage (String partKey, String imageFilePath) {
         System.out.println("partkey " + partKey + " space " + imageFilePath);
         currentGame.specifyPartImage(partKey, imageFilePath);
     }
-    
+
     public void specifyPartImage (String partKey, Image image) {
         currentGame.specifyPartImage(partKey, image);
     }
-    
+
     /**
      * Gets a copy of the part of key partKey. All data is present, but
      * modifying the data won't change the actual data stored in the game.
@@ -383,7 +382,6 @@ public class Controller {
         addKey(partKey);
         return part;
     }
-   
 
     private void populateKeyList () {
         for (String key : currentGame.getAllPartData().keySet()) {

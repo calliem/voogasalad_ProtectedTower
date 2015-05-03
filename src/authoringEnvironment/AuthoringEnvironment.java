@@ -120,10 +120,10 @@ public class AuthoringEnvironment {
         for (Editor e : editorsToAdd) {
             myTabPane.getTabs().add(e);
         }
-        
-        for (Tab tab : myTabPane.getTabs()){
+
+        for (Tab tab : myTabPane.getTabs()) {
             Editor editor = (Editor) tab;
-            tab.setOnSelectionChanged(e -> update(editor)); 
+            tab.setOnSelectionChanged(e -> update(editor));
         }
         myCurrentTab = myTabPane.getSelectionModel().getSelectedItem();
         grid.add(myTabPane, 0, 1);
@@ -183,16 +183,17 @@ public class AuthoringEnvironment {
 
     private void update (Editor selectedTab) {
         System.out.println("UPDATETAB()---------");
-        
-        if (myCurrentTab != selectedTab){
-            //Editor editor = (Editor) myCurrentTab.getContent();
-          //  Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the controller
-            
-            //myCurrentTab = selectedTab;
-            //Editor editor2 = (Editor) myCurrentTab.getContent();
-            //editor2.update();
+
+        if (myCurrentTab != selectedTab) {
+            // Editor editor = (Editor) myCurrentTab.getContent();
+            // Controller.updateEditor(myCurrentTab.getText(), editor); //update old tab in the
+            // controller
+
+            // myCurrentTab = selectedTab;
+            // Editor editor2 = (Editor) myCurrentTab.getContent();
+            // editor2.update();
             selectedTab.update();
-    }
+        }
         /*
          * System.out.println("previousTab" + previousTab);
          * System.out.println("selectedTab" + selectedTab);

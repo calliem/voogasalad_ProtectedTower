@@ -30,8 +30,6 @@ public abstract class Editor extends Tab {
     private static final String englishPartsFile = "resources/display/part_names_english";
     protected static final ResourceBundle partNames = ResourceBundle.getBundle(englishPartsFile);
 
-    // TODO: don't use protected
-
     protected static final double CONTENT_WIDTH = AuthoringEnvironment
             .getEnvironmentWidth();
     protected static final double CONTENT_HEIGHT = 0.89 * AuthoringEnvironment

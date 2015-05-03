@@ -2,39 +2,40 @@ package authoringEnvironment.setting;
 
 import authoringEnvironment.Controller;
 
+
 /**
  * 
  * @author Johnny
  *
  */
-public class DoubleSetting extends Setting{
+public class DoubleSetting extends Setting {
 
     private Double dataAsDouble;
 
-    public DoubleSetting(Controller controller, String part, String paramName, String defaultVal){
+    public DoubleSetting (Controller controller, String part, String paramName, String defaultVal) {
         super(controller, part, paramName, defaultVal);
     }
 
     @Override
-    public boolean parseField(){
-        try{
+    public boolean parseField () {
+        try {
             dataAsDouble = Double.parseDouble(textBox().getText());
             hideErrorAlert();
             return true;
         }
-        catch(NumberFormatException e){
+        catch (NumberFormatException e) {
             displayErrorAlert("This is not a decimal!");
             return false;
         }
     }
-    
+
     @Override
-    public void setParameterValue(Object value){
+    public void setParameterValue (Object value) {
         dataAsDouble = (Double) value;
-        textBox().setText(dataAsDouble+"");
+        textBox().setText(dataAsDouble + "");
     }
 
-    public Double getParameterValue(){
+    public Double getParameterValue () {
         return dataAsDouble;
     }
 }
