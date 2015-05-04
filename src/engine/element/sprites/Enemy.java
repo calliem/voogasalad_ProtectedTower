@@ -45,7 +45,6 @@ public class Enemy extends GameSprite {
     private double myPathLength;
     private List<GridCell> myGridPath;
     private static final double MOVE_DURATION = 1000;
-    //private ImageView invisView = new ImageView();
 
     public Enemy () {
 
@@ -58,18 +57,6 @@ public class Enemy extends GameSprite {
 
     public GridCell getGoal () {
         return myGridPath.get(myGridPath.size() - 1);
-    }
-
-    @Override
-    public void target (Sprite sprite) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onCollide (GameElement element) {
-        // TODO write collide methods
-        // super.decreaseHealth(sprite.getDamage());
     }
 
     @Override
@@ -172,6 +159,18 @@ public class Enemy extends GameSprite {
     public Map<Object, List<String>> update () {
         super.setLocation(super.getImageView().getTranslateX(), super.getImageView().getTranslateY());
         return new HashMap<Object, List<String>>();
+    }
+
+
+    @Override
+    public void target (Sprite sprite) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onCollide (GameElement element) {
+        // TODO write collide methods
     }
 
     @Override
