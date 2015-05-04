@@ -3,13 +3,8 @@ package authoringEnvironment.objects;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.Group;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.TextAlignment;
-import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.InstanceManager;
-import authoringEnvironment.Variables;
-
 
 /**
  * General abstraction for all game objects that do not get their properties directly from parameter
@@ -24,78 +19,41 @@ import authoringEnvironment.Variables;
  *
  */
 
-// TODO: make this into an interface
-public class GameObject {
+public class GameObject extends SimpleObject {
 
-    private String myKey;
-    private String myName;
-    private ImageView myImageView;
-
-    protected GameObject () {
-
-    }
-
-    //convert to node and then use get color for tiles
-    
     public GameObject (String key, String name, ImageView image) {
-        myKey = key;
-        myName = name;
-        myImageView = image;
+        super(key, name, image);
+    }
+    
+    protected GameObject(){};
+    
+    public void setKey (String key) {
+        super.setKey(key);
     }
 
-    public String getName () {
-        return myName;
+    public Map<String, Object> save () {
+        Map<String, Object> mapSettings = new HashMap<String, Object>();
+        mapSettings.put(InstanceManager.NAME_KEY, getName());
+        return mapSettings;
+    }
+
+    public Group getRoot (){
+        return new Group();
+    };
+
+    protected String getToolTipInfo () {
+        String info = "";
+        info += "Name: " + getName();
+        return info;
+
     }
 
     public void setName (String name) {
-        myName = name;
-    }
-
-    public void setKey (String key) {
-        myKey = key;
-    }
-
-    public String getKey () {
-        return myKey;
+        super.setName(name);
     }
     
     public void setImageView(ImageView image){
-        myImageView = image;
+        super.setImageView(image);
     }
-    
-    public ImageView getImageView(){
-        return myImageView;
-    }
-
-    public ImageView getUniqueThumbnail () {
-        ImageView uniqueNode = new ImageView(myImageView.getImage());
-        return uniqueNode;
-    }
-
-    public double getWidth (){
-        return myImageView.getFitWidth();
-    };
-
-    public double getHeight (){
-        return myImageView.getFitHeight();
-    };
-
-    public Map<String, Object> save (){
-        Map<String, Object> mapSettings = new HashMap<String, Object>();
-        mapSettings.put(InstanceManager.NAME_KEY, myName);
-        return mapSettings;
-    };
-
-    public Group getRoot (){
-        return null;
-    };
-
-    protected String getToolTipInfo (){
-        String info = "";
-        info += "Name: " + myName;
-        return info;
-        
-    }; // TODO: items to be displayed on the tooltip store
-                                                 // within a properties file
 
 }

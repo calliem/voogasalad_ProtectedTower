@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Callie Mao 
+
 package authoringEnvironment.objects;
 
 import java.util.ArrayList;
@@ -18,11 +21,13 @@ import authoringEnvironment.Controller;
 import authoringEnvironment.InstanceManager;
 import authoringEnvironment.NoImageFoundException;
 import authoringEnvironment.Variables;
+import authoringEnvironment.objects.GameObject;
+import authoringEnvironment.objects.SimpleObject;
 
 
 /**
  * VBox that holds an updating display of game objects including the object's image and name. These
- * are deleted and updated dynamically with observablelists and changelisteners to reflect any
+ * are deleted and updated dynamically to reflect any
  * changes the user makes to the list in other classes.
  * 
  * @author Callie Mao
@@ -39,7 +44,16 @@ public abstract class UpdatableDisplay extends VBox {
     private Controller myController;
     private String myPartType;
     private static final int SPACING = 15;
+    private static final double TRANSLATE_Y_MULTIPLIER = 1.8;
     private static final String EMPTY_LIST = "This list is empty.";
+
+    /**
+     * Constructs an UpdatableDisplay that displays all GameObjects within the provided list.
+     * 
+     * @param list List of GameObjects
+     * @param rowSize Number of objects to be displayed within one row on the updatableDisplay
+     * @param thumbnailMultiplier Multiplier to scale the thumbnail by
+     */
 
     public UpdatableDisplay (List<GameObject> list,
                              int rowSize,
@@ -51,6 +65,18 @@ public abstract class UpdatableDisplay extends VBox {
         selectedView = null;
     }
 
+    /**
+     * Constructs an UpdatableDisplay that will construct a simple game object of all elements of
+     * the partType map from the controller. This allows for display of simple game objects in
+     * separate classes/tabs/editors without needing to receive all parameter information from the
+     * Controller
+     * 
+     * @param c Controller
+     * @param partType PartType to be passed into the controller (ie.
+     *        "InstanceManager.GAMEMAP_PARTNAME")
+     * @param rowSize Number of objects to be displayed within one row on the updatableDisplay
+     * @param thumbnailMultiplier Multiplier to scale the thumbnail by
+     */
     public UpdatableDisplay (Controller c,
                              String partType,
                              int rowSize,
@@ -65,7 +91,7 @@ public abstract class UpdatableDisplay extends VBox {
         displayValues();
     }
 
-    public void populateObjects (ObservableList<String> keys) {
+    private void populateObjects (ObservableList<String> keys) {
         for (String key : keys) {
             Map<String, Object> partParameters = myController.getPartCopy(key);
             Image image = null;
@@ -78,8 +104,9 @@ public abstract class UpdatableDisplay extends VBox {
 
             ImageView thumbnail = setThumbnailSize(new ImageView(image));
             String name = (String) partParameters.get(InstanceManager.NAME_KEY);
-            GameObject displayObject = new GameObject(key, name, thumbnail);
-            myObjects.add(displayObject);
+            SimpleObject displayObject = new GameObject(key, name, thumbnail);
+            GameObject display = (GameObject) displayObject;
+            myObjects.add(display);
         }
     }
 
@@ -94,20 +121,11 @@ public abstract class UpdatableDisplay extends VBox {
         return thumbnail;
     }
 
+    // Follows template method design pattern to specify the listener for popualated objects
     private void displayValues () {
-        ScrollPane container = new ScrollPane();
+        ScrollPane container = createContainer();
+        checkIfEmptyList();
 
-        container.setHbarPolicy(ScrollBarPolicy.NEVER);
-        container.setPrefHeight(AuthoringEnvironment.getEnvironmentHeight() *
-                                Variables.THUMBNAIL_SIZE_MULTIPLIER * 4);
-
-        objectsDisplay = new VBox(SPACING);
-        setCurrentRow();
-
-        if (myObjects.isEmpty()) {
-            Text isEmpty = new Text(EMPTY_LIST);
-            objectsDisplay.getChildren().add(isEmpty);
-        }
         for (GameObject object : myObjects) {
             if (currentRow.getChildren().size() == numObjsPerRow) {
                 objectsDisplay.getChildren().add(currentRow);
@@ -124,8 +142,7 @@ public abstract class UpdatableDisplay extends VBox {
 
             Text mapName = new Text(object.getName());
             mapName.setTranslateY(AuthoringEnvironment.getEnvironmentHeight() *
-                                  Variables.THUMBNAIL_SIZE_MULTIPLIER / 1.8);
-
+                                  Variables.THUMBNAIL_SIZE_MULTIPLIER / TRANSLATE_Y_MULTIPLIER);
             StackPane.setAlignment(mapName, Pos.CENTER);
 
             objectView.getChildren().addAll(thumbnail, mapName);
@@ -141,6 +158,25 @@ public abstract class UpdatableDisplay extends VBox {
 
         container.setContent(objectsDisplay);
         getChildren().add(container);
+    }
+
+    private ScrollPane createContainer () {
+        ScrollPane container = new ScrollPane();
+
+        container.setHbarPolicy(ScrollBarPolicy.NEVER);
+        container.setPrefHeight(AuthoringEnvironment.getEnvironmentHeight() *
+                                Variables.THUMBNAIL_SIZE_MULTIPLIER * 4);
+
+        objectsDisplay = new VBox(SPACING);
+        setCurrentRow();
+        return container;
+    }
+
+    private void checkIfEmptyList () {
+        if (myObjects.isEmpty()) {
+            Text isEmpty = new Text(EMPTY_LIST);
+            objectsDisplay.getChildren().add(isEmpty);
+        }
     }
 
     private void selectObject (StackPane objectDisplay) {
@@ -162,6 +198,11 @@ public abstract class UpdatableDisplay extends VBox {
         currentRow.setAlignment(Pos.TOP_CENTER);
     }
 
+    /**
+     * Updates the UpdatableDisplay with the provided updated list of GameObjects
+     * 
+     * @param list of GameObjects
+     */
     public void updateDisplay (List<GameObject> list) {
         if (!getChildren().isEmpty()) {
             getChildren().clear();
@@ -170,6 +211,10 @@ public abstract class UpdatableDisplay extends VBox {
         displayValues();
     }
 
+    /**
+     * Updates the UpdatableDisplay by re-retrieving and reconstructing all simple game objects of
+     * the original part type (passed into the Constructor) from the controller
+     */
     public void updateDisplay () {
         if (!getChildren().isEmpty()) {
             getChildren().clear();

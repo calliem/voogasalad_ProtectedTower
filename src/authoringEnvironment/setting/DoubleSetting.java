@@ -11,6 +11,7 @@ import authoringEnvironment.Controller;
 public class DoubleSetting extends Setting {
 
     private Double dataAsDouble;
+    private static final String ERROR_MESSAGE = "This is not a decimal!";
 
     public DoubleSetting (Controller controller, String part, String paramName, String defaultVal) {
         super(controller, part, paramName, defaultVal);
@@ -23,8 +24,8 @@ public class DoubleSetting extends Setting {
             hideErrorAlert();
             return true;
         }
-        catch (NumberFormatException e) {
-            displayErrorAlert("This is not a decimal!");
+        catch(NumberFormatException e){
+            displayErrorAlert(ERROR_MESSAGE);
             return false;
         }
     }

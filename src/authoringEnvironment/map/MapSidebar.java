@@ -5,10 +5,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -43,21 +41,14 @@ import authoringEnvironment.util.Screenshot;
  *
  */
 
-// TODO: abstract further
 public class MapSidebar extends Sidebar {
 
     private static final double PADDING = AuthoringEnvironment.getEnvironmentWidth() / 128;
-    private static final Color DEFAULT_TILE_DISPLAY_COLOR = Color.TRANSPARENT;
-    private static final double DEFAULT_TILE_DISPLAY_SIZE = AuthoringEnvironment
-            .getEnvironmentWidth() / 32;
     private static final double TEXT_FIELD_WIDTH = AuthoringEnvironment.getEnvironmentWidth() / 32;
 
     private static final int NAME_COL = 0;
     private static final int NAME_ROW = 1;
-    // TODO: ^ similar magic values in the gridpane (is this necessary)?
 
-    // private MapWorkspace getMapWorkspace();
-    // private Color myActiveColor;
 
     private TextField tileRowDisplay;
     private TextField tileColDisplay;
@@ -79,11 +70,6 @@ public class MapSidebar extends Sidebar {
     public MapSidebar (ResourceBundle resources, ObservableList<GameObject> observableList,
                        MapWorkspace mapWorkspace, Controller c) {
         super(resources, observableList, mapWorkspace);
-        /*
-         * ObservableList<PathView> pathList =
-         * FXCollections.observableArrayList();
-         * getChildren().add(createListView(pathList, 300));
-         */
         myController = c;
         counter = 1;
         createMapSettings();
@@ -314,22 +300,6 @@ public class MapSidebar extends Sidebar {
      */
 
     private void saveToXML () throws MissingInformationException {
-        /*
-         * for (Node map : super.getMaps()) {
-         * Map<String, Object> mapSettings = new HashMap<String, Object>();
-         * mapSettings.put(InstanceManager.nameKey, mapName.getText());
-         * mapSettings.put(TILEMAP_KEY, map);
-         * myController.addPartToGame(MAP_PART_NAME, mapSettings);
-         * }
-         * 
-         * }
-         * 
-         * 
-         * 
-         * // Con: getMapWorkspace().getActiveMap(). instead of myActiveMap introduces a
-         * // dependency on my workspace. if something is changed there without this
-         * // class knowing, the code is easy to break
-         */
 
         for (GameObject map : super.getMaps()) {
             Map<String, Object> mapSettings = map.save();

@@ -25,7 +25,8 @@ import authoringEnvironment.util.Screenshot;
 
 
 /**
- * PathView displays the path consisting of anchors, curves (bound lines), and adds them to the parent
+ * PathView displays the path consisting of anchors, curves (bound lines), and adds them to the
+ * parent
  * 
  * @author Callie Mao
  *
