@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Michael Yang
+
 package engine;
 
 import java.util.ArrayList;
@@ -23,7 +26,6 @@ import engine.element.sprites.Tower;
  */
 public class CollisionChecker {
 
-    private static final String PARAMETER_RANGE = "Range";
     private static final int INITIAL_QUADTREE_REGIONS = 1;
 
     /**
@@ -94,7 +96,6 @@ public class CollisionChecker {
      * @return Circle object representing range of object
      */
     private Circle createRange (GameElement sprite) {
-        // TODO add range as an instance variable?
         return new Circle(sprite.getLocationX(), sprite.getLocationY(),
                           (double) ((Tower) sprite).getRange());
     }
@@ -154,7 +155,6 @@ public class CollisionChecker {
      */
 
     public Set<GameElement> findTargetable (GameElement sprite) {
-        // TODO Auto-generated method stub
         Set<GameElement> collisions = new HashSet<>();
         List<GameElement> possibleSprites = getPossibleCollisions(sprite);
         for (GameElement other : possibleSprites) {
