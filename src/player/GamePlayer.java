@@ -340,7 +340,7 @@ public class GamePlayer extends Application {
             Dragboard db = event.getDragboard();
             boolean success = false;
             if (db.hasString()) {
-                myGameController.addPlaceable(db.getString(),
+                myGameController.placeGameElement(db.getString(),
                                               event.getSceneX() -
                                                       Math.floor(db.getImage().getWidth() / 2),
                                               event.getSceneY() -

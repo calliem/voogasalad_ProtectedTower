@@ -41,7 +41,6 @@ public class GameController {
     private static final String[] PART_NAMES = new String[] { "Tower", "Enemy", "Projectile",
                                                              "GridCell", "GameMap", "Round",
                                                              "Wave", "Game", "Level", "MapPath" };
-    // TODO do we pull in a Layout object map?
     /**
      * Holds a subset of part names to give to the game element factory
      */
@@ -171,33 +170,31 @@ public class GameController {
 
     public void startGame (long frameRate) {
         Timeline gameTimeline = new Timeline();
-        KeyFrame game =
-                new KeyFrame(Duration.millis(1000 / frameRate),
-                             e -> myGame.update());
+        KeyFrame game = new KeyFrame(Duration.millis(1000 / frameRate), e -> myGame.update());
         gameTimeline.getKeyFrames().add(game);
         gameTimeline.setCycleCount(Animation.INDEFINITE);
         gameTimeline.play();
     }
 
     /**
-     * Called by the player to tell engine about keypressed
+     * Called by the player to tell engine about keypresses
      * 
      * @param key KeyEvent object
      */
     public void handleKeyInput (KeyEvent key) {
-
+        // currently not implemented, but would call a method in game
     }
 
-    public void addPlaceable (String id, double sceneX, double sceneY) {
-        // TODO Auto-generated method stub
+    /**
+     * Called by the player to place a game element at some location, such as placing a new tower
+     * that the user has bought
+     * 
+     * @param id GUID of the game element
+     * @param sceneX x-coordinate of placement
+     * @param sceneY y-coordinate of placement
+     */
+    public void placeGameElement (String id, double sceneX, double sceneY) {
+        // currently only places towers
         myGame.placeTower(id, sceneX, sceneY);
-    }
-
-    public static void main (String[] args) throws InsufficientParametersException {
-        System.out.println(new ArrayList<Sprite>());
-        GameController test =
-                new GameController(
-                                   "data//DesktopTDTest//DesktopTD//DesktopTD.gamefile",
-                                   new ArrayList<Sprite>(), new ArrayList<Tower>());
     }
 }
