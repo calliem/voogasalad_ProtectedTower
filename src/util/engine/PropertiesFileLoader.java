@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Qian Wang
+
 package util.engine;
 
 import java.io.File;
@@ -25,9 +28,8 @@ public class PropertiesFileLoader {
      * 
      * @param fileLocation String location of the file to load
      * @return List<String> with each line of the file as an element in the list
-     * @throws FileNotFoundException if file is not found
      */
-    public static List<String> loadToList (String fileLocation) throws FileNotFoundException {
+    public static List<String> loadToList (String fileLocation) {
         List<String> list = new ArrayList<>();
         list = (List<String>) loadToCollection(fileLocation, list);
         return list;
@@ -39,9 +41,8 @@ public class PropertiesFileLoader {
      * 
      * @param fileLocation String location of the file to load
      * @return Set<String> with each line of the file as an element in the set
-     * @throws FileNotFoundException if file is not found
      */
-    public static Set<String> loadToSet (String fileLocation) throws FileNotFoundException {
+    public static Set<String> loadToSet (String fileLocation) {
         Set<String> set = new HashSet<>();
         set = (Set<String>) loadToCollection(fileLocation, set);
         return set;
@@ -54,16 +55,20 @@ public class PropertiesFileLoader {
      * @param fileLocation String location of the file to load
      * @param collection Collection object with which to store data
      * @return Collection<String> object where each element contains one line of data
-     * @throws FileNotFoundException if file is not found
      */
     private static Collection<String> loadToCollection (String fileLocation,
-                                                        Collection<String> collection)
-                                                                                      throws FileNotFoundException {
-        Scanner s = new Scanner(new File(fileLocation));
-        while (s.hasNextLine()) {
-            collection.add(s.nextLine());
+                                                        Collection<String> collection) {
+        Scanner s;
+        try {
+            s = new Scanner(new File(fileLocation));
+            while (s.hasNextLine()) {
+                collection.add(s.nextLine());
+            }
+            s.close();
         }
-        s.close();
+        catch (FileNotFoundException e) {
+            System.err.println("File was not found");
+        }
         return collection;
     }
 }

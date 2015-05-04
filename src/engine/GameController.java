@@ -1,19 +1,18 @@
+// This entire file is part of my masterpiece.
+// Qian Wang
+
 package engine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-import testing.ExampleGame;
-import testing.ExampleGameMap;
-import testing.ExampleLevel;
-import testing.ExampleRound;
-import testing.ExampleWave;
+import util.engine.PropertiesFileLoader;
 import authoringEnvironment.GameCreator;
 import authoringEnvironment.InstanceManager;
 import engine.element.Game;
@@ -38,16 +37,13 @@ public class GameController {
     /**
      * Holds a set of part names to load
      */
-    private static final String[] PART_NAMES = new String[] { "Tower", "Enemy", "Projectile",
-                                                             "GridCell", "GameMap", "Round",
-                                                             "Wave", "Game", "Level", "MapPath" };
+    private static final Set<String> PART_NAMES = PropertiesFileLoader
+            .loadToSet("src/resources/partNamesToLoad.properties");
     /**
      * Holds a subset of part names to give to the game element factory
      */
-    private static final String[] FACTORY_PART_NAMES = new String[] { "Tower", "Enemy",
-                                                                     "Projectile", "GridCell",
-                                                                     "GameMap", "Round", "Wave",
-                                                                     "MapPath" };
+    private static final Set<String> FACTORY_PART_NAMES = PropertiesFileLoader
+            .loadToSet("src/resources/partNamesToFactory.properties");
 
     /**
      * Holds an instance of an entire game
@@ -95,17 +91,14 @@ public class GameController {
         }
 
         // Get list of parameters maps for all objects
-        // Map<GUID, Map<ParamType, ParamValue>>
-        // TODO change to collection or set
+        // in the form of Map<GUID, Map<Parameter Type, Parameter Value>>
         Map<String, Map<String, Object>> allDataObjects = InstanceManager.loadGameData(filepath);
 
         // Organize parameters maps
         for (Map<String, Object> obj : allDataObjects.values()) {
             String partType = (String) obj.get(PARAMETER_PARTTYPE);
             myObjects.get(partType).put((String) obj.get(PARAMETER_GUID), obj);
-            System.out.println(obj.get("Image"));
         }
-        System.out.println("===================================================");
 
         return initializeGame(nodes, myObjects, possibleTowers);
     }
@@ -126,45 +119,37 @@ public class GameController {
                                  Map<String, Map<String, Map<String, Object>>> myObjects,
                                  List<Tower> possibleTowers) throws InsufficientParametersException {
         // store game parameters
-        Game myGame = new Game(nodes, ExampleGame.generateExampleGame());
+        Game myGame = null;
 
-        // TODO test for errors for 0 data files, or too many
-        // if (myObjects.get("Game").size() != 1) {
-        // throw new InsufficientParametersException("Zero or multiple game data files created");
-        // }
-        // else {
-        // for (Map<String, Object> map : myObjects.get("Game").values()) {
-        // // TODO need game factory or something to initialize it
-        // }
-        // }
+        // Load game if only one made
+        if (myObjects.get("Game").size() != 1) {
+            throw new InsufficientParametersException("Zero or multiple game data files created");
+        }
+        else {
+            for (Map<String, Object> map : myObjects.get("Game").values()) {
+                myGame = new Game(nodes, map);
+            }
+        }
 
-        // if (myObjects.get("Level").size() < 1) {
-        // throw new InsufficientParametersException("No game levels created");
-        // }
-        // else {
-        // myGame.addLevels(myObjects.get("Level"));
-        // }
-
-        // TODO: ADDING LEVELS
-        myGame.addLevels(ExampleLevel.generateExampleLevel());
+        // Load levels if more than 0 made
+        if (myObjects.get("Level").size() < 1) {
+            throw new InsufficientParametersException("No game levels created");
+        }
+        else {
+            myGame.addLevels(myObjects.get("Level"));
+        }
 
         // Send right sets of objects to the right objects
         for (String partName : FACTORY_PART_NAMES) {
             myGame.addGameElement(partName, myObjects.get(partName));
         }
 
-        myGame.addGameElement("Round", ExampleRound.generateExampleRound());
-        myGame.addGameElement("Wave", ExampleWave.generateExampleWave());
-        myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap());
-        myGame.addGameElement("GameMap", ExampleGameMap.generateExampleMap2());
-
-        System.out.println("===================================================");
-        // TODO: POPULATING TOWER MANAGER
+        // Add towers to manager so that upgrade hierarchies can be found
         myTowerManager.add(myObjects.get("Tower"));
 
+        // Tell the player what towers to display
         possibleTowers.addAll(myGame.getAllTowerObjects(myObjects.get("Tower").keySet()));
 
-        System.out.println("===================================================");
         return myGame;
     }
 
