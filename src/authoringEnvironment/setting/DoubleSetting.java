@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Kevin He
 package authoringEnvironment.setting;
 
 import authoringEnvironment.Controller;
