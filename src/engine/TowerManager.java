@@ -56,11 +56,6 @@ public class TowerManager {
         if (!myTreeRoots.containsKey(towerGroup)) {
             myTreeRoots.put(towerGroup, newNode);
         }
-
-        // TODO find way to do this without casting
-        // for (String n : (List<String>) towerProperties.get(PARAMETER_NEXT_TOWER)) {
-        // myTowerMap.get(guid).addNextNode(myTowerMap.get(n));
-        // }
         myTowerMap.get(guid).addNextNode(myTowerMap.get(towerProperties.get(PARAMETER_NEXT_TOWER)));
     }
 

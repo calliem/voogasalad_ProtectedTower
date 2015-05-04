@@ -1,8 +1,14 @@
+// This entire file is part of my masterpiece.
+// BOJIA CHEN
+
 package engine.factories;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import util.reflection.Reflection;
 import engine.Reflectable;
 
@@ -22,7 +28,8 @@ import engine.Reflectable;
 
 public class GameElementFactory {
 
-    private static final String MY_CLASS_LOCATION = "engine.element.GameElement";
+    private static final String MY_MAP_PROPERTIES_LOCATION =
+            "src/engine/factories/elements.properties";
 
     /**
      * Holds all the possible parameters maps used to initialize all game elements. This is a
@@ -36,7 +43,7 @@ public class GameElementFactory {
     /**
      * Holds a map of a part name to the package to use to reflect
      */
-    Map<String, String> myPartTypeToPackage = new HashMap<>();
+    private Map<String, String> myPartTypeToPackage = new HashMap<>();
 
     /**
      * Constructor which initializes a new map of class name to map of guid to parameter map
@@ -49,16 +56,31 @@ public class GameElementFactory {
         }
     }
 
-    // TODO replace this with loading from data file
+    /**
+     * Reads the properties file in MY_MAP_PROPERTIES_LOCATION and populates myPartTypeToPackage.
+     */
+
     private void fillPackageMap () {
-        myPartTypeToPackage.put("Tower", "engine.element.sprites.Tower");
-        myPartTypeToPackage.put("Enemy", "engine.element.sprites.Enemy");
-        myPartTypeToPackage.put("Projectile", "engine.element.sprites.Projectile");
-        myPartTypeToPackage.put("GridCell", "engine.element.sprites.GridCell");
-        myPartTypeToPackage.put("GameMap", "engine.element.sprites.GameMap");
-        myPartTypeToPackage.put("Round", "engine.element.Round");
-        myPartTypeToPackage.put("Wave", "engine.element.Wave");
-        myPartTypeToPackage.put("MapPath", "engine.element.sprites.MapPath");
+        Properties packageMapProperties = new Properties();
+        InputStream inputStream =
+                getClass().getClassLoader().getResourceAsStream(MY_MAP_PROPERTIES_LOCATION);
+
+        if (inputStream != null) {
+            try {
+                packageMapProperties.load(inputStream);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.err.println("PackageMap file '" + MY_MAP_PROPERTIES_LOCATION + "' not found");
+        }
+
+        for (Object element : packageMapProperties.keySet()) {
+            myPartTypeToPackage.put((String) element,
+                                    (String) packageMapProperties.getProperty((String) element));
+        }
     }
 
     /**
@@ -98,7 +120,6 @@ public class GameElementFactory {
             Reflectable element =
                     (Reflectable) Reflection.createInstance(myPartTypeToPackage.get(className));
             element.addInstanceVariables(myGameElements.get(className).get(guid));
-            // System.out.println(String.format("%s %s created", className, guid));
             return element;
         }
         else {
@@ -115,6 +136,7 @@ public class GameElementFactory {
      * @return Map<String, Object> representing the parameter map, a mapping of parameter name to
      *         parameter value for a specific object
      */
+    @SuppressWarnings("unused")
     private Map<String, Object> getParameters (String className, String guid) {
         return myGameElements.get(className).get(guid);
     }
