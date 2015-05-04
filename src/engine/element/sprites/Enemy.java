@@ -170,13 +170,8 @@ public class Enemy extends GameSprite {
 
     @Override
     public Map<Object, List<String>> update () {
-//        move();
-        Map<Object, List<String>> spawnMap = new HashMap<Object, List<String>>();
         super.setLocation(super.getImageView().getTranslateX(), super.getImageView().getTranslateY());
-        // if (this.getHealth() == 0) {
-        // spawnMap.put(this.getLocation(), this.getNextSprites());
-        // }
-        return spawnMap;
+        return new HashMap<Object, List<String>>();
     }
 
     @Override
