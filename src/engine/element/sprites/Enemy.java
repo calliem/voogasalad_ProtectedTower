@@ -81,11 +81,6 @@ public class Enemy extends GameSprite {
         timer.schedule(poison, MOVE_DELAY, (long) (MOVE_DURATION * duration));
     }
 
-    @Override
-    protected void decreaseHealth (Double amount) {
-        super.decreaseHealth(amount);
-    }
-
     private void moveEnemy () {
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength / getSpeed()));
