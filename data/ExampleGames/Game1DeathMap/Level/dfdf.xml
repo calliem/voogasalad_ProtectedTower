@@ -1,0 +1,30 @@
+<map>
+  <entry>
+    <string>PartType</string>
+    <string>Level</string>
+  </entry>
+  <entry>
+    <string>GameMap</string>
+    <string>Game1DeathMap_Part7.GameMap</string>
+  </entry>
+  <entry>
+    <string>Rounds</string>
+    <list>
+      <string>Game1DeathMap_Part10.Round</string>
+      <string>Game1DeathMap_Part10.Round</string>
+      <string>Game1DeathMap_Part10.Round</string>
+    </list>
+  </entry>
+  <entry>
+    <string>name</string>
+    <string>dfdf</string>
+  </entry>
+  <entry>
+    <string>PartKey</string>
+    <string>Game1DeathMap_Part11.Level</string>
+  </entry>
+  <entry>
+    <string>Tags</string>
+    <list/>
+  </entry>
+</map>

@@ -397,6 +397,7 @@ public class Controller {
         return myMaps;
     }
 
+
     public String getNameForPart (String key) {
         return (String) currentGame.getAllPartData().get(key).get(InstanceManager.NAME_KEY);
     }

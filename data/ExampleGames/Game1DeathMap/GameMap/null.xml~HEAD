@@ -5454,11 +5454,11 @@
   </entry>
   <entry>
     <string>Background</string>
-    <string>images/Death_Valley.png</string>
+    <string>images/white_square.png</string>
   </entry>
   <entry>
     <string>PartKey</string>
-    <string>Game1DeathMap_Part7.GameMap</string>
+    <string>Game1DeathMap_Part1.GameMap</string>
   </entry>
   <entry>
     <string>TileSize</string>
@@ -5470,6 +5470,6 @@
   </entry>
   <entry>
     <string>Name</string>
-    <string>DeathValley</string>
+    <null/>
   </entry>
 </map>

@@ -11,6 +11,7 @@ import authoringEnvironment.Controller;
  */
 public class IntegerSetting extends Setting {
     private Integer dataAsInteger;
+    private static final String ERROR_MESSAGE = "This is not a number!";
     
     public IntegerSetting(Controller controller, String part, String label, String defaultVal){
         super(controller, part, label, defaultVal);
@@ -35,7 +36,7 @@ public class IntegerSetting extends Setting {
             return true;
         }
         catch(NumberFormatException e){
-            displayErrorAlert("This is not a number!");
+            displayErrorAlert(ERROR_MESSAGE);
             return false;
         }
     }
