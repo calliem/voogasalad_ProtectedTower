@@ -93,9 +93,7 @@ public class ActionManager {
     public void addEntryToManager (String[] tagPair,
                                    Collection<BiConsumer<GameElement, GameElement>> actions) {
         if (myDecisionMap.keySet().contains(tagPair)) {
-            for (BiConsumer<GameElement, GameElement> action : actions) {
-                myDecisionMap.get(tagPair).add(action);
-            }
+            actions.forEach(a -> myDecisionMap.get(tagPair).add(a));
         }
         else {
             myDecisionMap.put(tagPair, actions);
