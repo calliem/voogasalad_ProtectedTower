@@ -1,4 +1,4 @@
-//This entire file is part of my masterpiece
+// This entire file is part of my masterpiece
 // Janan Zhu
 
 package engine;
@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import engine.element.sprites.GameElement;
-import engine.element.sprites.Sprite;
 
 
 /**
@@ -25,96 +24,65 @@ import engine.element.sprites.Sprite;
  */
 
 public class ActionManager {
-    private Map<String[], Collection<BiConsumer<GameElement, GameElement>>[]> myDecisionMap;
+    private Map<String[], Collection<BiConsumer<GameElement, GameElement>>> myDecisionMap;
     private static final int REQUIRED_KEY_LENGTH = 2;
+    private static final String INTERACTION_MAP_FORMAT_ERROR =
+            "InteractionMap is in invalid format";
 
     /**
      * Load the map of interactions and actions into the table.
      * 
-     * @param interactionMap Map<String[], List<Integer>[]> object that maps a 2-element String
-     *        array representing the two Sprites that have an interaction to a 2-element
-     *        List<Integer> array representing a list of integers that correspond to actions.
-     * @param actions List<BiConsumer<Sprite,Sprite>> object of ordered actions that may be used to
-     *        specify
-     *        what actions should be applied to which sprites.
+     * @param interactionMap Map<String, List<Integer>> object that maps a String
+     *        array representing the two Game Elements that have an interaction to a
+     *        List<String> array representing a list of tags that correspond to actions.
+     * @param actions Map<String,Collection<BiConsumer<GameElement, GameElement>>> object of actions
+     *        mapped to tags that specify what actions should be applied to which gameElement.
      */
-    public ActionManager (Map<String[], List<Integer>[]> interactionMap,
-                          List<BiConsumer<GameElement, GameElement>> actions) {
+    public ActionManager (Map<String[], List<String>> interactionMap,
+                          Map<String, Collection<BiConsumer<GameElement, GameElement>>> actions) {
         // check that input is valid
         for (String[] key : interactionMap.keySet()) {
-            if (key.length != REQUIRED_KEY_LENGTH ||
-                    interactionMap.get(key).length != REQUIRED_KEY_LENGTH) { throw new InvalidParameterException(
-                            "InteractionMap is in invalid format"); }
+            if (key.length != REQUIRED_KEY_LENGTH) { throw new InvalidParameterException(
+                                                                                         INTERACTION_MAP_FORMAT_ERROR); }
         }
         // declare and load the decision map
-        myDecisionMap = new HashMap<String[], Collection<BiConsumer<GameElement, GameElement>>[]>();
+        myDecisionMap = new HashMap<String[], Collection<BiConsumer<GameElement, GameElement>>>();
         for (String[] pair : interactionMap.keySet()) {
-            Collection<BiConsumer<GameElement, GameElement>>[] actionArray =
-                    (Collection<BiConsumer<GameElement, GameElement>>[]) new Collection[REQUIRED_KEY_LENGTH];
-
-            actionArray[0] = actionList(interactionMap.get(pair)[0], actions);
-            actionArray[1] = actionList(interactionMap.get(pair)[1], actions);
-
-            myDecisionMap.put(pair, actionArray);
+            myDecisionMap.put(pair, actions.get(interactionMap.get(pair)));
         }
     }
 
     /**
-     * Private helper method to generate collection of BiConsumers to be applied to certain sprite
-     * as a result of collision, using action indices and given actions
-     * 
-     * @param actionIndices
-     * @param actions
-     * @return
-     */
-    private Collection<BiConsumer<GameElement, GameElement>> actionList (List<Integer> actionIndices,
-                                                                         List<BiConsumer<GameElement, GameElement>> actions) {
-        Collection<BiConsumer<GameElement, GameElement>> returnList =
-                new ArrayList<BiConsumer<GameElement, GameElement>>();
-
-        for (int i : actionIndices) {
-            returnList.add(actions.get(i));
-        }
-        return returnList;
-    }
-
-    /**
-     * Void method that applies appropriate action upon collision of two Sprites according to
-     * collisionTable
+     * Boolean method that applies appropriate action upon collision of two gameElements according
+     * to
+     * decisionMap
      *
-     * @param spriteOne first Sprite to collide
-     * @param spriteTwo second Sprite to collide
+     * @param elementOne first GameElement to collide
+     * @param elementTwo second GameElement to collide
      * @return true if an interaction was made
      */
-    public boolean applyAction (GameElement spriteOne, GameElement spriteTwo) {
-        String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
-        if (isAction(spriteOne, spriteTwo)) {
-            for (BiConsumer<GameElement, GameElement> action : myDecisionMap.get(spriteTagPair)[0]) {
-                action.accept(spriteOne, spriteTwo);
-            }
-            for (BiConsumer<GameElement, GameElement> action : myDecisionMap.get(spriteTagPair)[1]) {
-                action.accept(spriteTwo, spriteOne);
+    public boolean applyAction (GameElement elementOne, GameElement elementTwo) {
+        String[] elementTagPair = getTagPair(elementOne, elementTwo);
+        if (isAction(elementOne, elementTwo)) {
+            for (BiConsumer<GameElement, GameElement> action : myDecisionMap.get(elementTagPair)) {
+                action.accept(elementOne, elementTwo);
             }
             return true;
         }
         return false;
     }
 
-    public boolean isAction (GameElement spriteOne, GameElement spriteTwo) {
-        String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
-        return myDecisionMap.containsKey(spriteTagPair);
-    }
-
     /**
-     * Returns boolean describing whether or not two sprites collided
+     * Boolean method that looks into decision map and sees if an entry exists for given pair of
+     * Elememnts
      * 
-     * @param spriteOne Sprite object
-     * @param spriteTwo Sprite object
-     * @return true if two specified sprites are colliding
+     * @param elementOne first element
+     * @param elementTwo second element
+     * @return True iff myDecisionMap contains the tag pair for the elements
      */
-    public boolean containsActionFor (Sprite spriteOne, Sprite spriteTwo) {
-        String[] spriteTagPair = getTagPair(spriteOne, spriteTwo);
-        return myDecisionMap.containsKey(spriteTagPair);
+    public boolean isAction (GameElement elementOne, GameElement elementTwo) {
+        String[] elementTagPair = getTagPair(elementOne, elementTwo);
+        return myDecisionMap.containsKey(elementTagPair);
     }
 
     /**
@@ -124,13 +92,10 @@ public class ActionManager {
      * @param actions
      */
     public void addEntryToManager (String[] tagPair,
-                                   Collection<BiConsumer<GameElement, GameElement>>[] actions) {
+                                   Collection<BiConsumer<GameElement, GameElement>> actions) {
         if (myDecisionMap.keySet().contains(tagPair)) {
-            for (BiConsumer<GameElement, GameElement> action : actions[0]) {
-                myDecisionMap.get(tagPair)[0].add(action);
-            }
-            for (BiConsumer<GameElement, GameElement> action : actions[1]) {
-                myDecisionMap.get(tagPair)[1].add(action);
+            for (BiConsumer<GameElement, GameElement> action : actions) {
+                myDecisionMap.get(tagPair).add(action);
             }
         }
         else {
@@ -140,18 +105,17 @@ public class ActionManager {
     }
 
     /**
-     * Helper function to get String[] for pair of sprite tags from two sprites
+     * Helper function to get String[] for pair of GUID tags from two elements
      * 
-     * @param spriteOne First sprite
-     * @param spriteTwo Second sprite
-     * @return Array containing tags of sprites
+     * @param elementOne First element
+     * @param elementTwo Second element
+     * @return Array containing GUID tags of elements
      */
-    private String[] getTagPair (GameElement spriteOne, GameElement spriteTwo) {
-        String[] spriteTagPair = new String[REQUIRED_KEY_LENGTH];
-        // TODO takes the first tag for now, make work for multiple tags
-        spriteTagPair[0] = spriteOne.getTags().get(0);
-        spriteTagPair[1] = spriteTwo.getTags().get(0);
-        return spriteTagPair;
+    private String[] getTagPair (GameElement elementOne, GameElement elementTwo) {
+        String[] gameElementTagPair = new String[REQUIRED_KEY_LENGTH];
+        gameElementTagPair[0] = elementOne.getGUID();
+        gameElementTagPair[1] = elementTwo.getGUID();
+        return gameElementTagPair;
     }
 
 }
