@@ -1,9 +1,19 @@
+// This entire file is part of my masterpiece.
+// Callie Mao
+
 package authoringEnvironment.objects;
 
 import java.util.List;
 import javafx.scene.layout.StackPane;
+import authoringEnvironment.Controller;
 import authoringEnvironment.map.MapSidebar;
+import authoringEnvironment.map.MapWorkspace;
 
+/**
+ * Another example of UpdatableDisplay subclass extension
+ * @author Callie Mao
+ *
+ */
 
 public class MapUpdatableDisplay extends UpdatableDisplay {
 
@@ -13,10 +23,18 @@ public class MapUpdatableDisplay extends UpdatableDisplay {
         super(list, rowSize, thumbnailSizeMultiplier);
         mySidebar = sidebar;
     }
+    
+    public MapUpdatableDisplay (Controller c,
+                                 String partType,
+                                 int rowSize,
+                                 double thumbnailSizeMultiplier, MapSidebar sidebar) {
+        super(c, partType, rowSize, thumbnailSizeMultiplier);
+        mySidebar = sidebar;
+    }
 
     @Override
-    protected void objectClicked (GameObject object, StackPane objectView) {
-        super.objectClicked(object, objectView);
+    protected void objectSelected (GameObject object, StackPane objectView) {
+        super.objectSelected(object, objectView);
         mySidebar.changeMap((TileMap) object);
         mySidebar.updatePathDisplay((TileMap) object);
     }

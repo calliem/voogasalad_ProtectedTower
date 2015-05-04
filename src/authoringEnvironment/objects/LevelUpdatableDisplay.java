@@ -35,8 +35,8 @@ public class LevelUpdatableDisplay extends UpdatableDisplay {
     }
 
     @Override
-    protected void objectClicked (GameObject object, StackPane objectView) {
-        super.objectClicked(object, objectView);        // create a new map
+    protected void objectSelected (GameObject object, StackPane objectView) {
+        super.objectSelected(object, objectView);        // create a new map
         try {
             sidebar.setKey(object.getKey());
             myMapWorkspace.getChildren().add(new ImageView(myController.getImageForKey(object

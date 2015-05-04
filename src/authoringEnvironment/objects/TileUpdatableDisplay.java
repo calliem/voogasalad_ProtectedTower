@@ -28,8 +28,8 @@ public class TileUpdatableDisplay extends UpdatableDisplay {
     }
 
     @Override
-    protected void objectClicked (GameObject object, StackPane objectView) {
-        super.objectClicked(object, objectView);
+    protected void objectSelected (GameObject object, StackPane objectView) {
+        super.objectSelected(object, objectView);
         myMapWorkspace.setActiveTile(object.getKey());
     }
 

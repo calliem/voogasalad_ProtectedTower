@@ -66,8 +66,8 @@ public class PathUpdatableDisplay extends UpdatableDisplay {
      * loop through objects within a GameObjects list in the superclass.
      */
     @Override
-    protected void objectClicked (GameObject object, StackPane objectView) {
-        super.objectClicked(object, objectView);
+    protected void objectSelected (GameObject object, StackPane objectView) {
+        super.objectSelected(object, objectView);
         myMapWorkspace.updateWithNewPath((PathView) object);
     }
 

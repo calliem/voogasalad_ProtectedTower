@@ -147,7 +147,7 @@ public abstract class UpdatableDisplay extends VBox {
 
             objectView.getChildren().addAll(thumbnail, mapName);
             currentRow.getChildren().add(objectView);
-            objectView.setOnMouseClicked(e -> objectClicked(object, objectView));
+            objectView.setOnMouseClicked(e -> objectSelected(object, objectView));
             objectView.setOnMouseEntered(e -> selectObject(objectView));
             objectView.setOnMouseExited(e -> deselectObject(objectView));
         }
@@ -225,7 +225,7 @@ public abstract class UpdatableDisplay extends VBox {
         displayValues();
     }
 
-    protected void objectClicked (GameObject object, StackPane objectView) {
+    protected void objectSelected (GameObject object, StackPane objectView) {
         if (selectedView != null) {
             selectedView.setOpacity(1);
         }
