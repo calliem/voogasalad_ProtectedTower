@@ -42,7 +42,7 @@ public class ModifierStrip extends VBox {
     private ChoiceBox<String> changeType;
     private ChoiceBox<String> fields;
     private TextField amount;
-    
+
     public ModifierStrip (Controller controller, double width) {
         super(PADDING);
         myKey = Controller.KEY_BEFORE_CREATION;
@@ -150,12 +150,9 @@ public class ModifierStrip extends VBox {
         }
         return FXCollections.observableArrayList(fieldsList);
     }
-    
 
     private void save () {
         Map<String, Object> myMap = new HashMap<>();
-        myMap.put(InstanceManager.NAME_KEY, nameField.getText());
-        myMap.put(InstanceManager.PART_TYPE_KEY, "Modifier");
         myMap.put("actorType", type.getSelectionModel().getSelectedItem());
         myMap.put("acteeType", type2.getSelectionModel().getSelectedItem());
         myMap.put("actorTag", authoringObjects.getSelectionModel().getSelectedItem());
@@ -165,14 +162,9 @@ public class ModifierStrip extends VBox {
         myMap.put("amount", amount.getText());
 
         try {
-            if (myKey.equals(Controller.KEY_BEFORE_CREATION)) {
 
-                myKey = myController.addPartToGame(myMap);
+            myKey = myController.addPartToGame("Modifier", nameField.getText(), myKey, myMap);
 
-            }
-            else {
-                myKey = myController.addPartToGame(myKey, myMap);
-            }
         }
         catch (MissingInformationException e) {
             // TODO Auto-generated catch block

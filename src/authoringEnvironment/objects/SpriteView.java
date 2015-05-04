@@ -295,11 +295,8 @@ public abstract class SpriteView extends ObjectView {
 
         if (correctFormat && save) {
             try {
-                if (myKey.equals(Controller.KEY_BEFORE_CREATION))
-                    myKey = myController.addPartToGame(getSpriteType(),
-                                                       parameterFields);
-                else
-                    myKey = myController.addPartToGame(myKey, getSpriteType(), parameterFields);
+             
+                    myKey = myController.addPartToGame(myKey, getSpriteType(), spriteName, parameterFields);
             }
             catch (MissingInformationException e) {
                 // TODO Auto-generated catch block

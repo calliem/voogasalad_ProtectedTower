@@ -47,7 +47,7 @@ public class LevelSidebar extends Sidebar {
     private String myMapKey;
     private String myKey;
     private String myName;
-    
+
     private ObservableList<GameObject> myMapList;
 
     public LevelSidebar (ResourceBundle resources,
@@ -119,16 +119,11 @@ public class LevelSidebar extends Sidebar {
             roundKeys.add(rd.getRoundKey());
         }
 
-        part.put(InstanceManager.NAME_KEY, myName);
-        part.put(InstanceManager.PART_TYPE_KEY, "Level");
         part.put(GAMEMAP_KEY, myMapKey);
         part.put(ROUNDS_KEY, roundKeys);
 
         try {
-            if (myKey.equals(Controller.KEY_BEFORE_CREATION))
-                myKey = myController.addPartToGame(part);
-            else
-                myKey = myController.addPartToGame(myKey, part);
+            myKey = myController.addPartToGame("Level", myName, myKey, part);
         }
         catch (MissingInformationException e) {
             e.printStackTrace();

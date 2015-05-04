@@ -88,10 +88,8 @@ public class TileView extends ObjectView{
      */
     public void saveTile () {
         try{
-            if (myKey.equals(Controller.KEY_BEFORE_CREATION))
-                myKey = myController.addPartToGame(getTileInfo());
-            else
-                myKey = myController.addPartToGame(myKey, getTileInfo());
+          
+                myKey = myController.addPartToGame(myKey, "Tile", myName, getTileInfo());
         }
         catch(MissingInformationException exception){
         }

@@ -2,7 +2,9 @@ package authoringEnvironment.objects;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -17,6 +19,7 @@ import javafx.scene.text.TextAlignment;
 import authoringEnvironment.AuthoringEnvironment;
 import authoringEnvironment.Controller;
 import authoringEnvironment.DataFormatException;
+import authoringEnvironment.InstanceManager;
 import authoringEnvironment.MissingInformationException;
 import authoringEnvironment.editors.FlowEditor;
 
@@ -36,6 +39,8 @@ public abstract class FlowStrip extends HBox {
     private static final Color INFO_BACKGROUND_COLOR = Color.web("#1D2951");
     private static final Color STRIP_NAME_COLOR = Color.GOLDENROD;
     private static final String AUTHORING_OBJECTS_PACKAGE = "authoringEnvironment.objects.";
+    private static final String DIFFERENT_LIST_SIZE_MESSAGE =
+            "Lists passed must contain same number of elements.";
 
     protected Controller myController;
     private String myKey;
@@ -60,7 +65,7 @@ public abstract class FlowStrip extends HBox {
                             (INFO_PANEL_WIDTH + 3 * PADDING));
 
         setAlignment(Pos.CENTER);
-        
+
         HBox content = new HBox(PADDING);
         content.setAlignment(Pos.CENTER_LEFT);
         content.setTranslateX(PADDING);
@@ -119,7 +124,7 @@ public abstract class FlowStrip extends HBox {
 
         displayPane.setHvalue(2.0);
     }
-    
+
     protected List<Double> getTimesFromZero (List<String> partFileNames, List<Double> delays) {
         List<Double> times = new ArrayList<Double>();
         times.add(0.0);
@@ -129,28 +134,41 @@ public abstract class FlowStrip extends HBox {
                 all += t;
             times.add(all + d);
         }
-        
+
         // Get rid of potential last element due to extra arrow/input space
         if (partFileNames.size() != times.size()) {
             times.remove(times.size() - 1);
         }
         return times;
     }
-    
-    protected void saveToGame (String partType, String componentName, List<String> params, List<Object> data) {
+
+    protected void saveToGame (String partType,
+                               String componentName,
+                               List<String> params,
+                               List<Object> data) {
         try {
-            if (myKey.equals(Controller.KEY_BEFORE_CREATION)) {
-                myKey = myController.addPartToGame(partType, componentName,
-                                                   params, data);
-            }
-            else {
-                myKey = myController.addPartToGame(myKey, partType, componentName,
-                                                   params, data);
-            }
+
+            myKey = myController.addPartToGame(myKey, partType, componentName,
+                                               generateMapFromLists(params, data));
         }
         catch (MissingInformationException | DataFormatException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Generates the appropriate map from a type, name, and two lists of parameters and data.
+     */
+    private Map<String, Object> generateMapFromLists (List<String> params, List<Object> data)
+                                                                                             throws DataFormatException {
+        if (params.size() != data.size()) {
+            throw new DataFormatException(DIFFERENT_LIST_SIZE_MESSAGE);
+        }
+        Map<String, Object> toAdd = new HashMap<String, Object>();
+        for (int i = 0; i < params.size(); i++) {
+            toAdd.put(params.get(i), data.get(i));
+        }
+        return toAdd;
     }
 }
