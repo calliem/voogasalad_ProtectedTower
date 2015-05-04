@@ -1,3 +1,5 @@
+//THIS ENTIRE FILE IS PART OF MY MASTERPIECE
+//JOHN KUMPF
 package authoringEnvironment;
 
 import java.awt.image.RenderedImage;

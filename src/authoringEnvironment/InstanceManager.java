@@ -1,3 +1,5 @@
+//THIS ENTIRE FILE IS PART OF MY MASTERPIECE
+//JOHN KUMPF
 package authoringEnvironment;
 
 import java.awt.image.RenderedImage;
@@ -102,6 +104,14 @@ public class InstanceManager {
         return addPart(key, fullPartMap);
     }
 
+    /**
+     * Adds a part to this InstanceManager
+     * 
+     * @param key The key at which to add the part
+     * @param fullPartMap the full map representing the part's data
+     * @return The key at which the part was added
+     * @throws MissingInformationException if critical infomration is missing
+     */
     protected String addPart (String key, Map<String, Object> fullPartMap)
                                                                           throws MissingInformationException {
         fullPartMap.put(TAGS_KEY, getTagList(key));
@@ -154,6 +164,12 @@ public class InstanceManager {
         return missingKey;
     }
 
+    /**
+     * Deletes a part from this game
+     * 
+     * @param partKey The key for which to delete the part
+     * @return true if the part existed and was deleted, false otherwise
+     */
     protected boolean deletePart (String partKey) {
         if (userParts.keySet().contains(partKey)) {
             userParts.remove(partKey);
@@ -256,6 +272,13 @@ public class InstanceManager {
         return new HashMap<String, Map<String, Object>>(userParts);
     }
 
+    /**
+     * Takes a path to an image and saves a copy of that image in ImageData, then specifies that
+     * that saved file corresponds with the part specified by the key passed.
+     * 
+     * @param partKey The key of the part for which you want to specify its image
+     * @param imageFilePath The filePath to the image that this part should have
+     */
     protected void specifyPartImage (String partKey, String imageFilePath) {
         String realFilePath = "src/" + imageFilePath;
         String locationAfterRootDirectory =
@@ -274,6 +297,13 @@ public class InstanceManager {
         userParts.get(partKey).put(IMAGE_KEY, locationAfterRootDirectory);
     }
 
+    /**
+     * Takes a javafx Image object and saves a copy of that image in ImageData, then specifies that
+     * that saved file corresponds with the part specified by the key passed.
+     * 
+     * @param partKey
+     * @param image
+     */
     protected void specifyPartImage (String partKey, Image image) {
         String locationAfterRootDirectory =
                 GameCreator.IMAGE_DATA_FOLDER + "/" +
@@ -289,6 +319,12 @@ public class InstanceManager {
 
     }
 
+    /**
+     * Adds a tag to a part's list of tags
+     * 
+     * @param partKey The key of the part to which you want to add the tag
+     * @param tag The tag to add
+     */
     protected void addTagToPart (String partKey, String tag) {
         Map<String, Object> addTagTo = userParts.get(partKey);
         if (addTagTo.containsKey(TAGS_KEY)) {
@@ -310,6 +346,13 @@ public class InstanceManager {
 
     }
 
+    /**
+     * Removes a tag from a part
+     * 
+     * @param partKey The key from which to remove the tag
+     * @param tag The tag to remove
+     * @return true if the tag was successfully removed, false otherwise
+     */
     protected boolean removeTagFromPart (String partKey, String tag) {
         Map<String, Object> removeFrom = userParts.get(partKey);
         if (removeFrom.containsKey(TAGS_KEY)) {
@@ -321,6 +364,12 @@ public class InstanceManager {
         return false;
     }
 
+    /**
+     * Checks whether the current IM contains this key
+     * 
+     * @param key The key to check
+     * @return true if the key exists in the map of user parts, false otherwise
+     */
     protected boolean containsKey (String key) {
         return userParts.containsKey(key);
     }
