@@ -1,7 +1,6 @@
 package authoringEnvironment.objects;
 
 import imageselector.util.ScaleImage;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -30,7 +28,6 @@ import authoringEnvironment.NoImageFoundException;
  *
  */
 public class RoundStrip extends FlowStrip {
-    private UpdatableDisplay mapDisplay;
     private static final int MAP_SELECTOR_HEIGHT = 205;
     private static final int MAP_SELECTOR_WIDTH = 205;
     private static final int PADDING = 10;
@@ -38,8 +35,7 @@ public class RoundStrip extends FlowStrip {
     private static final String ROUND = "Round";
     private static final String WAVES_KEY = "Waves";
     private static final String TIMES_KEY = "Times";
-    private static final String PATHS_KEY = "PathKeys"; // TODO: fix this, refrence from callie's
-                                                        // store
+    private static final String PATHS_KEY = "PathKeys"; 
 
     private VBox rowContainer;
     private StackPane mapsAndBackground;
@@ -82,7 +78,6 @@ public class RoundStrip extends FlowStrip {
             rowContainer = createVBoxWithMapRows();
         }
         catch (NoImageFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -95,7 +90,8 @@ public class RoundStrip extends FlowStrip {
     private VBox createVBoxWithMapRows () throws NoImageFoundException {
         VBox rowContainer = new VBox(PADDING);
 
-        ObservableList<String> mapKeys = myController.getKeysForPartType(InstanceManager.GAMEMAP_PARTNAME);
+        ObservableList<String> mapKeys =
+                myController.getKeysForPartType(InstanceManager.GAMEMAP_PARTNAME);
         System.out.println("maps: " + mapKeys);
         HBox row = new HBox(PADDING);
         int mapsPlacedInRow = 0;
@@ -122,7 +118,7 @@ public class RoundStrip extends FlowStrip {
             ScaleImage.scale(map, mapSideLength, mapSideLength);
             map.setOnMouseClicked(e -> { // replace selection display with the map the user clicked
                 replaceMapSelectorWithMap(mapData, map);
-            }); // TODO: what key?
+            });
             map.setOnMouseEntered(e -> {
                 map.setOpacity(.5);
             });
@@ -141,13 +137,11 @@ public class RoundStrip extends FlowStrip {
 
     private void replaceMapSelectorWithMap (Map<String, Object> mapData, ImageView map) {
         List<String> pathsInMapClicked = (List<String>) mapData.get(PATHS_KEY);
-        System.out.println("paths in clicked: " + pathsInMapClicked);
-        System.out.println("mapData: " + mapData);
         // if the map has no paths
         if (pathsInMapClicked == null || pathsInMapClicked.size() == 0) {
             // TODO: display error
             System.out.println("NO PATS ~~~~~~~~~~~~~~~~~");
-            String message = "No paths exist map selected!  Please choose a different map.";
+            // String message = "No paths exist map selected!  Please choose a different map.";
         }
         // make sure the paths on the new map match the paths of the old map, or it's the first map
         // picked
@@ -174,14 +168,13 @@ public class RoundStrip extends FlowStrip {
 
     private Button changeMapButton (List<String> currentPaths, ImageView map) {
         Button changeMap = new Button("Change Map");
-        changeMap.setOnAction(e -> warnThenRegenerateMapDisplay(currentPaths, changeMap, map));
+        changeMap.setOnAction(e -> regenerateMapDisplay(currentPaths, changeMap, map));
         return changeMap;
     }
 
-    private void warnThenRegenerateMapDisplay (List<String> currentPaths,
-                                               Button changeMap,
-                                               ImageView map) {
-        promptUserAboutMapChanging(currentPaths);
+    private void regenerateMapDisplay (List<String> currentPaths,
+                                       Button changeMap,
+                                       ImageView map) {
         try {
             mapsAndBackground.getChildren().remove(changeMap);
             mapsAndBackground.getChildren().remove(map);
@@ -191,18 +184,6 @@ public class RoundStrip extends FlowStrip {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
-
-    private void promptUserAboutMapChanging (List<String> currentPaths) {
-        // TODO: some sort of alert
-        String message =
-                "The paths that exist on the current map are: \n" + currentPaths.toString() +
-                        "\nThe map you change to must contain the same paths.";
-    }
-
-    private void chooseMap (List<String> paths) {
-        // replace the image selection with large display of the map
-
     }
 
     @Override

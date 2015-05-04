@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Megan Gutter
 package authoringEnvironment.objects;
 
 import java.lang.reflect.InvocationTargetException;
@@ -30,6 +32,9 @@ import authoringEnvironment.editors.FlowEditor;
  */
 public abstract class FlowStrip extends HBox {
 
+    private static final String ADD_TO = "Add To ";
+    private static final String SAVE = "Save";
+    private static final int FLOW_VIEW_SIZE = 100;
     private static final int PADDING = 10;
     private static final int STRIP_PANEL_HEIGHT = FlowEditor.STRIP_PANEL_HEIGHT;
     private static final int INFO_PANEL_WIDTH = 170;
@@ -68,10 +73,10 @@ public abstract class FlowStrip extends HBox {
         VBox info = new VBox(2 * PADDING);
         info.setAlignment(Pos.CENTER);
 
-        Button addUnit = new Button("Add To " + editorType);
+        Button addUnit = new Button(ADD_TO + editorType);
         addUnit.setOnAction(e -> addComponentToRow(newRow, content, componentName));
 
-        Button save = new Button("Save");
+        Button save = new Button(SAVE);
         save.setOnAction(e -> saveData(componentName));
 
         VBox buttons = new VBox(PADDING);
@@ -107,7 +112,7 @@ public abstract class FlowStrip extends HBox {
             flow =
                     (FlowView) Class.forName(toCreate)
                             .getConstructor(int.class, Controller.class)
-                            .newInstance(100, myController);
+                            .newInstance(FLOW_VIEW_SIZE, myController);
         }
         catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException | NoSuchMethodException | SecurityException
@@ -129,7 +134,6 @@ public abstract class FlowStrip extends HBox {
                 all += t;
             times.add(all + d);
         }
-        
         // Get rid of potential last element due to extra arrow/input space
         if (partFileNames.size() != times.size()) {
             times.remove(times.size() - 1);

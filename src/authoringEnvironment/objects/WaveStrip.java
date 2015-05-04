@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Megan Gutter
 package authoringEnvironment.objects;
 
 import java.util.ArrayList;
@@ -45,8 +47,6 @@ public class WaveStrip extends FlowStrip {
         List<Object> data = new ArrayList<Object>();
         data.add(partKeyNames);
         data.add(times);
-        //System.out.println("times in wave editor: " + times);
-        //System.out.println("enemies in wave editor: " + partFileNames);
         
         saveToGame(WAVE, componentName, params, data);
 
