@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// SEAN SCOTT
+
 package engine.element.sprites;
 
 import java.util.ArrayList;
@@ -7,7 +10,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.animation.PathTransition;
-import javafx.scene.image.ImageView;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -43,7 +45,7 @@ public class Enemy extends GameSprite {
     private double myPathLength;
     private List<GridCell> myGridPath;
     private static final double MOVE_DURATION = 1000;
-    private ImageView invisView = new ImageView();
+    //private ImageView invisView = new ImageView();
 
     public Enemy () {
 
@@ -96,8 +98,7 @@ public class Enemy extends GameSprite {
         super.decreaseHealth(amount);
     }
 
-    @Override
-    public void move () {
+    private void moveEnemy () {
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(MOVE_DURATION * myPathLength / getSpeed()));
         pathTransition.setPath(myPath);
@@ -128,7 +129,7 @@ public class Enemy extends GameSprite {
         }
         myPath = path;
         myPathLength = (curveCoords.size() - 1) / 3;
-        move();
+        moveEnemy();
     }
 
     /**
@@ -163,7 +164,7 @@ public class Enemy extends GameSprite {
         }
         myPath = path;
         myPathLength = myGridPath.size();
-        move();
+        moveEnemy();
     }
 
     @Override
@@ -194,5 +195,11 @@ public class Enemy extends GameSprite {
         // TODO Auto-generated method stub
 
     }
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
